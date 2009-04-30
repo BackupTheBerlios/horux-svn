@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<configuration>
+    <modules>
+        <module id="globalization_velopark" class="TGlobalization">
+            <translation type="XLIFF" source="horux.messages" catalogue="velopark" marker="" cache="false" />
+        </module>
+    </modules>
+    <parameters>
+        <parameter id="printtemplate" value="default" Name="Print Template" RightText=".php" />
+    </parameters>
+</configuration>

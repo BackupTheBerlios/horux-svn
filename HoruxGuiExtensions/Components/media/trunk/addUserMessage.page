@@ -1,0 +1,131 @@
+<com:TContent ID="Main">
+<div id="content-box">
+    <div class="border">
+        <div class="padding">
+            <div id="toolbar-box">
+                
+                <div class="t">
+                    <div class="t">
+                        <div class="t"></div>
+                    </div>
+                </div>
+                <div class="m" >
+                    <div class="toolbar" id="toolbar">
+                        <table class="toolbar">
+                            <tr>   
+
+                                <td class="button" id="toolbar-apply">
+                                    <com:TLinkButton CssClass="toolbar" OnClick="onApply" ValidationGroup="Group1">
+                                      <span class="icon-32-apply" title="Apply"></span><com:TTranslate Catalogue="messages">Apply</com:TTranslate>
+                                    </com:TLinkButton> 
+                                </td>
+
+
+                                <td class="button" id="toolbar-save">
+                                    <com:TLinkButton CssClass="toolbar" OnClick="onSave" ValidationGroup="Group1">
+                                      <span class="icon-32-save" title="Save"></span><com:TTranslate Catalogue="messages">Save</com:TTranslate>
+                                    </com:TLinkButton> 
+                                </td>
+
+                                <td class="button" id="toolbar-cancel">
+                                    <a href="<%= $this->Service->constructUrl('user.UserList') %>" class="toolbar">
+                                        <span class="icon-32-cancel" title="Cancel"></span><com:TTranslate Catalogue="messages">Cancel</com:TTranslate>
+                                    </a>
+                                </td>
+
+                                <td class="button" id="toolbar-help">
+                                    <a href="./proxy/index.php?page=<%= $this->getApplication()->getService()->getRequestedPagePath() %>&lang=<%= $this->getApplication()->getGlobalState('lang') %>" title="<%[Help]%>" onClick="Modalbox.show(this.href, {title: this.title, width: 600, height: 600}); return false;" class="toolbar" >
+                                        <span class="icon-32-help" title="<com:TTranslate Catalogue="messages">Help</com:TTranslate>"></span><com:TTranslate Catalogue="messages">Help</com:TTranslate>
+                                    </a>
+                                </td>
+
+
+                            </tr>
+                        </table>
+                    </div><!-- end class toolbar -->
+
+                    <div class="header"  style="background-image: url(<%~ ./assets/icon-48-message.png %>)"><%[Info Display - Attribution]%></div>
+                    <div class="clr"></div>
+                </div><!-- end class m -->
+
+                <div class="b">
+                    <div class="b">
+                        <div class="b"></div>
+                    </div>
+                </div>
+            </div><!-- end class toolbar-box -->
+
+            <div class="clr"></div>
+
+            <com:TLiteral ID="okMsg" Text="" />
+            <com:TLiteral ID="koMsg" Text="" />
+
+            <div id="element-box">
+    
+                <div class="t">
+                    <div class="t">
+                        <div class="t"></div>
+                    </div>
+                </div>
+                <div class="m">
+		  <com:THiddenField ID="id" value="0" />
+		  <com:THiddenField ID="mid" value="0" />
+                  <fieldset class="adminform">
+	             <legend><%[Message]%></legend>
+                      <table class="admintable" cellspacing="1">
+                        <tbody>
+                          <tr>
+                            <td valign="top" class="key">
+                              <span onmouseover="Tip('<%[Enter the message displayed on the screen when the user present his key]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Message]%></span>
+                            </td>
+                            <td>
+                              <com:TTextBox 
+                                CssClass="text_area" 
+                                ID="message"
+				TextMode="MultiLine"
+				Rows="6" Columns="60"
+                                Width="50" />
+                            </td> 
+                          </tr>
+			  <tr>
+			    <td colspan="2">
+			      <%[You can insert the following tags in the message]%>:<br /><br />
+			      <b>{name}</b> : <%[It will be replace by the name of the user when the message is diplayed]%><br />
+			      <b>{firstName}</b> : <%[It will be replace by the firstname of the user when the message is diplayed]%><br />
+			      <b>{time}</b> : <%[It will be replace by the current time of the user when the message is diplayed]%><br />
+			      <b>{date}</b> : <%[It will be replace by the current date of the user when the message is diplayed]%><br />
+			      <b>{day}</b> : <%[It will be replace by the current day of the user when the message is diplayed]%><br />
+
+			    </td>
+			  </tr>
+                        </tbody>
+                      </table>
+                  </fieldset>
+				<div class="clr"></div>
+				</div> <!-- end class m -->
+                <div class="b">
+                    <div class="b"> 
+                        <div class="b"></div>
+                    </div>
+                </div>
+            </div><!-- end class toolbar-box -->
+			<div class="clr"></div>
+			<br/>
+
+ 
+                <div class="b">
+                    <div class="b"> 
+                        <div class="b"></div>
+                    </div>
+                </div>
+            </div><!-- end class toolbar-box -->
+
+			
+            <div class="clr"></div>
+
+            
+        </div> <!-- end class toolbar-box -->
+        <div class="clr"></div>
+    </div><!-- end class content-box -->
+</div> <!-- end class content-box -->
+</com:TContent> 

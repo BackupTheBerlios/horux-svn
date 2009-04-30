@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<install type="component">
+	<installName>infoDisplay</installName>
+	<name>Info Display</name>
+	<version>1.0.0</version>
+	<creationDate>13/11/08</creationDate>
+	<author>Jean-Luc Gyger / Letux</author>
+	<authorEmail>info@letux.ch</authorEmail>
+	<authorUrl>http://www.letux.ch</authorUrl>
+	<copyright>Letux</copyright>
+	<license>GNU/GPL</license>
+	<description>Extension to display message on screen displaying movies and pictures</description>
+	
+	<sqlinstall>install.sql</sqlinstall>
+	<sqluninstall>uninstall.sql</sqluninstall>	
+	
+	<mainmenu>
+		<menu iconmenu="icon-16-message.png" url="components.infoDisplay.infoDisplay" name="Info Display" >
+                        <submenus>
+                                <submenu iconmenu="icon-16-playlist.png" url="components.infoDisplay.mediaList" name="Play list" ></submenu>
+                                <submenu iconmenu="icon-16-infomessage.png" url="components.infoDisplay.messageInfoList" name="Info message" ></submenu>
+                        </submenus>
+               </menu>
+	</mainmenu>
+	
+	<permissions>
+		<permission>components.infoDisplay.addUserMessage</permission>
+                <permission>components.infoDisplay.infoDisplay</permission>
+                <permission>components.infoDisplay.mediaList</permission>
+                <permission>components.infoDisplay.addMedia</permission>
+                <permission>components.infoDisplay.modMedia</permission>
+                <permission>components.infoDisplay.messageInfoList</permission>
+                <permission>components.infoDisplay.addMessageInfo</permission>
+                <permission>components.infoDisplay.modMessageInfo</permission>
+	</permissions>
+	
+</install>

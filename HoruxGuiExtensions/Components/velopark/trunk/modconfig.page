@@ -1,0 +1,237 @@
+<com:TContent ID="Main">
+<div id="content-box">
+    <div class="border">
+        <div class="padding">
+            <div id="toolbar-box">
+                
+                <div class="t">
+                    <div class="t">
+                        <div class="t"></div>
+                    </div>
+                </div>
+                <div class="m" >
+                    <div class="toolbar" id="toolbar">
+                        <table class="toolbar">
+                            <tr>
+                                <td class="button" id="toolbar-apply">
+                                    <com:TLinkButton CssClass="toolbar" OnClick="onApply" ValidationGroup="Group1">
+                                      <span class="icon-32-apply" title="Apply"></span><com:TTranslate Catalogue="messages">Apply</com:TTranslate>
+                                    </com:TLinkButton> 
+                                </td>
+
+
+                                <td class="button" id="toolbar-save">
+                                    <com:TLinkButton CssClass="toolbar" OnClick="onSave" ValidationGroup="Group1">
+                                      <span class="icon-32-save" title="Save"></span><com:TTranslate Catalogue="messages">Save</com:TTranslate>
+                                    </com:TLinkButton> 
+                                </td>
+
+                                <td class="button" id="toolbar-cancel">
+                                    <com:TLinkButton CssClass="toolbar" OnClick="onCancel">
+                                      <span class="icon-32-cancel" title="Cancel"></span><com:TTranslate Catalogue="messages">Cancel</com:TTranslate>
+                                    </com:TLinkButton> 
+                                </td>
+
+                                <td class="button" id="toolbar-help">
+                                    <a href="./proxy/index.php?page=<%= $this->getApplication()->getService()->getRequestedPagePath() %>&lang=<%= $this->getApplication()->getGlobalState('lang') %>" title="<%[Help]%>" onClick="Modalbox.show(this.href, {title: this.title, width: 600, height: 600}); return false;" class="toolbar" >
+                                        <span class="icon-32-help" title="Help"></span><com:TTranslate Catalogue="messages">Help</com:TTranslate>
+                                    </a>
+                                </td>
+
+
+                            </tr>
+                        </table>
+                    </div><!-- end class toolbar -->
+
+                    <div class="header"  style="background-image: url(<%~ ./assets/icon-48-config.png %>)"><%[Modify a parking]%></div>
+                    <div class="clr"></div>
+                </div><!-- end class m -->
+
+
+                <div class="b">
+                    <div class="b">
+                        <div class="b"></div>
+                    </div>
+                </div>
+            </div><!-- end class toolbar-box -->
+
+            <com:TLiteral ID="okMsg" Text="" />
+            <com:TLiteral ID="koMsg" Text="" />
+
+            <div id="element-box">
+    
+                <div class="t">
+                    <div class="t">
+                        <div class="t"></div>
+                    </div>
+                </div>
+                <div class="m">
+
+                  <fieldset class="adminform">
+	             <legend><%[Parameters]%></legend>
+	             	   <com:THiddenField ID="id" value="" />
+                      <table class="admintable" cellspacing="1">
+                        <tbody>
+                          <tr>
+                            <td valign="top" class="key">
+                              <span onmouseover="Tip('<%[Enter the number of place to park]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)">* <%[Area]%></span>
+                            </td>
+                            <td>
+                              <com:TTextBox 
+                                CssClass="text_area" 
+                                ID="area"
+                                Width="50" />
+                              <com:TDataTypeValidator
+                                ValidationGroup="Group1"
+                                ControlToValidate="area"
+                                Display="Dynamic"
+								DataType="Integer"
+                                Text="<%[Must be an integer]%>" />
+                              <com:TRequiredFieldValidator
+								ValidationGroup="Group1" 
+								ControlToValidate="area"
+								Text="<%[This field is required]%>" 
+								Display="Dynamic"/>
+                            </td> 
+                          </tr>
+
+                          <tr>
+                            <td valign="top" class="key"><span onmouseover="Tip('<%[Select a access point device for this parking]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)">* <%[Access point device]%></span></td>
+                            <td>
+								<com:TDropDownList 
+									ID="accesspoint"
+						  		    DataTextField="Text"
+								    DataValueField="Value"
+								/>
+                            </td> 
+                          </tr>
+
+
+                          <tr>
+                            <td valign="top" class="key"><span onmouseover="Tip('<%[Select a display for this parking if it has one]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Display device]%></span></td>
+                            <td>
+								<com:TDropDownList 
+									ID="display"
+						  		    DataTextField="Text"
+								    DataValueField="Value"
+								/>
+                            </td> 
+                          </tr>
+
+                          <tr>
+                            <td valign="top" class="key">
+                              <span onmouseover="Tip('<%[Enter the default text displayed on the display]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"> <%[Default text]%></span>
+                            </td>
+                            <td>
+                              <com:TTextBox 
+                                CssClass="text_area" 
+                                ID="default_msg"
+                                Width="450px" /> <%[You can insert the following tag in the message]%> {date}/{time}
+                            </td> 
+                          </tr>
+
+                          <tr>
+                            <td valign="top" class="key">
+                              <span onmouseover="Tip('<%[Enter the text displayed when the user has the access]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"> <%[Access text]%></span>
+                            </td>
+                            <td>
+                              <com:TTextBox 
+                                CssClass="text_area" 
+                                ID="access_ok_msg"
+                                Width="450px" />
+                            </td> 
+                          </tr>
+                          
+                          <tr>
+                            <td valign="top" class="key">
+                              <span onmouseover="Tip('<%[Enter the text displayed when the user does not have thee access]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"> <%[No access text]%></span>
+                            </td>
+                            <td>
+                              <com:TTextBox 
+                                CssClass="text_area" 
+                                ID="access_ko_msg"
+                                Width="450px" />
+                            </td> 
+                          </tr>                          
+
+                          <tr>
+                            <td valign="top" class="key">
+                              <span onmouseover="Tip('<%[Enter the number of second to display a the access messages]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"> <%[Display time]%></span>
+                            </td>
+                            <td>
+                              <com:TTextBox 
+                                CssClass="text_area" 
+                                ID="displayTime"
+                                Width="50" /> <%[seconds]%>
+                              <com:TDataTypeValidator
+                                ValidationGroup="Group1"
+                                ControlToValidate="displayTime"
+                                Display="Dynamic"
+                                                                DataType="Integer"
+                                Text="<%[Must be an integer]%>" />
+                            </td> 
+                          </tr>                          
+
+
+                          <tr>
+                            <td valign="top" class="key"><span onmouseover="Tip('<%[Select the device where a light information is connected]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Light information]%></span></td>
+                            <td>
+                                  <com:TDropDownList 
+                                          ID="lightinfo"
+                                      DataTextField="Text"
+                                      DataValueField="Value"
+                                  />
+                                  <com:TDropDownList 
+                                      ID="lightinfo_io"
+                                      DataTextField="Text"
+                                      DataValueField="Value"
+                                  >
+                                    <com:TListItem Text="<%[---- None ----]%>" Value="0" />
+                                    <com:TListItem Text="<%[Output 1]%>" Value="1" />
+                                    <com:TListItem Text="<%[Output 2]%>" Value="2" />
+                                    <com:TListItem Text="<%[Output 3]%>" Value="3" />
+                                    <com:TListItem Text="<%[Output 4]%>" Value="4" />
+                                    <com:TListItem Text="<%[Output 5]%>" Value="5" />
+                                    <com:TListItem Text="<%[Output 6]%>" Value="6" />
+                                    <com:TListItem Text="<%[Output 7]%>" Value="7" />
+                                    <com:TListItem Text="<%[Output 8]%>" Value="8" />
+                                 </com:TDropDownList>
+                            </td> 
+                          </tr>
+
+						  <tr>
+                            <td valign="top" class="key"><span onmouseover="Tip('<%[Update de current filling]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Filling]%></span></td>
+                            <td>
+                              <com:TTextBox 
+                                CssClass="text_area" 
+                                ID="filling"
+                                Width="50" />
+                              <com:TDataTypeValidator
+                                ValidationGroup="Group1"
+                                ControlToValidate="filling"
+                                Display="Dynamic"
+								DataType="Integer"
+                                Text="<%[Must be an integer]%>" />
+                            </td> 
+                          </tr>
+
+
+
+                        </tbody>
+                      </table>
+                  </fieldset>
+
+                  <div class="clr"></div>
+                </div> <!-- end class m -->
+                <div class="b">
+                    <div class="b">
+                        <div class="b"></div>
+                    </div>
+                </div>
+            </div> <!-- end class element-box -->
+            <div class="clr"></div>
+        </div> <!-- end class toolbar-box -->
+        <div class="clr"></div>
+    </div><!-- end class content-box -->
+</div> <!-- end class content-box -->
+</com:TContent> 

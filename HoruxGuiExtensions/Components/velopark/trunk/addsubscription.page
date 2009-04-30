@@ -1,0 +1,278 @@
+<com:TContent ID="Main">
+<div id="content-box">
+    <div class="border">
+        <div class="padding">
+            <div id="toolbar-box">
+                
+                <div class="t">
+                    <div class="t">
+                        <div class="t"></div>
+                    </div>
+                </div>
+                <div class="m" >
+                    <div class="toolbar" id="toolbar">
+                        <table class="toolbar">
+                            <tr>
+                                <td class="button" id="toolbar-apply">
+                                    <com:TLinkButton CssClass="toolbar" OnClick="onApply" ValidationGroup="Group1">
+                                      <span class="icon-32-apply" title="Apply"></span><com:TTranslate Catalogue="messages">Apply</com:TTranslate>
+                                    </com:TLinkButton> 
+                                </td>
+
+
+                                <td class="button" id="toolbar-save">
+                                    <com:TLinkButton CssClass="toolbar" OnClick="onSave" ValidationGroup="Group1">
+                                      <span class="icon-32-save" title="Save"></span><com:TTranslate Catalogue="messages">Save</com:TTranslate>
+                                    </com:TLinkButton> 
+                                </td>
+
+                                <td class="button" id="toolbar-cancel">
+                                    <com:TLinkButton CssClass="toolbar" OnClick="onCancel">
+                                      <span class="icon-32-cancel" title="Cancel"></span><com:TTranslate Catalogue="messages">Cancel</com:TTranslate>
+                                    </com:TLinkButton> 
+                                </td>
+
+                                <td class="button" id="toolbar-help">
+                                    <a href="./proxy/index.php?page=<%= $this->getApplication()->getService()->getRequestedPagePath() %>&lang=<%= $this->getApplication()->getGlobalState('lang') %>" title="<%[Help]%>" onClick="Modalbox.show(this.href, {title: this.title, width: 600, height: 600}); return false;" class="toolbar" >
+                                        <span class="icon-32-help" title="Help"></span><com:TTranslate Catalogue="messages">Help</com:TTranslate>
+                                    </a>
+                                </td>
+
+
+                            </tr>
+                        </table>
+                    </div><!-- end class toolbar -->
+
+                    <div class="header"  style="background-image: url(<%~ ./assets/icon-48-subscription.png %>)"><%[Add a subscription]%></div>
+                    <div class="clr"></div>
+                </div><!-- end class m -->
+
+
+                <div class="b">
+                    <div class="b">
+                        <div class="b"></div>
+                    </div>
+                </div>
+            </div><!-- end class toolbar-box -->
+
+            <com:TLiteral ID="okMsg" Text="" />
+            <com:TLiteral ID="koMsg" Text="" />
+
+            <div id="element-box">
+    
+                <div class="t">
+                    <div class="t">
+                        <div class="t"></div>
+                    </div>
+                </div>
+                <div class="m">
+
+                  <fieldset class="adminform">
+	             <legend><%[Parameters]%></legend>
+                      <table class="admintable" cellspacing="1">
+                        <tbody>
+                          <tr>
+                            <td valign="top" class="key">
+                              <span onmouseover="Tip('<%[Enter a name for this subscription]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)">* <%[Name]%></span>
+                            </td>
+                            <td>
+                              <com:TTextBox 
+                                CssClass="text_area" 
+                                ID="name"
+                                Width="50" />
+                              <com:TRequiredFieldValidator
+								ValidationGroup="Group1" 
+								ControlToValidate="name" 
+								Text="<%[This field is required]%>" 
+								Display="Dynamic"/>
+                            </td> 
+                          </tr>
+
+                          <tr>
+                            <td valign="top" class="key"><span onmouseover="Tip('<%[Set the validity of this subscription.]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Validity]%></span></td>
+                            <td>
+								<%[Year]%> <com:TDropDownList 
+									ID="year"
+						  		    DataTextField="Text"
+								    DataValueField="Value"
+								>
+
+									<com:TListItem Value="0" Text="0" Selected="true" />
+									<com:TListItem Value="1" Text="1" />
+									<com:TListItem Value="2" Text="2" />
+									<com:TListItem Value="3" Text="3" />
+									<com:TListItem Value="4" Text="4" />
+									<com:TListItem Value="5" Text="5" />
+									<com:TListItem Value="6" Text="6" />
+									<com:TListItem Value="7" Text="7" />
+									<com:TListItem Value="8" Text="8" />
+									<com:TListItem Value="9" Text="9" />
+								</com:TDropDownList>
+
+								<%[Month]%> <com:TDropDownList 
+									ID="month"
+						  		    DataTextField="Text"
+								    DataValueField="Value"
+								>
+
+									<com:TListItem Value="0" Text="0" Selected="true"/>
+									<com:TListItem Value="1" Text="1" />
+									<com:TListItem Value="2" Text="2" />
+									<com:TListItem Value="3" Text="3" />
+									<com:TListItem Value="4" Text="4" />
+									<com:TListItem Value="5" Text="5" />
+									<com:TListItem Value="6" Text="6" />
+									<com:TListItem Value="7" Text="7" />
+									<com:TListItem Value="8" Text="8" />
+									<com:TListItem Value="9" Text="9" />
+									<com:TListItem Value="10" Text="10" />
+									<com:TListItem Value="11" Text="11" />
+								</com:TDropDownList>
+
+								<%[Day]%> <com:TDropDownList 
+									ID="day"
+						  		    DataTextField="Text"
+								    DataValueField="Value"
+								>
+
+									<com:TListItem Value="0" Text="0" Selected="true"/>
+									<com:TListItem Value="1" Text="1" />
+									<com:TListItem Value="2" Text="2" />
+									<com:TListItem Value="3" Text="3" />
+									<com:TListItem Value="4" Text="4" />
+									<com:TListItem Value="5" Text="5" />
+									<com:TListItem Value="6" Text="6" />
+									<com:TListItem Value="7" Text="7" />
+									<com:TListItem Value="8" Text="8" />
+									<com:TListItem Value="9" Text="9" />
+									<com:TListItem Value="10" Text="10" />
+									<com:TListItem Value="11" Text="11" />
+									<com:TListItem Value="12" Text="12" />
+									<com:TListItem Value="13" Text="13" />
+									<com:TListItem Value="14" Text="14" />
+									<com:TListItem Value="15" Text="15" />
+									<com:TListItem Value="16" Text="16" />
+									<com:TListItem Value="17" Text="17" />
+									<com:TListItem Value="18" Text="18" />
+									<com:TListItem Value="19" Text="19" />
+									<com:TListItem Value="20" Text="20" />
+									<com:TListItem Value="21" Text="21" />
+									<com:TListItem Value="22" Text="22" />
+									<com:TListItem Value="23" Text="23" />
+									<com:TListItem Value="24" Text="24" />
+									<com:TListItem Value="25" Text="25" />
+									<com:TListItem Value="26" Text="26" />
+									<com:TListItem Value="27" Text="27" />
+									<com:TListItem Value="28" Text="28" />
+									<com:TListItem Value="29" Text="29" />
+									<com:TListItem Value="30" Text="30" />
+								</com:TDropDownList>
+
+								<%[Hour]%> <com:TDropDownList 
+									ID="hour"
+						  		    DataTextField="Text"
+								    DataValueField="Value"
+								>
+
+									<com:TListItem Value="0" Text="0" Selected="true"/>
+									<com:TListItem Value="1" Text="1" />
+									<com:TListItem Value="2" Text="2" />
+									<com:TListItem Value="3" Text="3" />
+									<com:TListItem Value="4" Text="4" />
+									<com:TListItem Value="5" Text="5" />
+									<com:TListItem Value="6" Text="6" />
+									<com:TListItem Value="7" Text="7" />
+									<com:TListItem Value="8" Text="8" />
+									<com:TListItem Value="9" Text="9" />
+									<com:TListItem Value="10" Text="10" />
+									<com:TListItem Value="11" Text="11" />
+									<com:TListItem Value="12" Text="12" />
+									<com:TListItem Value="13" Text="13" />
+									<com:TListItem Value="14" Text="14" />
+									<com:TListItem Value="15" Text="15" />
+									<com:TListItem Value="16" Text="16" />
+									<com:TListItem Value="17" Text="17" />
+									<com:TListItem Value="18" Text="18" />
+									<com:TListItem Value="19" Text="19" />
+									<com:TListItem Value="20" Text="20" />
+									<com:TListItem Value="21" Text="21" />
+									<com:TListItem Value="22" Text="22" />
+									<com:TListItem Value="23" Text="23" />
+
+								</com:TDropDownList>
+                            </td> 
+                          </tr>
+
+
+                          <tr>
+                            <td valign="top" class="key"><span onmouseover="Tip('<%[Number used for mulitple subscription]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Credit]%></span></td>
+                            <td>
+                              <com:TTextBox 
+                                CssClass="text_area" 
+                                ID="multiple"
+								Text="1"
+                                Width="50" />
+                              <com:TDataTypeValidator
+                                ValidationGroup="Group1"
+                                ControlToValidate="multiple"
+                                Display="Dynamic"
+								DataType="Integer"
+                                Text="<%[Must be an integer]%>" />
+                              <com:TRequiredFieldValidator
+								ValidationGroup="Group1" 
+								ControlToValidate="multiple"
+								Text="<%[This field is required]%>" 
+								Display="Dynamic"/>
+                            </td> 
+                          </tr>
+
+                          <tr>
+                            <td valign="top" class="key">
+                              <span onmouseover="Tip('<%[Price of the subscription]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Price]%></span>
+                            </td>
+                            <td>
+                              <com:TTextBox 
+                                CssClass="text_area" 
+                                ID="price"
+                                Width="50" />
+								 <com:TLabel ID="devise" Text="" />
+								<com:TDataTypeValidator
+									ValidationGroup="Group1"
+									ControlToValidate="price"
+									Display="Dynamic"
+									DataType="Float"
+									Text="<%[You must enter a floating number.]%>" />
+                            </td> 
+                          </tr>
+
+                          <tr>
+                            <td valign="top" class="key">
+                              <span onmouseover="Tip('<%[You could insert a description for this subscription]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Description]%></span>
+                            </td>
+                            <td>
+                              <com:TTextBox 
+                                CssClass="text_area" 
+                                ID="description"
+                                Width="400px" />
+							 
+                            </td> 
+                          </tr>
+
+                        </tbody>
+                      </table>
+                  </fieldset>
+
+                  <div class="clr"></div>
+                </div> <!-- end class m -->
+                <div class="b">
+                    <div class="b">
+                        <div class="b"></div>
+                    </div>
+                </div>
+            </div> <!-- end class element-box -->
+            <div class="clr"></div>
+        </div> <!-- end class toolbar-box -->
+        <div class="clr"></div>
+    </div><!-- end class content-box -->
+</div> <!-- end class content-box -->
+</com:TContent> 

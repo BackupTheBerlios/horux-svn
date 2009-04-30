@@ -1,0 +1,307 @@
+<com:TContent ID="Main">
+<div id="content-box">
+    <div class="border">
+        <div class="padding">
+            <div id="toolbar-box">
+                
+                <div class="t">
+                    <div class="t">
+                        <div class="t"></div>
+                    </div>
+                </div>
+                <div class="m" >
+                    <div class="toolbar" id="toolbar">
+                        <table class="toolbar">
+                            <tr>   
+                                <td class="button" id="toolbar-delete">
+                                  <com:TLinkButton CssClass="toolbar" ID="delete" OnClick="onDelete">
+                                    <span class="icon-32-delete" title="Delete"></span><com:TTranslate Catalogue="messages">Delete</com:TTranslate>
+                                  </com:TLinkButton>
+                                </td>
+
+                               <td class="button" id="toolbar-new">
+                                  <com:TLinkButton CssClass="toolbar" ID="attribution" OnClick="attribute">
+                                    <span class="icon-32-new" title="Attribute"></span><com:TTranslate Catalogue="messages">Attribute</com:TTranslate>
+                                  </com:TLinkButton>
+                                </td>
+
+                                <td class="button" id="toolbar-cancel">
+                                    <a href="<%= $this->Service->constructUrl('user.UserList') %>" class="toolbar">
+                                        <span class="icon-32-cancel" title="Cancel"></span><com:TTranslate Catalogue="messages">Cancel</com:TTranslate>
+                                    </a>
+                                </td>
+
+                                <td class="button" id="toolbar-help">
+                                    <a href="./proxy/index.php?page=<%= $this->getApplication()->getService()->getRequestedPagePath() %>&lang=<%= $this->getApplication()->getGlobalState('lang') %>" title="<%[Help]%>" onClick="Modalbox.show(this.href, {title: this.title, width: 600, height: 600}); return false;" class="toolbar" >
+                                        <span class="icon-32-help" title="Help"></span><com:TTranslate Catalogue="messages">Help</com:TTranslate>
+                                    </a>
+                                </td>
+
+
+                            </tr>
+                        </table>
+                    </div><!-- end class toolbar -->
+
+                    <div class="header"  style="background-image: url(<%~ ./assets/icon-48-ticket.jpg %>)"><%[Velo Park - Attribution]%></div>
+                    <div class="clr"></div>
+                </div><!-- end class m -->
+
+                <div class="b">
+                    <div class="b">
+                        <div class="b"></div>
+                    </div>
+                </div>
+            </div><!-- end class toolbar-box -->
+
+            <div class="clr"></div>
+
+            <com:TLiteral ID="okMsg" Text="" />
+            <com:TLiteral ID="koMsg" Text="" />
+
+            <div id="element-box">
+    
+                <div class="t">
+                    <div class="t">
+                        <div class="t"></div>
+                    </div>
+                </div>
+                <div class="m">
+
+                  <fieldset class="adminform">
+	             <legend><%[Subscription]%></legend>
+                      <table class="admintable" cellspacing="1">
+                        <tbody>
+                          <tr>
+                            <td valign="top" class="key"><span onmouseover="Tip('<%[Select a subscription to attribute to the user]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)">* <%[Subscription type]%></span></td>
+                            <td>
+								<com:TDropDownList 
+									ID="subscription"
+						  		    DataTextField="Text"
+								    DataValueField="Value"
+								/>
+                            </td> 
+                          </tr>
+                        </tbody>
+                      </table>
+                  </fieldset>
+				<div class="clr"></div>
+				</div> <!-- end class m -->
+                <div class="b">
+                    <div class="b"> 
+                        <div class="b"></div>
+                    </div>
+                </div>
+            </div><!-- end class toolbar-box -->
+			<div class="clr"></div>
+			<br/>
+
+            <div id="element-box">
+    
+                <div class="t">
+                    <div class="t">
+                        <div class="t"></div>
+                    </div>
+                </div>
+                <div class="m">
+
+					<h2><%[List of the subscription for the current user]%></h2>
+					<div id="list">
+
+					<com:THiddenField ID="userId" />
+                    <com:TDataGrid
+                    ID="DataGrid"
+                    DataKeyField="id"
+                    AutoGenerateColumns="false"
+                    CssClass="adminlist"
+                    ItemStyle.CssClass = "row0"
+				    AlternatingItemStyle.CssClass="row1"
+                    AllowPaging="true"
+                    PageSize="15"
+                    PagerStyle.Mode="Numeric"
+                    PagerStyle.HorizontalAlign="Center"
+                    OnPageIndexChanged="changePage"
+                    OnPagerCreated="pagerCreated"
+                    OnEditCommand="onEdit"
+                    >
+
+                    <com:TBoundColumn
+                        HeaderText="ID"
+                        DataField="id"
+                        HeaderStyle.Width = "20px"
+                    />
+
+                    <com:TTemplateColumn
+                        HeaderText=""
+                        HeaderStyle.Width = "20px"
+                    >
+                        <prop:HeaderTemplate>
+                            <com:TActiveCheckBox
+                                ID="headerCB" 
+                                AutoPostBack="true"
+                                OnCallback="Page.checkboxAllCallback"
+                                InputAttributes.value="0"
+                            />
+                        </prop:HeaderTemplate>
+                        <prop:ItemTemplate>
+							<com:TConditional Condition="!$this->Page->isRecordBlock('hr_vp_parking', $this->NamingContainer->DataItem['id'])">
+								<prop:TrueTemplate>
+		                            <com:TActiveCheckBox 
+		                                ID="item"
+		                                InputAttributes.value="<%#$this->NamingContainer->DataItem['id']%>"
+		                            />
+		    		            </prop:TrueTemplate>
+								<prop:FalseTemplate>
+									<span onmouseover="Tip('<%[This record is modified by <b>]%><%= $this->Page->getUserName($this->NamingContainer->DataItem['locked']) %></b> ', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)">
+										<com:TImage ID="noAccess" ImageUrl="./themes/letux/images/menu/icon-16-access.png" />
+									</span>
+		            		    </prop:FalseTemplate>
+							</com:TConditional>
+                        </prop:ItemTemplate>
+                    </com:TTemplateColumn>
+
+	                <com:TTemplateColumn
+	                   HeaderText=""
+	                >
+                    <prop:HeaderTemplate>
+                        <com:TLabel
+                        	Text="<%[Subscription type]%>"
+                        />
+                    </prop:HeaderTemplate>
+
+
+                        <prop:ItemTemplate>
+							<span onmouseover="Tip('<%= addslashes($this->NamingContainer->DataItem['description']) %>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)">
+								<com:THyperLink 
+		                                NavigateUrl="<%= $this->Service->constructUrl('components.velopark.modattribution',array('userid'=>$this->Request['id'],'attid'=>$this->NamingContainer->DataItem['id'])) %>"
+		                                Text="<%#$this->NamingContainer->DataItem['type']%>"
+		                            />
+							</span>
+
+                        </prop:ItemTemplate>
+	                </com:TTemplateColumn>
+
+
+                    <com:TBoundColumn
+                        HeaderText="<%[Create by]%>"
+                        DataField="create_by"
+                    />
+
+	                <com:TTemplateColumn
+	                   HeaderText=""
+	                >
+                    <prop:HeaderTemplate>
+                        <com:TLabel
+                        	Text="<%[Create date]%>"
+                        />
+                    </prop:HeaderTemplate>
+
+
+                        <prop:ItemTemplate>
+						
+						<com:TDateFormat Pattern="dd.MM.yyyy HH:mm" Value="<%#$this->NamingContainer->DataItem['create_date']%>" />
+
+                        </prop:ItemTemplate>
+	                </com:TTemplateColumn>
+
+                    <com:TBoundColumn
+                        HeaderText="<%[Credit used]%>"
+                        DataField="credit"
+                    />
+
+	                <com:TTemplateColumn
+	                   HeaderText=""
+	                >
+                    <prop:HeaderTemplate>
+                        <com:TLabel
+                        	Text="<%[Start date]%>"
+                        />
+                    </prop:HeaderTemplate>
+
+
+                        <prop:ItemTemplate>
+					
+							<com:TConditional Condition="$this->NamingContainer->DataItem['start'] != '0000-00-00 00:00:00'" >
+								<prop:TrueTemplate>
+									<com:TDateFormat Pattern="dd.MM.yyyy HH:mm" Value="<%#$this->NamingContainer->DataItem['start']%>" />
+								</prop:TrueTemplate>
+								<prop:FalseTemplate>
+									<com:TLabel Text="<%[Will start on the first access or when the last one subscription started is finished]%>" />
+								</prop:FalseTemplate>
+							</com:TConditional>
+
+                        </prop:ItemTemplate>
+	                </com:TTemplateColumn>
+
+
+	                <com:TTemplateColumn
+	                   HeaderText=""
+	                >
+                    <prop:HeaderTemplate>
+                        <com:TLabel
+                        	Text="<%[Finnished date]%>"
+                        />
+                    </prop:HeaderTemplate>
+
+
+                        <prop:ItemTemplate>
+						
+							<com:TConditional Condition="$this->NamingContainer->DataItem['end'] != '0000-00-00 00:00:00'" >
+								<prop:TrueTemplate>
+									<com:TDateFormat Pattern="dd.MM.yyyy HH:mm" Value="<%#$this->NamingContainer->DataItem['end']%>" />
+								</prop:TrueTemplate>
+							</com:TConditional>
+
+                        </prop:ItemTemplate>
+	                </com:TTemplateColumn>
+
+                    <com:TBoundColumn
+                        HeaderText="<%[Status]%>"
+                        DataField="status_text"
+                    />
+
+	                <com:TTemplateColumn
+	                   HeaderText=""
+	                >
+                    <prop:HeaderTemplate>
+                        <com:TLabel
+                        	Text="<%[Action]%>"
+                        />
+                    </prop:HeaderTemplate>
+
+
+                        <prop:ItemTemplate>
+
+							<span onmouseover="Tip('<%[Print the subscription]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)">
+							<com:TImageButton 
+								Text="<%#$this->NamingContainer->DataItem['id']%>"
+								ImageUrl="<%~./assets/icon-16-printticket.png%>" 
+								OnClick="Page.printTicket" 
+								Style="border:0px"
+								/>
+							</span>
+
+                        </prop:ItemTemplate>
+	                </com:TTemplateColumn>
+
+
+                    </com:TDataGrid>
+					</div>
+
+				<div class="clr"></div>
+				</div> <!-- end class m -->
+                <div class="b">
+                    <div class="b"> 
+                        <div class="b"></div>
+                    </div>
+                </div>
+            </div><!-- end class toolbar-box -->
+
+			
+            <div class="clr"></div>
+
+            
+        </div> <!-- end class toolbar-box -->
+        <div class="clr"></div>
+    </div><!-- end class content-box -->
+</div> <!-- end class content-box -->
+</com:TContent> 

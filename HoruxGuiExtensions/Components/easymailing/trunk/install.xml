@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<install type="component">
+	<installName>easymailing</installName>
+	<name>EasyMailing</name>
+	<version>1.0.0</version>
+	<creationDate>30/01/09</creationDate>
+	<author>Jean-Luc Gyger / Letux</author>
+	<authorEmail>info@letux.ch</authorEmail>
+	<authorUrl>http://www.letux.ch</authorUrl>
+	<copyright>Letux</copyright>
+	<license>GNU/GPL</license>
+	<description>Horux log viewer</description>
+	
+        <mainmenu>
+			<menu iconmenu="icon-16-easymailing.png" url="components.easymailing.easymailing" name="EasyMailing"></menu>	
+	</mainmenu>
+	
+	<permissions>
+		<permission>components.easymailing.easymailing</permission>
+	</permissions>
+	
+</install>

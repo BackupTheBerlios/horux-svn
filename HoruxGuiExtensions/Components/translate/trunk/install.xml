@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<install type="component">
+	<installName>translate</installName>
+	<name>Tranlate Horux</name>
+	<version>1.0.0</version>
+	<creationDate>31/10/08</creationDate>
+	<author>Jean-Luc Gyger / Letux</author>
+	<authorEmail>info@letux.ch</authorEmail>
+	<authorUrl>http://www.letux.ch</authorUrl>
+	<copyright>Letux</copyright>
+	<license>GNU/GPL</license>
+	<description>Horux translation tool</description>
+	
+        <mainmenu>
+			<menu iconmenu="icon-16-translate.png" url="components.translate.translate" name="Translate"></menu>	
+	</mainmenu>
+	
+	<permissions>
+		<permission>components.translate.translate</permission>
+		<permission>components.translate.add</permission>
+	</permissions>
+	
+</install>

@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<configuration>
+    <modules>
+        <module id="globalization_infoDisplay" class="TGlobalization">
+            <translation type="XLIFF" source="horux.messages" catalogue="infoDisplay" marker="" />
+        </module>
+    </modules>
+</configuration>

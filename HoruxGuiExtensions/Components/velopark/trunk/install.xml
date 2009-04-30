@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<install type="component">
+	<installName>velopark</installName>
+	<name>Velo park</name>
+	<version>1.0.0</version>
+	<creationDate>14/10/08</creationDate>
+	<author>Jean-Luc Gyger / Letux</author>
+	<authorEmail>info@letux.ch</authorEmail>
+	<authorUrl>http://www.letux.ch</authorUrl>
+	<copyright>Letux</copyright>
+	<license>GNU/GPL</license>
+	<description>Extension for cycle parking</description>
+	
+	<sqlinstall>install.sql</sqlinstall>
+	<sqluninstall>uninstall.sql</sqluninstall>	
+	
+	<mainmenu>
+		<menu iconmenu="icon-16-ticket.jpg" url="user.UserList" name="Velo Park">
+			<submenus>
+				<submenu iconmenu="icon-16-config.png" url="components.velopark.config" name="Configuration" ></submenu>
+				<submenu iconmenu="icon-16-status.png" url="components.velopark.status" name="Status" ></submenu>
+				<submenu iconmenu="icon-16-subscrption.png" url="components.velopark.subscription" name="Subscription" ></submenu>
+			</submenus>
+		</menu>	
+	</mainmenu>
+	
+	<permissions>
+		<permission>components.velopark.config</permission>
+		<permission>components.velopark.modconfig</permission>
+		<permission>components.velopark.addconfig</permission>
+		<permission>components.velopark.status</permission>
+		<permission>components.velopark.subscription</permission>
+		<permission>components.velopark.addsubscription</permission>
+		<permission>components.velopark.modsubscription</permission>
+		<permission>components.velopark.attribution</permission>
+		<permission>components.velopark.modattribution</permission>
+	</permissions>
+	
+</install>
