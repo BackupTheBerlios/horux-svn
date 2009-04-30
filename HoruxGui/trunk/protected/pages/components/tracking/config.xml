@@ -1,0 +1,7 @@
+<configuration>
+    <modules>
+        <module id="globalization_tracking" class="TGlobalization" >
+			<translation  type="XLIFF" source="horux.messages" catalogue="tracking"  marker="" cache="false" />
+        </module>
+    </modules>
+</configuration>
