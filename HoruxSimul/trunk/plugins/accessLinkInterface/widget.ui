@@ -1,0 +1,764 @@
+<ui version="4.0" >
+ <class>Widget</class>
+ <widget class="QWidget" name="Widget" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>547</width>
+    <height>593</height>
+   </rect>
+  </property>
+  <property name="windowTitle" >
+   <string>Form</string>
+  </property>
+  <layout class="QGridLayout" >
+   <item row="0" column="0" >
+    <widget class="QGroupBox" name="groupBox" >
+     <property name="title" >
+      <string>Parameters</string>
+     </property>
+     <layout class="QGridLayout" >
+      <item row="0" column="0" >
+       <layout class="QGridLayout" >
+        <item row="0" column="0" >
+         <layout class="QVBoxLayout" >
+          <item>
+           <widget class="QLabel" name="label" >
+            <property name="text" >
+             <string>Name</string>
+            </property>
+            <property name="buddy" >
+             <cstring>name</cstring>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_26" >
+            <property name="text" >
+             <string>Mac address</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_2" >
+            <property name="text" >
+             <string>IP</string>
+            </property>
+            <property name="buddy" >
+             <cstring>ip</cstring>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_3" >
+            <property name="text" >
+             <string>IP server 1</string>
+            </property>
+            <property name="buddy" >
+             <cstring>ipS1</cstring>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_4" >
+            <property name="text" >
+             <string>IP server 2</string>
+            </property>
+            <property name="buddy" >
+             <cstring>ipS2</cstring>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_5" >
+            <property name="text" >
+             <string>IP server 3</string>
+            </property>
+            <property name="buddy" >
+             <cstring>ipS3</cstring>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_6" >
+            <property name="text" >
+             <string>Subnet</string>
+            </property>
+            <property name="buddy" >
+             <cstring>subnet</cstring>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_7" >
+            <property name="text" >
+             <string>Gateway</string>
+            </property>
+            <property name="buddy" >
+             <cstring>gateway</cstring>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_25" >
+            <property name="text" >
+             <string>Log</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item row="0" column="1" >
+         <layout class="QVBoxLayout" >
+          <item>
+           <widget class="QLineEdit" name="name" />
+          </item>
+          <item>
+           <widget class="QLineEdit" name="mac" />
+          </item>
+          <item>
+           <widget class="QLineEdit" name="ip" />
+          </item>
+          <item>
+           <widget class="QLineEdit" name="ipS1" />
+          </item>
+          <item>
+           <widget class="QLineEdit" name="ipS2" />
+          </item>
+          <item>
+           <widget class="QLineEdit" name="ipS3" />
+          </item>
+          <item>
+           <widget class="QLineEdit" name="subnet" />
+          </item>
+          <item>
+           <widget class="QLineEdit" name="gateway" />
+          </item>
+          <item>
+           <widget class="QCheckBox" name="log" >
+            <property name="text" >
+             <string/>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item row="0" column="2" >
+         <layout class="QVBoxLayout" >
+          <item>
+           <widget class="QLabel" name="label_8" >
+            <property name="text" >
+             <string>Sntp</string>
+            </property>
+            <property name="buddy" >
+             <cstring>sntp</cstring>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_9" >
+            <property name="text" >
+             <string>Daylight</string>
+            </property>
+            <property name="buddy" >
+             <cstring>daylight</cstring>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_10" >
+            <property name="text" >
+             <string>Password</string>
+            </property>
+            <property name="buddy" >
+             <cstring>password</cstring>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_11" >
+            <property name="text" >
+             <string>Hello port</string>
+            </property>
+            <property name="buddy" >
+             <cstring>helloPort</cstring>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_12" >
+            <property name="text" >
+             <string>Data port</string>
+            </property>
+            <property name="buddy" >
+             <cstring>dataPort</cstring>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_13" >
+            <property name="text" >
+             <string>Online reader</string>
+            </property>
+            <property name="buddy" >
+             <cstring>online</cstring>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_14" >
+            <property name="text" >
+             <string>Version</string>
+            </property>
+            <property name="buddy" >
+             <cstring>version</cstring>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item row="0" column="3" >
+         <layout class="QVBoxLayout" >
+          <item>
+           <widget class="QLineEdit" name="sntp" />
+          </item>
+          <item>
+           <widget class="QSpinBox" name="daylight" />
+          </item>
+          <item>
+           <widget class="QLineEdit" name="password" />
+          </item>
+          <item>
+           <widget class="QSpinBox" name="helloPort" >
+            <property name="minimum" >
+             <number>1024</number>
+            </property>
+            <property name="maximum" >
+             <number>65535</number>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QSpinBox" name="dataPort" >
+            <property name="minimum" >
+             <number>1024</number>
+            </property>
+            <property name="maximum" >
+             <number>65535</number>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="online" />
+          </item>
+          <item>
+           <widget class="QLineEdit" name="version" />
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item rowspan="2" row="0" column="1" >
+    <widget class="QGroupBox" name="groupBox_3" >
+     <property name="title" >
+      <string>Temperature</string>
+     </property>
+     <layout class="QGridLayout" >
+      <item row="0" column="0" >
+       <layout class="QHBoxLayout" >
+        <item>
+         <widget class="QSlider" name="tempSlider" >
+          <property name="minimum" >
+           <number>-30</number>
+          </property>
+          <property name="maximum" >
+           <number>100</number>
+          </property>
+          <property name="orientation" >
+           <enum>Qt::Vertical</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <layout class="QVBoxLayout" >
+          <item>
+           <widget class="QLabel" name="label_16" >
+            <property name="text" >
+             <string>100 C°</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer>
+            <property name="orientation" >
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" >
+             <size>
+              <width>20</width>
+              <height>201</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_15" >
+            <property name="text" >
+             <string>-30 C°</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </item>
+      <item row="0" column="1" >
+       <widget class="QSpinBox" name="temp" >
+        <property name="minimum" >
+         <number>-30</number>
+        </property>
+        <property name="maximum" >
+         <number>100</number>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="1" column="0" >
+    <widget class="QGroupBox" name="groupBox_2" >
+     <property name="title" >
+      <string>Inout/Output</string>
+     </property>
+     <layout class="QGridLayout" >
+      <item rowspan="2" row="0" column="0" >
+       <layout class="QGridLayout" >
+        <item row="0" column="0" >
+         <layout class="QHBoxLayout" >
+          <item>
+           <widget class="QLed" name="output1" >
+            <property name="toolTip" >
+             <string>Binary Led</string>
+            </property>
+            <property name="whatsThis" >
+             <string>Led widget</string>
+            </property>
+            <property name="value" >
+             <bool>false</bool>
+            </property>
+            <property name="color" >
+             <color>
+              <red>255</red>
+              <green>0</green>
+              <blue>0</blue>
+             </color>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_17" >
+            <property name="text" >
+             <string>Output 1</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item row="0" column="1" >
+         <layout class="QHBoxLayout" >
+          <item>
+           <widget class="QLed" name="output5" >
+            <property name="toolTip" >
+             <string>Binary Led</string>
+            </property>
+            <property name="whatsThis" >
+             <string>Led widget</string>
+            </property>
+            <property name="value" >
+             <bool>false</bool>
+            </property>
+            <property name="color" >
+             <color>
+              <red>255</red>
+              <green>0</green>
+              <blue>0</blue>
+             </color>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_21" >
+            <property name="text" >
+             <string>Output 5</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item row="1" column="0" >
+         <layout class="QHBoxLayout" >
+          <item>
+           <widget class="QLed" name="output2" >
+            <property name="toolTip" >
+             <string>Binary Led</string>
+            </property>
+            <property name="whatsThis" >
+             <string>Led widget</string>
+            </property>
+            <property name="value" >
+             <bool>false</bool>
+            </property>
+            <property name="color" >
+             <color>
+              <red>255</red>
+              <green>0</green>
+              <blue>0</blue>
+             </color>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_18" >
+            <property name="text" >
+             <string>Output 2</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item rowspan="2" row="1" column="1" >
+         <layout class="QHBoxLayout" >
+          <item>
+           <widget class="QLed" name="output6" >
+            <property name="toolTip" >
+             <string>Binary Led</string>
+            </property>
+            <property name="whatsThis" >
+             <string>Led widget</string>
+            </property>
+            <property name="value" >
+             <bool>false</bool>
+            </property>
+            <property name="color" >
+             <color>
+              <red>255</red>
+              <green>0</green>
+              <blue>0</blue>
+             </color>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_22" >
+            <property name="text" >
+             <string>Output 6</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item rowspan="2" row="2" column="0" >
+         <layout class="QHBoxLayout" >
+          <item>
+           <widget class="QLed" name="output3" >
+            <property name="toolTip" >
+             <string>Binary Led</string>
+            </property>
+            <property name="whatsThis" >
+             <string>Led widget</string>
+            </property>
+            <property name="value" >
+             <bool>false</bool>
+            </property>
+            <property name="color" >
+             <color>
+              <red>255</red>
+              <green>0</green>
+              <blue>0</blue>
+             </color>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_19" >
+            <property name="text" >
+             <string>Output 3</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item row="3" column="1" >
+         <layout class="QHBoxLayout" >
+          <item>
+           <widget class="QLed" name="output7" >
+            <property name="toolTip" >
+             <string>Binary Led</string>
+            </property>
+            <property name="whatsThis" >
+             <string>Led widget</string>
+            </property>
+            <property name="value" >
+             <bool>false</bool>
+            </property>
+            <property name="color" >
+             <color>
+              <red>255</red>
+              <green>0</green>
+              <blue>0</blue>
+             </color>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_23" >
+            <property name="text" >
+             <string>Output 7</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item row="4" column="0" >
+         <layout class="QHBoxLayout" >
+          <item>
+           <widget class="QLed" name="output4" >
+            <property name="toolTip" >
+             <string>Binary Led</string>
+            </property>
+            <property name="whatsThis" >
+             <string>Led widget</string>
+            </property>
+            <property name="value" >
+             <bool>false</bool>
+            </property>
+            <property name="color" >
+             <color>
+              <red>255</red>
+              <green>0</green>
+              <blue>0</blue>
+             </color>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_20" >
+            <property name="text" >
+             <string>Output 4</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item row="4" column="1" >
+         <layout class="QHBoxLayout" >
+          <item>
+           <widget class="QLed" name="output8" >
+            <property name="toolTip" >
+             <string>Binary Led</string>
+            </property>
+            <property name="whatsThis" >
+             <string>Led widget</string>
+            </property>
+            <property name="value" >
+             <bool>false</bool>
+            </property>
+            <property name="color" >
+             <color>
+              <red>255</red>
+              <green>0</green>
+              <blue>0</blue>
+             </color>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_24" >
+            <property name="text" >
+             <string>Output 8</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </item>
+      <item row="0" column="1" >
+       <layout class="QVBoxLayout" >
+        <item>
+         <widget class="QCheckBox" name="input1" >
+          <property name="text" >
+           <string>Input 1</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="input2" >
+          <property name="text" >
+           <string>Input 2</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="input3" >
+          <property name="text" >
+           <string>Input 3</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="input4" >
+          <property name="text" >
+           <string>Input 4</string>
+          </property>
+          <property name="checkable" >
+           <bool>true</bool>
+          </property>
+          <property name="checked" >
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="input5" >
+          <property name="text" >
+           <string>Input 5</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="input6" >
+          <property name="text" >
+           <string>Input 6</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="input7" >
+          <property name="text" >
+           <string>Input 7</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="input8" >
+          <property name="text" >
+           <string>Input 8</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="1" column="1" >
+       <widget class="QCheckBox" name="antivandal" >
+        <property name="text" >
+         <string>Antivandal</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="2" column="0" >
+    <layout class="QHBoxLayout" >
+     <item>
+      <widget class="QPushButton" name="info" >
+       <property name="text" >
+        <string>Info</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer>
+       <property name="orientation" >
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" >
+        <size>
+         <width>411</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QLed</class>
+   <extends>QWidget</extends>
+   <header>qled.h</header>
+  </customwidget>
+ </customwidgets>
+ <tabstops>
+  <tabstop>name</tabstop>
+  <tabstop>mac</tabstop>
+  <tabstop>ip</tabstop>
+  <tabstop>ipS1</tabstop>
+  <tabstop>ipS2</tabstop>
+  <tabstop>ipS3</tabstop>
+  <tabstop>subnet</tabstop>
+  <tabstop>gateway</tabstop>
+  <tabstop>log</tabstop>
+  <tabstop>sntp</tabstop>
+  <tabstop>daylight</tabstop>
+  <tabstop>password</tabstop>
+  <tabstop>helloPort</tabstop>
+  <tabstop>dataPort</tabstop>
+  <tabstop>online</tabstop>
+  <tabstop>version</tabstop>
+  <tabstop>input1</tabstop>
+  <tabstop>input2</tabstop>
+  <tabstop>input3</tabstop>
+  <tabstop>input4</tabstop>
+  <tabstop>input5</tabstop>
+  <tabstop>input6</tabstop>
+  <tabstop>input7</tabstop>
+  <tabstop>input8</tabstop>
+  <tabstop>antivandal</tabstop>
+  <tabstop>tempSlider</tabstop>
+  <tabstop>temp</tabstop>
+  <tabstop>info</tabstop>
+ </tabstops>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>tempSlider</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>temp</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>288</x>
+     <y>417</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>451</x>
+     <y>417</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>temp</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>tempSlider</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>451</x>
+     <y>417</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>288</x>
+     <y>417</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

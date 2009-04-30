@@ -1,0 +1,606 @@
+<ui version="4.0" >
+ <class>Widget</class>
+ <widget class="QWidget" name="Widget" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>509</width>
+    <height>589</height>
+   </rect>
+  </property>
+  <property name="windowTitle" >
+   <string>Form</string>
+  </property>
+  <layout class="QGridLayout" >
+   <item row="0" column="0" >
+    <widget class="QGroupBox" name="groupBox" >
+     <property name="title" >
+      <string>Parameters</string>
+     </property>
+     <layout class="QGridLayout" >
+      <item row="0" column="0" >
+       <layout class="QHBoxLayout" >
+        <item>
+         <layout class="QVBoxLayout" >
+          <item>
+           <widget class="QLabel" name="label" >
+            <property name="text" >
+             <string>Name</string>
+            </property>
+            <property name="buddy" >
+             <cstring>name</cstring>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_6" >
+            <property name="text" >
+             <string>Serial number</string>
+            </property>
+            <property name="buddy" >
+             <cstring>serialNumber</cstring>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_3" >
+            <property name="text" >
+             <string>App ver.</string>
+            </property>
+            <property name="buddy" >
+             <cstring>appVer</cstring>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_4" >
+            <property name="text" >
+             <string>OS ver.</string>
+            </property>
+            <property name="buddy" >
+             <cstring>osVer</cstring>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_8" >
+            <property name="text" >
+             <string>Address</string>
+            </property>
+            <property name="buddy" >
+             <cstring>address</cstring>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_12" >
+            <property name="text" >
+             <string>Relay Active Timer</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_2" >
+            <property name="text" >
+             <string>Db size</string>
+            </property>
+            <property name="buddy" >
+             <cstring>db200</cstring>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_13" >
+            <property name="text" >
+             <string>DB mode</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_14" >
+            <property name="text" >
+             <string>Log</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QVBoxLayout" >
+          <item>
+           <widget class="QLineEdit" name="name" />
+          </item>
+          <item>
+           <widget class="QLineEdit" name="serialNumber" />
+          </item>
+          <item>
+           <widget class="QLineEdit" name="appVer" />
+          </item>
+          <item>
+           <widget class="QLineEdit" name="osVer" />
+          </item>
+          <item>
+           <layout class="QHBoxLayout" >
+            <item>
+             <widget class="QSpinBox" name="address" >
+              <property name="minimum" >
+               <number>0</number>
+              </property>
+              <property name="maximum" >
+               <number>32</number>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="QSpinBox" name="relayActiveTime" >
+            <property name="minimum" >
+             <number>0</number>
+            </property>
+            <property name="maximum" >
+             <number>255</number>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" >
+            <item>
+             <widget class="QRadioButton" name="db200" >
+              <property name="text" >
+               <string>200</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QRadioButton" name="db1000" >
+              <property name="text" >
+               <string>1000</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="QComboBox" name="dbModeInfo" >
+            <property name="enabled" >
+             <bool>false</bool>
+            </property>
+            <item>
+             <property name="text" >
+              <string>Host</string>
+             </property>
+            </item>
+            <item>
+             <property name="text" >
+              <string>Standalone</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="log" >
+            <property name="text" >
+             <string/>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item rowspan="2" row="0" column="1" >
+    <widget class="QGroupBox" name="groupBox_3" >
+     <property name="title" >
+      <string>Reader RFID database</string>
+     </property>
+     <layout class="QGridLayout" >
+      <item row="0" column="0" >
+       <widget class="QListWidget" name="rfidList" />
+      </item>
+      <item row="1" column="0" >
+       <widget class="QLabel" name="dbSizeLabel" >
+        <property name="text" >
+         <string>0/200 </string>
+        </property>
+        <property name="alignment" >
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0" >
+       <layout class="QHBoxLayout" >
+        <item>
+         <layout class="QHBoxLayout" >
+          <item>
+           <widget class="QLed" name="dbStatusLed" >
+            <property name="toolTip" >
+             <string>Binary Led</string>
+            </property>
+            <property name="whatsThis" >
+             <string>Led widget</string>
+            </property>
+            <property name="value" >
+             <bool>true</bool>
+            </property>
+            <property name="color" >
+             <color>
+              <red>0</red>
+              <green>255</green>
+              <blue>0</blue>
+             </color>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="dbStatus" >
+            <property name="text" >
+             <string>On</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <spacer>
+          <property name="orientation" >
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" >
+           <size>
+            <width>61</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="1" column="0" >
+    <widget class="QGroupBox" name="groupBox_2" >
+     <property name="title" >
+      <string>Input/Output</string>
+     </property>
+     <layout class="QGridLayout" >
+      <item rowspan="4" row="0" column="0" >
+       <layout class="QVBoxLayout" >
+        <item>
+         <layout class="QHBoxLayout" >
+          <item>
+           <widget class="QLed" name="output1" >
+            <property name="toolTip" >
+             <string>Door lock output</string>
+            </property>
+            <property name="whatsThis" >
+             <string>Led widget</string>
+            </property>
+            <property name="value" >
+             <bool>false</bool>
+            </property>
+            <property name="color" >
+             <color>
+              <red>255</red>
+              <green>0</green>
+              <blue>0</blue>
+             </color>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_5" >
+            <property name="text" >
+             <string>Door</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" >
+          <item>
+           <widget class="QLed" name="output2" >
+            <property name="toolTip" >
+             <string>Green output</string>
+            </property>
+            <property name="whatsThis" >
+             <string>Led widget</string>
+            </property>
+            <property name="value" >
+             <bool>false</bool>
+            </property>
+            <property name="color" >
+             <color>
+              <red>255</red>
+              <green>0</green>
+              <blue>0</blue>
+             </color>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label6" >
+            <property name="text" >
+             <string>Green</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" >
+          <item>
+           <widget class="QLed" name="output3" >
+            <property name="toolTip" >
+             <string>Red output</string>
+            </property>
+            <property name="whatsThis" >
+             <string>Led widget</string>
+            </property>
+            <property name="value" >
+             <bool>false</bool>
+            </property>
+            <property name="color" >
+             <color>
+              <red>255</red>
+              <green>0</green>
+              <blue>0</blue>
+             </color>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_7" >
+            <property name="text" >
+             <string>Red</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" >
+          <item>
+           <widget class="QLed" name="output4" >
+            <property name="toolTip" >
+             <string>Orange output</string>
+            </property>
+            <property name="whatsThis" >
+             <string>Led widget</string>
+            </property>
+            <property name="value" >
+             <bool>false</bool>
+            </property>
+            <property name="color" >
+             <color>
+              <red>255</red>
+              <green>0</green>
+              <blue>0</blue>
+             </color>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_9" >
+            <property name="text" >
+             <string>Output 4</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </item>
+      <item row="0" column="1" >
+       <layout class="QVBoxLayout" >
+        <item>
+         <widget class="QCheckBox" name="input1" >
+          <property name="text" >
+           <string>Input 1</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="input2" >
+          <property name="text" >
+           <string>Input 2</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="1" column="1" >
+       <spacer>
+        <property name="orientation" >
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeHint" >
+         <size>
+          <width>116</width>
+          <height>51</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="2" column="1" >
+       <layout class="QHBoxLayout" >
+        <item>
+         <layout class="QHBoxLayout" >
+          <item>
+           <widget class="QLed" name="antenna" >
+            <property name="toolTip" >
+             <string>Antenna</string>
+            </property>
+            <property name="whatsThis" >
+             <string>Led widget</string>
+            </property>
+            <property name="value" >
+             <bool>false</bool>
+            </property>
+            <property name="color" >
+             <color>
+              <red>255</red>
+              <green>0</green>
+              <blue>0</blue>
+             </color>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_10" >
+            <property name="text" >
+             <string>Antenna</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <spacer>
+          <property name="orientation" >
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" >
+           <size>
+            <width>16</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </item>
+      <item row="3" column="1" >
+       <layout class="QHBoxLayout" >
+        <item>
+         <layout class="QHBoxLayout" >
+          <item>
+           <widget class="QLed" name="modulation" >
+            <property name="toolTip" >
+             <string>Modulation</string>
+            </property>
+            <property name="whatsThis" >
+             <string>Led widget</string>
+            </property>
+            <property name="value" >
+             <bool>false</bool>
+            </property>
+            <property name="color" >
+             <color>
+              <red>255</red>
+              <green>0</green>
+              <blue>0</blue>
+             </color>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_11" >
+            <property name="text" >
+             <string>Modulation</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <spacer>
+          <property name="orientation" >
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" >
+           <size>
+            <width>16</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="2" column="0" colspan="2" >
+    <layout class="QHBoxLayout" >
+     <item>
+      <widget class="QLineEdit" name="rfid" />
+     </item>
+     <item>
+      <widget class="QPushButton" name="sendRfid" >
+       <property name="text" >
+        <string>Send RFID</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="3" column="0" colspan="2" >
+    <layout class="QHBoxLayout" >
+     <item>
+      <widget class="QPushButton" name="info" >
+       <property name="text" >
+        <string>Info</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="loadTest" >
+       <property name="text" >
+        <string>Load testing...</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer>
+       <property name="orientation" >
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" >
+        <size>
+         <width>401</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QLed</class>
+   <extends>QWidget</extends>
+   <header>qled.h</header>
+  </customwidget>
+ </customwidgets>
+ <tabstops>
+  <tabstop>name</tabstop>
+  <tabstop>serialNumber</tabstop>
+  <tabstop>appVer</tabstop>
+  <tabstop>osVer</tabstop>
+  <tabstop>address</tabstop>
+  <tabstop>relayActiveTime</tabstop>
+  <tabstop>db200</tabstop>
+  <tabstop>db1000</tabstop>
+  <tabstop>dbModeInfo</tabstop>
+  <tabstop>log</tabstop>
+  <tabstop>input1</tabstop>
+  <tabstop>input2</tabstop>
+  <tabstop>rfid</tabstop>
+  <tabstop>sendRfid</tabstop>
+  <tabstop>info</tabstop>
+  <tabstop>rfidList</tabstop>
+ </tabstops>
+ <resources>
+  <include location="resource.qrc" />
+ </resources>
+ <connections/>
+</ui>
