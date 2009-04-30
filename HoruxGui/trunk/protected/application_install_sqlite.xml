@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<application id="horux" mode="Normal">
+
+  <paths>
+    <alias id="horux" path="." />
+    <alias id="themes" path="../themes" />
+    <alias id="js" path="../js/" />
+    <using namespace="System.I18N.*" />
+    <using namespace="Application.modules.*" />
+    <using namespace="Application.common.*" /> 
+    <using namespace="System.Data.*" />
+    <using namespace="System.Web.UI.ActiveControls.*" />
+    <using namespace="System.Security.*" />
+    <using namespace="System.Util.*" />
+  </paths>
+
+  <!-- configurations for modules -->
+  <modules>
+ 
+	  <module id="globalization" class="TGlobalizationAutoDetect" Culture="no_NO" >
+		  <translation  type="XLIFF" source="horux.messages" marker="" cache="true" />
+    </module>
+    
+    <module class="System.Data.TDataSourceConfig" id="horuxDb">
+        <database ConnectionString="sqlite:./protected/sqlitedb/horux.db3" />
+    </module>
+    
+    <module class="System.Data.ActiveRecord.TActiveRecordConfig" 
+        ConnectionID="horuxDb" />
+    
+	<!-- Auth manager, must be named 'Auth' -->
+	<module id="Auth" class="MTAuthManager"
+		UserManager="Users" LoginPage="login.login"
+		DBHandler="horuxDb" PermissionsTable="hr_gui_permissions"
+		Default="FALSE" />
+	<!-- User manager. -->
+	<module id="Users" class="MTUserManager"
+		DBHandler="horuxDb" UserTable="hr_superusers" GroupTable="hr_superuser_group" />    
+    
+        <module class="THttpSession" UseTransparentSessionID="true"  />
+    
+        <module id="Mailer" class="TMailer" />
+        <module id="GuiLog" class="TGuiLog" />
+  </modules>
+
+  <!-- configuration for available services -->
+  <services>
+    <service id="page" class="TPageService" DefaultPage="controlPanel.ControlPanel" >
+        <pages MasterClass="themes.letux.MainLayout" >
+        </pages>		
+    </service>
+    <service id="xmlrpc" class="System.Web.Services.TXmlRpcService">
+      <xmlrpc id="notification" provider="Application.webservice.notification.Notification" />
+    </service>
+  </services>
+
+  <!-- application parameters -->
+  <parameters>
+    <parameter id="SiteTitle" value="Horux - Access control" />
+    <parameter id="HoruxVersion" value="1.0.4" />
+    <parameter id="appMode" value="production" />
+  </parameters>
+  
+</application>
