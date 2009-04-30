@@ -1,0 +1,106 @@
+1. Copyright and disclaimer
+---------------------------
+This application is opensource software released under the GPL.  Please
+see source code and the LICENSE file
+
+
+2. Changelog
+------------
+This is a non-exhaustive (but still near complete) changelog for
+HoruxGui! 1.0.
+
+Our thanks to all those people who've contributed bug reports and
+code fixes.
+
+
+Legend:
+
+* -> Security Fix
+# -> Bug Fix
++ -> Addition
+^ -> Change
+- -> Removed
+! -> Note
+
+-------------------- Horux 1.0.4 Release Released [XX-02-2008] ------------------------
+30.01.2009      + Add the pin code in the user wizard
+30.01.2009      + Translate in french some text in the user wizard
+30.01.2009      + Add the wireless icon for the page where we can use a rfid reader to do some action
+30.01.2009      + Add functionnaly in the key page and user page where we can use horuxguitray for the key detection hardware
+02.02.2009      + Add the parameters for mail settings
+02.02.2009      - Remove the horuxd path parameter in the configuration
+02.02.2009      ^ All config params should not be obligatory as before, only the XMLRPC have to be obligatory
+03.02.2009      * Remove the PHPSESSID from the url
+03.02.2009      # Replace the / by DIRECTORY_SEPARATOR for plateforme compatiblity in the site.php
+10.02.2009      # UTF8 bug fix in the control panel page
+10.02.2009      + Save the global value of the filters in the key list page
+10.02.2009      + Save the global value of the filters in the tracking page
+10.02.2009      + Save the global value of the filters in the user page
+10.02.2009      + Save the global value of the page number in all page list
+10.02.2009      # Bug fix when setted a different template
+11.02.2009      # The key for  accessing the online help is now like a password
+12.02.2009      # Correction when displaying the main menu according to the super user access right
+12.02.2009      # Correction when displaying the extension action in the user list according to the user access right
+12.02.2009      # the horux info page is free access for a registred user.
+12.02.2009      # the control panel page is free access for a registred user.
+23.02.2009      ^ Update PRADO to 3.1.4
+23.02.2009      + Add the prado verion in the info system page
+23.02.2009      # Correction a bug in the Control Panel page with the Scriptaculous effect
+23.02.2009      # Correction a bug in the AccessLevel page (mod and add) with the Scriptaculous effect
+23.02.2009      # Correction a bug in the OpenTime page (mod and add) with the Scriptaculous effect
+26.02.2009      # The open time appear only for access device
+26.02.2009      ^ Disable the main menu when we need to apply, save or cancel the current page. Typical are modification.
+02.03.2009      # Bug in the mysql table containing the field blocked. In some table, this files was int(1)
+02.03.2009      ^ Replace the SQL LAST_INSTERT_ID call by the PDO function LastInsertID
+02.03.2009      # Bug in the userGroup.add/mod page. Bind id parameter removed.
+02.03.2009      ^ Addapation to support the sqlite database
+12.03.2009      + Add the TXmlRpcService for XMLRPC web service
+12.03.2009      + Add Notification XmlRpc web service for email, sms, etc user notification
+12.03.2009      + Add the email attribute for a superuser
+16.03.2009      + Add a filter in the key list allowing to search a key by its key number
+16.03.2009      ^ Change in the key list page the list filter identificator by a text box
+16.03.2009      ^ Change in the user list page the list filters name & firstname by a text box
+19.03.2009      - Remove the function getUserLogged in the common file TPage and TpageList. This completly done by the same function in HeaderBox
+19.03.2009      + Add the Alarms icon in the header box. This icon is display when a alarms happens else it is hidden. The check is done every 10 seconds
+19.03.2009      ^ Simplify the display of the alarm to be more flexible for the future
+24.03.2009      # Correct the where in some page it was not possible to loged out 
+24.03.2009      + Add the function log in Page and PageList which call the module TGuiLog to log the Gui action
+25.03.2009      # Bug when attribute the first key or group in the list to a user
+
+-------------------- Horux 1.0.3 Release Released [19-01-2008] ------------------------
+05.12.2008 	+ Add the open time functionnality
+05.12.2008  ^ Rename in all php file containing the name Horus to Horux in the header file
+05.12.2008  ^ Change the icon html title to be translate
+05.12.2008  # Correct a javascript bug in the main menu when displaying sub menu
+05.12.2008  ^ Add the favicon horux in the URL
+08.12.2008  + Add a default picture to the user
+08.12.2008  + Add a the pin code parameter in the user profile
+09.12.2008  ^ Change the filters in the tracking view
+09.12.2008  + Add reporting functionalities
+19.01.2009  # correct a bug in the now working date with a default date
+19.01.2009  # correct a bug in the control panel concerning the accent in the title
+
+-------------------- Horux 1.0.2 Release Released [20-11-2008] ------------------------
+03.11.2008  ^ Update the french text
+03.11.2008  ^ Modify the template letux to used its own catalog for the translation
+06.11.2008  - Remove the javascript code allowing to receive key serial number from the horuxguitray
+
+-------------------- Horux 1.0.1 Release Released [29-10-2008] ------------------------
+
+08.10.2008  ^ Modify the file HeaderBox.php to copy the icon menu of a components to the assets directory
+08.10.2008  ^ In the components tracking, remove the traking icon in the letux template. Now it is handle by prado assets
+08.10.2008  ^ Add some french text
+13.10.2008  ^ Add the possibility to configure a user group to be handle by a specific access plugin.
+14.10.2008  # Bug when displaying the sub menu of the components
+14.10.2008  # Bug in the super user group page
+17.10.2008  + Add tree news parameter in the site definition for commercial used (VTA, VAT value and currency)
+17.10.2008  + Add two new filter is the user liste to allow filter user by group and acces point
+17.10.2008  + Add the possibility to add dynamicly (extension installation user action in the user list.
+17.10.2008  # Bug during the installation of an extension with submenu
+17.10.2008  # Bug the datepicker was not display in current language in the tracking filter
+24.10.2008  + Add the fpdf in the project to allow the application to générate pfd document
+24.10.2008  + Add the possibility to configure parameters for a component
+29.10.2008  # Correct the message when we modify a access level
+
+-------------------- Horux 1.0.0 Release Released [25-Jul-2008] ------------------------
+

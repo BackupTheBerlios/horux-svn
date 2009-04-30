@@ -1,0 +1,66 @@
+HoruxGui derives from copyrighted works licensed under the GNU General
+Public License Version 3.  This version has been modified pursuant to the
+GNU General Public License as of April 07, 2008, and as distributed,
+it includes or is derivative of works licensed under the GNU General
+Public License or other free or open source software licenses, including
+works copyrighted by any or all of the following, from 2008 through 2008:
+
+
+Code contributers:
+------------------
+Jean-Luc Gyger(Letux)
+
+Documentation Contributers:
+---------------------------
+Jean-Luc Gyger
+
+Translation contributers:
+-------------------------
+Jean-Luc Gyger
+
+HoruxGui includes or is derivative of works distributed under the following copyright notices:
+
+Prado
+------
+Copyright:	2004-2007 by The PRADO Group (http://www.pradosoft.com)
+License:	BSD
+
+js-jscook-menu
+--------------
+Copyright:	2002-2005 by Heng Yuan
+License:	Custom open source license
+
+js-overlib
+----------
+Copyright:	Erik Bosrup 1998-2004
+License:	Artistic (see http://www.bosrup.com/web/overlib/?License)
+
+js-tabs
+-------
+Copyright:	1998 - 2003 Erik Arvidsson
+License:	GNU General Public License (GPL)
+
+Mootools
+--------
+Copyright:	Valerio Proietti
+License:	MIT-style license
+
+Pear
+----
+Copyright:	The PHP Group
+License:	PHP License 3.0
+
+Crystal Project Icons 
+-----------------------------------
+Copyright:	2006-2007  Everaldo Coelho (http://www.everaldo.com/crystal)
+License:	LGPL
+
+Open clipart
+------------
+Copyright: http://www.openclipart.org
+License: Creative commons Public Domain Dedication
+
+Letux Template
+---------
+Copyright:	Andy Miller - Joomla 1.5
+License:	GPL

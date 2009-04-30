@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<infoSystem>
+ <appVersion>0.1.0</appVersion>
+ <serverLive>13:55:08 / 09.07.2008</serverLive>
+ <plugins type="db" >
+  <plugin>
+   <name>horux_mysql_db</name>
+   <description>Handle a MySql database for Horux Core</description>
+
+   <version>0.1</version>
+   <author>Jean-Luc Gyger</author>
+   <copyright>Letux - 2008</copyright>
+  </plugin>
+ </plugins>
+ <plugins type="alarm" >
+  <plugin>
+
+   <name>alarm_horux</name>
+   <description>Handle the alarm for Horux Core</description>
+   <version>0.1</version>
+   <author>Jean-Luc Gyger</author>
+   <copyright>Letux - 2008</copyright>
+  </plugin>
+
+ </plugins>
+ <plugins type="access" >
+  <plugin>
+   <name>access_horux</name>
+   <description>Handle the access for Horux Core</description>
+   <version>0.1</version>
+   <author>Jean-Luc Gyger</author>
+
+   <copyright>Letux - 2008</copyright>
+  </plugin>
+ </plugins>
+ <plugins type="log" >
+  <plugin>
+   <name>htmllog_horux</name>
+   <description>Log all the message in html for Horux Core</description>
+
+   <version>0.1</version>
+   <author>Jean-Luc Gyger</author>
+   <copyright>Letux - 2008</copyright>
+  </plugin>
+ </plugins>
+ <plugins type="device" >
+  <plugin>
+
+   <name>accessLink_Interface</name>
+   <description>Handle a Access Link Interface</description>
+   <version>0.1</version>
+   <author>Jean-Luc Gyger</author>
+   <copyright>Letux - 2008</copyright>
+  </plugin>
+
+  <plugin>
+   <name>accessLink_ReaderRS485</name>
+   <description>Handle a Access Link Reader</description>
+   <version>0.1</version>
+   <author>Jean-Luc Gyger</author>
+   <copyright>Letux - 2008</copyright>
+
+  </plugin>
+  <plugin>
+   <name>accessLink_ReaderRS485</name>
+   <description>Handle a Access Link Reader</description>
+   <version>0.1</version>
+   <author>Jean-Luc Gyger</author>
+   <copyright>Letux - 2008</copyright>
+
+  </plugin>
+  <plugin>
+   <name>accessLink_ReaderRS485</name>
+   <description>Handle a Access Link Reader</description>
+   <version>0.1</version>
+   <author>Jean-Luc Gyger</author>
+   <copyright>Letux - 2008</copyright>
+
+  </plugin>
+ </plugins>
+ <devices>
+  <device id="29" >
+   <name>Interface</name>
+   <serialNumber>1111111</serialNumber>
+   <isConnected>1</isConnected>
+
+   <firmwareVersion>Version 1</firmwareVersion>
+   <antivandale>0</antivandale>
+   <input1>0</input1>
+   <input2>0</input2>
+   <input3>0</input3>
+   <input4>0</input4>
+
+   <input5>0</input5>
+   <input6>0</input6>
+   <input7>0</input7>
+   <input8>0</input8>
+   <output1>0</output1>
+   <output2>0</output2>
+
+   <output3>0</output3>
+   <output4>0</output4>
+   <output5>0</output5>
+   <output6>0</output6>
+   <output7>0</output7>
+   <output8>0</output8>
+
+   <temperature>58.00</temperature>
+  </device>
+  <device id="30" >
+   <name>Entry 1</name>
+   <serialNumber>4294967295</serialNumber>
+   <isConnected>1</isConnected>
+   <firmwareVersion>603.1/601.2</firmwareVersion>
+
+   <address>1</address>
+   <dbSize>9</dbSize>
+   <input1>1</input1>
+   <input2>1</input2>
+   <output1>0</output1>
+   <output2>0</output2>
+
+   <output3>0</output3>
+   <output4>0</output4>
+   <modulation>0</modulation>
+   <antenna>0</antenna>
+  </device>
+  <device id="32" >
+   <name>Entry 2</name>
+
+   <serialNumber>4294967295</serialNumber>
+   <isConnected>1</isConnected>
+   <firmwareVersion>603.1/601.2</firmwareVersion>
+   <address>2</address>
+   <dbSize>9</dbSize>
+   <input1>1</input1>
+
+   <input2>1</input2>
+   <output1>0</output1>
+   <output2>0</output2>
+   <output3>0</output3>
+   <output4>0</output4>
+   <modulation>0</modulation>
+
+   <antenna>0</antenna>
+  </device>
+ </devices>
+</infoSystem>
