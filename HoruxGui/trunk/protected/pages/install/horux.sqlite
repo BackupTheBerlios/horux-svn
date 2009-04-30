@@ -1,0 +1,556 @@
+# SQLiteManager Dump
+# Version: 1.2.0
+# http://www.sqlitemanager.org/
+#
+# Serveur: localhost
+# Généré le: Friday 27th 2009f February 2009 11:59 am
+# SQLite Version: 3.5.9
+# PHP Version: 5.2.6-2ubuntu4.1
+# Base de données: horux.db
+# --------------------------------------------------------
+
+#
+# Structure de la table: hr_alarms
+#
+CREATE TABLE hr_alarms ('id' INTEGER PRIMARY KEY AUTOINCREMENT,'type' int(11) NOT NULL default '0' ,'datetime_' datetime NOT NULL default '0000-00-00 00:00:00' ,'id_object' int(11) NOT NULL default '0' ,`message` text NOT NULL default '', 'checked' smallint(1) NOT NULL default '0' );
+
+#
+# Contenu de la table: hr_alarms
+#
+# --------------------------------------------------------
+
+
+#
+# Structure de la table: hr_component
+#
+CREATE TABLE hr_component (
+    'id' INTEGER PRIMARY KEY AUTOINCREMENT,
+    'id_install' smallint(6) NOT NULL ,
+    'parentmenu' smallint(6) NOT NULL ,
+    'menuname' varchar(30) NOT NULL ,
+    'page' varchar(100) NOT NULL ,
+    'iconmenu' varchar(200) default '' ,
+    'locked' int(11) default 0 );
+
+#
+# Contenu de la table: hr_component
+#
+INSERT INTO hr_component VALUES ('1', '3', '0', 'Tracking', 'components.tracking.tracking', 'icon-16-tracking.png', '0');
+# --------------------------------------------------------
+
+
+#
+# Structure de la table: hr_config
+#
+CREATE TABLE hr_config ( 
+    'id' INTEGER PRIMARY KEY AUTOINCREMENT,
+    'xmlrpc_server' int(11) NOT NULL default '1083' ,
+    'log_path' varchar(100) default '' ,
+    'debug_mode' smallint(1) NOT NULL default 0 ,
+    'server_path' varchar(50) NOT NULL default '',
+    'ldap_server_name' varchar(100) NOT NULL default '' ,
+    'ldpa_port' int(11) NOT NULL default 0,
+    'ldap_dn' varchar(100) NOT NULL  default '',
+    'ldap_user' varchar(100) NOT NULL  default '',
+    'ldpa_password' varchar(30) NOT NULL  default '',
+    'user_method' varchar(30) NOT NULL  default '',
+    'key' varchar(10) NOT NULL  default '',
+    'mail_mailer' varchar(8) NOT NULL default 'sendmail' ,
+    'mail_mail_from' varchar(50) NOT NULL  default '',
+    'mail_from_name' varchar(50) NOT NULL  default '',
+    'mail_sendmail_path' varchar(50) NOT NULL default '/usr/sbin/sendmail' ,
+    'mail_smtp_auth' smallint(1) NOT NULL default '0' ,
+    'mail_smtp_safe' varchar(4) NOT NULL default 'none' ,
+    'mail_smtp_username' varchar(50) NOT NULL  default '',
+    'mail_smtp_password' varchar(50) NOT NULL  default '',
+    'mail_smtp_host' varchar(50) NOT NULL default 'localhost' ,
+    'mail_smtp_port' int(11) NOT NULL default '21' );
+
+#
+# Contenu de la table: hr_config
+#
+INSERT INTO hr_config VALUES ('1', '1083', '', '0', '.', '', '0', '', '', '', 'db', '', 'sendmail', '', '', '/usr/sbin/sendmail', '0', 'none', '', '', '', '21');
+# --------------------------------------------------------
+
+
+#
+# Structure de la table: hr_device
+#
+CREATE TABLE hr_device (
+    'id' INTEGER PRIMARY KEY AUTOINCREMENT,
+    'name' varchar(100) NOT NULL ,
+    'accessPoint' smallint(1) NOT NULL default 0,
+    'type' varchar(40) NOT NULL ,
+    'parent_id' int(11) NOT NULL default '0' ,
+    'isLog' smallint(1) NOT NULL ,
+    'locked' int(11) default 0,
+    'description' varchar(150) NOT NULL ,
+    'accessPlugin' varchar(30) NOT NULL );
+
+#
+# Contenu de la table: hr_device
+#
+# --------------------------------------------------------
+
+
+#
+# Structure de la table: hr_gui_log
+#
+CREATE TABLE hr_gui_log ( 
+    'id' INTEGER PRIMARY KEY AUTOINCREMENT,
+    'when' timestamp NOT NULL default '' ,
+    'who' varchar(30) NOT NULL default '' ,
+    'what' text NOT NULL );
+
+#
+# Contenu de la table: hr_gui_log
+#
+# --------------------------------------------------------
+
+
+#
+# Structure de la table: hr_gui_permissions
+#
+CREATE TABLE hr_gui_permissions (
+    'id' INTEGER PRIMARY KEY AUTOINCREMENT,
+    'page' varchar(64) default NULL ,
+    'selector' varchar(8) default NULL ,
+    'value' smallint(5) default NULL ,
+    'allowed' varchar(1) NOT NULL );
+
+#
+# Contenu de la table: hr_gui_permissions
+#
+INSERT INTO hr_gui_permissions VALUES ('1', 'controlPanel.ControlPanel', 'group_id', '1', '1');
+INSERT INTO hr_gui_permissions VALUES ('2', 'site.Site', 'group_id', '1', '1');
+INSERT INTO hr_gui_permissions VALUES ('3', 'system.Alarms', 'group_id', '1', '1');
+INSERT INTO hr_gui_permissions VALUES ('4', 'system.Service', 'group_id', '1', '1');
+INSERT INTO hr_gui_permissions VALUES ('5', 'system.Status', 'group_id', '1', '1');
+INSERT INTO hr_gui_permissions VALUES ('6', 'user.UserList', 'group_id', '1', '1');
+INSERT INTO hr_gui_permissions VALUES ('7', 'user.add', 'group_id', '1', '1');
+INSERT INTO hr_gui_permissions VALUES ('8', 'user.mod', 'group_id', '1', '1');
+INSERT INTO hr_gui_permissions VALUES ('9', 'user.attribution', 'group_id', '1', '1');
+INSERT INTO hr_gui_permissions VALUES ('10', 'user.groups', 'group_id', '1', '1');
+INSERT INTO hr_gui_permissions VALUES ('11', 'user.UserWizzard', 'group_id', '1', '1');
+INSERT INTO hr_gui_permissions VALUES ('12', 'userGroup.UserGroupList', 'group_id', '1', '1');
+INSERT INTO hr_gui_permissions VALUES ('13', 'userGroup.add', 'group_id', '1', '1');
+INSERT INTO hr_gui_permissions VALUES ('14', 'userGroup.mod', 'group_id', '1', '1');
+INSERT INTO hr_gui_permissions VALUES ('15', 'key.KeyList', 'group_id', '1', '1');
+INSERT INTO hr_gui_permissions VALUES ('16', 'key.add', 'group_id', '1', '1');
+INSERT INTO hr_gui_permissions VALUES ('17', 'key.mod', 'group_id', '1', '1');
+INSERT INTO hr_gui_permissions VALUES ('18', 'accessLevel.accessLevelList', 'group_id', '1', '1');
+INSERT INTO hr_gui_permissions VALUES ('19', 'accessLevel.add', 'group_id', '1', '1');
+INSERT INTO hr_gui_permissions VALUES ('20', 'accessLevel.mod', 'group_id', '1', '1');
+INSERT INTO hr_gui_permissions VALUES ('21', 'nonWorkingDay.nonWorkingDay', 'group_id', '1', '1');
+INSERT INTO hr_gui_permissions VALUES ('22', 'nonWorkingDay.add', 'group_id', '1', '1');
+INSERT INTO hr_gui_permissions VALUES ('23', 'nonWorkingDay.mod', 'group_id', '1', '1');
+INSERT INTO hr_gui_permissions VALUES ('24', 'tool.GlobalCheckin', 'group_id', '1', '1');
+INSERT INTO hr_gui_permissions VALUES ('25', 'installation.extensions', 'group_id', '1', '1');
+INSERT INTO hr_gui_permissions VALUES ('26', 'installation.template', 'group_id', '1', '1');
+INSERT INTO hr_gui_permissions VALUES ('27', 'installation.language', 'group_id', '1', '1');
+INSERT INTO hr_gui_permissions VALUES ('28', 'installation.componentconfig', 'group_id', '1', '1');
+INSERT INTO hr_gui_permissions VALUES ('29', 'superuser.userList', 'group_id', '1', '1');
+INSERT INTO hr_gui_permissions VALUES ('30', 'superuser.userAdd', 'group_id', '1', '1');
+INSERT INTO hr_gui_permissions VALUES ('31', 'superuser.userMod', 'group_id', '1', '1');
+INSERT INTO hr_gui_permissions VALUES ('32', 'superuser.userGroupList', 'group_id', '1', '1');
+INSERT INTO hr_gui_permissions VALUES ('33', 'superuser.userGroupAdd', 'group_id', '1', '1');
+INSERT INTO hr_gui_permissions VALUES ('34', 'superuser.userGroupMod', 'group_id', '1', '1');
+INSERT INTO hr_gui_permissions VALUES ('35', 'configuration.config', 'group_id', '1', '1');
+INSERT INTO hr_gui_permissions VALUES ('36', 'installation.components', 'group_id', '1', '1');
+INSERT INTO hr_gui_permissions VALUES ('37', 'installation.devices', 'group_id', '1', '1');
+INSERT INTO hr_gui_permissions VALUES ('38', 'hardware.HardwareList', 'group_id', '1', '1');
+INSERT INTO hr_gui_permissions VALUES ('39', 'hardware.HardwareAddList', 'group_id', '1', '1');
+INSERT INTO hr_gui_permissions VALUES ('40', 'components.tracking.tracking', 'group_id', '1', '1');
+INSERT INTO hr_gui_permissions VALUES ('41', 'help.SystemInfo', 'group_id', '1', '1');
+INSERT INTO hr_gui_permissions VALUES ('42', 'help.About', 'group_id', '1', '1');
+INSERT INTO hr_gui_permissions VALUES ('43', 'openTime.openTimeList', 'group_id', '1', '1');
+INSERT INTO hr_gui_permissions VALUES ('44', 'openTime.add', 'group_id', '1', '1');
+INSERT INTO hr_gui_permissions VALUES ('45', 'openTime.mod', 'group_id', '1', '1');
+INSERT INTO hr_gui_permissions VALUES ('46', 'system.Notification', 'group_id', '1', '1');
+
+# --------------------------------------------------------
+
+
+#
+# Structure de la table: hr_keys
+#
+CREATE TABLE hr_keys (
+'id' INTEGER PRIMARY KEY AUTOINCREMENT,
+'identificator' varchar(30) NOT NULL default '' ,
+'serialNumber' varchar(128) NOT NULL ,
+'isUsed' smallint(1) NOT NULL default '0' ,
+'isBlocked' smallint(1) NOT NULL default '0' ,
+'locked' int(11) default 0);
+
+CREATE UNIQUE INDEX _hr_keys_serialNumber ON hr_keys ('serialNumber');
+CREATE INDEX _hr_keys_identificator ON hr_keys ('identificator');
+
+#
+# Contenu de la table: hr_keys
+#
+INSERT INTO hr_keys VALUES ('1', '??', '0000000000000000', '0', '1', '0');
+# --------------------------------------------------------
+
+
+#
+# Structure de la table: hr_openTime
+#
+CREATE TABLE hr_openTime ( 
+    'id' INTEGER PRIMARY KEY AUTOINCREMENT,
+    'name' varchar(50) NOT NULL ,
+    'non_working_day' smallint(1) NOT NULL default '0' ,
+    'week_end' smallint(1) NOT NULL default '0' ,
+    'validity_date' date default NULL ,
+    'validity_date_to' date default NULL ,
+    'monday_default' smallint(6) NOT NULL default '0' ,
+    'comment' varchar(50) default NULL ,
+    'locked' int(11) default 0);
+
+CREATE UNIQUE INDEX _hr_openTime_Name ON hr_openTime ('name');
+
+#
+# Contenu de la table: hr_openTime
+#
+# --------------------------------------------------------
+
+
+#
+# Structure de la table: hr_openTime_attribution
+#
+CREATE TABLE hr_openTime_attribution (
+    'id' INTEGER PRIMARY KEY AUTOINCREMENT,
+    'id_device' bigint(20) NOT NULL default '0' ,
+    'id_openTime' bigint(20) NOT NULL default '0' );
+
+#
+# Contenu de la table: hr_openTime_attribution
+#
+# --------------------------------------------------------
+
+
+#
+# Structure de la table: hr_openTime_time
+#
+CREATE TABLE hr_openTime_time (
+    'id' INTEGER PRIMARY KEY AUTOINCREMENT,
+    'id_openTime' bigint(20) NOT NULL default '0' ,
+    'day' varchar(10) NOT NULL default '0' ,
+    'from' int(11) NOT NULL default '0' ,
+    'until' int(11) NOT NULL default '0' );
+
+#
+# Contenu de la table: hr_openTime_time
+#
+# --------------------------------------------------------
+
+
+#
+# Structure de la table: hr_access_level
+#
+CREATE TABLE hr_access_level (
+    'id' INTEGER PRIMARY KEY AUTOINCREMENT,
+    'name' varchar(50) NOT NULL ,
+    'full_access' smallint(1) NOT NULL default '0' ,
+    'non_working_day' smallint(1) NOT NULL default '0' ,
+    'week_end' smallint(1) NOT NULL default '0' ,
+    'validity_date' date default NULL ,
+    'validity_date_to' date default NULL ,
+    'monday_default' smallint(6) NOT NULL default '0' ,
+    'comment' varchar(50) default NULL ,
+    'locked' int(11) default 0 );
+
+CREATE UNIQUE INDEX hr_access_level_Name ON hr_access_level ('name');
+
+#
+# Contenu de la table: hr_access_level
+#
+# --------------------------------------------------------
+
+
+#
+# Structure de la table: hr_access_time
+#
+CREATE TABLE hr_access_time (
+    'id' INTEGER PRIMARY KEY AUTOINCREMENT,
+    'id_access_level' bigint(20) NOT NULL default '0' ,
+    'day' varchar(10) NOT NULL default '0' ,
+    'from' int(11) NOT NULL default '0' ,
+    'until' int(11) NOT NULL default '0' );
+
+#
+# Contenu de la table: hr_access_time
+#
+# --------------------------------------------------------
+
+
+#
+# Structure de la table: hr_install
+#
+CREATE TABLE hr_install ( 
+    'id' INTEGER PRIMARY KEY AUTOINCREMENT,
+    'name' varchar(100) NOT NULL ,
+    'type' varchar(9) NOT NULL ,
+    'system' smallint(1) NOT NULL ,
+    'default' smallint(1) NOT NULL ,
+    'param' varchar(100) NOT NULL );
+
+#
+# Contenu de la table: hr_install
+#
+INSERT INTO hr_install VALUES ('1', 'letux', 'template', '1', '1', '');
+INSERT INTO hr_install VALUES ('2', 'English', 'language', '1', '1', 'en');
+INSERT INTO hr_install VALUES ('3', 'tracking', 'component', '1', '0', '');
+INSERT INTO hr_install VALUES ('4', 'Français', 'language', '0', '0', 'fr');
+# --------------------------------------------------------
+
+
+#
+# Structure de la table: hr_keys_attribution
+#
+CREATE TABLE hr_keys_attribution (
+    'id' INTEGER PRIMARY KEY AUTOINCREMENT,
+    'id_key' bigint(20) NOT NULL default '0' ,
+    'id_user' bigint(20) NOT NULL default '0' );
+
+#
+# Contenu de la table: hr_keys_attribution
+#
+# --------------------------------------------------------
+
+
+#
+# Structure de la table: hr_non_working_day
+#
+CREATE TABLE hr_non_working_day ( 
+    'id' INTEGER PRIMARY KEY AUTOINCREMENT,
+    'name' varchar(50) NOT NULL ,
+    'from' date default NULL ,
+    'until' date default NULL ,
+    'comment' varchar(100) default NULL ,
+    'locked' int(11) default 0);
+
+#
+# Contenu de la table: hr_non_working_day
+#
+# --------------------------------------------------------
+
+
+#
+# Structure de la table: hr_site
+#
+CREATE TABLE hr_site (
+    'id' INTEGER PRIMARY KEY AUTOINCREMENT,
+    'name' varchar(255) NOT NULL default '' ,
+    'street' varchar(255) NOT NULL  default '',
+    'npa' varchar(10) NOT NULL  default '',
+    'city' varchar(255) NOT NULL  default '',
+    'phone' varchar(20) NOT NULL  default '',
+    'fax' varchar(20) NOT NULL  default '',
+    'email' varchar(40) NOT NULL  default '',
+    'website' varchar(50) NOT NULL  default '',
+    'logo' varchar(50) NOT NULL  default '',
+    'tva_number' varchar(50) NOT NULL  default '',
+    'devise' varchar(5) NOT NULL  default '',
+    'tva' float);
+
+#
+# Contenu de la table: hr_site
+#
+# --------------------------------------------------------
+
+
+#
+# Structure de la table: hr_standalone_action_service
+#
+CREATE TABLE hr_standalone_action_service ( 
+    'id' INTEGER PRIMARY KEY AUTOINCREMENT,
+    'type' varchar(3) NOT NULL default 'add' ,
+    'serialNumber' varchar(128) NOT NULL default '0' ,
+    'rd_id' int(11) NOT NULL default '0' );
+
+#
+# Contenu de la table: hr_standalone_action_service
+#
+# --------------------------------------------------------
+
+
+#
+# Structure de la table: hr_superuser_group
+#
+CREATE TABLE hr_superuser_group (
+    'id' INTEGER PRIMARY KEY AUTOINCREMENT,
+    'name' varchar(32) NOT NULL ,
+    'superAdmin' smallint(1) NOT NULL default '0' ,
+    'description' varchar(200) default '' ,
+    'locked' int(11) default 0 );
+
+#
+# Contenu de la table: hr_superuser_group
+#
+INSERT INTO hr_superuser_group VALUES ('1', 'admin', '1', 'Admin', '0');
+# --------------------------------------------------------
+
+
+#
+# Structure de la table: hr_superusers
+#
+CREATE TABLE hr_superusers ( 'id' INTEGER PRIMARY KEY AUTOINCREMENT,
+    'group_id' smallint(5) ,
+    'user_id' smallint(5) ,
+    'name' varchar(32) NOT NULL ,
+    'password' varchar(64) ,
+    'isLogged' smallint(1) default 0,
+    'locked' int(11) default 0 ,
+    'session_id' varchar(100) default NULL ,
+    'lastConnection' datetime);
+
+CREATE INDEX hr_superusers_id ON hr_superusers ('id');
+
+#
+# Contenu de la table: hr_superusers
+#
+# --------------------------------------------------------
+
+
+#
+# Structure de la table: hr_tracking
+#
+CREATE TABLE hr_tracking ( 
+    'id' INTEGER PRIMARY KEY AUTOINCREMENT,
+    'id_user' int(11) NOT NULL default '0' ,
+    'id_key' int(11) NOT NULL default '0' ,
+    'time' time NOT NULL default '00:00:00' ,
+    'date' date NOT NULL default '0000-00-00' ,
+    'id_entry' int(11) NOT NULL default '0' ,
+    'is_access' smallint(1) NOT NULL default '1' ,
+    'id_comment' int(11) NOT NULL default '0' ,
+    'key' varchar(128) NOT NULL );
+
+CREATE INDEX hr_tracking_time ON hr_tracking ('time','date');
+
+#
+# Contenu de la table: hr_tracking
+#
+# --------------------------------------------------------
+
+
+#
+# Structure de la table: hr_user
+#
+CREATE TABLE hr_user (
+    'id' INTEGER PRIMARY KEY AUTOINCREMENT,
+    'name' varchar(30) default NULL ,
+    'firstname' varchar(30) default NULL ,
+    'street' varchar(40) default NULL ,
+    'city' varchar(30) default NULL ,
+    'country' varchar(30) default NULL ,
+    'zip' varchar(10) default NULL ,
+    'phone1' varchar(16) default NULL ,
+    'phone2' varchar(16) default NULL ,
+    'email1' varchar(50) default NULL ,
+    'email2' varchar(50) NOT NULL default '' ,
+    'picture' varchar(255) default NULL ,
+    'language' varchar(30) default NULL ,
+    'sex' varchar(1) NOT NULL default 'F' ,
+    'validity_date' date NOT NULL default '0000-00-00' ,
+    'isBlocked' smallint(1) NOT NULL default '0' ,
+    'locked' int(11) default 0 ,
+    'department' varchar(30) NOT NULL ,
+    'firme' varchar(30) NOT NULL ,
+    'street_pr' varchar(30) NOT NULL ,
+    'npa_pr' varchar(10) NOT NULL ,
+    'city_pr' varchar(30) NOT NULL ,
+    'country_pr' varchar(30) NOT NULL ,
+    'pin_code' varchar(12) default NULL );
+
+CREATE INDEX hr_user_name ON hr_user ('name');
+CREATE INDEX hr_user_firstname ON hr_user ('firstname');
+
+#
+# Contenu de la table: hr_user
+#
+INSERT INTO hr_user VALUES ('1', '??', '??', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', NULL, NULL, 'F', '0000-00-00', '0', '0', '', '', '', '', '', '', NULL);
+# --------------------------------------------------------
+
+
+#
+# Structure de la table: hr_user_action
+#
+CREATE TABLE hr_user_action ( 
+    'id' INTEGER PRIMARY KEY AUTOINCREMENT,
+    'name' varchar(30) NOT NULL ,
+    'page' varchar(100) NOT NULL ,
+    'icon' varchar(100) NOT NULL ,
+    'tip' varchar(255) NOT NULL ,
+    'catalog' varchar(30) NOT NULL );
+
+#
+# Contenu de la table: hr_user_action
+#
+# --------------------------------------------------------
+
+
+#
+# Structure de la table: hr_user_group
+#
+CREATE TABLE hr_user_group (
+    'id' INTEGER PRIMARY KEY AUTOINCREMENT,
+    'name' varchar(30) NOT NULL default '' ,
+    'comment' varchar(50) default NULL ,
+    'locked' int(11) default 0 ,
+    'accessPlugin' varchar(30) default NULL );
+
+#
+# Contenu de la table: hr_user_group
+#
+# --------------------------------------------------------
+
+
+#
+# Structure de la table: hr_user_group_access
+#
+CREATE TABLE hr_user_group_access ( 
+    'id' INTEGER PRIMARY KEY AUTOINCREMENT,
+    'id_group' bigint(20) NOT NULL default '0' ,
+    'id_device' bigint(20) NOT NULL default '0' ,
+    'id_access_level' bigint(20) NOT NULL default '0' );
+
+#
+# Contenu de la table: hr_user_group_access
+#
+# --------------------------------------------------------
+
+
+#
+# Structure de la table: hr_user_group_attribution
+#
+CREATE TABLE hr_user_group_attribution (
+    'id' INTEGER PRIMARY KEY AUTOINCREMENT,
+    'id_user' bigint(20) NOT NULL default '0' ,
+    'id_group' bigint(20) NOT NULL default '0' );
+
+#
+# Contenu de la table: hr_user_group_attribution
+#
+# --------------------------------------------------------
+
+CREATE TABLE hr_notification (
+  'id' INTEGER PRIMARY KEY AUTOINCREMENT,
+  'name' varchar(40) NOT NULL,
+  'emails' text NOT NULL,
+  'description' varchar(255) NOT NULL,
+  'locked' int(11) NOT NULL default '0',
+  PRIMARY KEY  (`id`)
+);
+
+CREATE TABLE hr_notification_code (
+  'id_notification' int(11) NOT NULL,
+  'type' varchar(40) NOT NULL,
+  'code' varchar(30) NOT NULL,
+  'param' varchar(100) NOT NULL
+);
+
+CREATE TABLE hr_notification_su (
+  'id_notification' int(11) NOT NULL,
+  'id_superuser' int(11) NOT NULL
+);

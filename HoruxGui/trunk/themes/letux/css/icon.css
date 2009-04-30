@@ -1,0 +1,79 @@
+/** menu icons **/
+.icon-16-accessLevel 		{ background-image: url(../images/menu/icon-16-accessLevel.png); }
+.icon-16-controlPanel		{ background-image: url(../images/menu/icon-16-controlPanel.png); }
+.icon-16-superUser		{ background-image: url(../images/menu/icon-16-superUser.png); }
+.icon-16-configure		{ background-image: url(../images/menu/icon-16-configure.png); }
+.icon-16-site		{ background-image: url(../images/menu/icon-16-site.png); }
+.icon-16-hardwareGroup		{ background-image: url(../images/menu/icon-16-hardwareGroup.png); }
+.icon-16-globalCheckin		{ background-image: url(../images/menu/icon-16-globalCheckin.png); }
+.icon-16-help		{ background-image: url(../images/menu/icon-16-help.png); }
+.icon-16-userGroup		{ background-image: url(../images/menu/icon-16-userGroup.png); }
+.icon-16-keyCheck		{ background-image: url(../images/menu/icon-16-keyCheck.png); }
+.icon-16-nonWorkingDay		{ background-image: url(../images/menu/icon-16-nonWorkingDay.png); }
+.icon-16-systemInfo		{ background-image: url(../images/menu/icon-16-systemInfo.png); }
+.icon-16-service		{ background-image: url(../images/menu/icon-16-service.png); }
+.icon-16-hardware		{ background-image: url(../images/menu/icon-16-hardware.png); }
+.icon-16-logout		{ background-image: url(../images/menu/icon-16-logout.png); }
+.icon-16-user 			{ background-image: url(../images/menu/icon-16-user.png); }
+.icon-16-user2 			{ background-image: url(../images/menu/icon-16-user2.png); }
+.icon-16-alarm 			{ background-image: url(../images/menu/icon-16-alarm.png); }
+.icon-16-systemStatus 			{ background-image: url(../images/menu/icon-16-systemStatus.png); }
+.icon-16-install 		{ background-image: url(../images/menu/icon-16-install.png);}
+.icon-16-themes 		{ background-image: url(../images/menu/icon-16-themes.png); }
+.icon-16-language 	{ background-image: url(../images/menu/icon-16-language.png);}
+.icon-16-standalone 	{ background-image: url(../images/menu/icon-16-standalone.png);}
+.icon-16-key 		{ background-image: url(../images/menu/icon-16-key.png); }
+
+
+/** toolbar icons **/
+.icon-32-help 			{ background-image: url(../images/toolbar/icon-32-help.png); }
+.icon-32-new 			{ background-image: url(../images/toolbar/icon-32-new.png); }
+.icon-32-delete 		{ background-image: url(../images/toolbar/icon-32-trash.png); }
+.icon-32-cancel 		{ background-image: url(../images/toolbar/icon-32-cancel.png); }
+.icon-32-save 			{ background-image: url(../images/toolbar/icon-32-save.png); }
+.icon-32-edit 			{ background-image: url(../images/toolbar/icon-32-edit.png); }
+.icon-32-apply 		{ background-image: url(../images/toolbar/icon-32-apply.png); }
+.icon-32-refresh 		{ background-image: url(../images/toolbar/icon-32-refresh.png); }
+.icon-32-start 		{ background-image: url(../images/toolbar/icon-32-start.png); }
+.icon-32-stop 		{ background-image: url(../images/toolbar/icon-32-stop.png); }
+.icon-32-default 		{ background-image: url(../images/toolbar/icon-32-default.png); }
+.icon-32-print 		{ background-image: url(../images/toolbar/icon-32-print.png); }
+
+
+
+
+/** header icons **/
+.icon-48-user	 		{ background-image: url(../images/header/icon-48-user.png); }
+.icon-48-userGroup	 		{ background-image: url(../images/header/icon-48-userGroup.png); }
+.icon-48-superUser	 		{ background-image: url(../images/header/icon-48-superUser.png); }
+.icon-48-accessLevel 		{ background-image: url(../images/header/icon-48-accessLevel.png); }
+.icon-48-alarm 		{ background-image: url(../images/header/icon-48-alarm.png); }
+.icon-48-keycheck 	{ background-image: url(../images/header/icon-48-keycheck.png); }
+.icon-48-ifcs 		{ background-image: url(../images/header/icon-48-hardware.png); }
+.icon-48-resource 		{ background-image: url(../images/header/icon-48-hardwareGroup.png); }
+.icon-48-site 	{ background-image: url(../images/header/icon-48-site.png); }
+.icon-48-accesslevel 	{ background-image: url(../images/header/icon-48-accesslevel.png); }
+.icon-48-noneworkingday 	{ background-image: url(../images/header/icon-48-noneworkingday.png); }
+.icon-48-user-wizzard 	{ background-image: url(../images/header/icon-48-wizard.png); }
+.icon-48-systeminfo 	{ background-image: url(../images/header/icon-48-info.png); }
+.icon-48-key 	{ background-image: url(../images/header/icon-48-key.png); }
+.icon-48-systeminfo2 	{ background-image: url(../images/header/icon-48-info2.png); }
+.icon-48-superUserGroup 	{ background-image: url(../images/header/icon-48-superUserGroup.png); }
+.icon-48-service 	{ background-image: url(../images/header/icon-48-service.png); }
+.icon-48-globalcheckin 	{ background-image: url(../images/header/icon-48-globalcheckin.png); }
+.icon-48-config 	{ background-image: url(../images/header/icon-48-config.png); }
+.icon-48-template 	{ background-image: url(../images/header/icon-48-template.png); }
+.icon-48-language 	{ background-image: url(../images/header/icon-48-language.png); }
+.icon-48-component 	{ background-image: url(../images/header/icon-48-component.png); }
+.icon-48-extensions 	{ background-image: url(../images/header/icon-48-extensions.png); }
+.icon-48-about 	{ background-image: url(../images/header/icon-48-about.png); }
+.icon-48-status 	{ background-image: url(../images/header/icon-48-status.png); }
+.icon-48-notification 	{ background-image: url(../images/header/icon-48-notification.png); }
+.icon-48-GuiLog 	{ background-image: url(../images/header/icon-48-guilog.png); }
+
+.icon-64-install 	{ margin-left:auto;margin-right:auto;background-image: url(../images/install.png);width:64px;height:64px }
+.icon-sparator 	{ background-image: url(../images/j_divider.png);width:195px;height:2px;margin-bottom:10px;margin-top:10px; }
+
+
+
+

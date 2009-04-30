@@ -1,0 +1,158 @@
+<com:TContent ID="Main">
+<div id="content-box">
+    <div class="border">
+        <div class="padding">
+            <div id="toolbar-box">
+                
+                <div class="t">
+                    <div class="t">
+                        <div class="t"></div>
+                    </div>
+                </div>
+                <div class="m" >
+                    <div class="toolbar" id="toolbar">
+                        <table class="toolbar">
+                            <tr>
+                                <td class="button" id="toolbar-apply">
+                                    <com:TLinkButton CssClass="toolbar" OnClick="onApply" ValidationGroup="Group1">
+                                      <span class="icon-32-apply" title="<%[Apply]%>"></span><%[Apply]%>
+                                    </com:TLinkButton> 
+                                </td>
+
+
+                                <td class="button" id="toolbar-save">
+                                    <com:TLinkButton CssClass="toolbar" OnClick="onSave" ValidationGroup="Group1">
+                                      <span class="icon-32-save" title="<%[Save]%>"></span><%[Save]%>
+                                    </com:TLinkButton> 
+                                </td>
+
+                                <td class="button" id="toolbar-cancel">
+                                    <com:TLinkButton CssClass="toolbar" OnClick="onCancel">
+                                      <span class="icon-32-cancel" title="<%[Cancel]%>"></span><%[Cancel]%>
+                                    </com:TLinkButton> 
+                                </td>
+
+                                <td class="button" id="toolbar-help">
+                                    <a href="./proxy/index.php?page=<%= $this->getApplication()->getService()->getRequestedPagePath() %>&lang=<%= $this->getApplication()->getGlobalState('lang') %>" title="<%[Help]%>" onClick="Modalbox.show(this.href, {title: this.title, width: 600, height: 600}); return false;" class="toolbar" >
+                                        <span class="icon-32-help" title="<%[Help]%>"></span><%[Help]%>
+                                    </a>
+                                </td>
+
+
+                            </tr>
+                        </table>
+                    </div><!-- end class toolbar -->
+
+                    <div class="header icon-48-userGroup"><%[Add a User Group]%></div>
+                    <div class="clr"></div>
+                </div><!-- end class m -->
+
+
+                <div class="b">
+                    <div class="b">
+                        <div class="b"></div>
+                    </div>
+                </div>
+            </div><!-- end class toolbar-box -->
+
+            <com:TLiteral ID="okMsg" Text="" />
+            <com:TLiteral ID="koMsg" Text="" />
+
+            <div id="element-box">
+    
+                <div class="t">
+                    <div class="t">
+                        <div class="t"></div>
+                    </div>
+                </div>
+                <div class="m">
+
+                  <fieldset class="adminform">
+	             <legend><%[Parameters]%></legend>
+                      <table class="admintable" cellspacing="1">
+                        <tbody>
+                          <tr>
+                            <td valign="top" class="key">
+                              <span onmouseover="Tip('<%[Enter a unique name for this group]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)">* <%[Name]%></span>
+                            </td>
+                            <td>
+                              <com:TTextBox 
+                                CssClass="text_area" 
+                                ID="name"
+                                Width="50" />
+                              <com:TCustomValidator
+                                ValidationGroup="Group1"
+                                EnableClientScript="false"
+                                ControlToValidate="name"
+                                OnServerValidate="serverValidateName"
+                                Display="Dynamic"
+                                Text="<%[This name is already used]%>" />
+                              <com:TRequiredFieldValidator
+								ValidationGroup="Group1" 
+								ControlToValidate="name" 
+								Text="<%[This field is required]%>" 
+								Display="Dynamic"/>
+                            </td> 
+                          </tr>
+                          <tr>
+                            <td valign="top" class="key"><span onmouseover="Tip('<%[You could insert a description for this group.]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Description]%></span></td>
+                            <td>
+                              <com:TTextBox CssClass="text_area" ID="comment" Width="400px"/>
+                            </td> 
+                          </tr>
+
+                        </tbody>
+                      </table>
+                  </fieldset>
+
+                  <fieldset class="adminform">
+	             <legend><%[Options]%></legend>
+                      <table class="admintable" cellspacing="1">
+                        <tbody>
+                          <tr>
+                            <td valign="top" class="key">
+                              <span onmouseover="Tip('<%[Define the access plugin used for the access control.<br/>If empty, all plugins are likely to give the access]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Access Plugin Name]%></span>
+                            </td>
+                            <td>
+                              <com:TTextBox 
+                                CssClass="text_area" 
+                                ID="accessPlugin"
+                                Width="50" />
+                            </td> 
+                          </tr>
+                        </tbody>
+                      </table>
+                  </fieldset>
+
+
+                  <fieldset class="adminform">
+	              <legend><%[Access Right]%></legend>
+                    <com:TRepeater ID="readerRepeater" OnItemDataBound="Page.repeaterDataBound">
+                      <prop:ItemTemplate>
+                        <div class="readerAccessRight">
+                          <com:TCheckBox 
+                            ID="reader" 
+                            Value="<%# $this->DataItem['id'] %>" 
+                            Text="<%# $this->DataItem['name'] %>"/>
+                        </div>
+                        <div class="accessLevel">
+                          <com:TListBox Rows="1" ID="accessLevel" />
+                        </div><br/><br/>
+                      </prop:ItemTemplate>
+                    </com:TRepeater> 
+                  </fieldset>
+
+                  <div class="clr"></div>
+                </div> <!-- end class m -->
+                <div class="b">
+                    <div class="b">
+                        <div class="b"></div>
+                    </div>
+                </div>
+            </div> <!-- end class element-box -->
+            <div class="clr"></div>
+        </div> <!-- end class toolbar-box -->
+        <div class="clr"></div>
+    </div><!-- end class content-box -->
+</div> <!-- end class content-box -->
+</com:TContent>
