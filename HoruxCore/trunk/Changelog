@@ -1,0 +1,44 @@
+Horux Core 1.0.5
+17.02.2009      Closing properly the database when stopping the engine
+17.02.2009      Destroy properly the device plugin when stopping the engine
+18.02.2009      Remove the standalone from the db handling to the device plugin
+18.02.2009      Redesign the access attribute in the handling class
+18.02.2009      Refactoring on the CDeviceHandling when creating the device
+18.02.2009      Refactoring of the devices setting when creating it
+18.02.2009      A alarm can apply action on a device by sending the event alarmAction. Each device is connected to this signal.
+18.02.2009      The CAccessHandling removed the access plugin control on the key. This check was moved in the plugin itself.
+04.03.2009      Add the detection when the antenna of the reader is off and set an alarm
+12.03.2009      Add the static function CHorux::sendNotification to send notificaiton to a web service. The web service could send emil, sms, etc.
+19.03.2009      Redefine the alarm code number
+19.03.2009      Add new alarm code (too many pin, door ajar and door forced). This code is not necessary used but is planned to be used
+20.03.2009      Send XMLRPC alarm if needed
+
+Horux Core 1.0.4
+19.01.2009      Add the functionnality to handle the free access
+19.01.2009      Add the handling event device connection in the access plugin
+
+Horux Core 1.0.3
+21.11.2008      Add the library "qextserialport"
+21.11.2008      Add the device plugin AccessLink Reader RS232. This device could be a tcpip access link over virtual port com
+21.11.2008      in the device interface, modification of the parameter interface to interfaces. This one geft problem on windows
+21.11.2008      the stopEngine function must close de device
+
+Horux Core 1.0.2
+14.11.2008	Bug in the AccessLink interface plugin when checking the eeprom
+14.11.2008	Bug in the AccessLink when checking if a reader is connected or deconnected
+20.11.2008      Add the device plugin horuxDisplayInfo
+
+
+Horux Core 1.0.1
+
+08.10.2008  Set the permission on the log file to be read by everybody 
+13.10.2008  (accesslinkrs485) Add the in the deviceEvent on key detection the name of the access plugin who has to handle the event
+13.10.2008  (access_horux) Add the handling of the parameter AccessPluginName
+27.10.2008  allow an access plugin to ask an other access the right access
+27.10.2008  add the function isAccess in the interface of an access plugin
+27.10.2008  change the interface function deviceEvent
+27.10.2008  check in the accesshandling the plugin must check the access according to the user group and the device definition
+
+Horux Core 1.0.0
+ * inital relaease
+
