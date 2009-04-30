@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/images" >
+        <file alias="horux.png">horux.png</file>
+    </qresource>
+</RCC>
