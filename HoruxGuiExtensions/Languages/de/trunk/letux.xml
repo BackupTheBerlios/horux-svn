@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<xliff version="1.0">
+<file source-language="en" target-language="de" datatype="plaintext" original="messages" date="2009-02-10T8:04:59Z" product-name="messages">
+<body>
+<trans-unit id="1">
+   <source><![CDATA[Installation]]></source>
+   <target><![CDATA[Installation]]></target>
+</trans-unit>
+<trans-unit id="2">
+   <source><![CDATA[Version]]></source>
+   <target><![CDATA[Version]]></target>
+</trans-unit>
+<trans-unit id="3">
+   <source><![CDATA[Access Control Managment]]></source>
+   <target><![CDATA[Access Control Management]]></target>
+</trans-unit>
+<trans-unit id="4">
+   <source><![CDATA[!Warning! Javascript must be enabled for proper operation of the Administrator]]></source>
+   <target><![CDATA[! Warnung! Javascript muss aktiviert sein, für den ordnungsgemäßen Betrieb der Administrator]]></target>
+</trans-unit>
+<trans-unit id="5">
+   <source><![CDATA[is Free Software released under the GNU/GPL License]]></source>
+   <target><![CDATA[ist Freie Software unter der GNU / GPL Lizenz]]></target>
+</trans-unit>
+</body>
+</file>
+</xliff>

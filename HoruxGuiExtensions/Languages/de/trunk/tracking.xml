@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<xliff version="1.0">
+<file source-language="en" target-language="de" datatype="plaintext" original="messages" date="2009-02-10T8:04:20Z" product-name="messages">
+<body>
+<trans-unit id="1">
+   <source><![CDATA[Tracking]]></source>
+   <target><![CDATA[Tracking]]></target>
+</trans-unit>
+<trans-unit id="2">
+   <source><![CDATA[Filter]]></source>
+   <target><![CDATA[Filter]]></target>
+</trans-unit>
+<trans-unit id="3">
+   <source><![CDATA[Name]]></source>
+   <target><![CDATA[Name]]></target>
+</trans-unit>
+<trans-unit id="4">
+   <source><![CDATA[Status]]></source>
+   <target><![CDATA[Status]]></target>
+</trans-unit>
+<trans-unit id="5">
+   <source><![CDATA[All]]></source>
+   <target><![CDATA[Alle]]></target>
+</trans-unit>
+<trans-unit id="6">
+   <source><![CDATA[Access ok]]></source>
+   <target><![CDATA[Access ok]]></target>
+</trans-unit>
+<trans-unit id="7">
+   <source><![CDATA[Access ko]]></source>
+   <target><![CDATA[Access ko]]></target>
+</trans-unit>
+<trans-unit id="8">
+   <source><![CDATA[Access point]]></source>
+   <target><![CDATA[Access Point]]></target>
+</trans-unit>
+<trans-unit id="9">
+   <source><![CDATA[From]]></source>
+   <target><![CDATA[Von]]></target>
+</trans-unit>
+<trans-unit id="10">
+   <source><![CDATA[Until]]></source>
+   <target><![CDATA[Bis]]></target>
+</trans-unit>
+<trans-unit id="11">
+   <source><![CDATA[Firstname]]></source>
+   <target><![CDATA[Vorname]]></target>
+</trans-unit>
+<trans-unit id="12">
+   <source><![CDATA[Date]]></source>
+   <target><![CDATA[Datum]]></target>
+</trans-unit>
+<trans-unit id="13">
+   <source><![CDATA[Time]]></source>
+   <target><![CDATA[Zeit]]></target>
+</trans-unit>
+<trans-unit id="14">
+   <source><![CDATA[Key]]></source>
+   <target><![CDATA[Schlüssel]]></target>
+</trans-unit>
+<trans-unit id="15">
+   <source><![CDATA[List of tracking]]></source>
+   <target><![CDATA[Liste der Tracking -]]></target>
+</trans-unit>
+<trans-unit id="16">
+   <source><![CDATA[Is Access]]></source>
+   <target><![CDATA[Ist der Zugang]]></target>
+</trans-unit>
+<trans-unit id="17">
+   <source><![CDATA[Yes]]></source>
+   <target><![CDATA[Ja]]></target>
+</trans-unit>
+<trans-unit id="18">
+   <source><![CDATA[No]]></source>
+   <target><![CDATA[Nein]]></target>
+</trans-unit>
+<trans-unit id="19">
+   <source><![CDATA[Authorize access]]></source>
+   <target><![CDATA[Autorisieren Zugang]]></target>
+</trans-unit>
+<trans-unit id="20">
+   <source><![CDATA[The key is bloqued]]></source>
+   <target><![CDATA[Der Schlüssel wird bloqued]]></target>
+</trans-unit>
+<trans-unit id="21">
+   <source><![CDATA[Unknown key]]></source>
+   <target><![CDATA[Unbekannt Schlüssel]]></target>
+</trans-unit>
+<trans-unit id="22">
+   <source><![CDATA[The key is not attributed]]></source>
+   <target><![CDATA[Der Schlüssel ist nicht zugeschrieben]]></target>
+</trans-unit>
+<trans-unit id="23">
+   <source><![CDATA[The person does not belong to any group]]></source>
+   <target><![CDATA[Die Person gehört nicht zu einer Gruppe]]></target>
+</trans-unit>
+<trans-unit id="24">
+   <source><![CDATA[Access refused during the week-end]]></source>
+   <target><![CDATA[Zugriff verweigert während der Woche-Ende]]></target>
+</trans-unit>
+<trans-unit id="25">
+   <source><![CDATA[Access refused during the non-workinf day]]></source>
+   <target><![CDATA[Zugriff verweigert während die nicht-workinf Tage]]></target>
+</trans-unit>
+<trans-unit id="26">
+   <source><![CDATA[Access refused at this date]]></source>
+   <target><![CDATA[Zugriff verweigert zu diesem Zeitpunkt]]></target>
+</trans-unit>
+<trans-unit id="27">
+   <source><![CDATA[Access refused at this time]]></source>
+   <target><![CDATA[Zugriff verweigert zu diesem Zeitpunkt]]></target>
+</trans-unit>
+<trans-unit id="28">
+   <source><![CDATA[No access for this access point]]></source>
+   <target><![CDATA[Kein Zugang für diesen Access Point]]></target>
+</trans-unit>
+<trans-unit id="29">
+   <source><![CDATA[Not handled by Horux]]></source>
+   <target><![CDATA[Nicht von Horux]]></target>
+</trans-unit>
+<trans-unit id="30">
+   <source><![CDATA[The person is blocked]]></source>
+   <target><![CDATA[Die Person ist gesperrt]]></target>
+</trans-unit>
+</body>
+</file>
+</xliff>

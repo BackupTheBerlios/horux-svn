@@ -1,0 +1,2495 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.0">
+<file source-language="en" target-language="de" datatype="plaintext" original="messages" date="2009-02-10T08:19:32Z" product-name="messages">
+<body>
+<trans-unit id="1">
+   <source>Report generate at {date} by {user}</source>
+   <target>Bericht generieren unter {date} von {user}</target>
+</trans-unit>
+<trans-unit id="2">
+   <source>Page</source>
+   <target>Seite</target>
+</trans-unit>
+<trans-unit id="3">
+   <source><![CDATA[Horux Configuration Changed]]></source>
+   <target><![CDATA[Horux Konfiguration geändert]]></target>
+</trans-unit>
+<trans-unit id="4">
+   <source><![CDATA[The Horux configuration was changed succeffuly!]]></source>
+   <target><![CDATA[Die Horux Konfiguration wurde geändert succeffuly!]]></target>
+</trans-unit>
+<trans-unit id="5">
+   <source><![CDATA[Edit]]></source>
+   <target><![CDATA[Bearbeiten]]></target>
+</trans-unit>
+<trans-unit id="6">
+   <source><![CDATA[New]]></source>
+   <target><![CDATA[Neu]]></target>
+</trans-unit>
+<trans-unit id="7">
+   <source><![CDATA[Delete]]></source>
+   <target><![CDATA[Löschen]]></target>
+</trans-unit>
+<trans-unit id="8">
+   <source><![CDATA[Print]]></source>
+   <target><![CDATA[Drucken]]></target>
+</trans-unit>
+<trans-unit id="9">
+   <source><![CDATA[Help]]></source>
+   <target><![CDATA[Hilfe]]></target>
+</trans-unit>
+<trans-unit id="10">
+   <source><![CDATA[Access Level List]]></source>
+   <target><![CDATA[Access Level Liste]]></target>
+</trans-unit>
+<trans-unit id="11">
+   <source><![CDATA[This record is modified by <b>]]></source>
+   <target><![CDATA[Dies wird durch <b>]]></target>
+</trans-unit>
+<trans-unit id="12">
+   <source><![CDATA[Name]]></source>
+   <target><![CDATA[Name]]></target>
+</trans-unit>
+<trans-unit id="13">
+   <source><![CDATA[Description]]></source>
+   <target><![CDATA[Beschreibung]]></target>
+</trans-unit>
+<trans-unit id="14">
+   <source><![CDATA[List of the access level]]></source>
+   <target><![CDATA[Liste der Zugriffsebene]]></target>
+</trans-unit>
+<trans-unit id="15">
+   <source><![CDATA[Full access]]></source>
+   <target><![CDATA[Voller Zugriff]]></target>
+</trans-unit>
+<trans-unit id="16">
+   <source><![CDATA[Yes]]></source>
+   <target><![CDATA[Ja]]></target>
+</trans-unit>
+<trans-unit id="17">
+   <source><![CDATA[No]]></source>
+   <target><![CDATA[Nein]]></target>
+</trans-unit>
+<trans-unit id="18">
+   <source><![CDATA[Apply to the week-end]]></source>
+   <target><![CDATA[Für die Wochenende]]></target>
+</trans-unit>
+<trans-unit id="19">
+   <source><![CDATA[Apply to the non working day]]></source>
+   <target><![CDATA[Für die nicht arbeitstäglich]]></target>
+</trans-unit>
+<trans-unit id="20">
+   <source><![CDATA[Valid from]]></source>
+   <target><![CDATA[Gültig ab]]></target>
+</trans-unit>
+<trans-unit id="21">
+   <source><![CDATA[Valid until]]></source>
+   <target><![CDATA[Gültig bis]]></target>
+</trans-unit>
+<trans-unit id="22">
+   <source><![CDATA[Monday]]></source>
+   <target><![CDATA[Montag]]></target>
+</trans-unit>
+<trans-unit id="23">
+   <source><![CDATA[Tuesday]]></source>
+   <target><![CDATA[Dienstag]]></target>
+</trans-unit>
+<trans-unit id="24">
+   <source><![CDATA[Wednesday]]></source>
+   <target><![CDATA[Mittwoch]]></target>
+</trans-unit>
+<trans-unit id="25">
+   <source><![CDATA[Thursday]]></source>
+   <target><![CDATA[Donnerstag]]></target>
+</trans-unit>
+<trans-unit id="26">
+   <source><![CDATA[Friday]]></source>
+   <target><![CDATA[Freitag]]></target>
+</trans-unit>
+<trans-unit id="27">
+   <source><![CDATA[Saturday]]></source>
+   <target><![CDATA[Samstag]]></target>
+</trans-unit>
+<trans-unit id="28">
+   <source><![CDATA[Sunday]]></source>
+   <target><![CDATA[Sonntag]]></target>
+</trans-unit>
+<trans-unit id="29">
+   <source><![CDATA[Select one item]]></source>
+   <target><![CDATA[Wählen Sie ein Element]]></target>
+</trans-unit>
+<trans-unit id="30">
+   <source>{n} access level was deleted</source>
+   <target>{n} Zugang wurde gelöscht</target>
+</trans-unit>
+<trans-unit id="31">
+   <source><![CDATA[Apply]]></source>
+   <target><![CDATA[Anwenden]]></target>
+</trans-unit>
+<trans-unit id="32">
+   <source><![CDATA[Save]]></source>
+   <target><![CDATA[Sichern]]></target>
+</trans-unit>
+<trans-unit id="33">
+   <source><![CDATA[Cancel]]></source>
+   <target><![CDATA[Abbrechen]]></target>
+</trans-unit>
+<trans-unit id="34">
+   <source><![CDATA[Add an access level]]></source>
+   <target><![CDATA[Fügen Sie eine Access-Ebene]]></target>
+</trans-unit>
+<trans-unit id="35">
+   <source><![CDATA[Parameters]]></source>
+   <target><![CDATA[Parameter]]></target>
+</trans-unit>
+<trans-unit id="36">
+   <source><![CDATA[Enter a name for this access level]]></source>
+   <target><![CDATA[Geben Sie einen Namen für diesen Zugang Ebene]]></target>
+</trans-unit>
+<trans-unit id="37">
+   <source><![CDATA[This field is required]]></source>
+   <target><![CDATA[Dieses Feld ist erforderlich]]></target>
+</trans-unit>
+<trans-unit id="38">
+   <source><![CDATA[Check it if you want a full access level]]></source>
+   <target><![CDATA[Überprüfen Sie, wenn Sie wollen eine vollständige Zugriff auf]]></target>
+</trans-unit>
+<trans-unit id="39">
+   <source><![CDATA[Check it if you want an access level having<br /> access during the non working day]]></source>
+   <target><![CDATA[Überprüfen Sie, wenn Sie eine Access-Ebene mit <br /> Zugang während des Arbeitstages nicht]]></target>
+</trans-unit>
+<trans-unit id="40">
+   <source><![CDATA[Non working day access]]></source>
+   <target><![CDATA[Nicht Arbeitstag Zugang]]></target>
+</trans-unit>
+<trans-unit id="41">
+   <source><![CDATA[Check it if you want an access level having<br /> access during the week-end]]></source>
+   <target><![CDATA[Überprüfen Sie, wenn Sie eine Access-Ebene mit <br /> Zugang in der Woche-Ende]]></target>
+</trans-unit>
+<trans-unit id="42">
+   <source><![CDATA[Week-end access]]></source>
+   <target><![CDATA[Week-End-Zugang]]></target>
+</trans-unit>
+<trans-unit id="43">
+   <source><![CDATA[Date when this access level is valid]]></source>
+   <target><![CDATA[Datum, an dem dieser Zugang ist gültig]]></target>
+</trans-unit>
+<trans-unit id="44">
+   <source><![CDATA[You must enter a valid date (d-M-yyyy).]]></source>
+   <target><![CDATA[Sie müssen ein gültiges Datum (D-M-jjjj).]]></target>
+</trans-unit>
+<trans-unit id="45">
+   <source><![CDATA[Date when this access level is unvalid]]></source>
+   <target><![CDATA[Datum, an dem dieser Zugang ist unvalid]]></target>
+</trans-unit>
+<trans-unit id="46">
+   <source><![CDATA[This date must be bigger that from]]></source>
+   <target><![CDATA[Dieses Datum muss größer aus, dass]]></target>
+</trans-unit>
+<trans-unit id="47">
+   <source><![CDATA[You could insert a description for this access level]]></source>
+   <target><![CDATA[Sie können eine Beschreibung für den Zugang dieser Ebene]]></target>
+</trans-unit>
+<trans-unit id="48">
+   <source><![CDATA[Time area]]></source>
+   <target><![CDATA[Time Zone]]></target>
+</trans-unit>
+<trans-unit id="49">
+   <source><![CDATA[Check it if you want to take Monday configuration<br/> as default for the rest of the week.]]></source>
+   <target><![CDATA[Überprüfen Sie, wenn Sie wollen, nehmen Montag <br/>-Konfiguration als Standard für den Rest der Woche.]]></target>
+</trans-unit>
+<trans-unit id="50">
+   <source><![CDATA[All days as Monday]]></source>
+   <target><![CDATA[Alle Tage am Montag]]></target>
+</trans-unit>
+<trans-unit id="51">
+   <source><![CDATA[The access level was added successfully]]></source>
+   <target><![CDATA[Der Zugang wurde erfolgreich hinzugefügt]]></target>
+</trans-unit>
+<trans-unit id="52">
+   <source><![CDATA[The access level was not added]]></source>
+   <target><![CDATA[Der Zugang wurde nicht hinzugefügt]]></target>
+</trans-unit>
+<trans-unit id="53">
+   <source><![CDATA[Modify an access level]]></source>
+   <target><![CDATA[Ändern Sie eine Access-Ebene]]></target>
+</trans-unit>
+<trans-unit id="54">
+   <source><![CDATA[The access level was modified successfully]]></source>
+   <target><![CDATA[Der Zugang wurde erfolgreich geändert]]></target>
+</trans-unit>
+<trans-unit id="55">
+   <source><![CDATA[The access level was not modified]]></source>
+   <target><![CDATA[Der Zugang wurde nicht verändert]]></target>
+</trans-unit>
+<trans-unit id="56">
+   <source><![CDATA[Configuration]]></source>
+   <target><![CDATA[Konfiguration]]></target>
+</trans-unit>
+<trans-unit id="57">
+   <source><![CDATA[Horux Server]]></source>
+   <target><![CDATA[Horux Server]]></target>
+</trans-unit>
+<trans-unit id="58">
+   <source><![CDATA[Enter the port number<br /> of the XMLRPC server for Horux]]></source>
+   <target><![CDATA[Geben Sie die Port-Nummer <br /> der XMLRPC-Server für Horux]]></target>
+</trans-unit>
+<trans-unit id="59">
+   <source><![CDATA[XMLRPC]]></source>
+   <target><![CDATA[XMLRPC]]></target>
+</trans-unit>
+<trans-unit id="60">
+   <source><![CDATA[You must enter an integer]]></source>
+   <target><![CDATA[Sie müssen eine Ganzzahl]]></target>
+</trans-unit>
+<trans-unit id="61">
+   <source><![CDATA[Logs]]></source>
+   <target><![CDATA[Protokolle]]></target>
+</trans-unit>
+<trans-unit id="62">
+   <source><![CDATA[Enter the path where the logs are saved]]></source>
+   <target><![CDATA[Geben Sie den Pfad, in dem die Protokolle gespeichert werden]]></target>
+</trans-unit>
+<trans-unit id="63">
+   <source><![CDATA[Path]]></source>
+   <target><![CDATA[Pfad]]></target>
+</trans-unit>
+<trans-unit id="64">
+   <source><![CDATA[Log all debug message from horuxd]]></source>
+   <target><![CDATA[Melden Sie sich alle Debug-Nachricht aus horuxd]]></target>
+</trans-unit>
+<trans-unit id="65">
+   <source><![CDATA[Debug info]]></source>
+   <target><![CDATA[Debug-Infos]]></target>
+</trans-unit>
+<trans-unit id="66">
+   <source><![CDATA[Enter the key allowing to access the online help]]></source>
+   <target><![CDATA[Geben Sie den Schlüssel erlauben den Zugriff auf die Online-Hilfe]]></target>
+</trans-unit>
+<trans-unit id="67">
+   <source><![CDATA[Key]]></source>
+   <target><![CDATA[Schlüssel]]></target>
+</trans-unit>
+<trans-unit id="68">
+   <source><![CDATA[Mail Settings]]></source>
+   <target><![CDATA[E-Mail-Einstellungen]]></target>
+</trans-unit>
+<trans-unit id="69">
+   <source><![CDATA[Select which mailer you wish to use for the delivery of site emails.]]></source>
+   <target><![CDATA[Wählen Sie den Mailer die Sie verwenden möchten, für die Lieferung von Website-E-Mails.]]></target>
+</trans-unit>
+<trans-unit id="70">
+   <source><![CDATA[Mailer]]></source>
+   <target><![CDATA[Mailer]]></target>
+</trans-unit>
+<trans-unit id="71">
+   <source><![CDATA[PHP Mail Function]]></source>
+   <target><![CDATA[PHP-Mail Funktion]]></target>
+</trans-unit>
+<trans-unit id="72">
+   <source><![CDATA[The e-mail address that will be used to send site e-mails from.]]></source>
+   <target><![CDATA[Die E-Mail-Adresse, die verwendet werden, um Website-E-Mails aus.]]></target>
+</trans-unit>
+<trans-unit id="73">
+   <source><![CDATA[Mail From]]></source>
+   <target><![CDATA[Von E-Mail]]></target>
+</trans-unit>
+<trans-unit id="74">
+   <source><![CDATA[By default, this field is populated with the site name entered during installation.]]></source>
+   <target><![CDATA[Standardmäßig wird dieses Feld wird mit dem Site-Namen während der Installation eingegeben.]]></target>
+</trans-unit>
+<trans-unit id="75">
+   <source><![CDATA[From Name]]></source>
+   <target><![CDATA[Von Name]]></target>
+</trans-unit>
+<trans-unit id="76">
+   <source><![CDATA[Enter the path to the sendmail program directory on the host server.]]></source>
+   <target><![CDATA[Geben Sie den Pfad zum sendmail-Programm-Verzeichnis auf dem Host-Server.]]></target>
+</trans-unit>
+<trans-unit id="77">
+   <source><![CDATA[Sendmail Path]]></source>
+   <target><![CDATA[Sendmail-Pfad]]></target>
+</trans-unit>
+<trans-unit id="78">
+   <source><![CDATA[Select Yes if your SMTP Host requires SMTP Authentication.]]></source>
+   <target><![CDATA[Wählen Sie Ja, wenn Sie den SMTP-Host SMTP-Authentifizierung erfordert.]]></target>
+</trans-unit>
+<trans-unit id="79">
+   <source><![CDATA[SMTP Authentication]]></source>
+   <target><![CDATA[SMTP-Authentifizierung]]></target>
+</trans-unit>
+<trans-unit id="80">
+   <source><![CDATA[Safe Connection]]></source>
+   <target><![CDATA[Sichere Verbindung]]></target>
+</trans-unit>
+<trans-unit id="81">
+   <source><![CDATA[None]]></source>
+   <target><![CDATA[Keine]]></target>
+</trans-unit>
+<trans-unit id="82">
+   <source><![CDATA[TLS]]></source>
+   <target><![CDATA[TLS]]></target>
+</trans-unit>
+<trans-unit id="83">
+   <source><![CDATA[SSL]]></source>
+   <target><![CDATA[SSL]]></target>
+</trans-unit>
+<trans-unit id="84">
+   <source><![CDATA[Enter the username for access to the SMTP host]]></source>
+   <target><![CDATA[Geben Sie den Benutzernamen für den Zugang zu den SMTP-Host]]></target>
+</trans-unit>
+<trans-unit id="85">
+   <source><![CDATA[SMTP Username]]></source>
+   <target><![CDATA[SMTP-Benutzername]]></target>
+</trans-unit>
+<trans-unit id="86">
+   <source><![CDATA[Enter the password for access to the SMTP host]]></source>
+   <target><![CDATA[Geben Sie das Passwort für den Zugang zu den SMTP-Host]]></target>
+</trans-unit>
+<trans-unit id="87">
+   <source><![CDATA[SMTP Password]]></source>
+   <target><![CDATA[SMTP-Passwort]]></target>
+</trans-unit>
+<trans-unit id="88">
+   <source><![CDATA[Enter the name of the SMTP host.]]></source>
+   <target><![CDATA[Geben Sie den Namen des SMTP-Host.]]></target>
+</trans-unit>
+<trans-unit id="89">
+   <source><![CDATA[SMTP Host]]></source>
+   <target><![CDATA[SMTP-Host]]></target>
+</trans-unit>
+<trans-unit id="90">
+   <source><![CDATA[Enter the number of the port of the SMTP host.]]></source>
+   <target><![CDATA[Geben Sie die Nummer des Ports des SMTP-Host.]]></target>
+</trans-unit>
+<trans-unit id="91">
+   <source><![CDATA[SMTP Port]]></source>
+   <target><![CDATA[SMTP-Port]]></target>
+</trans-unit>
+<trans-unit id="92">
+   <source><![CDATA[User]]></source>
+   <target><![CDATA[User]]></target>
+</trans-unit>
+<trans-unit id="93">
+   <source><![CDATA[Select from where the user information come from]]></source>
+   <target><![CDATA[Wählen Sie aus, in dem der Benutzer Informationen aus]]></target>
+</trans-unit>
+<trans-unit id="94">
+   <source><![CDATA[User method]]></source>
+   <target><![CDATA[User-Methode]]></target>
+</trans-unit>
+<trans-unit id="95">
+   <source><![CDATA[Name or IP address of the LDAP server. You can also specify a URL like ldap://hostname: port/]]></source>
+   <target><![CDATA[Name oder die IP-Adresse des LDAP-Servers. Sie können auch eine URL wie ldap: / / hostname: port /]]></target>
+</trans-unit>
+<trans-unit id="96">
+   <source><![CDATA[LDAP server name]]></source>
+   <target><![CDATA[LDAP-Server-Name]]></target>
+</trans-unit>
+<trans-unit id="97">
+   <source><![CDATA[Optionally, you can specify a port, which should be used to connect to LDAP server instead of the default port 389.]]></source>
+   <target><![CDATA[Optional können Sie einen Port, der verwendet werden soll, um eine Verbindung zum LDAP-Server anstelle des Standard-Port 389.]]></target>
+</trans-unit>
+<trans-unit id="98">
+   <source><![CDATA[Port number of the LDAP server]]></source>
+   <target><![CDATA[Port-Nummer des LDAP-Servers]]></target>
+</trans-unit>
+<trans-unit id="99">
+   <source><![CDATA[DN is the Distinguished Name, it situates information users, such as: o=My business, c=EN.]]></source>
+   <target><![CDATA[DN ist der Distinguished Name, bringt es Informationen, wie zB: o = Mein Unternehmen, c = DE.]]></target>
+</trans-unit>
+<trans-unit id="100">
+   <source><![CDATA[DN of LDAP]]></source>
+   <target><![CDATA[DN der LDAP -]]></target>
+</trans-unit>
+<trans-unit id="101">
+   <source><![CDATA[Leave blank if you use an access invited. If specified in phpBB, it will connect to the LDAP server as a user specified example:<br/> uid=User, or = MyUnit, o=MaCompagnie, c = EN. Required for servers with an Active Directory.]]></source>
+   <target><![CDATA[Lassen Sie die Felder leer, wenn Sie einen Zugang eingeladen. Wenn in phpBB, es wird eine Verbindung mit dem LDAP-Server als Benutzer angegebenen Beispiel: <br/> uid = User, oder = MyUnit, o = MaCompagnie, c = DE. Erforderlich für Server mit einer Active Directory.]]></target>
+</trans-unit>
+<trans-unit id="102">
+   <source><![CDATA[LDAP user]]></source>
+   <target><![CDATA[LDAP-Benutzer]]></target>
+</trans-unit>
+<trans-unit id="103">
+   <source><![CDATA[LDAP password]]></source>
+   <target><![CDATA[LDAP-Passwort]]></target>
+</trans-unit>
+<trans-unit id="104">
+   <source><![CDATA[The config was modified successfully]]></source>
+   <target><![CDATA[Die Konfiguration wurde erfolgreich]]></target>
+</trans-unit>
+<trans-unit id="105">
+   <source><![CDATA[The config was not modified.]]></source>
+   <target><![CDATA[Die Konfiguration wurde nicht verändert.]]></target>
+</trans-unit>
+<trans-unit id="106">
+   <source><![CDATA[Super User Manager]]></source>
+   <target><![CDATA[Super-User-Manager]]></target>
+</trans-unit>
+<trans-unit id="107">
+   <source><![CDATA[Access Level]]></source>
+   <target><![CDATA[Access Level]]></target>
+</trans-unit>
+<trans-unit id="108">
+   <source><![CDATA[User Wizard]]></source>
+   <target><![CDATA[User-Assistent]]></target>
+</trans-unit>
+<trans-unit id="109">
+   <source><![CDATA[User Groups]]></source>
+   <target><![CDATA[User Groups]]></target>
+</trans-unit>
+<trans-unit id="110">
+   <source><![CDATA[tracking]]></source>
+   <target><![CDATA[Tracking]]></target>
+</trans-unit>
+<trans-unit id="111">
+   <source><![CDATA[Tracking]]></source>
+   <target><![CDATA[Tracking]]></target>
+</trans-unit>
+<trans-unit id="112">
+   <source><![CDATA[Alarms]]></source>
+   <target><![CDATA[Alarme]]></target>
+</trans-unit>
+<trans-unit id="113">
+   <source><![CDATA[System Status]]></source>
+   <target><![CDATA[System-Status]]></target>
+</trans-unit>
+<trans-unit id="114">
+   <source><![CDATA[Welcome to Horux]]></source>
+   <target><![CDATA[Willkommen in Horux]]></target>
+</trans-unit>
+<trans-unit id="115">
+   <source><![CDATA[Congratulations on choosing Horux as your access control system. We hope you are able to manage your access with our program and maybe you will be able to give something back to the community later.]]></source>
+   <target><![CDATA[Herzlichen Glückwunsch zu Ihrer Wahl als Horux Access Control System. Wir hoffen, dass Sie in der Lage sind, verwalten Sie Ihre Zugangsdaten mit unserem Programm und vielleicht können Sie etwas zurück in die Gemeinschaft später.]]></target>
+</trans-unit>
+<trans-unit id="116">
+   <source>For your most common questions the best place to start looking for answers is the &lt;a href="http://forum.horux.ch" target="_blank"&gt;Frequently Asked Questions (FAQ)&lt;/a&gt; area.  If you are stuck on a particular screen in the Administration area of Horux (which is where you are now), then try clicking on the Help toolbar button which you will find on almost all screens.</source>
+   <target>Für Ihre am häufigsten gestellten Fragen der beste Platz zum Starten der Suche nach Antworten ist die &lt;a href="http://forum.horux.ch" target="_blank"&gt; Frequently Asked Questions (FAQ) &lt;/a&gt; Bereich. Wenn Sie stecken auf einem bestimmten Bildschirm im Bereich der Verwaltung Horux (wo Sie jetzt sind), dann versuchen Sie auf der Hilfe-Schaltfläche in der Symbolleiste, die Sie auf fast allen Bildschirmen.</target>
+</trans-unit>
+<trans-unit id="117">
+   <source>If you still have questions then take a look on our &lt;a href="http://forum.horux.ch" target="_blank"&gt;forum&lt;/a&gt; which is most likely the biggest resource on Horux there is and you will find almost every question answered at least once, so please try using the search function before asking your question.</source>
+   <target>Wenn Sie noch Fragen haben, dann werfen Sie einen Blick auf unsere &lt;a href="http://forum.horux.ch" target="_blank"&gt; Forum &lt;/a&gt;, die am ehesten die größte Ressource auf Horux gibt es, und Sie finden fast jede Frage beantwortet mindestens einmal, so wenden Sie sich bitte versuchen Sie es mit der Suche-Funktion, bevor Sie Ihre Frage.</target>
+</trans-unit>
+<trans-unit id="118">
+   <source><![CDATA[We hope you have much fun and success with Horux and hope to see you in the forum.]]></source>
+   <target><![CDATA[Wir wünschen Ihnen viel Spaß und Erfolg mit Horux und hoffen, Sie im Forum.]]></target>
+</trans-unit>
+<trans-unit id="119">
+   <source><![CDATA[Logged in users]]></source>
+   <target><![CDATA[Angemeldete Benutzer]]></target>
+</trans-unit>
+<trans-unit id="120">
+   <source><![CDATA[Group]]></source>
+   <target><![CDATA[Gruppe]]></target>
+</trans-unit>
+<trans-unit id="121">
+   <source><![CDATA[Last tracking]]></source>
+   <target><![CDATA[Letzte Tracking]]></target>
+</trans-unit>
+<trans-unit id="122">
+   <source><![CDATA[Date]]></source>
+   <target><![CDATA[Datum]]></target>
+</trans-unit>
+<trans-unit id="123">
+   <source><![CDATA[Time]]></source>
+   <target><![CDATA[Zeit]]></target>
+</trans-unit>
+<trans-unit id="124">
+   <source><![CDATA[Entry]]></source>
+   <target><![CDATA[Eintrag]]></target>
+</trans-unit>
+<trans-unit id="125">
+   <source><![CDATA[Last alarms]]></source>
+   <target><![CDATA[Letzte Erinnerungen]]></target>
+</trans-unit>
+<trans-unit id="126">
+   <source><![CDATA[Level]]></source>
+   <target><![CDATA[Level]]></target>
+</trans-unit>
+<trans-unit id="127">
+   <source><![CDATA[Object]]></source>
+   <target><![CDATA[Object]]></target>
+</trans-unit>
+<trans-unit id="128">
+   <source><![CDATA[Server who listen the interfaces cannot be started]]></source>
+   <target><![CDATA[Server, die hören die Schnittstellen kann nicht gestartet werden]]></target>
+</trans-unit>
+<trans-unit id="129">
+   <source><![CDATA[XMLRPC server cannot be started]]></source>
+   <target><![CDATA[XMLRPC-Server kann nicht gestartet werden]]></target>
+</trans-unit>
+<trans-unit id="130">
+   <source><![CDATA[Reader communication is closed]]></source>
+   <target><![CDATA[Reader Kommunikation ist geschlossen]]></target>
+</trans-unit>
+<trans-unit id="131">
+   <source><![CDATA[The reader database is full]]></source>
+   <target><![CDATA[Die Leser-Datenbank ist voll]]></target>
+</trans-unit>
+<trans-unit id="132">
+   <source><![CDATA[Impossible to insert a new key in the reader database]]></source>
+   <target><![CDATA[Unmöglich, einen neuen Schlüssel in der Leser-Datenbank]]></target>
+</trans-unit>
+<trans-unit id="133">
+   <source><![CDATA[Impossible to remove a key from the reader database]]></source>
+   <target><![CDATA[Unmöglich, einen Schlüssel aus der Leser-Datenbank]]></target>
+</trans-unit>
+<trans-unit id="134">
+   <source><![CDATA[Concetrator communication is closed]]></source>
+   <target><![CDATA[Concetrator Kommunikation ist geschlossen]]></target>
+</trans-unit>
+<trans-unit id="135">
+   <source><![CDATA[New status on the interface for the input 1]]></source>
+   <target><![CDATA[Neuer Status der Schnittstelle für den Eingang 1]]></target>
+</trans-unit>
+<trans-unit id="136">
+   <source><![CDATA[New status on the interface for the input 2]]></source>
+   <target><![CDATA[Neuer Status der Schnittstelle für den Eingang 2]]></target>
+</trans-unit>
+<trans-unit id="137">
+   <source><![CDATA[New status on the interface for the input 3]]></source>
+   <target><![CDATA[Neuer Status der Schnittstelle für den Eingang 3]]></target>
+</trans-unit>
+<trans-unit id="138">
+   <source><![CDATA[New status on the interface for the input 4]]></source>
+   <target><![CDATA[Neuer Status der Schnittstelle für den Eingang 4]]></target>
+</trans-unit>
+<trans-unit id="139">
+   <source><![CDATA[New status on the interface for the input 5]]></source>
+   <target><![CDATA[Neuer Status der Schnittstelle für den Eingang 5]]></target>
+</trans-unit>
+<trans-unit id="140">
+   <source><![CDATA[New status on the interface for the input 6]]></source>
+   <target><![CDATA[Neuer Status der Schnittstelle für den Eingang 6]]></target>
+</trans-unit>
+<trans-unit id="141">
+   <source><![CDATA[New status on the interface for the input 7]]></source>
+   <target><![CDATA[Neuer Status der Schnittstelle für den Eingang 7]]></target>
+</trans-unit>
+<trans-unit id="142">
+   <source><![CDATA[New status on the interface for the input 8]]></source>
+   <target><![CDATA[Neuer Status der Schnittstelle für den Eingang 8]]></target>
+</trans-unit>
+<trans-unit id="143">
+   <source><![CDATA[New status on the reader for the input 1]]></source>
+   <target><![CDATA[Neuer Status auf den Leser für den Eingang 1]]></target>
+</trans-unit>
+<trans-unit id="144">
+   <source><![CDATA[New status on the reader for the input 2]]></source>
+   <target><![CDATA[Neuer Status auf den Leser für den Eingang 2]]></target>
+</trans-unit>
+<trans-unit id="145">
+   <source><![CDATA[The reader database is soon full]]></source>
+   <target><![CDATA[Die Leser-Datenbank ist bald voll]]></target>
+</trans-unit>
+<trans-unit id="146">
+   <source><![CDATA[The concentrator temparature is too hot]]></source>
+   <target><![CDATA[Der Konzentrator temparature ist zu heiß]]></target>
+</trans-unit>
+<trans-unit id="147">
+   <source><![CDATA[The interface antivandal is off]]></source>
+   <target><![CDATA[Die Schnittstelle ist antivandal]]></target>
+</trans-unit>
+<trans-unit id="148">
+   <source><![CDATA[Somebody try to use a key who was blocked]]></source>
+   <target><![CDATA[Jemand versucht, ein Schlüssel, der gesperrt]]></target>
+</trans-unit>
+<trans-unit id="149">
+   <source><![CDATA[An none auhtorize person try to enter]]></source>
+   <target><![CDATA[Ein auhtorize keine Person versuchen,]]></target>
+</trans-unit>
+<trans-unit id="150">
+   <source><![CDATA[The interface antivandal is on]]></source>
+   <target><![CDATA[Die Schnittstelle ist auf antivandal]]></target>
+</trans-unit>
+<trans-unit id="151">
+   <source><![CDATA[Reader communication is opened]]></source>
+   <target><![CDATA[Reader Kommunikation eröffnet]]></target>
+</trans-unit>
+<trans-unit id="152">
+   <source><![CDATA[Concetrator communication is opened]]></source>
+   <target><![CDATA[Concetrator Kommunikation ist eröffnet]]></target>
+</trans-unit>
+<trans-unit id="153">
+   <source><![CDATA[Server CRITICAL error]]></source>
+   <target><![CDATA[Server Kritischer Fehler]]></target>
+</trans-unit>
+<trans-unit id="154">
+   <source><![CDATA[System CRITICAL error]]></source>
+   <target><![CDATA[System Kritischer Fehler]]></target>
+</trans-unit>
+<trans-unit id="155">
+   <source><![CDATA[System WARNING error]]></source>
+   <target><![CDATA[System WARNUNG Fehler]]></target>
+</trans-unit>
+<trans-unit id="156">
+   <source><![CDATA[Security WARNING]]></source>
+   <target><![CDATA[Sicherheitswarnung]]></target>
+</trans-unit>
+<trans-unit id="157">
+   <source><![CDATA[System OK]]></source>
+   <target><![CDATA[System OK]]></target>
+</trans-unit>
+<trans-unit id="158">
+   <source><![CDATA[Interface]]></source>
+   <target><![CDATA[Interface]]></target>
+</trans-unit>
+<trans-unit id="159">
+   <source><![CDATA[Server]]></source>
+   <target><![CDATA[Server]]></target>
+</trans-unit>
+<trans-unit id="160">
+   <source><![CDATA[Add a new Hardware]]></source>
+   <target><![CDATA[Fügen Sie eine neue Hardware]]></target>
+</trans-unit>
+<trans-unit id="161">
+   <source><![CDATA[Selection of the hardware type]]></source>
+   <target><![CDATA[Die Auswahl der Hardware-Typ]]></target>
+</trans-unit>
+<trans-unit id="162">
+   <source>{type} technology</source>
+   <target>{type} Technologie</target>
+</trans-unit>
+<trans-unit id="163">
+   <source><![CDATA[Hardware List]]></source>
+   <target><![CDATA[Hardware-Liste]]></target>
+</trans-unit>
+<trans-unit id="164">
+   <source><![CDATA[Filter]]></source>
+   <target><![CDATA[Filter]]></target>
+</trans-unit>
+<trans-unit id="165">
+   <source><![CDATA[All]]></source>
+   <target><![CDATA[Alle]]></target>
+</trans-unit>
+<trans-unit id="166">
+   <source><![CDATA[Access Point]]></source>
+   <target><![CDATA[Access Point]]></target>
+</trans-unit>
+<trans-unit id="167">
+   <source><![CDATA[Others]]></source>
+   <target><![CDATA[Andere]]></target>
+</trans-unit>
+<trans-unit id="168">
+   <source><![CDATA[Type]]></source>
+   <target><![CDATA[Typ]]></target>
+</trans-unit>
+<trans-unit id="169">
+   <source><![CDATA[Open time]]></source>
+   <target><![CDATA[Öffnungszeit]]></target>
+</trans-unit>
+<trans-unit id="170">
+   <source><![CDATA[Attribute one or more open time]]></source>
+   <target><![CDATA[Attribut eine oder mehrere offene Zeit]]></target>
+</trans-unit>
+<trans-unit id="171">
+   <source><![CDATA[List of the hardware]]></source>
+   <target><![CDATA[Liste der Hardware -]]></target>
+</trans-unit>
+<trans-unit id="172">
+   <source>{n} interface was deleted</source>
+   <target>{n} Schnittstelle wurde gelöscht</target>
+</trans-unit>
+<trans-unit id="173">
+   <source><![CDATA[Debug]]></source>
+   <target><![CDATA[Debug]]></target>
+</trans-unit>
+<trans-unit id="174">
+   <source><![CDATA[Access plugin]]></source>
+   <target><![CDATA[Access-Plugin]]></target>
+</trans-unit>
+<trans-unit id="175">
+   <source><![CDATA[About]]></source>
+   <target><![CDATA[Über]]></target>
+</trans-unit>
+<trans-unit id="176">
+   <source><![CDATA[Horux]]></source>
+   <target><![CDATA[Horux]]></target>
+</trans-unit>
+<trans-unit id="177">
+   <source><![CDATA[License]]></source>
+   <target><![CDATA[Lizenz]]></target>
+</trans-unit>
+<trans-unit id="178">
+   <source><![CDATA[Horux Version]]></source>
+   <target><![CDATA[Horux Version]]></target>
+</trans-unit>
+<trans-unit id="179">
+   <source><![CDATA[Site]]></source>
+   <target><![CDATA[Site]]></target>
+</trans-unit>
+<trans-unit id="180">
+   <source><![CDATA[Community Forum]]></source>
+   <target><![CDATA[Community Forum]]></target>
+</trans-unit>
+<trans-unit id="181">
+   <source><![CDATA[Copyright]]></source>
+   <target><![CDATA[Copyright]]></target>
+</trans-unit>
+<trans-unit id="182">
+   <source><![CDATA[System Information]]></source>
+   <target><![CDATA[System-Informationen]]></target>
+</trans-unit>
+<trans-unit id="183">
+   <source><![CDATA[Setting]]></source>
+   <target><![CDATA[Einstellung]]></target>
+</trans-unit>
+<trans-unit id="184">
+   <source><![CDATA[Value]]></source>
+   <target><![CDATA[Preis]]></target>
+</trans-unit>
+<trans-unit id="185">
+   <source><![CDATA[PHP built On]]></source>
+   <target><![CDATA[PHP auf]]></target>
+</trans-unit>
+<trans-unit id="186">
+   <source><![CDATA[Database Version]]></source>
+   <target><![CDATA[Database Version]]></target>
+</trans-unit>
+<trans-unit id="187">
+   <source><![CDATA[Database Collation]]></source>
+   <target><![CDATA[Datenbank-sortierfolge]]></target>
+</trans-unit>
+<trans-unit id="188">
+   <source><![CDATA[PHP Version]]></source>
+   <target><![CDATA[PHP Version]]></target>
+</trans-unit>
+<trans-unit id="189">
+   <source><![CDATA[Web Server]]></source>
+   <target><![CDATA[Web-Server]]></target>
+</trans-unit>
+<trans-unit id="190">
+   <source><![CDATA[WebServer to PHP interface]]></source>
+   <target><![CDATA[Webserver PHP-Schnittstelle]]></target>
+</trans-unit>
+<trans-unit id="191">
+   <source><![CDATA[User Agent]]></source>
+   <target><![CDATA[User Agent]]></target>
+</trans-unit>
+<trans-unit id="192">
+   <source><![CDATA[N/A (mySQL < 4.1.2)]]></source>
+   <target><![CDATA[N / A (mySQL <4.1.2)]]></target>
+</trans-unit>
+<trans-unit id="193">
+   <source><![CDATA[n/a]]></source>
+   <target><![CDATA[n / a]]></target>
+</trans-unit>
+<trans-unit id="194">
+   <source><![CDATA[Information]]></source>
+   <target><![CDATA[Information]]></target>
+</trans-unit>
+<trans-unit id="195">
+   <source><![CDATA[System Info]]></source>
+   <target><![CDATA[System-Info]]></target>
+</trans-unit>
+<trans-unit id="196">
+   <source><![CDATA[PHP Settings]]></source>
+   <target><![CDATA[PHP-Einstellungen]]></target>
+</trans-unit>
+<trans-unit id="197">
+   <source><![CDATA[Directory Permissions]]></source>
+   <target><![CDATA[Directory-Berechtigungen]]></target>
+</trans-unit>
+<trans-unit id="198">
+   <source><![CDATA[PHP Information]]></source>
+   <target><![CDATA[PHP-Informationen]]></target>
+</trans-unit>
+<trans-unit id="199">
+   <source><![CDATA[Directory]]></source>
+   <target><![CDATA[Directory]]></target>
+</trans-unit>
+<trans-unit id="200">
+   <source><![CDATA[Status]]></source>
+   <target><![CDATA[Status]]></target>
+</trans-unit>
+<trans-unit id="201">
+   <source><![CDATA[Devices Directory]]></source>
+   <target><![CDATA[Geräte-Verzeichnis]]></target>
+</trans-unit>
+<trans-unit id="202">
+   <source><![CDATA[Components Directory]]></source>
+   <target><![CDATA[Directory-Komponenten]]></target>
+</trans-unit>
+<trans-unit id="203">
+   <source><![CDATA[Cache Directory]]></source>
+   <target><![CDATA[Cache-Verzeichnis]]></target>
+</trans-unit>
+<trans-unit id="204">
+   <source><![CDATA[Templates Directory]]></source>
+   <target><![CDATA[Vorlagen-Verzeichnis]]></target>
+</trans-unit>
+<trans-unit id="205">
+   <source><![CDATA[Languages Directory]]></source>
+   <target><![CDATA[Sprachen Directory]]></target>
+</trans-unit>
+<trans-unit id="206">
+   <source><![CDATA[Pictures Directory]]></source>
+   <target><![CDATA[Bilder-Verzeichnis]]></target>
+</trans-unit>
+<trans-unit id="207">
+   <source><![CDATA[temp Directory]]></source>
+   <target><![CDATA[Temp-Verzeichnis]]></target>
+</trans-unit>
+<trans-unit id="208">
+   <source><![CDATA[Writeable]]></source>
+   <target><![CDATA[Writeable]]></target>
+</trans-unit>
+<trans-unit id="209">
+   <source><![CDATA[Unwriteable]]></source>
+   <target><![CDATA[Nicht Beschreibbar]]></target>
+</trans-unit>
+<trans-unit id="210">
+   <source><![CDATA[Relevant PHP Settings]]></source>
+   <target><![CDATA[Relevante PHP-Einstellungen]]></target>
+</trans-unit>
+<trans-unit id="211">
+   <source><![CDATA[Safe Mode]]></source>
+   <target><![CDATA[Safe Mode]]></target>
+</trans-unit>
+<trans-unit id="212">
+   <source><![CDATA[Open basedir]]></source>
+   <target><![CDATA[Open basedir]]></target>
+</trans-unit>
+<trans-unit id="213">
+   <source><![CDATA[Display Errors]]></source>
+   <target><![CDATA[Display-Fehler]]></target>
+</trans-unit>
+<trans-unit id="214">
+   <source><![CDATA[Short Open Tags]]></source>
+   <target><![CDATA[Short Open Tags]]></target>
+</trans-unit>
+<trans-unit id="215">
+   <source><![CDATA[File Uploads]]></source>
+   <target><![CDATA[Datei-Uploads]]></target>
+</trans-unit>
+<trans-unit id="216">
+   <source><![CDATA[Magic Quotes]]></source>
+   <target><![CDATA[Magic Quotes]]></target>
+</trans-unit>
+<trans-unit id="217">
+   <source><![CDATA[Register Globals]]></source>
+   <target><![CDATA[Register Globals]]></target>
+</trans-unit>
+<trans-unit id="218">
+   <source><![CDATA[Output Buffering]]></source>
+   <target><![CDATA[Output Buffering]]></target>
+</trans-unit>
+<trans-unit id="219">
+   <source><![CDATA[Session save path]]></source>
+   <target><![CDATA[Session Speicherpfad]]></target>
+</trans-unit>
+<trans-unit id="220">
+   <source><![CDATA[Session auto start]]></source>
+   <target><![CDATA[Session auto start]]></target>
+</trans-unit>
+<trans-unit id="221">
+   <source><![CDATA[XML enabled]]></source>
+   <target><![CDATA[XML-fähigen]]></target>
+</trans-unit>
+<trans-unit id="222">
+   <source><![CDATA[Zlib enabled]]></source>
+   <target><![CDATA[Zlib aktiviert]]></target>
+</trans-unit>
+<trans-unit id="223">
+   <source><![CDATA[Disabled Functions]]></source>
+   <target><![CDATA[Behinderte Funktionen]]></target>
+</trans-unit>
+<trans-unit id="224">
+   <source><![CDATA[Mbstring enabled]]></source>
+   <target><![CDATA[Mbstring aktiviert]]></target>
+</trans-unit>
+<trans-unit id="225">
+   <source><![CDATA[Iconv available]]></source>
+   <target><![CDATA[Iconv verfügbar]]></target>
+</trans-unit>
+<trans-unit id="226">
+   <source><![CDATA[ON]]></source>
+   <target><![CDATA[ON]]></target>
+</trans-unit>
+<trans-unit id="227">
+   <source><![CDATA[OFF]]></source>
+   <target><![CDATA[OFF]]></target>
+</trans-unit>
+<trans-unit id="228">
+   <source><![CDATA[Administrator Settings:]]></source>
+   <target><![CDATA[Administrator-Einstellungen:]]></target>
+</trans-unit>
+<trans-unit id="229">
+   <source><![CDATA[Administrator]]></source>
+   <target><![CDATA[Administrator]]></target>
+</trans-unit>
+<trans-unit id="230">
+   <source><![CDATA[Administrator Username]]></source>
+   <target><![CDATA[Administrator Benutzername]]></target>
+</trans-unit>
+<trans-unit id="231">
+   <source><![CDATA[Password]]></source>
+   <target><![CDATA[Passwort]]></target>
+</trans-unit>
+<trans-unit id="232">
+   <source><![CDATA[Confirmation]]></source>
+   <target><![CDATA[Bestätigung]]></target>
+</trans-unit>
+<trans-unit id="233">
+   <source><![CDATA[Connection Settings:]]></source>
+   <target><![CDATA[Verbindungs-Einstellungen:]]></target>
+</trans-unit>
+<trans-unit id="234">
+   <source><![CDATA[Enter the hostname of the server Horux is to be installed on.]]></source>
+   <target><![CDATA[Geben Sie den Hostnamen des Servers Horux ist für die Installation auf.]]></target>
+</trans-unit>
+<trans-unit id="235">
+   <source><![CDATA[Enter the MySQL username, password, and database name you wish to use with Horux. These must already exist for the database you are going to use.]]></source>
+   <target><![CDATA[Geben Sie den MySQL-Benutzernamen, das Kennwort und die Datenbank-Namen, den Sie verwenden möchten, mit Horux. Diese müssen bereits für die Datenbank, die Sie verwenden wollen.]]></target>
+</trans-unit>
+<trans-unit id="236">
+   <source><![CDATA[Basic Settings]]></source>
+   <target><![CDATA[Grundlegende Einstellungen]]></target>
+</trans-unit>
+<trans-unit id="237">
+   <source><![CDATA[Host Name]]></source>
+   <target><![CDATA[Host-Name]]></target>
+</trans-unit>
+<trans-unit id="238">
+   <source><![CDATA[This is usually localhost or a host name provided by the administrator]]></source>
+   <target><![CDATA[Dies ist in der Regel localhost oder Host-Namen, die durch den Administrator]]></target>
+</trans-unit>
+<trans-unit id="239">
+   <source><![CDATA[User Name]]></source>
+   <target><![CDATA[Benutzername]]></target>
+</trans-unit>
+<trans-unit id="240">
+   <source><![CDATA[This can be the default MySQL username root or a username provided by the administrator, or one that you have created whilst setting up your database server.]]></source>
+   <target><![CDATA[Dies kann der Standard-MySQL-Benutzernamen root oder einen Benutzernamen, die durch den Administrator, oder eine, die Sie erstellt haben, während die Einrichtung der Datenbank-Server.]]></target>
+</trans-unit>
+<trans-unit id="241">
+   <source><![CDATA[Database Name]]></source>
+   <target><![CDATA[Database Name]]></target>
+</trans-unit>
+<trans-unit id="242">
+   <source><![CDATA[Pre-installation check for Horux 1.0.0 Production/Stable]]></source>
+   <target><![CDATA[Pre-Installation überprüfen, ob Horux 1.0.0 Production / Stable]]></target>
+</trans-unit>
+<trans-unit id="243">
+   <source><![CDATA[Configuration not ok]]></source>
+   <target><![CDATA[Konfiguration nicht ok]]></target>
+</trans-unit>
+<trans-unit id="244">
+   <source><![CDATA[If any of these items is not supported (marked as <strong><font color="#ff0000">No</font></strong>) your system does not match the minimum requirements necessary. Please take the appropriate actions to correct the errors. Failure to do so could lead to your Horux installation not functioning correctly.]]></source>
+   <target><![CDATA[Wenn eines dieser Elemente wird nicht unterstützt (als <strong> <font color="#ff0000"> Nein </ font> </ strong>) auf dem System nicht den Mindestanforderungen erforderlich. Bitte nehmen Sie sich die entsprechenden Maßnahmen zur Behebung der Fehler. Sollte dies nicht geschehen, könnte dazu führen, dass Ihre Horux Installation nicht korrekt funktioniert.]]></target>
+</trans-unit>
+<trans-unit id="245">
+   <source><![CDATA[XML support]]></source>
+   <target><![CDATA[XML-Unterstützung]]></target>
+</trans-unit>
+<trans-unit id="246">
+   <source><![CDATA[ZIP support]]></source>
+   <target><![CDATA[ZIP-Unterstützung]]></target>
+</trans-unit>
+<trans-unit id="247">
+   <source><![CDATA[MySQL support]]></source>
+   <target><![CDATA[MySQL-Unterstützung]]></target>
+</trans-unit>
+<trans-unit id="248">
+   <source><![CDATA[Recommended Settings:]]></source>
+   <target><![CDATA[Empfohlene Einstellungen:]]></target>
+</trans-unit>
+<trans-unit id="249">
+   <source><![CDATA[These settings are recommended for PHP in order to ensure full compatibility with Horux. However, Horux! will still operate if your settings do not quite match the recommended.]]></source>
+   <target><![CDATA[Diese Einstellungen für PHP werden empfohlen, um die Kompatibilität mit Horux. Allerdings, Horux! wird immer noch funktionieren, wenn Sie Ihre Einstellungen nicht ganz mit dem empfohlen.]]></target>
+</trans-unit>
+<trans-unit id="250">
+   <source><![CDATA[Directive]]></source>
+   <target><![CDATA[Richtlinie]]></target>
+</trans-unit>
+<trans-unit id="251">
+   <source><![CDATA[Suggest]]></source>
+   <target><![CDATA[Suggest]]></target>
+</trans-unit>
+<trans-unit id="252">
+   <source><![CDATA[Current]]></source>
+   <target><![CDATA[Aktuell]]></target>
+</trans-unit>
+<trans-unit id="253">
+   <source><![CDATA[Off]]></source>
+   <target><![CDATA[Aus]]></target>
+</trans-unit>
+<trans-unit id="254">
+   <source><![CDATA[Display the errors:]]></source>
+   <target><![CDATA[Anzeige der Fehler:]]></target>
+</trans-unit>
+<trans-unit id="255">
+   <source><![CDATA[File transfert:]]></source>
+   <target><![CDATA[Datei-Transfer:]]></target>
+</trans-unit>
+<trans-unit id="256">
+   <source><![CDATA[Site configuration:]]></source>
+   <target><![CDATA[Site-Konfiguration:]]></target>
+</trans-unit>
+<trans-unit id="257">
+   <source><![CDATA[Enter the name of the access site.]]></source>
+   <target><![CDATA[Geben Sie den Namen der Website den Zugang.]]></target>
+</trans-unit>
+<trans-unit id="258">
+   <source><![CDATA[Site Name]]></source>
+   <target><![CDATA[Site Name]]></target>
+</trans-unit>
+<trans-unit id="259">
+   <source><![CDATA[Steps]]></source>
+   <target><![CDATA[Schritte]]></target>
+</trans-unit>
+<trans-unit id="260">
+   <source><![CDATA[Next]]></source>
+   <target><![CDATA[Nächster]]></target>
+</trans-unit>
+<trans-unit id="261">
+   <source><![CDATA[Previous]]></source>
+   <target><![CDATA[Zurück]]></target>
+</trans-unit>
+<trans-unit id="262">
+   <source><![CDATA[Step 1 :Pre-installation Check]]></source>
+   <target><![CDATA[Schritt 1: Pre-Installation Check]]></target>
+</trans-unit>
+<trans-unit id="263">
+   <source><![CDATA[Step 2 : License]]></source>
+   <target><![CDATA[Schritt 2: Lizenz]]></target>
+</trans-unit>
+<trans-unit id="264">
+   <source><![CDATA[Step 3 : Database]]></source>
+   <target><![CDATA[Schritt 3: Datenbank]]></target>
+</trans-unit>
+<trans-unit id="265">
+   <source><![CDATA[Step 4 : Site]]></source>
+   <target><![CDATA[Schritt 4: Site]]></target>
+</trans-unit>
+<trans-unit id="266">
+   <source><![CDATA[Step 5 : Administrator]]></source>
+   <target><![CDATA[Schritt 5: Administrator]]></target>
+</trans-unit>
+<trans-unit id="267">
+   <source><![CDATA[Login]]></source>
+   <target><![CDATA[Anmeldung]]></target>
+</trans-unit>
+<trans-unit id="268">
+   <source><![CDATA[Ok]]></source>
+   <target><![CDATA[OK]]></target>
+</trans-unit>
+<trans-unit id="269">
+   <source><![CDATA[On]]></source>
+   <target><![CDATA[Auf]]></target>
+</trans-unit>
+<trans-unit id="270">
+   <source><![CDATA[Cannot connect to the database, please check your parameters.]]></source>
+   <target><![CDATA[Kann keine Verbindung zu der Datenbank, überprüfen Sie bitte Ihre Parameter.]]></target>
+</trans-unit>
+<trans-unit id="271">
+   <source><![CDATA[Cannot create the database:]]></source>
+   <target><![CDATA[Kann nicht der Datenbank:]]></target>
+</trans-unit>
+<trans-unit id="272">
+   <source>Impossible to select the database {n}</source>
+   <target>Unmöglich, um die Datenbank {n}</target>
+</trans-unit>
+<trans-unit id="273">
+   <source><![CDATA[Cannot read the sql installation file : ./protected/pages/install/horux.sql]]></source>
+   <target><![CDATA[Nicht lesen können, die SQL-Datei:. / Geschützt / pages / install / horux.sql]]></target>
+</trans-unit>
+<trans-unit id="274">
+   <source><![CDATA[Query error:]]></source>
+   <target><![CDATA[Query error:]]></target>
+</trans-unit>
+<trans-unit id="275">
+   <source><![CDATA[Cannot read the application configuration file : ./protected/application_install.xml]]></source>
+   <target><![CDATA[Nicht lesen können, die Anwendung Konfigurationsdatei:. / Geschützt / application_install.xml]]></target>
+</trans-unit>
+<trans-unit id="276">
+   <source><![CDATA[Cannot open the application configuration file : ./protected/application_p.xml]]></source>
+   <target><![CDATA[Kann nicht öffnen Sie die Anwendung, Konfiguration:. / Geschützt / application_p.xml]]></target>
+</trans-unit>
+<trans-unit id="277">
+   <source><![CDATA[Cannot write the application configuration file : ./protected/application_p.xml]]></source>
+   <target><![CDATA[Kann nicht schreiben, die Anwendung Konfigurationsdatei:. / Geschützt / application_p.xml]]></target>
+</trans-unit>
+<trans-unit id="278">
+   <source><![CDATA[The configuration was saved successfully]]></source>
+   <target><![CDATA[Die Konfiguration wurde erfolgreich gespeichert]]></target>
+</trans-unit>
+<trans-unit id="279">
+   <source><![CDATA[The configuration was not saved]]></source>
+   <target><![CDATA[Die Konfiguration wurde nicht gespeichert]]></target>
+</trans-unit>
+<trans-unit id="280">
+   <source><![CDATA[Components]]></source>
+   <target><![CDATA[Komponenten]]></target>
+</trans-unit>
+<trans-unit id="281">
+   <source><![CDATA[Version]]></source>
+   <target><![CDATA[Version]]></target>
+</trans-unit>
+<trans-unit id="282">
+   <source><![CDATA[Author]]></source>
+   <target><![CDATA[Autor]]></target>
+</trans-unit>
+<trans-unit id="283">
+   <source><![CDATA[Device]]></source>
+   <target><![CDATA[Gerät]]></target>
+</trans-unit>
+<trans-unit id="284">
+   <source><![CDATA[Uninstall]]></source>
+   <target><![CDATA[Deinstallieren]]></target>
+</trans-unit>
+<trans-unit id="285">
+   <source><![CDATA[Extensions Manager]]></source>
+   <target><![CDATA[Extensions Manager]]></target>
+</trans-unit>
+<trans-unit id="286">
+   <source><![CDATA[Install]]></source>
+   <target><![CDATA[Installieren]]></target>
+</trans-unit>
+<trans-unit id="287">
+   <source><![CDATA[Templates]]></source>
+   <target><![CDATA[Vorlagen]]></target>
+</trans-unit>
+<trans-unit id="288">
+   <source><![CDATA[Languages]]></source>
+   <target><![CDATA[Sprachen]]></target>
+</trans-unit>
+<trans-unit id="289">
+   <source><![CDATA[Devices]]></source>
+   <target><![CDATA[Geräte]]></target>
+</trans-unit>
+<trans-unit id="290">
+   <source><![CDATA[Upload Package File]]></source>
+   <target><![CDATA[Paket-Datei hochladen]]></target>
+</trans-unit>
+<trans-unit id="291">
+   <source><![CDATA[Package File]]></source>
+   <target><![CDATA[Paketdatei]]></target>
+</trans-unit>
+<trans-unit id="292">
+   <source><![CDATA[Upload File and Install]]></source>
+   <target><![CDATA[Datei hochladen und Installieren]]></target>
+</trans-unit>
+<trans-unit id="293">
+   <source><![CDATA[The directory ./tmp must be writeable to install an extension]]></source>
+   <target><![CDATA[Das Verzeichnis. / Tmp müssen schreibbar zu installieren eine Erweiterung]]></target>
+</trans-unit>
+<trans-unit id="294">
+   <source>{n} components was deleted</source>
+   <target>{n} Komponenten wurde gelöscht</target>
+</trans-unit>
+<trans-unit id="295">
+   <source>{n} devices was deleted</source>
+   <target>{n} Geräte wurde gelöscht</target>
+</trans-unit>
+<trans-unit id="296">
+   <source>{n} themes was deleted</source>
+   <target>{n} Themen wurde gelöscht</target>
+</trans-unit>
+<trans-unit id="297">
+   <source>{n} language was deleted</source>
+   <target>{n} Sprache wurde gelöscht</target>
+</trans-unit>
+<trans-unit id="298">
+   <source><![CDATA[The directory ./protected/pages/components must be writeable to install a component extension]]></source>
+   <target><![CDATA[Das Verzeichnis. / Geschützt / pages / Komponenten müssen schreibbar für die Installation einer Komponente Erweiterung]]></target>
+</trans-unit>
+<trans-unit id="299">
+   <source><![CDATA[Warning! - This component is already installed]]></source>
+   <target><![CDATA[Warnung! - Diese Komponente ist bereits installiert]]></target>
+</trans-unit>
+<trans-unit id="300">
+   <source><![CDATA[The component is well installed. You have now to give the right access for this component.]]></source>
+   <target><![CDATA[Die Komponente ist installiert. Sie haben jetzt das Recht zu geben, den Zugang für diese Komponente.]]></target>
+</trans-unit>
+<trans-unit id="301">
+   <source><![CDATA[The directory ./protected/messages must be writeable to install a language extension]]></source>
+   <target><![CDATA[Das Verzeichnis. / Geschützt / messages müssen schreibbar zu installieren eine Sprache Verlängerung]]></target>
+</trans-unit>
+<trans-unit id="302">
+   <source><![CDATA[Warning! - This language is already installed]]></source>
+   <target><![CDATA[Warnung! - Diese Sprache ist bereits installiert]]></target>
+</trans-unit>
+<trans-unit id="303">
+   <source><![CDATA[The language is well installed.]]></source>
+   <target><![CDATA[Die Sprache ist auch installiert.]]></target>
+</trans-unit>
+<trans-unit id="304">
+   <source><![CDATA[The directory ./themes must be writeable to install a template extension]]></source>
+   <target><![CDATA[Das Verzeichnis. / Themen müssen schreibbar für die Installation einer Vorlage Erweiterung]]></target>
+</trans-unit>
+<trans-unit id="305">
+   <source><![CDATA[Warning! - This template is already installed]]></source>
+   <target><![CDATA[Warnung! - Diese Vorlage ist bereits installiert]]></target>
+</trans-unit>
+<trans-unit id="306">
+   <source><![CDATA[The theme is well installed.]]></source>
+   <target><![CDATA[Das Thema ist auch installiert.]]></target>
+</trans-unit>
+<trans-unit id="307">
+   <source><![CDATA[The directory ./protected/pages/hardware/device must be writeable to install a device extension]]></source>
+   <target><![CDATA[Das Verzeichnis. / Geschützt / pages / Hardware / Geräte müssen schreibbar zu installieren ein Gerät Erweiterung]]></target>
+</trans-unit>
+<trans-unit id="308">
+   <source><![CDATA[Warning! - This device is already installed]]></source>
+   <target><![CDATA[Warnung! - Das Gerät ist bereits installiert]]></target>
+</trans-unit>
+<trans-unit id="309">
+   <source><![CDATA[The device is well installed. You have now to give the right access for this device.]]></source>
+   <target><![CDATA[Das Gerät ist auch installiert. Sie haben nun, die richtigen Zugang zu diesem Gerät.]]></target>
+</trans-unit>
+<trans-unit id="310">
+   <source><![CDATA[Warning! - Unknown install type:{type}]]></source>
+   <target><![CDATA[Warnung! - Unbekannte Art der Installation: (type)]]></target>
+</trans-unit>
+<trans-unit id="311">
+   <source><![CDATA[Warning! - Failed to move file. Impossible to unzip the archive]]></source>
+   <target><![CDATA[Warnung! - Fehler-Datei zu bewegen. Unmöglich, Entpacken Sie das Archiv]]></target>
+</trans-unit>
+<trans-unit id="312">
+   <source><![CDATA[Warning! - Failed to move file. Cannot save the archive]]></source>
+   <target><![CDATA[Warnung! - Fehler-Datei zu bewegen. Kann nicht speichern Sie das Archiv]]></target>
+</trans-unit>
+<trans-unit id="313">
+   <source><![CDATA[Warning! - Failed to move file. Unknown Archive Type]]></source>
+   <target><![CDATA[Warnung! - Fehler-Datei zu bewegen. Unbekannt Archiv Typ]]></target>
+</trans-unit>
+<trans-unit id="314">
+   <source><![CDATA[There was an error uploading this file to the server.]]></source>
+   <target><![CDATA[Es wurde ein Fehler Hochladen dieser Datei auf den Server.]]></target>
+</trans-unit>
+<trans-unit id="315">
+   <source><![CDATA[This archive does not contain the file install.xml]]></source>
+   <target><![CDATA[Dieses Archiv enthält nicht die Datei install.xml]]></target>
+</trans-unit>
+<trans-unit id="316">
+   <source><![CDATA[Default]]></source>
+   <target><![CDATA[Vorgabe]]></target>
+</trans-unit>
+<trans-unit id="317">
+   <source><![CDATA[Language]]></source>
+   <target><![CDATA[Sprache]]></target>
+</trans-unit>
+<trans-unit id="318">
+   <source><![CDATA[Select only one item]]></source>
+   <target><![CDATA[Wählen Sie nur ein Element]]></target>
+</trans-unit>
+<trans-unit id="319">
+   <source><![CDATA[New default language updated]]></source>
+   <target><![CDATA[Neue Standard-Sprache aktualisiert]]></target>
+</trans-unit>
+<trans-unit id="320">
+   <source><![CDATA[Template]]></source>
+   <target><![CDATA[Vorlage]]></target>
+</trans-unit>
+<trans-unit id="321">
+   <source><![CDATA[New default template updated]]></source>
+   <target><![CDATA[Neue Standard-Vorlage aktualisiert]]></target>
+</trans-unit>
+<trans-unit id="322">
+   <source><![CDATA[Key List]]></source>
+   <target><![CDATA[Key List]]></target>
+</trans-unit>
+<trans-unit id="323">
+   <source><![CDATA[Identificator]]></source>
+   <target><![CDATA[Identifikator]]></target>
+</trans-unit>
+<trans-unit id="324">
+   <source><![CDATA[Attribution]]></source>
+   <target><![CDATA[Namensnennung]]></target>
+</trans-unit>
+<trans-unit id="325">
+   <source><![CDATA[Attributed]]></source>
+   <target><![CDATA[Zugeschrieben]]></target>
+</trans-unit>
+<trans-unit id="326">
+   <source><![CDATA[Unattributed]]></source>
+   <target><![CDATA[Nicht zugewiesenen]]></target>
+</trans-unit>
+<trans-unit id="327">
+   <source><![CDATA[Blocked]]></source>
+   <target><![CDATA[Gesperrte]]></target>
+</trans-unit>
+<trans-unit id="328">
+   <source><![CDATA[Unblocked]]></source>
+   <target><![CDATA[Unblocked]]></target>
+</trans-unit>
+<trans-unit id="329">
+   <source><![CDATA[Key Number]]></source>
+   <target><![CDATA[Key-Nummer]]></target>
+</trans-unit>
+<trans-unit id="330">
+   <source><![CDATA[Click here to edit the user]]></source>
+   <target><![CDATA[Klicken Sie hier, um die Benutzer]]></target>
+</trans-unit>
+<trans-unit id="331">
+   <source><![CDATA[Block]]></source>
+   <target><![CDATA[Block]]></target>
+</trans-unit>
+<trans-unit id="332">
+   <source><![CDATA[Click here to block or<br/> unblock the key]]></source>
+   <target><![CDATA[Klicken Sie hier, um zu sperren oder die Sperre der <br/> Schlüssel]]></target>
+</trans-unit>
+<trans-unit id="333">
+   <source>...Reading...</source>
+   <target>...Lesung...</target>
+</trans-unit>
+<trans-unit id="334">
+   <source><![CDATA[List of the keys]]></source>
+   <target><![CDATA[Liste der Schlüssel]]></target>
+</trans-unit>
+<trans-unit id="335">
+   <source>{n} key was deleted</source>
+   <target>{n} Schlüssel wurde gelöscht</target>
+</trans-unit>
+<trans-unit id="336">
+   <source><![CDATA[Add a Key]]></source>
+   <target><![CDATA[Fügen Sie einen Schlüssel]]></target>
+</trans-unit>
+<trans-unit id="337">
+   <source><![CDATA[Enter a <strong>unique</strong> identificator for this key]]></source>
+   <target><![CDATA[Geben Sie einen einzigartigen <strong> </ strong> Identifikator für diesen Schlüssel]]></target>
+</trans-unit>
+<trans-unit id="338">
+   <source><![CDATA[This identificator is already used]]></source>
+   <target><![CDATA[Dieser Identifikator wird bereits]]></target>
+</trans-unit>
+<trans-unit id="339">
+   <source><![CDATA[Unique serial number of the Key]]></source>
+   <target><![CDATA[Eindeutige Seriennummer des Key]]></target>
+</trans-unit>
+<trans-unit id="340">
+   <source><![CDATA[Key number]]></source>
+   <target><![CDATA[Schlüsselnummer]]></target>
+</trans-unit>
+<trans-unit id="341">
+   <source><![CDATA[This serialNumber is already used]]></source>
+   <target><![CDATA[Diese serialNumber wird bereits]]></target>
+</trans-unit>
+<trans-unit id="342">
+   <source><![CDATA[Check it if the key must be blocked]]></source>
+   <target><![CDATA[Überprüfen Sie, wenn Sie den Schlüssel gesperrt werden]]></target>
+</trans-unit>
+<trans-unit id="343">
+   <source><![CDATA[Attribute this key to somebody]]></source>
+   <target><![CDATA[Attribute dieser Schlüssel an jemanden]]></target>
+</trans-unit>
+<trans-unit id="344">
+   <source><![CDATA[---- No attribution ----]]></source>
+   <target><![CDATA[---- ---- Keine Namensnennung]]></target>
+</trans-unit>
+<trans-unit id="345">
+   <source><![CDATA[The key was added successfully]]></source>
+   <target><![CDATA[Der Schlüssel wurde erfolgreich]]></target>
+</trans-unit>
+<trans-unit id="346">
+   <source><![CDATA[The key was not added]]></source>
+   <target><![CDATA[Der Schlüssel wurde nicht hinzugefügt]]></target>
+</trans-unit>
+<trans-unit id="347">
+   <source><![CDATA[Modify a Key]]></source>
+   <target><![CDATA[Key ändern]]></target>
+</trans-unit>
+<trans-unit id="348">
+   <source><![CDATA[The key was modified successfully]]></source>
+   <target><![CDATA[Der Schlüssel wurde erfolgreich]]></target>
+</trans-unit>
+<trans-unit id="349">
+   <source><![CDATA[The key was not modified]]></source>
+   <target><![CDATA[Der Schlüssel wurde nicht verändert]]></target>
+</trans-unit>
+<trans-unit id="350">
+   <source><![CDATA[Horux Administration Login]]></source>
+   <target><![CDATA[Horux Verwaltung Login]]></target>
+</trans-unit>
+<trans-unit id="351">
+   <source><![CDATA[Username]]></source>
+   <target><![CDATA[Benutzername]]></target>
+</trans-unit>
+<trans-unit id="352">
+   <source><![CDATA[Use a valid username and password to gain access Horux.]]></source>
+   <target><![CDATA[Verwenden Sie einen gültigen Benutzernamen und ein Passwort, um Zugang Horux.]]></target>
+</trans-unit>
+<trans-unit id="353">
+   <source><![CDATA[Warning! JavaScript must be enabled for proper operation of the Administrator Back-end]]></source>
+   <target><![CDATA[Warnung! JavaScript muss aktiviert sein, für den ordnungsgemäßen Betrieb der Back-End-Administrator]]></target>
+</trans-unit>
+<trans-unit id="354">
+   <source><![CDATA[default]]></source>
+   <target><![CDATA[Vorgabe]]></target>
+</trans-unit>
+<trans-unit id="355">
+   <source><![CDATA[Add a Non Working Day]]></source>
+   <target><![CDATA[Hinzufügen eines Nicht-Working Day]]></target>
+</trans-unit>
+<trans-unit id="356">
+   <source><![CDATA[Enter a name for this non working day]]></source>
+   <target><![CDATA[Geben Sie einen Namen für diese nicht Arbeitstag]]></target>
+</trans-unit>
+<trans-unit id="357">
+   <source><![CDATA[Date when start this non working day]]></source>
+   <target><![CDATA[Datum, an dem Anfang dieses nicht Arbeitstag]]></target>
+</trans-unit>
+<trans-unit id="358">
+   <source><![CDATA[From]]></source>
+   <target><![CDATA[Von]]></target>
+</trans-unit>
+<trans-unit id="359">
+   <source><![CDATA[Date when finish this non working day.<br/>Do not insert the date if it is only one day]]></source>
+   <target><![CDATA[Datum, an dem Ende dieses nicht Arbeitstag. <br/> Sie nicht das Datum, wenn es nur einen Tag]]></target>
+</trans-unit>
+<trans-unit id="360">
+   <source><![CDATA[Until]]></source>
+   <target><![CDATA[Bis]]></target>
+</trans-unit>
+<trans-unit id="361">
+   <source><![CDATA[You could insert a description for this non working day]]></source>
+   <target><![CDATA[Sie können eine Beschreibung für diese nicht Arbeitstag]]></target>
+</trans-unit>
+<trans-unit id="362">
+   <source><![CDATA[The non working day was added successfully]]></source>
+   <target><![CDATA[Der Nicht-Arbeitstag wurde erfolgreich]]></target>
+</trans-unit>
+<trans-unit id="363">
+   <source><![CDATA[The non working day was not added]]></source>
+   <target><![CDATA[Der Nicht-Arbeitstag wurde nicht hinzugefügt]]></target>
+</trans-unit>
+<trans-unit id="364">
+   <source><![CDATA[Modify a Non Working Day]]></source>
+   <target><![CDATA[Ändern einer Non Working Day]]></target>
+</trans-unit>
+<trans-unit id="365">
+   <source><![CDATA[The non working day was deleted successfully]]></source>
+   <target><![CDATA[Der Nicht-Arbeitstag wurde erfolgreich gelöscht]]></target>
+</trans-unit>
+<trans-unit id="366">
+   <source><![CDATA[The non working day was modified successfully]]></source>
+   <target><![CDATA[Der Nicht-Arbeitstag wurde erfolgreich]]></target>
+</trans-unit>
+<trans-unit id="367">
+   <source><![CDATA[The non workong day was not modified]]></source>
+   <target><![CDATA[Der Tag war nicht workong nicht verändert]]></target>
+</trans-unit>
+<trans-unit id="368">
+   <source><![CDATA[The non working day was not modified]]></source>
+   <target><![CDATA[Der Nicht-Arbeitstag wurde nicht verändert]]></target>
+</trans-unit>
+<trans-unit id="369">
+   <source><![CDATA[Non Working Day]]></source>
+   <target><![CDATA[Nicht Working Day]]></target>
+</trans-unit>
+<trans-unit id="370">
+   <source><![CDATA[Year]]></source>
+   <target><![CDATA[Jahr]]></target>
+</trans-unit>
+<trans-unit id="371">
+   <source><![CDATA[January]]></source>
+   <target><![CDATA[Januar]]></target>
+</trans-unit>
+<trans-unit id="372">
+   <source><![CDATA[February]]></source>
+   <target><![CDATA[Februar]]></target>
+</trans-unit>
+<trans-unit id="373">
+   <source><![CDATA[March]]></source>
+   <target><![CDATA[März]]></target>
+</trans-unit>
+<trans-unit id="374">
+   <source><![CDATA[April]]></source>
+   <target><![CDATA[April]]></target>
+</trans-unit>
+<trans-unit id="375">
+   <source><![CDATA[May]]></source>
+   <target><![CDATA[Mai]]></target>
+</trans-unit>
+<trans-unit id="376">
+   <source><![CDATA[June]]></source>
+   <target><![CDATA[Juni]]></target>
+</trans-unit>
+<trans-unit id="377">
+   <source><![CDATA[Jully]]></source>
+   <target><![CDATA[Jully]]></target>
+</trans-unit>
+<trans-unit id="378">
+   <source><![CDATA[August]]></source>
+   <target><![CDATA[August]]></target>
+</trans-unit>
+<trans-unit id="379">
+   <source><![CDATA[September]]></source>
+   <target><![CDATA[September]]></target>
+</trans-unit>
+<trans-unit id="380">
+   <source><![CDATA[October]]></source>
+   <target><![CDATA[Oktober]]></target>
+</trans-unit>
+<trans-unit id="381">
+   <source><![CDATA[November]]></source>
+   <target><![CDATA[November]]></target>
+</trans-unit>
+<trans-unit id="382">
+   <source><![CDATA[December]]></source>
+   <target><![CDATA[Dezember]]></target>
+</trans-unit>
+<trans-unit id="383">
+   <source>List of the non working days since the {year}</source>
+   <target>Liste der nicht Arbeitstage, da die {year}</target>
+</trans-unit>
+<trans-unit id="384">
+   <source><![CDATA[Mon]]></source>
+   <target><![CDATA[Montag]]></target>
+</trans-unit>
+<trans-unit id="385">
+   <source><![CDATA[Tue]]></source>
+   <target><![CDATA[Dienstag]]></target>
+</trans-unit>
+<trans-unit id="386">
+   <source><![CDATA[Wed]]></source>
+   <target><![CDATA[Mittwoch]]></target>
+</trans-unit>
+<trans-unit id="387">
+   <source><![CDATA[Thu]]></source>
+   <target><![CDATA[Do]]></target>
+</trans-unit>
+<trans-unit id="388">
+   <source><![CDATA[Fri]]></source>
+   <target><![CDATA[Freitag]]></target>
+</trans-unit>
+<trans-unit id="389">
+   <source><![CDATA[Sat]]></source>
+   <target><![CDATA[Samstag]]></target>
+</trans-unit>
+<trans-unit id="390">
+   <source><![CDATA[Sun]]></source>
+   <target><![CDATA[Sonne]]></target>
+</trans-unit>
+<trans-unit id="391">
+   <source><![CDATA[Add an open time]]></source>
+   <target><![CDATA[Fügen Sie eine offene Zeit]]></target>
+</trans-unit>
+<trans-unit id="392">
+   <source><![CDATA[Enter a name for this open time]]></source>
+   <target><![CDATA[Geben Sie einen Namen für diese offene Zeit]]></target>
+</trans-unit>
+<trans-unit id="393">
+   <source><![CDATA[Check it if you want that the access point is opened during the non working day]]></source>
+   <target><![CDATA[Überprüfen Sie, wenn Sie wollen, dass der Access Point ist geöffnet während des Arbeitstages nicht]]></target>
+</trans-unit>
+<trans-unit id="394">
+   <source><![CDATA[Non working day open time]]></source>
+   <target><![CDATA[Nicht Arbeitstag offene Zeit]]></target>
+</trans-unit>
+<trans-unit id="395">
+   <source><![CDATA[Check it if you want that the access point is opened during the week-end]]></source>
+   <target><![CDATA[Überprüfen Sie, wenn Sie wollen, dass der Access Point ist geöffnet während der Woche-Ende]]></target>
+</trans-unit>
+<trans-unit id="396">
+   <source><![CDATA[Week-end open time]]></source>
+   <target><![CDATA[Week-end offene Zeit]]></target>
+</trans-unit>
+<trans-unit id="397">
+   <source><![CDATA[Date when this open time is valid]]></source>
+   <target><![CDATA[Datum, an dem dieser offenen Zeit gültig ist,]]></target>
+</trans-unit>
+<trans-unit id="398">
+   <source><![CDATA[Date when this open time is unvalid]]></source>
+   <target><![CDATA[Datum, an dem dieser offenen Zeit ist unvalid]]></target>
+</trans-unit>
+<trans-unit id="399">
+   <source><![CDATA[You could insert a description for this open time]]></source>
+   <target><![CDATA[Sie können eine Beschreibung für diese offene Zeit]]></target>
+</trans-unit>
+<trans-unit id="400">
+   <source><![CDATA[The open time was added successfully]]></source>
+   <target><![CDATA[Die offene Zeit wurde erfolgreich]]></target>
+</trans-unit>
+<trans-unit id="401">
+   <source><![CDATA[The open time was not added]]></source>
+   <target><![CDATA[Die offene Zeit wurde nicht hinzugefügt]]></target>
+</trans-unit>
+<trans-unit id="402">
+   <source><![CDATA[Attribute]]></source>
+   <target><![CDATA[Attribut]]></target>
+</trans-unit>
+<trans-unit id="403">
+   <source><![CDATA[Unattribute]]></source>
+   <target><![CDATA[Unattribute]]></target>
+</trans-unit>
+<trans-unit id="404">
+   <source><![CDATA[Open time Attribution]]></source>
+   <target><![CDATA[Geöffnet Namensnennung]]></target>
+</trans-unit>
+<trans-unit id="405">
+   <source><![CDATA[Available Open time]]></source>
+   <target><![CDATA[Verfügbare Open Zeit]]></target>
+</trans-unit>
+<trans-unit id="406">
+   <source><![CDATA[{n} open time was unattributed]]></source>
+   <target><![CDATA[(n) offene Zeit war nicht zugewiesenen]]></target>
+</trans-unit>
+<trans-unit id="407">
+   <source><![CDATA[Modify an open time]]></source>
+   <target><![CDATA[Ändern einer offenen Zeit]]></target>
+</trans-unit>
+<trans-unit id="408">
+   <source><![CDATA[The open time was modified successfully]]></source>
+   <target><![CDATA[Die offene Zeit wurde erfolgreich]]></target>
+</trans-unit>
+<trans-unit id="409">
+   <source><![CDATA[The open time was not modified]]></source>
+   <target><![CDATA[Die offene Zeit wurde nicht verändert]]></target>
+</trans-unit>
+<trans-unit id="410">
+   <source><![CDATA[Open Time List]]></source>
+   <target><![CDATA[US-Open Time]]></target>
+</trans-unit>
+<trans-unit id="411">
+   <source><![CDATA[List of the open time]]></source>
+   <target><![CDATA[Liste der offenen Zeit]]></target>
+</trans-unit>
+<trans-unit id="412">
+   <source><![CDATA[Apply on the devices]]></source>
+   <target><![CDATA[Anwenden auf die Geräte]]></target>
+</trans-unit>
+<trans-unit id="413">
+   <source>{n} open time was deleted</source>
+   <target>{n} offene Zeit wurde gestrichen,</target>
+</trans-unit>
+<trans-unit id="414">
+   <source><![CDATA[Enter the name for the site]]></source>
+   <target><![CDATA[Geben Sie den Namen für die Website]]></target>
+</trans-unit>
+<trans-unit id="415">
+   <source><![CDATA[Enter the street]]></source>
+   <target><![CDATA[Geben Sie den Straßennamen]]></target>
+</trans-unit>
+<trans-unit id="416">
+   <source><![CDATA[Street]]></source>
+   <target><![CDATA[Street]]></target>
+</trans-unit>
+<trans-unit id="417">
+   <source><![CDATA[Enter the zip number]]></source>
+   <target><![CDATA[Geben Sie die Zip-Zahl]]></target>
+</trans-unit>
+<trans-unit id="418">
+   <source><![CDATA[ZIP]]></source>
+   <target><![CDATA[ZIP]]></target>
+</trans-unit>
+<trans-unit id="419">
+   <source><![CDATA[Enter the city]]></source>
+   <target><![CDATA[Geben Sie die Stadt]]></target>
+</trans-unit>
+<trans-unit id="420">
+   <source><![CDATA[City]]></source>
+   <target><![CDATA[Stadt]]></target>
+</trans-unit>
+<trans-unit id="421">
+   <source><![CDATA[Enter the phone number of the site]]></source>
+   <target><![CDATA[Geben Sie die Telefonnummer des Standorts]]></target>
+</trans-unit>
+<trans-unit id="422">
+   <source><![CDATA[Phone]]></source>
+   <target><![CDATA[Telefon]]></target>
+</trans-unit>
+<trans-unit id="423">
+   <source><![CDATA[Enter the fax number of the site]]></source>
+   <target><![CDATA[Geben Sie die Fax-Nummer der Website]]></target>
+</trans-unit>
+<trans-unit id="424">
+   <source><![CDATA[Fax]]></source>
+   <target><![CDATA[Fax]]></target>
+</trans-unit>
+<trans-unit id="425">
+   <source><![CDATA[Enter the email of the site]]></source>
+   <target><![CDATA[Geben Sie die E-Mail von der Website]]></target>
+</trans-unit>
+<trans-unit id="426">
+   <source><![CDATA[Email]]></source>
+   <target><![CDATA[E-Mail]]></target>
+</trans-unit>
+<trans-unit id="427">
+   <source><![CDATA[Invalid email address.]]></source>
+   <target><![CDATA[Ungültige E-Mail-Adresse.]]></target>
+</trans-unit>
+<trans-unit id="428">
+   <source><![CDATA[Enter the web site of the site]]></source>
+   <target><![CDATA[Geben Sie die Web-Seite der Website]]></target>
+</trans-unit>
+<trans-unit id="429">
+   <source><![CDATA[Add the logo of the site]]></source>
+   <target><![CDATA[Fügen Sie das Logo der Webseite]]></target>
+</trans-unit>
+<trans-unit id="430">
+   <source><![CDATA[Picture]]></source>
+   <target><![CDATA[Bild]]></target>
+</trans-unit>
+<trans-unit id="431">
+   <source><![CDATA[Commercial]]></source>
+   <target><![CDATA[Kommerzielle]]></target>
+</trans-unit>
+<trans-unit id="432">
+   <source><![CDATA[Enter the VAT value]]></source>
+   <target><![CDATA[Geben Sie die MwSt.-Wert]]></target>
+</trans-unit>
+<trans-unit id="433">
+   <source><![CDATA[VAT]]></source>
+   <target><![CDATA[MwSt.]]></target>
+</trans-unit>
+<trans-unit id="434">
+   <source><![CDATA[Enter your VAT number]]></source>
+   <target><![CDATA[Geben Sie Ihre Umsatzsteuer-Identifikationsnummer]]></target>
+</trans-unit>
+<trans-unit id="435">
+   <source><![CDATA[VAT Number]]></source>
+   <target><![CDATA[Umsatzsteuer-Identifikationsnummer]]></target>
+</trans-unit>
+<trans-unit id="436">
+   <source><![CDATA[Enter your currency]]></source>
+   <target><![CDATA[Geben Sie Ihre Währung]]></target>
+</trans-unit>
+<trans-unit id="437">
+   <source><![CDATA[Currency]]></source>
+   <target><![CDATA[Währung]]></target>
+</trans-unit>
+<trans-unit id="438">
+   <source><![CDATA[The directory ./pictures must be writeable to save your logo]]></source>
+   <target><![CDATA[Das Verzeichnis. / Bilder müssen schreibbar, um Ihr Logo]]></target>
+</trans-unit>
+<trans-unit id="439">
+   <source><![CDATA[The site was modifed successfully]]></source>
+   <target><![CDATA[Die Site wurde modifiziert erfolgreich]]></target>
+</trans-unit>
+<trans-unit id="440">
+   <source><![CDATA[The site was not modified]]></source>
+   <target><![CDATA[Die Seite wurde nicht verändert]]></target>
+</trans-unit>
+<trans-unit id="441">
+   <source><![CDATA[The picture is bigger than 10K bytes]]></source>
+   <target><![CDATA[Das Bild ist größer als 10K bytes]]></target>
+</trans-unit>
+<trans-unit id="442">
+   <source><![CDATA[The picture is not a picture (jpg, png, gif)]]></source>
+   <target><![CDATA[Das Bild ist nicht ein Bild (jpg, png, gif)]]></target>
+</trans-unit>
+<trans-unit id="443">
+   <source><![CDATA[Add a super user]]></source>
+   <target><![CDATA[Fügen Sie einen Super-User]]></target>
+</trans-unit>
+<trans-unit id="444">
+   <source><![CDATA[Global]]></source>
+   <target><![CDATA[Global]]></target>
+</trans-unit>
+<trans-unit id="445">
+   <source><![CDATA[Enter the username for this super user]]></source>
+   <target><![CDATA[Geben Sie den Benutzernamen für diese Super-User]]></target>
+</trans-unit>
+<trans-unit id="446">
+   <source><![CDATA[This name is already used]]></source>
+   <target><![CDATA[Dieser Name wird bereits verwendet]]></target>
+</trans-unit>
+<trans-unit id="447">
+   <source><![CDATA[Enter the password for this super user]]></source>
+   <target><![CDATA[Geben Sie das Kennwort für diese Super-User]]></target>
+</trans-unit>
+<trans-unit id="448">
+   <source><![CDATA[The password must be equal to the confirmation]]></source>
+   <target><![CDATA[Das Passwort muss gleich die Bestätigung]]></target>
+</trans-unit>
+<trans-unit id="449">
+   <source><![CDATA[Enter the confirmation password for this super user]]></source>
+   <target><![CDATA[Geben Sie die Bestätigung das Kennwort für dieses Super-User]]></target>
+</trans-unit>
+<trans-unit id="450">
+   <source><![CDATA[Select super user group]]></source>
+   <target><![CDATA[Wählen Sie die Super-User-Gruppe]]></target>
+</trans-unit>
+<trans-unit id="451">
+   <source><![CDATA[Select user link]]></source>
+   <target><![CDATA[Wählen Sie Benutzer-Link]]></target>
+</trans-unit>
+<trans-unit id="452">
+   <source><![CDATA[The user was added successfully]]></source>
+   <target><![CDATA[Der Benutzer wurde erfolgreich]]></target>
+</trans-unit>
+<trans-unit id="453">
+   <source><![CDATA[The user was not added]]></source>
+   <target><![CDATA[Der Benutzer wurde nicht hinzugefügt]]></target>
+</trans-unit>
+<trans-unit id="454">
+   <source><![CDATA[The user was not saved]]></source>
+   <target><![CDATA[Der Benutzer wurde nicht gespeichert]]></target>
+</trans-unit>
+<trans-unit id="455">
+   <source><![CDATA[Add access]]></source>
+   <target><![CDATA[Add Zugang]]></target>
+</trans-unit>
+<trans-unit id="456">
+   <source><![CDATA[Add a super user group]]></source>
+   <target><![CDATA[Fügen Sie einen Super-User-Gruppe]]></target>
+</trans-unit>
+<trans-unit id="457">
+   <source><![CDATA[Enter the name for this super user group]]></source>
+   <target><![CDATA[Geben Sie den Namen für diese Super-User-Gruppe]]></target>
+</trans-unit>
+<trans-unit id="458">
+   <source><![CDATA[If you check this option, you will be able<br> to modify the password for all super user]]></source>
+   <target><![CDATA[Wenn Sie diese Option aktivieren, können Sie <br> zu ändern das Passwort für alle Super-User]]></target>
+</trans-unit>
+<trans-unit id="459">
+   <source><![CDATA[Super admin group]]></source>
+   <target><![CDATA[Super Admin-Gruppe]]></target>
+</trans-unit>
+<trans-unit id="460">
+   <source><![CDATA[You could insert a description for this group.]]></source>
+   <target><![CDATA[Sie können eine Beschreibung für diese Gruppe.]]></target>
+</trans-unit>
+<trans-unit id="461">
+   <source><![CDATA[Access]]></source>
+   <target><![CDATA[Access]]></target>
+</trans-unit>
+<trans-unit id="462">
+   <source><![CDATA[Select a page]]></source>
+   <target><![CDATA[Wählen Sie eine Seite]]></target>
+</trans-unit>
+<trans-unit id="463">
+   <source><![CDATA[--- Select one ----]]></source>
+   <target><![CDATA[--- Wählen Sie eine ----]]></target>
+</trans-unit>
+<trans-unit id="464">
+   <source><![CDATA[Control Panel]]></source>
+   <target><![CDATA[Control Panel]]></target>
+</trans-unit>
+<trans-unit id="465">
+   <source><![CDATA[Super User]]></source>
+   <target><![CDATA[Super User]]></target>
+</trans-unit>
+<trans-unit id="466">
+   <source><![CDATA[Super User Group]]></source>
+   <target><![CDATA[Super-User-Group]]></target>
+</trans-unit>
+<trans-unit id="467">
+   <source><![CDATA[System]]></source>
+   <target><![CDATA[System]]></target>
+</trans-unit>
+<trans-unit id="468">
+   <source><![CDATA[Hardware]]></source>
+   <target><![CDATA[Hardware]]></target>
+</trans-unit>
+<trans-unit id="469">
+   <source><![CDATA[Opent time]]></source>
+   <target><![CDATA[Opent Zeit]]></target>
+</trans-unit>
+<trans-unit id="470">
+   <source><![CDATA[Horux Service]]></source>
+   <target><![CDATA[Horux Service]]></target>
+</trans-unit>
+<trans-unit id="471">
+   <source><![CDATA[Horux Status]]></source>
+   <target><![CDATA[Horux Status]]></target>
+</trans-unit>
+<trans-unit id="472">
+   <source><![CDATA[User Group]]></source>
+   <target><![CDATA[User Group]]></target>
+</trans-unit>
+<trans-unit id="473">
+   <source><![CDATA[Install/Uninstall]]></source>
+   <target><![CDATA[Installieren / Deinstallieren]]></target>
+</trans-unit>
+<trans-unit id="474">
+   <source><![CDATA[Extensions]]></source>
+   <target><![CDATA[Erweiterungen]]></target>
+</trans-unit>
+<trans-unit id="475">
+   <source><![CDATA[Devices Manager]]></source>
+   <target><![CDATA[Geräte-Manager]]></target>
+</trans-unit>
+<trans-unit id="476">
+   <source><![CDATA[Component Manager]]></source>
+   <target><![CDATA[Component Manager]]></target>
+</trans-unit>
+<trans-unit id="477">
+   <source><![CDATA[Template Manager]]></source>
+   <target><![CDATA[Template Manager]]></target>
+</trans-unit>
+<trans-unit id="478">
+   <source><![CDATA[Language Manager]]></source>
+   <target><![CDATA[Language Manager]]></target>
+</trans-unit>
+<trans-unit id="479">
+   <source><![CDATA[Global Checkin]]></source>
+   <target><![CDATA[Global Checkin]]></target>
+</trans-unit>
+<trans-unit id="480">
+   <source><![CDATA[Tools]]></source>
+   <target><![CDATA[Werkzeuge]]></target>
+</trans-unit>
+<trans-unit id="481">
+   <source><![CDATA[Action]]></source>
+   <target><![CDATA[Aktion]]></target>
+</trans-unit>
+<trans-unit id="482">
+   <source><![CDATA[Remove this access]]></source>
+   <target><![CDATA[Entfernen Sie diesen Zugang]]></target>
+</trans-unit>
+<trans-unit id="483">
+   <source><![CDATA[The group was added successfully]]></source>
+   <target><![CDATA[Die Gruppe wurde erfolgreich hinzugefügt]]></target>
+</trans-unit>
+<trans-unit id="484">
+   <source><![CDATA[The group was not added]]></source>
+   <target><![CDATA[Die Gruppe wurde nicht hinzugefügt]]></target>
+</trans-unit>
+<trans-unit id="485">
+   <source><![CDATA[The group was not saved]]></source>
+   <target><![CDATA[Die Gruppe wurde nicht gespeichert]]></target>
+</trans-unit>
+<trans-unit id="486">
+   <source><![CDATA[User Group List]]></source>
+   <target><![CDATA[User Group-Liste]]></target>
+</trans-unit>
+<trans-unit id="487">
+   <source><![CDATA[List of the super users groups]]></source>
+   <target><![CDATA[Liste der Super-User-Gruppen]]></target>
+</trans-unit>
+<trans-unit id="488">
+   <source><![CDATA[One or more groups cannot be deleted. The group musst not contains super user to be deleted.]]></source>
+   <target><![CDATA[Eine oder mehrere Gruppen kann nicht gelöscht werden. Bei der Gruppe, musst nicht mit Super-User zu streichen.]]></target>
+</trans-unit>
+<trans-unit id="489">
+   <source><![CDATA[The main super user group cannot be deleted]]></source>
+   <target><![CDATA[Die Super-User-Gruppe kann nicht gelöscht werden]]></target>
+</trans-unit>
+<trans-unit id="490">
+   <source>{n} group(s) was deleted</source>
+   <target>{n} Gruppe wurde gelöscht</target>
+</trans-unit>
+<trans-unit id="491">
+   <source><![CDATA[Super users in \]]></source>
+   <target><![CDATA[Super-Benutzer in \]]></target>
+</trans-unit>
+<trans-unit id="492">
+   <source><![CDATA[Modify a super user group]]></source>
+   <target><![CDATA[Ändern einer Super-User-Gruppe]]></target>
+</trans-unit>
+<trans-unit id="493">
+   <source><![CDATA[Open Time]]></source>
+   <target><![CDATA[Open Time]]></target>
+</trans-unit>
+<trans-unit id="494">
+   <source><![CDATA[Components Manager]]></source>
+   <target><![CDATA[Komponenten-Manager]]></target>
+</trans-unit>
+<trans-unit id="495">
+   <source><![CDATA[Component]]></source>
+   <target><![CDATA[Component]]></target>
+</trans-unit>
+<trans-unit id="496">
+   <source><![CDATA[The group was modified successfully]]></source>
+   <target><![CDATA[Die Gruppe wurde erfolgreich]]></target>
+</trans-unit>
+<trans-unit id="497">
+   <source><![CDATA[The group was not modified]]></source>
+   <target><![CDATA[Die Gruppe wurde nicht verändert]]></target>
+</trans-unit>
+<trans-unit id="498">
+   <source><![CDATA[Users List]]></source>
+   <target><![CDATA[Benutzerliste]]></target>
+</trans-unit>
+<trans-unit id="499">
+   <source><![CDATA[List of the super users]]></source>
+   <target><![CDATA[Liste der Super-User]]></target>
+</trans-unit>
+<trans-unit id="500">
+   <source>{n} user(s) was deleted</source>
+   <target>{n} Benutzer wurde gelöscht</target>
+</trans-unit>
+<trans-unit id="501">
+   <source><![CDATA[Firstname]]></source>
+   <target><![CDATA[Vorname]]></target>
+</trans-unit>
+<trans-unit id="502">
+   <source><![CDATA[Modify a super user]]></source>
+   <target><![CDATA[Ändern einer Super-User]]></target>
+</trans-unit>
+<trans-unit id="503">
+   <source><![CDATA[The user was modified successfully. The password was changed]]></source>
+   <target><![CDATA[Der Benutzer wurde erfolgreich geändert. Das Passwort wurde geändert]]></target>
+</trans-unit>
+<trans-unit id="504">
+   <source><![CDATA[The user was modified successfully. The password was not changed]]></source>
+   <target><![CDATA[Der Benutzer wurde erfolgreich geändert. Das Passwort wurde nicht geändert]]></target>
+</trans-unit>
+<trans-unit id="505">
+   <source><![CDATA[The user was not modified. The password was not changed]]></source>
+   <target><![CDATA[Der Benutzer wurde nicht verändert. Das Passwort wurde nicht geändert]]></target>
+</trans-unit>
+<trans-unit id="506">
+   <source><![CDATA[You don't have the right to modify this user']]></source>
+   <target><![CDATA[Sie haben nicht das Recht zur Änderung dieses Benutzers "]]></target>
+</trans-unit>
+<trans-unit id="507">
+   <source><![CDATA[Refresh]]></source>
+   <target><![CDATA[Aktualisieren]]></target>
+</trans-unit>
+<trans-unit id="508">
+   <source><![CDATA[Security]]></source>
+   <target><![CDATA[Sicherheit]]></target>
+</trans-unit>
+<trans-unit id="509">
+   <source><![CDATA[ok]]></source>
+   <target><![CDATA[OK]]></target>
+</trans-unit>
+<trans-unit id="510">
+   <source><![CDATA[critical]]></source>
+   <target><![CDATA[kritische]]></target>
+</trans-unit>
+<trans-unit id="511">
+   <source><![CDATA[Warning]]></source>
+   <target><![CDATA[Warnung]]></target>
+</trans-unit>
+<trans-unit id="512">
+   <source><![CDATA[Critical]]></source>
+   <target><![CDATA[Kritische]]></target>
+</trans-unit>
+<trans-unit id="513">
+   <source><![CDATA[Device communication is closed]]></source>
+   <target><![CDATA[Geräte-Kommunikation ist geschlossen]]></target>
+</trans-unit>
+<trans-unit id="514">
+   <source><![CDATA[The interface temparature is too hot]]></source>
+   <target><![CDATA[Die Schnittstelle temparature ist zu heiß]]></target>
+</trans-unit>
+<trans-unit id="515">
+   <source><![CDATA[The interface antivandal is ok]]></source>
+   <target><![CDATA[Die Schnittstelle antivandal ist ok]]></target>
+</trans-unit>
+<trans-unit id="516">
+   <source><![CDATA[The device communication is opened]]></source>
+   <target><![CDATA[Das Gerät ist Kommunikation eröffnet]]></target>
+</trans-unit>
+<trans-unit id="517">
+   <source><![CDATA[The interface antivandal is forced]]></source>
+   <target><![CDATA[Die Schnittstelle ist antivandal gezwungen]]></target>
+</trans-unit>
+<trans-unit id="518">
+   <source><![CDATA[Stop]]></source>
+   <target><![CDATA[Stoppen]]></target>
+</trans-unit>
+<trans-unit id="519">
+   <source><![CDATA[Start]]></source>
+   <target><![CDATA[Start]]></target>
+</trans-unit>
+<trans-unit id="520">
+   <source><![CDATA[Service Horux]]></source>
+   <target><![CDATA[Service Horux]]></target>
+</trans-unit>
+<trans-unit id="521">
+   <source><![CDATA[The server <i>horuxd</i> is running]]></source>
+   <target><![CDATA[Der Server <i> horuxd </ i> läuft]]></target>
+</trans-unit>
+<trans-unit id="522">
+   <source><![CDATA[The server <i>horuxd</i> is not running]]></source>
+   <target><![CDATA[Der Server <i> horuxd </ i> ist nicht aktiv]]></target>
+</trans-unit>
+<trans-unit id="523">
+   <source><![CDATA[Horux Core Info]]></source>
+   <target><![CDATA[Horux Core Info]]></target>
+</trans-unit>
+<trans-unit id="524">
+   <source><![CDATA[Plugins]]></source>
+   <target><![CDATA[Plugins]]></target>
+</trans-unit>
+<trans-unit id="525">
+   <source><![CDATA[The server horux seems to be down]]></source>
+   <target><![CDATA[Der Server horux scheint nicht zu funktionieren]]></target>
+</trans-unit>
+<trans-unit id="526">
+   <source><![CDATA[Horux Core Devices Information]]></source>
+   <target><![CDATA[Horux Core Geräte Informationen]]></target>
+</trans-unit>
+<trans-unit id="527">
+   <source><![CDATA[ID]]></source>
+   <target><![CDATA[ID]]></target>
+</trans-unit>
+<trans-unit id="528">
+   <source><![CDATA[Serial Number]]></source>
+   <target><![CDATA[Serial Number]]></target>
+</trans-unit>
+<trans-unit id="529">
+   <source><![CDATA[Connection status]]></source>
+   <target><![CDATA[Connection Status]]></target>
+</trans-unit>
+<trans-unit id="530">
+   <source><![CDATA[Firmware Version]]></source>
+   <target><![CDATA[Firmware-Version]]></target>
+</trans-unit>
+<trans-unit id="531">
+   <source><![CDATA[Details]]></source>
+   <target><![CDATA[Details]]></target>
+</trans-unit>
+<trans-unit id="532">
+   <source><![CDATA[Device Info]]></source>
+   <target><![CDATA[Geräte-Info]]></target>
+</trans-unit>
+<trans-unit id="533">
+   <source><![CDATA[show]]></source>
+   <target><![CDATA[zeigen]]></target>
+</trans-unit>
+<trans-unit id="534">
+   <source><![CDATA[Horux Core Information]]></source>
+   <target><![CDATA[Horux Kerninformationen]]></target>
+</trans-unit>
+<trans-unit id="535">
+   <source><![CDATA[Horux Core Version]]></source>
+   <target><![CDATA[Horux Core Version]]></target>
+</trans-unit>
+<trans-unit id="536">
+   <source><![CDATA[Horux time live]]></source>
+   <target><![CDATA[Horux Zeit leben]]></target>
+</trans-unit>
+<trans-unit id="537">
+   <source><![CDATA[Horux Core Plugins Information]]></source>
+   <target><![CDATA[Horux Core Plugins Information]]></target>
+</trans-unit>
+<trans-unit id="538">
+   <source><![CDATA[Global Check-in]]></source>
+   <target><![CDATA[Global Check-in]]></target>
+</trans-unit>
+<trans-unit id="539">
+   <source><![CDATA[Table name]]></source>
+   <target><![CDATA[Tabellenname]]></target>
+</trans-unit>
+<trans-unit id="540">
+   <source><![CDATA[# of Items]]></source>
+   <target><![CDATA[Anzahl der Artikel]]></target>
+</trans-unit>
+<trans-unit id="541">
+   <source>Checked in {n} Items</source>
+   <target>Geprüft in {n} Artikel</target>
+</trans-unit>
+<trans-unit id="542">
+   <source><![CDATA[First Name]]></source>
+   <target><![CDATA[Vorname]]></target>
+</trans-unit>
+<trans-unit id="543">
+   <source><![CDATA[Groups]]></source>
+   <target><![CDATA[Gruppen]]></target>
+</trans-unit>
+<trans-unit id="544">
+   <source><![CDATA[Attribute the user<br/>to one or more groups]]></source>
+   <target><![CDATA[Attribut <br/> der Benutzer zu einer oder mehreren Gruppen]]></target>
+</trans-unit>
+<trans-unit id="545">
+   <source><![CDATA[Keys]]></source>
+   <target><![CDATA[Keys]]></target>
+</trans-unit>
+<trans-unit id="546">
+   <source><![CDATA[Attribute one or more keys<br/>to the user]]></source>
+   <target><![CDATA[Attribute einer oder mehrerer Tasten <br/> an den Benutzer]]></target>
+</trans-unit>
+<trans-unit id="547">
+   <source><![CDATA[Click here to block or<br/> unblock]]></source>
+   <target><![CDATA[Klicken Sie hier, um zu sperren oder freizugeben <br/>]]></target>
+</trans-unit>
+<trans-unit id="548">
+   <source><![CDATA[Extension]]></source>
+   <target><![CDATA[Erweiterung]]></target>
+</trans-unit>
+<trans-unit id="549">
+   <source><![CDATA[List of the users]]></source>
+   <target><![CDATA[Liste der Benutzer]]></target>
+</trans-unit>
+<trans-unit id="550">
+   <source><![CDATA[Is Blocked]]></source>
+   <target><![CDATA[Blockiert]]></target>
+</trans-unit>
+<trans-unit id="551">
+   <source><![CDATA[Step 1 : User information]]></source>
+   <target><![CDATA[Schritt 1: Benutzer-Informationen]]></target>
+</trans-unit>
+<trans-unit id="552">
+   <source><![CDATA[Step 2 : Group Attribution]]></source>
+   <target><![CDATA[Schritt 2: Gruppe Namensnennung]]></target>
+</trans-unit>
+<trans-unit id="553">
+   <source><![CDATA[Step 3 : Key Attribution]]></source>
+   <target><![CDATA[Schritt 3: Geben Namensnennung]]></target>
+</trans-unit>
+<trans-unit id="554">
+   <source><![CDATA[Complete]]></source>
+   <target><![CDATA[Vollständige]]></target>
+</trans-unit>
+<trans-unit id="555">
+   <source><![CDATA[The new user is registred]]></source>
+   <target><![CDATA[Der neue Benutzer registriert]]></target>
+</trans-unit>
+<trans-unit id="556">
+   <source><![CDATA[Select the sex for this user]]></source>
+   <target><![CDATA[Wählen Sie das Geschlecht für diesen Benutzer]]></target>
+</trans-unit>
+<trans-unit id="557">
+   <source><![CDATA[Sex]]></source>
+   <target><![CDATA[Sex]]></target>
+</trans-unit>
+<trans-unit id="558">
+   <source><![CDATA[Enter the name for this user]]></source>
+   <target><![CDATA[Geben Sie den Namen für diesen Benutzer]]></target>
+</trans-unit>
+<trans-unit id="559">
+   <source><![CDATA[Enter the firstname for this user]]></source>
+   <target><![CDATA[Geben Sie die für diesen Benutzer firstname]]></target>
+</trans-unit>
+<trans-unit id="560">
+   <source><![CDATA[Select the language for this user]]></source>
+   <target><![CDATA[Wählen Sie die Sprache für dieses Benutzers]]></target>
+</trans-unit>
+<trans-unit id="561">
+   <source><![CDATA[---- Select a language ----]]></source>
+   <target><![CDATA[---- Wählen Sie eine Sprache ----]]></target>
+</trans-unit>
+<trans-unit id="562">
+   <source><![CDATA[English]]></source>
+   <target><![CDATA[Englisch]]></target>
+</trans-unit>
+<trans-unit id="563">
+   <source><![CDATA[French]]></source>
+   <target><![CDATA[Französisch]]></target>
+</trans-unit>
+<trans-unit id="564">
+   <source><![CDATA[German]]></source>
+   <target><![CDATA[Deutsch]]></target>
+</trans-unit>
+<trans-unit id="565">
+   <source><![CDATA[Italian]]></source>
+   <target><![CDATA[Italienisch]]></target>
+</trans-unit>
+<trans-unit id="566">
+   <source><![CDATA[Spanish]]></source>
+   <target><![CDATA[Spanisch]]></target>
+</trans-unit>
+<trans-unit id="567">
+   <source><![CDATA[Add the picture of the user]]></source>
+   <target><![CDATA[Fügen Sie das Bild des Benutzers]]></target>
+</trans-unit>
+<trans-unit id="568">
+   <source><![CDATA[Enter the pin code for this user, if used]]></source>
+   <target><![CDATA[Geben Sie den PIN-Code für diesen Benutzer, wenn sie]]></target>
+</trans-unit>
+<trans-unit id="569">
+   <source><![CDATA[PIN Code]]></source>
+   <target><![CDATA[PIN-Code]]></target>
+</trans-unit>
+<trans-unit id="570">
+   <source><![CDATA[Personal information]]></source>
+   <target><![CDATA[Persönliche Daten]]></target>
+</trans-unit>
+<trans-unit id="571">
+   <source><![CDATA[Enter the personal street]]></source>
+   <target><![CDATA[Geben Sie die persönlichen Straße]]></target>
+</trans-unit>
+<trans-unit id="572">
+   <source><![CDATA[Enter the personal zip number]]></source>
+   <target><![CDATA[Geben Sie die persönlichen zip Zahl]]></target>
+</trans-unit>
+<trans-unit id="573">
+   <source><![CDATA[Enter the personal city]]></source>
+   <target><![CDATA[Geben Sie die persönliche Stadt]]></target>
+</trans-unit>
+<trans-unit id="574">
+   <source><![CDATA[Enter the personal country]]></source>
+   <target><![CDATA[Geben Sie die persönlichen Land]]></target>
+</trans-unit>
+<trans-unit id="575">
+   <source><![CDATA[Country]]></source>
+   <target><![CDATA[Land]]></target>
+</trans-unit>
+<trans-unit id="576">
+   <source><![CDATA[Enter the personal phone number]]></source>
+   <target><![CDATA[Geben Sie die Telefonnummer]]></target>
+</trans-unit>
+<trans-unit id="577">
+   <source><![CDATA[Enter the personal email]]></source>
+   <target><![CDATA[Geben Sie die persönliche E-Mail]]></target>
+</trans-unit>
+<trans-unit id="578">
+   <source><![CDATA[Professional information]]></source>
+   <target><![CDATA[Professionelle Informationen]]></target>
+</trans-unit>
+<trans-unit id="579">
+   <source><![CDATA[Enter the firme]]></source>
+   <target><![CDATA[Geben Sie die Firma]]></target>
+</trans-unit>
+<trans-unit id="580">
+   <source><![CDATA[Firme]]></source>
+   <target><![CDATA[Firme]]></target>
+</trans-unit>
+<trans-unit id="581">
+   <source><![CDATA[Enter the department]]></source>
+   <target><![CDATA[Geben Sie die Abteilung]]></target>
+</trans-unit>
+<trans-unit id="582">
+   <source><![CDATA[Department]]></source>
+   <target><![CDATA[Abteilung]]></target>
+</trans-unit>
+<trans-unit id="583">
+   <source><![CDATA[Enter the professional street]]></source>
+   <target><![CDATA[Geben Sie die professionelle Straße]]></target>
+</trans-unit>
+<trans-unit id="584">
+   <source><![CDATA[Enter the professional zip number]]></source>
+   <target><![CDATA[Geben Sie die Anzahl professioneller zip]]></target>
+</trans-unit>
+<trans-unit id="585">
+   <source><![CDATA[Enter the professional city]]></source>
+   <target><![CDATA[Geben Sie die professionelle Stadt]]></target>
+</trans-unit>
+<trans-unit id="586">
+   <source><![CDATA[Enter the professional country]]></source>
+   <target><![CDATA[Geben Sie den professionellen Land]]></target>
+</trans-unit>
+<trans-unit id="587">
+   <source><![CDATA[Enter the professional phone number]]></source>
+   <target><![CDATA[Geben Sie die berufliche Telefonnummer]]></target>
+</trans-unit>
+<trans-unit id="588">
+   <source><![CDATA[Enter the professional email]]></source>
+   <target><![CDATA[Geben Sie die professionelle E-Mail]]></target>
+</trans-unit>
+<trans-unit id="589">
+   <source><![CDATA[Select all the groups<br/>attributes to this user]]></source>
+   <target><![CDATA[Wählen Sie alle Gruppen <br/> Attribute dieses Benutzers]]></target>
+</trans-unit>
+<trans-unit id="590">
+   <source><![CDATA[Attribute the group]]></source>
+   <target><![CDATA[Attribut der Gruppe]]></target>
+</trans-unit>
+<trans-unit id="591">
+   <source><![CDATA[Select all the keys<br/>attributes to this user]]></source>
+   <target><![CDATA[Wählen Sie alle Schlüssel <br/> Attribute dieses Benutzers]]></target>
+</trans-unit>
+<trans-unit id="592">
+   <source><![CDATA[Attribute the key]]></source>
+   <target><![CDATA[Machen Sie die Taste]]></target>
+</trans-unit>
+<trans-unit id="593">
+   <source><![CDATA[Add a user]]></source>
+   <target><![CDATA[Hinzufügen eines neuen Nutzers]]></target>
+</trans-unit>
+<trans-unit id="594">
+   <source><![CDATA[Key Attribution]]></source>
+   <target><![CDATA[Key Namensnennung]]></target>
+</trans-unit>
+<trans-unit id="595">
+   <source><![CDATA[RFID Number]]></source>
+   <target><![CDATA[RFID-Nummer]]></target>
+</trans-unit>
+<trans-unit id="596">
+   <source>{n} key was unattributed</source>
+   <target>{n} Schlüssel war nicht zugewiesenen</target>
+</trans-unit>
+<trans-unit id="597">
+   <source><![CDATA[The key is already attributed]]></source>
+   <target><![CDATA[Der Schlüssel ist bereits zugeordnet]]></target>
+</trans-unit>
+<trans-unit id="598">
+   <source><![CDATA[Groups Attribution]]></source>
+   <target><![CDATA[Gruppen Namensnennung]]></target>
+</trans-unit>
+<trans-unit id="599">
+   <source><![CDATA[Comment]]></source>
+   <target><![CDATA[Kommentar]]></target>
+</trans-unit>
+<trans-unit id="600">
+   <source>{n} group was unattributed</source>
+   <target>{n} Gruppen war nicht zugewiesenen</target>
+</trans-unit>
+<trans-unit id="601">
+   <source><![CDATA[Modify a user]]></source>
+   <target><![CDATA[Ändern eines Benutzers]]></target>
+</trans-unit>
+<trans-unit id="602">
+   <source><![CDATA[Check it if you want to<br/>delete an existing picture]]></source>
+   <target><![CDATA[Überprüfen Sie, wenn Sie wollen, löschen Sie eine vorhandene <br/> Bild]]></target>
+</trans-unit>
+<trans-unit id="603">
+   <source><![CDATA[The user was modified successfully]]></source>
+   <target><![CDATA[Der Benutzer wurde erfolgreich]]></target>
+</trans-unit>
+<trans-unit id="604">
+   <source><![CDATA[The user was not modified]]></source>
+   <target><![CDATA[Der Benutzer wurde nicht verändert]]></target>
+</trans-unit>
+<trans-unit id="605">
+   <source><![CDATA[Access Plugin Name]]></source>
+   <target><![CDATA[Access-Plugin Name]]></target>
+</trans-unit>
+<trans-unit id="606">
+   <source><![CDATA[List of the users groups]]></source>
+   <target><![CDATA[Liste der Benutzer-Gruppen]]></target>
+</trans-unit>
+<trans-unit id="607">
+   <source><![CDATA[Cannot delete the group {name}, it contains one or more person]]></source>
+   <target><![CDATA[Kann nicht gelöscht werden der Gruppe (name), sie enthält eine oder mehrere Personen]]></target>
+</trans-unit>
+<trans-unit id="608">
+   <source>{n} group was deleted</source>
+   <target>{n} Gruppen wurde gelöscht</target>
+</trans-unit>
+<trans-unit id="609">
+   <source><![CDATA[Add a User Group]]></source>
+   <target><![CDATA[Fügen Sie eine User Group]]></target>
+</trans-unit>
+<trans-unit id="610">
+   <source><![CDATA[Enter a unique name for this group]]></source>
+   <target><![CDATA[Geben Sie einen eindeutigen Namen für diese Gruppe]]></target>
+</trans-unit>
+<trans-unit id="611">
+   <source><![CDATA[Options]]></source>
+   <target><![CDATA[Optionen]]></target>
+</trans-unit>
+<trans-unit id="612">
+   <source><![CDATA[Define the access plugin used for the access control.<br/>If empty, all plugins are likely to give the access]]></source>
+   <target><![CDATA[Definieren Sie die Plugin-Zugang für die Zugangskontrolle. <br/> Wenn leer, alle Plugins sind, um den Zugang]]></target>
+</trans-unit>
+<trans-unit id="613">
+   <source><![CDATA[Access Right]]></source>
+   <target><![CDATA[Rechte]]></target>
+</trans-unit>
+<trans-unit id="614">
+   <source><![CDATA[Modify a User Group]]></source>
+   <target><![CDATA[Ändern einer User Group]]></target>
+</trans-unit>
+<trans-unit id="615">
+   <source><![CDATA[Logout]]></source>
+   <target><![CDATA[Logout]]></target>
+</trans-unit>
+<trans-unit id="616">
+   <source><![CDATA[Standalone]]></source>
+   <target><![CDATA[Standalone]]></target>
+</trans-unit>
+<trans-unit id="617">
+   <source><![CDATA[User group]]></source>
+   <target><![CDATA[Benutzer-Gruppe]]></target>
+</trans-unit>
+<trans-unit id="618">
+   <source><![CDATA[Non Working Days]]></source>
+   <target><![CDATA[Nicht Arbeitstage]]></target>
+</trans-unit>
+<trans-unit id="619">
+   <source><![CDATA[Install/Uninstal]]></source>
+   <target><![CDATA[Installieren / UNINSTAL]]></target>
+</trans-unit>
+<trans-unit id="620">
+   <source><![CDATA[Gloal Check-in]]></source>
+   <target><![CDATA[Gloal Check-in]]></target>
+</trans-unit>
+<trans-unit id="621">
+   <source><![CDATA[Info]]></source>
+   <target><![CDATA[Info]]></target>
+</trans-unit>
+<trans-unit id="622">
+   <source><![CDATA[Horux About]]></source>
+   <target><![CDATA[Über Horux]]></target>
+</trans-unit>
+</body>
+</file>
+</xliff>
