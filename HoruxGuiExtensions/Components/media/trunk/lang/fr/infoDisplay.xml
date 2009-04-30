@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.0">
+<file source-language="en" target-language="fr" datatype="plaintext" original="messages" date="2008-12-05T14:09:40Z" product-name="messages">
+<body>
+
+<trans-unit id="1">
+   <source>Info Display - Attribution</source>
+   <target>Info Point - Attribution</target>
+</trans-unit>
+<trans-unit id="2">
+   <source>Message</source>
+   <target>Message</target>
+</trans-unit>
+<trans-unit id="3">
+   <source>Enter the message displayed on the screen when the user present his key</source>
+   <target>Entrez le message qui doit être affiché sur l\'écran quand un utilisateur présente sa clé</target>
+</trans-unit>
+<trans-unit id="4">
+   <source>You can insert the following tags in the message</source>
+   <target>Vous pouvez entrer les "tags" suivants dans le message</target>
+</trans-unit>
+<trans-unit id="5">
+   <source>It will be replace by the name of the user when the message is diplayed</source>
+   <target>Il sera remplacé par le nom de l'utilisateur quand le message est affiché</target>
+</trans-unit>
+<trans-unit id="6">
+   <source>It will be replace by the firstname of the user when the message is diplayed</source>
+   <target>Il sera remplacé par le prénom de l'utilisateur quand le message est affiché</target>
+</trans-unit>
+<trans-unit id="7">
+   <source>It will be replace by the current time of the user when the message is diplayed</source>
+   <target>Il sera remplacé par l'heure courante quand le message est affiché</target>
+</trans-unit>
+<trans-unit id="8">
+   <source>It will be replace by the current day of the user when the message is diplayed</source>
+   <target>Il sera remplacé par le jour courant quand le message est affiché</target>
+</trans-unit>
+<trans-unit id="9">
+   <source>The message was setted successfully</source>
+   <target>Le message a été sauvé correctement</target>
+</trans-unit>
+<trans-unit id="10">
+   <source>The message was not setted</source>
+   <target>Le message n'a pas été sauvé</target>
+</trans-unit>
+<trans-unit id="11">
+   <source>Info Display</source>
+   <target>Info Point</target>
+</trans-unit>
+<trans-unit id="12">
+   <source>Parameters</source>
+   <target>Paramètres</target>
+</trans-unit>
+<trans-unit id="13">
+   <source>Enter the message displayed to all user. Can be empty</source>
+   <target>Entrez le message affiché à tous les utisateur. Peut être vide.</target>
+</trans-unit>
+<trans-unit id="14">
+   <source>Message for all user</source>
+   <target>Message pour tous les utilisateurs</target>
+</trans-unit>
+<trans-unit id="15">
+   <source>Enter the message displayed to unknown user. Can be empty</source>
+   <target>Entrez le message affiché aux utilisateur inconnu. Peut être vide</target>
+</trans-unit>
+<trans-unit id="16">
+   <source>Message for unknown user</source>
+   <target>Message pour les utilisateurs inconnus</target>
+</trans-unit>
+<trans-unit id="17">
+   <source>Play list</source>
+   <target>Liste à jouer</target>
+</trans-unit>
+<trans-unit id="18">
+   <source>Info message</source>
+   <target>Message d'information</target>
+</trans-unit>
+
+<trans-unit id="19">
+<source>It will be replace by the current date of the user when the message is diplayed</source>
+<target>Il sera remplacé par la date courante quand le message est affiché</target>
+</trans-unit>
+
+<trans-unit id="20">
+<source>Add a media</source>
+<target>Ajouter un média</target>
+</trans-unit>
+
+<trans-unit id="21">
+<source>Enter the name of the message</source>
+<target>Entrez le nom du message</target>
+</trans-unit>
+
+<trans-unit id="22">
+<source>Name</source>
+<target>Nom</target>
+</trans-unit>
+
+<trans-unit id="23">
+<source>This field is required</source>
+<target>Ce champs est requis</target>
+</trans-unit>
+
+<trans-unit id="24">
+<source>Select the type of the media</source>
+<target>Séléctionnez le type du média</target>
+</trans-unit>
+
+<trans-unit id="25">
+<source>Type</source>
+<target>Type</target>
+</trans-unit>
+
+<trans-unit id="26">
+<source>Movie</source>
+<target>Film</target>
+</trans-unit>
+
+<trans-unit id="27">
+<source>Picture</source>
+<target>Image</target>
+</trans-unit>
+
+<trans-unit id="28">
+<source>Select a media</source>
+<target>Séléctionnez un média</target>
+</trans-unit>
+
+<trans-unit id="29">
+<source>Media</source>
+<target>Média</target>
+</trans-unit>
+
+<trans-unit id="30">
+<source>How many secondes the media must be displayed. (0 means infinite)</source>
+<target>Nombre de secondes d\'affichage du média</target>
+</trans-unit>
+
+<trans-unit id="31">
+<source>During</source>
+<target>Durée</target>
+</trans-unit>
+
+<trans-unit id="32">
+<source>The media was added successfully</source>
+<target>Le média a été ajouté avec succès</target>
+</trans-unit>
+
+<trans-unit id="33">
+<source>The media was not added</source>
+<target>Le média n'a pas été ajouté</target>
+</trans-unit>
+
+<trans-unit id="34">
+<source>The info message was not added</source>
+<target>Le message d'info n'a pas été ajouté </target>
+</trans-unit>
+
+<trans-unit id="35">
+<source>Add an info message</source>
+<target>Ajouter un message d'information</target>
+</trans-unit>
+
+<trans-unit id="36">
+<source>Enter the info message displayed on the screen</source>
+<target>Entrez le message d\'information affiché à l\'écran</target>
+</trans-unit>
+
+<trans-unit id="37">
+<source>Date and time when the message will be displayed</source>
+<target>Date et heure quand le message doit être affiché</target>
+</trans-unit>
+
+<trans-unit id="38">
+<source>Start Display</source>
+<target>Début d'affichage</target>
+</trans-unit>
+
+<trans-unit id="39">
+<source>You must enter a valid date (d-M-yyyy).</source>
+<target>Vous devez entrer une date valide (d-M-yyyy)</target>
+</trans-unit>
+
+<trans-unit id="40">
+<source>Date and time when the message will be undisplayed</source>
+<target>Date et heure quand le message ne sera plus affiché</target>
+</trans-unit>
+
+<trans-unit id="41">
+<source>Stop Display</source>
+<target>Fin d'affichage</target>
+</trans-unit>
+
+<trans-unit id="42">
+<source>The info message was added successfully</source>
+<target>Le message d'information a été ajouter avec succès</target>
+</trans-unit>
+
+<trans-unit id="43">
+<source>The messages was modified successfully</source>
+<target>Les messages ont été modifiés avec succès</target>
+</trans-unit>
+
+<trans-unit id="44">
+<source>The messages was not modified</source>
+<target>Les message n'ont pas été modifiés</target>
+</trans-unit>
+
+<trans-unit id="45">
+<source>Reload display</source>
+<target>Redémarrer l'affichage</target>
+</trans-unit>
+
+<trans-unit id="46">
+<source>Media List</source>
+<target>Liste des médias</target>
+</trans-unit>
+
+<trans-unit id="47">
+<source>Display</source>
+<target>Affichage</target>
+</trans-unit>
+
+<trans-unit id="48">
+<source>This record is modified by &lt;b&gt;</source>
+<target>Cet enregistrement est modifié par &lt;b&gt;</target>
+</trans-unit>
+
+<trans-unit id="49">
+<source>File</source>
+<target>Fichier</target>
+</trans-unit>
+
+<trans-unit id="50">
+<source>Time (secondes)</source>
+<target>Temps (secondes)</target>
+</trans-unit>
+
+<trans-unit id="51">
+<source>Reorder</source>
+<target>Réorganiser</target>
+</trans-unit>
+
+<trans-unit id="52">
+<source>Publish</source>
+<target>Publier</target>
+</trans-unit>
+
+<trans-unit id="53">
+<source>Select one item</source>
+<target>Choisir un enregistrement</target>
+</trans-unit>
+
+<trans-unit id="54">
+<source>{n} media was deleted</source>
+<target>{n} médias ont été supprimés</target>
+</trans-unit>
+
+<trans-unit id="55">
+<source>Info message List</source>
+<target>Liste des message d'information</target>
+</trans-unit>
+
+<trans-unit id="56">
+<source>Text</source>
+<target>Texte</target>
+</trans-unit>
+
+<trans-unit id="57">
+<source>Start display</source>
+<target>Début d'affichage</target>
+</trans-unit>
+
+<trans-unit id="58">
+<source>Stop display</source>
+<target>Fin d'affichage</target>
+</trans-unit>
+
+<trans-unit id="59">
+<source>{n} info message was deleted</source>
+<target>{n} messages d'information ont été supprimés</target>
+</trans-unit>
+
+<trans-unit id="60">
+<source>Modify a media</source>
+<target>Modifier un média</target>
+</trans-unit>
+
+<trans-unit id="61">
+<source>The media was modified successfully</source>
+<target>Le média a été modifié avec succès</target>
+</trans-unit>
+
+<trans-unit id="62">
+<source>The media was not modified</source>
+<target>Le média n'a pas été supprimé</target>
+</trans-unit>
+
+<trans-unit id="63">
+<source>Modify an info message</source>
+<target>Modifier un message d'information</target>
+</trans-unit>
+
+<trans-unit id="64">
+<source>The info message was modified successfully</source>
+<target>Le message d'information a été modifié avec succès</target>
+</trans-unit>
+
+<trans-unit id="65">
+<source>The info message was not modified</source>
+<target>Le message d'information n'a pas été modifié</target>
+</trans-unit>
+</body>
+</file>
+</xliff>

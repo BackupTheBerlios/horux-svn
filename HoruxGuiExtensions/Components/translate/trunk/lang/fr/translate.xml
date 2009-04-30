@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.0">
+<file source-language="en" target-language="fr" datatype="plaintext" original="messages" date="2008-11-03T11:31:45Z" product-name="messages">
+<body>
+<trans-unit id="1">
+   <source>Add a language</source>
+   <target>Ajouter une langue</target>
+</trans-unit>
+<trans-unit id="2">
+   <source>Parameters</source>
+   <target>Paramètres</target>
+</trans-unit>
+<trans-unit id="3">
+   <source>Enter the ISO code for the language (ex: en, fr)</source>
+   <target>Entrez le code ISO pour la langue (ex: en, fr)</target>
+</trans-unit>
+<trans-unit id="4">
+   <source>This field is required</source>
+   <target>Ce champs est requit</target>
+</trans-unit>
+<trans-unit id="5">
+   <source>Enter the long name of the language</source>
+   <target>Entrez le long nom pour la langue</target>
+</trans-unit>
+<trans-unit id="6">
+   <source>Language name</source>
+   <target>Nom de la langue</target>
+</trans-unit>
+<trans-unit id="7">
+   <source>Enter the name of the author</source>
+   <target>Entrez le nom de l\'auteur</target>
+</trans-unit>
+<trans-unit id="8">
+   <source>Author</source>
+   <target>Auteur</target>
+</trans-unit>
+<trans-unit id="9">
+   <source>Enter a email of the author</source>
+   <target>Entrez l\'email de l\'auteur</target>
+</trans-unit>
+<trans-unit id="10">
+   <source>Email</source>
+   <target>Email</target>
+</trans-unit>
+<trans-unit id="11">
+   <source>Enter the web site</source>
+   <target>Entrez le site web</target>
+</trans-unit>
+<trans-unit id="12">
+   <source>Web site</source>
+   <target>Site web</target>
+</trans-unit>
+<trans-unit id="13">
+   <source>Enter the copyright</source>
+   <target>Entrez les droits d\'auteur</target>
+</trans-unit>
+<trans-unit id="14">
+   <source>Copyright</source>
+   <target>Droit d'auteur</target>
+</trans-unit>
+<trans-unit id="15">
+   <source>Enter the licence</source>
+   <target>Entrez la license</target>
+</trans-unit>
+<trans-unit id="16">
+   <source>Licence</source>
+   <target>License</target>
+</trans-unit>
+<trans-unit id="17">
+   <source>Enter a description</source>
+   <target>Entrez la description</target>
+</trans-unit>
+<trans-unit id="18">
+   <source>Description</source>
+   <target>Description</target>
+</trans-unit>
+<trans-unit id="19">
+   <source>The language was added successfully</source>
+   <target>La langue a été ajoutée avec succès</target>
+</trans-unit>
+<trans-unit id="20">
+   <source>The language was not added</source>
+   <target>La langue n'a pas été ajoutée</target>
+</trans-unit>
+<trans-unit id="21">
+   <source>The directory {dir} must be writeable</source>
+   <target>Le répertoire {dir} doit être en écriture</target>
+</trans-unit>
+<trans-unit id="22">
+   <source>Translate</source>
+   <target>Traduction</target>
+</trans-unit>
+<trans-unit id="23">
+   <source>Language</source>
+   <target>Langue</target>
+</trans-unit>
+<trans-unit id="24">
+   <source>Module</source>
+   <target>Module</target>
+</trans-unit>
+<trans-unit id="25">
+   <source>-- Select a module --</source>
+   <target>-- Sélectionner un module --</target>
+</trans-unit>
+<trans-unit id="26">
+   <source>Components</source>
+   <target>Composants</target>
+</trans-unit>
+<trans-unit id="27">
+   <source>Hardware</source>
+   <target>Périphérique</target>
+</trans-unit>
+<trans-unit id="28">
+   <source>Extension</source>
+   <target>Extension</target>
+</trans-unit>
+<trans-unit id="29">
+   <source>Source</source>
+   <target>Source</target>
+</trans-unit>
+<trans-unit id="30">
+   <source>Translation</source>
+   <target>Traduction</target>
+</trans-unit>
+<trans-unit id="31">
+   <source>Edit</source>
+   <target>Edition</target>
+</trans-unit>
+<trans-unit id="32">
+   <source>Save</source>
+   <target>Sauver</target>
+</trans-unit>
+<trans-unit id="33">
+   <source>Cancel</source>
+   <target>Annuler</target>
+</trans-unit>
+
+
+<trans-unit id="34">
+   <source>-- Select a language--</source>
+   <target>-- Sélectionner une langue --</target>
+</trans-unit>
+<trans-unit id="35">
+   <source>-- Select a Module--</source>
+   <target>-- Sélectionner un module --</target>
+</trans-unit>
+
+<trans-unit id="36">
+<source>Themes</source>
+<target>Gabarit</target>
+</trans-unit>
+
+<trans-unit id="37">
+<source>Delete</source>
+<target>Supprimer</target>
+</trans-unit>
+
+<trans-unit id="38">
+<source>Are you sure?</source>
+<target>Etes-vous sûre?</target>
+</trans-unit>
+</body>
+</file>
+</xliff>

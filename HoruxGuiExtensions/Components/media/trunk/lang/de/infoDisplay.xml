@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.0">
+<file source-language="en" target-language="de" datatype="plaintext" original="messages" date="2009-02-10T08:08:20Z" product-name="messages">
+<body>
+<trans-unit id="1">
+   <source><![CDATA[Help]]></source>
+   <target><![CDATA[Hilfe]]></target>
+</trans-unit>
+<trans-unit id="2">
+   <source><![CDATA[Add a media]]></source>
+   <target><![CDATA[Add a Medien]]></target>
+</trans-unit>
+<trans-unit id="3">
+   <source><![CDATA[Parameters]]></source>
+   <target><![CDATA[Parameter]]></target>
+</trans-unit>
+<trans-unit id="4">
+   <source><![CDATA[Enter the name of the message]]></source>
+   <target><![CDATA[Geben Sie den Namen der Nachricht]]></target>
+</trans-unit>
+<trans-unit id="5">
+   <source><![CDATA[Name]]></source>
+   <target><![CDATA[Name]]></target>
+</trans-unit>
+<trans-unit id="6">
+   <source><![CDATA[This field is required]]></source>
+   <target><![CDATA[Dieses Feld ist erforderlich]]></target>
+</trans-unit>
+<trans-unit id="7">
+   <source><![CDATA[Select the type of the media]]></source>
+   <target><![CDATA[Wählen Sie die Art der Medien]]></target>
+</trans-unit>
+<trans-unit id="8">
+   <source><![CDATA[Type]]></source>
+   <target><![CDATA[Typ]]></target>
+</trans-unit>
+<trans-unit id="9">
+   <source><![CDATA[Movie]]></source>
+   <target><![CDATA[Movie]]></target>
+</trans-unit>
+<trans-unit id="10">
+   <source><![CDATA[Picture]]></source>
+   <target><![CDATA[Bild]]></target>
+</trans-unit>
+<trans-unit id="11">
+   <source><![CDATA[Select a media]]></source>
+   <target><![CDATA[Wählen Sie eine Mediendatei]]></target>
+</trans-unit>
+<trans-unit id="12">
+   <source><![CDATA[Media]]></source>
+   <target><![CDATA[Media]]></target>
+</trans-unit>
+<trans-unit id="13">
+   <source><![CDATA[How many secondes the media must be displayed. (0 means infinite)]]></source>
+   <target><![CDATA[Wie viele Sekunden die Medien angezeigt werden. (0 bedeutet unendlich)]]></target>
+</trans-unit>
+<trans-unit id="14">
+   <source><![CDATA[During]]></source>
+   <target><![CDATA[Während]]></target>
+</trans-unit>
+<trans-unit id="15">
+   <source><![CDATA[The media was added successfully]]></source>
+   <target><![CDATA[Die Medien wurden erfolgreich]]></target>
+</trans-unit>
+<trans-unit id="16">
+   <source><![CDATA[The media was not added]]></source>
+   <target><![CDATA[Die Medien wurden nicht hinzugefügt]]></target>
+</trans-unit>
+<trans-unit id="17">
+   <source><![CDATA[The info message was not added]]></source>
+   <target><![CDATA[Die Info-Nachricht wurde nicht hinzugefügt]]></target>
+</trans-unit>
+<trans-unit id="18">
+   <source><![CDATA[Add an info message]]></source>
+   <target><![CDATA[Fügen Sie eine Info-Nachricht]]></target>
+</trans-unit>
+<trans-unit id="19">
+   <source><![CDATA[Enter the info message displayed on the screen]]></source>
+   <target><![CDATA[Geben Sie die Informationen auf dem Bildschirm angezeigte Meldung]]></target>
+</trans-unit>
+<trans-unit id="20">
+   <source><![CDATA[Message]]></source>
+   <target><![CDATA[Nachricht]]></target>
+</trans-unit>
+<trans-unit id="21">
+   <source><![CDATA[Date and time when the message will be displayed]]></source>
+   <target><![CDATA[Datum und Zeit, in der die Nachricht wird angezeigt]]></target>
+</trans-unit>
+<trans-unit id="22">
+   <source><![CDATA[Start Display]]></source>
+   <target><![CDATA[Start anzeigen]]></target>
+</trans-unit>
+<trans-unit id="23">
+   <source><![CDATA[You must enter a valid date (d-M-yyyy).]]></source>
+   <target><![CDATA[Sie müssen ein gültiges Datum (D-M-jjjj).]]></target>
+</trans-unit>
+<trans-unit id="24">
+   <source><![CDATA[Date and time when the message will be undisplayed]]></source>
+   <target><![CDATA[Datum und Zeit, in der die Nachricht wird undisplayed]]></target>
+</trans-unit>
+<trans-unit id="25">
+   <source><![CDATA[Stop Display]]></source>
+   <target><![CDATA[Stop-Display]]></target>
+</trans-unit>
+<trans-unit id="26">
+   <source><![CDATA[The info message was added successfully]]></source>
+   <target><![CDATA[Die Info-Nachricht wurde erfolgreich hinzugefügt]]></target>
+</trans-unit>
+<trans-unit id="27">
+   <source><![CDATA[Info Display - Attribution]]></source>
+   <target><![CDATA[Info-Display - Namensnennung]]></target>
+</trans-unit>
+<trans-unit id="28">
+   <source><![CDATA[Enter the message displayed on the screen when the user present his key]]></source>
+   <target><![CDATA[Geben Sie die Nachricht auf dem Bildschirm angezeigt werden, wenn der Benutzer seinen Schlüssel]]></target>
+</trans-unit>
+<trans-unit id="29">
+   <source><![CDATA[You can insert the following tags in the message]]></source>
+   <target><![CDATA[Sie können folgende Tags in der Nachricht]]></target>
+</trans-unit>
+<trans-unit id="30">
+   <source><![CDATA[It will be replace by the name of the user when the message is diplayed]]></source>
+   <target><![CDATA[Er wird ersetzt durch den Namen des Benutzers, wenn die Meldung Bild sehen]]></target>
+</trans-unit>
+<trans-unit id="31">
+   <source><![CDATA[It will be replace by the firstname of the user when the message is diplayed]]></source>
+   <target><![CDATA[Er wird ersetzt durch den Vorname des Benutzers, wenn die Meldung Bild sehen]]></target>
+</trans-unit>
+<trans-unit id="32">
+   <source><![CDATA[It will be replace by the current time of the user when the message is diplayed]]></source>
+   <target><![CDATA[Er wird ersetzt durch die aktuelle Uhrzeit des Benutzers, wenn die Meldung Bild sehen]]></target>
+</trans-unit>
+<trans-unit id="33">
+   <source><![CDATA[It will be replace by the current date of the user when the message is diplayed]]></source>
+   <target><![CDATA[Er wird ersetzt durch das aktuelle Datum des Benutzers, wenn die Meldung Bild sehen]]></target>
+</trans-unit>
+<trans-unit id="34">
+   <source><![CDATA[It will be replace by the current day of the user when the message is diplayed]]></source>
+   <target><![CDATA[Er wird ersetzt durch den aktuellen Tag des Benutzers, wenn die Meldung Bild sehen]]></target>
+</trans-unit>
+<trans-unit id="35">
+   <source><![CDATA[The message was setted successfully]]></source>
+   <target><![CDATA[Die Nachricht wurde erfolgreich setted]]></target>
+</trans-unit>
+<trans-unit id="36">
+   <source><![CDATA[The message was not setted]]></source>
+   <target><![CDATA[Die Nachricht wurde nicht setted]]></target>
+</trans-unit>
+<trans-unit id="37">
+   <source><![CDATA[Info Display]]></source>
+   <target><![CDATA[Info Display]]></target>
+</trans-unit>
+<trans-unit id="38">
+   <source><![CDATA[Enter the message displayed to all user. Can be empty]]></source>
+   <target><![CDATA[Geben Sie die Nachricht an alle Benutzer angezeigt. Kann leer sein]]></target>
+</trans-unit>
+<trans-unit id="39">
+   <source><![CDATA[Message for all user]]></source>
+   <target><![CDATA[Nachricht für alle Benutzer]]></target>
+</trans-unit>
+<trans-unit id="40">
+   <source><![CDATA[Enter the message displayed to unknown user. Can be empty]]></source>
+   <target><![CDATA[Geben Sie die Nachricht angezeigt, um unbekannte User. Kann leer sein]]></target>
+</trans-unit>
+<trans-unit id="41">
+   <source><![CDATA[Message for unknown user]]></source>
+   <target><![CDATA[Nachricht an unknown user]]></target>
+</trans-unit>
+<trans-unit id="42">
+   <source><![CDATA[The messages was modified successfully]]></source>
+   <target><![CDATA[Die Nachrichten wurde erfolgreich]]></target>
+</trans-unit>
+<trans-unit id="43">
+   <source><![CDATA[The messages was not modified]]></source>
+   <target><![CDATA[Die Nachrichten wurden nicht verändert]]></target>
+</trans-unit>
+<trans-unit id="44">
+   <source><![CDATA[Play list]]></source>
+   <target><![CDATA[Play-Liste]]></target>
+</trans-unit>
+<trans-unit id="45">
+   <source><![CDATA[Info message]]></source>
+   <target><![CDATA[Info-Nachricht]]></target>
+</trans-unit>
+<trans-unit id="46">
+   <source><![CDATA[Reload display]]></source>
+   <target><![CDATA[Reload Anzeige]]></target>
+</trans-unit>
+<trans-unit id="47">
+   <source><![CDATA[Media List]]></source>
+   <target><![CDATA[US-Medien]]></target>
+</trans-unit>
+<trans-unit id="48">
+   <source><![CDATA[Display]]></source>
+   <target><![CDATA[Anzeige]]></target>
+</trans-unit>
+<trans-unit id="49">
+   <source><![CDATA[This record is modified by <b>]]></source>
+   <target><![CDATA[Dies wird durch <b>]]></target>
+</trans-unit>
+<trans-unit id="50">
+   <source><![CDATA[File]]></source>
+   <target><![CDATA[Datei]]></target>
+</trans-unit>
+<trans-unit id="51">
+   <source><![CDATA[Time (secondes)]]></source>
+   <target><![CDATA[Zeit (Sekunden)]]></target>
+</trans-unit>
+<trans-unit id="52">
+   <source><![CDATA[Reorder]]></source>
+   <target><![CDATA[Reorder]]></target>
+</trans-unit>
+<trans-unit id="53">
+   <source><![CDATA[Publish]]></source>
+   <target><![CDATA[Veröffentlichen]]></target>
+</trans-unit>
+<trans-unit id="54">
+   <source><![CDATA[Select one item]]></source>
+   <target><![CDATA[Wählen Sie ein Element]]></target>
+</trans-unit>
+<trans-unit id="55">
+   <source>{n} media was deleted</source>
+   <target>{n} Medien wurde gelöscht</target>
+</trans-unit>
+<trans-unit id="56">
+   <source><![CDATA[Info message List]]></source>
+   <target><![CDATA[Info US-Botschaft]]></target>
+</trans-unit>
+<trans-unit id="57">
+   <source><![CDATA[Text]]></source>
+   <target><![CDATA[Text]]></target>
+</trans-unit>
+<trans-unit id="58">
+   <source><![CDATA[Start display]]></source>
+   <target><![CDATA[Start-Anzeige]]></target>
+</trans-unit>
+<trans-unit id="59">
+   <source><![CDATA[Stop display]]></source>
+   <target><![CDATA[Stop-Display]]></target>
+</trans-unit>
+<trans-unit id="60">
+   <source>{n} info message was deleted</source>
+   <target>{n} info Nachricht wurde gelöscht</target>
+</trans-unit>
+<trans-unit id="61">
+   <source><![CDATA[Modify a media]]></source>
+   <target><![CDATA[Ändern einer Medien]]></target>
+</trans-unit>
+<trans-unit id="62">
+   <source><![CDATA[The media was modified successfully]]></source>
+   <target><![CDATA[Die Medien wurde erfolgreich]]></target>
+</trans-unit>
+<trans-unit id="63">
+   <source><![CDATA[The media was not modified]]></source>
+   <target><![CDATA[Die Medien wurden nicht verändert]]></target>
+</trans-unit>
+<trans-unit id="64">
+   <source><![CDATA[Modify an info message]]></source>
+   <target><![CDATA[Ändern Sie eine Info-Nachricht]]></target>
+</trans-unit>
+<trans-unit id="65">
+   <source><![CDATA[The info message was modified successfully]]></source>
+   <target><![CDATA[Die Info-Nachricht wurde erfolgreich geändert]]></target>
+</trans-unit>
+<trans-unit id="66">
+   <source><![CDATA[The info message was not modified]]></source>
+   <target><![CDATA[Die Info-Nachricht wurde nicht verändert]]></target>
+</trans-unit>
+</body>
+</file>
+</xliff>

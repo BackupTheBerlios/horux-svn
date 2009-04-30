@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.0">
+<file source-language="en" target-language="de" datatype="plaintext" original="messages" date="2009-02-10T08:08:48Z" product-name="messages">
+<body>
+<trans-unit id="1">
+   <source><![CDATA[Log Viewer]]></source>
+   <target><![CDATA[Log Viewer]]></target>
+</trans-unit>
+<trans-unit id="2">
+   <source><![CDATA[Log File]]></source>
+   <target><![CDATA[Log-Datei]]></target>
+</trans-unit>
+<trans-unit id="3">
+   <source>The directory {dir} is not readable</source>
+   <target>Das Verzeichnis {dir} ist nicht lesbar</target>
+</trans-unit>
+<trans-unit id="4">
+   <source>The directory {dir} does not exist</source>
+   <target>Das Verzeichnis {dir} ist nicht vorhanden</target>
+</trans-unit>
+</body>
+</file>
+</xliff>

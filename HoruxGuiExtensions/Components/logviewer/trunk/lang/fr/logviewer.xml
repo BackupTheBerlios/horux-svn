@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<xliff version="1.0">
+	<file source-language="EN" target-language="fr" datatype="plaintext" original="logviewer" date="2008-07-01T09:06:51Z" product-name="logviewer">
+		<body>
+			<trans-unit id="1">
+				<source>Log Viewer</source>
+				<target>Visualiseur de journaux</target>
+			</trans-unit>	
+			<trans-unit id="2">
+				<source>Log File</source>
+				<target>Journaux</target>
+			</trans-unit>	
+			<trans-unit id="3">
+				<source>The directory {dir} is not readable</source>
+				<target>Le répertoire {dir} n'a pas les droits en lecture</target>
+			</trans-unit>	
+			<trans-unit id="4">
+				<source>The directory {dir} does not exist</source>
+				<target>Le répertoire {dir} n'existe pas</target>
+			</trans-unit>	
+			
+		</body>
+	</file>
+</xliff> 

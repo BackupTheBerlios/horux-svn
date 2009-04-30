@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.0">
+<file source-language="en" target-language="fr" datatype="plaintext" original="messages" date="2009-02-03T09:21:21Z" product-name="messages">
+<body>
+<trans-unit id="1">
+   <source>Send</source>
+   <target>Envoyer</target>
+</trans-unit>
+<trans-unit id="2">
+   <source>Easy Mailing</source>
+   <target>Easy Mailing</target>
+</trans-unit>
+<trans-unit id="3">
+   <source>Email</source>
+   <target>Email</target>
+</trans-unit>
+<trans-unit id="4">
+   <source>Select one or more users/groups</source>
+   <target>Sélectionner un ou plusieurs groupes/utilisateurs</target>
+</trans-unit>
+<trans-unit id="5">
+   <source>To</source>
+   <target>A</target>
+</trans-unit>
+<trans-unit id="6">
+   <source>Groups</source>
+   <target>Groupes</target>
+</trans-unit>
+<trans-unit id="7">
+   <source>Users</source>
+   <target>Utilisateurs</target>
+</trans-unit>
+<trans-unit id="8">
+   <source>Please, select the recipients from groups or users</source>
+   <target>Veuillez sélectionner des destinataires depuis les groupes ou les utilisateurs</target>
+</trans-unit>
+<trans-unit id="9">
+   <source>Enter the object of the email</source>
+   <target>Entrer le titre de l\'email</target>
+</trans-unit>
+<trans-unit id="10">
+   <source>Object</source>
+   <target>Titre</target>
+</trans-unit>
+<trans-unit id="11">
+   <source>This field is required</source>
+   <target>Ce champs est requit</target>
+</trans-unit>
+<trans-unit id="12">
+   <source>Attachments</source>
+   <target>Attachements</target>
+</trans-unit>
+<trans-unit id="13">
+   <source>Send as mailing list. If checked, each recepient will show only his email.</source>
+   <target>Envoyer comme une mailing liste. Si sélectionné, chaque destinataire ne verra que sont email.</target>
+</trans-unit>
+<trans-unit id="14">
+   <source>Mailing</source>
+   <target>Mailing</target>
+</trans-unit>
+<trans-unit id="15">
+   <source>Message</source>
+   <target>Message</target>
+</trans-unit>
+<trans-unit id="16">
+   <source>The mail was delivered successfully</source>
+   <target>Le courrier a été livré avec succès</target>
+</trans-unit>
+<trans-unit id="17">
+   <source>The mail was not delivered successfully</source>
+   <target>Le courrier n'a pas été livré avec succès</target>
+</trans-unit>
+<trans-unit id="18">
+   <source>EasyMailing</source>
+   <target>EasyMailing</target>
+</trans-unit>
+</body>
+</file>
+</xliff>

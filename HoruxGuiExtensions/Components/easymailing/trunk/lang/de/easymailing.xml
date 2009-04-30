@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<xliff version="1.0">
+<file source-language="en" target-language="de" datatype="plaintext" original="messages" date="2009-02-10T8:03:45Z" product-name="messages">
+<body>
+<trans-unit id="1">
+   <source><![CDATA[Send]]></source>
+   <target><![CDATA[Senden]]></target>
+</trans-unit>
+<trans-unit id="2">
+   <source><![CDATA[Easy Mailing]]></source>
+   <target><![CDATA[Easy Mailing]]></target>
+</trans-unit>
+<trans-unit id="3">
+   <source><![CDATA[Email]]></source>
+   <target><![CDATA[E-Mail]]></target>
+</trans-unit>
+<trans-unit id="4">
+   <source><![CDATA[Select one or more users/groups]]></source>
+   <target><![CDATA[Wählen Sie einen oder mehrere Benutzer / Gruppen]]></target>
+</trans-unit>
+<trans-unit id="5">
+   <source><![CDATA[To]]></source>
+   <target><![CDATA[Zu]]></target>
+</trans-unit>
+<trans-unit id="6">
+   <source><![CDATA[Groups]]></source>
+   <target><![CDATA[Gruppen]]></target>
+</trans-unit>
+<trans-unit id="7">
+   <source><![CDATA[Users]]></source>
+   <target><![CDATA[Benutzer]]></target>
+</trans-unit>
+<trans-unit id="8">
+   <source><![CDATA[Please, select the recipients from groups or users]]></source>
+   <target><![CDATA[Bitte wählen Sie die Empfänger von Gruppen oder Benutzer]]></target>
+</trans-unit>
+<trans-unit id="9">
+   <source><![CDATA[Enter the object of the email]]></source>
+   <target><![CDATA[Geben Sie das Objekt der E-Mail]]></target>
+</trans-unit>
+<trans-unit id="10">
+   <source><![CDATA[Object]]></source>
+   <target><![CDATA[Objekt]]></target>
+</trans-unit>
+<trans-unit id="11">
+   <source><![CDATA[This field is required]]></source>
+   <target><![CDATA[Dieses Feld ist erforderlich]]></target>
+</trans-unit>
+<trans-unit id="12">
+   <source><![CDATA[Attachments]]></source>
+   <target><![CDATA[Anhänge]]></target>
+</trans-unit>
+<trans-unit id="13">
+   <source><![CDATA[Send as mailing list. If checked, each recepient will show only his email.]]></source>
+   <target><![CDATA[Senden als Mailing-Liste. Wenn aktiviert, wird jeder Empfänger nur seine E-Mail.]]></target>
+</trans-unit>
+<trans-unit id="14">
+   <source><![CDATA[Mailing]]></source>
+   <target><![CDATA[Mailing]]></target>
+</trans-unit>
+<trans-unit id="15">
+   <source><![CDATA[Message]]></source>
+   <target><![CDATA[Nachricht]]></target>
+</trans-unit>
+<trans-unit id="16">
+   <source><![CDATA[The mail was delivered successfully]]></source>
+   <target><![CDATA[Die E-Mail wurde erfolgreich]]></target>
+</trans-unit>
+<trans-unit id="17">
+   <source><![CDATA[The mail was not delivered successfully]]></source>
+   <target><![CDATA[Die E-Mail nicht zugestellt wurde erfolgreich]]></target>
+</trans-unit>
+<trans-unit id="18">
+   <source><![CDATA[EasyMailing]]></source>
+   <target><![CDATA[EasyMailing]]></target>
+</trans-unit>
+</body>
+</file>
+</xliff>

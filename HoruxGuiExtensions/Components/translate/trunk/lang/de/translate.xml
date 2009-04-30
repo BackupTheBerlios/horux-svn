@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.0">
+<file source-language="en" target-language="de" datatype="plaintext" original="messages" date="2009-02-10T08:09:30Z" product-name="messages">
+<body>
+<trans-unit id="1">
+   <source><![CDATA[Add a language]]></source>
+   <target><![CDATA[Fügen Sie eine Sprache]]></target>
+</trans-unit>
+<trans-unit id="2">
+   <source><![CDATA[Parameters]]></source>
+   <target><![CDATA[Parameter]]></target>
+</trans-unit>
+<trans-unit id="3">
+   <source>Enter the ISO code for the language (ex: en, fr)</source>
+   <target>Geben Sie die ISO-Code für die Sprache (z. B.: en, fr)</target>
+</trans-unit>
+<trans-unit id="4">
+   <source><![CDATA[This field is required]]></source>
+   <target><![CDATA[Dieses Feld ist erforderlich]]></target>
+</trans-unit>
+<trans-unit id="5">
+   <source><![CDATA[Enter the long name of the language]]></source>
+   <target><![CDATA[Geben Sie die langen Namen der Sprache]]></target>
+</trans-unit>
+<trans-unit id="6">
+   <source><![CDATA[Language name]]></source>
+   <target><![CDATA[Name Sprache]]></target>
+</trans-unit>
+<trans-unit id="7">
+   <source><![CDATA[Enter the name of the author]]></source>
+   <target><![CDATA[Geben Sie den Namen des Autors]]></target>
+</trans-unit>
+<trans-unit id="8">
+   <source><![CDATA[Author]]></source>
+   <target><![CDATA[Autor]]></target>
+</trans-unit>
+<trans-unit id="9">
+   <source><![CDATA[Enter a email of the author]]></source>
+   <target><![CDATA[Geben Sie eine E-Mail des Autors]]></target>
+</trans-unit>
+<trans-unit id="10">
+   <source><![CDATA[Email]]></source>
+   <target><![CDATA[E-Mail]]></target>
+</trans-unit>
+<trans-unit id="11">
+   <source><![CDATA[Enter the web site]]></source>
+   <target><![CDATA[Geben Sie die Web-Site]]></target>
+</trans-unit>
+<trans-unit id="12">
+   <source><![CDATA[Web site]]></source>
+   <target><![CDATA[Website]]></target>
+</trans-unit>
+<trans-unit id="13">
+   <source><![CDATA[Enter the copyright]]></source>
+   <target><![CDATA[Geben Sie das Urheberrecht]]></target>
+</trans-unit>
+<trans-unit id="14">
+   <source><![CDATA[Copyright]]></source>
+   <target><![CDATA[Copyright]]></target>
+</trans-unit>
+<trans-unit id="15">
+   <source><![CDATA[Enter the licence]]></source>
+   <target><![CDATA[Geben Sie die Lizenz]]></target>
+</trans-unit>
+<trans-unit id="16">
+   <source><![CDATA[Licence]]></source>
+   <target><![CDATA[Lizenz]]></target>
+</trans-unit>
+<trans-unit id="17">
+   <source><![CDATA[Enter a description]]></source>
+   <target><![CDATA[Geben Sie eine Beschreibung]]></target>
+</trans-unit>
+<trans-unit id="18">
+   <source><![CDATA[Description]]></source>
+   <target><![CDATA[Beschreibung]]></target>
+</trans-unit>
+<trans-unit id="19">
+   <source><![CDATA[The language was added successfully]]></source>
+   <target><![CDATA[Die Sprache wurde erfolgreich]]></target>
+</trans-unit>
+<trans-unit id="20">
+   <source><![CDATA[The language was not added]]></source>
+   <target><![CDATA[Die Sprache wurde nicht hinzugefügt]]></target>
+</trans-unit>
+<trans-unit id="21">
+   <source><![CDATA[The directory {dir} must be writeable]]></source>
+   <target><![CDATA[Das Verzeichnis (dir) müssen schreibbar]]></target>
+</trans-unit>
+<trans-unit id="22">
+   <source><![CDATA[Translate]]></source>
+   <target><![CDATA[Übersetzen]]></target>
+</trans-unit>
+<trans-unit id="23">
+   <source><![CDATA[Language]]></source>
+   <target><![CDATA[Sprache]]></target>
+</trans-unit>
+<trans-unit id="24">
+   <source><![CDATA[Module]]></source>
+   <target><![CDATA[Modul]]></target>
+</trans-unit>
+<trans-unit id="25">
+   <source><![CDATA[-- Select a module --]]></source>
+   <target><![CDATA[- Wählen Sie ein Modul --]]></target>
+</trans-unit>
+<trans-unit id="26">
+   <source><![CDATA[Themes]]></source>
+   <target><![CDATA[Themen]]></target>
+</trans-unit>
+<trans-unit id="27">
+   <source><![CDATA[Components]]></source>
+   <target><![CDATA[Komponenten]]></target>
+</trans-unit>
+<trans-unit id="28">
+   <source><![CDATA[Hardware]]></source>
+   <target><![CDATA[Hardware]]></target>
+</trans-unit>
+<trans-unit id="29">
+   <source><![CDATA[Extension]]></source>
+   <target><![CDATA[Erweiterung]]></target>
+</trans-unit>
+<trans-unit id="30">
+   <source><![CDATA[Source]]></source>
+   <target><![CDATA[Quelle]]></target>
+</trans-unit>
+<trans-unit id="31">
+   <source><![CDATA[Translation]]></source>
+   <target><![CDATA[Übersetzung]]></target>
+</trans-unit>
+<trans-unit id="32">
+   <source><![CDATA[Edit]]></source>
+   <target><![CDATA[Bearbeiten]]></target>
+</trans-unit>
+<trans-unit id="33">
+   <source><![CDATA[Save]]></source>
+   <target><![CDATA[Sichern]]></target>
+</trans-unit>
+<trans-unit id="34">
+   <source><![CDATA[Cancel]]></source>
+   <target><![CDATA[Abbrechen]]></target>
+</trans-unit>
+<trans-unit id="35">
+   <source><![CDATA[Delete]]></source>
+   <target><![CDATA[Löschen]]></target>
+</trans-unit>
+<trans-unit id="36">
+   <source><![CDATA[Are you sure?]]></source>
+   <target><![CDATA[Sind Sie sicher?]]></target>
+</trans-unit>
+<trans-unit id="37">
+   <source><![CDATA[-- Select a language--]]></source>
+   <target><![CDATA[- Wählen Sie eine Sprache --]]></target>
+</trans-unit>
+<trans-unit id="38">
+   <source><![CDATA[-- Select a Module--]]></source>
+   <target><![CDATA[- Wählen Sie ein Modul --]]></target>
+</trans-unit>
+</body>
+</file>
+</xliff>
