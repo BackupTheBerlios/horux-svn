@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <xliff version="1.0">
- <file source-language="FR" target-language="fr" datatype="plaintext" original="messages" date="2009-03-26T11:22:09Z" product-name="messages">
+ <file source-language="FR" target-language="fr" datatype="plaintext" original="messages" date="2009-04-30T17:45:59Z" product-name="messages">
   <body>
   
 <trans-unit id="1">
@@ -3593,6 +3593,16 @@
 <trans-unit id="680">
 <source>Horux Gui log</source>
 <target>Journal de Horux Gui</target>
+</trans-unit>
+
+<trans-unit id="681">
+<source>The directory ./protected/sqlitedb must be writeable</source>
+<target>Impossible d'&#xE9;crire dans le r&#xE9;pertoire ./protected/sqlitedb</target>
+</trans-unit>
+
+<trans-unit id="682">
+<source>The database is already existing in ./protected/sqlitedb</source>
+<target>La base de donn&#xE9;es existe d&#xE9;j&#xE0; dans./protected/sqlitedb </target>
 </trans-unit>
 </body>
 </file>

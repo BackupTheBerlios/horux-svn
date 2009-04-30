@@ -142,10 +142,9 @@ class HeaderBox extends Portlet
 	
       	$p = $this->getService()->getRequestedPagePath();
 
-	  	if( $user->getIsGuest() || $p == 'install.install' )
+	  	if( $user->getIsGuest() || $p == 'install.install' || $p == 'login.login' )
         {
-     		$this->setVisible(false);
-            
+     		$this->setVisible(false);            
         }
 	  }
       else

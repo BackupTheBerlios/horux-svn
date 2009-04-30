@@ -120,7 +120,13 @@ class install extends TPage
             $this->dberror->Text = Prado::localize("The directory ./protected/sqlitedb must be writeable");
             return false;
         }
-        
+
+        if(file_exists('./protected/sqlitedb/horux.db3'))
+        {
+            $this->dberror->Text = Prado::localize("The database is already existing in ./protected/sqlitedb");
+            return false;
+        }
+
         if ($db = new PDO('sqlite:./protected/sqlitedb/horux.db3'))
         {
              chmod("./protected/sqlitedb/horux.db3", 0777);
