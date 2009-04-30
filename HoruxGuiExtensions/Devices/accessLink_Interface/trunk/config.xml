@@ -1,0 +1,7 @@
+<configuration>
+    <modules>
+        <module id="globalization_accessLink_Interface" class="TGlobalization" >
+            <translation  type="XLIFF" source="horux.messages" catalogue="accessLink_Interface" marker="" cache="false" />
+        </module>
+    </modules>
+</configuration>
