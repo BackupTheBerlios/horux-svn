@@ -1,0 +1,182 @@
+<?xml version="1.0"?>
+<xliff version="1.0">
+ <file source-language="EN" target-language="en" datatype="plaintext" original="accessLink_Interface" date="2008-04-18T14:16:58Z" product-name="accessLink_Interface">
+  <body>
+  
+<trans-unit id="1">
+<source>This name is already used</source>
+<target/>
+</trans-unit>
+
+<trans-unit id="2">
+<source>This field is required</source>
+<target/>
+</trans-unit>
+
+<trans-unit id="3">
+<source>This IP address is already used</source>
+<target/>
+</trans-unit>
+
+<trans-unit id="4">
+<source>The format is not correct</source>
+<target/>
+</trans-unit>
+
+<trans-unit id="5">
+<source>Input must be between 1024 and 65535.</source>
+<target/>
+</trans-unit>
+
+<trans-unit id="6">
+<source>Input must be between 0 and 100.</source>
+<target/>
+</trans-unit>
+
+<trans-unit id="7">
+<source>Apply</source>
+<target/>
+</trans-unit>
+
+<trans-unit id="8">
+<source>Save</source>
+<target/>
+</trans-unit>
+
+<trans-unit id="9">
+<source>Add an RS485 TCP/IP Interface</source>
+<target/>
+</trans-unit>
+
+<trans-unit id="10">
+<source>Parameters</source>
+<target/>
+</trans-unit>
+
+<trans-unit id="11">
+<source>Enter a &lt;strong&gt;unique&lt;/strong&gt; name for this interface</source>
+<target/>
+</trans-unit>
+
+<trans-unit id="12">
+<source>Enter an IP address for this interface.&lt;br/&gt; This IP address must be static and not configured by DHCP.&lt;br/&gt;&lt;em&gt;Ex:192.168.1.50&lt;/em&gt;</source>
+<target/>
+</trans-unit>
+
+<trans-unit id="13">
+<source>IP Address</source>
+<target/>
+</trans-unit>
+
+<trans-unit id="14">
+<source>Enter the mask of your network.</source>
+<target/>
+</trans-unit>
+
+<trans-unit id="15">
+<source>Mask</source>
+<target/>
+</trans-unit>
+
+<trans-unit id="16">
+<source>Enter the gateway of your network.</source>
+<target/>
+</trans-unit>
+
+<trans-unit id="17">
+<source>Gateway</source>
+<target/>
+</trans-unit>
+
+<trans-unit id="18">
+<source>Enter the port number opened&lt;br/&gt;on the interface to communicate with him.&lt;br&gt;1025 is the default value</source>
+<target/>
+</trans-unit>
+
+<trans-unit id="19">
+<source>Communication port</source>
+<target/>
+</trans-unit>
+
+<trans-unit id="20">
+<source>Enter the IP address of the Spass server.&lt;br/&gt;This address allows the interface to start&lt;br/&gt; the communication with the server.</source>
+<target/>
+</trans-unit>
+
+<trans-unit id="21">
+<source>Main server</source>
+<target/>
+</trans-unit>
+
+<trans-unit id="22">
+<source>Allow to log the communication in a log file</source>
+<target/>
+</trans-unit>
+
+<trans-unit id="23">
+<source>Debug</source>
+<target/>
+</trans-unit>
+
+<trans-unit id="24">
+<source>You could insert a description for this interface.</source>
+<target/>
+</trans-unit>
+
+<trans-unit id="25">
+<source>Options</source>
+<target/>
+</trans-unit>
+
+<trans-unit id="26">
+<source>Enter a second IP address of a slave Spass server.&lt;br/&gt;If the main server is not found the interface&lt;br/&gt;will try with the second one.&lt;br/&gt;&lt;em&gt;Ex:192.168.1.50&lt;/em&gt;</source>
+<target/>
+</trans-unit>
+
+<trans-unit id="27">
+<source>Second server</source>
+<target/>
+</trans-unit>
+
+<trans-unit id="28">
+<source>Enter a third IP address of a slave Spass server.&lt;br/&gt;If the main and second server is not found&lt;br/&gt;the interface will try with the third one.&lt;br/&gt;&lt;em&gt;Ex:192.168.1.50&lt;/em&gt;</source>
+<target/>
+</trans-unit>
+
+<trans-unit id="29">
+<source>Third server</source>
+<target/>
+</trans-unit>
+
+<trans-unit id="30">
+<source>If the temperature of the Interface is bigger&lt;br/&gt; than the value, a warning will be set up.</source>
+<target/>
+</trans-unit>
+
+<trans-unit id="31">
+<source>Temperature warning (C&#xB0;)</source>
+<target/>
+</trans-unit>
+
+<trans-unit id="32">
+<source>The interface was added successfully</source>
+<target/>
+</trans-unit>
+
+<trans-unit id="33">
+<source>Modify the RS485 TCP/IP Interface</source>
+<target/>
+</trans-unit>
+
+<trans-unit id="34">
+<source>Enter the number of the port open&lt;br/&gt;on the interface to communicate with him.&lt;br&gt;1025 is the default value</source>
+<target/>
+</trans-unit>
+
+<trans-unit id="35">
+<source>The interface was not modified</source>
+<target></target>
+</trans-unit>
+</body>
+ </file>
+</xliff>

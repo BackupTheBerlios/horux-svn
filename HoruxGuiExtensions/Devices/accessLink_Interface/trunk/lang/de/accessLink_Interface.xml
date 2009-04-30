@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<xliff version="1.0">
+<file source-language="en" target-language="de" datatype="plaintext" original="messages" date="2009-02-10T8:05:18Z" product-name="messages">
+<body>
+<trans-unit id="1">
+   <source><![CDATA[Apply]]></source>
+   <target><![CDATA[Anwenden]]></target>
+</trans-unit>
+<trans-unit id="2">
+   <source><![CDATA[Save]]></source>
+   <target><![CDATA[Sichern]]></target>
+</trans-unit>
+<trans-unit id="3">
+   <source><![CDATA[Cancel]]></source>
+   <target><![CDATA[Abbrechen]]></target>
+</trans-unit>
+<trans-unit id="4">
+   <source><![CDATA[Help]]></source>
+   <target><![CDATA[Hilfe]]></target>
+</trans-unit>
+<trans-unit id="5">
+   <source><![CDATA[Add an RS485 TCP/IP Interface]]></source>
+   <target><![CDATA[Fügen Sie einen RS485 TCP / IP-Schnittstelle]]></target>
+</trans-unit>
+<trans-unit id="6">
+   <source><![CDATA[Parameters]]></source>
+   <target><![CDATA[Parameter]]></target>
+</trans-unit>
+<trans-unit id="7">
+   <source><![CDATA[Enter a <strong>unique</strong> name for this interface]]></source>
+   <target><![CDATA[Geben Sie einen einzigartigen <strong> </ strong> Namen für diese Schnittstelle]]></target>
+</trans-unit>
+<trans-unit id="8">
+   <source><![CDATA[Name]]></source>
+   <target><![CDATA[Name]]></target>
+</trans-unit>
+<trans-unit id="9">
+   <source><![CDATA[This name is already used]]></source>
+   <target><![CDATA[Dieser Name wird bereits verwendet]]></target>
+</trans-unit>
+<trans-unit id="10">
+   <source><![CDATA[This field is required]]></source>
+   <target><![CDATA[Dieses Feld ist erforderlich]]></target>
+</trans-unit>
+<trans-unit id="11">
+   <source><![CDATA[Enter an IP address for this interface.<br/> This IP address must be static and not configured by DHCP.<br/><em>Ex:192.168.1.50</em>]]></source>
+   <target><![CDATA[Geben Sie eine IP-Adresse für diese Schnittstelle. <br/> Diese IP-Adresse ist statisch und nicht per DHCP konfiguriert. <br/> <em> Ex: 192.168.1.50 </ em>]]></target>
+</trans-unit>
+<trans-unit id="12">
+   <source><![CDATA[IP Address]]></source>
+   <target><![CDATA[IP-Adresse]]></target>
+</trans-unit>
+<trans-unit id="13">
+   <source><![CDATA[This IP address is already used]]></source>
+   <target><![CDATA[Diese IP-Adresse wird bereits]]></target>
+</trans-unit>
+<trans-unit id="14">
+   <source><![CDATA[The format is not correct]]></source>
+   <target><![CDATA[Das Format ist nicht korrekt]]></target>
+</trans-unit>
+<trans-unit id="15">
+   <source><![CDATA[Enter the mask of your network.]]></source>
+   <target><![CDATA[Geben Sie die Maske Ihres Netzwerks.]]></target>
+</trans-unit>
+<trans-unit id="16">
+   <source><![CDATA[Mask]]></source>
+   <target><![CDATA[Maske]]></target>
+</trans-unit>
+<trans-unit id="17">
+   <source><![CDATA[Enter the gateway of your network.]]></source>
+   <target><![CDATA[Geben Sie das Gateway Ihres Netzwerks.]]></target>
+</trans-unit>
+<trans-unit id="18">
+   <source><![CDATA[Gateway]]></source>
+   <target><![CDATA[Gateway]]></target>
+</trans-unit>
+<trans-unit id="19">
+   <source><![CDATA[Enter the port number opened<br/>on the interface to communicate with him.<br>1025 is the default value]]></source>
+   <target><![CDATA[Geben Sie die Port-Nummer eröffnet <br/> auf der Schnittstelle für die Kommunikation mit ihm. <br> 1025 ist der Standardwert]]></target>
+</trans-unit>
+<trans-unit id="20">
+   <source><![CDATA[Communication port]]></source>
+   <target><![CDATA[Kommunikations-Port]]></target>
+</trans-unit>
+<trans-unit id="21">
+   <source><![CDATA[Input must be between 1024 and 65535.]]></source>
+   <target><![CDATA[Eingang muss zwischen 1024 und 65535 liegen.]]></target>
+</trans-unit>
+<trans-unit id="22">
+   <source><![CDATA[Enter the IP address of the Horux server.<br/>This address allows the interface to start<br/> the communication with the server.]]></source>
+   <target><![CDATA[Geben Sie die IP-Adresse des Horux Server. <br/> Die Adresse erlaubt die Schnittstelle zu starten <br/> die Kommunikation mit dem Server.]]></target>
+</trans-unit>
+<trans-unit id="23">
+   <source><![CDATA[Main server]]></source>
+   <target><![CDATA[Main Server]]></target>
+</trans-unit>
+<trans-unit id="24">
+   <source><![CDATA[Allow to log the communication in a log file]]></source>
+   <target><![CDATA[Gestatten Sie, um sich die Kommunikation in einer Log-Datei]]></target>
+</trans-unit>
+<trans-unit id="25">
+   <source><![CDATA[Debug]]></source>
+   <target><![CDATA[Debug]]></target>
+</trans-unit>
+<trans-unit id="26">
+   <source><![CDATA[You could insert a description for this interface.]]></source>
+   <target><![CDATA[Sie können eine Beschreibung für diese Schnittstelle.]]></target>
+</trans-unit>
+<trans-unit id="27">
+   <source><![CDATA[Description]]></source>
+   <target><![CDATA[Beschreibung]]></target>
+</trans-unit>
+<trans-unit id="28">
+   <source><![CDATA[Options]]></source>
+   <target><![CDATA[Optionen]]></target>
+</trans-unit>
+<trans-unit id="29">
+   <source><![CDATA[Enter a second IP address of a slave Horux server.<br/>If the main server is not found the interface<br/>will try with the second one.<br/><em>Ex:192.168.1.50</em>]]></source>
+   <target><![CDATA[Geben Sie eine zweite IP-Adresse eines Slave-Server Horux. <br/> Wenn der Server nicht gefunden wird die Schnittstelle <br/> werde versuchen mit der zweiten. <br/> <em> Ex: 192.168.1.50 </ em >]]></target>
+</trans-unit>
+<trans-unit id="30">
+   <source><![CDATA[Second server]]></source>
+   <target><![CDATA[Zweiter Server]]></target>
+</trans-unit>
+<trans-unit id="31">
+   <source><![CDATA[Enter a third IP address of a slave Horux server.<br/>If the main and second server is not found<br/>the interface will try with the third one.<br/><em>Ex:192.168.1.50</em>]]></source>
+   <target><![CDATA[Geben Sie einen dritten IP-Adresse eines Slave-Server Horux. <br/> Wenn der Haupt-und zweiten Server nicht gefunden wird <br/> die Schnittstelle wird mit dem dritten Versuch ein. <br/> <em> Ex: 192.168.1.50 < / em>]]></target>
+</trans-unit>
+<trans-unit id="32">
+   <source><![CDATA[Third server]]></source>
+   <target><![CDATA[Dritte-Server]]></target>
+</trans-unit>
+<trans-unit id="33">
+   <source><![CDATA[If the temperature of the Interface is bigger<br/> than the value, a warning will be set up.]]></source>
+   <target><![CDATA[Wenn die Temperatur des Interface <br/> ist größer als der Wert, wird eine Warnung wird eingerichtet.]]></target>
+</trans-unit>
+<trans-unit id="34">
+   <source><![CDATA[Temperature warning (C°)]]></source>
+   <target><![CDATA[Temperatur-Warnanzeige (C °)]]></target>
+</trans-unit>
+<trans-unit id="35">
+   <source><![CDATA[Input must be between 0 and 100.]]></source>
+   <target><![CDATA[Eingang muss zwischen 0 und 100.]]></target>
+</trans-unit>
+<trans-unit id="36">
+   <source><![CDATA[The interface was added successfully]]></source>
+   <target><![CDATA[Das Interface wurde erfolgreich]]></target>
+</trans-unit>
+<trans-unit id="37">
+   <source><![CDATA[The interface was not added]]></source>
+   <target><![CDATA[Die Schnittstelle wurde nicht hinzugefügt]]></target>
+</trans-unit>
+<trans-unit id="38">
+   <source><![CDATA[Modify the RS485 TCP/IP Interface]]></source>
+   <target><![CDATA[Ändern Sie die RS485 TCP / IP-Schnittstelle]]></target>
+</trans-unit>
+<trans-unit id="39">
+   <source><![CDATA[Enter the number of the port open<br/>on the interface to communicate with him.<br>1025 is the default value]]></source>
+   <target><![CDATA[Geben Sie die Anzahl der Port offen <br/> an der Schnittstelle für die Kommunikation mit ihm. <br> 1025 ist der Standardwert]]></target>
+</trans-unit>
+<trans-unit id="40">
+   <source><![CDATA[The interface was modified successfully]]></source>
+   <target><![CDATA[Das Interface wurde erfolgreich]]></target>
+</trans-unit>
+<trans-unit id="41">
+   <source><![CDATA[The interface was not modified]]></source>
+   <target><![CDATA[Die Schnittstelle wurde nicht verändert]]></target>
+</trans-unit>
+</body>
+</file>
+</xliff>

@@ -1,0 +1,178 @@
+<?xml version="1.0"?>
+<xliff version="1.0">
+ <file source-language="EN" target-language="en" datatype="plaintext" original="accessLink_ReaderRS485" date="2008-04-18T14:16:28Z" product-name="accessLink_ReaderRS485">
+  <body>
+  
+<trans-unit id="1">
+<source>This name is already used</source>
+<target></target>
+</trans-unit>
+
+<trans-unit id="2">
+<source>This field is required</source>
+<target></target>
+</trans-unit>
+
+<trans-unit id="3">
+<source>Input must be between 1 and 254.</source>
+<target></target>
+</trans-unit>
+
+<trans-unit id="4">
+<source>Input must be an integer</source>
+<target></target>
+</trans-unit>
+
+<trans-unit id="5">
+<source>Apply</source>
+<target></target>
+</trans-unit>
+
+<trans-unit id="6">
+<source>Save</source>
+<target></target>
+</trans-unit>
+
+<trans-unit id="7">
+<source>Add RFID LINK RS485 Reader</source>
+<target></target>
+</trans-unit>
+
+<trans-unit id="8">
+<source>Parameters</source>
+<target></target>
+</trans-unit>
+
+<trans-unit id="9">
+<source>Enter a &lt;strong&gt;unique&lt;/strong&gt; name for this device</source>
+<target></target>
+</trans-unit>
+
+<trans-unit id="10">
+<source>Set the device address used on the RS485 bus.</source>
+<target></target>
+</trans-unit>
+
+<trans-unit id="11">
+<source>Address</source>
+<target></target>
+</trans-unit>
+
+<trans-unit id="12">
+<source>Set on which RS485/TCPIP interface&lt;br/&gt;this reader is connected.</source>
+<target></target>
+</trans-unit>
+
+<trans-unit id="13">
+<source>Interface</source>
+<target></target>
+</trans-unit>
+
+<trans-unit id="14">
+<source>Enter the time used to open a door&lt;br/&gt;The value is 100 miliseconds step [1-254]</source>
+<target></target>
+</trans-unit>
+
+<trans-unit id="15">
+<source>Open door time (100ms)</source>
+<target></target>
+</trans-unit>
+
+<trans-unit id="16">
+<source>Enter the time used to activate the green LED&lt;br/&gt;when the access is accepted.&lt;br/&gt;The value is 100 miliseconds step [1-254]</source>
+<target></target>
+</trans-unit>
+
+<trans-unit id="17">
+<source>Green LED time (100ms)</source>
+<target></target>
+</trans-unit>
+
+<trans-unit id="18">
+<source>Enter the time used to activate the red LED&lt;br/&gt;when the access is not accepted.&lt;br/&gt;The value is 100 miliseconds step [1-254]</source>
+<target></target>
+</trans-unit>
+
+<trans-unit id="19">
+<source>Red LED time (100ms)</source>
+<target></target>
+</trans-unit>
+
+<trans-unit id="20">
+<source>You could insert a description for this device.</source>
+<target></target>
+</trans-unit>
+
+<trans-unit id="21">
+<source>Options</source>
+<target></target>
+</trans-unit>
+
+<trans-unit id="22">
+<source>Check all subdevices running on this reader</source>
+<target></target>
+</trans-unit>
+
+<trans-unit id="23">
+<source>Sub devices</source>
+<target></target>
+</trans-unit>
+
+<trans-unit id="24">
+<source>If the reader has a LCD, give the default text.&lt;br/&gt;You can enter 40 charaters</source>
+<target></target>
+</trans-unit>
+
+<trans-unit id="25">
+<source>Default text</source>
+<target></target>
+</trans-unit>
+
+<trans-unit id="26">
+<source>Check the standalone memory size</source>
+<target></target>
+</trans-unit>
+
+<trans-unit id="27">
+<source>Standalone memory</source>
+<target></target>
+</trans-unit>
+
+<trans-unit id="28">
+<source>Enter the time used to activate the orange LED.&lt;br/&gt;This LED is used on specific application&lt;br/&gt;The value is 100 miliseconds step [1-254]</source>
+<target></target>
+</trans-unit>
+
+<trans-unit id="29">
+<source>Orange LED time (100ms)</source>
+<target></target>
+</trans-unit>
+
+<trans-unit id="30">
+<source>Protects multiple presentation. Time in second</source>
+<target></target>
+</trans-unit>
+
+<trans-unit id="31">
+<source>Anti pass-back</source>
+<target></target>
+</trans-unit>
+
+<trans-unit id="32">
+<source>Allow to log the communication in a log file</source>
+<target></target>
+</trans-unit>
+
+<trans-unit id="33">
+<source>Debug</source>
+<target></target>
+</trans-unit>
+
+<trans-unit id="34">
+<source>Input must be between 0 and 254.</source>
+<target></target>
+</trans-unit>
+
+</body>
+ </file>
+</xliff>

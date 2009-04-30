@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.0">
+<file source-language="en" target-language="fr" datatype="plaintext" original="messages" date="2008-11-20T16:28:58Z" product-name="messages">
+<body>
+<trans-unit id="1">
+   <source>Add Horux Info Display</source>
+   <target>Ajouter un Horux Info Point</target>
+</trans-unit>
+<trans-unit id="2">
+   <source>Parameters</source>
+   <target>Paramètres</target>
+</trans-unit>
+<trans-unit id="3">
+   <source>Enter a &lt;strong&gt;unique&lt;/strong&gt; name for this device</source>
+   <target>Entrez un nom unique pour ce périphérique</target>
+</trans-unit>
+<trans-unit id="4">
+   <source>Name</source>
+   <target>Nom</target>
+</trans-unit>
+<trans-unit id="5">
+   <source>This name is already used</source>
+   <target>Ce nom est déjà utilisé</target>
+</trans-unit>
+<trans-unit id="6">
+   <source>This field is required</source>
+   <target>Ce champs est requit</target>
+</trans-unit>
+<trans-unit id="7">
+   <source>Enter an IP address for this device.&lt;br/&gt; This IP address must be static and not configured by DHCP.&lt;br/&gt;&lt;em&gt;Ex:192.168.1.50&lt;/em&gt;</source>
+   <target>Entrez une adresse IP pour ce périphérique.&lt;br/&gt;Cette adresse doit être static et non pas en DHCP.&lt;br/&gt;&lt;em&gt;Ex:192.168.1.50&lt;/em&gt;</target>
+</trans-unit>
+<trans-unit id="8">
+   <source>IP Address</source>
+   <target>Adresse IP</target>
+</trans-unit>
+<trans-unit id="9">
+   <source>The format is not correct</source>
+   <target>Le format n'est pas correcte</target>
+</trans-unit>
+<trans-unit id="10">
+   <source>Enter the port number opened&lt;br/&gt;on the interface to communicate with him.&lt;br&gt;7000 is the default value</source>
+   <target>Entrez le numéro du port&lt;br/&gt; du périphérique pour pouvoir communiquer avec.&lt;br /&gt;7000 est la valeur par défaut.</target>
+</trans-unit>
+<trans-unit id="11">
+   <source>Communication port</source>
+   <target>Port de communication</target>
+</trans-unit>
+<trans-unit id="12">
+   <source>Input must be between 1024 and 65535.</source>
+   <target>La valeur doit être compris entre 1024 et 65553.</target>
+</trans-unit>
+<trans-unit id="13">
+   <source>Set on which access point&lt;br/&gt;the device check the key presentation.</source>
+   <target>Définir sur quel point d\'accès le périphérique contrôle la présentation des clés.</target>
+</trans-unit>
+<trans-unit id="14">
+   <source>Access point</source>
+   <target>Point d'accès</target>
+</trans-unit>
+<trans-unit id="15">
+   <source>Allow to log the communication in a log file</source>
+   <target>Permet la journalisation de la communication dans un fichier.</target>
+</trans-unit>
+<trans-unit id="16">
+   <source>Debug</source>
+   <target>Debug</target>
+</trans-unit>
+<trans-unit id="17">
+   <source>You could insert a description for this device.</source>
+   <target>Vous pouvez insérer une description concernant le périphérique.</target>
+</trans-unit>
+<trans-unit id="18">
+   <source>Description</source>
+   <target>Description</target>
+</trans-unit>
+<trans-unit id="19">
+   <source>The device was added successfully</source>
+   <target>Le périphérique a été ajouté avec succès</target>
+</trans-unit>
+<trans-unit id="20">
+   <source>The device was not added</source>
+   <target>Le périphérique n'a été ajouté</target>
+</trans-unit>
+<trans-unit id="21">
+   <source>The device was not saved</source>
+   <target>Le périphérique n'a été sauvé</target>
+</trans-unit>
+
+<trans-unit id="22">
+   <source>The device was not modified</source>
+   <target>Le périphérique n'a été modifié</target>
+</trans-unit>
+<trans-unit id="23">
+   <source>The device was modified successfully</source>
+   <target>Le périphérique a été modifié avec succès</target>
+</trans-unit>
+</body>
+</file>
+</xliff>

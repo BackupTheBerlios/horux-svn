@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<xliff version="1.0">
+<file source-language="en" target-language="de" datatype="plaintext" original="messages" date="2009-02-10T8:05:54Z" product-name="messages">
+<body>
+<trans-unit id="1">
+   <source><![CDATA[Add RFID LINK RS485 Reader]]></source>
+   <target><![CDATA[Add RFID Reader RS485-LINK]]></target>
+</trans-unit>
+<trans-unit id="2">
+   <source><![CDATA[Parameters]]></source>
+   <target><![CDATA[Parameter]]></target>
+</trans-unit>
+<trans-unit id="3">
+   <source><![CDATA[Enter a <strong>unique</strong> name for this device]]></source>
+   <target><![CDATA[Geben Sie einen einzigartigen <strong> </ strong> Name für dieses Gerät]]></target>
+</trans-unit>
+<trans-unit id="4">
+   <source><![CDATA[Name]]></source>
+   <target><![CDATA[Name]]></target>
+</trans-unit>
+<trans-unit id="5">
+   <source><![CDATA[This name is already used]]></source>
+   <target><![CDATA[Dieser Name wird bereits verwendet]]></target>
+</trans-unit>
+<trans-unit id="6">
+   <source><![CDATA[This field is required]]></source>
+   <target><![CDATA[Dieses Feld ist erforderlich]]></target>
+</trans-unit>
+<trans-unit id="7">
+   <source><![CDATA[Set the device address used on the RS485 bus.]]></source>
+   <target><![CDATA[Stellen Sie das Gerät auf die Adresse, die RS485-Bus.]]></target>
+</trans-unit>
+<trans-unit id="8">
+   <source><![CDATA[Address]]></source>
+   <target><![CDATA[Adresse]]></target>
+</trans-unit>
+<trans-unit id="9">
+   <source><![CDATA[Set on which RS485/TCPIP interface<br/>this reader is connected.]]></source>
+   <target><![CDATA[Setzen Sie auf die RS485/TCPIP Schnittstelle <br/> dieser Leser angeschlossen ist.]]></target>
+</trans-unit>
+<trans-unit id="10">
+   <source><![CDATA[Interface]]></source>
+   <target><![CDATA[Interface]]></target>
+</trans-unit>
+<trans-unit id="11">
+   <source><![CDATA[Enter the time used to open a door<br/>The value is 100 miliseconds step [1-254]]]></source>
+   <target><![CDATA[Geben Sie die Zeit genutzt, um eine Tür <br/> Der Wert von 100 miliseconds Schritt [1-254]]]></target>
+</trans-unit>
+<trans-unit id="12">
+   <source><![CDATA[Open door time (100ms)]]></source>
+   <target><![CDATA[Der offenen Tür Zeit (100 ms)]]></target>
+</trans-unit>
+<trans-unit id="13">
+   <source><![CDATA[Input must be between 1 and 254.]]></source>
+   <target><![CDATA[Eingang muss zwischen 1 und 254 ein.]]></target>
+</trans-unit>
+<trans-unit id="14">
+   <source><![CDATA[Enter the time used to activate the green LED<br/>when the access is accepted.<br/>The value is 100 miliseconds step [1-254]]]></source>
+   <target><![CDATA[Geben Sie die Zeit genutzt, um die grüne LED <br/>, wenn der Zugang wird akzeptiert. <br/> Wert von 100 miliseconds Schritt [1-254]]]></target>
+</trans-unit>
+<trans-unit id="15">
+   <source><![CDATA[Green LED time (100ms)]]></source>
+   <target><![CDATA[Die grüne LED-Zeit (100 ms)]]></target>
+</trans-unit>
+<trans-unit id="16">
+   <source><![CDATA[Input must be between 0 and 254.]]></source>
+   <target><![CDATA[Eingang muss zwischen 0 und 254 ein.]]></target>
+</trans-unit>
+<trans-unit id="17">
+   <source><![CDATA[Enter the time used to activate the red LED<br/>when the access is not accepted.<br/>The value is 100 miliseconds step [1-254]]]></source>
+   <target><![CDATA[Geben Sie die Zeit genutzt, um die rote LED <br/>, wenn der Zugang ist nicht möglich. <br/> Der Wert ist 100 miliseconds Schritt [1-254]]]></target>
+</trans-unit>
+<trans-unit id="18">
+   <source><![CDATA[Red LED time (100ms)]]></source>
+   <target><![CDATA[Die rote LED-Zeit (100 ms)]]></target>
+</trans-unit>
+<trans-unit id="19">
+   <source><![CDATA[You could insert a description for this device.]]></source>
+   <target><![CDATA[Sie können eine Beschreibung für dieses Gerät.]]></target>
+</trans-unit>
+<trans-unit id="20">
+   <source><![CDATA[Description]]></source>
+   <target><![CDATA[Beschreibung]]></target>
+</trans-unit>
+<trans-unit id="21">
+   <source><![CDATA[Options]]></source>
+   <target><![CDATA[Optionen]]></target>
+</trans-unit>
+<trans-unit id="22">
+   <source><![CDATA[Check all subdevices running on this reader]]></source>
+   <target><![CDATA[Überprüfen Sie alle subdevices auf dieser Leser]]></target>
+</trans-unit>
+<trans-unit id="23">
+   <source><![CDATA[Sub devices]]></source>
+   <target><![CDATA[Sub-Geräte]]></target>
+</trans-unit>
+<trans-unit id="24">
+   <source><![CDATA[If the reader has a LCD, give the default text.<br/>You can enter 40 charaters]]></source>
+   <target><![CDATA[Wenn der Leser verfügt über ein LCD, die Standard-Text. <br/> Sie können 40 charaters]]></target>
+</trans-unit>
+<trans-unit id="25">
+   <source><![CDATA[Default text]]></source>
+   <target><![CDATA[Standard-Text]]></target>
+</trans-unit>
+<trans-unit id="26">
+   <source><![CDATA[Check the standalone memory size]]></source>
+   <target><![CDATA[Überprüfen Sie die Standalone-Speichergröße]]></target>
+</trans-unit>
+<trans-unit id="27">
+   <source><![CDATA[Standalone memory]]></source>
+   <target><![CDATA[Standalone-Speicher]]></target>
+</trans-unit>
+<trans-unit id="28">
+   <source><![CDATA[Enter the time used to activate the orange LED.<br/>This LED is used on specific application<br/>The value is 100 miliseconds step [1-254]]]></source>
+   <target><![CDATA[Geben Sie die Zeit genutzt, um die orange LED. <br/> Diese LED wird auf spezifische Anwendung <br/> Der Wert von 100 miliseconds Schritt [1-254]]]></target>
+</trans-unit>
+<trans-unit id="29">
+   <source><![CDATA[Orange LED time (100ms)]]></source>
+   <target><![CDATA[Orange LED-Zeit (100 ms)]]></target>
+</trans-unit>
+<trans-unit id="30">
+   <source><![CDATA[Set how the door lock output musst be hanlded<br>1: This option could be used on a timestamp reader<br>2: This can be used on a standard door<br>3: This can be used on a turnstile where we have to wait some seconde before to accept new key<br>4: This can be used on a turnstile where we used the feedback of the tunrstile when it turned]]></source>
+   <target><![CDATA[Festzulegen, wie das Türschloss Ausgabe musst werden hanlded <br> 1: Diese Option kann verwendet werden, auf einem Zeitstempel <br> Leser 2: Dies kann verwendet werden, auf einem Standard-Tür <br> 3: Dies kann verwendet werden, auf einem Drehkreuz, wo wir warten müssen, bis einige Sekunde vor, um neue Schlüssel <br> 4: Dies kann verwendet werden, auf einem Drehkreuz, wo wir das Feedback der tunrstile, wenn es sich]]></target>
+</trans-unit>
+<trans-unit id="31">
+   <source><![CDATA[Door lock mode]]></source>
+   <target><![CDATA[Türschloss-Modus]]></target>
+</trans-unit>
+<trans-unit id="32">
+   <source><![CDATA[1: Do not open, only track the access]]></source>
+   <target><![CDATA[1: Öffnen Sie nicht, nur den aktuellen Zugang]]></target>
+</trans-unit>
+<trans-unit id="33">
+   <source><![CDATA[2: Just open and track the access]]></source>
+   <target><![CDATA[2: Öffnen Sie einfach und verfolgen den Zugang]]></target>
+</trans-unit>
+<trans-unit id="34">
+   <source><![CDATA[3: Wait X seconds before to accept new key]]></source>
+   <target><![CDATA[3: Warten Sie, bis X Sekunden vor, um neue Schlüssel]]></target>
+</trans-unit>
+<trans-unit id="35">
+   <source><![CDATA[4: Wait X second or an input activation before to accept new key]]></source>
+   <target><![CDATA[4: Warten X zweiten oder eine Eingabe vor, um die Aktivierung neuer Schlüssel]]></target>
+</trans-unit>
+<trans-unit id="36">
+   <source><![CDATA[Timeout in second used on mode 3 and 4]]></source>
+   <target><![CDATA[Timeout in Sekunden auf-Modus 3 und 4]]></target>
+</trans-unit>
+<trans-unit id="37">
+   <source><![CDATA[Timeout mode]]></source>
+   <target><![CDATA[Timeout-Modus]]></target>
+</trans-unit>
+<trans-unit id="38">
+   <source><![CDATA[Time must be an integer]]></source>
+   <target><![CDATA[Zeit muss eine Ganzzahl]]></target>
+</trans-unit>
+<trans-unit id="39">
+   <source><![CDATA[Select the input value. Only used for the fourth mode]]></source>
+   <target><![CDATA[Wählen Sie die Input-Wert. Nur für die vierte Modus]]></target>
+</trans-unit>
+<trans-unit id="40">
+   <source><![CDATA[Input mode]]></source>
+   <target><![CDATA[Input-Modus]]></target>
+</trans-unit>
+<trans-unit id="41">
+   <source><![CDATA[None]]></source>
+   <target><![CDATA[Keine]]></target>
+</trans-unit>
+<trans-unit id="42">
+   <source><![CDATA[Input 1]]></source>
+   <target><![CDATA[Eingang 1]]></target>
+</trans-unit>
+<trans-unit id="43">
+   <source><![CDATA[Input 2]]></source>
+   <target><![CDATA[Eingang 2]]></target>
+</trans-unit>
+<trans-unit id="44">
+   <source><![CDATA[Both]]></source>
+   <target><![CDATA[Beides]]></target>
+</trans-unit>
+<trans-unit id="45">
+   <source><![CDATA[Protects multiple presentation. Time in second]]></source>
+   <target><![CDATA[Schützt mehrere Präsentation. Zeit in der zweiten]]></target>
+</trans-unit>
+<trans-unit id="46">
+   <source><![CDATA[Anti pass-back]]></source>
+   <target><![CDATA[Anti-Pass-Back -]]></target>
+</trans-unit>
+<trans-unit id="47">
+   <source><![CDATA[Input must be an integer]]></source>
+   <target><![CDATA[Eingang muss eine Ganzzahl]]></target>
+</trans-unit>
+<trans-unit id="48">
+   <source><![CDATA[Allow to work without the system]]></source>
+   <target><![CDATA[Lassen Sie die Arbeit ohne das System]]></target>
+</trans-unit>
+<trans-unit id="49">
+   <source><![CDATA[Standalone]]></source>
+   <target><![CDATA[Standalone]]></target>
+</trans-unit>
+<trans-unit id="50">
+   <source><![CDATA[Allow to log the communication in a log file]]></source>
+   <target><![CDATA[Gestatten Sie, um sich die Kommunikation in einer Log-Datei]]></target>
+</trans-unit>
+<trans-unit id="51">
+   <source><![CDATA[Debug]]></source>
+   <target><![CDATA[Debug]]></target>
+</trans-unit>
+<trans-unit id="52">
+   <source><![CDATA[Define the access plugin used for the access control.<br/>If empty, all plugins are likely to give the access]]></source>
+   <target><![CDATA[Definieren Sie die Plugin-Zugang für die Zugangskontrolle. <br/> Wenn leer, alle Plugins sind, um den Zugang]]></target>
+</trans-unit>
+<trans-unit id="53">
+   <source><![CDATA[Access Plugin Name]]></source>
+   <target><![CDATA[Access-Plugin Name]]></target>
+</trans-unit>
+<trans-unit id="54">
+   <source><![CDATA[The device was added successfully]]></source>
+   <target><![CDATA[Das Gerät wurde erfolgreich]]></target>
+</trans-unit>
+<trans-unit id="55">
+   <source><![CDATA[The device was not added]]></source>
+   <target><![CDATA[Das Gerät wurde nicht hinzugefügt]]></target>
+</trans-unit>
+<trans-unit id="56">
+   <source><![CDATA[The device was not saved]]></source>
+   <target><![CDATA[Das Gerät wurde nicht gespeichert]]></target>
+</trans-unit>
+<trans-unit id="57">
+   <source><![CDATA[Modify RFID LINK RS485 Reader]]></source>
+   <target><![CDATA[Ändern RFID Reader RS485-LINK]]></target>
+</trans-unit>
+<trans-unit id="58">
+   <source><![CDATA[The reader was modified successfully]]></source>
+   <target><![CDATA[Der Leser wurde erfolgreich]]></target>
+</trans-unit>
+<trans-unit id="59">
+   <source><![CDATA[The reader was not modified]]></source>
+   <target><![CDATA[Der Leser wurde nicht verändert]]></target>
+</trans-unit>
+</body>
+</file>
+</xliff>

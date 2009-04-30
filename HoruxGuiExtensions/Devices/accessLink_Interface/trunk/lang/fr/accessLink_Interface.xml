@@ -1,0 +1,202 @@
+<?xml version="1.0"?>
+<xliff version="1.0">
+ <file source-language="EN" target-language="en" datatype="plaintext" original="accessLink_Interface" date="2008-12-05T14:08:29Z" product-name="accessLink_Interface">
+  <body>
+  
+<trans-unit id="1">
+<source>This name is already used</source>
+<target>Ce nom est d&#xE9;j&#xE0; utilis&#xE9;</target>
+</trans-unit>
+
+<trans-unit id="2">
+<source>This field is required</source>
+<target>Ce champs est requis</target>
+</trans-unit>
+
+<trans-unit id="3">
+<source>This IP address is already used</source>
+<target>Cette adresse ip est d&#xE9;j&#xE0; utilis&#xE9;</target>
+</trans-unit>
+
+<trans-unit id="4">
+<source>The format is not correct</source>
+<target>Le format n'est pas correcte</target>
+</trans-unit>
+
+<trans-unit id="5">
+<source>Input must be between 1024 and 65535.</source>
+<target>L'entr&#xE9;e doit &#xEA;tre une valeur comprise entre 1024 et 65535.</target>
+</trans-unit>
+
+<trans-unit id="6">
+<source>Input must be between 0 and 100.</source>
+<target>L'entr&#xE9;e doit &#xEA;tre un nombre compris entre 0 et 100.</target>
+</trans-unit>
+
+
+
+
+
+<trans-unit id="7">
+<source>Add an RS485 TCP/IP Interface</source>
+<target>Ajouter une interface RS485 TCP/IP </target>
+</trans-unit>
+
+<trans-unit id="8">
+<source>Parameters</source>
+<target>Param&#xE8;tres</target>
+</trans-unit>
+
+<trans-unit id="9">
+<source>Enter a &lt;strong&gt;unique&lt;/strong&gt; name for this interface</source>
+<target>Entrez un nom unique pour l\'interface</target>
+</trans-unit>
+
+<trans-unit id="10">
+<source>Enter an IP address for this interface.&lt;br/&gt; This IP address must be static and not configured by DHCP.&lt;br/&gt;&lt;em&gt;Ex:192.168.1.50&lt;/em&gt;</source>
+<target>Entrez l\'adresse ip de l\'interface.&lt;br/&gt; Cette adress ip doit &#xEA;tre une adresse satique et non configurer par DHCP (Exemple: 192.168.1.50)</target>
+</trans-unit>
+
+<trans-unit id="11">
+<source>IP Address</source>
+<target>Adresse IP</target>
+</trans-unit>
+
+<trans-unit id="12">
+<source>Enter the mask of your network.</source>
+<target>Entrez le masque r&#xE9;seau</target>
+</trans-unit>
+
+<trans-unit id="13">
+<source>Mask</source>
+<target>Masque</target>
+</trans-unit>
+
+<trans-unit id="14">
+<source>Enter the gateway of your network.</source>
+<target>Entrez l\'adresse de la passerelle</target>
+</trans-unit>
+
+<trans-unit id="15">
+<source>Gateway</source>
+<target>Passerelle</target>
+</trans-unit>
+
+<trans-unit id="16">
+<source>Communication port</source>
+<target>Port de communication</target>
+</trans-unit>
+
+<trans-unit id="17">
+<source>Enter the IP address of the Horux server.&lt;br/&gt;This address allows the interface to start&lt;br/&gt; the communication with the server.</source>
+<target>Entrez l\'adresse ip du server Horux.&lt;br/&gt;Cette adresse permet &#xE0; l\'interface de d&#xE9;marrer la communication avec le serveur.</target>
+</trans-unit>
+
+<trans-unit id="18">
+<source>Main server</source>
+<target>Serveur principal</target>
+</trans-unit>
+
+<trans-unit id="19">
+<source>Allow to log the communication in a log file</source>
+<target>Permet de journalis&#xE9; la communication dans un fichier</target>
+</trans-unit>
+
+<trans-unit id="20">
+<source>Debug</source>
+<target>Debug</target>
+</trans-unit>
+
+<trans-unit id="21">
+<source>You could insert a description for this interface.</source>
+<target>Vous pouvez donner une description</target>
+</trans-unit>
+
+<trans-unit id="22">
+<source>Options</source>
+<target>Options</target>
+</trans-unit>
+
+<trans-unit id="23">
+<source>Enter a second IP address of a slave Horux server.&lt;br/&gt;If the main server is not found the interface&lt;br/&gt;will try with the second one.&lt;br/&gt;&lt;em&gt;Ex:192.168.1.50&lt;/em&gt;</source>
+<target>Entrez la seconde adresse Ip pour un second serveur Horux.&lt;br/&gt; Si le premier serveur ne r&#xE9;pond pas, l\'interface tentera d\'acc&#xE8;der le second</target>
+</trans-unit>
+
+<trans-unit id="24">
+<source>Second server</source>
+<target>Deuxi&#xE8;me server</target>
+</trans-unit>
+
+<trans-unit id="25">
+<source>Enter a third IP address of a slave Horux server.&lt;br/&gt;If the main and second server is not found&lt;br/&gt;the interface will try with the third one.&lt;br/&gt;&lt;em&gt;Ex:192.168.1.50&lt;/em&gt;</source>
+<target>Entrez la seconde adresse Ip pour un troisi&#xE8;me serveur Horux.&lt;br/&gt; Si le premier et le second serveur ne r&#xE9;pond pas, l\'interface tentera d\'acc&#xE8;der le second</target>
+</trans-unit>
+
+<trans-unit id="26">
+<source>Third server</source>
+<target>Troisi&#xE8;me serveur</target>
+</trans-unit>
+
+<trans-unit id="27">
+<source>If the temperature of the Interface is bigger&lt;br/&gt; than the value, a warning will be set up.</source>
+<target>Si la temp&#xE9;rature de l\'interface est plus haute que la valeur d&#xE9;finit, il y aura une alarme</target>
+</trans-unit>
+
+<trans-unit id="28">
+<source>Temperature warning (C&#xB0;)</source>
+<target>Avertissement de la temp&#xE9;rature (C&#xB0;)</target>
+</trans-unit>
+
+<trans-unit id="29">
+<source>The interface was added successfully</source>
+<target>L'interface a &#xE9;t&#xE9; ajouter avec succ&#xE8;s</target>
+</trans-unit>
+
+<trans-unit id="30">
+<source>Modify the RS485 TCP/IP Interface</source>
+<target>Modifier un interface RS485 TCP/IP</target>
+</trans-unit>
+
+<trans-unit id="31">
+<source>Enter the number of the port open&lt;br/&gt;on the interface to communicate with him.&lt;br&gt;1025 is the default value</source>
+<target>Entrez le num&#xE9;ro de port ouvert sur l\'interface pour communiquer avec.&lt;br&gt;La valeur par d&#xE9;faut est 1025</target>
+</trans-unit>
+
+<trans-unit id="32">
+<source>The interface was not modified</source>
+<target>L'interface n'a pas &#xE9;t&#xE9; modifi&#xE9;</target>
+</trans-unit>
+
+<trans-unit id="33">
+<source>Enter the port number opened&lt;br/&gt;on the interface to communicate with him.&lt;br&gt;1025 is the default value</source>
+<target>Entrez le num&#xE9;ro du port ouvert sur l\'interface permettant de communiqu&#xE9; avec.&lt;br&gt;1025 est le port par d&#xE9;faut</target>
+</trans-unit>
+
+<trans-unit id="34">
+<source>The interface was modified successfully</source>
+<target>L'interface a &#xE9;t&#xE9; modifi&#xE9; avec succ&#xE8;s</target>
+</trans-unit>
+
+
+
+
+
+
+
+<trans-unit id="35">
+<source>Name</source>
+<target>Nom</target>
+</trans-unit>
+
+<trans-unit id="36">
+<source>Description</source>
+<target>Description</target>
+</trans-unit>
+
+<trans-unit id="37">
+<source>The interface was not added</source>
+<target>L'interface n'a pas &#xE9;t&#xE9; ajout&#xE9;</target>
+</trans-unit>
+</body>
+ </file>
+</xliff>

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<xliff version="1.0">
+<file source-language="en" target-language="de" datatype="plaintext" original="messages" date="2009-02-10T8:06:31Z" product-name="messages">
+<body>
+<trans-unit id="1">
+   <source><![CDATA[Add Horux Info Display]]></source>
+   <target><![CDATA[Add Horux Info Display]]></target>
+</trans-unit>
+<trans-unit id="2">
+   <source><![CDATA[Parameters]]></source>
+   <target><![CDATA[Parameter]]></target>
+</trans-unit>
+<trans-unit id="3">
+   <source><![CDATA[Enter a <strong>unique</strong> name for this device]]></source>
+   <target><![CDATA[Geben Sie einen einzigartigen <strong> </ strong> Name für dieses Gerät]]></target>
+</trans-unit>
+<trans-unit id="4">
+   <source><![CDATA[Name]]></source>
+   <target><![CDATA[Name]]></target>
+</trans-unit>
+<trans-unit id="5">
+   <source><![CDATA[This name is already used]]></source>
+   <target><![CDATA[Dieser Name wird bereits verwendet]]></target>
+</trans-unit>
+<trans-unit id="6">
+   <source><![CDATA[This field is required]]></source>
+   <target><![CDATA[Dieses Feld ist erforderlich]]></target>
+</trans-unit>
+<trans-unit id="7">
+   <source><![CDATA[Enter an IP address for this device.<br/> This IP address must be static and not configured by DHCP.<br/><em>Ex:192.168.1.50</em>]]></source>
+   <target><![CDATA[Geben Sie eine IP-Adresse für dieses Gerät. <br/> Diese IP-Adresse ist statisch und nicht per DHCP konfiguriert. <br/> <em> Ex: 192.168.1.50 </ em>]]></target>
+</trans-unit>
+<trans-unit id="8">
+   <source><![CDATA[IP Address]]></source>
+   <target><![CDATA[IP-Adresse]]></target>
+</trans-unit>
+<trans-unit id="9">
+   <source><![CDATA[The format is not correct]]></source>
+   <target><![CDATA[Das Format ist nicht korrekt]]></target>
+</trans-unit>
+<trans-unit id="10">
+   <source><![CDATA[Enter the port number opened<br/>on the interface to communicate with him.<br>7000 is the default value]]></source>
+   <target><![CDATA[Geben Sie die Port-Nummer eröffnet <br/> auf der Schnittstelle für die Kommunikation mit ihm. <br> 7000 ist der Standardwert]]></target>
+</trans-unit>
+<trans-unit id="11">
+   <source><![CDATA[Communication port]]></source>
+   <target><![CDATA[Kommunikations-Port]]></target>
+</trans-unit>
+<trans-unit id="12">
+   <source><![CDATA[Input must be between 1024 and 65535.]]></source>
+   <target><![CDATA[Eingang muss zwischen 1024 und 65535 liegen.]]></target>
+</trans-unit>
+<trans-unit id="13">
+   <source><![CDATA[Set on which access point<br/>the device check the key presentation.]]></source>
+   <target><![CDATA[Setzen Sie auf die Access-Point <br/> das Gerät die Taste Präsentation.]]></target>
+</trans-unit>
+<trans-unit id="14">
+   <source><![CDATA[Access point]]></source>
+   <target><![CDATA[Access Point]]></target>
+</trans-unit>
+<trans-unit id="15">
+   <source><![CDATA[Allow to log the communication in a log file]]></source>
+   <target><![CDATA[Gestatten Sie, um sich die Kommunikation in einer Log-Datei]]></target>
+</trans-unit>
+<trans-unit id="16">
+   <source><![CDATA[Debug]]></source>
+   <target><![CDATA[Debug]]></target>
+</trans-unit>
+<trans-unit id="17">
+   <source><![CDATA[You could insert a description for this device.]]></source>
+   <target><![CDATA[Sie können eine Beschreibung für dieses Gerät.]]></target>
+</trans-unit>
+<trans-unit id="18">
+   <source><![CDATA[Description]]></source>
+   <target><![CDATA[Beschreibung]]></target>
+</trans-unit>
+<trans-unit id="19">
+   <source><![CDATA[The device was added successfully]]></source>
+   <target><![CDATA[Das Gerät wurde erfolgreich]]></target>
+</trans-unit>
+<trans-unit id="20">
+   <source><![CDATA[The device was not added]]></source>
+   <target><![CDATA[Das Gerät wurde nicht hinzugefügt]]></target>
+</trans-unit>
+<trans-unit id="21">
+   <source><![CDATA[The device was not saved]]></source>
+   <target><![CDATA[Das Gerät wurde nicht gespeichert]]></target>
+</trans-unit>
+<trans-unit id="22">
+   <source><![CDATA[The device was modified successfully]]></source>
+   <target><![CDATA[Das Gerät wurde erfolgreich geändert]]></target>
+</trans-unit>
+<trans-unit id="23">
+   <source><![CDATA[The device was not modified]]></source>
+   <target><![CDATA[Das Gerät wurde nicht verändert]]></target>
+</trans-unit>
+</body>
+</file>
+</xliff>
