@@ -1,0 +1,329 @@
+/* ThemeIEMenu Style Sheet */
+
+.ThemeIEMenu,.ThemeIESubMenuTable
+{
+    font-family:    arial, verdana, sans-serif;
+    font-size:  11px;
+    padding:    0;
+    white-space:    nowrap;
+    cursor:     default;
+    height: 25px;
+}
+
+.ThemeIESubMenu
+{
+    position:   absolute;
+    visibility: hidden;
+
+    /*
+       Netscape/Mozilla renders borders by increasing
+       their z-index.  The following line is necessary
+       to cover any borders underneath
+    */
+    z-index:    100;
+    border:     0;
+    padding:    0;
+
+    overflow:   visible;
+    border:     1px solid #8C867B;
+
+    filter:progid:DXImageTransform.Microsoft.Shadow(color=#BDC3BD, Direction=135, Strength=4);
+}
+
+.ThemeIESubMenuTable
+{
+    overflow:   visible;
+}
+
+.ThemeIEMainItem,.ThemeIEMainItemHover,.ThemeIEMainItemActive,
+.ThemeIEMenuItem,.ThemeIEMenuItemHover,.ThemeIEMenuItemActive
+{
+    border:     0;
+    cursor:     default;
+    white-space:    nowrap;
+}
+
+.ThemeIEMainItem
+{
+    /*background-color: #EFEBDE;*/
+    padding: 0.35em 1em 0.35em;
+    margin: 0 1px 0 1px;
+    color: #333333;
+    line-height: 1.6em; vertical-align: middle;
+    font-size: 11px; font-weight: bold; text-decoration: none;
+    cursor: default;
+    background-repeat: no-repeat; background-position: left 50%;
+}
+
+.ThemeIEMainItemHover,.ThemeIEMainItemActive
+{
+    background-color:   #fff8d7;
+    padding: 0.35em 1em 0.35em;
+    margin: 0 1px 0 1px;
+    color: #333333;
+    line-height: 1.6em; vertical-align: middle;
+    font-size: 11px; font-weight: bold; text-decoration: none;
+    cursor: default;
+    background-repeat: no-repeat; background-position: left 50%;
+}
+
+.ThemeIEMenuItem
+{
+    background-color:   #F1F3F5;
+}
+
+.ThemeIEMenuItemHover,.ThemeIEMenuItemActive
+{
+    background-color:   #fff8d7;
+}
+
+
+/* horizontal main menu */
+
+.ThemeIEMainItem
+{
+    padding: 1px 15px 1px 15px;
+    border-right: 1px solid #cccccc;
+}
+
+td.ThemeIEMainItemHover,td.ThemeIEMainItemActive
+{
+    padding: 1px 15px 1px 15px;
+    border-right:   1px solid #ead678;
+    border-left:    1px solid #ead678;
+}
+
+.ThemeIEMainFolderLeft,.ThemeIEMainItemLeft,
+.ThemeIEMainFolderText,.ThemeIEMainItemText,
+.ThemeIEMainFolderRight,.ThemeIEMainItemRight
+{
+    background-color:   inherit;
+}
+
+/* vertical main menu sub components */
+
+td.ThemeIEMainFolderLeft,td.ThemeIEMainItemLeft
+{
+    padding-top:    2px;
+    padding-bottom: 2px;
+    padding-left:   0px;
+    padding-right:  2px;
+
+    border-top: 1px solid #ead678;
+    border-bottom:  1px solid #ead678;
+    border-left:    1px solid #ead678;
+
+    background-color:   inherit;
+}
+
+td.ThemeIEMainFolderText,td.ThemeIEMainItemText
+{
+    padding-top:    2px;
+    padding-bottom: 2px;
+    padding-left:   5px;
+    padding-right:  5px;
+
+    border-top: 1px solid #ead678;
+    border-bottom:  1px solid #ead678;
+
+    background-color:   inherit;
+    white-space:    nowrap;
+}
+
+td.ThemeIEMainFolderRight,td.ThemeIEMainItemRight
+{
+    padding-top:    2px;
+    padding-bottom: 2px;
+    padding-left:   0px;
+    padding-right:  0px;
+
+    border-top: 1px solid #ead678;
+    border-bottom:  1px solid #ead678;
+    border-right:   1px solid #ead678;
+
+    background-color:   inherit;
+}
+
+tr.ThemeIEMainItem td.ThemeIEMainFolderLeft,
+tr.ThemeIEMainItem td.ThemeIEMainItemLeft
+{
+    padding-top:    3px;
+    padding-bottom: 3px;
+    padding-left:   1px;
+    padding-right:  2px;
+
+    white-space:    nowrap;
+
+    border:     0;
+    background-color:   inherit;
+}
+
+tr.ThemeIEMainItem td.ThemeIEMainFolderText,
+tr.ThemeIEMainItem td.ThemeIEMainItemText
+{
+    padding-top:    3px;
+    padding-bottom: 3px;
+    padding-left:   5px;
+    padding-right:  5px;
+
+    border:     0;
+    background-color:   inherit;
+}
+
+tr.ThemeIEMainItem td.ThemeIEMainItemRight,
+tr.ThemeIEMainItem td.ThemeIEMainFolderRight
+{
+    padding-top:    3px;
+    padding-bottom: 3px;
+    padding-left:   0px;
+    padding-right:  1px;
+
+    border:     0;
+    background-color:   inherit;
+}
+
+/* sub menu sub components */
+
+.ThemeIEMenuFolderLeft,.ThemeIEMenuItemLeft
+{
+    padding-top:    2px;
+    padding-bottom: 2px;
+    padding-left:   1px;
+    padding-right:  3px;
+
+    border-top: 1px solid #ead678;
+    border-bottom:  1px solid #ead678;
+    border-left:    1px solid #ead678;
+
+    background-color:   inherit;
+    white-space:    nowrap;
+}
+
+.ThemeIEMenuFolderText,.ThemeIEMenuItemText
+{
+    padding-top:    2px;
+    padding-bottom: 2px;
+    padding-left:   5px;
+    padding-right:  5px;
+
+    border-top: 1px solid #ead678;
+    border-bottom:  1px solid #ead678;
+
+    background-color:   inherit;
+    white-space:    nowrap;
+}
+
+.ThemeIEMenuFolderRight,.ThemeIEMenuItemRight
+{
+    padding-top:    2px;
+    padding-bottom: 2px;
+    padding-left:   0px;
+    padding-right:  0px;
+
+    border-top: 1px solid #ead678;
+    border-bottom:  1px solid #ead678;
+    border-right:   1px solid #ead678;
+
+    background-color:   inherit;
+    white-space:    nowrap;
+}
+
+.ThemeIEMenuItem .ThemeIEMenuFolderLeft,
+.ThemeIEMenuItem .ThemeIEMenuItemLeft
+{
+    padding-top:    3px;
+    padding-bottom: 3px;
+    padding-left:   2px;
+    padding-right:  3px;
+
+    white-space:    nowrap;
+
+    border:     0px;
+    background-color:   #DDE1E6;
+}
+
+.ThemeIEMenuItem .ThemeIEMenuFolderText,
+.ThemeIEMenuItem .ThemeIEMenuItemText
+{
+    padding-top:    3px;
+    padding-bottom: 3px;
+    padding-left:   5px;
+    padding-right:  5px;
+
+    border:     0px;
+    background-color:   inherit;
+}
+
+.ThemeIEMenuItem .ThemeIEMenuFolderRight,
+.ThemeIEMenuItem .ThemeIEMenuItemRight
+{
+    padding-top:    3px;
+    padding-bottom: 3px;
+    padding-left:   0px;
+    padding-right:  1px;
+
+    border:     0;
+    background-color:   inherit;
+}
+
+/* menu splits */
+
+.ThemeIEMenuSplit
+{
+    margin:     0px;
+    height:     1px;
+    overflow:   hidden;
+    background-color:   inherit;
+    border-top: 1px solid #C6C3BD;
+}
+
+/* image shadow animation */
+
+/*
+    seq1:   image for normal
+    seq2:   image for hover and active
+
+    To use, in the icon field, input the following:
+    <img class="seq1" src="normal.gif" /><img class="seq2" src="hover.gif" />
+*/
+
+.ThemeIEMenuItem img.seq1
+{
+    display:    inline;
+}
+
+.ThemeIEMenuItemHover seq2,
+.ThemeIEMenuItemActive seq2
+{
+    display:    inline;
+}
+
+.ThemeIEMenuItem .seq2,
+.ThemeIEMenuItemHover .seq1,
+.ThemeIEMenuItemActive .seq1
+{
+    display:    none;
+}
+
+
+/* inactive settings */
+div.inactive td.ThemeIEMainItemHover, div.inactive td.ThemeIEMainItemActive
+{
+    border-top: 0px;
+    border-right:   1px solid #f1f3f5;
+    border-left:    1px solid #f1f3f5;
+}
+
+div.inactive .ThemeIEMainItem {
+    color: #bbb;
+
+}
+
+div.inactive span.ThemeIEMainItemText {
+    color: #aaa;
+}
+
+div.inactive .ThemeIEMainItemHover, div.inactive .ThemeIEMainItemActive
+{
+    background-color:   #f1f3f5;
+}
