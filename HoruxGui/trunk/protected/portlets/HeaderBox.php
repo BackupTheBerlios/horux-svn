@@ -133,19 +133,23 @@ class HeaderBox extends Portlet
     {
    	  parent::onInit($param);
 	  $this->logout->Text = Prado::localize('Logout',array(), "messages");
-
 	  $this->generateMenu();
 
   	  $user = $this->application->getUser();
+
 	  if($user)
 	  {
 	
       	$p = $this->getService()->getRequestedPagePath();
 
 	  	if( $user->getIsGuest() || $p == 'install.install' )
+        {
      		$this->setVisible(false);
+            
+        }
 	  }
-     		
+      else
+     	$this->setVisible(false);
     }
 
     public function generateMenuDisabled()
