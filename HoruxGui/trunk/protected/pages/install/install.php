@@ -23,7 +23,7 @@ class install extends TPage
         $this->xml->Text = extension_loaded('xml') ? Prado::localize('Yes'):'<span style="color:red">'.Prado::localize('No').'<span>';
         $this->mysql->Text = extension_loaded('mysql') ? Prado::localize('Yes'):'<span style="color:red">'.Prado::localize('No').'<span>';
         $this->sqlite->Text = extension_loaded('sqlite') ? Prado::localize('Yes'):'<span style="color:red">'.Prado::localize('No').'<span>';
-        $this->postgre->Text = extension_loaded('pgsql') ? Prado::localize('Yes'):'<span style="color:red">'.Prado::localize('No').'<span>';
+        //$this->postgre->Text = extension_loaded('pgsql') ? Prado::localize('Yes'):'<span style="color:red">'.Prado::localize('No').'<span>';
         $this->zip->Text = extension_loaded('zip') ? Prado::localize('Yes'):'<span style="color:red">'.Prado::localize('No').'<span>';
         $this->application_xml->Text = is_writable('./protected/application_p.xml') ? Prado::localize('Yes'):'<span style="color:red">'.Prado::localize('No').'<span>';
 	
@@ -32,7 +32,7 @@ class install extends TPage
             !extension_loaded('xml') ||
             !extension_loaded('mysql') ||
             !extension_loaded('sqlite') ||
-            !extension_loaded('pgsql') ||
+            //!extension_loaded('pgsql') ||
             !extension_loaded('zip') ||
             !is_writable('./protected/application_p.xml')
           )
@@ -62,6 +62,7 @@ class install extends TPage
             $this->username_db->setEnabled (true);
             $this->password_db->setEnabled (true);
             $this->hostname->setEnabled (true);
+            $this->dbname->setEnabled (true);
         }
     }	
 
@@ -73,7 +74,7 @@ class install extends TPage
 		!extension_loaded('xml') ||
 		!extension_loaded('mysql') ||
         !extension_loaded('sqlite') ||
-        !extension_loaded('pgsql') ||
+        //!extension_loaded('pgsql') ||
 		!extension_loaded('zip') ||
 		!is_writable('./protected/application_p.xml')
 		)
@@ -90,8 +91,7 @@ class install extends TPage
 
 	public function createDb($sender,$param)
 	{
-		$param->IsValid=$this->createDatabase();
-
+        $param->IsValid = $this->createDatabase();
 	}
 	
 	protected function createDatabase()
@@ -99,20 +99,27 @@ class install extends TPage
         switch($this->dbServer->getSelectedValue())
         {
             case "sqlite":
-                $this->createSqlite();
+                return $this->createSqlite();
                 break;
             case "mysql":
-                $this->createMysql();
+                return $this->createMysql();
                 break;
-            case "pgsql":
+            /*case "pgsql":
                 $this->createPgsql();
-                break;
+                break;*/
 
         }
+
+        return false;
     }
 
     protected function createSqlite()
     {
+        if(!is_writable('./protected/sqlitedb'))
+        {
+            $this->dberror->Text = Prado::localize("The directory ./protected/sqlitedb must be writeable");
+            return false;
+        }
         
         if ($db = new PDO('sqlite:./protected/sqlitedb/horux.db3'))
         {
@@ -309,9 +316,9 @@ class install extends TPage
            }
        }
 
-       if($this->dbServer->getSelectedValue() == "pgsql")
+       /*if($this->dbServer->getSelectedValue() == "pgsql")
        {
-       }
+       }*/
 	}
 
 	public function wizardCompleted($sender,$param)
@@ -338,11 +345,11 @@ class install extends TPage
            }
        }
 
-       if($this->dbServer->getSelectedValue() == "pgsql")
+       /*if($this->dbServer->getSelectedValue() == "pgsql")
        {
-       }
+       }*/
 
-	   fopen("./assets/.installed", "a");
+	   fopen("./protected/runtime/.installed", "a");
 	   
 	   $this->Response->redirect($this->Service->constructUrl('login.login')); 
 

@@ -21,7 +21,7 @@
 				<p><com:TCustomValidator
 				ID="dberror"
 			    ValidationGroup="Group1"
-			    ControlToValidate="dbname"
+			    ControlToValidate="dbServer"
 			    OnServerValidate="createDb"
 			    Text="" />
 			    </p>

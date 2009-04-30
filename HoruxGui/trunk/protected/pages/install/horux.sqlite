@@ -536,18 +536,17 @@ CREATE TABLE hr_user_group_attribution (
 
 CREATE TABLE hr_notification (
   'id' INTEGER PRIMARY KEY AUTOINCREMENT,
-  'name' varchar(40) NOT NULL,
-  'emails' text NOT NULL,
+  'name' varchar(40) NOT NULL default '',
+  'emails' text NOT NULL default '',
   'description' varchar(255) NOT NULL,
-  'locked' int(11) NOT NULL default '0',
-  PRIMARY KEY  (`id`)
+  'locked' int(11) NOT NULL default '0'
 );
 
 CREATE TABLE hr_notification_code (
   'id_notification' int(11) NOT NULL,
-  'type' varchar(40) NOT NULL,
-  'code' varchar(30) NOT NULL,
-  'param' varchar(100) NOT NULL
+  'type' varchar(40) NOT NULL default '',
+  'code' varchar(30) NOT NULL default '',
+  'param' varchar(100) NOT NULL default ''
 );
 
 CREATE TABLE hr_notification_su (

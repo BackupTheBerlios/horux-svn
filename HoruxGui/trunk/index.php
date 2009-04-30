@@ -32,7 +32,7 @@ require_once($frameworkPath);
 
 
 
-if(!file_exists('./assets/.installed'))
+if(!file_exists('./protected/runtime/.installed'))
 {
 	$app_conf = new TApplicationConfiguration();
 	$app_conf->loadFromFile('./protected/pages/install/application.xml');
