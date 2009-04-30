@@ -167,6 +167,8 @@ INSERT INTO hr_gui_permissions VALUES ('43', 'openTime.openTimeList', 'group_id'
 INSERT INTO hr_gui_permissions VALUES ('44', 'openTime.add', 'group_id', '1', '1');
 INSERT INTO hr_gui_permissions VALUES ('45', 'openTime.mod', 'group_id', '1', '1');
 INSERT INTO hr_gui_permissions VALUES ('46', 'system.Notification', 'group_id', '1', '1');
+INSERT INTO hr_gui_permissions VALUES ('47', 'system.NotificationAdd', 'group_id', '1', '1');
+INSERT INTO hr_gui_permissions VALUES ('48', 'system.NotificationMod', 'group_id', '1', '1');
 
 # --------------------------------------------------------
 
@@ -402,7 +404,9 @@ CREATE TABLE hr_superusers ( 'id' INTEGER PRIMARY KEY AUTOINCREMENT,
     'isLogged' smallint(1) default 0,
     'locked' int(11) default 0 ,
     'session_id' varchar(100) default NULL ,
-    'lastConnection' datetime);
+    'lastConnection' datetime,
+    'email' varchar(30) default NULL
+);
 
 CREATE INDEX hr_superusers_id ON hr_superusers ('id');
 

@@ -254,7 +254,9 @@ INSERT INTO `hr_gui_permissions` (`id`, `page`, `selector`, `value`, `allowed`) 
 (43, 'openTime.openTimeList', 'group_id', 1, '1'),
 (44, 'openTime.add', 'group_id', 1, '1'),
 (45, 'openTime.mod', 'group_id', 1, '1'),
-(46, 'system.Notification', 'group_id', 1, '1');
+(46, 'system.Notification', 'group_id', 1, '1'),
+(47, 'system.NotificationAdd', 'group_id', 1, '1'),
+(48, 'system.NotificationMod', 'group_id', 1, '1');
 
 
 # --------------------------------------------------------
@@ -392,6 +394,7 @@ CREATE TABLE IF NOT EXISTS `hr_superusers` (
   `locked` int(11) NOT NULL default '0',
   `session_id` varchar(100) collate utf8_unicode_ci NOT NULL,
   `lastConnection` datetime NOT NULL,
+  `email` varchar(30) default NULL,
   KEY `id` (`id`)
 ) TYPE=MyISAM CHARACTER SET `utf8`;
 
