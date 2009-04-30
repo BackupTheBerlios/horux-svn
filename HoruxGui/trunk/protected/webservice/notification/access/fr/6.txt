@@ -1,0 +1,10 @@
+La clé suivante est bloquée pendant le jours non ouvrables :
+
+Utilisateur : %user%
+Site : %site%
+Porte : %device%
+Clé  : %key%
+Date : %date%
+Heure : %time%
+
+Ne pas répondre à ce message.

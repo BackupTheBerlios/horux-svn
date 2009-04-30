@@ -1,0 +1,8 @@
+The antenna of th device is enabled :
+
+Site : %site%
+Door : %device%
+Date : %date%
+Time : %time%
+
+Don't response to this message.

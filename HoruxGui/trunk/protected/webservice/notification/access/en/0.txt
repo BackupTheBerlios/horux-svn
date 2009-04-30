@@ -1,0 +1,10 @@
+The following user has obtained access :
+
+User : %user%
+Site : %site%
+Door : %device%
+Key  : %key%
+Date : %date%
+Time : %time%
+
+Don't response to this message.

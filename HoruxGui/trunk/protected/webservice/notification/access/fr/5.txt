@@ -1,0 +1,10 @@
+La clé suivante est bloquée pendant le week-end :
+
+Utilisateur : %user%
+Site : %site%
+Porte : %device%
+Clé  : %key%
+Date : %date%
+Heure : %time%
+
+Ne pas répondre à ce message.

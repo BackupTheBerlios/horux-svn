@@ -1,0 +1,10 @@
+Le groupe de l'utilisateur n'a pas de niveau d'accès
+
+Utilisateur : %user%
+Site : %site%
+Porte : %device%
+Clé  : %key%
+Date : %date%
+Heure : %time%
+
+Ne pas répondre à ce message.

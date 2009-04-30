@@ -1,0 +1,7 @@
+Le server Horux XMLRPC ne fonctionne pas:
+
+Site : %site%
+Date : %date%
+Heure : %time%
+
+Ne pas répondre à ce message.

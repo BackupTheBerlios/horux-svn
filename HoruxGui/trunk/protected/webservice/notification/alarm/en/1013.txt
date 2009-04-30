@@ -1,0 +1,8 @@
+Cannot remove a key from the device memory :
+
+Site : %site%
+Door : %device%
+Date : %date%
+Time : %time%
+
+Don't response to this message.

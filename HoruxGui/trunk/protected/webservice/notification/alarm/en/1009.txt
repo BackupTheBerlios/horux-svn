@@ -1,0 +1,9 @@
+The temperature on the device is too hot :
+
+Site : %site%
+Door : %device%
+Date : %date%
+Time : %time%
+
+Don't response to this message.
+ 

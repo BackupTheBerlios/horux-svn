@@ -1,0 +1,10 @@
+L'utilisateur suivant est bloqué :
+
+Utilisateur : %user%
+Site : %site%
+Porte : %device%
+Clé  : %key%
+Date : %date%
+Heure : %time%
+
+Ne pas répondre à ce message.

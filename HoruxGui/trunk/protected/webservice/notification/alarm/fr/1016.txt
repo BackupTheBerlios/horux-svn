@@ -1,0 +1,8 @@
+La communication avec le péripéhrique n'a pas été ouverte :
+
+Site : %site%
+Porte : %device%
+Date : %date%
+Heure : %time%
+
+Ne pas répondre à ce message

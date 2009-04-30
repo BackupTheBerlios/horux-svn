@@ -1,0 +1,11 @@
+La clé suivante est hors des heures :
+
+Utilisateur : %user%
+Site : %site%
+Porte : %device%
+Clé  : %key%
+Date : %date%
+Heure : %time%
+
+Ne pas répondre à ce message.
+ 

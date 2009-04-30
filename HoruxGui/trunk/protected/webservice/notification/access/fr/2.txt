@@ -1,0 +1,9 @@
+La clé suivante est inconnue du système :
+
+Site : %site%
+Porte : %device%
+Clé  : %key%
+Date : %date%
+Heure : %time%
+
+Ne pas répondre à ce message.

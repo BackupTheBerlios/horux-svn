@@ -1,0 +1,11 @@
+L'utilisateur suivant n'appartient à aucun groupe :
+
+Utilisateur : %user%
+Site : %site%
+Porte : %device%
+Clé  : %key%
+Date : %date%
+Heure : %time%
+
+Ne pas répondre à ce message.
+ 

@@ -1,0 +1,9 @@
+Impossible de supprimer une clé de la mémoire du périphérique :
+
+Site : %site%
+Porte : %device%
+Date : %date%
+Heure : %time%
+
+Ne pas répondre à ce message.
+

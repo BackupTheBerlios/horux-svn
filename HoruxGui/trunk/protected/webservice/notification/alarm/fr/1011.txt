@@ -1,0 +1,9 @@
+La mémoire du périphérique est bientôt pleine :
+
+Site : %site%
+Porte : %device%
+Date : %date%
+Heure : %time%
+
+Ne pas répondre à ce message.
+

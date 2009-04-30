@@ -1,0 +1,9 @@
+La clé suivante n'est pas attribuée :
+
+Site : %site%
+Porte : %device%
+Clé  : %key%
+Date : %date%
+Heure : %time%
+
+Ne pas répondre à ce message.

@@ -1,0 +1,8 @@
+Impossible d'insérer une clé dans la mémoire du périphérique :
+
+Site : %site%
+Porte : %device%
+Date : %date%
+Heure : %time%
+
+Ne pas répondre à ce message.

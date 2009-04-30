@@ -1,0 +1,9 @@
+L'antivandal a été annulé :
+
+Site : %site%
+Porte : %device%
+Date : %date%
+Heure : %time%
+
+Ne pas répondre à ce message.
+ 

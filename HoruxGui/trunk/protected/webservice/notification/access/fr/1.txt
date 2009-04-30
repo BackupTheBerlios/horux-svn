@@ -1,0 +1,10 @@
+La clé bloquée suivante a été utilisée :
+
+Utilisateur : %user%
+Site : %site%
+Porte : %device%
+Clé  : %key%
+Date : %date%
+Heure : %time%
+
+Ne pas répondre à ce message.

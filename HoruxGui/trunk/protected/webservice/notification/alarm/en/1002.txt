@@ -1,0 +1,9 @@
+The antivandal was cleared :
+
+Site : %site%
+Door : %device%
+Date : %date%
+Time : %time%
+
+Don't response to this message.
+ 
