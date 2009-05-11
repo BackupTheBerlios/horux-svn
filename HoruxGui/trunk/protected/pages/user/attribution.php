@@ -77,8 +77,12 @@ class Attribution extends Page
                     }
                     else
                     {
+                         $cmd = NULL;
                         //! add the new key in the database
-                        $cmd=$this->db->createCommand(SQL::SQL_ADD_KEY);
+                        if($this->db->DriverName == 'sqlite')
+                            $cmd=$this->db->createCommand(SQL::SQL_ADD_KEY_SQLITE);
+                        else
+                            $cmd=$this->db->createCommand(SQL::SQL_ADD_KEY);
                         $cmd->bindParameter(":serialNumber",$this->Request['sn']);   
                         $cmd->execute();
                         //! attribute the new key

@@ -60,5 +60,19 @@ class SQL {
                         :serialNumber,
                         '0',
                         '1'
-                  )";  
+                  )";
+
+  const SQL_ADD_KEY_SQLITE = "INSERT INTO hr_keys (
+                        `identificator` ,
+                        `serialNumber`,
+                        `isBlocked`,
+                        `isUsed`
+                  )
+                  VALUES (
+                        'Key' || ' - ' || :serialNumber,
+                        :serialNumber,
+                        '0',
+                        '1'
+                  )";
+
 }

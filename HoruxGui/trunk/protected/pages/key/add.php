@@ -88,7 +88,17 @@ class add extends Page
       $cmd = $this->db->createCommand( SQL::SQL_ADD_KEY );
       $cmd->bindParameter(":identificator",$this->identificator->SafeText,PDO::PARAM_STR);
       $cmd->bindParameter(":serialNumber",$this->serialNumber->SafeText, PDO::PARAM_STR);
-      $cmd->bindParameter(":isBlocked",$this->isBlocked->getChecked(), PDO::PARAM_STR);
+      
+      if($this->isBlocked->getChecked())
+      {
+          $isBlocked = 1;
+          $cmd->bindParameter(":isBlocked",$isBlocked, PDO::PARAM_STR);
+      }
+      else
+      {
+          $isBlocked = 0;
+          $cmd->bindParameter(":isBlocked",$isBlocked, PDO::PARAM_STR);
+      }
 
 	  if($this->person->getSelectedValue() != 'null')
       	$isUsed = 1;

@@ -30,6 +30,10 @@ class Status extends Page
 			$result = $this->getSystemStatus();
 			$this->parseResponse($result);
         }
+
+            $app = $this->getApplication();
+            $db = $app->getModule('horuxDb')->DbConnection;
+            $db->Active=true;
     }
     
     
