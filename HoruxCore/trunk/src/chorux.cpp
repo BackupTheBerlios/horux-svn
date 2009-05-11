@@ -145,7 +145,7 @@ bool CHorux::startEngine()
 
     if ( !xmlRpcServer )
     {
-        xmlRpcServer = new MaiaXmlRpcServer ( CFactory::getDbHandling()->plugin()->getConfigParam ( "xmlrpc_server" ).toInt(), this );
+        xmlRpcServer = new MaiaXmlRpcServer ( CFactory::getDbHandling()->plugin()->getConfigParam ( "xmlrpc_port" ).toInt(), this );
 
         if ( xmlRpcServer && xmlRpcServer->isListening() )
         {

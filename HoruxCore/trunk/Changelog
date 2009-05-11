@@ -12,6 +12,8 @@ Horux Core 1.0.5
 19.03.2009      Redefine the alarm code number
 19.03.2009      Add new alarm code (too many pin, door ajar and door forced). This code is not necessary used but is planned to be used
 20.03.2009      Send XMLRPC alarm if needed
+11.05.2009      Add the compilation option for linux embedded system
+11.05.2009      use the new xmlrpc config
 
 Horux Core 1.0.4
 19.01.2009      Add the functionnality to handle the free access

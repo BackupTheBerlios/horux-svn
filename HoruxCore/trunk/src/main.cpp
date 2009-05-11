@@ -63,7 +63,7 @@ void myMessageOutput ( QtMsgType type, const char *msg )
 }
 
 #if defined(Q_OS_WIN)
-#elif defined(Q_WS_X11)
+#elif defined(Q_WS_X11) || defined(Q_WS_QWS)
 
 #define RUNNING_DIR "/tmp"
 #define LOCK_FILE "appd.lock"
@@ -125,7 +125,7 @@ void deamonize()
 int main ( int argc, char *argv[] )
 {
 #if defined(Q_OS_WIN)
-#elif defined(Q_WS_X11)
+#elif defined(Q_WS_X11) || defined(Q_WS_QWS)
 #if defined(H_PRODUCTION)
     // deamonize();
 #endif

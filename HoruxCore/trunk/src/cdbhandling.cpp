@@ -123,7 +123,7 @@ bool CDbHandling::loadPlugin()
 
 #if defined(Q_OS_WIN)
     filter << plugin + "*";
-#elif defined(Q_WS_X11)
+#elif defined(Q_WS_X11) || defined(Q_WS_QWS)
     filter << "lib" + plugin + "*";
 #endif
 
