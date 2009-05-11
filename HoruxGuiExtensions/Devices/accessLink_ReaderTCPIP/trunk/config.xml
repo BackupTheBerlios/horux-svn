@@ -1,0 +1,7 @@
+<configuration>
+    <modules>
+        <module id="globalization_accessLink_ReaderTCPIP" class="TGlobalization" >
+            <translation  type="XLIFF" source="horux.messages" catalogue="accessLink_ReaderTCPIP" marker="" />
+        </module>
+    </modules>
+</configuration>

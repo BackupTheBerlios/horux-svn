@@ -1,0 +1,308 @@
+<?xml version="1.0"?>
+<xliff version="1.0">
+ <file source-language="EN" target-language="en" datatype="plaintext" original="accessLink_ReaderRS485" date="2009-05-11T11:05:40Z" product-name="accessLink_ReaderRS485">
+  <body>
+  
+<trans-unit id="1">
+<source>This name is already used</source>
+<target>Ce nom est d&#xE9;j&#xE0; utilis&#xE9;</target>
+</trans-unit>
+
+<trans-unit id="2">
+<source>This field is required</source>
+<target>Ce champs est requis</target>
+</trans-unit>
+
+<trans-unit id="3">
+<source>Input must be between 1 and 254.</source>
+<target>L'entr&#xE9;e doit &#xEA;tre comprise en 1 et 254</target>
+</trans-unit>
+
+<trans-unit id="4">
+<source>Input must be an integer</source>
+<target>L'entr&#xE9;e doit &#xEA;tre un nombre entier</target>
+</trans-unit>
+
+
+
+
+
+
+
+<trans-unit id="5">
+<source>Parameters</source>
+<target>Param&#xE8;tres</target>
+</trans-unit>
+
+<trans-unit id="6">
+<source>Enter a &lt;strong&gt;unique&lt;/strong&gt; name for this device</source>
+<target>Entrez un nom unique pour ce lecteur</target>
+</trans-unit>
+
+
+
+
+
+
+
+
+
+<trans-unit id="7">
+<source>Enter the time used to open a door&lt;br/&gt;The value is 100 miliseconds step [1-254]</source>
+<target>Entrez le temps d\'ouverture de la porte.&lt;br/&gt;La valeur est un pas de 100 milisecondes [1-254]</target>
+</trans-unit>
+
+<trans-unit id="8">
+<source>Open door time (100ms)</source>
+<target>Temps d'ouverture de la porte (100ms)</target>
+</trans-unit>
+
+<trans-unit id="9">
+<source>Enter the time used to activate the green LED&lt;br/&gt;when the access is accepted.&lt;br/&gt;The value is 100 miliseconds step [1-254]</source>
+<target>Entrez le temps pour activer la LED verte losrque l\'acc&#xE8;s est accept&#xE9;.&lt;br/&gt;La valeur est un pas de 100 milisecondes [1-254]</target>
+</trans-unit>
+
+<trans-unit id="10">
+<source>Green LED time (100ms)</source>
+<target>Temps de la LED verte (100ms)</target>
+</trans-unit>
+
+<trans-unit id="11">
+<source>Enter the time used to activate the red LED&lt;br/&gt;when the access is not accepted.&lt;br/&gt;The value is 100 miliseconds step [1-254]</source>
+<target>Entrez le temps pour activer la LED verte losrque l\'acc&#xE8;s n\'est pas accept&#xE9;.&lt;br/&gt;La valeur est un pas de 100 milisecondes [1-254]</target>
+</trans-unit>
+
+<trans-unit id="12">
+<source>Red LED time (100ms)</source>
+<target>Temps de la LED rouge (100ms)</target>
+</trans-unit>
+
+<trans-unit id="13">
+<source>You could insert a description for this device.</source>
+<target>Vous pouvez donner une description pour ce lecteur</target>
+</trans-unit>
+
+<trans-unit id="14">
+<source>Options</source>
+<target>Options</target>
+</trans-unit>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<trans-unit id="15">
+<source>Enter the time used to activate the orange LED.&lt;br/&gt;This LED is used on specific application&lt;br/&gt;The value is 100 miliseconds step [1-254]</source>
+<target>Entrez le temps pour activer la LED orange. Cette LED est utilis&#xE9;e pour des applications sp&#xE9;cifiques.&lt;br/&gt;La valeur est un pas de 100 milisecondes [1-254]</target>
+</trans-unit>
+
+<trans-unit id="16">
+<source>Orange LED time (100ms)</source>
+<target>Temps de la LED orange (100ms)</target>
+</trans-unit>
+
+<trans-unit id="17">
+<source>Protects multiple presentation. Time in second</source>
+<target>Prot&#xE8;ge des pr&#xE9;sentation multiple. Temps en seconde</target>
+</trans-unit>
+
+<trans-unit id="18">
+<source>Anti pass-back</source>
+<target>Anti pass-back</target>
+</trans-unit>
+
+<trans-unit id="19">
+<source>Allow to log the communication in a log file</source>
+<target>Permet de journalis&#xE9; la communication</target>
+</trans-unit>
+
+<trans-unit id="20">
+<source>Debug</source>
+<target>Debug</target>
+</trans-unit>
+
+<trans-unit id="21">
+<source>The device was added successfully</source>
+<target>Le lecteur a &#xE9;t&#xE9; ajouter avec succ&#xE8;s</target>
+</trans-unit>
+
+
+
+
+
+
+
+
+<trans-unit id="22">
+<source>1: Do not open, only track the access</source>
+<target>1: Ne pas ouvrir, tracer uniquement l'acc&#xE8;s</target>
+</trans-unit>
+
+<trans-unit id="23">
+<source>2: Just open and track the access</source>
+<target>2: Seulement ouvrir et tracer l'acc&#xE8;s</target>
+</trans-unit>
+
+<trans-unit id="24">
+<source>3: Wait X seconds before to accept new key</source>
+<target>3: Attendre X secondes avant d'accepter une nouvelle cl&#xE9;</target>
+</trans-unit>
+
+<trans-unit id="25">
+<source>4: Wait X second or an input activation before to accept new key</source>
+<target>4: Attendre X secondes ou l'activation d'une entr&#xE9;e du lecteur avant d'accepter une nouvelle cl&#xE9;</target>
+</trans-unit>
+
+<trans-unit id="26">
+<source>Time must be an integer</source>
+<target>Le temps doit &#xEA;tre un entier</target>
+</trans-unit>
+
+<trans-unit id="27">
+<source>None</source>
+<target>Aucune</target>
+</trans-unit>
+
+<trans-unit id="28">
+<source>Input 1</source>
+<target>Entr&#xE9;e 1</target>
+</trans-unit>
+
+<trans-unit id="29">
+<source>Input 2</source>
+<target>Entr&#xE9;e 2</target>
+</trans-unit>
+
+<trans-unit id="30">
+<source>Both</source>
+<target>Le deux</target>
+</trans-unit>
+
+<trans-unit id="31">
+<source>Set how the door lock output musst be hanlded&lt;br&gt;1: This option could be used on a timestamp reader&lt;br&gt;2: This can be used on a standard door&lt;br&gt;3: This can be used on a turnstile where we have to wait some seconde before to accept new key&lt;br&gt;4: This can be used on a turnstile where we used the feedback of the tunrstile when it turned</source>
+<target>Applique comment doit &#xEA;tre utilis&#xE9; la sortie permettant d\'ouvrir une porte.&lt;br&gt;1: Cette option pourrait &#xEA;tre utilis&#xE9;e pour une timbreuse.&lt;br&gt;2: Cette option peut &#xEA;tre utilis&#xE9;e pour une porte standard.&lt;br&gt;3: Cette option peut &#xEA;tre utilis&#xE9; avec un tourniquet sans retour d\'information sur l\'ouverture de celui-ci.&lt;br&gt;4: Cette option peut &#xEA;tre utilis&#xE9; avec un tourniquet avec retour d\'information sur l\'ouverture de celui-ci.</target>
+</trans-unit>
+
+<trans-unit id="32">
+<source>Door lock mode</source>
+<target>Mode d'ouverture de la porte</target>
+</trans-unit>
+
+<trans-unit id="33">
+<source>Timeout in second used on mode 3 and 4</source>
+<target>Temps en seconde utilis&#xE9; dans le mode 3 et 4</target>
+</trans-unit>
+
+<trans-unit id="34">
+<source>Timeout mode</source>
+<target>Temps mort du mode</target>
+</trans-unit>
+
+<trans-unit id="35">
+<source>Select the input value. Only used for the fourth mode</source>
+<target>Choisir la valeur des entr&#xE9;e utilis&#xE9; pour le mode quatre</target>
+</trans-unit>
+
+<trans-unit id="36">
+<source>Input mode</source>
+<target>Entr&#xE9; du mode 4</target>
+</trans-unit>
+
+
+
+
+
+<trans-unit id="37">
+	<source>Access Plugin Name</source>
+	<target>Nom du plugin d'acc&#xE8;s</target>
+</trans-unit>
+
+<trans-unit id="38">
+	<source>Define the access plugin used for the access control.&lt;br/&gt;If empty, all plugins are likely to give the access</source>
+	<target>D&#xE9;finit le plugin d\'acc&#xE8;s utilis&#xE9; pour le control d\'acc&#xE8;s.&lt;br/&gt;Si vide, tous les plugins sont susceptible de pouvoir donner l\'acc&#xE8;s</target>
+</trans-unit>
+
+
+
+
+<trans-unit id="39">
+<source>Name</source>
+<target>Nom</target>
+</trans-unit>
+
+
+
+
+
+<trans-unit id="40">
+<source>Description</source>
+<target>Description</target>
+</trans-unit>
+
+<trans-unit id="41">
+<source>The device was not added</source>
+<target>Le p&#xE9;riph&#xE9;rique n'a pas &#xE9;t&#xE9; ajout&#xE9;</target>
+</trans-unit>
+
+<trans-unit id="42">
+<source>The device was not saved</source>
+<target>Le p&#xE9;riph&#xE9;rique n'a pas &#xE9;t&#xE9; sauv&#xE9;</target>
+</trans-unit>
+
+
+
+<trans-unit id="43">
+<source>The device was modified successfully</source>
+<target>Le p&#xE9;riph&#xE9;rique a &#xE9;t&#xE9; modifi&#xE9; avec succ&#xE8;s</target>
+</trans-unit>
+
+<trans-unit id="44">
+<source>The device was not modified</source>
+<target>Le p&#xE9;riph&#xE9;rique n'a pas &#xE9;t&#xE9; modifi&#xE9;</target>
+</trans-unit>
+
+<trans-unit id="45">
+<source>Input must be between 0 and 254.</source>
+<target>L'entr&#xE9;e doit &#xEA;tre comprise en 0 et 254</target>
+</trans-unit>
+
+<trans-unit id="46">
+<source>Add RFID LINK TCPIP Reader</source>
+<target>Ajouter un lecteur TCPIP</target>
+</trans-unit>
+
+<trans-unit id="47">
+<source>Enter ip address</source>
+<target>Entrez l\'adresse IP</target>
+</trans-unit>
+
+<trans-unit id="48">
+<source>IP address</source>
+<target>Adresse IP</target>
+</trans-unit>
+
+<trans-unit id="49">
+<source>Enter port number</source>
+<target>Entre le num&#xE9;ro de port</target>
+</trans-unit>
+
+<trans-unit id="50">
+<source>Port number</source>
+<target>Num&#xE9;ro du port</target>
+</trans-unit>
+
+<trans-unit id="51">
+<source>Modify RFID LINK TCPIP Reader</source>
+<target>Modifier un lecteur RFID LINK</target>
+</trans-unit>
+</body>
+ </file>
+</xliff>
