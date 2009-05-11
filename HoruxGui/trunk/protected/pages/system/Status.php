@@ -108,7 +108,7 @@ class Status extends Page
 	   $dataObj = $dataObj->read();
 	   $this->host = $dataObj['xmlrpc_server'];
 	   $this->port = $dataObj['xmlrpc_port'];
-   			
+
   		$param = $this->Application->getParameters();
 	
    		if($param['appMode'] != 'demo')
