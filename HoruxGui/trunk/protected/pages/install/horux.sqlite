@@ -70,7 +70,7 @@ CREATE TABLE hr_config (
 #
 # Contenu de la table: hr_config
 #
-INSERT INTO hr_config VALUES ('1', '1083', '', '0', '.', '', '0', '', '', '', 'db', '', 'sendmail', '', '', '/usr/sbin/sendmail', '0', 'none', '', '', '', '21');
+INSERT INTO hr_config VALUES ('1', 'localhost', '1083', '', '0', '.', '', '0', '', '', '', 'db', '', 'sendmail', '', '', '/usr/sbin/sendmail', '0', 'none', '', '', '', '21');
 # --------------------------------------------------------
 
 

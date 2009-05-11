@@ -149,7 +149,7 @@ CREATE TABLE IF NOT EXISTS `hr_config` (
 --
 
 INSERT INTO `hr_config` (`id`, `xmlrpc_server`, `log_path`, `debug_mode`, `server_path`, `ldap_server_name`, `ldpa_port`, `ldap_dn`, `ldap_user`, `ldpa_password`, `user_method`, `key`, `mail_mailer`, `mail_mail_from`, `mail_from_name`, `mail_sendmail_path`, `mail_smtp_auth`, `mail_smtp_safe`, `mail_smtp_username`, `mail_smtp_password`, `mail_smtp_host`, `mail_smtp_port`) VALUES
-(1, 1083, '', 0, '.', '', 0, '', '', '', 'db', '', 'sendmail', '', '', '/usr/sbin/sendmail', 0, 'none', '', '', '', 21);
+(1, 'localhost', 1083, '', 0, '.', '', 0, '', '', '', 'db', '', 'sendmail', '', '', '/usr/sbin/sendmail', 0, 'none', '', '', '', 21);
 
 # --------------------------------------------------------
 
