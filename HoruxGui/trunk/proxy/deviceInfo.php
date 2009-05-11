@@ -20,6 +20,15 @@
 		return;
 	}
 
+    if(isset($_GET['host']))
+        $host = $_GET['host'];
+	else
+	{
+		echo "";
+		return;
+	}
+
+
 	$result = "";
 	$content_error = "";
 
@@ -29,7 +38,7 @@
 		require_once( 'XML/RPC.php' );
 		
 
-	    $client = new XML_RPC_Client("RPC2", "localhost", $port);
+	    $client = new XML_RPC_Client("RPC2", $host, $port);
 	    $msg = new XML_RPC_Message("horux.getSystemInfo");
 	    @$response = $client->send($msg);
 	

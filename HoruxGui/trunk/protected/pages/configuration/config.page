@@ -58,28 +58,48 @@
 
                           <tr>
                             <td valign="top" class="key">
-                              <span onmouseover="Tip('<%[Enter the port number<br /> of the XMLRPC server for Horux]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)">* <%[XMLRPC]%></span>
+                              <span onmouseover="Tip('<%[Enter the host<br /> of the XMLRPC server for Horux]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)">* <%[XMLRPC server]%></span>
                             </td>
                             <td>
                               <com:TTextBox 
                                 CssClass="text_area" 
                                 ID="xmlrpc_server"
-                                Width="50" />
+                                Width="50"
+                                Text="localhost"/>
                               <com:TRequiredFieldValidator
 								ValidationGroup="Group1" 
 								ControlToValidate="xmlrpc_server" 
 								Text="<%[This field is required]%>" 
 								Display="Dynamic"/>
-							<com:TDataTypeValidator
-							    ValidationGroup="Group1"
-							    EnableClientScript="false"
-							    ControlToValidate="xmlrpc_server"
-							    DataType="Integer"
-							    Text="<%[You must enter an integer]%>" 
-							    Display="Dynamic" />								
+							
 
                             </td> 
                           </tr>                         
+
+                          <tr>
+                            <td valign="top" class="key">
+                              <span onmouseover="Tip('<%[Enter the port number<br /> of the XMLRPC server for Horux]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)">* <%[Port XMLRPC]%></span>
+                            </td>
+                            <td>
+                              <com:TTextBox
+                                CssClass="text_area"
+                                ID="xmlrpc_port"
+                                Width="50" />
+                              <com:TRequiredFieldValidator
+								ValidationGroup="Group1"
+								ControlToValidate="xmlrpc_port"
+								Text="<%[This field is required]%>"
+								Display="Dynamic"/>
+							<com:TDataTypeValidator
+							    ValidationGroup="Group1"
+							    EnableClientScript="false"
+							    ControlToValidate="xmlrpc_port"
+							    DataType="Integer"
+							    Text="<%[You must enter an integer]%>"
+							    Display="Dynamic" />
+
+                            </td>
+                          </tr>
                          
 
 

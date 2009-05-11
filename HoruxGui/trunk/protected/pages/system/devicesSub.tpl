@@ -43,7 +43,7 @@
 				<td><%#$this->Data['isConnected']=='1'?'<span style="color:green">'.Prado::localize('Yes').'</span>':'<span style="color:red">'.Prado::localize('No').'</span>'%></td>
 				<td><%#$this->Data['firmwareVersion']%></td>
 				<td>
-					<a href="./proxy/deviceInfo.php?id=<%#$this->Data['id']%>&port=<%#$this->Data['port']%>" title="<%[Device Info]%>" onClick="Modalbox.show(this.href, {title: this.title, width: 600, height: 600}); return false;" class="toolbar" >
+					<a href="./proxy/deviceInfo.php?id=<%#$this->Data['id']%>&port=<%#$this->Data['port']%>&host=<%#$this->Data['host']%>" title="<%[Device Info]%>" onClick="Modalbox.show(this.href, {title: this.title, width: 600, height: 600}); return false;" class="toolbar" >
 						<%[show]%>
                     </a>                   
 				</td>

@@ -19,6 +19,7 @@ class Status extends Page
 	public $plugins = NULL;	
 	public $devices = NULL;
 	public $port = 0;
+	public $host = 0;
 
     public function onLoad($param)
     {
@@ -85,6 +86,7 @@ class Status extends Page
 	   				$p['isConnected'] = $device->isConnected;
 	   				$p['firmwareVersion'] = $device->firmwareVersion; 
 	   				$p['port'] = $this->port;  
+	   				$p['host'] = $this->host;
 	   				$this->devices[] = $p;	   								
 	   			}   				
    			}
@@ -104,7 +106,8 @@ class Status extends Page
 	   $command=$this->db->createCommand($sql);
 	   $dataObj=$command->query();
 	   $dataObj = $dataObj->read();
-	   $this->port = $dataObj['xmlrpc_server']; 
+	   $this->host = $dataObj['xmlrpc_server'];
+	   $this->port = $dataObj['xmlrpc_port'];
    			
   		$param = $this->Application->getParameters();
 	
@@ -114,7 +117,7 @@ class Status extends Page
 	   		require_once( 'XML/RPC.php' );	
 	   		$result = "";
 	   		$content_error = "";
-	        $client = new XML_RPC_Client("RPC2", "localhost", $this->port);
+	        $client = new XML_RPC_Client("RPC2", $this->host, $this->port);
 	        $msg = new XML_RPC_Message("horux.getSystemInfo");
 	        @$response = $client->send($msg);
 	    

@@ -66,6 +66,7 @@ Legend:
 24.03.2009      # Correct the where in some page it was not possible to loged out 
 24.03.2009      + Add the function log in Page and PageList which call the module TGuiLog to log the Gui action
 25.03.2009      # Bug when attribute the first key or group in the list to a user
+11.05.2009      ^ add the host address for the xmlrpc request and configuration in the case where horux core is installed on a different server
 
 -------------------- Horux 1.0.3 Release Released [19-01-2008] ------------------------
 05.12.2008 	+ Add the open time functionnality

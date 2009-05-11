@@ -17,6 +17,7 @@ class SQL {
 
   const SQL_UPDATE_CONFIG =  "UPDATE hr_config SET
                         `xmlrpc_server`=:xmlrpc_server,
+                        `xmlrpc_port`=:xmlrpc_port,
                         `log_path`=:log_path,
                         `debug_mode`=:debug_mode,
 

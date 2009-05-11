@@ -39,8 +39,10 @@ class Service extends Page
 	   $command=$this->db->createCommand($sql);
 	   $dataObj=$command->query();
 	   $dataObj = $dataObj->read();
-	   $port = $dataObj['xmlrpc_server']; 
-   			
+	   $host = $dataObj['xmlrpc_server'];
+	   $port = $dataObj['xmlrpc_port'];
+
+  			
    		$result = "";
    		$content_error = "";
    		$param = $this->Application->getParameters();
@@ -53,7 +55,7 @@ class Service extends Page
    		{
    			
    			require_once( 'XML/RPC.php' );
-	        $client = new XML_RPC_Client("RPC2", "localhost", $port);
+	        $client = new XML_RPC_Client("RPC2", $host, $port);
 
 	        $msg = new XML_RPC_Message("horux.isEngine");
 	        @$response = $client->send($msg);
@@ -115,11 +117,12 @@ class Service extends Page
 	   $command=$this->db->createCommand($sql);
 	   $dataObj=$command->query();
 	   $dataObj = $dataObj->read();
-	   $port = $dataObj['xmlrpc_server']; 
+	   $host = $dataObj['xmlrpc_server'];
+	   $port = $dataObj['xmlrpc_port'];
    			
    		$result = "";
    		$content_error = "";
-        $client = new XML_RPC_Client("RPC2", "localhost", $port);
+        $client = new XML_RPC_Client("RPC2", $host, $port);
 
         $app = $this->getApplication();
 
@@ -149,11 +152,12 @@ class Service extends Page
 	   $command=$this->db->createCommand($sql);
 	   $dataObj=$command->query();
 	   $dataObj = $dataObj->read();
-	   $port = $dataObj['xmlrpc_server']; 
-   			
+	   $host = $dataObj['xmlrpc_server'];
+	   $port = $dataObj['xmlrpc_port'];
+
    		$result = "";
    		$content_error = "";
-        $client = new XML_RPC_Client("RPC2", "localhost", $port);
+        $client = new XML_RPC_Client("RPC2", $host, $port);
 
 
         $msg = new XML_RPC_Message("horux.startEngine");

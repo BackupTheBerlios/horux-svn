@@ -45,6 +45,7 @@ class Config extends Page
           {
               $data = $query->read();
                       
+              $this->xmlrpc_port->Text = $data['xmlrpc_port'];
               $this->xmlrpc_server->Text = $data['xmlrpc_server'];
               $this->log_path->Text = $data['log_path'];
               $this->debug_mode->setChecked($data['debug_mode']);
@@ -103,7 +104,11 @@ class Config extends Page
           }
           else
           {
-          	$pBack = array('koMsg'=>Prado::localize('The config was not modified. ').$this->emailError);
+            if($res && $this->emailError != '')
+                $pBack = array('koMsg'=>Prado::localize('The config was modified successfully. ').$this->emailError);
+            else
+                $pBack = array('koMsg'=>Prado::localize('The config was not modified. ').$this->emailError);
+
           }
           $this->Response->redirect($this->Service->constructUrl('configuration.config',$pBack));
         }		
@@ -114,6 +119,7 @@ class Config extends Page
           $cmd = $this->db->createCommand( SQL::SQL_UPDATE_CONFIG );
             
           $cmd->bindParameter(":xmlrpc_server",$this->xmlrpc_server->SafeText,PDO::PARAM_STR);
+          $cmd->bindParameter(":xmlrpc_port",$this->xmlrpc_port->SafeText,PDO::PARAM_STR);
           $cmd->bindParameter(":log_path",$this->log_path->SafeText,PDO::PARAM_STR);
           $cmd->bindParameter(":debug_mode",$this->debug_mode->getChecked(),PDO::PARAM_STR);
           $cmd->bindParameter(":key",$this->key->SafeText,PDO::PARAM_STR);
