@@ -20,6 +20,7 @@
 #ifndef CLOGINTERFACE_H
 #define CLOGINTERFACE_H
 
+
 /**
 	@author Jean-Luc Gyger <jean-luc.gyger@letux.ch>
 */

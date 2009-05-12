@@ -5,7 +5,8 @@ SOURCES += main.cpp \
  caccesshandling.cpp \
  cdevicehandling.cpp \
  clog.cpp \
- calarmhandling.cpp
+ calarmhandling.cpp \
+ cxmlfactory.cpp
 
 TEMPLATE = app
 
@@ -25,7 +26,9 @@ include.h \
 clog.h \
 caccesshandling.h \
 cdevicehandling.h \
- calarmhandling.h
+ calarmhandling.h \
+cxmlfactory.cpp
+
 QT += core \
  sql \
  xml \

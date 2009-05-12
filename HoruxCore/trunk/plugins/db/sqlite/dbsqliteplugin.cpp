@@ -22,10 +22,10 @@
 #include <QtCore>
 
 
-bool DbSqlitePlugin::open(const QString host, 
+bool DbSqlitePlugin::open(const QString,
                   const QString db, 
-                  const QString username, 
-                  const QString password)
+                  const QString,
+                  const QString)
 {
     dbase = QSqlDatabase::addDatabase("QSQLITE");
     dbase.setDatabaseName(db);
@@ -120,7 +120,7 @@ bool DbSqlitePlugin::isXMLRPCAccess(QString username, QString password)
   return (bool)query.value(0).toInt();
 }
 
-int DbSqlitePlugin::countNotification( QMap<QString, QVariant> params)
+int DbSqlitePlugin::countNotification( QMap<QString, QVariant>)
 {
-
+    return 0;
 }

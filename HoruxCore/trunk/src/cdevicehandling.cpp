@@ -20,6 +20,7 @@
 #include <QtCore>
 #include "cdevicehandling.h"
 #include "include.h"
+#include "cxmlfactory.h"
 
 CDeviceHandling *CDeviceHandling::pThis = NULL;
 
@@ -257,21 +258,8 @@ bool CDeviceHandling::startDevice()
         {
             if ( !i.value()->open() )
             {
-                QString xml = "<deviceEvent id=\"" + i.value()->getParameter ( "id" ).toString().toLatin1() + "\">";
+                QString xml = CXmlFactory::deviceEvent( i.value()->getParameter ( "id" ).toString().toLatin1(), "1016", "The communication with the device cannot be opened");
                 
-
-                xml += "<event>1016</event>";
-                xml += "<params>"; 
-                xml += "<param>"; 
-                xml += "<name>"; 
-                xml += "message";
-                xml += "</name>"; 
-                xml += "<value>The communication with the device cannot be opened</value>"; 
-                xml += "</param>"; 
-                xml += "</params>";
-
-                xml += "</deviceEvent>";
-
                 CFactory::getAlarmHandling()->alarmMonitor(xml);
             }
         }

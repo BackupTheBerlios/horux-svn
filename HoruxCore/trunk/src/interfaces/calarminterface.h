@@ -20,6 +20,8 @@
 #ifndef CALARMINTERFACE_H
 #define CALARMINTERFACE_H
 
+
+
 /**
     @author Jean-Luc Gyger <jean-luc.gyger@letux.ch>
 */

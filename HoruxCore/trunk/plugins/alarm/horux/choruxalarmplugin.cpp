@@ -120,7 +120,7 @@ void CHoruxAlarmPlugin::deviceConnectionMonitor(int deviceId, bool isConnected)
   }
 }
 
-void CHoruxAlarmPlugin::deviceInputMonitor(int deviceId, int in, bool status)
+void CHoruxAlarmPlugin::deviceInputMonitor(int , int , bool )
 {
   //qDebug("Input changed on %u (%u:%u)", deviceId, in, status);
 }

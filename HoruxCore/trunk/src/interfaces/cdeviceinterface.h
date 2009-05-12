@@ -27,6 +27,7 @@ class QVariant;
 #include <QtXml>
 #include <QMap>
 
+
 /**
     @author Jean-Luc Gyger <jean-luc.gyger@letux.ch>
 */

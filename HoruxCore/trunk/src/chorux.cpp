@@ -22,12 +22,12 @@
 
 #include "maiaXmlRpcServer.h"
 #include "maiaXmlRpcClient.h"
-
+#include "cxmlfactory.h"
 #include "include.h"
 #include <QFile>
 
 
- CHorux *CHorux::pThis = NULL;
+CHorux *CHorux::pThis = NULL;
 
 CHorux::CHorux ( QObject *parent )
         : QObject ( parent )
@@ -156,20 +156,7 @@ bool CHorux::startEngine()
         }
         else
         {
-            QString xml = "<systemAlarm id=\"0\">";
-
-            xml += "<event>1200</event>";
-            xml += "<params>"; 
-            xml += "<param>"; 
-            xml += "<name>"; 
-            xml += "message";
-            xml += "</name>"; 
-            xml += "<value>The Horux XMLRPC server cannot be started</value>"; 
-            xml += "</param>"; 
-            xml += "</params>";
-            
-            xml += "</systemAlarm>";
-
+            QString xml = CXmlFactory::systemAlarm("0","1200", "The Horux XMLRPC server cannot be started");
             CFactory::getAlarmHandling()->alarmMonitor(xml);
         }
 
@@ -267,7 +254,7 @@ QString CHorux::getInfo( )
 
 void CHorux::sendNotification(QMap<QString, QVariant> params)
 {
-    // check if we have at least one notification accroding to the type 
+    // check if we have at least one notification accoding to the type
     if(CFactory::getDbHandling()->plugin()->countNotification(params) == 0) return;
 
     QSettings settings ( QCoreApplication::instance()->applicationDirPath() +"/horux.ini", QSettings::IniFormat );
@@ -289,7 +276,7 @@ void CHorux::sendNotification(QMap<QString, QVariant> params)
 
 }
 
-void CHorux::notificationResponse(QVariant &arg) {
+void CHorux::notificationResponse(QVariant &) {
 
 }
 

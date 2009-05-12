@@ -1,0 +1,9 @@
+maia_xmlrpc
+plugins/access/horux
+plugins/alarm/horux
+plugins/db/mysql
+plugins/db/sqlite
+plugins/log/html
+qextserialport
+src/interfaces
+src

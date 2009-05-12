@@ -10,7 +10,7 @@ QT -= gui
 QT += sql \
 xml
 
-INCLUDEPATH += ../../../src/interfaces
+INCLUDEPATH += ../../../src/interfaces ../../../src
 
 HEADERS += accesshoruxplugin.h
 

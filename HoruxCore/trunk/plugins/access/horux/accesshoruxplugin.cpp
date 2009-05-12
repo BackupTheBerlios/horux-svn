@@ -178,37 +178,20 @@ void AccessHoruxPlugin::checkFreeAccess()
 
       if(sendValue != "")
       {
-        QString xml = "<deviceAction id=\"" + entryId  + "\">";
-        xml += "<action>";
-        xml += "<function>openDoor</function>";
-        xml += "<params>";
-        xml += "<param>";
-        xml += "<name>";
-        xml += "freeAccess";
-        xml += "</name>";
-        xml += "<value>";
-        xml += sendValue;
-        xml += "</value>";
-        xml += "</param>";
-  
+
+        QMap<QString, QString> param;
+
+        param["freeAccess"] = sendValue;
+
         int index = metaObject()->indexOfClassInfo ( "PluginName" );
-  
+
         if ( index != -1 )
         {
-                xml += "<param>";
-                xml += "<name>";
-                xml += "PluginName";
-                xml += "</name>";
-                xml += "<value>";
-                xml += metaObject()->classInfo ( index ).value(); 
-                xml += "</value>";
-                xml += "</param>";
+            param["PluginName"] = metaObject()->classInfo ( index ).value();
         }
-  
-        xml += "</params>";
-        xml += "</action>";
-        xml += "</deviceAction>";
-  
+
+        QString xml = CXmlFactory::deviceAction(entryId, "openDoor", param);
+
         emit accessAction(xml);
       }
   }
@@ -457,95 +440,44 @@ void AccessHoruxPlugin::insertTracking(QString userId, QString keyId, QString en
 
   if(isAccess)
   {
-    QString xml = "<deviceAction id=\"" + entryId  + "\">";
-    xml += "<action>";
-    xml += "<function>openDoor</function>";
-    xml += "<params>";
-    xml += "<param>";
-    xml += "<name>";
-    xml += "isAccess";
-    xml += "</name>";
-    xml += "<value>";
-    xml += "1";
-    xml += "</value>";
-    xml += "</param>";
-
-    xml += "<param>";
-    xml += "<name>";
-    xml += "key";
-    xml += "</name>";
-    xml += "<value>";
-    xml += serialNumber;
-    xml += "</value>";
-    xml += "</param>";
-
-		int index = metaObject()->indexOfClassInfo ( "PluginName" );
-
-    if ( index != -1 )
-		{
-			xml += "<param>";
-			xml += "<name>";
-			xml += "PluginName";
-			xml += "</name>";
-			xml += "<value>";
-			xml += metaObject()->classInfo ( index ).value(); 
-			xml += "</value>";
-			xml += "</param>";
-		}
-
-    xml += "</params>";
-    xml += "</action>";
-    xml += "</deviceAction>";
-
     if(emitAction)
+    {
+        QMap<QString, QString> param;
+
+        param["isAccess"] = "1";
+        param["key"] = serialNumber;
+
+        int index = metaObject()->indexOfClassInfo ( "PluginName" );
+
+        if ( index != -1 )
+        {
+            param["PluginName"] = metaObject()->classInfo ( index ).value();
+        }
+
+        QString xml = CXmlFactory::deviceAction(entryId, "openDoor", param);
+
         emit accessAction(xml);
+    }
   }
   else
   {
-    QString xml = "<deviceAction id=\"" + entryId  + "\">";
-    xml += "<action>";
-    xml += "<function>openDoor</function>";
-    xml += "<params>";
-    xml += "<param>";
-    xml += "<name>";
-    xml += "isAccess";
-    xml += "</name>";
-    xml += "<value>";
-    xml += "0";
-    xml += "</value>";
-    xml += "</param>";
-
-    xml += "<param>";
-    xml += "<name>";
-    xml += "key";
-    xml += "</name>";
-    xml += "<value>";
-    xml += serialNumber;
-    xml += "</value>";
-    xml += "</param>";
-
-
-		int index = metaObject()->indexOfClassInfo ( "PluginName" );
-
-    if ( index != -1 )
-		{
-			xml += "<param>";
-			xml += "<name>";
-			xml += "PluginName";
-			xml += "</name>";
-			xml += "<value>";
-			xml += metaObject()->classInfo ( index ).value(); 
-			xml += "</value>";
-			xml += "</param>";
-		}
-
-    xml += "</params>";
-    xml += "</action>";
-    xml += "</deviceAction>";
-
-	if(emitAction)
+    if(emitAction)
     {
-    	emit accessAction(xml);
+       QMap<QString, QString> param;
+
+       param["isAccess"] = "0";
+       param["key"] = serialNumber;
+
+       int index = metaObject()->indexOfClassInfo ( "PluginName" );
+
+       if ( index != -1 )
+       {
+           param["PluginName"] = metaObject()->classInfo ( index ).value();
+       }
+
+       QString xml = CXmlFactory::deviceAction(entryId, "openDoor", param);
+
+       emit accessAction(xml);
     }
   }
 
@@ -580,47 +512,20 @@ void AccessHoruxPlugin::insertTracking(QString userId, QString keyId, QString en
 
   if(reason == KEY_BLOCKED && userId != "1")
   {
-    QString xml = "<accessAlarm id=\"" + userId + "\">";
-
-    xml += "<event>1100</event>";
-    xml += "<params>"; 
-    xml += "<param>"; 
-    xml += "<name>"; 
-    xml += "message";
-    xml += "</name>"; 
-    xml += "<value>The key is currently blocked</value>"; 
-    xml += "</param>"; 
-    xml += "</params>";
-  
-  
-    xml += "</accessAlarm>";
+    QString xml = CXmlFactory::accessAlarm( userId, 1100, "The key is currently blocked");
   
     emit accessAction(xml);
   }
 
   if(reason == USER_BLOCKED && userId != "1")
   {
-    QString xml = "<accessAlarm id=\"" + userId + "\">";
+    QString xml = CXmlFactory::accessAlarm( userId, 1101, "The user is currently blocked");
 
-
-    xml += "<event>1101</event>";
-    xml += "<params>"; 
-    xml += "<param>"; 
-    xml += "<name>"; 
-    xml += "message";
-    xml += "</name>"; 
-    xml += "<value>The user is currently blocked</value>"; 
-    xml += "</param>"; 
-    xml += "</params>";
-
-
-    xml += "</accessAlarm>";
-  
     emit accessAction(xml);
   }
 
-	if(emitAction)
-	{
+  if(emitAction)
+  {
         QSqlQuery query("INSERT INTO `hr_tracking` ( `id` , `id_user` , `id_key` , `time` , `date` , `id_entry` , `is_access` , `id_comment`, `key` ) VALUES ('', '" +
                     userId +
                     "','" +
@@ -644,7 +549,7 @@ void AccessHoruxPlugin::insertTracking(QString userId, QString keyId, QString en
         p["entryId"] = entryId;
                         
         emit notification(p);
-	}
+    }
 }
 
 Q_EXPORT_PLUGIN2(horuxaccessplugin, AccessHoruxPlugin);

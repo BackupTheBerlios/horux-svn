@@ -24,6 +24,7 @@
 #include <QtSql>
 
 #include "caccessinterface.h"
+#include "cxmlfactory.h"
 
 //!access result
 #define ACCESS_OK			"0"
