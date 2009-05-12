@@ -25,9 +25,9 @@ unix {
     INSTALLS += library
 }
 
-INCLUDEPATH += ../../../../HoruxCore/trunk/src/interfaces
+INCLUDEPATH += ../../../../HoruxCore/trunk/src/interfaces ../../../../HoruxCore/trunk/src
 
-
+OBJECTS += ../../../../HoruxCore/trunk/src/cxmlfactory.o
 
 QT -= gui
 

@@ -511,20 +511,11 @@ void CAccessLinkRS232::timerEvent(QTimerEvent *e)
   if(msgTimeoutTimer == e->timerId())
   {
       //! one message was maybe not well sended
-      QString xml = "<deviceEvent id=\"" + QString::number(id) + "\">";
+
       QString cmd;
       cmd = cmd.sprintf("%02X",currentMessage.at(1));
-      xml += "<event>1017</event>";
-      xml += "<params>"; 
-      xml += "<param>"; 
-      xml += "<name>"; 
-      xml += "message";
-      xml += "</name>"; 
-      xml += "<value>Do not receive the response from the reader (" + cmd + ")</value>"; 
-      xml += "</param>"; 
-      xml += "</params>"; 
-      xml += "</deviceEvent>";
-        
+      QString xml = CXmlFactory::deviceEvent(QString::number(id), "1017", "Do not receive the response from the reader (" + cmd + ")");
+
       emit deviceEvent(xml);
 
       killTimer(msgTimeoutTimer);
@@ -632,19 +623,7 @@ void CAccessLinkRS232::dispatchMessage(QByteArray ba)
                 case 16: //modulation
                   if(b_new == 1)
                   {
-
-                    QString xml = "<deviceEvent id=\"" + QString::number(id) + "\">";
-                  
-                    xml += "<event>1015</event>";
-                    xml += "<params>"; 
-                    xml += "<param>"; 
-                    xml += "<name>"; 
-                    xml += "message";
-                    xml += "</name>"; 
-                    xml += "<value>The modulation is off</value>"; 
-                    xml += "</param>"; 
-                    xml += "</params>"; 
-                    xml += "</deviceEvent>";
+                    QString xml = CXmlFactory::deviceEvent(QString::number(id), "1015", "The modulation is off");
                     
                     emit deviceEvent(xml); 
                   }
@@ -654,19 +633,7 @@ void CAccessLinkRS232::dispatchMessage(QByteArray ba)
                 case 64: //antenna power
                   if(b_new == 1)
                   {
-                    QString xml = "<deviceEvent id=\"" + QString::number(id) + "\">";
-                  
-                    xml += "<event>1015</event>";
-                    xml += "<params>"; 
-                    xml += "<param>"; 
-                    xml += "<name>"; 
-                    xml += "message";
-                    xml += "</name>"; 
-                    xml += "<value>The antenna power is off</value>"; 
-                    xml += "</param>"; 
-                    xml += "</params>"; 
-                    xml += "</deviceEvent>";
-                    
+                    QString xml = CXmlFactory::deviceEvent(QString::number(id), "1015", "The antenna power is off");
                     emit deviceEvent(xml); 
                   }
                   break;
@@ -862,36 +829,14 @@ void CAccessLinkRS232::checkReaderStatus(uchar status)
     {
         if(tc_new > 0)
         {
-            QString xml = "<deviceEvent id=\"" + QString::number(id) + "\">";
-            
-            xml += "<event>1015</event>";
-            xml += "<params>"; 
-            xml += "<param>"; 
-            xml += "<name>"; 
-            xml += "message";
-            xml += "</name>"; 
-            xml += "<value>The tag control is off</value>"; 
-            xml += "</param>"; 
-            xml += "</params>"; 
-            xml += "</deviceEvent>";
+            QString xml = CXmlFactory::deviceEvent(QString::number(id), "1015", "The tag control is off");
             
             emit deviceEvent(xml); 
         }
         else
         {
-            QString xml = "<deviceEvent id=\"" + QString::number(id) + "\">";
-            
-            xml += "<event>1014</event>";
-            xml += "<params>"; 
-            xml += "<param>"; 
-            xml += "<name>"; 
-            xml += "message";
-            xml += "</name>"; 
-            xml += "<value>The tag control is on</value>"; 
-            xml += "</param>"; 
-            xml += "</params>"; 
-            xml += "</deviceEvent>";
-            
+            QString xml = CXmlFactory::deviceEvent(QString::number(id), "1015", "The tag control is on");
+           
             emit deviceEvent(xml); 
         }
     }
@@ -951,15 +896,7 @@ void CAccessLinkRS232::handleSn(QString sn)
       break;
   }
 
-  QString xml = "<deviceEvent id=\"" + QString::number(id) + "\">";
-
-  xml += "<event>keyDetected</event>";
-
-	QString pluginAccess = "<param><name>AccessPluginName</name><value>"+getAccessPluginName()+"</value></param>";
-
-  xml += "<params><param><name>key</name><value>"+ sn  + "</value></param>"+pluginAccess+"</params>";
-
-  xml += "</deviceEvent>";
+  QString xml = CXmlFactory::keyDetection(QString::number(id), getAccessPluginName(), sn);
 
   emit deviceEvent(xml);
 

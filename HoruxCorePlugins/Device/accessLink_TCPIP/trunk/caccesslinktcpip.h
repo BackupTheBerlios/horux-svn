@@ -23,6 +23,7 @@
 #include <QObject>
 #include <QTcpSocket>
 #include "cdeviceinterface.h"
+#include "cxmlfactory.h"
 
 #define OUTPUT_OFF 0x00  //clear the output
 #define OUTPUT_1  0x01  //door

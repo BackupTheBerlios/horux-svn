@@ -65,48 +65,21 @@ void CVeloPark::acceptAccess(QMap<QString, QVariant> params, bool isOk)
 {
   if(isOk)
   {
-    QString xml = "<deviceAction id=\"" + params["deviceId"].toString()  + "\">";
-    xml += "<action>";
-    xml += "<function>openDoor</function>";
-    xml += "<params>";
-    xml += "<param>";
-    xml += "<name>";
-    xml += "isAccess";
-    xml += "</name>";
-    xml += "<value>";
-    xml += "1";
-    xml += "</value>";
-    xml += "</param>";
+    QMap<QString, QString> param;
 
-    xml += "<param>";
-    xml += "<name>";
-    xml += "key";
-    xml += "</name>";
-    xml += "<value>";
-    xml += params["key"].toString();
-    xml += "</value>";
-    xml += "</param>";
+    param["isAccess"] = "1";
+    param["key"] = params["key"].toString();
 
-	int index = metaObject()->indexOfClassInfo ( "PluginName" );
+    int index = metaObject()->indexOfClassInfo ( "PluginName" );
 
     if ( index != -1 )
-		{
-			xml += "<param>";
-			xml += "<name>";
-			xml += "PluginName";
-			xml += "</name>";
-			xml += "<value>";
-			xml += metaObject()->classInfo ( index ).value(); 
-			xml += "</value>";
-			xml += "</param>";
-		}
+    {
+        param["PluginName"] = metaObject()->classInfo ( index ).value();
+    }
 
-    xml += "</params>";
-    xml += "</action>";
-    xml += "</deviceAction>";
+    QString xml = CXmlFactory::deviceAction(params["deviceId"].toString(), "openDoor", param);
 
-
-	emit accessAction(xml);	
+    emit accessAction(xml);
 
     //!display the message in the display
     displayMessage("ok",params["deviceId"].toString());
@@ -117,48 +90,21 @@ void CVeloPark::acceptAccess(QMap<QString, QVariant> params, bool isOk)
   }
   else
   {
-    QString xml = "<deviceAction id=\"" + params["deviceId"].toString()  + "\">";
-    xml += "<action>";
-    xml += "<function>openDoor</function>";
-    xml += "<params>";
-    xml += "<param>";
-    xml += "<name>";
-    xml += "isAccess";
-    xml += "</name>";
-    xml += "<value>";
-    xml += "0";
-    xml += "</value>";
-    xml += "</param>";
+    QMap<QString, QString> param;
 
-    xml += "<param>";
-    xml += "<name>";
-    xml += "key";
-    xml += "</name>";
-    xml += "<value>";
-    xml += params["key"].toString();
-    xml += "</value>";
-    xml += "</param>";
+    param["isAccess"] = "0";
+    param["key"] = params["key"].toString();
 
-
-	int index = metaObject()->indexOfClassInfo ( "PluginName" );
+    int index = metaObject()->indexOfClassInfo ( "PluginName" );
 
     if ( index != -1 )
-		{
-			xml += "<param>";
-			xml += "<name>";
-			xml += "PluginName";
-			xml += "</name>";
-			xml += "<value>";
-			xml += metaObject()->classInfo ( index ).value(); 
-			xml += "</value>";
-			xml += "</param>";
-		}
+    {
+        param["PluginName"] = metaObject()->classInfo ( index ).value();
+    }
 
-    xml += "</params>";
-    xml += "</action>";
-    xml += "</deviceAction>";
+    QString xml = CXmlFactory::deviceAction(params["deviceId"].toString(), "openDoor", param);
 
-   	emit accessAction(xml);
+    emit accessAction(xml);
 
     //!display the message in the display
     displayMessage("ko",params["deviceId"].toString());
@@ -336,37 +282,18 @@ void CVeloPark::displayMessage(QString type, QString deviceId)
       if(type != "default")
         displayTimeTimer[startTimer(query.value(6).toInt() * 1000)] = deviceId.toInt();
 
-      QString xml = "<deviceAction id=\"" + query.value(2).toString()  + "\">";
-      xml += "<action>";
-      xml += "<function>displayMessage</function>";
-      xml += "<params>";
-      xml += "<param>";
-      xml += "<name>";
-      xml += "message";
-      xml += "</name>";
-      xml += "<value>";
-      xml += msg;
-      xml += "</value>";
-      xml += "</param>";
-  
-  
+      QMap<QString, QString> param;
+
+      param["message"] = msg;
+
       int index = metaObject()->indexOfClassInfo ( "PluginName" );
-  
+
       if ( index != -1 )
-          {
-              xml += "<param>";
-              xml += "<name>";
-              xml += "PluginName";
-              xml += "</name>";
-              xml += "<value>";
-              xml += metaObject()->classInfo ( index ).value(); 
-              xml += "</value>";
-              xml += "</param>";
-          }
-  
-      xml += "</params>";
-      xml += "</action>";
-      xml += "</deviceAction>";
+      {
+          param["PluginName"] = metaObject()->classInfo ( index ).value();
+      }
+
+      QString xml = CXmlFactory::deviceAction( query.value(2).toString(), "displayMessage", param);
   
       emit accessAction(xml);
     }

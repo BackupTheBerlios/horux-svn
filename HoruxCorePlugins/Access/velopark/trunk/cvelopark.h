@@ -24,7 +24,7 @@
 #include <QtSql>
 
 #include "caccessinterface.h"
-
+#include "cxmlfactory.h"
 
 /**
 	@author Jean-Luc Gyger <jean-luc.gyger@letux.ch>

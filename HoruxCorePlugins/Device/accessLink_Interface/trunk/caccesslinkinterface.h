@@ -26,6 +26,7 @@
 #include <QUdpSocket>
 #include <QDateTime>
 #include "cdeviceinterface.h"
+#include "cxmlfactory.h"
 
 #include "cryptopp/modes.h"
 #include "cryptopp/aes.h"

@@ -17,9 +17,12 @@ SOURCES += choruxmedia.cpp
 HEADERS += choruxmedia.h
 
 INCLUDEPATH += ../../../../HoruxCore/trunk/maia_xmlrpc \
-  ../../../../HoruxCore/trunk/src/interfaces
+  ../../../../HoruxCore/trunk/src/interfaces ../../../../HoruxCore/trunk/src
 
 LIBS += ../../../../HoruxCore/trunk/maia_xmlrpc/libmaia_xmlrpc.a
+
+OBJECTS += ../../../../HoruxCore/trunk/src/cxmlfactory.o
+
 
 TARGETDEPS += ../../../../HoruxCore/trunk/maia_xmlrpc/libmaia_xmlrpc.a
 

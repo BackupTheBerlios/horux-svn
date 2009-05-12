@@ -27,8 +27,11 @@ unix {
     INSTALLS += library
 }
 
+
+OBJECTS += ../../../../HoruxCore/trunk/src/cxmlfactory.o
+
 INCLUDEPATH += ../../../../HoruxCore/trunk/qextserialport \
-  ../../../../HoruxCore/trunk/src/interfaces
+  ../../../../HoruxCore/trunk/src/interfaces  ../../../../HoruxCore/trunk/src
 
 LIBS += ../../../../HoruxCore/trunk/qextserialport/build/libqextserialport.a
 

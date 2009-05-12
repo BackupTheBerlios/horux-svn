@@ -380,19 +380,9 @@ void CAccessLinkRS485::timerEvent(QTimerEvent *e)
   if(msgTimeoutTimer == e->timerId())
   {
       //! one message was maybe not well sended
-      QString xml = "<deviceEvent id=\"" + QString::number(id) + "\">";
       QString cmd;
       cmd = cmd.sprintf("%02X",currentMessage.at(2));
-      xml += "<event>1017</event>";
-      xml += "<params>"; 
-      xml += "<param>"; 
-      xml += "<name>"; 
-      xml += "message";
-      xml += "</name>"; 
-      xml += "<value>Do not receive the response from the reader (" + cmd + ")</value>"; 
-      xml += "</param>"; 
-      xml += "</params>"; 
-      xml += "</deviceEvent>";
+      QString xml = CXmlFactory::deviceEvent(QString::number(id),"1017", "Do not receive the response from the reader (" + cmd + ")");
         
       emit deviceEvent(xml);
   
@@ -513,18 +503,7 @@ void CAccessLinkRS485::dispatchMessage(QByteArray ba)
                   if(b_new == 1)
                   {
 
-                    QString xml = "<deviceEvent id=\"" + QString::number(id) + "\">";
-                  
-                    xml += "<event>1015</event>";
-                    xml += "<params>"; 
-                    xml += "<param>"; 
-                    xml += "<name>"; 
-                    xml += "message";
-                    xml += "</name>"; 
-                    xml += "<value>The modulation is off</value>"; 
-                    xml += "</param>"; 
-                    xml += "</params>"; 
-                    xml += "</deviceEvent>";
+                    QString xml = CXmlFactory::deviceEvent(QString::number(id),"1015", "The modulation is off");
                     
                     emit deviceEvent(xml); 
                   }
@@ -534,18 +513,7 @@ void CAccessLinkRS485::dispatchMessage(QByteArray ba)
                 case 64: //antenna power
                   if(b_new == 1)
                   {
-                    QString xml = "<deviceEvent id=\"" + QString::number(id) + "\">";
-                  
-                    xml += "<event>1015</event>";
-                    xml += "<params>"; 
-                    xml += "<param>"; 
-                    xml += "<name>"; 
-                    xml += "message";
-                    xml += "</name>"; 
-                    xml += "<value>The antenna power is off</value>"; 
-                    xml += "</param>"; 
-                    xml += "</params>"; 
-                    xml += "</deviceEvent>";
+                    QString xml = CXmlFactory::deviceEvent(QString::number(id),"1015", "The antenna power is off");
                     
                     emit deviceEvent(xml); 
                   }
@@ -579,18 +547,7 @@ void CAccessLinkRS485::dispatchMessage(QByteArray ba)
       {
         case 0x00: //! cmd not ok
           {
-            QString xml = "<deviceEvent id=\"" + QString::number(id) + "\">";
-          
-            xml += "<event>1017</event>";
-            xml += "<params>"; 
-            xml += "<param>"; 
-            xml += "<name>"; 
-            xml += "message";
-            xml += "</name>"; 
-            xml += "<value>The database cannot be cleared (80)</value>"; 
-            xml += "</param>"; 
-            xml += "</params>"; 
-            xml += "</deviceEvent>";
+            QString xml = CXmlFactory::deviceEvent(QString::number(id),"1017", "The database cannot be cleared (80)");
             
             emit deviceEvent(xml);
           }
@@ -608,19 +565,7 @@ void CAccessLinkRS485::dispatchMessage(QByteArray ba)
       {
         case 0x00: //! cmd not ok
           {
-            QString xml = "<deviceEvent id=\"" + QString::number(id) + "\">";
-          
-            xml += "<event>1012</event>";
-            xml += "<params>"; 
-            xml += "<param>"; 
-            xml += "<name>"; 
-            xml += "message";
-            xml += "</name>"; 
-            xml += "<value>Cannot insert a new key in the reader database</value>"; 
-            xml += "</param>"; 
-            xml += "</params>"; 
-            xml += "</deviceEvent>";
-            
+            QString xml = CXmlFactory::deviceEvent(QString::number(id),"1012", "Cannot insert a new key in the reader database");
             emit deviceEvent(xml);
           }
           break;
@@ -637,19 +582,7 @@ void CAccessLinkRS485::dispatchMessage(QByteArray ba)
       {
         case 0x00: //! cmd not ok
           {
-            QString xml = "<deviceEvent id=\"" + QString::number(id) + "\">";
-          
-            xml += "<event>1013</event>";
-            xml += "<params>"; 
-            xml += "<param>"; 
-            xml += "<name>"; 
-            xml += "message";
-            xml += "</name>"; 
-            xml += "<value>Cannot remove a key from the reader database</value>"; 
-            xml += "</param>"; 
-            xml += "</params>"; 
-
-            xml += "</deviceEvent>";
+            QString xml = CXmlFactory::deviceEvent(QString::number(id),"1013", "Cannot remove a key from the reader database");
             
             emit deviceEvent(xml);
           }
@@ -667,18 +600,7 @@ void CAccessLinkRS485::dispatchMessage(QByteArray ba)
       {
         case 0x00: //! cmd not ok
           {
-            QString xml = "<deviceEvent id=\"" + QString::number(id) + "\">";
-          
-            xml += "<event>1017</event>";
-            xml += "<params>"; 
-            xml += "<param>"; 
-            xml += "<name>"; 
-            xml += "message";
-            xml += "</name>"; 
-            xml += "<value>The pin code cannot be programmed (84)</value>"; 
-            xml += "</param>"; 
-            xml += "</params>"; 
-            xml += "</deviceEvent>";
+            QString xml = CXmlFactory::deviceEvent(QString::number(id),"1017", "The pin code cannot be programmed (84)");
             
             emit deviceEvent(xml);
           }
@@ -693,19 +615,7 @@ void CAccessLinkRS485::dispatchMessage(QByteArray ba)
       {
         case 0x00: //! cmd not ok
           {
-            QString xml = "<deviceEvent id=\"" + QString::number(id) + "\">";
-          
-            xml += "<event>1017</event>";
-            xml += "<params>"; 
-            xml += "<param>"; 
-            xml += "<name>"; 
-            xml += "message";
-            xml += "</name>"; 
-            xml += "<value>The database cannot be read (8E)</value>"; 
-            xml += "</param>"; 
-            xml += "</params>"; 
-            xml += "</deviceEvent>";
-            
+            QString xml = CXmlFactory::deviceEvent(QString::number(id),"1017", "The database cannot be read (8E)");
             emit deviceEvent(xml);
           }
           break;
@@ -717,37 +627,14 @@ void CAccessLinkRS485::dispatchMessage(QByteArray ba)
           //! if the memory is equal or greater than 90%, send an alarm
           if( dbSize >=  (int)(90 * memory / 100) )
           {
-            QString xml = "<deviceEvent id=\"" + QString::number(id) + "\">";
-          
-            xml += "<event>1011</event>";
-            xml += "<params>"; 
-            xml += "<param>"; 
-            xml += "<name>"; 
-            xml += "message";
-            xml += "</name>"; 
-            xml += "<value>The memory database of the reader is almost full</value>"; 
-            xml += "</param>"; 
-            xml += "</params>"; 
-            xml += "</deviceEvent>";
+            QString xml = CXmlFactory::deviceEvent(QString::number(id),"1011", "The memory database of the reader is almost full");
             
             emit deviceEvent(xml);
           }
 
           if( dbSize ==  memory )
           {
-            QString xml = "<deviceEvent id=\"" + QString::number(id) + "\">";
-          
-            xml += "<event>1010</event>";
-            xml += "<params>"; 
-            xml += "<param>"; 
-            xml += "<name>"; 
-            xml += "message";
-            xml += "</name>"; 
-            xml += "<value>The memory database of the reader is full</value>"; 
-            xml += "</param>"; 
-            xml += "</params>"; 
-            xml += "</deviceEvent>";
-            
+            QString xml = CXmlFactory::deviceEvent(QString::number(id),"1010", "The memory database of the reader is full");
             emit deviceEvent(xml);
           }
 
@@ -953,35 +840,13 @@ void CAccessLinkRS485::checkReaderStatus(uchar status)
     {
         if(tc_new > 0)
         {
-            QString xml = "<deviceEvent id=\"" + QString::number(id) + "\">";
-            
-            xml += "<event>1015</event>";
-            xml += "<params>"; 
-            xml += "<param>"; 
-            xml += "<name>"; 
-            xml += "message";
-            xml += "</name>"; 
-            xml += "<value>The tag control is off</value>"; 
-            xml += "</param>"; 
-            xml += "</params>"; 
-            xml += "</deviceEvent>";
+            QString xml = CXmlFactory::deviceEvent(QString::number(id),"1015", "The tag control is off");
             
             emit deviceEvent(xml); 
         }
         else
         {
-            QString xml = "<deviceEvent id=\"" + QString::number(id) + "\">";
-            
-            xml += "<event>1014</event>";
-            xml += "<params>"; 
-            xml += "<param>"; 
-            xml += "<name>"; 
-            xml += "message";
-            xml += "</name>"; 
-            xml += "<value>The tag control is on</value>"; 
-            xml += "</param>"; 
-            xml += "</params>"; 
-            xml += "</deviceEvent>";
+            QString xml = CXmlFactory::deviceEvent(QString::number(id),"1014", "The tag control is on");
             
             emit deviceEvent(xml); 
         }
@@ -1042,15 +907,7 @@ void CAccessLinkRS485::handleSn(QString sn)
       break;
   }
 
-  QString xml = "<deviceEvent id=\"" + QString::number(id) + "\">";
-
-  xml += "<event>keyDetected</event>";
-
-	QString pluginAccess = "<param><name>AccessPluginName</name><value>"+getAccessPluginName()+"</value></param>";
-
-  xml += "<params><param><name>key</name><value>"+ sn  + "</value></param>"+pluginAccess+"</params>";
-
-  xml += "</deviceEvent>";
+  QString xml = CXmlFactory::keyDetection(QString::number(id),getAccessPluginName(),sn);
 
   emit deviceEvent(xml);
 

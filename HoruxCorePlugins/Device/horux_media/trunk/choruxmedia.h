@@ -27,6 +27,7 @@
 #include <QTcpSocket>
 #include "cdeviceinterface.h"
 #include "maiaXmlRpcClient.h"
+#include "cxmlfactory.h"
 
 class CHoruxMedia : public QObject, CDeviceInterface
 {

@@ -287,20 +287,7 @@ bool CAccessLinkInterface::open()
 
   if(!res)
   {
-    //! @todo implement this alarm
-    QString xml = "<deviceEvent id=\"" + QString::number(id) + "\">";
-  
-    xml += "<event>1016</event>";
-    xml += "<params>"; 
-    xml += "<param>"; 
-    xml += "<name>"; 
-    xml += "message";
-    xml += "</name>"; 
-    xml += "<value>The AccesLink interface server cannot be started</value>"; 
-    xml += "</param>"; 
-    xml += "</params>";
-  
-    xml += "</deviceEvent>";
+    QString xml = CXmlFactory::deviceEvent(QString::number(id),"1016","The AccesLink interface server cannot be started");
   
     emit deviceEvent(xml);
   }
@@ -806,35 +793,16 @@ void CAccessLinkInterface::dispatch_interface(QByteArray ba)
     {
       if(antivandale !=  (bool)ba.at(1) )
       {
-        QString xml = "<deviceEvent id=\"" + QString::number(id) + "\">";
+        QString xml;
       
         if(ba.at(1))
         {
-            xml += "<event>1001</event>";
-            xml += "<params>"; 
-            xml += "<param>"; 
-            xml += "<name>"; 
-            xml += "message";
-            xml += "</name>"; 
-            xml += "<value>The antivandal is actif</value>"; 
-            xml += "</param>"; 
-            xml += "</params>"; 
+            xml = CXmlFactory::deviceEvent(QString::number(id), "1001", "The antivandal is actif");
         }
         else
         {
-            xml += "<event>1002</event>";
-            xml += "<params>"; 
-            xml += "<param>"; 
-            xml += "<name>"; 
-            xml += "message";
-            xml += "</name>"; 
-            xml += "<value>The antivandal is cleared</value>"; 
-            xml += "</param>"; 
-            xml += "</params>"; 
+            xml = CXmlFactory::deviceEvent(QString::number(id), "1002", "The antivandal is cleared");
         }
-
-        xml += "</deviceEvent>";
-
         
         emit deviceEvent(xml);
         
@@ -918,17 +886,7 @@ void CAccessLinkInterface::timerEvent(QTimerEvent *e)
   if(msgTimeoutTimer == e->timerId())
   {
       //! one message was maybe not well sended
-      QString xml = "<deviceEvent id=\"" + QString::number(id) + "\">";
-      xml += "<event>1017</event>";
-      xml += "<params>"; 
-      xml += "<param>"; 
-      xml += "<name>"; 
-      xml += "message";
-      xml += "</name>"; 
-      xml += "<value>Do not receive a response from the interface </value>"; 
-      xml += "</param>"; 
-      xml += "</params>"; 
-      xml += "</deviceEvent>";
+      QString xml = CXmlFactory::deviceEvent(QString::number(id), "1017", "Do not receive a response from the interface ");
         
       emit deviceEvent(xml);
 
@@ -1443,20 +1401,7 @@ void CAccessLinkInterface::memoryChange(int mem)
  */
 void CAccessLinkInterface::tempTooHot(float temp)
 {
-  QString xml = "<deviceEvent id=\"" + QString::number(id) + "\">";
-
-  xml += "<event>1009</event>";
-  xml += "<params>"; 
-  xml += "<param>"; 
-  xml += "<name>"; 
-  xml += "message";
-  xml += "</name>"; 
-  xml += "<value>The temparature is too hot( " + QString::number(temp, 'f',2).toLatin1() + " C°)</value>"; 
-  xml += "</param>"; 
-  xml += "</params>";
-
-
-  xml += "</deviceEvent>";
+  QString xml = CXmlFactory::deviceEvent(QString::number(id), "1009", "The temparature is too hot( " + QString::number(temp, 'f',2).toLatin1() + " C°)");
   
   emit deviceEvent(xml);
 }
