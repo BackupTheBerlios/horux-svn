@@ -139,7 +139,7 @@ void CAccessLinkRS232::deviceAction(QString xml)
           func(getMetaObject(), funcParam);
       }
       else
-        qDebug("The function " + funcName.toLatin1() + " is not define in the device " + name.toLatin1());
+        qDebug("The function %s is not define in the device %s",funcName.toLatin1().constData(), name.toLatin1().constData());
     }
 
     actionNode = actionNode.nextSibling(); 
@@ -360,7 +360,7 @@ void CAccessLinkRS232::appendMessage(uchar *msg, int len)
       for(int i=0; i<len; i++)      
         currentMessage.append(msg[i]);
 
-      int ret = port->write((const char*)msg,len);
+      port->write((const char*)msg,len);
 
       port->flush();
       logComm(msg, false, len);

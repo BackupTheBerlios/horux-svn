@@ -176,12 +176,12 @@ bool CHoruxMedia::isOpened()
   return _isConnected;
 }
 
-void CHoruxMedia::dispatchMessage(QByteArray ba)
+void CHoruxMedia::dispatchMessage(QByteArray )
 {
 }
 
 
-void CHoruxMedia::logComm(uchar *ba, bool isReceive, int len)
+void CHoruxMedia::logComm(uchar *, bool , int )
 {
 }
 
@@ -224,7 +224,7 @@ void CHoruxMedia::displayMessage(QString key)
 }
 
 
-void CHoruxMedia::xmlrpcResponse(QVariant &arg) {
+void CHoruxMedia::xmlrpcResponse(QVariant &) {
 }
 
 void CHoruxMedia::xmlrpcFault(int error, const QString &message) {

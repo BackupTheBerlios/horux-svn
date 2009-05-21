@@ -79,7 +79,7 @@ class CAccessLinkInterface : public QObject, CDeviceInterface
   Q_INTERFACES ( CDeviceInterface )
   Q_CLASSINFO ( "Author", "Jean-Luc Gyger" );
   Q_CLASSINFO ( "Copyright", "Letux - 2008" );
-  Q_CLASSINFO ( "Version", "0.0.0.1" );
+  Q_CLASSINFO ( "Version", "0.0.1" );
   Q_CLASSINFO ( "PluginName", "accessLink_Interface" );
   Q_CLASSINFO ( "PluginType", "device" );
   Q_CLASSINFO ( "PluginDescription", "Handle a Access Link Interface" );

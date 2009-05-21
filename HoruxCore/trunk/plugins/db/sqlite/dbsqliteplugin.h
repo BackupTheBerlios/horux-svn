@@ -34,7 +34,7 @@ class DbSqlitePlugin : public QObject, CDbInterface
     Q_INTERFACES(CDbInterface)
     Q_CLASSINFO ( "Author", "Jean-Luc Gyger" );
     Q_CLASSINFO ( "Copyright", "Letux - 2008" );
-    Q_CLASSINFO ( "Version", "0.0.0.1" );
+    Q_CLASSINFO ( "Version", "0.0.1" );
     Q_CLASSINFO ( "PluginName", "horux_sqlite_db" );
     Q_CLASSINFO ( "PluginType", "db" );
     Q_CLASSINFO ( "PluginDescription", "Handle a Sqlite database for Horux Core" );

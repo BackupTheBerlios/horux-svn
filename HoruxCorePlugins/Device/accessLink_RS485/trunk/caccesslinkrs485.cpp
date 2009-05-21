@@ -144,7 +144,7 @@ void CAccessLinkRS485::deviceAction(QString xml)
           func(getMetaObject(), funcParam);
       }
       else
-        qDebug("The function " + funcName.toLatin1() + " is not define in the device " + name.toLatin1());
+        qDebug("The function %s is not define in the device %s",funcName.toLatin1().constData(), name.toLatin1().constData());
     }
 
     actionNode = actionNode.nextSibling(); 

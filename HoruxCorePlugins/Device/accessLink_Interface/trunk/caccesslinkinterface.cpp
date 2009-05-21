@@ -200,7 +200,7 @@ void CAccessLinkInterface::deviceAction(QString xml)
           func(getMetaObject(), funcParam);
       }
       else
-        qDebug("The function " + funcName.toLatin1() + " is not define in the device " + name.toLatin1());
+        qDebug("The function %s is not define in the device %s", funcName.toLatin1().constData(), name.toLatin1().constData());
     }
 
     actionNode = actionNode.nextSibling(); 
@@ -1063,7 +1063,7 @@ void CAccessLinkInterface::sendCheckEEPROM()
 
   if(lenpswd > 8)
   {
-    qWarning("The password for the interface " + name.toLatin1() + " is too long");
+    qWarning("The password for the interface %s is too long", name.toLatin1().constData());
     return;
   }
 
@@ -1154,43 +1154,43 @@ void CAccessLinkInterface::checkEEPROM(QByteArray data)
     
     if(ip != concentrator_ip)
     {
-      qDebug("The ip musst be updated in the EEPROM for the interface " + name.toLatin1());
+      qDebug("The ip musst be updated in the EEPROM for the interface %s", name.toLatin1().constData());
       isOK = false;
     }
 
     if(ipServer1 != server1_ip)
     {
-      qDebug("The ipServer1 musst be updated in the EEPROM for the interface " + name.toLatin1());
+      qDebug("The ipServer1 musst be updated in the EEPROM for the interface %s", name.toLatin1().constData());
       isOK = false;
     }
 
     if(ipServer2 != server2_ip)
     {
-      qDebug("The ipServer2 musst be updated in the EEPROM for the interface " + name.toLatin1());
+      qDebug("The ipServer2 musst be updated in the EEPROM for the interface %s", name.toLatin1().constData());
       isOK = false;
     }
 
     if(ipServer3 != server3_ip)
     {
-      qDebug("The ipServer3 musst be updated in the EEPROM for the interface " + name.toLatin1());
+      qDebug("The ipServer3 musst be updated in the EEPROM for the interface %s", name.toLatin1().constData());
       isOK = false;
     }
 
     if(mask != mask_ip)
     {
-      qDebug("The mask musst be updated in the EEPROM for the interface " + name.toLatin1());
+      qDebug("The mask musst be updated in the EEPROM for the interface %s", name.toLatin1().constData());
       isOK = false;
     }
 
     if(gateway != gway_ip)
     {
-      qDebug("The gateway musst be updated in the EEPROM for the interface " + name.toLatin1());
+      qDebug("The gateway musst be updated in the EEPROM for the interface %s", name.toLatin1().constData());
       isOK = false;
     }
 
     if(data_port != port_data)  
     {
-      qDebug("The data_port musst be updated in the EEPROM for the interface " + name.toLatin1());
+      qDebug("The data_port musst be updated in the EEPROM for the interface %s", name.toLatin1().constData());
       isOK = false;
     }
 
@@ -1203,14 +1203,14 @@ void CAccessLinkInterface::checkEEPROM(QByteArray data)
       i.next();
       if(i.value())
       {
-        long mask = long( 1 << i.value()->getParameter("address").toInt()-1 );
+        long mask = long( 1 << (i.value()->getParameter("address").toInt()-1) );
         readerListDB |= mask;
       }
     }
 
     if( readerListDB != reader_list)
     {
-      qDebug("The online reader musst be updated in the EEPROM for the interface " + name.toLatin1());
+      qDebug("The online reader musst be updated in the EEPROM for the interface %s", name.toLatin1().constData());
       isOK = false;
     }
     
@@ -1232,7 +1232,7 @@ void CAccessLinkInterface::checkEEPROM(QByteArray data)
     }
   }
   else
-    qWarning("The number of bytes return by the interface ( " + name.toLatin1() + " ) when reading the EEPROM was not right");
+    qWarning("The number of bytes return by the interface (%s ) when reading the EEPROM was not right", name.toLatin1().constData());
 }
 
 
@@ -1261,7 +1261,7 @@ void CAccessLinkInterface::rewriteEEPROM()
 
   if(password.length() > 8)
   {
-    qWarning("The password for the interface " + name.toLatin1() + " is too long");
+    qWarning("The password for the interface %s is too long", name.toLatin1().constData());
     return;
   }
 
@@ -1319,7 +1319,7 @@ void CAccessLinkInterface::rewriteEEPROM()
     i.next();
     if(i.value())
     {
-      long mask = long( 1 << i.value()->getParameter("address").toInt()-1 );
+      long mask = long( 1 << (i.value()->getParameter("address").toInt()-1) );
       readerListDB |= mask;
     }
   }
@@ -1381,7 +1381,7 @@ void CAccessLinkInterface::setOutput(QObject* p, QMap<QString, QVariant> params)
 /*!
     \fn CAccessLinkInterface::memoryChange(int mem) 
  */
-void CAccessLinkInterface::memoryChange(int mem) 
+void CAccessLinkInterface::memoryChange(int)
 {
     // not handled
 

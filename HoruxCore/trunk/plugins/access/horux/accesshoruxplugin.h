@@ -48,7 +48,7 @@ class AccessHoruxPlugin : public QObject, CAccessInterface
     Q_INTERFACES(CAccessInterface)
     Q_CLASSINFO ( "Author", "Jean-Luc Gyger" );
     Q_CLASSINFO ( "Copyright", "Letux - 2008" );
-    Q_CLASSINFO ( "Version", "0.0.0.2" );
+    Q_CLASSINFO ( "Version", "0.0.1" );
     Q_CLASSINFO ( "PluginName", "access_horux" );
     Q_CLASSINFO ( "PluginType", "access" );
     Q_CLASSINFO ( "PluginDescription", "Handle the access for Horux Core" );

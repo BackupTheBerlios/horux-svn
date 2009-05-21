@@ -67,7 +67,7 @@ class CHoruxAlarmPlugin : public QObject, CAlarmInterface
     Q_INTERFACES(CAlarmInterface)
     Q_CLASSINFO ( "Author", "Jean-Luc Gyger" );
     Q_CLASSINFO ( "Copyright", "Letux - 2008" );
-    Q_CLASSINFO ( "Version", "0.0.0.1" );
+    Q_CLASSINFO ( "Version", "0.0.1" );
     Q_CLASSINFO ( "PluginName", "alarm_horux" );
     Q_CLASSINFO ( "PluginType", "alarm" );
     Q_CLASSINFO ( "PluginDescription", "Handle the alarm for Horux Core" );
