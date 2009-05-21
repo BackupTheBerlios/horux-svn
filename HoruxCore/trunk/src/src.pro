@@ -7,7 +7,8 @@ SOURCES += main.cpp \
     clog.cpp \
     calarmhandling.cpp \
     cxmlfactory.cpp \
-    choruxservice.cpp
+    choruxservice.cpp \
+    cnotification.cpp
 TEMPLATE = app
 CONFIG += warn_on \
     thread \
@@ -24,7 +25,9 @@ HEADERS += cfactory.h \
     cdevicehandling.h \
     calarmhandling.h \
     cxmlfactory.cpp \
-    choruxservice.h
+    choruxservice.h \
+    cnotification.h
+
 QT += core \
     sql \
     xml \

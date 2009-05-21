@@ -23,7 +23,7 @@
 #include <QObject>
 
 class MaiaXmlRpcServer;
-class MaiaXmlRpcClient;
+class CNotification;
 
 /**
     Main class of the Horux applications
@@ -85,18 +85,6 @@ class CHorux : public QObject
         */
         QString getInfo( );
 
-    private slots:
-
-        /*!
-            Positive response after a notification
-        */
-        void rpcNotificationResponse(QVariant &arg);
-
-        /*!
-            Fault response after a notification
-        */
-        void rpcNotificatioFault(int error, const QString &message);
-
 
     protected:
         //! call th slot internaly or not
@@ -111,8 +99,8 @@ class CHorux : public QObject
         //! xmlrpc server
         MaiaXmlRpcServer *ptr_xmlRpcServer;
 
-        //! xmlrpc client
-        MaiaXmlRpcClient *ptr_rpc;
+        //! Notification
+        CNotification *notification;
 
         //! pointer of the instance
         static CHorux *ptr_this;

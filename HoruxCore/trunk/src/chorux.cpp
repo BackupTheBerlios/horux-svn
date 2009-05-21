@@ -21,11 +21,10 @@
 #include "chorux.h"
 
 #include "maiaXmlRpcServer.h"
-#include "maiaXmlRpcClient.h"
 #include "cxmlfactory.h"
 #include "include.h"
+#include "cnotification.h"
 #include <QFile>
-
 
 CHorux *CHorux::ptr_this = NULL;
 
@@ -35,25 +34,7 @@ CHorux::CHorux ( QObject *parent )
     isStarted = false;
     ptr_xmlRpcServer = NULL;
     ptr_this = this;
-
-    //! set the notification service
-    QSettings settings ( QCoreApplication::instance()->applicationDirPath() +"/horux.ini", QSettings::IniFormat );
-
-    settings.beginGroup ( "Notification" );
-
-    if ( !settings.contains ( "host" ) ) settings.setValue ( "host", "localhost" );
-    if ( !settings.contains ( "port" ) ) settings.setValue ( "port", "80" );
-    if ( !settings.contains ( "webservice" ) ) settings.setValue ( "webservice", "" );
-
-    QString host = settings.value ( "host", "localhost" ).toString();
-    QString port = settings.value ( "port", "80" ).toString();
-    QString webservice = settings.value ( "webservice", "" ).toString();
-
-    ptr_rpc = new MaiaXmlRpcClient(QUrl("http://" + host + ":" + port + "/" + webservice), this);
-
-
-    settings.endGroup();
-
+    notification = new CNotification(this);
 }
 
 
@@ -254,32 +235,9 @@ QString CHorux::getInfo( )
 
 void CHorux::sendNotification(QMap<QString, QVariant> params)
 {
-    // check if we have at least one notification accoding to the type
+    // check if we have at least one notification according to the type
     if(CFactory::getDbHandling()->plugin()->countNotification(params) == 0) return;
 
-    QSettings settings ( QCoreApplication::instance()->applicationDirPath() +"/horux.ini", QSettings::IniFormat );
+    ptr_this->notification->notify(params);
 
-    settings.beginGroup ( "SQL" );
-
-    params["username"] = settings.value ( "username", "root" ).toString();
-    params["password"] = settings.value ( "password", "" ).toString();
-
-    settings.endGroup();
-
-
-    QVariantList args;
-    args << params;
-
-    ptr_this->ptr_rpc->call("notification", args,
-        ptr_this, SLOT(rpcNotificationResponse(QVariant &)),
-        ptr_this, SLOT(rpcNotificatioFault(int, const QString &)));
-
-}
-
-void CHorux::rpcNotificationResponse(QVariant &) {
-
-}
-
-void CHorux::rpcNotificatioFault(int error, const QString &message) {
-    qDebug() << error << " : " << message;
 }
