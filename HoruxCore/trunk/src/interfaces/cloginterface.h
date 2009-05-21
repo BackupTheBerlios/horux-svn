@@ -26,7 +26,7 @@
 */
 class CLogInterface{
 public:
-    virtual ~CLogInterface() {};
+    virtual ~CLogInterface() {}
 
     virtual void debug(QString msg) = 0;
     virtual void warning(QString msg) = 0;

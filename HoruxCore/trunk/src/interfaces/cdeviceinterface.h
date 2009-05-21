@@ -41,7 +41,7 @@ class CDeviceInterface
         */
         virtual CDeviceInterface * createInstance ( QMap<QString, QVariant> config, QObject *parent=0 ) = 0;
 
-        virtual ~CDeviceInterface() { interfaces.clear(); };
+        virtual ~CDeviceInterface() { interfaces.clear(); }
 
         /*!
           Connect a child device to this device

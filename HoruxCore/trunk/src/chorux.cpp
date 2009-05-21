@@ -27,14 +27,14 @@
 #include <QFile>
 
 
-CHorux *CHorux::pThis = NULL;
+CHorux *CHorux::ptr_this = NULL;
 
 CHorux::CHorux ( QObject *parent )
         : QObject ( parent )
 {
     isStarted = false;
-    xmlRpcServer = NULL;
-    pThis = this;
+    ptr_xmlRpcServer = NULL;
+    ptr_this = this;
 
     //! set the notification service
     QSettings settings ( QCoreApplication::instance()->applicationDirPath() +"/horux.ini", QSettings::IniFormat );
@@ -49,7 +49,7 @@ CHorux::CHorux ( QObject *parent )
     QString port = settings.value ( "port", "80" ).toString();
     QString webservice = settings.value ( "webservice", "" ).toString();
 
-    rpc = new MaiaXmlRpcClient(QUrl("http://" + host + ":" + port + "/" + webservice), this);
+    ptr_rpc = new MaiaXmlRpcClient(QUrl("http://" + host + ":" + port + "/" + webservice), this);
 
 
     settings.endGroup();
@@ -143,16 +143,16 @@ bool CHorux::startEngine()
     if ( !CFactory::getDeviceHandling()->init() )
         return false;
 
-    if ( !xmlRpcServer )
+    if ( !ptr_xmlRpcServer )
     {
-        xmlRpcServer = new MaiaXmlRpcServer ( CFactory::getDbHandling()->plugin()->getConfigParam ( "xmlrpc_port" ).toInt(), this );
+        ptr_xmlRpcServer = new MaiaXmlRpcServer ( CFactory::getDbHandling()->plugin()->getConfigParam ( "xmlrpc_port" ).toInt(), this );
 
-        if ( xmlRpcServer && xmlRpcServer->isListening() )
+        if ( ptr_xmlRpcServer && ptr_xmlRpcServer->isListening() )
         {
-            xmlRpcServer->addMethod ( "horux.getSystemInfo", this, "getInfo" );
-            xmlRpcServer->addMethod ( "horux.startEngine", this, "startEngine" );
-            xmlRpcServer->addMethod ( "horux.stopEngine", this, "stopEngine" );
-            xmlRpcServer->addMethod ( "horux.isEngine", this, "isEngine" );
+            ptr_xmlRpcServer->addMethod ( "horux.getSystemInfo", this, "getInfo" );
+            ptr_xmlRpcServer->addMethod ( "horux.startEngine", this, "startEngine" );
+            ptr_xmlRpcServer->addMethod ( "horux.stopEngine", this, "stopEngine" );
+            ptr_xmlRpcServer->addMethod ( "horux.isEngine", this, "isEngine" );
         }
         else
         {
@@ -270,16 +270,16 @@ void CHorux::sendNotification(QMap<QString, QVariant> params)
     QVariantList args;
     args << params;
 
-    pThis->rpc->call("notification", args,
-                pThis, SLOT(notificationResponse(QVariant &)),
-                pThis, SLOT(notificatioFault(int, const QString &)));
+    ptr_this->ptr_rpc->call("notification", args,
+        ptr_this, SLOT(rpcNotificationResponse(QVariant &)),
+        ptr_this, SLOT(rpcNotificatioFault(int, const QString &)));
 
 }
 
-void CHorux::notificationResponse(QVariant &) {
+void CHorux::rpcNotificationResponse(QVariant &) {
 
 }
 
-void CHorux::notificatioFault(int error, const QString &message) {
+void CHorux::rpcNotificatioFault(int error, const QString &message) {
     qDebug() << error << " : " << message;
 }

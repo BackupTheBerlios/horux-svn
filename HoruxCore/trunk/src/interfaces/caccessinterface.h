@@ -30,13 +30,13 @@ class CAccessInterface
 
     public:
 
-        virtual ~CAccessInterface() {};
+        virtual ~CAccessInterface() {}
 
         virtual void deviceEvent ( QMap<QString, QVariant> params ) = 0;
 
         virtual bool isAccess ( QMap<QString, QVariant> params, bool emitAction ) = 0;
 
-        virtual void deviceConnectionMonitor ( int, bool ) {};
+        virtual void deviceConnectionMonitor ( int, bool ) {}
 
         /*!
           Return the meta object

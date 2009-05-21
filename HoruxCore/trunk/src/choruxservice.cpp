@@ -29,7 +29,7 @@ CHoruxService::CHoruxService(int argc, char **argv) : QtService<QCoreApplication
     QCoreApplication::setOrganizationDomain ( "letux.ch" );
     QCoreApplication::setApplicationName ( "HoruxCore" );
 
-    chorux = NULL;
+    ptr_horux = NULL;
 }
 
 void CHoruxService::start()
@@ -38,29 +38,32 @@ void CHoruxService::start()
 
     app->addLibraryPath ( app->applicationDirPath() + "/plugins" );
 
-    if(!chorux)
-        chorux = new CHorux(app);
+    if(!ptr_horux)
+        ptr_horux = new CHorux(app);
 
     //! start the horux engine
-    if ( !chorux->startEngine() )
+    if ( !ptr_horux->startEngine() )
     {
         //! the function stopEngine could be called by XMLRPC, we set first the call to be internal called
-        chorux->setInternalCall ( true );
+        ptr_horux->setInternalCall ( true );
         //! an error happens, stop the engine
-        chorux->stopEngine ( "","" );
-        chorux->setInternalCall ( false );
+        ptr_horux->stopEngine ( "","" );
+        ptr_horux->setInternalCall ( false );
     }
 
 }
 
 void CHoruxService::stop()
 {
-    //! the function stopEngine could be called by XMLRPC, we set first the call to be internal called
-    chorux->setInternalCall ( true );
-    //! an error happens, stop the engine
-    chorux->stopEngine ( "","" );
-    chorux->setInternalCall ( false );
+    if(ptr_horux)
+    {
+        //! the function stopEngine could be called by XMLRPC, we set first the call to be internal called
+        ptr_horux->setInternalCall ( true );
+        //! an error happens, stop the engine
+        ptr_horux->stopEngine ( "","" );
+        ptr_horux->setInternalCall ( false );
 
-    delete chorux;
+        delete ptr_horux;
+    }
 }
 

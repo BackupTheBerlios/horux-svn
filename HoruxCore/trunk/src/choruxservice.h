@@ -34,7 +34,7 @@ protected:
     void stop();
 
 private:
-    CHorux *chorux;
+    CHorux *ptr_horux;
 };
 
 #endif // CHORUXSERVICE_H

@@ -90,12 +90,12 @@ class CHorux : public QObject
         /*!
             Positive response after a notification
         */
-        void notificationResponse(QVariant &arg);
+        void rpcNotificationResponse(QVariant &arg);
 
         /*!
             Fault response after a notification
         */
-        void notificatioFault(int error, const QString &message);
+        void rpcNotificatioFault(int error, const QString &message);
 
 
     protected:
@@ -109,13 +109,13 @@ class CHorux : public QObject
         QDateTime serverStarted;
 
         //! xmlrpc server
-        MaiaXmlRpcServer *xmlRpcServer;
+        MaiaXmlRpcServer *ptr_xmlRpcServer;
 
         //! xmlrpc client
-        MaiaXmlRpcClient *rpc;
+        MaiaXmlRpcClient *ptr_rpc;
 
         //! pointer of the instance
-        static CHorux *pThis;
+        static CHorux *ptr_this;
 };
 
 #endif

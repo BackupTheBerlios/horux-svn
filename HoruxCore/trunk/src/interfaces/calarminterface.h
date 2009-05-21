@@ -28,7 +28,7 @@
 class CAlarmInterface
 {
     public:
-        virtual ~CAlarmInterface() {};
+        virtual ~CAlarmInterface() {}
 
         virtual void alarmMonitor ( QString xml ) = 0;
         virtual void deviceConnectionMonitor ( int deviceId, bool isConnected ) = 0;
