@@ -14,6 +14,9 @@ Horux Core 1.0.5
 20.03.2009      Send XMLRPC alarm if needed
 11.05.2009      Add the compilation option for linux embedded system
 11.05.2009      use the new xmlrpc config
+21.05.2009      Replace the current Deamon/service implementation by QtService
+21.05.2009      Remove warning message at the compilation
+21.05.2009      Add the CXmlFactory giving static function which allow to construct xml message used to communicate between plugin
 
 Horux Core 1.0.4
 19.01.2009      Add the functionnality to handle the free access
