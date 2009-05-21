@@ -32,11 +32,11 @@ CNotification::CNotification(QObject * parent ) :QObject(parent)
 
     if ( !settings.contains ( "host" ) ) settings.setValue ( "host", "localhost" );
     if ( !settings.contains ( "port" ) ) settings.setValue ( "port", "80" );
-    if ( !settings.contains ( "webservice" ) ) settings.setValue ( "webservice", "" );
+    if ( !settings.contains ( "webservice" ) ) settings.setValue ( "webservice", "HoruxGui/index.php?xmlrpc=notification" );
 
     QString host = settings.value ( "host", "localhost" ).toString();
     QString port = settings.value ( "port", "80" ).toString();
-    QString webservice = settings.value ( "webservice", "" ).toString();
+    QString webservice = settings.value ( "webservice", "HoruxGui/index.php?xmlrpc=notification" ).toString();
 
     settings.endGroup();
 
@@ -67,5 +67,5 @@ void CNotification::rpcNotificationResponse(QVariant &) {
 }
 
 void CNotification::rpcNotificationFault(int error, const QString &message) {
-    qDebug() << error << " : " << message;
+    qDebug("Nofitication error %i : %s", error, message.toLatin1().constData());
 }
