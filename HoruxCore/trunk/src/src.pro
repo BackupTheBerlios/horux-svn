@@ -24,7 +24,7 @@ HEADERS += cfactory.h \
     caccesshandling.h \
     cdevicehandling.h \
     calarmhandling.h \
-    cxmlfactory.cpp \
+    cxmlfactory.h \
     choruxservice.h \
     cnotification.h
 

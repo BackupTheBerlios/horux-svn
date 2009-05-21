@@ -104,23 +104,23 @@ bool CHorux::startEngine()
               SLOT ( deviceConnectionMonitor ( int, bool ) ) );
 
 
-    //! Secondary, initialize the db engine
+    //! 1, initialize the db engine
     if ( !CFactory::getDbHandling()->init() )
         return false;
 
-    //! First, initialize the log engine
+    //! 2, initialize the log engine
     if ( !CFactory::getLog()->init() )
         return false;
 
-    //! Third, initialize the access engine
+    //! 3, initialize the access engine
     if ( !CFactory::getAccessHandling()->init() )
         return false;
 
-    //! First, initialize the alarm engine
+    //! 4, initialize the alarm engine
     if ( !CFactory::getAlarmHandling()->init() )
         return false;
 
-    //! Third, initialize the device engine
+    //! 5, initialize the device engine
     if ( !CFactory::getDeviceHandling()->init() )
         return false;
 

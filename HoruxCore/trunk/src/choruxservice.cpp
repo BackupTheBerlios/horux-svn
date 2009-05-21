@@ -25,7 +25,7 @@ CHoruxService::CHoruxService(int argc, char **argv) : QtService<QCoreApplication
     setServiceDescription("Horux Core service");
     setServiceFlags(QtServiceBase::Default);
 
-    QCoreApplication::setOrganizationName ( "Letux" );
+    QCoreApplication::setOrganizationName ( "Letux Sàrl" );
     QCoreApplication::setOrganizationDomain ( "letux.ch" );
     QCoreApplication::setApplicationName ( "HoruxCore" );
 
@@ -50,7 +50,6 @@ void CHoruxService::start()
         ptr_horux->stopEngine ( "","" );
         ptr_horux->setInternalCall ( false );
     }
-
 }
 
 void CHoruxService::stop()
