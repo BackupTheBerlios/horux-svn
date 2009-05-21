@@ -36,7 +36,7 @@ bool DbSqlitePlugin::open(const QString,
     {
       return true;
     }
-    qWarning(dbase.lastError().databaseText().toLatin1());
+    qWarning("%s",dbase.lastError().databaseText().toLatin1().constData());
     return false;
 }
 

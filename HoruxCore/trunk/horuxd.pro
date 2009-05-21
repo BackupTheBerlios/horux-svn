@@ -1,4 +1,3 @@
-
 SUBDIRS +=  maia_xmlrpc \
  qextserialport \
  src \

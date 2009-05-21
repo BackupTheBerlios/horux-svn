@@ -512,14 +512,14 @@ void AccessHoruxPlugin::insertTracking(QString userId, QString keyId, QString en
 
   if(reason == KEY_BLOCKED && userId != "1")
   {
-    QString xml = CXmlFactory::accessAlarm( userId, 1100, "The key is currently blocked");
+    QString xml = CXmlFactory::accessAlarm( userId, "1100", "The key is currently blocked");
   
     emit accessAction(xml);
   }
 
   if(reason == USER_BLOCKED && userId != "1")
   {
-    QString xml = CXmlFactory::accessAlarm( userId, 1101, "The user is currently blocked");
+    QString xml = CXmlFactory::accessAlarm( userId, "1101", "The user is currently blocked");
 
     emit accessAction(xml);
   }

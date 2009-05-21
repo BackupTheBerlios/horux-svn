@@ -134,7 +134,7 @@ bool CAccessHandling::loadPlugin()
             }
             else
             {
-                qWarning ( "Unknown plugin access name : " + pName.toLatin1() );
+                qWarning ( "Unknown plugin access name : %s", pName.toLatin1().constData() );
             }
         }
     }

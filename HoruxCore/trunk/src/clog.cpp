@@ -119,7 +119,7 @@ bool CLog::loadPlugin()
             }
             else
             {
-                qWarning ( "Unknown plugin log name : " + pName.toLatin1() );
+                qWarning ( "Unknown plugin log name : %s", pName.toLatin1().constData() );
             }
         }
     }

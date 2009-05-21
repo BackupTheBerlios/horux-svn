@@ -122,7 +122,7 @@ QMap<QString, CDeviceInterface *> CDeviceHandling::loadPlugin()
             }
             else
             {
-                qWarning ( "Unknown plugin device name: " + pName.toLatin1() );
+                qWarning ( "Unknown plugin device name: %s", pName.toLatin1().constData() );
             }
         }
     }
@@ -197,7 +197,7 @@ bool CDeviceHandling::createDevice()
                     );
         }
         else
-            qWarning ( "Cannot create the device with the plugin: " + type.toLatin1() );
+            qWarning ( "Cannot create the device with the plugin: %s", type.toLatin1().constData() );
     }
 
     QMapIterator<QString, CDeviceInterface *> i2 ( loadedPlugins );
