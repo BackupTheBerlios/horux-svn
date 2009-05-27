@@ -13,7 +13,7 @@
 		<p><%[Choice the server database.]%></p>
         <%[DB Server]%> <com:TDropDownList ID="dbServer" AutoPostBack="true" >
            <com:TListItem Value="mysql" Text="MySql" Selected="true" />
-            <com:TListItem Value="sqlite" Text="Sqlite"  />
+            <!--<com:TListItem Value="sqlite" Text="Sqlite (expérimentale)"  />-->
         </com:TDropDownList>
 
 		<p><%[Enter the database username, password, and database name you wish to use with Horux. These must already exist for the database you are going to use.]%></p>

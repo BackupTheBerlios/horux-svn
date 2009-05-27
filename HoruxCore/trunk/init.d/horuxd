@@ -55,7 +55,7 @@ case "$1" in
 	## Stop daemon with killproc(8) and if this fails
 	## set echo the echo return value.
 
-	killall horuxd
+	$ATD_BIN -t
 
 	;;
     try-restart)
