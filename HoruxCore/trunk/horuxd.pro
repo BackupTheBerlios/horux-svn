@@ -5,8 +5,7 @@ SUBDIRS +=  maia_xmlrpc \
  src/interfaces \
  plugins/access/horux \
  plugins/log/html \
- plugins/alarm/horux \
- plugins/db/sqlite
+ plugins/alarm/horux
 
 TEMPLATE = subdirs 
 CONFIG += warn_on \
