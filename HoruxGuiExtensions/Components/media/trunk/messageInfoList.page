@@ -22,7 +22,7 @@
                                 </td>
 
                                 <td class="button" id="toolbar-new">
-                                    <a href="<%= $this->Service->constructUrl('components.infoDisplay.addMessageInfo') %>" class="toolbar">
+                                    <a href="<%= $this->Service->constructUrl('components.media.addMessageInfo') %>" class="toolbar">
                                         <span class="icon-32-new" title="New"></span><com:TTranslate Catalogue="messages">New</com:TTranslate>
                                     </a>
                                 </td>
@@ -104,7 +104,7 @@
                             />
                         </prop:HeaderTemplate>
                         <prop:ItemTemplate>
-                                                        <com:TConditional Condition="!$this->Page->isRecordBlock('hr_horux_infoDisplay_message', $this->NamingContainer->DataItem['id'])">
+                                                        <com:TConditional Condition="!$this->Page->isRecordBlock('hr_horux_media_message', $this->NamingContainer->DataItem['id'])">
                                                                 <prop:TrueTemplate>
                                             <com:TActiveCheckBox 
                                                 ID="item"
@@ -132,7 +132,7 @@
 
 
                         <prop:ItemTemplate>
-                                                        <com:TConditional Condition="!$this->Page->isRecordBlock('hr_horux_infoDisplay_message', $this->NamingContainer->DataItem['id'])">
+                                                        <com:TConditional Condition="!$this->Page->isRecordBlock('hr_horux_media_message', $this->NamingContainer->DataItem['id'])">
                                                                 <prop:TrueTemplate>
                                             <com:THyperLink 
                                                 NavigateUrl="<%= $this->Service->constructUrl('components.infoDisplay.modMessageInfo',array('id'=>$this->NamingContainer->DataItem['id'])) %>"

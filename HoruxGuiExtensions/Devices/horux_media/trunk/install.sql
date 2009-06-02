@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS `hr_horux_InfoDisplay` (
+CREATE TABLE IF NOT EXISTS `hr_horux_media` (
   `id` int(11) NOT NULL auto_increment,
   `id_device` int(11) NOT NULL,
   `ip` varchar(15) NOT NULL,

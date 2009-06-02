@@ -12,7 +12,7 @@
 * See COPYRIGHT.php for copyright notices and details.
 */
 
-Prado::using('horux.pages.hardware.device.horux_InfoDisplay.sql');
+Prado::using('horux.pages.hardware.device.horux_media.sql');
 
 class add extends Page
 {
@@ -54,12 +54,12 @@ class add extends Page
         {
           $id = $this->lastId;
           $pBack = array('okMsg'=>Prado::localize('The device was added successfully'), 'id'=>$id);
-          $this->Response->redirect($this->Service->constructUrl('hardware.device.horux_InfoDisplay.mod', $pBack));
+          $this->Response->redirect($this->Service->constructUrl('hardware.device.horux_media.mod', $pBack));
         }
         else
         {
               $pBack = array('koMsg'=>Prado::localize('The device was not added'));
-              $this->Response->redirect($this->Service->constructUrl('hardware.device.horux_InfoDisplay.add',$pBack));        	          	
+              $this->Response->redirect($this->Service->constructUrl('hardware.device.horux_media.add',$pBack));        	          	
         }
       }		
     }

@@ -23,7 +23,7 @@ class addMedia extends Page
 
             $deviceId = $this->Request["deviceId"];
             
-            $cmd = $this->db->createCommand( "SELECT * FROM `hr_horux_InfoDisplay` WHERE id_device=:id" );
+            $cmd = $this->db->createCommand( "SELECT * FROM `hr_horux_media` WHERE id_device=:id" );
             $cmd->bindParameter(":id",$deviceId,PDO::PARAM_STR);
             $row = $cmd->query();
             $row = $row->read();
@@ -73,7 +73,7 @@ class addMedia extends Page
           {
             $id = $lastId;
             $pBack = array('okMsg'=>Prado::localize('The media was added successfully'), 'id'=>$id);
-            $this->Response->redirect($this->Service->constructUrl('components.infoDisplay.modMedia', $pBack));
+            $this->Response->redirect($this->Service->constructUrl('components.media.modMedia', $pBack));
           }
           else
           {
@@ -92,13 +92,13 @@ class addMedia extends Page
           }
           else
             $pBack = array('koMsg'=>Prado::localize('The info message was not added'));
-          $this->Response->redirect($this->Service->constructUrl('components.infoDisplay.mediaList',$pBack));
+          $this->Response->redirect($this->Service->constructUrl('components.media.mediaList',$pBack));
         }
     }
 
     public function onCancel($sender, $param)
     {
-      $this->Response->redirect($this->Service->constructUrl('components.infoDisplay.mediaList'));  
+      $this->Response->redirect($this->Service->constructUrl('components.media.mediaList'));  
     }
 
 
@@ -106,12 +106,12 @@ class addMedia extends Page
     {
         $deviceId = $this->Request["deviceId"];
 
-        $cmd = $this->db->createCommand("SELECT * FROM `hr_horux_infoDisplay_media` WHERE id_device=:id ORDER BY `order` DESC ");
+        $cmd = $this->db->createCommand("SELECT * FROM `hr_horux_media_media` WHERE id_device=:id ORDER BY `order` DESC ");
         $cmd->bindParameter(":id",$deviceId, PDO::PARAM_STR);
         $row = $cmd->query();
         $row = $row->read();
     
-        $cmd = $this->db->createCommand( "INSERT INTO `hr_horux_infoDisplay_media` (`name` ,`type`,`path`,`time`, `id_device`, `order`  ) VALUES (:name, :type, :path, :time,:id_device, :order)" );
+        $cmd = $this->db->createCommand( "INSERT INTO `hr_horux_media_media` (`name` ,`type`,`path`,`time`, `id_device`, `order`  ) VALUES (:name, :type, :path, :time,:id_device, :order)" );
 
         $type = "IMAGE";
         if($this->movie->getChecked())

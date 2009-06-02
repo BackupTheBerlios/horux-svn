@@ -18,7 +18,7 @@ class messageInfoList extends PageList
     {
 
                 
-        $sql = "SELECT * FROM  hr_horux_infoDisplay_message WHERE type='INFO'";
+        $sql = "SELECT * FROM  hr_horux_media_message WHERE type='INFO'";
 
         $cmd=$this->db->createCommand($sql);
         $dataKey = $cmd->query();
@@ -84,7 +84,7 @@ class messageInfoList extends PageList
             {
                 $this->addStandalone('sub',$cb->Value);
 
-                $cmd=$this->db->createCommand("DELETE FROM hr_horux_infoDisplay_message WHERE id=:id");
+                $cmd=$this->db->createCommand("DELETE FROM hr_horux_media_message WHERE id=:id");
                 $cmd->bindParameter(":id",$cb->Value);
                 if($cmd->execute())
                   $nDelete++;
@@ -96,7 +96,7 @@ class messageInfoList extends PageList
           $pBack = array('koMsg'=>$koMsg);
         else
           $pBack = array('okMsg'=>Prado::localize('{n} info message was deleted',array('n'=>$nDelete)));
-        $this->Response->redirect($this->Service->constructUrl('components.infoDisplay.messageInfoList',$pBack));
+        $this->Response->redirect($this->Service->constructUrl('components.media.messageInfoList',$pBack));
     }
 
 
@@ -105,7 +105,7 @@ class messageInfoList extends PageList
         if(count($this->DataGrid->DataKeys) === 0)
         {
                 $pBack = array('koMsg'=>Prado::localize('Select one item'));
-                $this->Response->redirect($this->Service->constructUrl('components.infoDisplay.messageInfoList',$pBack));
+                $this->Response->redirect($this->Service->constructUrl('components.media.messageInfoList',$pBack));
 
         }
 
@@ -113,7 +113,7 @@ class messageInfoList extends PageList
         if(is_numeric($id)) 
         {
               $pBack = array('id'=>$id);
-              $this->Response->redirect($this->Service->constructUrl('components.infoDisplay.modMessageInfo',$pBack));
+              $this->Response->redirect($this->Service->constructUrl('components.media.modMessageInfo',$pBack));
         }
 
         $cbs = $this->findControlsByType("TActiveCheckBox");
@@ -123,12 +123,12 @@ class messageInfoList extends PageList
             if( (bool)$cb->getChecked() && $cb->Value != "0")
             {
               $pBack = array('id'=>$cb->Value);
-              $this->Response->redirect($this->Service->constructUrl('components.infoDisplay.modMessageInfo',$pBack));
+              $this->Response->redirect($this->Service->constructUrl('components.media.modMessageInfo',$pBack));
             }
         }
 
         $pBack = array('koMsg'=>Prado::localize('Select one item'));
-        $this->Response->redirect($this->Service->constructUrl('components.infoDisplay.messageInfoList',$pBack));
+        $this->Response->redirect($this->Service->constructUrl('components.media.messageInfoList',$pBack));
     }
  }
 ?>

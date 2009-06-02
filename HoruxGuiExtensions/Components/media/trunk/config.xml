@@ -2,7 +2,7 @@
 <configuration>
     <modules>
         <module id="globalization_infoDisplay" class="TGlobalization">
-            <translation type="XLIFF" source="horux.messages" catalogue="infoDisplay" marker="" />
+            <translation type="XLIFF" source="horux.messages" catalogue="media" marker="" />
         </module>
     </modules>
 </configuration>

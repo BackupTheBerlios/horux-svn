@@ -117,7 +117,7 @@
                             />
                         </prop:HeaderTemplate>
                         <prop:ItemTemplate>
-                                                        <com:TConditional Condition="!$this->Page->isRecordBlock('hr_horux_infoDisplay_media', $this->NamingContainer->DataItem['id'])">
+                                                        <com:TConditional Condition="!$this->Page->isRecordBlock('hr_horux_media_media', $this->NamingContainer->DataItem['id'])">
                                                                 <prop:TrueTemplate>
                                             <com:TActiveCheckBox 
                                                 ID="item"
@@ -145,7 +145,7 @@
 
 
                         <prop:ItemTemplate>
-                                                        <com:TConditional Condition="!$this->Page->isRecordBlock('hr_horux_infoDisplay_media', $this->NamingContainer->DataItem['id'])">
+                                                        <com:TConditional Condition="!$this->Page->isRecordBlock('hr_horux_media_media', $this->NamingContainer->DataItem['id'])">
                                                                 <prop:TrueTemplate>
                                             <com:THyperLink 
                                                 NavigateUrl="<%= $this->Service->constructUrl('components.infoDisplay.modMedia',array('id'=>$this->NamingContainer->DataItem['id'])) %>"

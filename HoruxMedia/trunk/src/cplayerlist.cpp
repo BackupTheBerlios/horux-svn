@@ -164,7 +164,7 @@ void CPlayerList::start()
 
   QString mediaPath = settings.value("media_path","").toString();
 
-  QSqlQuery query("SELECT * FROM hr_horux_infoDisplay_media WHERE published=1 AND id_device=" + deviceId + " ORDER by `order`");
+  QSqlQuery query("SELECT * FROM hr_horux_media_media WHERE published=1 AND id_device=" + deviceId + " ORDER by `order`");
 
   while(query.next())
   {
@@ -273,7 +273,7 @@ void CPlayerList::userDetected(QString userId)
     QString name = userQuery.value(1).toString();
     QString firstName = userQuery.value(2).toString();
 
-    QSqlQuery messageQuery("SELECT * FROM hr_horux_infoDisplay_message WHERE type='ALL' OR id_user="+userId + " ORDER BY ID");
+    QSqlQuery messageQuery("SELECT * FROM hr_horux_media_message WHERE type='ALL' OR id_user="+userId + " ORDER BY ID");
     QString message = "";
     while(messageQuery.next())
     {
@@ -295,7 +295,7 @@ void CPlayerList::userDetected(QString userId)
   }
   else
   {
-      QSqlQuery messageQuery("SELECT * FROM hr_horux_infoDisplay_message WHERE type='UNKNOWN'");
+      QSqlQuery messageQuery("SELECT * FROM hr_horux_media_message WHERE type='UNKNOWN'");
       if(messageQuery.next())
       {
         QString message = messageQuery.value(2).toString().toLatin1();

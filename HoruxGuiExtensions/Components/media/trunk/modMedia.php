@@ -25,7 +25,7 @@ class modMedia extends Page
           {
 
                 $userId=$this->Application->getUser()->getUserId();
-                $this->blockRecord('hr_horux_infoDisplay_media', $this->Request['id'], $userId);   
+                $this->blockRecord('hr_horux_media_media', $this->Request['id'], $userId);   
 
                 $this->id->Value = $this->Request['id'];
                 $this->setData();
@@ -35,7 +35,7 @@ class modMedia extends Page
 
     protected function setData()
     {
-        $cmd = $this->db->createCommand( "SELECT * FROM hr_horux_infoDisplay_media WHERE id=:id" );
+        $cmd = $this->db->createCommand( "SELECT * FROM hr_horux_media_media WHERE id=:id" );
         $cmd->bindParameter(":id",$this->id->Value, PDO::PARAM_INT);
         $query = $cmd->query();
         if($query)
@@ -48,7 +48,7 @@ class modMedia extends Page
 
           $deviceId = $data['id_device'];
           
-          $cmd = $this->db->createCommand( "SELECT * FROM `hr_horux_InfoDisplay` WHERE id_device=:id" );
+          $cmd = $this->db->createCommand( "SELECT * FROM `hr_horux_media` WHERE id_device=:id" );
           $cmd->bindParameter(":id",$deviceId,PDO::PARAM_STR);
           $row = $cmd->query();
           $row = $row->read();
@@ -106,12 +106,12 @@ class modMedia extends Page
           if($this->saveData())
           {
             $pBack = array('okMsg'=>Prado::localize('The media was modified successfully'), 'id'=>$this->id->Value);
-            $this->Response->redirect($this->Service->constructUrl('components.infoDisplay.modMedia', $pBack));
+            $this->Response->redirect($this->Service->constructUrl('components.media.modMedia', $pBack));
           }
           else
           {
             $pBack = array('koMsg'=>Prado::localize('The media was not modified'), 'id'=>$this->id->Value);
-            $this->Response->redirect($this->Service->constructUrl('components.infoDisplay.modMedia', $pBack));
+            $this->Response->redirect($this->Service->constructUrl('components.media.modMedia', $pBack));
           }
         }
     }
@@ -128,14 +128,14 @@ class modMedia extends Page
             $pBack = array('koMsg'=>Prado::localize('The media was not modified'));
             
           $this->blockRecord('hr_keys', $this->id->Value, 0);
-          $this->Response->redirect($this->Service->constructUrl('components.infoDisplay.mediaList',$pBack));
+          $this->Response->redirect($this->Service->constructUrl('components.media.mediaList',$pBack));
         }
     }
 
         public function onCancel($sender, $param)
         {
-                $this->blockRecord('hr_horux_infoDisplay_media', $this->id->Value, 0);     
-        $this->Response->redirect($this->Service->constructUrl('components.infoDisplay.mediaList')); 
+                $this->blockRecord('hr_horux_media_media', $this->id->Value, 0);     
+        $this->Response->redirect($this->Service->constructUrl('components.media.mediaList')); 
         }
 
 
@@ -143,9 +143,9 @@ class modMedia extends Page
     {
       $res1 = true;     
     
-      $cmd = $this->db->createCommand( "UPDATE hr_horux_infoDisplay_message SET name=:name, message=:message, startDisplay=:startDisplay, stopDisplay=:stopDisplay WHERE id=:id" );
+      $cmd = $this->db->createCommand( "UPDATE hr_horux_media_message SET name=:name, message=:message, startDisplay=:startDisplay, stopDisplay=:stopDisplay WHERE id=:id" );
         
-        $cmd = $this->db->createCommand( "UPDATE `hr_horux_infoDisplay_media` SET `name`=:name ,`type`=:type,`path`=:path, `time`=:time WHERE id=:id" );
+        $cmd = $this->db->createCommand( "UPDATE `hr_horux_media_media` SET `name`=:name ,`type`=:type,`path`=:path, `time`=:time WHERE id=:id" );
         $cmd->bindParameter(":id",$this->id->Value,PDO::PARAM_STR);
 
         $type = "IMAGE";

@@ -95,7 +95,7 @@ void SplashItem::displayInfoMessage()
   if (!timerDisplay.isActive())
   {
 
-    QSqlQuery messageQuery("SELECT * FROM hr_horux_infoDisplay_message WHERE type='INFO' AND startDisplay<=NOW() AND stopDisplay>=NOW()");
+    QSqlQuery messageQuery("SELECT * FROM hr_horux_media_message WHERE type='INFO' AND startDisplay<=NOW() AND stopDisplay>=NOW()");
   
     QString message = "";
   

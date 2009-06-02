@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <install type="component">
-	<installName>infoDisplay</installName>
-	<name>Info Display</name>
+	<installName>media</installName>
+	<name>Media</name>
 	<version>1.0.0</version>
 	<creationDate>13/11/08</creationDate>
 	<author>Jean-Luc Gyger / Letux</author>
@@ -15,23 +15,23 @@
 	<sqluninstall>uninstall.sql</sqluninstall>	
 	
 	<mainmenu>
-		<menu iconmenu="icon-16-message.png" url="components.infoDisplay.infoDisplay" name="Info Display" >
+		<menu iconmenu="icon-16-message.png" url="components.media.infoDisplay" name="Info Display" >
                         <submenus>
-                                <submenu iconmenu="icon-16-playlist.png" url="components.infoDisplay.mediaList" name="Play list" ></submenu>
-                                <submenu iconmenu="icon-16-infomessage.png" url="components.infoDisplay.messageInfoList" name="Info message" ></submenu>
+                                <submenu iconmenu="icon-16-playlist.png" url="components.media.mediaList" name="Play list" ></submenu>
+                                <submenu iconmenu="icon-16-infomessage.png" url="components.media.messageInfoList" name="Info message" ></submenu>
                         </submenus>
                </menu>
 	</mainmenu>
 	
 	<permissions>
-		<permission>components.infoDisplay.addUserMessage</permission>
-                <permission>components.infoDisplay.infoDisplay</permission>
-                <permission>components.infoDisplay.mediaList</permission>
-                <permission>components.infoDisplay.addMedia</permission>
-                <permission>components.infoDisplay.modMedia</permission>
-                <permission>components.infoDisplay.messageInfoList</permission>
-                <permission>components.infoDisplay.addMessageInfo</permission>
-                <permission>components.infoDisplay.modMessageInfo</permission>
+		<permission>components.media.addUserMessage</permission>
+                <permission>components.media.infoDisplay</permission>
+                <permission>components.media.mediaList</permission>
+                <permission>components.media.addMedia</permission>
+                <permission>components.media.modMedia</permission>
+                <permission>components.media.messageInfoList</permission>
+                <permission>components.media.addMessageInfo</permission>
+                <permission>components.media.modMessageInfo</permission>
 	</permissions>
 	
 </install>

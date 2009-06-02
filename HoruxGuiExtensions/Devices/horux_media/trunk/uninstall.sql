@@ -1,1 +1,1 @@
-DROP TABLE IF EXISTS `hr_horux_InfoDisplay`;
+DROP TABLE IF EXISTS `hr_horux_media`;

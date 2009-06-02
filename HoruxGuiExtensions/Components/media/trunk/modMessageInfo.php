@@ -25,7 +25,7 @@ class modMessageInfo extends Page
           {
 
                 $userId=$this->Application->getUser()->getUserId();
-                $this->blockRecord('hr_horux_infoDisplay_message', $this->Request['id'], $userId);   
+                $this->blockRecord('hr_horux_media_message', $this->Request['id'], $userId);   
 
                 $this->id->Value = $this->Request['id'];
                 $this->setData();
@@ -35,7 +35,7 @@ class modMessageInfo extends Page
 
     protected function setData()
     {
-        $cmd = $this->db->createCommand( "SELECT * FROM hr_horux_infoDisplay_message WHERE id=:id" );
+        $cmd = $this->db->createCommand( "SELECT * FROM hr_horux_media_message WHERE id=:id" );
         $cmd->bindParameter(":id",$this->id->Value, PDO::PARAM_INT);
         $query = $cmd->query();
         if($query)
@@ -69,12 +69,12 @@ class modMessageInfo extends Page
           if($this->saveData())
           {
             $pBack = array('okMsg'=>Prado::localize('The info message was modified successfully'), 'id'=>$this->id->Value);
-            $this->Response->redirect($this->Service->constructUrl('components.infoDisplay.modMessageInfo', $pBack));
+            $this->Response->redirect($this->Service->constructUrl('components.media.modMessageInfo', $pBack));
           }
           else
           {
             $pBack = array('koMsg'=>Prado::localize('The info message was not modified'), 'id'=>$this->id->Value);
-            $this->Response->redirect($this->Service->constructUrl('components.infoDisplay.modMessageInfo', $pBack));
+            $this->Response->redirect($this->Service->constructUrl('components.media.modMessageInfo', $pBack));
           }
         }
     }
@@ -91,14 +91,14 @@ class modMessageInfo extends Page
             $pBack = array('koMsg'=>Prado::localize('The info message was not modified'));
             
           $this->blockRecord('hr_keys', $this->id->Value, 0);
-          $this->Response->redirect($this->Service->constructUrl('components.infoDisplay.messageInfoList',$pBack));
+          $this->Response->redirect($this->Service->constructUrl('components.media.messageInfoList',$pBack));
         }
     }
 
         public function onCancel($sender, $param)
         {
-                $this->blockRecord('hr_horux_infoDisplay_message', $this->id->Value, 0);     
-        $this->Response->redirect($this->Service->constructUrl('components.infoDisplay.messageInfoList')); 
+                $this->blockRecord('hr_horux_media_message', $this->id->Value, 0);     
+        $this->Response->redirect($this->Service->constructUrl('components.media.messageInfoList')); 
         }
 
 
@@ -106,7 +106,7 @@ class modMessageInfo extends Page
     {
       $res1 = true;     
     
-      $cmd = $this->db->createCommand( "UPDATE hr_horux_infoDisplay_message SET name=:name, message=:message, startDisplay=:startDisplay, stopDisplay=:stopDisplay WHERE id=:id" );
+      $cmd = $this->db->createCommand( "UPDATE hr_horux_media_message SET name=:name, message=:message, startDisplay=:startDisplay, stopDisplay=:stopDisplay WHERE id=:id" );
         $cmd->bindParameter(":id",$this->id->Value,PDO::PARAM_STR);
         $cmd->bindParameter(":name",$this->name->SafeText,PDO::PARAM_STR);
         $cmd->bindParameter(":message",$this->message->SafeText, PDO::PARAM_STR);

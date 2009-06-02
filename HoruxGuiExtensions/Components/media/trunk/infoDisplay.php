@@ -21,7 +21,7 @@ class infoDisplay extends Page
 
         if(!$this->IsPostBack)
         {
-          $cmd = $this->db->createCommand( "SELECT * FROM hr_horux_infoDisplay_message WHERE type='ALL'" );
+          $cmd = $this->db->createCommand( "SELECT * FROM hr_horux_media_message WHERE type='ALL'" );
           $data =  $cmd->query();
           if($data)
           {
@@ -29,7 +29,7 @@ class infoDisplay extends Page
             $this->messageForAllUser->Text = $data['message'];
           }
           
-          $cmd = $this->db->createCommand( "SELECT * FROM hr_horux_infoDisplay_message WHERE type='UNKNOWN'" );
+          $cmd = $this->db->createCommand( "SELECT * FROM hr_horux_media_message WHERE type='UNKNOWN'" );
           $data =  $cmd->query();
           if($data)
           {
@@ -51,7 +51,7 @@ class infoDisplay extends Page
           else
             $pBack = array('koMsg'=>Prado::localize('The messages was not modified'));
             
-          $this->Response->redirect($this->Service->constructUrl('components.infoDisplay.infoDisplay',$pBack));
+          $this->Response->redirect($this->Service->constructUrl('components.media.infoDisplay',$pBack));
         }
     }
     
@@ -59,11 +59,11 @@ class infoDisplay extends Page
     {
       $res1 = $res2 = $res3 = true;     
     
-      $cmd = $this->db->createCommand( "UPDATE hr_horux_infoDisplay_message SET message=:message WHERE type='ALL'" );
+      $cmd = $this->db->createCommand( "UPDATE hr_horux_media_message SET message=:message WHERE type='ALL'" );
       $cmd->bindParameter(":message",$this->messageForAllUser->SafeText,PDO::PARAM_STR);
       $cmd->execute();
       
-      $cmd = $this->db->createCommand( "UPDATE hr_horux_infoDisplay_message SET message=:message WHERE type='UNKNOWN'" );
+      $cmd = $this->db->createCommand( "UPDATE hr_horux_media_message SET message=:message WHERE type='UNKNOWN'" );
       $cmd->bindParameter(":message",$this->messageForUnknownUser->SafeText,PDO::PARAM_STR);
       $cmd->execute();
       

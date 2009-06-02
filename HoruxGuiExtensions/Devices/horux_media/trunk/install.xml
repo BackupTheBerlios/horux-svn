@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <install type="device">
 	<name>Horux Display info</name>
-        <installName>horux_InfoDisplay</installName>
+        <installName>horux_media</installName>
 	<version>1.0.0</version>
 	<creationDate>07/11/08</creationDate>
 	<author>Jean-Luc Gyger / Letux</author>
@@ -14,8 +14,8 @@
 	<sqluninstall>uninstall.sql</sqluninstall>
 	
 	<permissions>
-          <permission>hardware.device.horux_InfoDisplay.add</permission>
-          <permission>hardware.device.horux_InfoDisplay.mod</permission>
+          <permission>hardware.device.horux_media.add</permission>
+          <permission>hardware.device.horux_media.mod</permission>
 	</permissions>	
 	
 	

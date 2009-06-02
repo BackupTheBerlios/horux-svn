@@ -50,19 +50,19 @@ class addMessageInfo extends Page
           }
           else
             $pBack = array('koMsg'=>Prado::localize('The info message was not added'));
-          $this->Response->redirect($this->Service->constructUrl('components.infoDisplay.messageInfoList',$pBack));
+          $this->Response->redirect($this->Service->constructUrl('components.media.messageInfoList',$pBack));
         }
     }
 
         public function onCancel($sender, $param)
         {
-        $this->Response->redirect($this->Service->constructUrl('components.infoDisplay.messageInfoList'));  
+        $this->Response->redirect($this->Service->constructUrl('components.media.messageInfoList'));  
         }
 
 
     protected function saveData()
     {
-        $cmd = $this->db->createCommand( "INSERT INTO `hr_horux_infoDisplay_message` (`name` ,`message` ,`type`,`startDisplay`,`stopDisplay`  ) VALUES (:name, :message, 'INFO' ,:startDisplay,:stopDisplay)" );
+        $cmd = $this->db->createCommand( "INSERT INTO `hr_horux_media_message` (`name` ,`message` ,`type`,`startDisplay`,`stopDisplay`  ) VALUES (:name, :message, 'INFO' ,:startDisplay,:stopDisplay)" );
 
         $cmd->bindParameter(":name",$this->name->SafeText,PDO::PARAM_STR);
         $cmd->bindParameter(":message",$this->message->SafeText, PDO::PARAM_STR);

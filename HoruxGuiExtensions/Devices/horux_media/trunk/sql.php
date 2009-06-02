@@ -17,7 +17,7 @@ class SQL {
 	
       const SQL_GET_ACCESSPOINT = "SELECT id, name FROM hr_device WHERE accessPoint=1";
 
-	const SQL_ADD_INFODISPLAY = "INSERT INTO hr_horux_InfoDisplay (
+	const SQL_ADD_INFODISPLAY = "INSERT INTO hr_horux_media (
                         `id_device` , 
                         `ip` , 
                         `port` , 
@@ -44,7 +44,7 @@ class SQL {
                   VALUES (
                         :name,
                         1,
-                        'horux_InfoDisplay',
+                        'horux_media',
                         :isLog,
                         0,
                         0,
@@ -54,9 +54,9 @@ class SQL {
                   
   	const SQL_IS_NAME_EXIST = "SELECT name FROM 
   								hr_device 
-  								WHERE type='horux_InfoDisplay' AND name=:name";
+  								WHERE type='horux_media' AND name=:name";
 
-	const SQL_GET_INFODISPLAY = "SELECT * FROM hr_horux_InfoDisplay AS ai LEFT JOIN hr_device AS d ON d.id=ai.id_device  WHERE ai.id_device=:id";
+	const SQL_GET_INFODISPLAY = "SELECT * FROM hr_horux_media AS ai LEFT JOIN hr_device AS d ON d.id=ai.id_device  WHERE ai.id_device=:id";
 	
 	const SQL_MOD_DEVICE =  "UPDATE hr_device SET
 			            `name`=:name,
@@ -65,7 +65,7 @@ class SQL {
                                   WHERE id=:id"
                       ;
                       
-	const SQL_UPDATE_INFODISPLAY =  "UPDATE hr_horux_InfoDisplay SET
+	const SQL_UPDATE_INFODISPLAY =  "UPDATE hr_horux_media SET
                         `ip`=:ip, 
                         `port`=:port, 
                         `id_action_device`=:id_action_device
@@ -74,7 +74,7 @@ class SQL {
                       
    	const SQL_IS_READER_NAME_EXIST2 = "SELECT name FROM 
   								hr_device
-  								WHERE type='horux_InfoDisplay' AND name=:name AND id<>:id";
+  								WHERE type='horux_media' AND name=:name AND id<>:id";
 }
 
 ?>

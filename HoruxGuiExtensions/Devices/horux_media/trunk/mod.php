@@ -12,7 +12,7 @@
 * See COPYRIGHT.php for copyright notices and details.
 */
 
-Prado::using('horux.pages.hardware.device.horux_InfoDisplay.sql');
+Prado::using('horux.pages.hardware.device.horux_media.sql');
 
 class mod extends Page
 {
@@ -80,7 +80,7 @@ class mod extends Page
           {
             $id = $this->id->Value;
             $pBack = array('okMsg'=>Prado::localize('The device was modified successfully'), 'id'=>$id);
-            $this->Response->redirect($this->Service->constructUrl('hardware.device.horux_InfoDisplay.mod', $pBack));
+            $this->Response->redirect($this->Service->constructUrl('hardware.device.horux_media.mod', $pBack));
           }
           else
           {

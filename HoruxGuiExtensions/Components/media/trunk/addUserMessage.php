@@ -22,7 +22,7 @@ class addUserMessage extends Page
         if(!$this->IsPostBack)
         {          
 	  $this->id->Value = $this->Request['id'];
-	  $cmd = $this->db->createCommand( "SELECT * FROM hr_horux_infoDisplay_message WHERE id_user=:id" );
+	  $cmd = $this->db->createCommand( "SELECT * FROM hr_horux_media_message WHERE id_user=:id" );
 	  $cmd->bindParameter(":id",$this->id->Value,PDO::PARAM_STR);
 	  
 	  $res = $cmd->query();
@@ -44,7 +44,7 @@ class addUserMessage extends Page
           {
             $id = $lastId;
             $pBack = array('okMsg'=>Prado::localize('The message was setted successfully'), 'id'=>$id);
-            $this->Response->redirect($this->Service->constructUrl('components.infoDisplay.addUserMessage', $pBack));
+            $this->Response->redirect($this->Service->constructUrl('components.media.addUserMessage', $pBack));
           }
           else
           {
@@ -72,7 +72,7 @@ class addUserMessage extends Page
 
       if($this->mid->Value == 0)
       {
-	$cmd = $this->db->createCommand( "INSERT INTO hr_horux_infoDisplay_message (`id_user` ,`message` ,`type` ) VALUES (:id_user, :message, 'USER')" );
+	$cmd = $this->db->createCommand( "INSERT INTO hr_horux_media_message (`id_user` ,`message` ,`type` ) VALUES (:id_user, :message, 'USER')" );
 
       	$cmd->bindParameter(":id_user",$this->id->Value,PDO::PARAM_STR);
       	$cmd->bindParameter(":message",$this->message->SafeText, PDO::PARAM_STR);
@@ -85,7 +85,7 @@ class addUserMessage extends Page
       }
       else
       {
-	$cmd = $this->db->createCommand( "UPDATE hr_horux_infoDisplay_message SET message=:message WHERE id=:mid" );
+	$cmd = $this->db->createCommand( "UPDATE hr_horux_media_message SET message=:message WHERE id=:mid" );
 
       	$cmd->bindParameter(":mid",$this->mid->Value,PDO::PARAM_STR);
       	$cmd->bindParameter(":message",$this->message->SafeText, PDO::PARAM_STR);

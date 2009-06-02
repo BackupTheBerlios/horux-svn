@@ -18,7 +18,7 @@ class mediaList extends PageList
     {
         $deviceId = $this->display->getSelectedvalue();
     
-        $sql = "SELECT * FROM  hr_horux_infoDisplay_media WHERE id_device=".$deviceId." ORDER BY `order`";
+        $sql = "SELECT * FROM  hr_horux_media_media WHERE id_device=".$deviceId." ORDER BY `order`";
 
         $cmd=$this->db->createCommand($sql);
         $dataKey = $cmd->query();
@@ -29,7 +29,7 @@ class mediaList extends PageList
     
     protected function getDisplay()
     {
-        $sql = "SELECT id AS Value, name AS Text FROM  hr_device WHERE `type`='horux_InfoDisplay'";
+        $sql = "SELECT id AS Value, name AS Text FROM  hr_device WHERE `type`='horux_media'";
 
         $cmd=$this->db->createCommand($sql);
         $dataKey = $cmd->query();
@@ -71,7 +71,7 @@ class mediaList extends PageList
     public function onNew($sender, $param)
     {
       $pBack = array("deviceId"=>$this->display->getSelectedValue());
-      $this->Response->redirect($this->Service->constructUrl('components.infoDisplay.addMedia',$pBack));
+      $this->Response->redirect($this->Service->constructUrl('components.media.addMedia',$pBack));
     }
 
     public function onReloadDisplay($sender, $param)
@@ -90,7 +90,7 @@ class mediaList extends PageList
             if($param->CommandName == 'publish')
             {
                 $sql = "UPDATE 
-                            `hr_horux_infoDisplay_media` 
+                            `hr_horux_media_media` 
                         SET
                             published=abs(published-1)
                         WHERE
@@ -99,9 +99,9 @@ class mediaList extends PageList
                 $cmd->Execute();
 
                 $asset = $this->Application->getAssetManager();
-                $urlTick = $asset->publishFilePath('./protected/pages/components/infoDisplay/assets/tick.gif');    
+                $urlTick = $asset->publishFilePath('./protected/pages/components/media/assets/tick.gif');    
                 $asset = $this->Application->getAssetManager();
-                $urlPublish = $asset->publishFilePath('./protected/pages/components/infoDisplay/assets/publish_x.gif');
+                $urlPublish = $asset->publishFilePath('./protected/pages/components/media/assets/publish_x.gif');
 
                 if($sender->ImageUrl == $urlTick)
                 {
@@ -129,7 +129,7 @@ class mediaList extends PageList
                             `order`,
                             id 
                         FROM 
-                            hr_horux_infoDisplay_media 
+                            hr_horux_media_media 
                         WHERE 
                             id={$param->CommandParameter}";
                             
@@ -142,7 +142,7 @@ class mediaList extends PageList
                             `order`,
                             id 
                         FROM 
-                            hr_horux_infoDisplay_media 
+                            hr_horux_media_media 
                         WHERE 
                             `order`>={$dataKey['order']}
                         AND
@@ -160,7 +160,7 @@ class mediaList extends PageList
                 $id= $dataKey[1]['id'];
 
                 $sql = "UPDATE 
-                            `hr_horux_infoDisplay_media` 
+                            `hr_horux_media_media` 
                         SET
                             `order`=$publishOrder2
                         WHERE
@@ -170,7 +170,7 @@ class mediaList extends PageList
                 $dataKey = $cmd->execute();
 
                 $sql = "UPDATE 
-                            `hr_horux_infoDisplay_media` 
+                            `hr_horux_media_media` 
                         SET
                             `order`=$publishOrder1
                         WHERE
@@ -186,7 +186,7 @@ class mediaList extends PageList
                             `order`,
                             id 
                         FROM 
-                            hr_horux_infoDisplay_media 
+                            hr_horux_media_media 
                         WHERE 
                             id={$param->CommandParameter}";
 
@@ -198,7 +198,7 @@ class mediaList extends PageList
                             `order`,
                             id 
                         FROM 
-                            hr_horux_infoDisplay_media 
+                            hr_horux_media_media 
                         WHERE 
                             `order`<={$dataKey['order']}
                         AND
@@ -216,7 +216,7 @@ class mediaList extends PageList
                 $id= $dataKey[1]['id'];
 
                 $sql = "UPDATE 
-                            `hr_horux_infoDisplay_media` 
+                            `hr_horux_media_media` 
                         SET
                             `order`=$publishOrder2
                         WHERE
@@ -225,7 +225,7 @@ class mediaList extends PageList
                 $dataKey = $cmd->execute();
 
                 $sql = "UPDATE 
-                            `hr_horux_infoDisplay_media` 
+                            `hr_horux_media_media` 
                         SET
                             `order`=$publishOrder1
                         WHERE
@@ -258,9 +258,9 @@ class mediaList extends PageList
         {
 
             $asset = $this->Application->getAssetManager();
-            $urlTick = $asset->publishFilePath('./protected/pages/components/infoDisplay/assets/tick.gif');    
+            $urlTick = $asset->publishFilePath('./protected/pages/components/media/assets/tick.gif');    
             $asset = $this->Application->getAssetManager();
-            $urlPublish = $asset->publishFilePath('./protected/pages/components/infoDisplay/assets/publish_x.gif');    
+            $urlPublish = $asset->publishFilePath('./protected/pages/components/media/assets/publish_x.gif');    
 
             if($item->DataItem['published'])
                 $item->publish->publishImg->setImageUrl($urlTick);
@@ -273,7 +273,7 @@ class mediaList extends PageList
             $sql = "SELECT 
                         COUNT(id) AS nb 
                     FROM 
-                        hr_horux_infoDisplay_media
+                        hr_horux_media_media
                     WHERE
                         id_device=$deviceId";
 
@@ -335,7 +335,7 @@ class mediaList extends PageList
          {
             if( (bool)$cb->getChecked() && $cb->Value != "0")
             {
-                $cmd=$this->db->createCommand("DELETE FROM hr_horux_infoDisplay_media WHERE id=:id");
+                $cmd=$this->db->createCommand("DELETE FROM hr_horux_media_media WHERE id=:id");
                 $cmd->bindParameter(":id",$cb->Value);
                 if($cmd->execute())
                   $nDelete++;
@@ -347,7 +347,7 @@ class mediaList extends PageList
           $pBack = array('koMsg'=>$koMsg);
         else
           $pBack = array('okMsg'=>Prado::localize('{n} media was deleted',array('n'=>$nDelete)));
-        $this->Response->redirect($this->Service->constructUrl('components.infoDisplay.mediaList',$pBack));
+        $this->Response->redirect($this->Service->constructUrl('components.media.mediaList',$pBack));
     }
 
 
@@ -356,7 +356,7 @@ class mediaList extends PageList
         if(count($this->DataGrid->DataKeys) === 0)
         {
                 $pBack = array('koMsg'=>Prado::localize('Select one item'));
-                $this->Response->redirect($this->Service->constructUrl('components.infoDisplay.mediaList',$pBack));
+                $this->Response->redirect($this->Service->constructUrl('components.media.mediaList',$pBack));
 
         }
 
@@ -364,7 +364,7 @@ class mediaList extends PageList
         if(is_numeric($id)) 
         {
               $pBack = array('id'=>$id);
-              $this->Response->redirect($this->Service->constructUrl('components.infoDisplay.modMedia',$pBack));
+              $this->Response->redirect($this->Service->constructUrl('components.media.modMedia',$pBack));
         }
 
         $cbs = $this->findControlsByType("TActiveCheckBox");
@@ -374,12 +374,12 @@ class mediaList extends PageList
             if( (bool)$cb->getChecked() && $cb->Value != "0")
             {
               $pBack = array('id'=>$cb->Value);
-              $this->Response->redirect($this->Service->constructUrl('components.infoDisplay.modMedia',$pBack));
+              $this->Response->redirect($this->Service->constructUrl('components.media.modMedia',$pBack));
             }
         }
 
         $pBack = array('koMsg'=>Prado::localize('Select one item'));
-        $this->Response->redirect($this->Service->constructUrl('components.infoDisplay.mediaList',$pBack));
+        $this->Response->redirect($this->Service->constructUrl('components.media.mediaList',$pBack));
     }
  }
 ?>

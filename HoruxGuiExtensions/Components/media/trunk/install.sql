@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS `hr_horux_infoDisplay_media` (
+CREATE TABLE IF NOT EXISTS `hr_horux_media_media` (
   `id` int(11) NOT NULL auto_increment,
   `name` varchar(50) NOT NULL,
   `type` set('IMAGE','MOVIE') NOT NULL,
@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS `hr_horux_infoDisplay_media` (
   PRIMARY KEY  (`id`)
 ) TYPE=MyISAM CHARACTER SET `utf8`;
 
-CREATE TABLE IF NOT EXISTS `hr_horux_infoDisplay_message` (
+CREATE TABLE IF NOT EXISTS `hr_horux_media_message` (
   `id` int(11) NOT NULL auto_increment,
   `id_user` int(11) NOT NULL,
   `message` text NOT NULL,
@@ -24,9 +24,9 @@ CREATE TABLE IF NOT EXISTS `hr_horux_infoDisplay_message` (
 ) TYPE=MyISAM CHARACTER SET `utf8`;
 
 INSERT INTO `hr_user_action` (`id` ,`name` ,`page` ,`icon` ,`tip` ,`catalog`)
-VALUES (NULL , 'InfoDisplay', 'components.infoDisplay.addUserMessage', './protected/pages/components/infoDisplay/assets/icon-16-message.png', 'Attribute a message to the user', 'infoDisplay');
+VALUES (NULL , 'media', 'components.media.addUserMessage', './protected/pages/components/media/assets/icon-16-message.png', 'Attribute a message to the user', 'media');
 
 
-INSERT INTO `hr_horux_infoDisplay_message` (`id`, `id_user`, `message`, `type`, `startDisplay`, `stopDisplay`) VALUES
+INSERT INTO `hr_horux_media_message` (`id`, `id_user`, `message`, `type`, `startDisplay`, `stopDisplay`) VALUES
 (1, 0, '', 'ALL', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 (2, 0, '', 'UNKNOWN', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
