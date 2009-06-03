@@ -54,7 +54,7 @@ public:
 
     ~CPlayerList();
     
-    
+    bool isStarted();
 
 protected slots:
     //! XMLRPC access

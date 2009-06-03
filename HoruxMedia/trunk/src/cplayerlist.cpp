@@ -32,11 +32,14 @@ CPlayerList::CPlayerList(QObject * parent)
 {
   isStart = false; 
 
-  QSettings settings(QCoreApplication::applicationDirPath () + "/config.ini",
+  QSettings settings(QCoreApplication::instance()->applicationDirPath () + "/config.ini",
                     QSettings::IniFormat);
 
+
   if(!settings.contains("media_path"))
+  {
     settings.setValue("media_path","");
+  }
 
   if(!settings.contains("mysql_host"))
     settings.setValue("mysql_host","localhost");
@@ -69,7 +72,8 @@ CPlayerList::CPlayerList(QObject * parent)
 
   if(!result)
   {
-    exit(0);
+    qDebug() << "Adapt the config.ini file";
+    return;
   }
 
   xmlRpcServer = new MaiaXmlRpcServer(settings.value("xmlrpc",7000).toInt(), this);
@@ -86,7 +90,6 @@ CPlayerList::CPlayerList(QObject * parent)
   if(deviceId == "0")
   {
     QMessageBox::information(NULL, "Error", "Set the device id parameter in config.ini and restart the application");
-    exit(1);
     return;
   }
 
@@ -127,6 +130,11 @@ QString CPlayerList::getMediaList()
   return sl.join(",");
 }
 
+bool CPlayerList::isStarted()
+{
+    return isStart;
+}
+
 void CPlayerList::start()
 {
 
@@ -165,11 +173,11 @@ void CPlayerList::start()
   QString mediaPath = settings.value("media_path","").toString();
 
   QSqlQuery query("SELECT * FROM hr_horux_media_media WHERE published=1 AND id_device=" + deviceId + " ORDER by `order`");
-
   while(query.next())
   {
     QString type = query.value(2).toString();
     QString path = mediaPath + query.value(3).toString();
+
     int time = query.value(4).toInt();
     QFile file(path);
     if(file.exists())

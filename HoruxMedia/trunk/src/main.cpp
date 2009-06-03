@@ -38,7 +38,10 @@ int main(int argc, char *argv[])
 
   CPlayerList playerList; 
 
-  return app.exec();
+  if(playerList.isStarted())
+    return app.exec();
+
+  return 1;
 }
 
 

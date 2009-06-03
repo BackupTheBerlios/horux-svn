@@ -148,7 +148,7 @@
                                                         <com:TConditional Condition="!$this->Page->isRecordBlock('hr_horux_media_media', $this->NamingContainer->DataItem['id'])">
                                                                 <prop:TrueTemplate>
                                             <com:THyperLink 
-                                                NavigateUrl="<%= $this->Service->constructUrl('components.infoDisplay.modMedia',array('id'=>$this->NamingContainer->DataItem['id'])) %>"
+                                                NavigateUrl="<%= $this->Service->constructUrl('components.media.modMedia',array('id'=>$this->NamingContainer->DataItem['id'])) %>"
                                                 Text="<%#$this->NamingContainer->DataItem['name']%>"
                                             />
                                             </prop:TrueTemplate>

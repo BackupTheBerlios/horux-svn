@@ -31,7 +31,7 @@ class addMessageInfo extends Page
           {
             $id = $lastId;
             $pBack = array('okMsg'=>Prado::localize('The info message was added successfully'), 'id'=>$id);
-            $this->Response->redirect($this->Service->constructUrl('components.infoDisplay.modMessageInfo', $pBack));
+            $this->Response->redirect($this->Service->constructUrl('components.media.modMessageInfo', $pBack));
           }
           else
           {
@@ -75,7 +75,7 @@ class addMessageInfo extends Page
         $stopDisplay = explode("-",$this->stopDisplay->Text);
         $stopDisplay = $stopDisplay[2]."-".$stopDisplay[1]."-".$stopDisplay[0];
         $stopDisplay .= " ";
-        $stopDisplay .= $this->stopDisplayHour->SafeText.":".$this->stopDisplayHMinute->SafeText.":00";
+        $stopDisplay .= $this->stopDisplayHour->SafeText.":".$this->stopDisplayMinute->SafeText.":00";
 
 
         $cmd->bindParameter(":startDisplay",$startDisplay, PDO::PARAM_STR);
