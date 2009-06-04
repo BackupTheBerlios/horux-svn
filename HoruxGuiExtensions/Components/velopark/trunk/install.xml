@@ -2,7 +2,7 @@
 <install type="component">
 	<installName>velopark</installName>
 	<name>Velo park</name>
-	<version>1.0.0</version>
+	<version>beta</version>
 	<creationDate>14/10/08</creationDate>
 	<author>Jean-Luc Gyger / Letux</author>
 	<authorEmail>info@letux.ch</authorEmail>

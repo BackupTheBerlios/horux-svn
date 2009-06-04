@@ -2,7 +2,7 @@
 <install type="device">
 	<name>Access Link Reader RS232</name>
         <installName>accessLink_ReaderRS232</installName>
-	<version>1.0.1</version>
+	<version>1.0.0</version>
 	<creationDate>21/11/08</creationDate>
 	<author>Jean-Luc Gyger / Letux</author>
 	<authorEmail>info@letux.ch</authorEmail>
