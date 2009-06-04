@@ -6,7 +6,7 @@
  * @link http://www.pradosoft.com/
  * @copyright Copyright &copy; 2005-2008 PradoSoft
  * @license http://www.pradosoft.com/license/
- * @version $Id: TClientScriptManager.php 2564 2008-11-11 21:56:02Z carlgmathisen $
+ * @version $Id: TClientScriptManager.php 2614 2009-02-24 09:54:08Z Christophe.Boulain $
  * @package System.Web.UI
  */
 
@@ -16,7 +16,7 @@
  * TClientScriptManager manages javascript and CSS stylesheets for a page.
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
- * @version $Id: TClientScriptManager.php 2564 2008-11-11 21:56:02Z carlgmathisen $
+ * @version $Id: TClientScriptManager.php 2614 2009-02-24 09:54:08Z Christophe.Boulain $
  * @package System.Web.UI
  * @since 3.0
  */
@@ -76,7 +76,12 @@ class TClientScriptManager extends TApplicationComponent
 	 * @var array
 	 */
 	private static $_pradoScripts;
-
+	/**
+	 * Client-side javascript library packages, loads from SCRIPT_PATH.'/packages.php';
+	 * @var array
+	 */
+	 private static $_pradoPackages;
+	 
 	/**
 	 * Constructor.
 	 * @param TPage page that owns this client script manager
@@ -120,6 +125,7 @@ class TClientScriptManager extends TApplicationComponent
 				$packageFile = Prado::getFrameworkPath().DIRECTORY_SEPARATOR.self::SCRIPT_PATH.'/packages.php';
 				list($packages,$deps)= include($packageFile);
 				self::$_pradoScripts = $deps;
+				self::$_pradoPackages = $packages;
 			}
 
 			if(isset(self::$_pradoScripts[$name]))
@@ -147,9 +153,31 @@ class TClientScriptManager extends TApplicationComponent
 	{
 		if(($packages=array_keys($this->_registeredPradoScripts))!==array())
 		{
-			$base = Prado::getFrameworkPath().DIRECTORY_SEPARATOR.self::SCRIPT_PATH;
-			$url = $this->registerJavascriptPackages($base, $packages);
-			$writer->write(TJavaScript::renderScriptFile($url));
+			if (Prado::getApplication()->getMode()!==TApplicationMode::Debug)
+			{
+				$base = Prado::getFrameworkPath().DIRECTORY_SEPARATOR.self::SCRIPT_PATH;
+				$url = $this->registerJavascriptPackages($base, $packages);
+				$writer->write(TJavaScript::renderScriptFile($url));
+			}
+			else
+			{
+				// In debug mode, we add 1 <script> line by file
+				$base = Prado::getFrameworkPath().DIRECTORY_SEPARATOR.self::SCRIPT_PATH;
+				list($path,$baseUrl)=$this->getPackagePathUrl($base);
+				$packagesUrl=array();
+				foreach ($packages as $p)
+				{
+					foreach (self::$_pradoScripts[$p] as $dep)
+					{
+						foreach (self::$_pradoPackages[$dep] as $script)
+						{
+							if (!in_array($url=$baseUrl.'/'.$script,$packagesUrl))
+								$packagesUrl[]=$url;
+						}
+					}
+				}
+				$writer->write(TJavaScript::renderScriptFiles($packagesUrl));
+			}
 		}
 	}
 
@@ -651,7 +679,7 @@ class TClientScriptManager extends TApplicationComponent
  * between ActiveControls and validators.
  *
  * @author <weizhuo[at]gmail[dot]com>
- * @version $Id: TClientScriptManager.php 2564 2008-11-11 21:56:02Z carlgmathisen $
+ * @version $Id: TClientScriptManager.php 2614 2009-02-24 09:54:08Z Christophe.Boulain $
  * @package System.Web.UI
  * @since 3.0
  */

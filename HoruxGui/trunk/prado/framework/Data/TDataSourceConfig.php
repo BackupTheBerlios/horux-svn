@@ -6,7 +6,7 @@
  * @link http://www.pradosoft.com/
  * @copyright Copyright &copy; 2005-2008 PradoSoft
  * @license http://www.pradosoft.com/license/
- * @version $Id: TDataSourceConfig.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TDataSourceConfig.php 2624 2009-03-19 21:20:47Z godzilla80@gmx.net $
  * @package System.Data
  */
 
@@ -42,7 +42,7 @@ Prado::using('System.Data.TDbConnection');
  * that extends the TDbConnection class.
  *
  * @author Wei Zhuo <weizho[at]gmail[dot]com>
- * @version $Id: TDataSourceConfig.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TDataSourceConfig.php 2624 2009-03-19 21:20:47Z godzilla80@gmx.net $
  * @package System.Data
  * @since 3.1
  */
@@ -131,7 +131,7 @@ class TDataSourceConfig extends TModule
 	 */
 	public function setConnectionClass($value)
 	{
-		if(!is_null($this->_conn))
+		if($this->_conn!==null)
 			throw new TConfigurationException('datasource_dbconnection_exists', $value);
 		$this->_connClass=$value;
 	}
@@ -148,7 +148,7 @@ class TDataSourceConfig extends TModule
 		if($conn instanceof TDbConnection)
 			return $conn;
 		else if($conn instanceof TDataSourceConfig)
-			return $conn->_conn;
+			return $conn->getDbConnection();
 		else
 			throw new TConfigurationException('datasource_dbconnection_invalid',$id);
 	}

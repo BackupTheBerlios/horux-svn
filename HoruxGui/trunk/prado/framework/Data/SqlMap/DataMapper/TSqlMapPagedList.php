@@ -6,7 +6,7 @@
  * @link http://www.pradosoft.com/
  * @copyright Copyright &copy; 2005-2008 PradoSoft
  * @license http://www.pradosoft.com/license/
- * @version $Id: TSqlMapPagedList.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TSqlMapPagedList.php 2624 2009-03-19 21:20:47Z godzilla80@gmx.net $
  * @package System.Data.SqlMap
  */
 
@@ -23,7 +23,7 @@ Prado::using('System.Collections.TPagedList');
  * The paged list does not need to know about the total number of records.
  *
  * @author Wei Zhuo <weizhuo[at]gmail[dot]com>
- * @version $Id: TSqlMapPagedList.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TSqlMapPagedList.php 2624 2009-03-19 21:20:47Z godzilla80@gmx.net $
  * @package System.Data.SqlMap
  * @since 3.1
  */
@@ -178,7 +178,7 @@ class TSqlMapPagedList extends TPagedList
 	 */
 	public function getIsNextPageAvailable()
 	{
-		return !is_null($this->_nextPageList);
+		return $this->_nextPageList!==null;
 	}
 
 	/**
@@ -186,7 +186,7 @@ class TSqlMapPagedList extends TPagedList
 	 */
 	public function getIsPreviousPageAvailable()
 	{
-		return !is_null($this->_prevPageList);
+		return $this->_prevPageList!==null;
 	}
 
 	/**
@@ -194,7 +194,7 @@ class TSqlMapPagedList extends TPagedList
 	 */
 	public function getIsLastPage()
 	{
-		return is_null($this->_nextPageList) || $this->_nextPageList->getCount() < 1;
+		return ($this->_nextPageList===null) || $this->_nextPageList->getCount() < 1;
 	}
 
 	/**

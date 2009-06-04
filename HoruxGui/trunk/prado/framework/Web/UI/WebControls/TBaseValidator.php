@@ -6,7 +6,7 @@
  * @link http://www.pradosoft.com/
  * @copyright Copyright &copy; 2005-2008 PradoSoft
  * @license http://www.pradosoft.com/license/
- * @version $Id: TBaseValidator.php 2551 2008-10-30 17:07:05Z carlgmathisen $
+ * @version $Id: TBaseValidator.php 2630 2009-04-04 09:53:57Z godzilla80@gmx.net $
  * @package System.Web.UI.WebControls
  */
 
@@ -70,7 +70,7 @@ Prado::using('System.Web.UI.WebControls.TLabel');
  * override the method {@link evaluateIsValid}.
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
- * @version $Id: TBaseValidator.php 2551 2008-10-30 17:07:05Z carlgmathisen $
+ * @version $Id: TBaseValidator.php 2630 2009-04-04 09:53:57Z godzilla80@gmx.net $
  * @package System.Web.UI.WebControls
  * @since 3.0
  */
@@ -210,7 +210,7 @@ abstract class TBaseValidator extends TLabel implements IValidator
 	 */
 	public function getClientSide()
 	{
-		if(is_null($this->_clientSide))
+		if($this->_clientSide===null)
 			$this->_clientSide = $this->createClientSide();
 		return $this->_clientSide;
 	}
@@ -246,15 +246,15 @@ abstract class TBaseValidator extends TLabel implements IValidator
 	}
 
 	/**
-	 * Override parent implementation to update the control CSS Class before 
-	 * the validated control is rendered 
+	 * Override parent implementation to update the control CSS Class before
+	 * the validated control is rendered
 	 */
 	public function onPreRender ($param)
 	{
 		parent::onPreRender($param);
 		$this->updateControlCssClass();
 	}
-	
+
 	/**
 	 * Update the ControlToValidate component's css class depending
 	 * if the ControlCssClass property is set, and whether this is valid.
@@ -464,7 +464,7 @@ abstract class TBaseValidator extends TLabel implements IValidator
 	 * @throws TConfigurationException if {@link getControlToValidate
 	 * ControlToValidate} is empty or does not point to a valid control
 	 */
-	protected function getValidationTarget()
+	public function getValidationTarget()
 	{
 		if(($id=$this->getControlToValidate())!=='' && ($control=$this->findControl($id))!==null)
 			return $control;
@@ -496,7 +496,7 @@ abstract class TBaseValidator extends TLabel implements IValidator
 		$this->setIsValid(true);
 		$this->onValidate();
 		if($this->getVisible(true) && $this->getEnabled(true))
-		{			
+		{
 			// if the target is not a disabled web control
 			if(($target=$this->getValidationTarget())!==null && !($target instanceof TWebControl && !$target->getEnabled(true)))
 			{
@@ -606,7 +606,7 @@ abstract class TBaseValidator extends TLabel implements IValidator
  * See the quickstart documentation for further details.
  *
  * @author Wei Zhuo <weizhuo[at]gmail[dot]com>
- * @version $Id: TBaseValidator.php 2551 2008-10-30 17:07:05Z carlgmathisen $
+ * @version $Id: TBaseValidator.php 2630 2009-04-04 09:53:57Z godzilla80@gmx.net $
  * @package System.Web.UI.WebControls
  * @since 3.0
  */
@@ -680,7 +680,7 @@ class TValidatorClientSide extends TClientSideOptions
 	public function getObserveChanges()
 	{
 		$changes = $this->getOption('ObserveChanges');
-		return is_null($changes) ? true : $changes;
+		return ($changes===null) ? true : $changes;
 	}
 }
 
@@ -696,7 +696,7 @@ class TValidatorClientSide extends TClientSideOptions
  * - Fixed: Similar to Dynamic except that the error message physically occupies the page layout (even though it may not be visible)
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
- * @version $Id: TBaseValidator.php 2551 2008-10-30 17:07:05Z carlgmathisen $
+ * @version $Id: TBaseValidator.php 2630 2009-04-04 09:53:57Z godzilla80@gmx.net $
  * @package System.Web.UI.WebControls
  * @since 3.0.4
  */
@@ -719,7 +719,7 @@ class TValidatorDisplayStyle extends TEnumerable
  * - String
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
- * @version $Id: TBaseValidator.php 2551 2008-10-30 17:07:05Z carlgmathisen $
+ * @version $Id: TBaseValidator.php 2630 2009-04-04 09:53:57Z godzilla80@gmx.net $
  * @package System.Web.UI.WebControls
  * @since 3.0.4
  */

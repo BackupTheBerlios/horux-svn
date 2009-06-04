@@ -6,7 +6,7 @@
  * @link http://www.pradosoft.com/
  * @copyright Copyright &copy; 2005-2008 PradoSoft
  * @license http://www.pradosoft.com/license/
- * @version $Id: TSqlMapCacheModel.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TSqlMapCacheModel.php 2636 2009-04-15 21:11:55Z godzilla80@gmx.net $
  * @package System.Data.SqlMap.Configuration
  */
 
@@ -28,7 +28,7 @@
  * the current request.
  *
  * @author Wei Zhuo <weizho[at]gmail[dot]com>
- * @version $Id: TSqlMapCacheModel.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TSqlMapCacheModel.php 2636 2009-04-15 21:11:55Z godzilla80@gmx.net $
  * @package System.Data.SqlMap.Configuration
  * @since 3.1
  */
@@ -38,8 +38,9 @@ class TSqlMapCacheModel extends TComponent
 	private $_hits = 0;
 	private $_requests = 0;
 	private $_id;
-	private $_implementation='basic';
+	private $_implementation=TSqlMapCacheTypes::Basic;
 	private $_properties = array();
+	private $_flushInterval = 0;
 
 	/**
 	 * @return string unique cache model identifier.
@@ -74,12 +75,28 @@ class TSqlMapCacheModel extends TComponent
 	}
 
 	/**
+	 * @param integer the number of seconds in which the cached value will expire. 0 means never expire.
+	 */
+	public function setFlushInterval($value)
+	{
+		$this->_flushInterval=TPropertyValue::ensureInteger($value);
+	}
+
+	/**
+	 * @return integer cache duration.
+	 */
+	public function getFlushInterval()
+	{
+		return $this->_flushInterval;
+	}
+
+	/**
 	 * Initialize the cache implementation, sets the actual cache contain if supplied.
 	 * @param ISqLMapCache cache implementation instance.
 	 */
 	public function initialize($cache=null)
 	{
-		if(is_null($cache))
+		if($cache===null)
 			$this->_cache= Prado::createComponent($this->getImplementationClass());
 		else
 			$this->_cache=$cache;
@@ -127,7 +144,7 @@ class TSqlMapCacheModel extends TComponent
 		//if flush ?
 		$value = $this->_cache->get($key);
 		$this->_requests++;
-		if(!is_null($value))
+		if($value!==null)
 			$this->_hits++;
 		return $value;
 	}
@@ -141,8 +158,8 @@ class TSqlMapCacheModel extends TComponent
 		if($key instanceof TSqlMapCacheKey)
 			$key = $key->getHash();
 
-		if(!is_null($value))
-			$this->_cache->set($key, $value);
+		if($value!==null)
+			$this->_cache->set($key, $value, $this->_flushInterval);
 	}
 
 	/**
@@ -163,7 +180,7 @@ class TSqlMapCacheModel extends TComponent
  * Implemented cache are 'Basic', 'FIFO' and 'LRU'.
  *
  * @author Wei Zhuo <weizho[at]gmail[dot]com>
- * @version $Id: TSqlMapCacheModel.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TSqlMapCacheModel.php 2636 2009-04-15 21:11:55Z godzilla80@gmx.net $
  * @package System.Data.SqlMap.Configuration
  * @since 3.1
  */
@@ -180,7 +197,7 @@ class TSqlMapCacheTypes extends TEnumerable
  * Provides a hash of the object to be cached.
  *
  * @author Wei Zhuo <weizho[at]gmail[dot]com>
- * @version $Id: TSqlMapCacheModel.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TSqlMapCacheModel.php 2636 2009-04-15 21:11:55Z godzilla80@gmx.net $
  * @package System.Data.SqlMap.Configuration
  * @since 3.1
  */

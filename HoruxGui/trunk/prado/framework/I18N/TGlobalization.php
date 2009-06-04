@@ -6,7 +6,7 @@
  * @link http://www.pradosoft.com/
  * @copyright Copyright &copy; 2005-2008 PradoSoft
  * @license http://www.pradosoft.com/license/
- * @version $Id: TGlobalization.php 2482 2008-07-30 02:07:13Z knut $
+ * @version $Id: TGlobalization.php 2624 2009-03-19 21:20:47Z godzilla80@gmx.net $
  * @package System.I18N
  */
 
@@ -225,7 +225,7 @@ class TGlobalization extends TModule
 	 */
 	public function getCultureVariants($culture=null)
 	{
-		if(is_null($culture)) $culture = $this->getCulture();
+		if($culture===null) $culture = $this->getCulture();
 		$variants = explode('_', $culture);
 		$result = array();
 		for(; count($variants) > 0; array_pop($variants))

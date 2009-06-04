@@ -6,7 +6,7 @@
  * @link http://www.pradosoft.com/
  * @copyright Copyright &copy; 2005-2008 PradoSoft
  * @license http://www.pradosoft.com/license/
- * @version $Id: TInPlaceTextBox.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TInPlaceTextBox.php 2624 2009-03-19 21:20:47Z godzilla80@gmx.net $
  * @package System.Web.UI.ActiveControls
  */
 
@@ -40,7 +40,7 @@ Prado::using('System.Web.UI.ActiveControls.TActiveTextBox');
  * the control not editable. This property can be also changed on callback
  * 
  * @author Wei Zhuo <weizhuo[at]gmail[dot]com>
- * @version $Id: TInPlaceTextBox.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TInPlaceTextBox.php 2624 2009-03-19 21:20:47Z godzilla80@gmx.net $
  * @package System.Web.UI.ActiveControls
  * @since 3.1
  */
@@ -124,7 +124,7 @@ class TInPlaceTextBox extends TActiveTextBox
 	protected function getExternalControlID()
 	{
 		$extID = $this->getEditTriggerControlID();
-		if(is_null($extID)) return '';
+		if($extID===null) return '';
 		if(($control = $this->findControl($extID))!==null)
 			return $control->getClientID();
 		return $extID;

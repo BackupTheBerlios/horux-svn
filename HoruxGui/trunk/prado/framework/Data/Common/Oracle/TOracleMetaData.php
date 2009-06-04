@@ -6,11 +6,14 @@
  * @link http://www.pradosoft.com/
  * @copyright Copyright &copy; 2005-2008 PradoSoft
  * @license http://www.pradosoft.com/license/
- * @version $Id: TOracleMetaData.php 2482 2008-07-30 02:07:13Z knut $
+ * @version $Id: TOracleMetaData.php 2653 2009-05-13 06:59:31Z Christophe.Boulain $
  * @package System.Data.Common.Oracle
  */
 
-
+/**
+ * Load the base TDbMetaData class.
+ */
+Prado::using('System.Data.Common.TDbMetaData');
 Prado::using('System.Data.Common.Oracle.TOracleTableInfo');
 Prado::using('System.Data.Common.Oracle.TOracleTableColumn');
 
@@ -18,32 +21,15 @@ Prado::using('System.Data.Common.Oracle.TOracleTableColumn');
  * TOracleMetaData loads Oracle database table and column information.
  *
  * @author Marcos Nobre <marconobre[at]gmail[dot]com>
- * @version $Id: TOracleMetaData.php 2482 2008-07-30 02:07:13Z knut $
+ * @version $Id: TOracleMetaData.php 2653 2009-05-13 06:59:31Z Christophe.Boulain $
  * @package System.Data.Common.Oracle
  * @since 3.1
  */
-class TOracleMetaData extends TComponent
+class TOracleMetaData extends TDbMetaData
 {
-	private $_tableInfoCache=array();
-	private $_connection;
 	private $_defaultSchema = 'system';
 
-	/**
-	 * @param TDbConnection database connection.
-	 */
-	public function __construct($conn)
-	{
-		$this->_connection=$conn;
-	}
-
-	/**
-	 * @return TDbConnection database connection.
-	 */
-	public function getDbConnection()
-	{
-		return $this->_connection;
-	}
-
+	
 	/**
 	 * @return string TDbTableInfo class name.
 	 */
@@ -66,23 +52,6 @@ class TOracleMetaData extends TComponent
 	public function getDefaultSchema()
 	{
 		return $this->_defaultSchema;
-	}
-
-	/**
-	 * Obtains table meta data information for the current connection and given table name.
-	 * @param string table or view name
-	 * @return TDbTableInfo table information.
-	 */
-	public function getTableInfo($tableName=null)
-	{
-		$key = $tableName===null?$this->getDbConnection()->getConnectionString():$tableName;
-		if(!isset($this->_tableInfoCache[$key]))
-		{
-			$class = $this->getTableInfoClass();
-			$tableInfo = $tableName===null ? new $class : $this->createTableInfo($tableName);
-			$this->_tableInfoCache[$key] = $tableInfo;
-		}
-		return $this->_tableInfoCache[$key];
 	}
 
 	/**

@@ -6,7 +6,7 @@
  * @link http://www.pradosoft.com/
  * @copyright Copyright &copy; 2005-2008 PradoSoft
  * @license http://www.pradosoft.com/license/
- * @version $Id: TXmlDocument.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TXmlDocument.php 2638 2009-04-16 09:26:55Z godzilla80@gmx.net $
  * @package System.Xml
  */
 
@@ -22,7 +22,7 @@
  * TBD: xpath
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
- * @version $Id: TXmlDocument.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TXmlDocument.php 2638 2009-04-16 09:26:55Z godzilla80@gmx.net $
  * @package System.Xml
  * @since 3.0
  */
@@ -300,7 +300,7 @@ class TXmlElement extends TComponent
  * </code>
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
- * @version $Id: TXmlDocument.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TXmlDocument.php 2638 2009-04-16 09:26:55Z godzilla80@gmx.net $
  * @package System.Xml
  * @since 3.0
  */
@@ -396,8 +396,27 @@ class TXmlDocument extends TXmlElement
 		$attributes=$this->getAttributes();
 		$elements->clear();
 		$attributes->clear();
+
+		static $bSimpleXml;
+		if($bSimpleXml === null)
+			$bSimpleXml = (boolean)function_exists('simplexml_load_string');
+
+		if($bSimpleXml)
+		{
+			$simpleDoc = simplexml_load_string($string);
+			$docNamespaces = $simpleDoc->getDocNamespaces(false);
+			$simpleDoc = null;
+			foreach($docNamespaces as $prefix => $uri)
+			{
+ 				if($prefix === '')
+   					$attributes->add('xmlns', $uri);
+   				else
+   					$attributes->add('xmlns:'.$prefix, $uri);
+			}
+		}
+
 		foreach($element->attributes as $name=>$attr)
-			$attributes->add($name,$attr->value);
+			$attributes->add(($attr->prefix === '' ? '' : $attr->prefix . ':') .$name,$attr->value);
 		foreach($element->childNodes as $child)
 		{
 			if($child instanceof DOMElement)
@@ -464,7 +483,8 @@ class TXmlDocument extends TXmlElement
 		$element=new TXmlElement($node->tagName);
 		$element->setValue($node->nodeValue);
 		foreach($node->attributes as $name=>$attr)
-			$element->getAttributes()->add($name,$attr->value);
+			$element->getAttributes()->add(($attr->prefix === '' ? '' : $attr->prefix . ':') . $name,$attr->value);
+
 		foreach($node->childNodes as $child)
 		{
 			if($child instanceof DOMElement)
@@ -482,7 +502,7 @@ class TXmlDocument extends TXmlElement
  * You may manipulate the collection with the operations defined in {@link TList}.
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
- * @version $Id: TXmlDocument.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TXmlDocument.php 2638 2009-04-16 09:26:55Z godzilla80@gmx.net $
  * @package System.Xml
  * @since 3.0
  */

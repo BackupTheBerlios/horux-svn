@@ -6,7 +6,7 @@
  * @link http://www.pradosoft.com/
  * @copyright Copyright &copy; 2005-2008 PradoSoft
  * @license http://www.pradosoft.com/license/
- * @version $Id: TMysqlMetaData.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TMysqlMetaData.php 2652 2009-05-13 06:01:17Z godzilla80@gmx.net $
  * @package System.Data.Common.Mysql
  */
 
@@ -23,7 +23,7 @@ Prado::using('System.Data.Common.Mysql.TMysqlTableInfo');
  * See http://netevil.org/node.php?nid=795&SC=1
  *
  * @author Wei Zhuo <weizho[at]gmail[dot]com>
- * @version $Id: TMysqlMetaData.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TMysqlMetaData.php 2652 2009-05-13 06:01:17Z godzilla80@gmx.net $
  * @package System.Data.Commom.Sqlite
  * @since 3.1
  */
@@ -310,7 +310,7 @@ EOD;
 			$sql = "SHOW CREATE TABLE `{$tableName}`";
 		$command = $this->getDbConnection()->createCommand($sql);
 		$result = $command->queryRow();
-		return $result['Create Table'];
+		return isset($result['Create Table']) ? $result['Create Table'] : (isset($result['Create View']) ? $result['Create View'] : '');
 	}
 
 	/**

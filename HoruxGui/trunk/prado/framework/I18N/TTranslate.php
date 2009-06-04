@@ -6,7 +6,7 @@
  * @link http://www.pradosoft.com/
  * @copyright Copyright &copy; 2005-2008 PradoSoft
  * @license http://www.pradosoft.com/license/
- * @version $Id: TTranslate.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TTranslate.php 2624 2009-03-19 21:20:47Z godzilla80@gmx.net $
  * @package System.I18N
  */
 
@@ -236,7 +236,7 @@ class TTranslate extends TI18NControl
 		$app = $this->getApplication()->getGlobalization();
 
 		//no translation handler provided
-		if(is_null($config = $app->getTranslationConfiguration()))
+		if(($config = $app->getTranslationConfiguration())===null)
 			return strtr($text, $subs);
 
 		$catalogue = $this->getCatalogue();

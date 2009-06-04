@@ -6,7 +6,7 @@
  * @link http://www.pradosoft.com/
  * @copyright Copyright &copy; 2005-2008 PradoSoft
  * @license http://www.pradosoft.com/license/
- * @version $Id: TColorPicker.php 2549 2008-10-29 16:06:10Z carlgmathisen $
+ * @version $Id: TColorPicker.php 2624 2009-03-19 21:20:47Z godzilla80@gmx.net $
  * @package System.Web.UI.WebControls
  */
 
@@ -16,7 +16,7 @@
  * Be aware, this control is EXPERIMENTAL and is not stablized yet.
  *
  * @author Wei Zhuo <weizhuo[at]gmail[dot]com>
- * @version $Id: TColorPicker.php 2549 2008-10-29 16:06:10Z carlgmathisen $
+ * @version $Id: TColorPicker.php 2624 2009-03-19 21:20:47Z godzilla80@gmx.net $
  * @package System.Web.UI.WebControls
  * @since 3.0
  */
@@ -112,7 +112,7 @@ class TColorPicker extends TTextBox
 	 */
 	public function getClientSide()
 	{
-		if(is_null($this->_clientSide))
+		if($this->_clientSide===null)
 			$this->_clientSide = $this->createClientSide();
 		return $this->_clientSide;
 	}
@@ -231,7 +231,7 @@ class TColorPicker extends TTextBox
  * - Full
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
- * @version $Id: TColorPicker.php 2549 2008-10-29 16:06:10Z carlgmathisen $
+ * @version $Id: TColorPicker.php 2624 2009-03-19 21:20:47Z godzilla80@gmx.net $
  * @package System.Web.UI.WebControls
  * @since 3.0.4
  */
@@ -248,7 +248,7 @@ class TColorPickerMode extends TEnumerable
  * Client-side javascript code options.
  *
  * @author Wei Zhuo <weizhuo[at]gmail[dot]com>
- * @version $Id: TColorPicker.php 2549 2008-10-29 16:06:10Z carlgmathisen $
+ * @version $Id: TColorPicker.php 2624 2009-03-19 21:20:47Z godzilla80@gmx.net $
  * @package System.Web.UI.WebControls
  * @since 3.1
  */

@@ -6,7 +6,7 @@
  * @link http://www.pradosoft.com/
  * @copyright Copyright &copy; 2005-2008 PradoSoft
  * @license http://www.pradosoft.com/license/
- * @version $Id: TDateFormat.php 2510 2008-10-13 10:28:33Z carl $
+ * @version $Id: TDateFormat.php 2624 2009-03-19 21:20:47Z godzilla80@gmx.net $
  * @package System.I18N
  */
 
@@ -119,7 +119,7 @@ class TDateFormat extends TI18NControl implements IDataRenderer
 
 		//no presets found, use the string as the pattern
 		//and let the DateFormat handle it.
-		if(is_null($pattern))
+		if($pattern===null)
 			$pattern = $string;
 		if (!is_array($pattern) && strlen($pattern) == 0)
 			$pattern = null;
@@ -226,7 +226,7 @@ class TDateFormat extends TI18NControl implements IDataRenderer
 		$app = $this->getApplication()->getGlobalization();
 
 		//initialized the default class wide formatter
-		if(is_null(self::$formatter))
+		if(self::$formatter===null)
 			self::$formatter = new DateFormat($app->getCulture());
 
 		$culture = $this->getCulture();

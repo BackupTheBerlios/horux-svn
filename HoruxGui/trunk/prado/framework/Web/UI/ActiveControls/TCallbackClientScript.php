@@ -6,7 +6,7 @@
  * @link http://www.pradosoft.com/
  * @copyright Copyright &copy; 2005-2008 PradoSoft
  * @license http://www.pradosoft.com/license/
- * @version $Id: TCallbackClientScript.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TCallbackClientScript.php 2626 2009-03-20 06:51:50Z godzilla80@gmx.net $
  * @package System.Web.UI.ActiveControls
  */
 
@@ -28,7 +28,7 @@
  * </code>
  *
  * @author Wei Zhuo <weizhuo[at]gamil[dot]com>
- * @version $Id: TCallbackClientScript.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TCallbackClientScript.php 2626 2009-03-20 06:51:50Z godzilla80@gmx.net $
  * @package System.Web.UI.ActiveControls
  * @since 3.1
  */
@@ -104,7 +104,7 @@ class TCallbackClientScript extends TApplicationComponent
 	{
 		$method = TPropertyValue::ensureEnum($method,
 				'Value', 'Index', 'Clear', 'Indices', 'Values', 'All', 'Invert');
-		$type = is_null($type) ? $this->getSelectionControlType($control) : $type;
+		$type = ($type===null) ? $this->getSelectionControlType($control) : $type;
 		$total = $this->getSelectionControlIsListType($control) ? $control->getItemCount() : 1;
 		$this->callClientFunction('Prado.Element.select',
 				array($control, $type.$method, $value, $total));
@@ -177,6 +177,18 @@ class TCallbackClientScript extends TApplicationComponent
 	public function setListItems($control, $items)
 	{
 		$options = array();
+		if($control instanceof TListControl)
+		{
+			$promptText		= $control->getPromptText();
+			$promptValue	= $control->getPromptValue();
+			
+			if($promptValue==='')
+				$promptValue = $promptText;
+	
+			if($promptValue!=='')
+				$options[] = array($promptText, $promptValue);
+		}
+		
 		foreach($items as $item)
 		{
 			if($item->getHasAttributes())

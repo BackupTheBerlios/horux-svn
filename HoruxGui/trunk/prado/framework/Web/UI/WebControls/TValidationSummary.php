@@ -6,7 +6,7 @@
  * @link http://www.pradosoft.com/
  * @copyright Copyright &copy; 2005-2008 PradoSoft
  * @license http://www.pradosoft.com/license/
- * @version $Id: TValidationSummary.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TValidationSummary.php 2637 2009-04-15 21:23:22Z godzilla80@gmx.net $
  * @package System.Web.UI.WebControls
  */
 
@@ -30,7 +30,7 @@
  * {@link setEnableClientScript EnableClientScript} is true.
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
- * @version $Id: TValidationSummary.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TValidationSummary.php 2637 2009-04-15 21:23:22Z godzilla80@gmx.net $
  * @package System.Web.UI.WebControls
  * @since 3.0
  */
@@ -261,7 +261,7 @@ class TValidationSummary extends TWebControl
 		$options['ValidationGroup'] =  $this->getValidationGroup();
 		$options['Display'] = $this->getDisplay();
 
-		if(!is_null($this->_clientSide))
+		if($this->_clientSide!==null)
 			$options = array_merge($options,$this->_clientSide->getOptions()->toArray());
 
 		return $options;
@@ -273,7 +273,7 @@ class TValidationSummary extends TWebControl
 	 */
 	public function getClientSide()
 	{
-		if(is_null($this->_clientSide))
+		if($this->_clientSide===null)
 			$this->_clientSide = $this->createClientScript();
 		return $this->_clientSide;
 	}
@@ -323,6 +323,9 @@ class TValidationSummary extends TWebControl
 					break;
 				case TValidationSummaryDisplayMode::BulletList:
 					$this->renderBulletList($writer);
+					break;
+				case TValidationSummaryDisplayMode::HeaderOnly:
+					$this->renderHeaderOnly($writer);
 					break;
 			}
 		}
@@ -382,6 +385,15 @@ class TValidationSummary extends TWebControl
 		}
 		$writer->write($content);
 	}
+
+	/**
+	 * Render the validation summary header text only.
+	 * @param THtmlWriter the writer used for the rendering purpose
+	 */
+	protected function renderHeaderOnly($writer)
+	{
+		$writer->write($this->getHeaderText());
+	}
 }
 
 /**
@@ -401,7 +413,7 @@ class TValidationSummary extends TWebControl
  * See the quickstart documentation for further details.
  *
  * @author Wei Zhuo <weizhuo[at]gmail[dot]com>
- * @version $Id: TValidationSummary.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TValidationSummary.php 2637 2009-04-15 21:23:22Z godzilla80@gmx.net $
  * @package System.Web.UI.WebControls
  * @since 3.0
  */
@@ -468,9 +480,10 @@ class TClientSideValidationSummaryOptions extends TClientSideOptions
  * - SimpleList: the error messages are displayed as a list without any decorations.
  * - SingleParagraph: the error messages are concatenated together into a paragraph.
  * - BulletList: the error messages are displayed as a bulleted list.
+ * - HeaderOnly: only the HeaderText will be display.
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
- * @version $Id: TValidationSummary.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TValidationSummary.php 2637 2009-04-15 21:23:22Z godzilla80@gmx.net $
  * @package System.Web.UI.WebControls
  * @since 3.0.4
  */
@@ -479,6 +492,7 @@ class TValidationSummaryDisplayMode extends TEnumerable
 	const SimpleList='SimpleList';
 	const SingleParagraph='SingleParagraph';
 	const BulletList='BulletList';
+	const HeaderOnly='HeaderOnly';
 }
 
 
@@ -493,7 +507,7 @@ class TValidationSummaryDisplayMode extends TEnumerable
  * - Fixed: Similar to Dynamic except that the error messages physically occupy the page layout (even though they may not be visible)
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
- * @version $Id: TValidationSummary.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TValidationSummary.php 2637 2009-04-15 21:23:22Z godzilla80@gmx.net $
  * @package System.Web.UI.WebControls
  * @since 3.0.4
  */

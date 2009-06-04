@@ -6,7 +6,7 @@
  * @link http://www.pradosoft.com/
  * @copyright Copyright &copy; 2005-2008 PradoSoft
  * @license http://www.pradosoft.com/license/
- * @version $Id: TDbConnection.php 2505 2008-08-27 15:06:25Z tof $
+ * @version $Id: TDbConnection.php 2605 2009-01-29 07:43:23Z Christophe.Boulain $
  * @package System.Data
  */
 
@@ -77,7 +77,7 @@ Prado::using('System.Data.TDbCommand');
  * of certain DBMS attributes, such as {@link getNullConversion NullConversion}.
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
- * @version $Id: TDbConnection.php 2505 2008-08-27 15:06:25Z tof $
+ * @version $Id: TDbConnection.php 2605 2009-01-29 07:43:23Z Christophe.Boulain $
  * @package System.Data
  * @since 3.0
  */
@@ -267,7 +267,7 @@ class TDbConnection extends TComponent
 	 */
 	public function getCharset ()
 	{
-		return $this>_charset;
+		return $this->_charset;
 	}
 	
 	/**
@@ -556,7 +556,7 @@ class TDbConnection extends TComponent
  * TDbColumnCaseMode
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
- * @version $Id: TDbConnection.php 2505 2008-08-27 15:06:25Z tof $
+ * @version $Id: TDbConnection.php 2605 2009-01-29 07:43:23Z Christophe.Boulain $
  * @package System.Data
  * @since 3.0
  */
@@ -580,7 +580,7 @@ class TDbColumnCaseMode extends TEnumerable
  * TDbNullConversionMode
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
- * @version $Id: TDbConnection.php 2505 2008-08-27 15:06:25Z tof $
+ * @version $Id: TDbConnection.php 2605 2009-01-29 07:43:23Z Christophe.Boulain $
  * @package System.Data
  * @since 3.0
  */

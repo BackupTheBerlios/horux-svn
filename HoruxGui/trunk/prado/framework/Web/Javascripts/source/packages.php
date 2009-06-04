@@ -1,10 +1,10 @@
 <?php
 
-//$Id: packages.php 2599 2009-01-07 08:13:22Z christophe.boulain $
+//$Id: packages.php 2611 2009-02-23 13:40:30Z Christophe.Boulain $
 
 // To make future upgrades easier
-if (!defined('PROTOTYPE_DIR')) define ('PROTOTYPE_DIR', 'prototype-1.6.0.2');
-if (!defined('SCRIPTACULOUS_DIR')) define ('SCRIPTACULOUS_DIR', 'scriptaculous-1.8.1');
+if (!defined('PROTOTYPE_DIR')) define ('PROTOTYPE_DIR', 'prototype-1.6.0.3');
+if (!defined('SCRIPTACULOUS_DIR')) define ('SCRIPTACULOUS_DIR', 'scriptaculous-1.8.2');
 
 //package names and its contents (files relative to the current directory)
 $packages = array(

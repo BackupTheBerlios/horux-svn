@@ -6,7 +6,7 @@
  * @link http://www.pradosoft.com/
  * @copyright Copyright &copy; 2005-2008 PradoSoft
  * @license http://www.pradosoft.com/license/
- * @version $Id: TCachingStatement.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TCachingStatement.php 2624 2009-03-19 21:20:47Z godzilla80@gmx.net $
  * @package System.Data.SqlMap.Statements
  */
 
@@ -14,7 +14,7 @@
  * TCacheingStatement class.
  *
  * @author Wei Zhuo <weizhuo[at]gmail[dot]com>
- * @version $Id: TCachingStatement.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TCachingStatement.php 2624 2009-03-19 21:20:47Z godzilla80@gmx.net $
  * @package System.Data.SqlMap.Statements
  * @since 3.1
  */
@@ -47,7 +47,7 @@ class TCachingStatement implements IMappedStatement
 		$sql = $this->createCommand($connection, $parameter, $skip, $max);
 		$key = $this->getCacheKey(array(clone($sql), $keyProperty, $valueProperty,$skip, $max));
 		$map = $this->getStatement()->getCache()->get($key);
-		if(is_null($map))
+		if($map===null)
 		{
 			$map = $this->_mappedStatement->runQueryForMap(
 				$connection, $parameter, $sql, $keyProperty, $valueProperty,  $delegate);
@@ -71,7 +71,7 @@ class TCachingStatement implements IMappedStatement
 		$sql = $this->createCommand($connection, $parameter, $skip, $max);
 		$key = $this->getCacheKey(array(clone($sql), $parameter, $skip, $max));
 		$list = $this->getStatement()->getCache()->get($key);
-		if(is_null($list))
+		if($list===null)
 		{
 			$list = $this->_mappedStatement->runQueryForList(
 				$connection, $parameter, $sql, $result, $delegate);
@@ -85,7 +85,7 @@ class TCachingStatement implements IMappedStatement
 		$sql = $this->createCommand($connection, $parameter);
 		$key = $this->getCacheKey(array(clone($sql), $parameter));
 		$object = $this->getStatement()->getCache()->get($key);
-		if(is_null($object))
+		if($object===null)
 		{
 			$object = $this->_mappedStatement->runQueryForObject($connection, $sql, $result);
 			$this->getStatement()->getCache()->set($key, $object);

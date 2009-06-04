@@ -6,7 +6,7 @@
  * @link http://www.pradosoft.com/
  * @copyright Copyright &copy; 2005-2008 PradoSoft
  * @license http://www.pradosoft.com/license/
- * @version $Id: THttpResponse.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: THttpResponse.php 2624 2009-03-19 21:20:47Z godzilla80@gmx.net $
  * @package System.Web
  */
 
@@ -60,7 +60,7 @@ Prado::using('System.Web.THttpResponseAdapter');
  * will force the browser to ask for a username and a password.
  *  
  * @author Qiang Xue <qiang.xue@gmail.com>
- * @version $Id: THttpResponse.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: THttpResponse.php 2624 2009-03-19 21:20:47Z godzilla80@gmx.net $
  * @package System.Web
  * @since 3.0
  */
@@ -145,7 +145,7 @@ class THttpResponse extends TModule implements ITextWriter
 	 */
 	public function getHasAdapter()
 	{
-		return !is_null($this->_adapter);
+		return $this->_adapter!==null;
 	}
 
 	/**
@@ -383,6 +383,12 @@ class THttpResponse extends TModule implements ITextWriter
 	/**
 	 * Redirect the browser to another URL and exists the current application.
 	 * This method is used internally. Please use {@link redirect} instead.
+	 *
+	 * @since 3.1.5
+	 * You can set the set {@link setStatusCode StatusCode} to a value between 300 and 399 before
+	 * calling this function to change the type of redirection.
+	 * If not specified, StatusCode will be 302 (Found) by default
+	 * 
 	 * @param string URL to be redirected to. If the URL is a relative one, the base URL of
 	 * the current request will be inserted at the beginning.
 	 */
@@ -392,7 +398,12 @@ class THttpResponse extends TModule implements ITextWriter
 			$this->getApplication()->onEndRequest();
 		if($url[0]==='/')
 			$url=$this->getRequest()->getBaseUrl().$url;
-		header('Location: '.str_replace('&amp;','&',$url));
+		if ($this->_status >= 300 && $this->_status < 400)
+			// The status code has been modified to a valid redirection status, send it
+			header('Location: '.str_replace('&amp;','&',$url), true, $this->_status);
+		else
+			header('Location: '.str_replace('&amp;','&',$url));
+		
 		exit();
 	}
 

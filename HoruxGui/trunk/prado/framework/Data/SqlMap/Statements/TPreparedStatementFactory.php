@@ -6,7 +6,7 @@
  * @link http://www.pradosoft.com/
  * @copyright Copyright &copy; 2005-2008 PradoSoft
  * @license http://www.pradosoft.com/license/
- * @version $Id: TPreparedStatementFactory.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TPreparedStatementFactory.php 2624 2009-03-19 21:20:47Z godzilla80@gmx.net $
  * @package System.Data.SqlMap.Statements
  */
 
@@ -14,7 +14,7 @@
  * TPreparedStatementFactory class.
  *
  * @author Wei Zhuo <weizho[at]gmail[dot]com>
- * @version $Id: TPreparedStatementFactory.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TPreparedStatementFactory.php 2624 2009-03-19 21:20:47Z godzilla80@gmx.net $
  * @package System.Data.SqlMap.Statements
  * @since 3.1
  */
@@ -35,7 +35,7 @@ class TPreparedStatementFactory
 	{
 		$this->_preparedStatement = new TPreparedStatement();
 		$this->_preparedStatement->setPreparedSql($this->_commandText);
-		if(!is_null($this->_statement->parameterMap()))
+		if($this->_statement->parameterMap()!==null)
 			$this->createParametersForTextCommand();
 		return $this->_preparedStatement;
 	}

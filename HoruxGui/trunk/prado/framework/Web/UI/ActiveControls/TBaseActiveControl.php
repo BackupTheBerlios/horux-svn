@@ -6,7 +6,7 @@
  * @link http://www.pradosoft.com/
  * @copyright Copyright &copy; 2005-2008 PradoSoft
  * @license http://www.pradosoft.com/license/
- * @version $Id: TBaseActiveControl.php 2564 2008-11-11 21:56:02Z carlgmathisen $
+ * @version $Id: TBaseActiveControl.php 2624 2009-03-19 21:20:47Z godzilla80@gmx.net $
  * @package System.Web.UI.ActiveControls
  */
 
@@ -23,7 +23,7 @@ Prado::using('System.Web.UI.ActiveControls.TCallbackClientSide');
  * response returns.
  *
  * @author Wei Zhuo <weizhuo[at]gamil[dot]com>
- * @version $Id: TBaseActiveControl.php 2564 2008-11-11 21:56:02Z carlgmathisen $
+ * @version $Id: TBaseActiveControl.php 2624 2009-03-19 21:20:47Z godzilla80@gmx.net $
  * @package System.Web.UI.ActiveControls
  * @since 3.1
  */
@@ -58,8 +58,8 @@ class TBaseActiveControl extends TComponent
 	 */
 	protected function setOption($name,$value,$default=null)
 	{
-		$value = is_null($value) ? $default : $value;
-		if(!is_null($value))
+		$value = ($value===null) ? $default : $value;
+		if($value!==null)
 			$this->_options->add($name,$value);
 	}
 
@@ -73,7 +73,7 @@ class TBaseActiveControl extends TComponent
 	protected function getOption($name,$default=null)
 	{
 		$item = $this->_options->itemAt($name);
-		return is_null($item) ? $default : $item;
+		return ($item===null) ? $default : $item;
 	}
 
 	/**
@@ -154,7 +154,7 @@ class TBaseActiveControl extends TComponent
  * </code>
  *
  * @author Wei Zhuo <weizhuo[at]gmail[dot]com>
- * @version $Id: TBaseActiveControl.php 2564 2008-11-11 21:56:02Z carlgmathisen $
+ * @version $Id: TBaseActiveControl.php 2624 2009-03-19 21:20:47Z godzilla80@gmx.net $
  * @package System.Web.UI.ActiveControls
  * @since 3.1
  */
@@ -168,7 +168,7 @@ class TBaseActiveCallbackControl extends TBaseActiveControl
 	 */
 	public function getClientSide()
 	{
-		if(is_null($client = $this->getOption('ClientSide')))
+		if(($client = $this->getOption('ClientSide'))===null)
 		{
 			$client = $this->createClientSide();
 			$this->setOption('ClientSide', $client);
@@ -182,7 +182,7 @@ class TBaseActiveCallbackControl extends TBaseActiveControl
 	 */
 	public function setClientSide($client)
 	{
-		if(is_null($this->getOption('ClientSide')))
+		if( $this->getOption('ClientSide')===null)
 			$this->setOption('ClientSide', $client);
 		else
 			throw new TConfigurationException(

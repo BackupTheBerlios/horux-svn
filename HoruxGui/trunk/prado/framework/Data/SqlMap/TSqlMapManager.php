@@ -6,7 +6,7 @@
  * @link http://www.pradosoft.com/
  * @copyright Copyright &copy; 2005-2008 PradoSoft
  * @license http://www.pradosoft.com/license/
- * @version $Id: TSqlMapManager.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TSqlMapManager.php 2659 2009-05-23 07:52:15Z godzilla80@gmx.net $
  * @package System.Data.SqlMap
  */
 
@@ -18,6 +18,7 @@ Prado::using('System.Data.SqlMap.Configuration.TSqlMapStatement');
 Prado::using('System.Data.SqlMap.Configuration.*');
 Prado::using('System.Data.SqlMap.DataMapper.*');
 Prado::using('System.Data.SqlMap.Statements.*');
+Prado::using('System.Caching.TCache');
 
 
 /**
@@ -36,7 +37,7 @@ Prado::using('System.Data.SqlMap.Statements.*');
  * </code>
  *
  * @author Wei Zhuo <weizhuo[at]gmail[dot]com>
- * @version $Id: TSqlMapManager.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TSqlMapManager.php 2659 2009-05-23 07:52:15Z godzilla80@gmx.net $
  * @package System.Data.SqlMap
  * @since 3.1
  */
@@ -50,6 +51,7 @@ class TSqlMapManager extends TComponent
 
 	private $_connection;
 	private $_gateway;
+	private $_cacheDependencies;
 
 	/**
 	 * Constructor, create a new SqlMap manager.
@@ -110,6 +112,18 @@ class TSqlMapManager extends TComponent
 	{
 		$config = new TSqlMapXmlConfiguration($this);
 		$config->configure($file);
+	}
+
+	/**
+	 * @return TChainedCacheDependency
+	 * @since 3.1.5
+	 */
+	public function getCacheDependencies()
+	{
+		if($this->_cacheDependencies === null)
+			$this->_cacheDependencies=new TChainedCacheDependency();
+
+		return $this->_cacheDependencies;
 	}
 
 	/**

@@ -6,7 +6,7 @@
  * @link http://www.pradosoft.com/
  * @copyright Copyright &copy; 2005-2008 PradoSoft
  * @license http://www.pradosoft.com/license/
- * @version $Id: TActivePageAdapter.php 2564 2008-11-11 21:56:02Z carlgmathisen $
+ * @version $Id: TActivePageAdapter.php 2624 2009-03-19 21:20:47Z godzilla80@gmx.net $
  * @package System.Web.UI.ActiveControls
  */
 
@@ -23,7 +23,7 @@ Prado::using('System.Web.UI.ActiveControls.TCallbackEventParameter');
  * Callback request handler.
  *
  * @author Wei Zhuo <weizhuo[at]gamil[dot]com>
- * @version $Id: TActivePageAdapter.php 2564 2008-11-11 21:56:02Z carlgmathisen $
+ * @version $Id: TActivePageAdapter.php 2624 2009-03-19 21:20:47Z godzilla80@gmx.net $
  * @package System.Web.UI.ActiveControls
  * @since 3.1
  */
@@ -153,7 +153,7 @@ class TActivePageAdapter extends TControlAdapter
 		if($response->getHasAdapter())
 		{
 			$responseData = $response->getAdapter()->getResponseData();
-			if(!is_null($responseData))
+			if($responseData!==null)
 			{
 				$data = TJavaScript::jsonEncode($responseData);
 
@@ -284,7 +284,7 @@ class TActivePageAdapter extends TControlAdapter
 	 */
 	public function getCallbackClientHandler()
 	{
-		if(is_null($this->_callbackClient))
+		if($this->_callbackClient===null)
 			$this->_callbackClient = new TCallbackClientScript;
 		return $this->_callbackClient;
 	}
@@ -299,7 +299,7 @@ class TActivePageAdapter extends TControlAdapter
  * the error stack trace.
  *
  * @author Wei Zhuo <weizhuo[at]gmail[dot]com>
- * @version $Id: TActivePageAdapter.php 2564 2008-11-11 21:56:02Z carlgmathisen $
+ * @version $Id: TActivePageAdapter.php 2624 2009-03-19 21:20:47Z godzilla80@gmx.net $
  * @package System.Web.UI.ActiveControls
  * @since 3.1
  */
@@ -359,7 +359,7 @@ class TCallbackErrorHandler extends TErrorHandler
  * TInvalidCallbackException class.
  *
  * @author Wei Zhuo <weizhuo[at]gmail[dot]com>
- * @version $Id: TActivePageAdapter.php 2564 2008-11-11 21:56:02Z carlgmathisen $
+ * @version $Id: TActivePageAdapter.php 2624 2009-03-19 21:20:47Z godzilla80@gmx.net $
  * @package System.Web.UI.ActiveControls
  * @since 3.1
  */

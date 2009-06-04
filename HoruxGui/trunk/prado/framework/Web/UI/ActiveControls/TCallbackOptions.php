@@ -6,7 +6,7 @@
  * @link http://www.pradosoft.com/
  * @copyright Copyright &copy; 2005-2008 PradoSoft
  * @license http://www.pradosoft.com/license/
- * @version $Id: TCallbackOptions.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TCallbackOptions.php 2624 2009-03-19 21:20:47Z godzilla80@gmx.net $
  * @package System.Web.UI.ActiveControls
  */
 
@@ -17,7 +17,7 @@
  * to be attached to other active controls.
  *
  * @author Wei Zhuo <weizhuo[at]gmail[dot]com>
- * @version $Id: TCallbackOptions.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TCallbackOptions.php 2624 2009-03-19 21:20:47Z godzilla80@gmx.net $
  * @package System.Web.UI.ActiveControls
  * @since 3.1
  */
@@ -37,7 +37,7 @@ class TCallbackOptions extends TControl
 	 */
 	public function getClientSide()
 	{
-		if(is_null($this->_clientSide))
+		if($this->_clientSide===null)
 			$this->_clientSide = $this->createClientSide();
 		return $this->_clientSide;
 	}

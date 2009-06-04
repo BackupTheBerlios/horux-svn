@@ -6,7 +6,7 @@
  * @link http://www.pradosoft.com/
  * @copyright Copyright &copy; 2005-2008 PradoSoft
  * @license http://www.pradosoft.com/license/
- * @version $Id: TActiveCustomValidator.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TActiveCustomValidator.php 2624 2009-03-19 21:20:47Z godzilla80@gmx.net $
  * @package System.Web.UI.ActiveControls
  */
 
@@ -28,7 +28,7 @@ Prado::using('System.Web.UI.ActiveControls.TCallbackClientSide');
  * will be true when validation is made during a callback request.
  *
  * @author Wei Zhuo <weizhuo[at]gmail[dot]com>
- * @version $Id: TActiveCustomValidator.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TActiveCustomValidator.php 2624 2009-03-19 21:20:47Z godzilla80@gmx.net $
  * @package System.Web.UI.ActiveControls
  * @since 3.1
  */
@@ -162,7 +162,7 @@ class TActiveCustomValidator extends TCustomValidator
  * Custom Validator callback client side options class.
  *
  * @author Wei Zhuo <weizhuo[at]gmail[dot]com>
- * @version $Id: TActiveCustomValidator.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TActiveCustomValidator.php 2624 2009-03-19 21:20:47Z godzilla80@gmx.net $
  * @package System.Web.UI.ActiveControls
  * @since 3.1
  */
@@ -236,6 +236,6 @@ class TActiveCustomValidatorClientSide extends TCallbackClientSide
 	public function getObserveChanges()
 	{
 		$changes = $this->getOption('ObserveChanges');
-		return is_null($changes) ? true : $changes;
+		return ($changes===null) ? true : $changes;
 	}
 }

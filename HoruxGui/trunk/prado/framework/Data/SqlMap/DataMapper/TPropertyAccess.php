@@ -6,7 +6,7 @@
  * @link http://www.pradosoft.com/
  * @copyright Copyright &copy; 2005-2008 PradoSoft
  * @license http://www.pradosoft.com/license/
- * @version $Id: TPropertyAccess.php 2560 2008-11-07 11:49:53Z carlgmathisen $
+ * @version $Id: TPropertyAccess.php 2644 2009-05-01 08:30:05Z godzilla80@gmx.net $
  * @package System.Data.SqlMap
  */
 
@@ -37,7 +37,7 @@
  * </code>
  *
  * @author Wei Zhuo <weizho[at]gmail[dot]com>
- * @version $Id: TPropertyAccess.php 2560 2008-11-07 11:49:53Z carlgmathisen $
+ * @version $Id: TPropertyAccess.php 2644 2009-05-01 08:30:05Z godzilla80@gmx.net $
  * @package System.Data.SqlMap
  * @since 3.1
  */
@@ -70,6 +70,8 @@ class TPropertyAccess
 				if(method_exists($object, $getter) && is_callable(array($object, $getter)))
 					$object = $object->{$getter}();
 				else if(in_array($prop, array_keys(get_object_vars($object))))
+					$object = $object->{$prop};
+				elseif(method_exists($object, '__get') && is_callable(array($object, '__get')))
 					$object = $object->{$prop};
 				else
 					throw new TInvalidPropertyException('sqlmap_invalid_property',$path);
@@ -105,6 +107,8 @@ class TPropertyAccess
 				if(method_exists($object, $getter) && is_callable(array($object, $getter)))
 					$object = $object->{$getter}();
 				else if(in_array($prop, array_keys(get_object_vars($object))))
+					$object = $object->{$prop};
+				elseif(method_exists($object, '__get') && is_callable(array($object, '__get')))
 					$object = $object->{$prop};
 				else
 					return false;

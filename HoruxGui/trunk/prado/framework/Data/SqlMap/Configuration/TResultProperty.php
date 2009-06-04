@@ -6,7 +6,7 @@
  * @link http://www.pradosoft.com/
  * @copyright Copyright &copy; 2005-2008 PradoSoft
  * @license http://www.pradosoft.com/license/
- * @version $Id: TResultProperty.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TResultProperty.php 2624 2009-03-19 21:20:47Z godzilla80@gmx.net $
  * @package System.Data.SqlMap.Configuration
  */
 
@@ -29,7 +29,7 @@
  * with the {@link Select setSelect()} .
  *
  * @author Wei Zhuo <weizho[at]gmail[dot]com>
- * @version $Id: TResultProperty.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TResultProperty.php 2624 2009-03-19 21:20:47Z godzilla80@gmx.net $
  * @package System.Data.SqlMap.Configuration
  * @since 3.1
  */
@@ -242,7 +242,7 @@ class TResultProperty extends TComponent
 			$value = $this->getTypedValue($registry,$row[$index]);
 		else if(isset($row[$name]))
 			$value = $this->getTypedValue($registry,$row[$name]);
-		if(is_null($value) && !is_null($this->getNullValue()))
+		if(($value===null) && ($this->getNullValue()!==null))
 			$value = $this->getTypedValue($registry,$this->getNullValue());
 		return $value;
 	}
@@ -302,7 +302,7 @@ class TResultProperty extends TComponent
 	 */
 	public function instanceOfListType($target)
 	{
-		if(is_null($this->getType()))
+		if($this->getType()===null)
 			return  TPropertyAccess::get($target,$this->getProperty()) instanceof TList;
 		return $this->getPropertyValueType() == self::LIST_TYPE;
 	}
@@ -315,7 +315,7 @@ class TResultProperty extends TComponent
 	 */
 	public function instanceOfArrayType($target)
 	{
-		if(is_null($this->getType()))
+		if($this->getType()===null)
 		{
 			$prop = TPropertyAccess::get($target,$this->getProperty());
 			if(is_object($prop))

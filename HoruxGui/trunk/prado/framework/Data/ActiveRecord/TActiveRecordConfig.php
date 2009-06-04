@@ -6,11 +6,12 @@
  * @link http://www.pradosoft.com/
  * @copyright Copyright &copy; 2005-2008 PradoSoft
  * @license http://www.pradosoft.com/license/
- * @version $Id: TActiveRecordConfig.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TActiveRecordConfig.php 2648 2009-05-10 10:51:52Z godzilla80@gmx.net $
  * @package System.Data.ActiveRecord
  */
 
 Prado::using('System.Data.TDataSourceConfig');
+Prado::using('System.Data.ActiveRecord.TActiveRecordManager');
 
 /**
  * TActiveRecordConfig module configuration class.
@@ -65,7 +66,7 @@ Prado::using('System.Data.TDataSourceConfig');
  * </code>
  *
  * @author Wei Zhuo <weizho[at]gmail[dot]com>
- * @version $Id: TActiveRecordConfig.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TActiveRecordConfig.php 2648 2009-05-10 10:51:52Z godzilla80@gmx.net $
  * @package System.Data.ActiveRecord
  * @since 3.1
  */
@@ -74,17 +75,25 @@ class TActiveRecordConfig extends TDataSourceConfig
 	private $_enableCache=false;
 
 	/**
+	 * Defaults to '{@link TActiveRecordInvalidFinderResult::Null Null}'
+	 *
+	 * @var TActiveRecordInvalidFinderResult
+	 * @since 3.1.5
+	 */
+	private $_invalidFinderResult = TActiveRecordInvalidFinderResult::Null;
+
+	/**
 	 * Initialize the active record manager.
 	 * @param TXmlDocument xml configuration.
 	 */
 	public function init($xml)
 	{
 		parent::init($xml);
-		Prado::using('System.Data.ActiveRecord.TActiveRecordManager');
 		$manager = TActiveRecordManager::getInstance();
 		if($this->getEnableCache())
 			$manager->setCache($this->getApplication()->getCache());
 		$manager->setDbConnection($this->getDbConnection());
+		$manager->setInvalidFinderResult($this->getInvalidFinderResult());
 	}
 
 	/**
@@ -103,5 +112,26 @@ class TActiveRecordConfig extends TDataSourceConfig
 	{
 		return $this->_enableCache;
 	}
-}
 
+	/**
+	 * @return TActiveRecordInvalidFinderResult Defaults to '{@link TActiveRecordInvalidFinderResult::Null Null}'.
+	 * @see setInvalidFinderResult
+	 * @since 3.1.5
+	 */
+	public function getInvalidFinderResult()
+	{
+		return $this->_invalidFinderResult;
+	}
+
+	/**
+	 * Define the way an active record finder react if an invalid magic-finder invoked
+	 *
+	 * @param TActiveRecordInvalidFinderResult
+	 * @see getInvalidFinderResult
+	 * @since 3.1.5
+	 */
+	public function setInvalidFinderResult($value)
+	{
+		$this->_invalidFinderResult = TPropertyValue::ensureEnum($value, 'TActiveRecordInvalidFinderResult');
+	}
+}

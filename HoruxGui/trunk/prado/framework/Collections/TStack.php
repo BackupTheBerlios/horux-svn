@@ -6,7 +6,7 @@
  * @link http://www.pradosoft.com/
  * @copyright Copyright &copy; 2005-2008 PradoSoft
  * @license http://www.pradosoft.com/license/
- * @version $Id: TStack.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TStack.php 2625 2009-03-19 22:07:39Z godzilla80@gmx.net $
  * @package System.Collections
  */
 
@@ -27,7 +27,7 @@
  * </code>
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
- * @version $Id: TStack.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TStack.php 2625 2009-03-19 22:07:39Z godzilla80@gmx.net $
  * @package System.Collections
  * @since 3.0
  */
@@ -140,7 +140,7 @@ class TStack extends TComponent implements IteratorAggregate,Countable
 	public function push($item)
 	{
 		++$this->_c;
-		array_push($this->_d,$item);
+		$this->_d[] = $item;
 	}
 
 	/**
@@ -181,7 +181,7 @@ class TStack extends TComponent implements IteratorAggregate,Countable
  * for traversing the items in the list.
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
- * @version $Id: TStack.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TStack.php 2625 2009-03-19 22:07:39Z godzilla80@gmx.net $
  * @package System.Collections
  * @since 3.0
  */

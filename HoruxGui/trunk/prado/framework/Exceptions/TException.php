@@ -6,7 +6,7 @@
  * @link http://www.pradosoft.com/
  * @copyright Copyright &copy; 2005-2008 PradoSoft
  * @license http://www.pradosoft.com/license/
- * @version $Id: TException.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TException.php 2606 2009-02-11 15:24:27Z haertl.mike $
  * @package System.Exceptions
  */
 
@@ -28,13 +28,14 @@
  * "message.txt" will be used instead.
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
- * @version $Id: TException.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TException.php 2606 2009-02-11 15:24:27Z haertl.mike $
  * @package System.Exceptions
  * @since 3.0
  */
 class TException extends Exception
 {
 	private $_errorCode='';
+	static $_messageCache=array();
 
 	/**
 	 * Constructor.
@@ -64,16 +65,20 @@ class TException extends Exception
 	protected function translateErrorMessage($key)
 	{
 		$msgFile=$this->getErrorMessageFile();
-		if(($entries=@file($msgFile))!==false)
+
+		// Cache messages
+		if (!isset(self::$_messageCache[$msgFile])) 
 		{
-			foreach($entries as $entry)
+			if(($entries=@file($msgFile))!==false)
 			{
-				@list($code,$message)=explode('=',$entry,2);
-				if(trim($code)===$key)
-					return trim($message);
+				foreach($entries as $entry)
+				{
+					@list($code,$message)=explode('=',$entry,2);
+					self::$_messageCache[$msgFile][trim($code)]=trim($message);
+				}
 			}
 		}
-		return $key;
+		return isset(self::$_messageCache[$msgFile][$key]) ? self::$_messageCache[$msgFile][$key] : $key;
 	}
 
 	/**
@@ -127,7 +132,7 @@ class TException extends Exception
  * TSystemException is the base class for all framework-level exceptions.
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
- * @version $Id: TException.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TException.php 2606 2009-02-11 15:24:27Z haertl.mike $
  * @package System.Exceptions
  * @since 3.0
  */
@@ -141,7 +146,7 @@ class TSystemException extends TException
  * TApplicationException is the base class for all user application-level exceptions.
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
- * @version $Id: TException.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TException.php 2606 2009-02-11 15:24:27Z haertl.mike $
  * @package System.Exceptions
  * @since 3.0
  */
@@ -155,7 +160,7 @@ class TApplicationException extends TException
  * TInvalidOperationException represents an exception caused by invalid operations.
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
- * @version $Id: TException.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TException.php 2606 2009-02-11 15:24:27Z haertl.mike $
  * @package System.Exceptions
  * @since 3.0
  */
@@ -169,7 +174,7 @@ class TInvalidOperationException extends TSystemException
  * TInvalidDataTypeException represents an exception caused by invalid data type.
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
- * @version $Id: TException.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TException.php 2606 2009-02-11 15:24:27Z haertl.mike $
  * @package System.Exceptions
  * @since 3.0
  */
@@ -183,7 +188,7 @@ class TInvalidDataTypeException extends TSystemException
  * TInvalidDataValueException represents an exception caused by invalid data value.
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
- * @version $Id: TException.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TException.php 2606 2009-02-11 15:24:27Z haertl.mike $
  * @package System.Exceptions
  * @since 3.0
  */
@@ -198,7 +203,7 @@ class TInvalidDataValueException extends TSystemException
  * such as error in an application configuration file or control template file.
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
- * @version $Id: TException.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TException.php 2606 2009-02-11 15:24:27Z haertl.mike $
  * @package System.Exceptions
  * @since 3.0
  */
@@ -212,7 +217,7 @@ class TConfigurationException extends TSystemException
  * TTemplateException represents an exception caused by invalid template syntax.
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
- * @version $Id: TException.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TException.php 2606 2009-02-11 15:24:27Z haertl.mike $
  * @package System.Exceptions
  * @since 3.1
  */
@@ -277,7 +282,7 @@ class TTemplateException extends TConfigurationException
  * TIOException represents an exception related with improper IO operations.
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
- * @version $Id: TException.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TException.php 2606 2009-02-11 15:24:27Z haertl.mike $
  * @package System.Exceptions
  * @since 3.0
  */
@@ -291,7 +296,7 @@ class TIOException extends TSystemException
  * TDbException represents an exception related with DB operations.
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
- * @version $Id: TException.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TException.php 2606 2009-02-11 15:24:27Z haertl.mike $
  * @package System.Exceptions
  * @since 3.0
  */
@@ -305,7 +310,7 @@ class TDbException extends TSystemException
  * TDbConnectionException represents an exception caused by DB connection failure.
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
- * @version $Id: TException.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TException.php 2606 2009-02-11 15:24:27Z haertl.mike $
  * @package System.Exceptions
  * @since 3.0
  */
@@ -319,7 +324,7 @@ class TDbConnectionException extends TDbException
  * TNotSupportedException represents an exception caused by using an unsupported PRADO feature.
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
- * @version $Id: TException.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TException.php 2606 2009-02-11 15:24:27Z haertl.mike $
  * @package System.Exceptions
  * @since 3.0
  */
@@ -334,7 +339,7 @@ class TNotSupportedException extends TSystemException
  * This exception is mainly thrown within a PHP error handler.
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
- * @version $Id: TException.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TException.php 2606 2009-02-11 15:24:27Z haertl.mike $
  * @package System.Exceptions
  * @since 3.0
  */
@@ -377,7 +382,7 @@ class TPhpErrorException extends TSystemException
  * It is used by {@link TErrorHandler} to provide different error output to users.
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
- * @version $Id: TException.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TException.php 2606 2009-02-11 15:24:27Z haertl.mike $
  * @package System.Exceptions
  * @since 3.0
  */

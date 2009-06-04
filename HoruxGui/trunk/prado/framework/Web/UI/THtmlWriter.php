@@ -6,7 +6,7 @@
  * @link http://www.pradosoft.com/
  * @copyright Copyright &copy; 2005-2008 PradoSoft
  * @license http://www.pradosoft.com/license/
- * @version $Id: THtmlWriter.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: THtmlWriter.php 2625 2009-03-19 22:07:39Z godzilla80@gmx.net $
  * @package System.Web.UI
  */
 
@@ -32,7 +32,7 @@
  * tags in HTML and XHTML.
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
- * @version $Id: THtmlWriter.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: THtmlWriter.php 2625 2009-03-19 22:07:39Z godzilla80@gmx.net $
  * @package System.Web.UI
  * @since 3.0
  */
@@ -232,12 +232,12 @@ class THtmlWriter extends TApplicationComponent implements ITextWriter
 		if(isset(self::$_simpleTags[$tagName]))
 		{
 			$str.=' />';
-			array_push($this->_openTags,'');
+			$this->_openTags[] = '';
 		}
 		else
 		{
 			$str.='>';
-			array_push($this->_openTags,$tagName);
+			$this->_openTags[] = $tagName;
 		}
 		$this->_writer->write($str);
 		$this->_attributes=array();

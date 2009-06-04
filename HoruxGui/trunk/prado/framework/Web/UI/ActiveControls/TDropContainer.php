@@ -5,7 +5,7 @@
  * @author Christophe BOULAIN (Christophe.Boulain@gmail.com)
  * @copyright Copyright &copy; 2008, PradoSoft
  * @license http://www.pradosoft.com/license
- * @version $Id: TDropContainer.php 2517 2008-10-13 13:40:34Z tof $
+ * @version $Id: TDropContainer.php 2650 2009-05-11 08:40:37Z Christophe.Boulain $
  */
 
 /**
@@ -35,7 +35,7 @@ Prado::using('System.Web.UI.ActiveControls.TActivePanel');
  * @author Christophe BOULAIN (Christophe.Boulain@gmail.com)
  * @copyright Copyright &copy; 2008, PradoSoft
  * @license http://www.pradosoft.com/license
- * @version $Id: TDropContainer.php 2517 2008-10-13 13:40:34Z tof $
+ * @version $Id: TDropContainer.php 2650 2009-05-11 08:40:37Z Christophe.Boulain $
  */
 class TDropContainer extends TPanel implements IActiveControl, ICallbackEventHandler 
 {	
@@ -123,12 +123,8 @@ class TDropContainer extends TPanel implements IActiveControl, ICallbackEventHan
 	{
 		// Find the control
 		// Warning, this will not work if you have a '_' in your control Id !
-		$control=$this->getPage();
-		$namingContainers=explode(TControl::CLIENT_ID_SEPARATOR, $dropControlId);
-		foreach ($namingContainers as $nc)
-		{
-			$control=$control->findControl($nc);
-		}
+		$dropControlId=str_replace(TControl::CLIENT_ID_SEPARATOR,TControl::ID_SEPARATOR,$dropControlId);
+		$control=$this->getPage()->findControl($dropControlId);
 		$this->raiseEvent('OnDrop', $this, new TDropContainerEventParameter ($control));
 		
 	}
@@ -196,7 +192,7 @@ class TDropContainer extends TPanel implements IActiveControl, ICallbackEventHan
 		if ($this->_container===null)
 		{
 			$this->_container=Prado::CreateComponent('System.Web.UI.ActiveControls.TActivePanel');
-			$this->_container->setId($this->getId().'_content');
+			$this->_container->setId($this->getId(false).'_content');
 			parent::getControls()->add($this->_container);
 		}
 	}
@@ -244,7 +240,7 @@ class TDropContainer extends TPanel implements IActiveControl, ICallbackEventHan
  * @author Christophe BOULAIN (Christophe.Boulain@ceram.fr)
  * @copyright Copyright &copy; 2008, PradoSoft
  * @license http://www.pradosoft.com/license
- * @version $Id: TDropContainer.php 2517 2008-10-13 13:40:34Z tof $
+ * @version $Id: TDropContainer.php 2650 2009-05-11 08:40:37Z Christophe.Boulain $
  */
 class TDropContainerEventParameter extends TEventParameter
 {

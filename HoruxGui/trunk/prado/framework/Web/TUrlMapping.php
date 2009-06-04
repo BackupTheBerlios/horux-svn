@@ -6,7 +6,7 @@
  * @link http://www.pradosoft.com/
  * @copyright Copyright &copy; 2005-2008 PradoSoft
  * @license http://www.pradosoft.com/license/
- * @version $Id: TUrlMapping.php 2584 2008-12-04 17:05:12Z haertl.mike $
+ * @version $Id: TUrlMapping.php 2604 2009-01-21 08:49:21Z haertl.mike $
  * @package System.Web
  */
 
@@ -63,7 +63,7 @@ Prado::using('System.Collections.TAttributeCollection');
  * in the GET variables.
  *
  * @author Wei Zhuo <weizhuo[at]gmail[dot]com>
- * @version $Id: TUrlMapping.php 2584 2008-12-04 17:05:12Z haertl.mike $
+ * @version $Id: TUrlMapping.php 2604 2009-01-21 08:49:21Z haertl.mike $
  * @package System.Web
  * @since 3.0.5
  */
@@ -417,7 +417,7 @@ class TUrlMapping extends TUrlManager
  * <tt>.../index.php/admin/listuser/param1-value1/param2-value2</tt>.
  *
  * @author Wei Zhuo <weizhuo[at]gmail[dot]com>
- * @version $Id: TUrlMapping.php 2584 2008-12-04 17:05:12Z haertl.mike $
+ * @version $Id: TUrlMapping.php 2604 2009-01-21 08:49:21Z haertl.mike $
  * @package System.Web
  * @since 3.0.5
  */
@@ -629,6 +629,9 @@ class TUrlMappingPattern extends TComponent
 			preg_match($pattern,$request->getPathInfo(),$matches);
 		else
 			preg_match($this->getParameterizedPattern(),trim($request->getPathInfo(),'/').'/',$matches);
+
+		if($this->getIsWildCardPattern() && isset($matches[$this->_serviceID]))
+			$matches[$this->_serviceID]=str_replace('*',$matches[$this->_serviceID],$this->_serviceParameter);
 
 		if (isset($matches['urlparams']))
 		{

@@ -7,7 +7,7 @@
  * @link http://www.pradosoft.com/
  * @copyright Copyright &copy; 2005-2008 PradoSoft
  * @license http://www.pradosoft.com/license/
- * @version $Id: TActiveDatePicker.php 2508 2008-09-24 13:09:23Z tof $
+ * @version $Id: TActiveDatePicker.php 2633 2009-04-08 07:10:01Z Christophe.Boulain $
  * @package System.Web.UI.ActiveControls
  */
 
@@ -25,7 +25,7 @@ Prado::using('System.Web.UI.ActiveControls.TActiveControlAdapter');
  * 
  * @author Bradley Booms <Bradley.Booms@nsighttel.com>
  * @author Christophe Boulain <Christophe.Boulain@gmail.com>
- * @version $Id: TActiveDatePicker.php 2508 2008-09-24 13:09:23Z tof $
+ * @version $Id: TActiveDatePicker.php 2633 2009-04-08 07:10:01Z Christophe.Boulain $
  * @package System.Web.UI.ActiveControls
  * @since 3.1.3
  */
@@ -39,6 +39,7 @@ class TActiveDatePicker extends TDatePicker  implements ICallbackEventHandler, I
 	protected function getDatePickerOptions(){
 		$options = parent::getDatePickerOptions();
 		$options['EventTarget'] = $this->getUniqueID();
+		$options['ShowCalendar'] = $this->getShowCalendar();
 		return $options;
 	}
 	
@@ -108,22 +109,20 @@ class TActiveDatePicker extends TDatePicker  implements ICallbackEventHandler, I
 	 */
 	protected function registerCalendarClientScript()
 	{
-		if($this->getShowCalendar())
+	
+		$cs = $this->getPage()->getClientScript();
+		$cs->registerPradoScript("activedatepicker");
+
+		if(!$cs->isEndScriptRegistered('TDatePicker.spacer'))
 		{
-			$cs = $this->getPage()->getClientScript();
-			$cs->registerPradoScript("activedatepicker");
-
-			if(!$cs->isEndScriptRegistered('TDatePicker.spacer'))
-			{
-				$spacer = $this->getAssetUrl('spacer.gif');
-				$code = "Prado.WebUI.TDatePicker.spacer = '$spacer';";
-				$cs->registerEndScript('TDatePicker.spacer', $code);
-			}
-
-			$options = TJavaScript::encode($this->getDatePickerOptions());
-			$code = "new Prado.WebUI.TActiveDatePicker($options);";
-			$cs->registerEndScript("prado:".$this->getClientID(), $code);
+			$spacer = $this->getAssetUrl('spacer.gif');
+			$code = "Prado.WebUI.TDatePicker.spacer = '$spacer';";
+			$cs->registerEndScript('TDatePicker.spacer', $code);
 		}
+
+		$options = TJavaScript::encode($this->getDatePickerOptions());
+		$code = "new Prado.WebUI.TActiveDatePicker($options);";
+		$cs->registerEndScript("prado:".$this->getClientID(), $code);
 	}
 }
 ?>

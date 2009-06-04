@@ -6,7 +6,7 @@
  * @link http://www.pradosoft.com/
  * @copyright Copyright &copy; 2005-2008 PradoSoft
  * @license http://www.pradosoft.com/license/
- * @version $Id: TSqlMapXmlConfiguration.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TSqlMapXmlConfiguration.php 2659 2009-05-23 07:52:15Z godzilla80@gmx.net $
  * @package System.Data.SqlMap.Configuration
  */
 
@@ -16,7 +16,7 @@ Prado::using('System.Data.SqlMap.Configuration.TSqlMapStatement');
  * TSqlMapXmlConfig class file.
  *
  * @author Wei Zhuo <weizhuo[at]gmail[dot]com>
- * @version $Id: TSqlMapXmlConfiguration.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TSqlMapXmlConfiguration.php 2659 2009-05-23 07:52:15Z godzilla80@gmx.net $
  * @package System.Data.SqlMap.Configuration
  */
 abstract class TSqlMapXmlConfigBuilder
@@ -89,6 +89,9 @@ abstract class TSqlMapXmlConfigBuilder
 	 */
 	protected function loadXmlDocument($filename,TSqlMapXmlConfiguration $config)
 	{
+		if( strpos($filename, '${') !== false)
+			$filename = $config->replaceProperties($filename);
+
 		if(!is_file($filename))
 			throw new TSqlMapConfigurationException(
 				'sqlmap_unable_to_find_config', $filename);
@@ -125,7 +128,7 @@ abstract class TSqlMapXmlConfigBuilder
  * Configures the TSqlMapManager using xml configuration file.
  *
  * @author Wei Zhuo <weizho[at]gmail[dot]com>
- * @version $Id: TSqlMapXmlConfiguration.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TSqlMapXmlConfiguration.php 2659 2009-05-23 07:52:15Z godzilla80@gmx.net $
  * @package System.Data.SqlMap.Configuration
  * @since 3.1
  */
@@ -228,6 +231,9 @@ class TSqlMapXmlConfiguration extends TSqlMapXmlConfigBuilder
 	{
 		if(strlen($resource = (string)$node['resource']) > 0)
 		{
+			if( strpos($resource, '${') !== false)
+				$resource = $this->replaceProperties($resource);
+
 			$mapping = new TSqlMapXmlMappingConfiguration($this);
 			$filename = $this->getAbsoluteFilePath($this->_configFile, $resource);
 			$mapping->configure($filename);
@@ -255,7 +261,7 @@ class TSqlMapXmlConfiguration extends TSqlMapXmlConfigBuilder
 								$resultMap, $this->_configFile, $entry->getID());
 				}
 			}
-			if(!is_null($entry->getDiscriminator()))
+			if($entry->getDiscriminator()!==null)
 				$entry->getDiscriminator()->initialize($this->_manager);
 		}
 	}
@@ -295,7 +301,7 @@ class TSqlMapXmlConfiguration extends TSqlMapXmlConfigBuilder
  * description
  *
  * @author Wei Zhuo <weizho[at]gmail[dot]com>
- * @version $Id: TSqlMapXmlConfiguration.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TSqlMapXmlConfiguration.php 2659 2009-05-23 07:52:15Z godzilla80@gmx.net $
  * @package System.Data.SqlMap.Configuration
  * @since 3.1
  */
@@ -342,6 +348,15 @@ class TSqlMapXmlMappingConfiguration extends TSqlMapXmlConfigBuilder
 		$this->_configFile=$filename;
 		$document = $this->loadXmlDocument($filename,$this->_xmlConfig);
 		$this->_document=$document;
+
+		static $bCacheDependencies;
+		if($bCacheDependencies === null)
+			$bCacheDependencies = Prado::getApplication()->getMode() !== TApplicationMode::Performance;
+
+		if($bCacheDependencies)
+			$this->_manager->getCacheDependencies()
+					->getDependencies()
+					->add(new TFileCacheDependency($filename));
 
 		foreach($document->xpath('//resultMap') as $node)
 			$this->loadResultMap($node);
@@ -434,7 +449,7 @@ class TSqlMapXmlMappingConfiguration extends TSqlMapXmlConfigBuilder
 
 		foreach($node->xpath('subMap') as $subMapNode)
 		{
-			if(is_null($discriminator))
+			if($discriminator===null)
 				throw new TSqlMapConfigurationException(
 					'sqlmap_undefined_discriminator', $node, $this->_configFile,$subMapNode);
 			$subMap = new TSubMap;
@@ -442,7 +457,7 @@ class TSqlMapXmlMappingConfiguration extends TSqlMapXmlConfigBuilder
 			$discriminator->addSubMap($subMap);
 		}
 
-		if(!is_null($discriminator))
+		if($discriminator!==null)
 			$resultMap->setDiscriminator($discriminator);
 
 		return $resultMap;
@@ -697,10 +712,46 @@ class TSqlMapXmlMappingConfiguration extends TSqlMapXmlConfigBuilder
 		}
 		$cache = Prado::createComponent($cacheModel->getImplementationClass());
 		$this->setObjectPropFromNode($cache,$node,$properties);
+		$this->loadFlushInterval($cacheModel,$node);
+
 		$cacheModel->initialize($cache);
 		$this->_manager->addCacheModel($cacheModel);
 		foreach($node->xpath('flushOnExecute') as $flush)
 			$this->loadFlushOnCache($cacheModel,$node,$flush);
+	}
+
+	/**
+	 * Load the flush interval
+	 * @param TSqlMapCacheModel cache model
+	 * @param SimpleXmlElement cache node
+	 */
+	protected function loadFlushInterval($cacheModel, $node)
+	{
+		$flushInterval = $node->xpath('flushInterval');
+		if($flushInterval === null || count($flushInterval) === 0) return;
+		$duration = 0;
+		foreach($flushInterval[0]->attributes() as $name=>$value)
+		{
+			switch(strToLower($name))
+			{
+				case 'seconds':
+					$duration += (integer)$value;
+				break;
+				case 'minutes':
+					$duration += 60 * (integer)$value;
+				break;
+				case 'hours':
+					$duration += 3600 * (integer)$value;
+				break;
+				case 'days':
+					$duration += 86400 * (integer)$value;
+				break;
+				case 'duration':
+					$duration = (integer)$value;
+				break 2; // switch, foreach
+			}
+		}
+		$cacheModel->setFlushInterval($duration);
 	}
 
 	/**

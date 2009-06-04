@@ -9,7 +9,7 @@
  * @link http://www.pradosoft.com/
  * @copyright Copyright &copy; 2005-2008 PradoSoft
  * @license http://www.pradosoft.com/license/
- * @version $Id: PradoBase.php 2602 2009-01-12 01:08:39Z qiang.xue $
+ * @version $Id: PradoBase.php 2661 2009-05-24 20:30:26Z qiang.xue $
  * @package System
  */
 
@@ -34,7 +34,7 @@ if(!defined('PRADO_CHMOD'))
  * rewritten for customization.
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
- * @version $Id: PradoBase.php 2602 2009-01-12 01:08:39Z qiang.xue $
+ * @version $Id: PradoBase.php 2661 2009-05-24 20:30:26Z qiang.xue $
  * @package System
  * @since 3.0
  */
@@ -66,7 +66,7 @@ class PradoBase
 	 */
 	public static function getVersion()
 	{
-		return '3.1.4';
+		return '3.1.5';
 	}
 
 	/**
@@ -448,7 +448,7 @@ class PradoBase
 				$languages=array();
 				foreach(explode(',',$_SERVER['HTTP_ACCEPT_LANGUAGE']) as $language)
 				{
-					$array=split(';q=',trim($language));
+					$array=explode(';q=',trim($language));
 					$languages[trim($array[0])]=isset($array[1])?(float)$array[1]:1.0;
 				}
 				arsort($languages);
@@ -596,7 +596,7 @@ class PradoBase
  * This class was originally written to cope with the incompatibility between different PHP versions.
  * It is equivalent to ReflectionClass for PHP version >= 5.1.0
  * @author Qiang Xue <qiang.xue@gmail.com>
- * @version $Id: PradoBase.php 2602 2009-01-12 01:08:39Z qiang.xue $
+ * @version $Id: PradoBase.php 2661 2009-05-24 20:30:26Z qiang.xue $
  * @package System
  * @since 3.0
  */

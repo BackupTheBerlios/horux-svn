@@ -6,7 +6,7 @@
  * @link http://www.pradosoft.com/
  * @copyright Copyright &copy; 2005-2008 PradoSoft
  * @license http://www.pradosoft.com/license/
- * @version $Id: TCustomValidator.php 2551 2008-10-30 17:07:05Z carlgmathisen $
+ * @version $Id: TCustomValidator.php 2630 2009-04-04 09:53:57Z godzilla80@gmx.net $
  * @package System.Web.UI.WebControls
  */
 
@@ -48,7 +48,7 @@ Prado::using('System.Web.UI.WebControls.TBaseValidator');
  * with the TCustomValidator.
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
- * @version $Id: TCustomValidator.php 2551 2008-10-30 17:07:05Z carlgmathisen $
+ * @version $Id: TCustomValidator.php 2630 2009-04-04 09:53:57Z godzilla80@gmx.net $
  * @package System.Web.UI.WebControls
  * @since 3.0
  */
@@ -112,11 +112,11 @@ class TCustomValidator extends TBaseValidator
 		else
 			return $param->getIsValid();
 	}
-	
+
 	/**
 	 * @return TControl control to be validated. Null if no control is found.
 	 */
-	protected function getValidationTarget()
+	public function getValidationTarget()
 	{
 		if(($id=$this->getControlToValidate())!=='' && ($control=$this->findControl($id))!==null)
 			return $control;
@@ -156,7 +156,7 @@ class TCustomValidator extends TBaseValidator
  * <b>OnServerValidate</b> event of TCustomValidator components.
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
- * @version $Id: TCustomValidator.php 2551 2008-10-30 17:07:05Z carlgmathisen $
+ * @version $Id: TCustomValidator.php 2630 2009-04-04 09:53:57Z godzilla80@gmx.net $
  * @package System.Web.UI.WebControls
  * @since 3.0
  */

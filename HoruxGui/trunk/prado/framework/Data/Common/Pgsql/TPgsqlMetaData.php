@@ -6,7 +6,7 @@
  * @link http://www.pradosoft.com/
  * @copyright Copyright &copy; 2005-2008 PradoSoft
  * @license http://www.pradosoft.com/license/
- * @version $Id: TPgsqlMetaData.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TPgsqlMetaData.php 2641 2009-04-26 06:22:19Z godzilla80@gmx.net $
  * @package System.Data.Common.Pgsql
  */
 
@@ -20,7 +20,7 @@ Prado::using('System.Data.Common.Pgsql.TPgsqlTableInfo');
  * TPgsqlMetaData loads PostgreSQL database table and column information.
  *
  * @author Wei Zhuo <weizho[at]gmail[dot]com>
- * @version $Id: TPgsqlMetaData.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TPgsqlMetaData.php 2641 2009-04-26 06:22:19Z godzilla80@gmx.net $
  * @package System.Data.Common.Pgsql
  * @since 3.1
  */
@@ -330,7 +330,7 @@ EOD;
 	 */
 	protected function getPrimaryKeys($tableName, $schemaName, $columnIndex)
 	{
-		$index = join(', ', split(' ', $columnIndex));
+		$index = join(', ', explode(' ', $columnIndex));
 		$sql =
 <<<EOD
     SELECT attnum, attname FROM pg_catalog.pg_attribute WHERE
@@ -344,7 +344,7 @@ EOD;
 		$command = $this->getDbConnection()->createCommand($sql);
 		$command->bindValue(':table', $tableName);
 		$command->bindValue(':schema', $schemaName);
-//		$command->bindValue(':columnIndex', join(', ', split(' ', $columnIndex)));
+//		$command->bindValue(':columnIndex', join(', ', explode(' ', $columnIndex)));
 		$primary = array();
 		foreach($command->query() as $row)
 		{

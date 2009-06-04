@@ -6,7 +6,7 @@
  * @link http://www.pradosoft.com/
  * @copyright Copyright &copy; 2005-2008 PradoSoft
  * @license http://www.pradosoft.com/license/
- * @version $Id: TAutoComplete.php 2564 2008-11-11 21:56:02Z carlgmathisen $
+ * @version $Id: TAutoComplete.php 2624 2009-03-19 21:20:47Z godzilla80@gmx.net $
  * @package System.Web.UI.ActiveControls
  */
 
@@ -77,7 +77,7 @@ Prado::using('System.Web.UI.ActiveControls.TCallbackEventParameter');
  * "informal" are ignored as text for suggestions.
  *
  * @author Wei Zhuo <weizhuo[at]gmail[dot]com>
- * @version $Id: TAutoComplete.php 2564 2008-11-11 21:56:02Z carlgmathisen $
+ * @version $Id: TAutoComplete.php 2624 2009-03-19 21:20:47Z godzilla80@gmx.net $
  * @package System.Web.UI.ActiveControls
  * @since 3.1
  */
@@ -235,7 +235,7 @@ class TAutoComplete extends TActiveTextBox implements INamingContainer
 	 */
 	public function getResultPanel()
 	{
-		if(is_null($this->_resultPanel))
+		if($this->_resultPanel===null)
 			$this->_resultPanel = $this->createResultPanel();
 		return $this->_resultPanel;
 	}
@@ -256,7 +256,7 @@ class TAutoComplete extends TActiveTextBox implements INamingContainer
 	 */
 	public function getSuggestions()
 	{
-		if(is_null($this->_repeater))
+		if($this->_repeater===null)
 			$this->_repeater = $this->createRepeater();
 		return $this->_repeater;
 	}
@@ -374,7 +374,7 @@ class TAutoComplete extends TActiveTextBox implements INamingContainer
  * suggestion selected by the user, -1 if not suggestion is selected.
  *
  * @author Wei Zhuo <weizhuo[at]gmail[dot]com>
- * @version $Id: TAutoComplete.php 2564 2008-11-11 21:56:02Z carlgmathisen $
+ * @version $Id: TAutoComplete.php 2624 2009-03-19 21:20:47Z godzilla80@gmx.net $
  * @package System.Web.UI.ActiveControls
  * @since 3.1
  */
@@ -415,7 +415,7 @@ class TAutoCompleteEventParameter extends TCallbackEventParameter
  * item template.
  *
  * @author Wei Zhuo <weizhuo[at]gmail[dot]com>
- * @version $Id: TAutoComplete.php 2564 2008-11-11 21:56:02Z carlgmathisen $
+ * @version $Id: TAutoComplete.php 2624 2009-03-19 21:20:47Z godzilla80@gmx.net $
  * @package System.Web.UI.ActiveControls
  * @since 3.1
  */

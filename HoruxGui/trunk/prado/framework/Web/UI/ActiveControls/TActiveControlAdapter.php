@@ -6,7 +6,7 @@
  * @link http://www.pradosoft.com/
  * @copyright Copyright &copy; 2005-2008 PradoSoft
  * @license http://www.pradosoft.com/license/
- * @version $Id: TActiveControlAdapter.php 2564 2008-11-11 21:56:02Z carlgmathisen $
+ * @version $Id: TActiveControlAdapter.php 2624 2009-03-19 21:20:47Z godzilla80@gmx.net $
  * @package System.Web.UI.ActiveControls
  */
 
@@ -29,7 +29,7 @@ Prado::using('System.Web.UI.ActiveControls.TBaseActiveControl');
  * corresponding client-side properties.
  *
  * @author Wei Zhuo <weizhuo[at]gmail[dot]com>
- * @version $Id: TActiveControlAdapter.php 2564 2008-11-11 21:56:02Z carlgmathisen $
+ * @version $Id: TActiveControlAdapter.php 2624 2009-03-19 21:20:47Z godzilla80@gmx.net $
  * @package System.Web.UI.ActiveControls
  * @since 3.1
  */
@@ -64,7 +64,7 @@ class TActiveControlAdapter extends TControlAdapter
 	 */
 	protected function setBaseControlClass($type)
 	{
-		if(is_null($type))
+		if($type===null)
 		{
 			if($this->getControl() instanceof ICallbackEventHandler)
 				$this->_activeControlType = 'TBaseActiveCallbackControl';
@@ -117,7 +117,7 @@ class TActiveControlAdapter extends TControlAdapter
 	 */
 	public function getBaseActiveControl()
 	{
-		if(is_null($this->_baseActiveControl))
+		if($this->_baseActiveControl===null)
 		{
 			$type = $this->_activeControlType;
 			$this->_baseActiveControl = new $type($this->getControl());
@@ -161,7 +161,7 @@ class TActiveControlAdapter extends TControlAdapter
 	 */
 	public function saveState()
 	{
-		if(!is_null($this->_stateTracker)
+		if(($this->_stateTracker!==null)
 			&& $this->getControl()->getActiveControl()->canUpdateClientSide())
 		{
 			$this->_stateTracker->respondToChanges();
@@ -184,7 +184,7 @@ class TActiveControlAdapter extends TControlAdapter
  * Tracking changes to the page state during callback.
  *
  * @author Wei Zhuo <weizhuo[at]gmail[dot]com>
- * @version $Id: TActiveControlAdapter.php 2564 2008-11-11 21:56:02Z carlgmathisen $
+ * @version $Id: TActiveControlAdapter.php 2624 2009-03-19 21:20:47Z godzilla80@gmx.net $
  * @package System.Web.UI.ActiveControls
  * @since 3.1
  */
@@ -353,7 +353,7 @@ class TCallbackPageStateTracker
 	 */
 	protected function updateStyle($style)
 	{
-		if(!is_null($style['CssClass']))
+		if($style['CssClass']!==null)
 			$this->client()->setAttribute($this->_control, 'class', $style['CssClass']);
 		if(count($style['Style']) > 0)
 			$this->client()->setStyle($this->_control, $style['Style']);
@@ -374,7 +374,7 @@ class TCallbackPageStateTracker
  * Calculates the viewstate changes during the request.
  *
  * @author Wei Zhuo <weizhuo[at]gmail[dot]com>
- * @version $Id: TActiveControlAdapter.php 2564 2008-11-11 21:56:02Z carlgmathisen $
+ * @version $Id: TActiveControlAdapter.php 2624 2009-03-19 21:20:47Z godzilla80@gmx.net $
  * @package System.Web.UI.ActiveControls
  * @since 3.1
  */
@@ -418,7 +418,7 @@ abstract class TViewStateDiff
  * Calculate the changes to a scalar value.
  *
  * @author Wei Zhuo <weizhuo[at]gmail[dot]com>
- * @version $Id: TActiveControlAdapter.php 2564 2008-11-11 21:56:02Z carlgmathisen $
+ * @version $Id: TActiveControlAdapter.php 2624 2009-03-19 21:20:47Z godzilla80@gmx.net $
  * @package System.Web.UI.ActiveControls
  * @since 3.1
  */
@@ -443,7 +443,7 @@ class TScalarDiff extends TViewStateDiff
  * Calculates the changes to the Style properties.
  *
  * @author Wei Zhuo <weizhuo[at]gmail[dot]com>
- * @version $Id: TActiveControlAdapter.php 2564 2008-11-11 21:56:02Z carlgmathisen $
+ * @version $Id: TActiveControlAdapter.php 2624 2009-03-19 21:20:47Z godzilla80@gmx.net $
  * @package System.Web.UI.ActiveControls
  * @since 3.1
  */
@@ -487,9 +487,9 @@ class TStyleDiff extends TViewStateDiff
 	 */
 	protected function getCssClassDiff()
 	{
-		if(is_null($this->_old))
+		if($this->_old===null)
 		{
-			return !is_null($this->_new) && $this->_new->hasCssClass()
+			return ($this->_new!==null) && $this->_new->hasCssClass()
 						? $this->_new->getCssClass() : null;
 		}
 		else
@@ -515,13 +515,13 @@ class TStyleDiff extends TViewStateDiff
 	 */
 	public function getDifference()
 	{
-		if(is_null($this->_new))
+		if($this->_new===null)
 			return $this->_null;
 		else
 		{
 			$css = $this->getCssClassDiff();
 			$style = $this->getStyleDiff();
-			if(!is_null($css) || !is_null($style))
+			if(($css!==null) || ($style!==null))
 				return array('CssClass' => $css, 'Style' => $style);
 			else
 				$this->_null;
@@ -535,7 +535,7 @@ class TStyleDiff extends TViewStateDiff
  * Calculate the changes to attributes collection.
  *
  * @author Wei Zhuo <weizhuo[at]gmail[dot]com>
- * @version $Id: TActiveControlAdapter.php 2564 2008-11-11 21:56:02Z carlgmathisen $
+ * @version $Id: TActiveControlAdapter.php 2624 2009-03-19 21:20:47Z godzilla80@gmx.net $
  * @package System.Web.UI.ActiveControls
  * @since 3.1
  */
@@ -546,9 +546,9 @@ class TMapCollectionDiff extends TViewStateDiff
 	 */
 	public function getDifference()
 	{
-		if(is_null($this->_old))
+		if($this->_old===null)
 		{
-			return !is_null($this->_new) ? $this->_new->toArray() : $this->_null;
+			return ($this->_new!==null) ? $this->_new->toArray() : $this->_null;
 		}
 		else
 		{

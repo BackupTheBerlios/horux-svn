@@ -6,7 +6,7 @@
  * @link http://www.pradosoft.com/
  * @copyright Copyright &copy; 2005-2008 PradoSoft
  * @license http://www.pradosoft.com/license/
- * @version $Id: TNumberFormat.php 2510 2008-10-13 10:28:33Z carl $
+ * @version $Id: TNumberFormat.php 2624 2009-03-19 21:20:47Z godzilla80@gmx.net $
  * @package System.I18N
  */
 
@@ -220,7 +220,7 @@ class TNumberFormat extends TI18NControl implements IDataRenderer
 
 		$app = $this->getApplication()->getGlobalization();
 		//initialized the default class wide formatter
-		if(is_null(self::$formatter))
+		if(self::$formatter===null)
 			self::$formatter = new NumberFormat($app->getCulture());
 
 		$pattern = strlen($this->getPattern()) > 0

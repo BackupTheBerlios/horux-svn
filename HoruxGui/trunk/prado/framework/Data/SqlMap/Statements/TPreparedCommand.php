@@ -6,7 +6,7 @@
  * @link http://www.pradosoft.com/
  * @copyright Copyright &copy; 2005-2008 PradoSoft
  * @license http://www.pradosoft.com/license/
- * @version $Id: TPreparedCommand.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TPreparedCommand.php 2629 2009-03-22 08:02:35Z godzilla80@gmx.net $
  * @package System.Data.SqlMap.Statements
  */
 
@@ -17,7 +17,7 @@ Prado::using('System.Data.Common.TDbCommandBuilder');
  * TPreparedCommand class.
  *
  * @author Wei Zhuo <weizho[at]gmail[dot]com>
- * @version $Id: TPreparedCommand.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TPreparedCommand.php 2629 2009-03-22 08:02:35Z godzilla80@gmx.net $
  * @package System.Data.SqlMap.Statements
  * @since 3.1
  */
@@ -25,9 +25,15 @@ class TPreparedCommand
 {
 	public function create(TSqlMapManager $manager, $connection, $statement, $parameterObject,$skip=null,$max=null)
 	{
-		$prepared = $statement->getSQLText()->getPreparedStatement($parameterObject);
+		$sqlText = $statement->getSQLText();
+
+		$prepared = $sqlText->getPreparedStatement($parameterObject);
 		$connection->setActive(true);
 		$sql = $prepared->getPreparedSql();
+
+		if($sqlText instanceof TSimpleDynamicSql)
+			$sql = $sqlText->replaceDynamicParameter($sql, $parameterObject);
+
 		if($max!==null || $skip!==null)
 		{
 			$builder = TDbMetaData::getInstance($connection)->createCommandBuilder();
@@ -35,6 +41,7 @@ class TPreparedCommand
 		}
 		$command = $connection->createCommand($sql);
 		$this->applyParameterMap($manager, $command, $prepared, $statement, $parameterObject);
+
 		return $command;
 	}
 

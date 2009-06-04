@@ -6,7 +6,7 @@
  * @link http://www.pradosoft.com/
  * @copyright Copyright &copy; 2005-2008 PradoSoft
  * @license http://www.pradosoft.com/license/
- * @version $Id: TI18NControl.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TI18NControl.php 2624 2009-03-19 21:20:47Z godzilla80@gmx.net $
  * @package System.I18N
  */
 
@@ -49,11 +49,11 @@ class TI18NControl extends TControl
 
 		//fall back to globalization charset
 		if(empty($charset))
-			$charset = is_null($app) ? '' : $app->getCharset();
+			$charset = ($app===null) ? '' : $app->getCharset();
 
 		//fall back to default charset
 		if(empty($charset))
-			$charset = (is_null($app)) ? 'UTF-8' : $app->getDefaultCharset();
+			$charset = ($app===null) ? 'UTF-8' : $app->getDefaultCharset();
 
 		return $charset;
 	}

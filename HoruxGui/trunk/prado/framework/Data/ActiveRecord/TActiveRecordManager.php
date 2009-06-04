@@ -6,7 +6,7 @@
  * @link http://www.pradosoft.com/
  * @copyright Copyright &copy; 2005-2008 PradoSoft
  * @license http://www.pradosoft.com/license/
- * @version $Id: TActiveRecordManager.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TActiveRecordManager.php 2648 2009-05-10 10:51:52Z godzilla80@gmx.net $
  * @package System.Data.ActiveRecord
  */
 
@@ -31,7 +31,7 @@ Prado::using('System.Data.ActiveRecord.TActiveRecordGateway');
  * the active record gateway to cache the table meta data information.
  *
  * @author Wei Zhuo <weizho[at]gmail[dot]com>
- * @version $Id: TActiveRecordManager.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TActiveRecordManager.php 2648 2009-05-10 10:51:52Z godzilla80@gmx.net $
  * @package System.Data.ActiveRecord
  * @since 3.1
  */
@@ -42,6 +42,14 @@ class TActiveRecordManager extends TComponent
 	private $_connection;
 
 	private $_cache;
+
+	/**
+	 * Defaults to '{@link TActiveRecordInvalidFinderResult::Null Null}'
+	 *
+	 * @var TActiveRecordInvalidFinderResult
+	 * @since 3.1.5
+	 */
+	private $_invalidFinderResult = TActiveRecordInvalidFinderResult::Null;
 
 	/**
 	 * @return ICache application cache.
@@ -106,6 +114,25 @@ class TActiveRecordManager extends TComponent
 	{
 		return new TActiveRecordGateway($this);
 	}
+
+	/**
+	 * @return TActiveRecordInvalidFinderResult Defaults to '{@link TActiveRecordInvalidFinderResult::Null Null}'.
+	 * @since 3.1.5
+	 * @see setInvalidFinderResult
+	 */
+	public function getInvalidFinderResult()
+	{
+		return $this->_invalidFinderResult;
+	}
+
+	/**
+	 * Define the way an active record finder react if an invalid magic-finder invoked
+	 * @param TActiveRecordInvalidFinderResult
+	 * @since 3.1.5
+	 * @see getInvalidFinderResult
+	 */
+	public function setInvalidFinderResult($value)
+	{
+		$this->_invalidFinderResult = TPropertyValue::ensureEnum($value, 'TActiveRecordInvalidFinderResult');
+	}
 }
-
-

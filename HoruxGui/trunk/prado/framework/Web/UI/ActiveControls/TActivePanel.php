@@ -6,7 +6,7 @@
  * @link http://www.pradosoft.com/
  * @copyright Copyright &copy; 2005-2008 PradoSoft
  * @license http://www.pradosoft.com/license/
- * @version $Id: TActivePanel.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TActivePanel.php 2642 2009-04-29 06:22:27Z Christophe.Boulain $
  * @package System.Web.UI.ActiveControls
  */
 
@@ -32,7 +32,7 @@ Prado::using('System.Web.UI.ActiveControls.TActiveControlAdapter');
  * </code>
  *
  * @author Wei Zhuo <weizhuo[at]gmail[dot]com>
- * @version $Id: TActivePanel.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TActivePanel.php 2642 2009-04-29 06:22:27Z Christophe.Boulain $
  * @package System.Web.UI.ActiveControls
  * @since 3.1
  */
@@ -55,6 +55,15 @@ class TActivePanel extends TPanel implements IActiveControl
 	public function getActiveControl()
 	{
 		return $this->getAdapter()->getBaseActiveControl();
+	}
+
+	/**
+	 * Adds attribute id to the renderer.
+	 * @param THtmlWriter the writer used for the rendering purpose
+	 */
+	protected function addAttributesToRender($writer) {
+	    $writer->addAttribute('id',$this->getClientID());
+	    parent::addAttributesToRender($writer);
 	}
 
 	/**

@@ -6,7 +6,7 @@
  * @link http://www.pradosoft.com/
  * @copyright Copyright &copy; 2005-2008 PradoSoft
  * @license http://www.pradosoft.com/license/
- * @version $Id: TSqlMapConfig.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TSqlMapConfig.php 2659 2009-05-23 07:52:15Z godzilla80@gmx.net $
  * @package System.Data.SqlMap
  */
 
@@ -18,7 +18,7 @@ Prado::using('System.Data.TDataSourceConfig');
  * Database connection and TSqlMapManager configuration.
  *
  * @author Wei Zhuo <weizho[at]gmail[dot]com>
- * @version $Id: TSqlMapConfig.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TSqlMapConfig.php 2659 2009-05-23 07:52:15Z godzilla80@gmx.net $
  * @package System.Data.SqlMap
  * @since 3.1
  */
@@ -49,7 +49,7 @@ class TSqlMapConfig extends TDataSourceConfig
 		$cache = $this->getApplication()->getCache();
 		if($cache !== null) {
 			$cache->delete($this->getCacheKey());
-		}	
+		}
 	}
 
 	/**
@@ -62,7 +62,10 @@ class TSqlMapConfig extends TDataSourceConfig
 		{
 			$cache = $this->getApplication()->getCache();
 			if($cache !== null) {
-				return $cache->set($this->getCacheKey(), $manager);
+				$dependencies = null;
+				if($this->getApplication()->getMode() !== TApplicationMode::Performance)
+					$dependencies = $manager->getCacheDependencies();
+				return $cache->set($this->getCacheKey(), $manager, 0, $dependencies);
 			}
 		}
 		return false;
@@ -146,6 +149,9 @@ class TSqlMapConfig extends TDataSourceConfig
 				$manager->configureXml($file);
 				$this->cacheSqlMapManager($manager);
 			}
+		}
+		else {
+			$manager->setDbConnection($this->getDbConnection());
 		}
 		return $manager->getSqlmapGateway();
 	}

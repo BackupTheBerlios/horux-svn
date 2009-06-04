@@ -6,7 +6,7 @@
  * @link http://www.pradosoft.com/
  * @copyright Copyright &copy; 2005-2008 PradoSoft
  * @license http://www.pradosoft.com/license/
- * @version $Id: TListControl.php 2591 2008-12-19 20:31:18Z carlgmathisen $
+ * @version $Id: TListControl.php 2624 2009-03-19 21:20:47Z godzilla80@gmx.net $
  * @package System.Web.UI.WebControls
  */
 
@@ -74,7 +74,7 @@ Prado::using('System.Util.TDataFieldAccessor');
  * for an explanation of the format string.
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
- * @version $Id: TListControl.php 2591 2008-12-19 20:31:18Z carlgmathisen $
+ * @version $Id: TListControl.php 2624 2009-03-19 21:20:47Z godzilla80@gmx.net $
  * @package System.Web.UI.WebControls
  * @since 3.0
  */
@@ -884,7 +884,7 @@ abstract class TListControl extends TDataBoundControl implements IDataRenderer
  * TListItemCollection maintains a list of {@link TListItem} for {@link TListControl}.
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
- * @version $Id: TListControl.php 2591 2008-12-19 20:31:18Z carlgmathisen $
+ * @version $Id: TListControl.php 2624 2009-03-19 21:20:47Z godzilla80@gmx.net $
  * @package System.Web.UI.WebControls
  * @since 3.0
  */
@@ -913,7 +913,7 @@ class TListItemCollection extends TList
 	protected function createNewListItem($text=null)
 	{
 		$item =  new TListItem;
-		if(!is_null($text))
+		if($text!==null)
 			$item->setText($text);
 		return $item;
 	}

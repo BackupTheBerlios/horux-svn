@@ -6,7 +6,7 @@
  * @link http://www.pradosoft.com/
  * @copyright Copyright &copy; 2005-2008 PradoSoft
  * @license http://www.pradosoft.com/license/
- * @version $Id: TCallbackClientSide.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TCallbackClientSide.php 2624 2009-03-19 21:20:47Z godzilla80@gmx.net $
  * @package System.Web.UI.ActiveControls
  */
 
@@ -47,7 +47,7 @@
  *   viewstate update. This will automatically set HasPrority to true when enabled.
  *
  * @author Wei Zhuo <weizhuo[at]gamil[dot]com>
- * @version $Id: TCallbackClientSide.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TCallbackClientSide.php 2624 2009-03-19 21:20:47Z godzilla80@gmx.net $
  * @package System.Web.UI.ActiveControls
  * @since 3.1
  */
@@ -247,7 +247,7 @@ class TCallbackClientSide extends TClientSideOptions
 	public function getHasPriority()
 	{
 		$option =  $this->getOption('HasPriority');
-		return is_null($option) ? true : $option;
+		return ($option===null) ? true : $option;
 	}
 
 	/**
@@ -284,7 +284,7 @@ class TCallbackClientSide extends TClientSideOptions
 	public function getEnablePageStateUpdate()
 	{
 		$option = $this->getOption('EnablePageStateUpdate');
-		return is_null($option) ? true : $option;
+		return ($option===null) ? true : $option;
 	}
 
 	/**

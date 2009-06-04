@@ -6,7 +6,7 @@
  * @link http://www.pradosoft.com/
  * @copyright Copyright &copy; 2005-2008 PradoSoft
  * @license http://www.pradosoft.com/license/
- * @version $Id: TLogRouter.php 2563 2008-11-11 10:03:41Z haertl.mike $
+ * @version $Id: TLogRouter.php 2658 2009-05-23 06:12:08Z godzilla80@gmx.net $
  * @package System.Util
  */
 
@@ -31,7 +31,7 @@ Prado::using('System.Data.TDbConnection');
  * targets, even if the routes are of the same type.
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
- * @version $Id: TLogRouter.php 2563 2008-11-11 10:03:41Z haertl.mike $
+ * @version $Id: TLogRouter.php 2658 2009-05-23 06:12:08Z godzilla80@gmx.net $
  * @package System.Util
  * @since 3.0
  */
@@ -97,8 +97,8 @@ class TLogRouter extends TModule
 
 	/**
 	 * Adds a TLogRoute instance to the log router.
-	 * 
-	 * @param TLogRoute $route 
+	 *
+	 * @param TLogRoute $route
 	 * @throws TInvalidDataTypeException if the route object is invalid
 	 */
 	public function addRoute($route)
@@ -159,7 +159,7 @@ class TLogRouter extends TModule
  * satisfying both filter conditions will they be returned.
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
- * @version $Id: TLogRouter.php 2563 2008-11-11 10:03:41Z haertl.mike $
+ * @version $Id: TLogRouter.php 2658 2009-05-23 06:12:08Z godzilla80@gmx.net $
  * @package System.Util
  * @since 3.0
  */
@@ -332,7 +332,7 @@ abstract class TLogRoute extends TApplicationComponent
  * specifies how many files to be kept.
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
- * @version $Id: TLogRouter.php 2563 2008-11-11 10:03:41Z haertl.mike $
+ * @version $Id: TLogRouter.php 2658 2009-05-23 06:12:08Z godzilla80@gmx.net $
  * @package System.Util
  * @since 3.0
  */
@@ -472,7 +472,7 @@ class TFileLogRoute extends TLogRoute
  * {@link setSentFrom SentFrom} address.
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
- * @version $Id: TLogRouter.php 2563 2008-11-11 10:03:41Z haertl.mike $
+ * @version $Id: TLogRouter.php 2658 2009-05-23 06:12:08Z godzilla80@gmx.net $
  * @package System.Util
  * @since 3.0
  */
@@ -598,7 +598,7 @@ class TEmailLogRoute extends TLogRoute
  * TBrowserLogRoute prints selected log messages in the response.
  *
  * @author Xiang Wei Zhuo <weizhuo[at]gmail[dot]com>
- * @version $Id: TLogRouter.php 2563 2008-11-11 10:03:41Z haertl.mike $
+ * @version $Id: TLogRouter.php 2658 2009-05-23 06:12:08Z godzilla80@gmx.net $
  * @package System.Util
  * @since 3.0
  */
@@ -632,14 +632,14 @@ class TBrowserLogRoute extends TLogRoute
 	protected function renderHeader()
 	{
 		$string = <<<EOD
-<table cellspacing="0" cellpadding="2" border="0" width="100%">
+<table cellspacing="0" cellpadding="2" border="0" width="100%" style="table-layout:auto">
 	<tr>
-		<th style="background-color: black; color:white;" colspan="11">
+		<th style="background-color: black; color:white;" colspan="5">
 			Application Log
 		</th>
-	</tr><tr style="background-color: #ccc;">
-	    <th>&nbsp;</th>
-		<th>Category</th><th>Message</th><th>Time Spent (s)</th><th>Cumulated Time Spent (s)</th>
+	</tr><tr style="background-color: #ccc; color:black">
+	    <th style="width: 15px">&nbsp;</th>
+		<th style="width: auto">Category</th><th style="width: auto">Message</th><th style="width: 120px">Time Spent (s)</th><th style="width: 150px">Cumulated Time Spent (s)</th>
 	</tr>
 EOD;
 		return $string;
@@ -654,7 +654,7 @@ EOD;
 		$msg = preg_replace('/\(line[^\)]+\)$/','',$log[0]); //remove line number info
 		$msg = THttpUtility::htmlEncode($msg);
 		$string = <<<EOD
-	<tr style="background-color: {$bgcolor};">
+	<tr style="background-color: {$bgcolor}; color:#000">
 		<td style="border:1px solid silver;background-color: $color;">&nbsp;</td>
 		<td>{$log[2]}</td>
 		<td>{$msg}</td>
@@ -682,11 +682,11 @@ EOD;
 
 	protected function renderFooter()
 	{
-		$string = "<tr><td colspan=\"11\" style=\"text-align:center; border-top: 1px solid #ccc; padding:0.2em;\">";
+		$string = "<tr><td colspan=\"5\" style=\"text-align:center; background-color:black; border-top: 1px solid #ccc; padding:0.2em;\">";
 		foreach(self::$_levelValues as $name => $level)
 		{
-			$string .= "<span style=\"color:white;background-color:".$this->getColorLevel($level);
-			$string .= ";margin: 0.5em;\">".strtoupper($name)."</span>";
+			$string .= "<span style=\"color:white; border:1px solid white; background-color:".$this->getColorLevel($level);
+			$string .= ";margin: 0.5em; padding:0.01em;\">".strtoupper($name)."</span>";
 		}
 		$string .= "</td></tr></table>";
 		return $string;
@@ -716,7 +716,7 @@ EOD;
  * </code>
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
- * @version $Id: TLogRouter.php 2563 2008-11-11 10:03:41Z haertl.mike $
+ * @version $Id: TLogRouter.php 2658 2009-05-23 06:12:08Z godzilla80@gmx.net $
  * @package System.Util
  * @since 3.1.2
  */
@@ -764,7 +764,7 @@ class TDbLogRoute extends TLogRoute
 		$sql='SELECT * FROM '.$this->_logTable.' WHERE 0';
 		try
 		{
-			$db->createCommand($sql)->execute();
+			$db->createCommand($sql)->query()->close();
 		}
 		catch(Exception $e)
 		{
@@ -788,26 +788,33 @@ class TDbLogRoute extends TLogRoute
 		$command=$this->getDbConnection()->createCommand($sql);
 		foreach($logs as $log)
 		{
-			$command->bindValue(':level',$log[0]);
-			$command->bindValue(':category',$log[1]);
-			$command->bindValue(':logtime',$log[2]);
-			$command->bindValue(':message',$log[3]);
+			$command->bindValue(':message',$log[0]);
+			$command->bindValue(':level',$log[1]);
+			$command->bindValue(':category',$log[2]);
+			$command->bindValue(':logtime',$log[3]);
 			$command->execute();
 		}
 	}
 
 	/**
 	 * Creates the DB table for storing log messages.
+	 * @todo create sequence for PostgreSQL
 	 */
 	protected function createDbTable()
 	{
+		$db = $this->getDbConnection();
+		$driver=$db->getDriverName();
+		$autoidAttributes = '';
+		if($driver==='mysql')
+			$autoidAttributes = 'AUTO_INCREMENT';
+
 		$sql='CREATE TABLE '.$this->_logTable.' (
-			log_id INTEGER NOT NULL PRIMARY KEY,
+			log_id INTEGER NOT NULL PRIMARY KEY ' . $autoidAttributes . ',
 			level INTEGER,
 			category VARCHAR(128),
 			logtime VARCHAR(20),
 			message VARCHAR(255))';
-		$this->getDbConnection()->createCommand($sql)->execute();
+		$db->createCommand($sql)->execute();
 	}
 
 	/**
@@ -915,7 +922,7 @@ class TDbLogRoute extends TLogRoute
  * {@link http://www.getfirebug.com/ FireBug Website}
  *
  * @author Enrico Stahn <mail@enricostahn.com>, Christophe Boulain <Christophe.Boulain@gmail.com>
- * @version $Id: TLogRouter.php 2563 2008-11-11 10:03:41Z haertl.mike $
+ * @version $Id: TLogRouter.php 2658 2009-05-23 06:12:08Z godzilla80@gmx.net $
  * @package System.Util
  * @since 3.1.2
  */
@@ -981,4 +988,101 @@ EOD;
 	}
 
 }
-?>
+
+/**
+ * TFirePhpLogRoute class.
+ *
+ * TFirePhpLogRoute prints log messages in the firebug log console via firephp.
+ *
+ * {@link http://www.getfirebug.com/ FireBug Website}
+ * {@link http://www.firephp.org/ FirePHP Website}
+ *
+ * @author Yves Berkholz <godzilla80[at]gmx[dot]net>
+ * @version $Id: TLogRouter.php 2658 2009-05-23 06:12:08Z godzilla80@gmx.net $
+ * @package System.Util
+ * @since 3.1.5
+ */
+class TFirePhpLogRoute extends TLogRoute
+{
+	/**
+	 * Default group label
+	 */
+	const DEFAULT_LABEL = 'System.Util.TLogRouter(TFirePhpLogRoute)';
+
+	private $_groupLabel = null;
+
+	public function processLogs($logs)
+	{
+		if(empty($logs) || $this->getApplication()->getMode()==='Performance') return;
+
+		require_once Prado::getPathOfNamespace('System.3rdParty.FirePHPCore') . '/FirePHP.class.php';
+		$firephp = FirePHP::getInstance(true);
+		$firephp -> setOptions(array('useNativeJsonEncode' => false));
+
+		$firephp -> group($this->getGroupLabel(), array('Collapsed' => true));
+
+		$firephp ->log('Time,  Message');
+
+		$first = $logs[0][3];
+		$c = count($logs);
+		for($i=0,$n=$c;$i<$n;++$i)
+		{
+			$message	= $logs[$i][0];
+			$level		= $logs[$i][1];
+			$category	= $logs[$i][2];
+
+			if ($i<$n-1)
+			{
+				$delta = $logs[$i+1][3] - $logs[$i][3];
+				$total = $logs[$i+1][3] - $first;
+			}
+			else
+			{
+				$delta = '?';
+				$total = $logs[$i][3] - $first;
+			}
+
+			$message = sPrintF('+%0.6f: %s', $delta, preg_replace('/\(line[^\)]+\)$/','',$message));
+			$firephp ->fb($message, $category, self::translateLogLevel($level));
+		}
+		$firephp ->log( sPrintF('%0.6f', $total), 'Cumulated Time');
+		$firephp -> groupEnd();
+	}
+
+	protected static function translateLogLevel($level)
+	{
+		switch($level)
+		{
+			case TLogger::INFO:
+				return FirePHP::INFO;
+			case TLogger::DEBUG:
+			case TLogger::NOTICE:
+				return FirePHP::LOG;
+			case TLogger::WARNING:
+				return FirePHP::WARN;
+			case TLogger::ERROR:
+			case TLogger::ALERT:
+			case TLogger::FATAL:
+				return FirePHP::ERROR;
+		}
+		return FirePHP::LOG;
+	}
+
+	/**
+	 * @return string group label. Defaults to TFirePhpLogRoute::DEFAULT_LABEL
+	 */
+	public function getGroupLabel()
+	{
+		if($this->_groupLabel===null)
+			$this->_groupLabel=self::DEFAULT_LABEL;
+		return $this->_groupLabel;
+	}
+
+	/**
+	 * @param string group label.
+	 */
+	public function setGroupLabel($value)
+	{
+		$this->_groupLabel=$value;
+	}
+}

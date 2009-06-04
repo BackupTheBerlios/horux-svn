@@ -6,7 +6,7 @@
  * @link http://www.pradosoft.com/
  * @copyright Copyright &copy; 2005-2008 PradoSoft
  * @license http://www.pradosoft.com/license/
- * @version $Id: TActiveRecordGateway.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TActiveRecordGateway.php 2618 2009-03-16 10:41:42Z Christophe.Boulain $
  * @package System.Data.ActiveRecord
  */
 
@@ -15,7 +15,7 @@
  * record as arrays (for most finder methods).
  *
  * @author Wei Zhuo <weizho[at]gmail[dot]com>
- * @version $Id: TActiveRecordGateway.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TActiveRecordGateway.php 2618 2009-03-16 10:41:42Z Christophe.Boulain $
  * @package System.Data.ActiveRecord
  * @since 3.1
  */
@@ -349,7 +349,7 @@ class TActiveRecordGateway extends TComponent
 					$tableInfo->getTableFullName(), $name);
 			}
 			if($column->getIsPrimaryKey())
-				$primary[] = $value;
+				$primary[$name] = $value;
 			else
 				$values[$name] = $value;
 		}

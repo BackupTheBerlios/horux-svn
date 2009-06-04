@@ -6,7 +6,7 @@
  * @link http://www.pradosoft.com/
  * @copyright Copyright &copy; 2005-2008 PradoSoft
  * @license http://www.pradosoft.com/license/
- * @version $Id: TResultMap.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TResultMap.php 2624 2009-03-19 21:20:47Z godzilla80@gmx.net $
  * @package System.Data.SqlMap.Configuration
  */
 
@@ -32,7 +32,7 @@
  * from the "parent" <resultMap> are set before any values specified by this <resultMap>.
  *
  * @author Wei Zhuo <weizho[at]gmail[dot]com>
- * @version $Id: TResultMap.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TResultMap.php 2624 2009-03-19 21:20:47Z godzilla80@gmx.net $
  * @package System.Data.SqlMap.Configuration
  * @since 3.1
  */
@@ -162,7 +162,7 @@ class TResultMap extends TComponent
 		$handler = $registry->getTypeHandler($this->getClass());
 		try
 		{
-			if(!is_null($handler))
+			if($handler!==null)
 				return $handler->createNewInstance();
 			else
 				return $registry->createInstanceOf($this->getClass());
@@ -184,12 +184,12 @@ class TResultMap extends TComponent
 	public function resolveSubMap($registry,$row)
 	{
 		$subMap = $this;
-		if(!is_null($disc = $this->getDiscriminator()))
+		if(($disc = $this->getDiscriminator())!==null)
 		{
 			$value = $disc->getMapping()->getPropertyValue($registry,$row);
 			$subMap = $disc->getSubMap((string)$value);
 
-			if(is_null($subMap))
+			if($subMap===null)
 				$subMap = $this;
 			else if($subMap !== $this)
 				$subMap = $subMap->resolveSubMap($registry,$row);

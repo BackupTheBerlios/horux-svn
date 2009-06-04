@@ -545,6 +545,7 @@ Prado.WebUI.TValidationSummary.prototype =
 		 * @var {element} messages
 		 */
 		this.messages = $(options.ID);
+		Prado.Registry.set(options.ID, this);
 		if(this.messages)
 		{
 			/**
@@ -674,7 +675,7 @@ Prado.WebUI.TValidationSummary.prototype =
 	/**
 	 * Return the format parameters for the summary.
 	 * @function {object} ?
-	 * @param {string} type - Format type: "List", "SingleParagraph" or "BulletList" (default)
+	 * @param {string} type - Format type: "List", "SingleParagraph", "HeaderOnly" or "BulletList" (default)
 	 * @return Object with format parameters:
 	 * @... {string} header - Text for header
 	 * @... {string} first - Text to prepend before message list
@@ -690,6 +691,8 @@ Prado.WebUI.TValidationSummary.prototype =
 				return { header : "<br />", first : "", pre : "", post : "<br />", last : ""};
 			case "SingleParagraph":
 				return { header : " ", first : "", pre : "", post : " ", last : "<br />"};
+			case "HeaderOnly":
+				return { header : "", first : "<!--", pre : "", post : "", last : "-->"};
 			case "BulletList":
 			default:
 				return { header : "", first : "<ul>", pre : "<li>", post : "</li>", last : "</ul>"};
@@ -831,6 +834,7 @@ Prado.WebUI.TBaseValidator.prototype =
 		 * @var {element} message
 		 */
 		this.message = $(options.ID);
+		Prado.Registry.set(options.ID, this);
 		if(this.control && this.message)
 		{
 			this.group = options.ValidationGroup;

@@ -6,7 +6,7 @@
  * @link http://www.pradosoft.com/
  * @copyright Copyright &copy; 2005-2008 PradoSoft
  * @license http://www.pradosoft.com/license/
- * @version $Id: TDatePicker.php 2575 2008-12-01 13:18:33Z carlgmathisen $
+ * @version $Id: TDatePicker.php 2624 2009-03-19 21:20:47Z godzilla80@gmx.net $
  * @package System.Web.UI.WebControls
  */
 
@@ -65,7 +65,7 @@ Prado::using('System.Web.UI.WebControls.TTextBox');
  *
  * @author Wei Zhuo <weizhuo[at]gmail[dot]com>
  * @author Carl G. Mathisen <carlgmathisen@gmail.com>
- * @version $Id: TDatePicker.php 2575 2008-12-01 13:18:33Z carlgmathisen $
+ * @version $Id: TDatePicker.php 2624 2009-03-19 21:20:47Z godzilla80@gmx.net $
  * @package System.Web.UI.WebControls
  * @since 3.0
  */
@@ -366,7 +366,7 @@ class TDatePicker extends TTextBox
 	 */
 	public function getClientSide()
 	{
-		if(is_null($this->_clientScript))
+		if($this->_clientScript===null)
 			$this->_clientScript = $this->createClientScript();
 		return $this->_clientScript;
 	}
@@ -529,7 +529,7 @@ class TDatePicker extends TTextBox
 		$options['PositionMode'] = $this->getPositionMode();
 
 		$options = array_merge($options, $this->getCulturalOptions());
-		if(!is_null($this->_clientScript))
+		if($this->_clientScript!==null)
 			$options = array_merge($options,
 				$this->_clientScript->getOptions()->toArray());
 		return $options;
@@ -610,7 +610,7 @@ class TDatePicker extends TTextBox
 	{
 		$formatter = Prado::createComponent('System.Util.TSimpleDateFormatter',
 						$this->getDateFormat());
-		return !is_null($formatter->getDayPattern());
+		return ($formatter->getDayPattern()!==null);
 	}
 
 	/**
@@ -879,7 +879,7 @@ class TDatePicker extends TTextBox
  * as parameter to this event
  * 
  * @author Wei Zhuo <weizhuo[at]gmail[dot]com>
- * @version $Id: TDatePicker.php 2575 2008-12-01 13:18:33Z carlgmathisen $
+ * @version $Id: TDatePicker.php 2624 2009-03-19 21:20:47Z godzilla80@gmx.net $
  * @package System.Web.UI.WebControls
  * @since 3.0.4
  */
@@ -913,7 +913,7 @@ class TDatePickerClientScript extends TClientSideOptions
  * - DropDownList: dropdown lists are used to pick up date values
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
- * @version $Id: TDatePicker.php 2575 2008-12-01 13:18:33Z carlgmathisen $
+ * @version $Id: TDatePicker.php 2624 2009-03-19 21:20:47Z godzilla80@gmx.net $
  * @package System.Web.UI.WebControls
  * @since 3.0.4
  */
@@ -934,7 +934,7 @@ class TDatePickerInputMode extends TEnumerable
  * - ImageButton: Shows an image next to the text input, clicking on the image shows the date picker,
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
- * @version $Id: TDatePicker.php 2575 2008-12-01 13:18:33Z carlgmathisen $
+ * @version $Id: TDatePicker.php 2624 2009-03-19 21:20:47Z godzilla80@gmx.net $
  * @package System.Web.UI.WebControls
  * @since 3.0.4
  */

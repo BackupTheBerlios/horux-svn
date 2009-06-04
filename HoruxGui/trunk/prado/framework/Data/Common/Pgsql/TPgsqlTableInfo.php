@@ -6,7 +6,7 @@
  * @link http://www.pradosoft.com/
  * @copyright Copyright &copy; 2005-2008 PradoSoft
  * @license http://www.pradosoft.com/license/
- * @version $Id: TPgsqlTableInfo.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TPgsqlTableInfo.php 2654 2009-05-14 07:34:16Z godzilla80@gmx.net $
  * @package System.Data.Common.Pgsql
  */
 
@@ -20,7 +20,7 @@ Prado::using('System.Data.Common.Pgsql.TPgsqlTableColumn');
  * TPgsqlTableInfo class provides additional table information for PostgreSQL database.
  *
  * @author Wei Zhuo <weizho[at]gmail[dot]com>
- * @version $Id: TPgsqlTableInfo.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TPgsqlTableInfo.php 2654 2009-05-14 07:34:16Z godzilla80@gmx.net $
  * @package System.Data.Common.Pgsql
  * @since 3.1
  */
@@ -42,7 +42,7 @@ class TPgsqlTableInfo extends TDbTableInfo
 		if(($schema=$this->getSchemaName())!==null)
 			return $schema.'.'.$this->getTableName();
 		else
-			$this->getTableName();
+			return $this->getTableName();
 	}
 
 	/**

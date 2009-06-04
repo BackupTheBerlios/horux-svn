@@ -6,7 +6,7 @@
  * @link http://www.pradosoft.com/
  * @copyright Copyright &copy; 2005-2008 PradoSoft
  * @license http://www.pradosoft.com/license/
- * @version $Id: TParameterMap.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TParameterMap.php 2624 2009-03-19 21:20:47Z godzilla80@gmx.net $
  * @package System.Data.SqlMap.Configuration
  */
 
@@ -26,7 +26,7 @@
  * The <parameterMap> element accepts two attributes: id (required) and extends (optional).
  *
  * @author Wei Zhuo <weizho[at]gmail[dot]com>
- * @version $Id: TParameterMap.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TParameterMap.php 2624 2009-03-19 21:20:47Z godzilla80@gmx.net $
  * @package System.Data.SqlMap.Configuration
  * @since 3.1
  */
@@ -140,12 +140,12 @@ class TParameterMap extends TComponent
 	{
 		$value = $this->getObjectValue($parameterValue,$property);
 
-		if(!is_null($handler=$this->createTypeHandler($property, $registry)))
+		if(($handler=$this->createTypeHandler($property, $registry))!==null)
 			$value = $handler->getParameter($value);
 
 		$value = $this->nullifyDefaultValue($property,$value);
 
-		if(!is_null($type = $property->getType()))
+		if(($type = $property->getType())!==null)
 			$value = $registry->convertToType($type, $value);
 
 		return $value;
@@ -197,7 +197,7 @@ class TParameterMap extends TComponent
 	 */
 	protected function nullifyDefaultValue($property,$value)
 	{
-		if(!is_null($nullValue = $property->getNullValue()))
+		if(($nullValue = $property->getNullValue())!==null)
 		{
 			if($nullValue === $value)
 				$value = null;

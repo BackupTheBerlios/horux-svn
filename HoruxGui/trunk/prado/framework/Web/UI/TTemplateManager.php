@@ -6,7 +6,7 @@
  * @link http://www.pradosoft.com/
  * @copyright Copyright &copy; 2005-2008 PradoSoft
  * @license http://www.pradosoft.com/license/
- * @version $Id: TTemplateManager.php 2567 2008-11-12 16:53:52Z carlgmathisen $
+ * @version $Id: TTemplateManager.php 2625 2009-03-19 22:07:39Z godzilla80@gmx.net $
  * @package System.Web.UI
  */
 
@@ -32,7 +32,7 @@ Prado::using('System.Web.UI.WebControls.TOutputCache');
  * template manager module that can be accessed via {@link TPageService::getTemplateManager()}.
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
- * @version $Id: TTemplateManager.php 2567 2008-11-12 16:53:52Z carlgmathisen $
+ * @version $Id: TTemplateManager.php 2625 2009-03-19 22:07:39Z godzilla80@gmx.net $
  * @package System.Web.UI
  * @since 3.0
  */
@@ -162,7 +162,7 @@ class TTemplateManager extends TModule
  * set their parent as $control.
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
- * @version $Id: TTemplateManager.php 2567 2008-11-12 16:53:52Z carlgmathisen $
+ * @version $Id: TTemplateManager.php 2625 2009-03-19 22:07:39Z godzilla80@gmx.net $
  * @package System.Web.UI
  * @since 3.0
  */
@@ -608,7 +608,7 @@ class TTemplate extends TApplicationComponent implements ITemplate
 					$tpl[$c++]=array($container,$type,$attributes);
 					if($str[strlen($str)-2]!=='/')  // open tag
 					{
-						array_push($stack,$type);
+						$stack[] = $type;
 						$container=$c-1;
 					}
 				}
@@ -695,7 +695,7 @@ class TTemplate extends TApplicationComponent implements ITemplate
 					else  // regular property
 					{
 						$prop=strtolower($match[3][0]);
-						array_push($stack,'@'.$prop);
+						$stack[] = '@'.$prop;
 						if(!$expectPropEnd)
 						{
 							if($matchStart>$textStart)
