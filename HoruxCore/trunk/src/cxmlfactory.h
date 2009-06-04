@@ -22,7 +22,6 @@
 #define CXMLFACTORY_H
 
 #include <QtCore>
-#include <QtXml>
 
 class CXmlFactory
 {
