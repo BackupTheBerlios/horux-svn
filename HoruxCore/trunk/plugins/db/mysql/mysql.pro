@@ -20,6 +20,9 @@ INCLUDEPATH += ../../../src/interfaces
 
 DESTDIR = ../../../bin/plugins/db
 
+OBJECTS += ../../../src/cxmlfactory.o
+
+
 unix {
   library.path = /usr/share/horux/core/plugins/db
   library.files = $$DESTDIR/libmysql.so

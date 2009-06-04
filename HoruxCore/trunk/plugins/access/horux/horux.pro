@@ -18,6 +18,8 @@ SOURCES += accesshoruxplugin.cpp
 
 DESTDIR = ../../../bin/plugins/access
 
+OBJECTS += ../../../src/cxmlfactory.o
+
 unix {
     library.path = /usr/share/horux/core/plugins/access
     library.files = $$DESTDIR/libhorux.so

@@ -19,8 +19,8 @@ TEMPLATE = app
 CONFIG += warn_on \
 	  thread \
           qt
-TARGET = horuxmedia
-DESTDIR = ../bin
+TARGET = ../bin/horuxmedia
+
 QT += xml \
 network \
  phonon \
@@ -62,3 +62,17 @@ TARGETDEPS += ../maia_xmlrpc/libmaia_xmlrpc.a
 
 RESOURCES += res.qrc
 
+unix {
+    binary.path = /usr/share/horux/media
+    binary.commands = install \
+        -m \
+        777 \
+        -p \
+        $$TARGET \
+        /usr/share/horux/media \
+        && \
+        $(SYMLINK) \
+        /usr/share/horux/media/horuxmedia \
+        /usr/bin/horuxmedia
+    INSTALLS += binary
+}

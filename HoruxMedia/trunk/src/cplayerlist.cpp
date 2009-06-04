@@ -285,19 +285,21 @@ void CPlayerList::userDetected(QString userId)
     QString message = "";
     while(messageQuery.next())
     {
-      message += messageQuery.value(2).toString().toLatin1();
+      if(messageQuery.value(2).toString().toLatin1() != "")
+      {
+          message += messageQuery.value(2).toString().toLatin1();
+          message.replace(QString("{day}"), day);
+          message.replace(QString("{date}"), date);
+          message.replace(QString("{time}"), time);
+          message.replace(QString("{name}"), name);
+          message.replace(QString("{firstName}"), firstName);
 
-      message.replace(QString("{day}"), day);
-      message.replace(QString("{date}"), date);
-      message.replace(QString("{time}"), time);
-      message.replace(QString("{name}"), name);
-      message.replace(QString("{firstName}"), firstName);
-
-      message += "\n\n";
-
+          message += "\n\n";
+      }
     }
 
-      splash->setText(message);
+    if(message != "")
+        splash->setText(message);
 
 
   }

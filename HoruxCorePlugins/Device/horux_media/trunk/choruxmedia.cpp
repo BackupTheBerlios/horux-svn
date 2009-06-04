@@ -217,7 +217,7 @@ void CHoruxMedia::displayMessage(QString key)
 
   QVariantList args;
   args << userId;
-  rpc->call("horuxMedia.userDetected", args,
+  rpc->call("horuxInfoDisplay.userDetected", args,
                           this, SLOT(xmlrpcResponse(QVariant &)),
                           this, SLOT(xmlrpcFault(int, const QString &)));
 
@@ -228,7 +228,7 @@ void CHoruxMedia::xmlrpcResponse(QVariant &) {
 }
 
 void CHoruxMedia::xmlrpcFault(int error, const QString &message) {
-		qDebug() << "EEE:" << error << "-" << message;
+                qDebug() << "Horux Media error:" << error << "-" << message;
 }
 
 Q_EXPORT_PLUGIN2(horuxmedia, CHoruxMedia);

@@ -17,6 +17,9 @@ INCLUDEPATH += ../../../src/interfaces
 
 DESTDIR = ../../../bin/plugins/log
 
+OBJECTS += ../../../src/cxmlfactory.o
+
+
 unix {
     library.path = /usr/share/horux/core/plugins/log
     library.files = $$DESTDIR/libhtml.so
