@@ -18,7 +18,9 @@ SOURCES += main.cpp \
 TEMPLATE = app
 CONFIG += warn_on \
 	  thread \
-          qt
+          qt \
+          release
+
 TARGET = ../bin/horuxmedia
 
 QT += xml \
