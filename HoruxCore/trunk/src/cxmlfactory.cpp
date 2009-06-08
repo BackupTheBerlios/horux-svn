@@ -19,7 +19,7 @@
  ***************************************************************************/
 
 #include "cxmlfactory.h"
-#include <QtXml/QtXml>
+#include <QtXml>
 
 QString CXmlFactory::systemAlarm(QString id, QString e, QString m)
 {

@@ -5,9 +5,7 @@ plugin \
  release
 
 QT -= gui
-
-
-VERSION = 1.0.0.1
+QT += xml
 
 HEADERS += chtmllogplugin.h
 
@@ -17,7 +15,13 @@ INCLUDEPATH += ../../../src/interfaces
 
 DESTDIR = ../../../bin/plugins/log
 
+unix {
 OBJECTS += ../../../src/cxmlfactory.o
+}
+
+win32 {
+OBJECTS += ../../../src/release/cxmlfactory.o
+}
 
 
 unix {

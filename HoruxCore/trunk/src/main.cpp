@@ -54,6 +54,10 @@ void myMessageOutput ( QtMsgType type, const char *msg )
 
 int main ( int argc, char *argv[] )
 {
+
+    qInstallMsgHandler ( myMessageOutput );
+
+
 #if !defined(Q_WS_WIN)
     // QtService stores service settings in SystemScope, which normally require root privileges.
     // To allow testing Horux Core as non-root, we change the directory of the SystemScope settings file.
