@@ -791,7 +791,7 @@ class translate extends PageList
           $contenu=curl_exec($ch);
           curl_close($ch);
           //recup du mot traduit dans la variable $contenu par l'intermediaire du dom (31 ieme balise td , 2 ieme balise br et noeud suivant)
-
+//echo $contenu; exit;
          $doc = @DOMDocument::loadHTML($contenu);
           /*echo"$contenu";
 
@@ -808,9 +808,19 @@ class translate extends PageList
           $i++;
           }
           */
+          $isFind = false;
+          $i=0;
+          while(!$isFind && $i < 100)
+          {
+            $mot_traduit = $doc->getElementsByTagName('div')->item($i)/*->nodeValue*/;
+            if($mot_traduit->hasAttribute('id') && $mot_traduit->getAttribute('id') == 'result_box' )
+            {
+               $mot_traduit = $mot_traduit->nodeValue."<br>";
+               $isFind = true;
+            }
+            $i++;
+          }
 
-          $mot_traduit = $doc -> getElementsByTagName('div')->item('10')->nodeValue;
-        
           if ($mot_traduit!==""){return utf8_decode($mot_traduit);}else{return FALSE;}
 
         }
