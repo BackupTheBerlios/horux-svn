@@ -53,7 +53,6 @@ QString CXmlFactory::systemAlarm(QString id, QString e, QString m)
     param.appendChild(value);
 
     doc.appendChild(systemAlarm);
-
     return doc.toString();
 }
 
@@ -89,7 +88,6 @@ QString CXmlFactory::deviceEvent(QString id, QString e, QString m)
     param.appendChild(value);
 
     doc.appendChild(deviceEvent);
-
     return doc.toString();
 }
 
@@ -137,7 +135,6 @@ QString CXmlFactory::keyDetection(QString id, QString pn, QString k)
 
 
     doc.appendChild(deviceEvent);
-
     return doc.toString();
 }
 
@@ -173,7 +170,6 @@ QString CXmlFactory::accessAlarm(QString id, QString e, QString m)
     param.appendChild(value);
 
     doc.appendChild(accessAlarm);
-
     return doc.toString();
 }
 
@@ -216,7 +212,6 @@ QString CXmlFactory::deviceAction(QString id, QString f, QMap<QString, QString>p
 
 
     doc.appendChild(deviceAction);
-
     return doc.toString();
 
 }

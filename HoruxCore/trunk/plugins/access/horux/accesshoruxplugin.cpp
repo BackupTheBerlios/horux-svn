@@ -199,6 +199,12 @@ void AccessHoruxPlugin::checkFreeAccess()
 
 void AccessHoruxPlugin::deviceEvent(QMap<QString, QVariant> params)
 {
+    QString event = params["event"].toString();
+
+    //! handle only the key detection
+    if(event != "keyDetected")
+        return;
+
     QString key = params["key"].toString();
     QString deviceId = params["deviceId"].toString();
 
@@ -211,7 +217,7 @@ void AccessHoruxPlugin::deviceEvent(QMap<QString, QVariant> params)
 
     if(query.next() && query.value(0).toString() != metaObject()->classInfo ( index ).value()) return;
 
-	isAccess(params, true);
+    isAccess(params, true);
 }
 
 bool AccessHoruxPlugin::isAccess(QMap<QString, QVariant> params, bool emitAction)

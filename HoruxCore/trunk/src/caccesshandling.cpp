@@ -169,9 +169,11 @@ void CAccessHandling::deviceEvent ( QString xml )
     //! check if the request contain the tag "event"
     if ( event.tagName() == "event" )
     {
-
+        
+        funcParam["event"] = event.text();
+        
         //! check if the request contain the tag "keyDetected"
-        if ( event.text() == "keyDetected" )
+        if ( event.text() != "" )
         {
 
             eventNode = eventNode.nextSibling();

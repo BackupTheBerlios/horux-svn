@@ -25,6 +25,12 @@
 
 void CVeloPark::deviceEvent(QMap<QString, QVariant> params)
 {
+    QString event = params["event"].toString();
+
+    //! handle only the key detection
+    if(event != "keyDetected")
+        return;
+
     QString key = params["key"].toString();
     QString deviceId = params["deviceId"].toString();
 
