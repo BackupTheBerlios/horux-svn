@@ -13,6 +13,7 @@
     <using namespace="System.Web.UI.ActiveControls.*" />
     <using namespace="System.Security.*" />
     <using namespace="System.Util.*" />
+    <using namespace="Application.control.XWeekPlanner2.*" />
   </paths>
 
   <!-- configurations for modules -->

@@ -16,6 +16,8 @@ Prado::using('horux.pages.accessLevel.sql');
 
 class mod extends Page
 {
+    protected $timeArray = array();
+    
     public function onLoad($param)
     {
         parent::onLoad($param);
@@ -56,85 +58,6 @@ class mod extends Page
 	  		  $this->until->Text = $this->dateFromSql($data['validity_date_to']);	
 		  }
         } 
-
-        $cmd = $this->db->createCommand( SQL::SQL_GET_ACCESS_TIME_ID );
-        $cmd->bindParameter(":id",$this->id->Value, PDO::PARAM_INT);
-        $query = $cmd->query();
-        if($query)
-        {
-        	$data = $query->readAll();
-
-			$this->time1->Value = "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000";
-			$this->time2->Value = "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000";
-			$this->time3->Value = "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000";
-			$this->time4->Value = "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000";
-			$this->time5->Value = "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000";
-			$this->time6->Value = "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000";
-			$this->time7->Value = "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000";
-        	
-        	foreach($data as $d)
-        	{
-				$start = $d['from'];
-				$stop = $d['until'];
-				$day = $d['day'];
-      			  		
-				$n_case = ($stop - $start) / 15;
-
-				if($start == 0)
-					$index = 0; 
-				else
-					$index = ($start/15);
-				switch($day)
-				{
-					case "lundi": 
-						$v = $this->time1->Value;
-						for($i=0;$i<$n_case;$i++)
-							$v{$index+$i}  = '1';
-						$this->time1->Value = $v;
-						break;
-					case "mardi":
-						$v = $this->time2->Value;
-						for($i=0;$i<$n_case;$i++)
-							$v{$index+$i}  = '1';
-						$this->time2->Value = $v;
-						break;
-					case "mercredi":
-						$v = $this->time3->Value;
-						for($i=0;$i<$n_case;$i++)
-							$v{$index+$i}  = '1';
-						$this->time3->Value = $v;
-						break;
-					case "jeudi":
-						$v = $this->time4->Value;
-						for($i=0;$i<$n_case;$i++)
-							$v{$index+$i}  = '1';
-						$this->time4->Value = $v;
-						break; 
-					case "vendredi":
-						$v = $this->time5->Value;
-						for($i=0;$i<$n_case;$i++)
-							$v{$index+$i}  = '1';
-						$this->time5->Value = $v;
-						break;
-					case "samedi":
-						$v = $this->time6->Value;
-						for($i=0;$i<$n_case;$i++)
-							$v{$index+$i}  = '1';
-						$this->time6->Value = $v;
-						break;
-					case "dimanche":
-						$v = $this->time7->Value;
-						for($i=0;$i<$n_case;$i++)
-							$v{$index+$i}  = '1';
-						$this->time7->Value = $v;
-						break;
-				} 
-
-        	}
-        	
-        }
-        
-        
     }
 
     public function onApply($sender, $param)
@@ -199,48 +122,56 @@ class mod extends Page
    	    $cmd->bindParameter(":id",$this->id->Value, PDO::PARAM_INT);
 		$res = $cmd->execute();	
 
-			$this->saveTimeData($this->time1->Value, 'lundi', $this->Request['id']);
-			$this->saveTimeData($this->time2->Value, 'mardi', $this->Request['id']);
-			$this->saveTimeData($this->time3->Value, 'mercredi', $this->Request['id']);
-			$this->saveTimeData($this->time4->Value, 'jeudi', $this->Request['id']);
-			$this->saveTimeData($this->time5->Value, 'vendredi', $this->Request['id']);
-			$this->saveTimeData($this->time6->Value, 'samedi', $this->Request['id']);
-			$this->saveTimeData($this->time7->Value, 'dimanche', $this->Request['id']);		
+        $this->timeArray = $this->getViewState('timeArray',array());
+        foreach($this->timeArray as $time)
+        {
+            $this->saveTimeData($time['day'], $time['hourStart'], $time['duration'], $this->Request['id']);
+        }
 
         $this->log("Modify the access level: ".$this->name->SafeText);
 
 		return $res || $res2;
     }
 
-    protected function saveTimeData($day, $dayName,$lastId)
+    protected function saveTimeData($day, $hourStart, $duration ,$lastId)
     {
-		$indexStartHours=0;
-		$indexEndHours=0;
-		for($i=0; $i<96; $i++)
-		{
-			if(strcmp($day{$i},"1")==0)
-			{
-				$indexStartHours = $i;
-	
-				while( (strcmp($day{$i},"1") == 0 ) )
-				{
-					$i++;
-					
-					if($i === 96)
-						break;
-				}
-				$indexEndHours = $i;
-				$indexStartHours *=15;
-				$indexEndHours *=15;
-		      	$cmd = $this->db->createCommand( SQL::SQL_ADD_ACCESS_LEVEL_TIME );
-		      	$cmd->bindParameter(":id_access_level",$lastId,PDO::PARAM_STR);
-		      	$cmd->bindParameter(":day",$dayName,PDO::PARAM_STR);
-			    $cmd->bindParameter(":from",$indexStartHours,PDO::PARAM_INT);
-		      	$cmd->bindParameter(":until",$indexEndHours,PDO::PARAM_INT);
-				
-				$cmd->execute();
-			}
-		}	
+        switch($day)
+        {
+            case 0:
+                $dayName = 'lundi';
+                break;
+            case 1:
+                $dayName = 'mardi';
+                break;
+            case 2:
+                $dayName = 'mercredi';
+                break;
+            case 3:
+                $dayName = 'jeudi';
+                break;
+            case 4:
+                $dayName = 'vendredi';
+                break;
+            case 5:
+                $dayName = 'samedi';
+                break;
+            case 6:
+                $dayName = 'dimanche';
+                break;
+        }
+
+		$indexStartHours=explode(':',$hourStart);
+		$indexEndHours=explode(':',$duration);
+        $indexStartHours = ($indexStartHours[0]*60) + $indexStartHours[1];
+		$indexEndHours= $indexStartHours + ($indexEndHours[0]*60) + $indexEndHours[1];
+
+        $cmd = $this->db->createCommand( SQL::SQL_ADD_ACCESS_LEVEL_TIME );
+        $cmd->bindParameter(":id_access_level",$lastId,PDO::PARAM_STR);
+        $cmd->bindParameter(":day",$dayName,PDO::PARAM_STR);
+        $cmd->bindParameter(":from",$indexStartHours,PDO::PARAM_INT);
+        $cmd->bindParameter(":until",$indexEndHours,PDO::PARAM_INT);
+
+        $cmd->execute();
     } 
 
 	protected function serverUntilValidate($sender, $param)
@@ -253,4 +184,55 @@ class mod extends Page
 			$param->IsValid=false;
 	}
 
+    public function OnLoadAppointments($sender, $param)
+    {
+        $cmd = $this->db->createCommand( SQL::SQL_GET_ACCESS_TIME_ID );
+        $cmd->bindParameter(":id",$this->id->Value, PDO::PARAM_INT);
+        $query = $cmd->query();
+        if($query)
+        {
+        	$data = $query->readAll();
+            $arrItems = array();
+            $days['lundi'] = 0;
+            $days['mardi'] = 1;
+            $days['mercredi'] = 2;
+            $days['jeudi'] = 3;
+            $days['vendredi'] = 4;
+            $days['samedi'] = 5;
+            $days['dimanche'] = 6;
+            foreach($data as $d)
+            {
+                $from = str_pad((int)($d['from'] / 60),2,'0',STR_PAD_LEFT).':'.str_pad(($d['from'] % 60),2,'0',STR_PAD_LEFT);
+                $duration = $d['until'] - $d['from'];
+                $duration = str_pad((int)($duration / 60),2,'0',STR_PAD_LEFT).':'.str_pad(($duration % 60),2,'0',STR_PAD_LEFT);
+
+                $arrItems[] = array('id' => $d['id'],
+                         'day' => $days[$d['day']],
+                         'hour' => $from,
+                         'duration' => $duration);
+
+                $this->timeArray[$d['id']] = array("day"=> $days[$d['day']], "duration"=>$duration,"hourStart"=>$from);
+            }
+            $this->setViewState('timeArray',$this->timeArray,'');
+            $this->getResponse()->getAdapter()->setResponseData($arrItems);
+        }
+    }
+
+    public function OnSaveAppointment($sender, $param)
+    {
+       $this->timeArray = $this->getViewState('timeArray',array());
+
+       $p = $param->getCallbackParameter()->CommandParameter;
+       $this->timeArray[$p->id] = array("day"=> $p->day, "duration"=>$p->duration,"hourStart"=>$p->hour);
+
+       $this->setViewState('timeArray',$this->timeArray,'');
+   }
+
+    public function OnDeleteAppointment($sender, $param)
+    {
+        $this->timeArray = $this->getViewState('timeArray',array());
+        $p = $param->getCallbackParameter()->CommandParameter;
+        unset($this->timeArray[$p->id]);
+        $this->setViewState('timeArray',$this->timeArray,'');
+    }
 }

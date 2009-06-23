@@ -16,6 +16,8 @@ Prado::using('horux.pages.accessLevel.sql');
 
 class add extends Page
 {
+    protected $timeArray = array();
+
     public function onLoad($param)
     {
         parent::onLoad($param);       
@@ -73,52 +75,57 @@ class add extends Page
 
 		if($res)
 		{
-			$lastId = $this->db->getLastInsertId();
-	
-			$this->saveTimeData($this->time1->Value, 'lundi', $lastId);
-			$this->saveTimeData($this->time2->Value, 'mardi', $lastId);
-			$this->saveTimeData($this->time3->Value, 'mercredi', $lastId);
-			$this->saveTimeData($this->time4->Value, 'jeudi', $lastId);
-			$this->saveTimeData($this->time5->Value, 'vendredi', $lastId);
-			$this->saveTimeData($this->time6->Value, 'samedi', $lastId);
-			$this->saveTimeData($this->time7->Value, 'dimanche', $lastId);
+            $lastId = $this->db->getLastInsertId();
+            $this->timeArray = $this->getViewState('timeArray',array());
+            foreach($this->timeArray as $time)
+            {
+                $this->saveTimeData($time['day'], $time['hourStart'], $time['duration'], $lastId);
+            }
 		}
-
         $this->log("Add the access level: ".$this->name->SafeText);
 
       	return $res;
     }
     
-    protected function saveTimeData($day, $dayName,$lastId)
+    protected function saveTimeData($day, $hourStart, $duration ,$lastId)
     {
-		$indexStartHours=0;
-		$indexEndHours=0;
-		for($i=0; $i<96; $i++)
-		{
-			if(strcmp($day{$i},"1")==0)
-			{
-				$indexStartHours = $i;
-	
-				while( (strcmp($day{$i},"1") == 0 ) )
-				{
-					$i++;
-					
-					if($i === 96)
-						break;
-				}
-				$indexEndHours = $i;
-				$indexStartHours *=15;
-				$indexEndHours *=15;
+        switch($day)
+        {
+            case 0:
+                $dayName = 'lundi';
+                break;
+            case 1:
+                $dayName = 'mardi';
+                break;
+            case 2:
+                $dayName = 'mercredi';
+                break;
+            case 3:
+                $dayName = 'jeudi';
+                break;
+            case 4:
+                $dayName = 'vendredi';
+                break;
+            case 5:
+                $dayName = 'samedi';
+                break;
+            case 6:
+                $dayName = 'dimanche';
+                break;
+        }
 
-		      	$cmd = $this->db->createCommand( SQL::SQL_ADD_ACCESS_LEVEL_TIME );
-		      	$cmd->bindParameter(":id_access_level",$lastId,PDO::PARAM_STR);
-		      	$cmd->bindParameter(":day",$dayName,PDO::PARAM_STR);
-			    $cmd->bindParameter(":from",$indexStartHours,PDO::PARAM_INT);
-		      	$cmd->bindParameter(":until",$indexEndHours,PDO::PARAM_INT);
-				
-				$cmd->execute();
-			}
-		}	
+		$indexStartHours=explode(':',$hourStart);
+		$indexEndHours=explode(':',$duration);
+        $indexStartHours = ($indexStartHours[0]*60) + $indexStartHours[1];
+		$indexEndHours= $indexStartHours + ($indexEndHours[0]*60) + $indexEndHours[1];
+
+        $cmd = $this->db->createCommand( SQL::SQL_ADD_ACCESS_LEVEL_TIME );
+        $cmd->bindParameter(":id_access_level",$lastId,PDO::PARAM_STR);
+        $cmd->bindParameter(":day",$dayName,PDO::PARAM_STR);
+        $cmd->bindParameter(":from",$indexStartHours,PDO::PARAM_INT);
+        $cmd->bindParameter(":until",$indexEndHours,PDO::PARAM_INT);
+
+        $cmd->execute();
     } 
     
 	protected function serverUntilValidate($sender, $param)
@@ -130,4 +137,29 @@ class add extends Page
 		if($until<$from)
 			$param->IsValid=false;
 	}
+
+    public function OnLoadAppointments($sender, $param)
+    {
+        $arrItems[] = array();
+		$this->getResponse()->getAdapter()->setResponseData($arrItems);
+    }
+
+    public function OnSaveAppointment($sender, $param)
+    {
+       $this->timeArray = $this->getViewState('timeArray',array());
+
+       $p = $param->getCallbackParameter()->CommandParameter;
+       $this->timeArray[$p->id] = array("day"=> $p->day, "duration"=>$p->duration,"hourStart"=>$p->hour);
+
+       $this->setViewState('timeArray',$this->timeArray,'');
+   }
+
+    public function OnDeleteAppointment($sender, $param)
+    { 
+        $this->timeArray = $this->getViewState('timeArray',array());
+        $p = $param->getCallbackParameter()->CommandParameter;
+        unset($this->timeArray[$p->id]);
+        $this->setViewState('timeArray',$this->timeArray,'');
+    }
+
 }
