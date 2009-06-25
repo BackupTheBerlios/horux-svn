@@ -21,6 +21,8 @@ class SQL {
   
   const SQL_GET_OPEN_TIME_ID = "SELECT * FROM hr_openTime WHERE id=:id";
   const SQL_GET_OPEN_TIME_TIME_ID = "SELECT * FROM hr_openTime_time WHERE id_openTime=:id";
+  const SQL_IS_OPEN_TIME_NAME_EXIST = "SELECT * FROM hr_openTime WHERE name=:name";
+  const SQL_IS_OPEN_TIME_NAME_EXIST_EXCEPT_ID = "SELECT * FROM hr_openTime WHERE name=:name AND id!=:id";
 
   
   const SQL_ATTRIBUTE_OPEN_TIME = "INSERT INTO hr_openTime_attribution (id_device, id_openTime) VALUES (:id_device, :id_openTime)";

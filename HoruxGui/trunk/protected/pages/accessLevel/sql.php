@@ -18,8 +18,10 @@ class SQL {
   const SQL_GET_ALL_ACCESS_LEVEL = "SELECT * FROM hr_access_level";
   const SQL_GET_ACCESS_LEVEL_ID = "SELECT * FROM hr_access_level WHERE id=:id";
   const SQL_GET_ACCESS_TIME_ID = "SELECT * FROM hr_access_time WHERE id_access_level=:id";
+  const SQL_IS_ACCESS_LEVEL_NAME_EXIST = "SELECT * FROM hr_access_level WHERE name=:name";
+  const SQL_IS_ACCESS_LEVEL_NAME_EXIST_EXCEPT_ID = "SELECT * FROM hr_access_level WHERE name=:name AND id!=:id";
 
-  
+
   const SQL_ADD_ACCESS_LEVEL = "INSERT INTO hr_access_level (
                         `name` , 
                         `full_access`,

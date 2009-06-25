@@ -231,4 +231,17 @@ class mod extends Page
         unset($this->timeArray[$p->id]);
         $this->setViewState('timeArray',$this->timeArray,'');
     }
+
+    public function nameValidateIdentificator($sender, $param)
+    {
+      $cmd = $this->db->createCommand( SQL::SQL_IS_OPEN_TIME_NAME_EXIST_EXCEPT_ID);
+      $cmd->bindParameter(":name",$this->name->SafeText,PDO::PARAM_STR);
+      $cmd->bindParameter(":id",$this->Request['id'],PDO::PARAM_STR);
+      $array = $cmd->query()->readAll();
+
+      if(count($array) > 0)
+        $param->IsValid=false;
+      else
+        $param->IsValid=true;
+    }
 }

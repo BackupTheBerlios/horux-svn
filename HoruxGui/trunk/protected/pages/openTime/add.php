@@ -160,4 +160,16 @@ class add extends Page
         $this->setViewState('timeArray',$this->timeArray,'');
     }
 
+    public function nameValidateIdentificator($sender, $param)
+    {
+      $cmd = $this->db->createCommand( SQL::SQL_IS_OPEN_TIME_NAME_EXIST);
+      $cmd->bindParameter(":name",$this->name->SafeText,PDO::PARAM_STR);
+      $array = $cmd->query()->readAll();
+
+      if(count($array) > 0)
+        $param->IsValid=false;
+      else
+        $param->IsValid=true;
+    }
+
 }

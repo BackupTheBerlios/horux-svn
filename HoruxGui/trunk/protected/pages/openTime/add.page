@@ -84,7 +84,13 @@
 								ControlToValidate="name" 
 								Text="<%[This field is required]%>" 
 								Display="Dynamic"/>
-                            </td> 
+                              <com:TCustomValidator
+                                ValidationGroup="Group1"
+                                EnableClientScript="false"
+                                ControlToValidate="name"
+                                OnServerValidate="nameValidateIdentificator"
+                                Display="Dynamic"
+                                Text="<%[This identificator is already used]%>" />                            </td>
                           </tr>
 
                           <tr>
