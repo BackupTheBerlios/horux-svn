@@ -257,7 +257,8 @@ INSERT INTO `hr_gui_permissions` (`id`, `page`, `selector`, `value`, `allowed`) 
 (45, 'openTime.mod', 'group_id', 1, '1'),
 (46, 'system.Notification', 'group_id', 1, '1'),
 (47, 'system.NotificationAdd', 'group_id', 1, '1'),
-(48, 'system.NotificationMod', 'group_id', 1, '1');
+(48, 'system.NotificationMod', 'group_id', 1, '1'),
+(49, 'tool.GuiLog', 'group_id', 1, '1');
 
 
 # --------------------------------------------------------

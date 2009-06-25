@@ -170,6 +170,7 @@ INSERT INTO hr_gui_permissions VALUES ('45', 'openTime.mod', 'group_id', '1', '1
 INSERT INTO hr_gui_permissions VALUES ('46', 'system.Notification', 'group_id', '1', '1');
 INSERT INTO hr_gui_permissions VALUES ('47', 'system.NotificationAdd', 'group_id', '1', '1');
 INSERT INTO hr_gui_permissions VALUES ('48', 'system.NotificationMod', 'group_id', '1', '1');
+INSERT INTO hr_gui_permissions VALUES ('49', 'tool.GuiLog', 'group_id', '1', '1');
 
 # --------------------------------------------------------
 
