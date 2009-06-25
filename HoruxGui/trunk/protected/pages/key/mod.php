@@ -34,7 +34,8 @@ class mod extends Page
                     $this->setData();
                     $this->person->DataSource = $this->PersonList;
                     $this->person->dataBind();
-		  }
+
+        }
 
 		  if(isset($this->Request['sn']))
 		  {
@@ -51,6 +52,8 @@ class mod extends Page
 				$this->setData();
 				$this->person->DataSource = $this->PersonList;
 				$this->person->dataBind();
+                if($this->person->getItemCount())
+                    $this->person->setSelectedIndex(0);
 			}
 			else
 				$this->Response->redirect($this->Service->constructUrl('key.add',array('sn'=>$this->Request['sn'])));
@@ -98,7 +101,13 @@ class mod extends Page
           	$data = $query->read();
           	
           	$this->person->setSelectedValue($data['id']);
-          } 
+          }
+          else
+          {
+            if($this->person->getItemCount())
+                $this->person->setSelectedIndex(0);
+
+          }
         } 
     }
 

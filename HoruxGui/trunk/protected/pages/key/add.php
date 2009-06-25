@@ -28,6 +28,9 @@ class add extends Page
         
         $this->person->DataSource = $this->PersonList;
         $this->person->dataBind();
+
+        if($this->person->getItemCount())
+            $this->person->setSelectedIndex(0);
     }
     
     protected function getPersonList()
