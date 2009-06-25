@@ -54,7 +54,8 @@ class attribute extends Page
         $this->OpenTime->DataSource=$this->getOpenTime();
         $this->OpenTime->dataBind();   
 
-
+        if($this->OpenTime->getItemCount())
+            $this->OpenTime->setSelectedIndex(0);
 
         if(isset($this->Request['okMsg']))
         {
