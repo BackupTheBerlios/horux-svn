@@ -116,6 +116,14 @@
 												</tr>
 												<tr>
 													<td valign="top" class="key">
+														<%[Inform about bugs and request ]%>
+													</td>
+													<td>
+														<a href="https://developer.berlios.de/bugs/?group_id=10834" target="_blank">Horux Berlios</a>
+													</td>
+												</tr>
+												<tr>
+													<td valign="top" class="key">
 														<%[Copyright]%>
 													</td>
 													<td>
