@@ -21,7 +21,7 @@ class Page extends TPage
     {
 	
       $this->db = $this->Application->getModule('horuxDb')->DbConnection;
-      //$this->db->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY,true);
+      $this->db->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY,true);
 
       $this->db->Active=true;
 
