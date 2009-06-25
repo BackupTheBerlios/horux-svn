@@ -5,6 +5,7 @@
   var serial = new Array();
   var counter = 0;
   var serialDetected = false;
+  var specialKey = false;
 
   document.onkeydown = function(evt) {
 
@@ -20,9 +21,12 @@
   }
   
   if(kc == 16 || kc==17 || kc ==18)
+  {
+    specialKey = true;
     return false;
+  }
   
-  if(kc == 51 && (counter == 0 || counter == 1))
+  if(kc == 51 && (counter == 0 || counter == 1) && specialKey)
   {
     serial.push(51);
     counter++;
@@ -34,7 +38,7 @@
   }
   else
   {
-    if(kc == 51 && serialDetected)
+    if(kc == 51 && serialDetected && specialKey)
     {
       serial.push(51);
       counter++;
@@ -64,6 +68,7 @@
       }
       else
       {
+        specialKey = false;
         document.getElementById("detected").innerHTML = '';
         counter = 0;
         delete serial;
