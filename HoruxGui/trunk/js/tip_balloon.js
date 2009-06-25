@@ -24,7 +24,7 @@ Implements balloon tooltips.
 
 //===================  GLOBAL TOOPTIP CONFIGURATION  =========================//
 config. Balloon = false				   // true or false - set to true if you want this to be the default behaviour
-config. BalloonImgPath = "../scripts/tip_balloon/" // Path to images (border, corners, stem). This path must be relative to your HTML file.
+config. BalloonImgPath = "./js/tip_balloon/" // Path to images (border, corners, stem). This path must be relative to your HTML file.
 // Sizes of balloon images
 config. BalloonEdgeSize = 5
 config. BalloonStemWidth = 15

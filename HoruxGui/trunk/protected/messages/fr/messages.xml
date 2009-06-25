@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <xliff version="1.0">
- <file source-language="FR" target-language="fr" datatype="plaintext" original="messages" date="2009-06-23T11:52:03Z" product-name="messages">
+ <file source-language="FR" target-language="fr" datatype="plaintext" original="messages" date="2009-06-25T14:37:28Z" product-name="messages">
   <body>
   
 <trans-unit id="1">
@@ -3635,6 +3635,11 @@
 <trans-unit id="688">
 <source>The config was modified successfully.</source>
 <target>La configuration a &#xE9;t&#xE9; modifi&#xE9; avec succ&#xE8;s</target>
+</trans-unit>
+
+<trans-unit id="689">
+<source>Inform about bugs and request</source>
+<target>Bugs et nouvelles demandes</target>
 </trans-unit>
 </body>
 </file>

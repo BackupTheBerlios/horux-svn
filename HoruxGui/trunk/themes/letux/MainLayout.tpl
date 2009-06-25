@@ -8,9 +8,15 @@
 <meta http-equiv="content-language" content="en"/>
 <link rel="shortcut icon" href="favicon.ico">
 
+<link rel="stylesheet" type="text/css" href="./themes/letux/css/general.css" />
+<link rel="stylesheet" type="text/css" href="./themes/letux/css/icon.css" />
+<link rel="stylesheet" type="text/css" href="./themes/letux/css/menu.css" />
+<link rel="stylesheet" type="text/css" href="./themes/letux/css/component.css" />
+<link rel="stylesheet" type="text/css" href="./themes/letux/css/horus.css" />
 
-<link rel="stylesheet" type="text/css" href="./themes/letux/css/template.css" />
 <link rel="stylesheet" type="text/css" href="./themes/letux/css/rounded.css" />
+<link rel="stylesheet" type="text/css" href="./js/modalbox/modalbox.css">
+<link rel="stylesheet" type="text/css" href="./js/ThemeIE/theme.css" />
 
 <!--[if IE 7]>
 <link href="./themes/letux/css/ie7.css" rel="stylesheet" type="text/css" />
@@ -20,19 +26,11 @@
 <link href="./themes/letux/css/ie6.css" rel="stylesheet" type="text/css" />
 <![endif]-->
 
-
-<link rel="stylesheet" type="text/css" href="./js/ThemeIE/theme.css" />
+</com:THead>
+<body>
 <com:TClientScript ScriptUrl="./js/JSCookMenu.js" />
 <com:TClientScript ScriptUrl="./js/ThemeIE/theme.js" />
 <com:TClientScript ScriptUrl="./js/effect.js" />
-
-<com:TClientScript ScriptUrl="./js/modalbox/lib/prototype.js" />
-<com:TClientScript ScriptUrl="./js/modalbox/lib/scriptaculous.js? » load=builder,effects" />
-<com:TClientScript ScriptUrl="./js/modalbox/modalbox.js" />
-<link type="text/css" href="./js/modalbox/modalbox.css" rel="stylesheet">
-
-</com:THead>
-<body>
 <com:TClientScript ScriptUrl="./js/wz_tooltip.js" />
 <com:TClientScript ScriptUrl="./js/tip_balloon.js" />
 <com:TClientScript ScriptUrl="./js/tip_centerwindow.js" />
@@ -49,6 +47,7 @@
 </div>
 
 <com:TForm ID="adminForm">
+<com:TClientScript ScriptUrl="./js/modalbox/modalbox.js" />
   <!-- Add the main menu -->
   <com:Application.portlets.HeaderBox ID="mainMenu"/>
 

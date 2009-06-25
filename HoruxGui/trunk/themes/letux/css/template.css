@@ -20,9 +20,9 @@
 
 /* -- Imported styles ----------------------------- */
 
-@import url("general.css");
-@import url("icon.css");
-@import url("menu.css");
-@import url("component.css");
-@import url("horus.css");
+@import url("./themes/letux/css/general.css");
+@import url("./themes/letux/css/icon.css");
+@import url("./themes/letux/css/menu.css");
+@import url("./themes/letux/css/component.css");
+@import url("./themes/letux/css/horus.css");
 
