@@ -22,7 +22,16 @@ Legend:
 - -> Removed
 ! -> Note
 
--------------------- Horux 1.0.4 Release Released [04-06-2008] ------------------------
+-------------------- Horux 1.0.5 Release Released [XX-XX-2009] ------------------------
+25.06.2009         ^ Change the concept of how to set the time for the access level and open time
+25.06.2009         # [#015926] Fixed
+25.06.2009         # [#015916] Fixed
+25.06.2009         # [#015915] Fixed
+25.06.2009         # [#015914] Fixed
+25.06.2009         # [#015913] Fixed
+25.06.2009         ^ Refactoring the letux template to reduce the size page
+
+-------------------- Horux 1.0.4 Release Released [04-06-2009] ------------------------
 30.01.2009      + Add the pin code in the user wizard
 30.01.2009      + Translate in french some text in the user wizard
 30.01.2009      + Add the wireless icon for the page where we can use a rfid reader to do some action
