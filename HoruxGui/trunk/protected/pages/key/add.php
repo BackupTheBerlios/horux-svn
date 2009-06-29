@@ -198,4 +198,9 @@ class add extends Page
       else 
         $param->IsValid=true;
     }
+
+	public function onCancel($sender, $param)
+	{
+        $this->Response->redirect($this->Service->constructUrl('key.KeyList'));
+	}
 }
