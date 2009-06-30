@@ -16,53 +16,53 @@ Prado::using('horux.pages.system.sql');
 
 class Alarms extends PageList
 {
-	protected $alarmMessage = array();
+    protected $alarmMessage = array();
 
     protected function getObjectAlarms($data, $indexStart, $indexStop)
-    { 
-    	if(count($data)<$indexStop) $indexStop = count($data); 
-    			
-		for($i=$indexStart; $i<$indexStop; $i++)
-		{
-			$dateAndTime = explode(" ", $data[$i]['datetime_']);
-			$data[$i]['datetime_'] = date("d-m-Y", strtotime($dateAndTime[0])).' '.$dateAndTime[1];
-		
-			$text =  $this->alarmMessage[$data[$i]['type']];		
+    {
+        if(count($data)<$indexStop) $indexStop = count($data);
+
+        for($i=$indexStart; $i<$indexStop; $i++)
+        {
+            $dateAndTime = explode(" ", $data[$i]['datetime_']);
+            $data[$i]['datetime_'] = date("d-m-Y", strtotime($dateAndTime[0])).' '.$dateAndTime[1];
+
+            $text =  $this->alarmMessage[$data[$i]['type']];
 
             $data[$i]['description'] = $text;
-		
+
             if($data[$i]['type'] >= 1001 && $data[$i]['type'] <= 1099)
             {
- 				   $object_type = Prado::localize("Device");
-				   $sql = "SELECT * FROM hr_device WHERE id=".$data[$i]['id_object'];
-				   $command=$this->db->createCommand($sql);
-				   $dataObj=$command->query();
-				   $dataObj = $dataObj->read();
-				   $object = $dataObj['name'];                
+                $object_type = Prado::localize("Device");
+                $sql = "SELECT * FROM hr_device WHERE id=".$data[$i]['id_object'];
+                $command=$this->db->createCommand($sql);
+                $dataObj=$command->query();
+                $dataObj = $dataObj->read();
+                $object = $dataObj['name'];
             }
 
             if($data[$i]['type'] >= 1100 && $data[$i]['type'] <= 1199)
             {
-				   $object_type =  Prado::localize("User");
-				   $sql = "SELECT * FROM hr_user WHERE id=".$data[$i]['id_object'];
-				   $command=$this->db->createCommand($sql);
-				   $dataObj=$command->query();
-				   $dataObj = $dataObj->read();
-				   $object = $dataObj['name']." ".$dataObj['firstname'];
+                $object_type =  Prado::localize("User");
+                $sql = "SELECT * FROM hr_user WHERE id=".$data[$i]['id_object'];
+                $command=$this->db->createCommand($sql);
+                $dataObj=$command->query();
+                $dataObj = $dataObj->read();
+                $object = $dataObj['name']." ".$dataObj['firstname'];
             }
-		
-			$data[$i]['object'] = '<i>'.$object_type.'</i>:'.$object;
-		
-		}
 
-  			
+            $data[$i]['object'] = '<i>'.$object_type.'</i>:'.$object;
+
+        }
+
+
         $connection->Active=false;  // connection is established
 
         return $data;
     }
 
 
-	
+
     protected function getData()
     {
         $this->alarmMessage[1001] = Prado::localize("1001");
@@ -87,50 +87,50 @@ class Alarms extends PageList
         $this->alarmMessage[1101] = Prado::localize("1101");
 
         $this->alarmMessage[1200] = Prado::localize("1200");
-		
-		$from = "";
-		$until = "";
 
-		$from = $this->dateToSql( $this->from->SafeText );
-		$until = $this->dateToSql( $this->until->SafeText );
+        $from = "";
+        $until = "";
+
+        $from = $this->dateToSql( $this->from->SafeText );
+        $until = $this->dateToSql( $this->until->SafeText );
 
 
-		if($from == "" && $until == "")
-		{
-   			$cmd=$this->db->createCommand(SQL::SQL_GET_ALARMS);
-		}
-		else
-		{
-			if($from != "" && $until != "")
-			{
+        if($from == "" && $until == "")
+        {
+            $cmd=$this->db->createCommand(SQL::SQL_GET_ALARMS);
+        }
+        else
+        {
+            if($from != "" && $until != "")
+            {
                 $cmd=$this->db->createCommand(SQL::SQL_GET_ALARMS_BY_DATE);
                 $cmd->bindParameter(":from",$from,PDO::PARAM_STR);
                 $cmd->bindParameter(":until",$until,PDO::PARAM_STR);
-			}
-			if($from != "" && $until == "")
-			{
+            }
+            if($from != "" && $until == "")
+            {
                 $cmd=$this->db->createCommand(SQL::SQL_GET_ALARMS_BY_DATE_FROM);
                 $cmd->bindParameter(":from",$from,PDO::PARAM_STR);
-			}
-			if($from == "" && $until != "")
-			{
+            }
+            if($from == "" && $until != "")
+            {
                 $cmd=$this->db->createCommand(SQL::SQL_GET_ALARMS_BY_DATE_UNTIL);
                 $cmd->bindParameter(":until",$until,PDO::PARAM_STR);
-			}
-			
-		}
-		$indexStart = $this->DataGrid->CurrentPageIndex*15;
-		$indexStop = $indexStart+15;
-   		$data = $cmd->query();
-		$data = $data->readAll();
+            }
+
+        }
+        $indexStart = $this->DataGrid->CurrentPageIndex*15;
+        $indexStop = $indexStart+15;
+        $data = $cmd->query();
+        $data = $data->readAll();
 
 
         return $this->getObjectAlarms( $data, $indexStart, $indexStop );
-    }	
+    }
 
     public function onLoad($param)
     {
-        parent::onLoad($param); 
+        parent::onLoad($param);
 
         if(!$this->IsPostBack)
         {
@@ -140,14 +140,14 @@ class Alarms extends PageList
 
         }
     }
-	
-	public function onRefresh($sender, $param)
-	{
-		//$this->DataGrid->CurrentPageIndex = 0;
-	
+
+    public function onRefresh($sender, $param)
+    {
+        //$this->DataGrid->CurrentPageIndex = 0;
+
         $this->DataGrid->DataSource=$this->Data;
         $this->DataGrid->dataBind();
         $this->Page->CallbackClient->update('list', $this->DataGrid);
-   	}
+    }
 }
 ?>

@@ -2,40 +2,40 @@
 
 <application id="horux_i" mode="Normal">
 
-  <paths>
-    <alias id="horux_i" path="../../" />
-    <alias id="msg" path="../../messages" />
-    <alias id="themes_i" path="../../../themes" />
-    <using namespace="System.I18N.*" />
-    <using namespace="Application.modules.*" />
-    <using namespace="Application.common.*" /> 
-    <using namespace="System.Data.*" />
-    <using namespace="System.Web.UI.ActiveControls.*" />
-    <using namespace="System.Security.*" />
-    <using namespace="System.Util.*" />
-  </paths>
+    <paths>
+        <alias id="horux_i" path="../../" />
+        <alias id="msg" path="../../messages" />
+        <alias id="themes_i" path="../../../themes" />
+        <using namespace="System.I18N.*" />
+        <using namespace="Application.modules.*" />
+        <using namespace="Application.common.*" />
+        <using namespace="System.Data.*" />
+        <using namespace="System.Web.UI.ActiveControls.*" />
+        <using namespace="System.Security.*" />
+        <using namespace="System.Util.*" />
+    </paths>
 
-  <modules>      
-    <module id="globalization" class="TGlobalizationAutoDetect" Culture="no_NO" >
-        <translation  type="XLIFF" source="msg" marker="" cache="true" />
-    </module>    
+    <modules>
+        <module id="globalization" class="TGlobalizationAutoDetect" Culture="no_NO" >
+            <translation  type="XLIFF" source="msg" marker="" cache="true" />
+        </module>
    
-  </modules>
+    </modules>
 
   <!-- configuration for available services -->
-  <services>
-    <service id="page" class="TPageService" DefaultPage="install.install" >
-        <pages MasterClass="themes_i.letux.MainLayout" >
-        </pages>		
-    </service>
+    <services>
+        <service id="page" class="TPageService" DefaultPage="install.install" >
+            <pages MasterClass="themes_i.letux.MainLayout" >
+            </pages>
+        </service>
 
-  </services>
+    </services>
 
   <!-- application parameters -->
-  <parameters>
-    <parameter id="SiteTitle" value="Horux - Access control" />
-    <parameter id="HoruxVersion" value="1.0.5" />
-    <parameter id="appMode" value="production" />
-  </parameters>
+    <parameters>
+        <parameter id="SiteTitle" value="Horux - Access control" />
+        <parameter id="HoruxVersion" value="1.0.5" />
+        <parameter id="appMode" value="production" />
+    </parameters>
   
 </application>

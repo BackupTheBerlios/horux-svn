@@ -15,17 +15,17 @@
 
 class GlobalCheckin extends Page
 {
-	public function onLoad($param)
-	{
-		parent::onLoad($param);
-		
-		$this->Checkin();
+    public function onLoad($param)
+    {
+        parent::onLoad($param);
+
+        $this->Checkin();
 
         $this->log("Global checking");
-	}	
-	
-	protected function Checkin()
-	{
+    }
+
+    protected function Checkin()
+    {
         $cmd = NULL;
         if($this->db->DriverName == 'sqlite')
         {
@@ -35,14 +35,14 @@ class GlobalCheckin extends Page
         {
             $cmd = $this->db->createCommand( "SHOW TABLE STATUS" );
         }
-		$data = $cmd->query();
-		
-		$data = $data->readAll();
-		
-		$tables = array();
-		
-		foreach($data as $d)
-		{
+        $data = $cmd->query();
+
+        $data = $data->readAll();
+
+        $tables = array();
+
+        foreach($data as $d)
+        {
             $cmd = NULL;
             if($this->db->DriverName == 'sqlite')
             {
@@ -55,7 +55,7 @@ class GlobalCheckin extends Page
                 {
                     foreach($data3 as $data4)
                     {
-                       if( $data4['name'] == 'locked' ) $data2 = true;
+                        if( $data4['name'] == 'locked' ) $data2 = true;
                     }
                 }
 
@@ -67,33 +67,33 @@ class GlobalCheckin extends Page
                 $data2 = $data2->read();
             }
 
-			if($data2)
-			{
+            if($data2)
+            {
                 if($this->db->DriverName == 'sqlite')
-                    $cmd = $this->db->createCommand("SELECT COUNT(*) AS nb FROM ".$d['name']." WHERE locked>0" );
+                $cmd = $this->db->createCommand("SELECT COUNT(*) AS nb FROM ".$d['name']." WHERE locked>0" );
                 else
-                    $cmd = $this->db->createCommand("SELECT COUNT(*) AS nb FROM ".$d['Name']." WHERE locked>0" );
+                $cmd = $this->db->createCommand("SELECT COUNT(*) AS nb FROM ".$d['Name']." WHERE locked>0" );
 
-				$data2 = $cmd->query();
-				$data2 = $data2->read();
-				
-                if($this->db->DriverName == 'sqlite')
-    				$cmd = $this->db->createCommand("UPDATE ".$d['name']." SET locked=0");
-                else
-    				$cmd = $this->db->createCommand("UPDATE ".$d['Name']." SET locked=0");
+                $data2 = $cmd->query();
+                $data2 = $data2->read();
 
-				$cmd->execute();
-				
                 if($this->db->DriverName == 'sqlite')
-    				$tables[] = array('name'=>$d['name'], 'item'=>Prado::localize('Checked in {n} Items', array('n'=>$data2['nb'])));
+                $cmd = $this->db->createCommand("UPDATE ".$d['name']." SET locked=0");
                 else
-    				$tables[] = array('name'=>$d['Name'], 'item'=>Prado::localize('Checked in {n} Items', array('n'=>$data2['nb'])));
-			}
-		}
-		
+                $cmd = $this->db->createCommand("UPDATE ".$d['Name']." SET locked=0");
+
+                $cmd->execute();
+
+                if($this->db->DriverName == 'sqlite')
+                $tables[] = array('name'=>$d['name'], 'item'=>Prado::localize('Checked in {n} Items', array('n'=>$data2['nb'])));
+                else
+                $tables[] = array('name'=>$d['Name'], 'item'=>Prado::localize('Checked in {n} Items', array('n'=>$data2['nb'])));
+            }
+        }
+
         $this->DataGrid->DataSource=$tables;
-        $this->DataGrid->dataBind();				
-	}
+        $this->DataGrid->dataBind();
+    }
 }
 
 ?>

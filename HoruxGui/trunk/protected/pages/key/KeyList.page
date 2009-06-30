@@ -1,94 +1,94 @@
 <com:TContent ID="Main">
 <script language="Javascript">
-  function onPrintRedirect()
-  {
-          var f1 = document.getElementById( '<%= $this->FilterIdentificator->getClientID() %>' );
-          var f2 = document.getElementById( '<%= $this->FilterUsed->getClientID() %>' );
-          var f3 = document.getElementById( '<%= $this->FilterStatus->getClientID() %>' );
-          
-          var param = "&f1=" + f1.value + "&f2=" + f2.value + "&f3=" + f3.value;
-          window.open( "<%= $this->Service->constructUrl($this->getApplication()->getService()->getRequestedPagePath()) %>&action=print" + param, target="_blank" ) ;
-  }
-
-  var serial = new Array();
-  var counter = 0;
-  var serialDetected = false;
-var ss = "";
-  document.onkeydown = function(evt) {
-
-  var kc = 0;
- 
-  if(evt)
-  {
-    kc = evt.keyCode;   // firefox
-  }
-  else
-  {
-    kc = window.event.keyCode;  // IE
-  }
-
-  if(kc == 16 || kc==17 || kc ==18)
-    return false;
-  
-  if(kc == 51 && (counter == 0 || counter == 1))
-  {
-    serial.push(51);
-    counter++;
-    if(counter == 2 && serial[0] == 51 && serial[1] == 51)
+    function onPrintRedirect()
     {
-      serialDetected = true;
-      document.getElementById("detected").innerHTML = '[<%= Prado::localize("...Reading...") %>]';
-    }
-  }
-  else
-  {
-    if(kc == 51 && serialDetected)
-    {
-      serial.push(51);
-      counter++;
+        var f1 = document.getElementById( '<%= $this->FilterIdentificator->getClientID() %>' );
+        var f2 = document.getElementById( '<%= $this->FilterUsed->getClientID() %>' );
+        var f3 = document.getElementById( '<%= $this->FilterStatus->getClientID() %>' );
 
-      if(serial[serial.length-1] == 51 && serial[serial.length-2] == 51)
-      {
-        document.getElementById("detected").innerHTML = '';
-        
-        var sn = "";
-        for(i=2; i<serial.length-2; i++)
-          sn += String.fromCharCode(serial[i]);
-        
-        
-        window.location.replace('index.php?page=key.mod&sn=' + sn);
-        counter = 0;
-        delete serial;
-        serial = new Array();
-        serialDetected = false;
-      }
+        var param = "&f1=" + f1.value + "&f2=" + f2.value + "&f3=" + f3.value;
+        window.open( "<%= $this->Service->constructUrl($this->getApplication()->getService()->getRequestedPagePath()) %>&action=print" + param, target="_blank" ) ;
     }
-    else
-    {
-      if(serialDetected)
-      {
-        serial.push(kc);
-        counter++;
-      }
-      else
-      {
-        document.getElementById("detected").innerHTML = '';
-        counter = 0;
-        delete serial;
-        serial = new Array();
-        serialDetected = false;
-        return true;
-      }
+
+    var serial = new Array();
+    var counter = 0;
+    var serialDetected = false;
+    var ss = "";
+    document.onkeydown = function(evt) {
+
+        var kc = 0;
+
+        if(evt)
+        {
+            kc = evt.keyCode;   // firefox
+        }
+        else
+        {
+            kc = window.event.keyCode;  // IE
+        }
+
+        if(kc == 16 || kc==17 || kc ==18)
+            return false;
+
+        if(kc == 51 && (counter == 0 || counter == 1))
+        {
+            serial.push(51);
+            counter++;
+            if(counter == 2 && serial[0] == 51 && serial[1] == 51)
+            {
+                serialDetected = true;
+                document.getElementById("detected").innerHTML = '[<%= Prado::localize("...Reading...") %>]';
+            }
+        }
+        else
+        {
+            if(kc == 51 && serialDetected)
+            {
+                serial.push(51);
+                counter++;
+
+                if(serial[serial.length-1] == 51 && serial[serial.length-2] == 51)
+                {
+                    document.getElementById("detected").innerHTML = '';
+
+                    var sn = "";
+                    for(i=2; i<serial.length-2; i++)
+                        sn += String.fromCharCode(serial[i]);
+
+
+                    window.location.replace('index.php?page=key.mod&sn=' + sn);
+                    counter = 0;
+                    delete serial;
+                    serial = new Array();
+                    serialDetected = false;
+                }
+            }
+            else
+            {
+                if(serialDetected)
+                {
+                    serial.push(kc);
+                    counter++;
+                }
+                else
+                {
+                    document.getElementById("detected").innerHTML = '';
+                    counter = 0;
+                    delete serial;
+                    serial = new Array();
+                    serialDetected = false;
+                    return true;
+                }
+            }
+
+        }
+
+        return false;
     }
-    
-  }
-  
-  return false;
-}
 </script>
 
 <%include Application.common.template.headerContent %>
-            
+
 <com:TToolbarBox
     ID="tbb"
     Title="<%[Key List]%>"
@@ -100,10 +100,9 @@ var ss = "";
     PrintVisible="true"
     JsClickPrint="onPrintRedirect()"
     HelpVisible="true"
-/>
+    />
 
-<com:TLiteral ID="okMsg" Text="" />
-<com:TLiteral ID="koMsg" Text="" />
+
 
 <%include Application.common.template.headerBoxContent %>
 
@@ -137,38 +136,38 @@ var ss = "";
 
 <div id="list">
 <com:TDataGrid
-ID="DataGrid"
-DataKeyField="id"
-AutoGenerateColumns="false"
-CssClass="adminlist"
-ItemStyle.CssClass = "row0"
-AlternatingItemStyle.CssClass="row1"
-AllowPaging="true"
-PageSize="15"
-PagerStyle.Mode="Numeric"
-PagerStyle.HorizontalAlign="Center"
-OnPageIndexChanged="changePage"
-OnPagerCreated="pagerCreated"
-OnEditCommand="onEdit"
->
+    ID="DataGrid"
+    DataKeyField="id"
+    AutoGenerateColumns="false"
+    CssClass="adminlist"
+    ItemStyle.CssClass = "row0"
+    AlternatingItemStyle.CssClass="row1"
+    AllowPaging="true"
+    PageSize="15"
+    PagerStyle.Mode="Numeric"
+    PagerStyle.HorizontalAlign="Center"
+    OnPageIndexChanged="changePage"
+    OnPagerCreated="pagerCreated"
+    OnEditCommand="onEdit"
+    >
 
 <com:TBoundColumn
     HeaderText="ID"
     DataField="id"
     HeaderStyle.Width = "20px"
-/>
+    />
 
 <com:TTemplateColumn
     HeaderText=""
     HeaderStyle.Width = "20px"
->
+    >
     <prop:HeaderTemplate>
         <com:TActiveCheckBox
             ID="headerCB"
             AutoPostBack="true"
             OnCallback="Page.checkboxAllCallback"
             InputAttributes.value="0"
-        />
+            />
     </prop:HeaderTemplate>
     <prop:ItemTemplate>
         <com:TConditional Condition="!$this->Page->isRecordBlock('hr_keys', $this->NamingContainer->DataItem['id'])">
@@ -176,7 +175,7 @@ OnEditCommand="onEdit"
                 <com:TActiveCheckBox
                     ID="item"
                     InputAttributes.value="<%#$this->NamingContainer->DataItem['id']%>"
-                />
+                    />
             </prop:TrueTemplate>
             <prop:FalseTemplate>
                 <span onmouseover="Tip('<%[This record is modified by <b>]%><%= $this->Page->getUserName($this->NamingContainer->DataItem['locked']) %></b> ', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)">
@@ -189,13 +188,13 @@ OnEditCommand="onEdit"
 </com:TTemplateColumn>
 
 <com:TTemplateColumn
-   HeaderText=""
->
-<prop:HeaderTemplate>
-    <com:TLabel
-        Text="<%[Identificator]%>"
-    />
-</prop:HeaderTemplate>
+    HeaderText=""
+    >
+    <prop:HeaderTemplate>
+        <com:TLabel
+            Text="<%[Identificator]%>"
+            />
+    </prop:HeaderTemplate>
 
 
     <prop:ItemTemplate>
@@ -204,12 +203,12 @@ OnEditCommand="onEdit"
                 <com:THyperLink
                     NavigateUrl="<%= $this->Service->constructUrl('key.mod',array('id'=>$this->NamingContainer->DataItem['id'])) %>"
                     Text="<%#$this->NamingContainer->DataItem['identificator']%>"
-                />
+                    />
             </prop:TrueTemplate>
             <prop:FalseTemplate>
                 <com:TLabel
                     Text="<%#$this->NamingContainer->DataItem['identificator']%>"
-                />
+                    />
             </prop:FalseTemplate>
         </com:TConditional>
     </prop:ItemTemplate>
@@ -218,35 +217,35 @@ OnEditCommand="onEdit"
 <com:TBoundColumn 
     HeaderText="<%[Key Number]%>"
     DataField="serialNumber"
-/>
+    />
 
 
 
 <com:TTemplateColumn HeaderStyle.Width = "150px">
-<prop:HeaderTemplate><%[Attribution]%></prop:HeaderTemplate>
-<prop:ItemTemplate>
-<span onmouseover="Tip('<%[Click here to edit the user]%> <i><%# $this->NamingContainer->DataItem['person']%></i>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)">
-<com:THyperLink 
-    Text="<%#$this->NamingContainer->DataItem['person']%>"
-    NavigateUrl="<%#$this->NamingContainer->DataItem['url']%>"
-    />
-</prop:ItemTemplate>
-</span>
+    <prop:HeaderTemplate><%[Attribution]%></prop:HeaderTemplate>
+    <prop:ItemTemplate>
+        <span onmouseover="Tip('<%[Click here to edit the user]%> <i><%# $this->NamingContainer->DataItem['person']%></i>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)">
+        <com:THyperLink
+            Text="<%#$this->NamingContainer->DataItem['person']%>"
+            NavigateUrl="<%#$this->NamingContainer->DataItem['url']%>"
+            />
+    </prop:ItemTemplate>
+    </span>
 </com:TTemplateColumn>					
 
 
 <com:TTemplateColumn HeaderStyle.Width = "20px">
-<prop:HeaderTemplate><%[Block]%></prop:HeaderTemplate>
-<prop:ItemTemplate>
-<span onmouseover="Tip('<%[Click here to block or<br/> unblock the key]%> <i><%# $this->NamingContainer->DataItem['identificator']%></i>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)">
-<com:TActiveImageButton 
-    Text="<%#$this->NamingContainer->DataItem['id']%>"
-    ImageUrl="<%# $this->NamingContainer->DataItem['isBlocked'] ? './themes/letux/images/menu/icon-16-access.png' : './themes/letux/images/menu/icon-16-checkin.png'%>"
-    OnClick="Page.setBlocked"
-    Style="border:0px"
-    />
-</prop:ItemTemplate>
-</span>
+    <prop:HeaderTemplate><%[Block]%></prop:HeaderTemplate>
+    <prop:ItemTemplate>
+        <span onmouseover="Tip('<%[Click here to block or<br/> unblock the key]%> <i><%# $this->NamingContainer->DataItem['identificator']%></i>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)">
+        <com:TActiveImageButton
+            Text="<%#$this->NamingContainer->DataItem['id']%>"
+            ImageUrl="<%# $this->NamingContainer->DataItem['isBlocked'] ? './themes/letux/images/menu/icon-16-access.png' : './themes/letux/images/menu/icon-16-checkin.png'%>"
+            OnClick="Page.setBlocked"
+            Style="border:0px"
+            />
+    </prop:ItemTemplate>
+    </span>
 </com:TTemplateColumn>
 
 </com:TDataGrid>

@@ -1,168 +1,95 @@
 <com:TContent ID="Main">
-<div id="content-box">
-    <div class="border">
-        <div class="padding">
-            <div id="toolbar-box">
-                
-                <div class="t">
-                    <div class="t">
-                        <div class="t"></div>
-                    </div>
-                </div>
-                <div class="m" >
-                    <div class="toolbar" id="toolbar">
-                        <table class="toolbar">
-                            <tr>
-                                <td class="button" id="toolbar-apply">
-                                    <com:TLinkButton CssClass="toolbar" OnClick="onApply" ValidationGroup="Group1">
-                                      <span class="icon-32-apply" title="<%[Apply]%>"></span><%[Apply]%>
-                                    </com:TLinkButton> 
-                                </td>
+    <%include Application.common.template.headerContent %>
 
+    <com:TToolbarBox
+        ID="tbb"
+        Title="<%[Modify a Non Working Day]%>"
+        CssIcon="icon-48-noneworkingday"
+        ApplyVisible="true"
+        SaveVisible="true"
+        CancelVisible="true"
+        HelpVisible="true"
+        />
 
-                                <td class="button" id="toolbar-save">
-                                    <com:TLinkButton CssClass="toolbar" OnClick="onSave" ValidationGroup="Group1">
-                                      <span class="icon-32-save" title="<%[Save]%>"></span><%[Save]%>
-                                    </com:TLinkButton> 
-                                </td>
+    <%include Application.common.template.headerBoxContent %>
 
-                                <td class="button" id="toolbar-delete">
-                                  <com:TLinkButton CssClass="toolbar" ID="delete" OnClick="onDelete">
-                                    <span class="icon-32-delete" title="<%[Delete]%>"></span><%[Delete]%>
-                                  </com:TLinkButton>
-                                </td>
+    <com:THiddenField ID="id" value="" />
 
+    <fieldset class="adminform">
+        <legend><%[Parameters]%></legend>
+        <table class="admintable" cellspacing="1">
+            <tbody>
+                <tr>
+                    <td valign="top" class="key">
+                        <span onmouseover="Tip('<%[Enter a name for this non working day]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)">* <%[Name]%></span>
+                    </td>
+                    <td>
+                        <com:TTextBox
+                            CssClass="text_area"
+                            ID="name"
+                            Width="50" />
+                        <com:TRequiredFieldValidator
+                            ValidationGroup="Group1"
+                            ControlToValidate="name"
+                            Text="<%[This field is required]%>"
+                            Display="Dynamic"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td valign="top" class="key"><span onmouseover="Tip('<%[Date when start this non working day]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)">* <%[From]%></span></td>
+                    <td>
+                        <com:TDatePicker CssClass="text_area" ID="from" Mode="ImageButton" />
+                        <com:TDataTypeValidator
+                            ValidationGroup="Group1"
+                            ControlToValidate="from"
+                            DataType="Date"
+                            DateFormat="d-M-yyyy"
+                            Display="Dynamic"
+                            Text="<%[You must enter a valid date (d-M-yyyy).]%>" />
+                        <com:TRequiredFieldValidator
+                            ValidationGroup="Group1"
+                            ControlToValidate="from"
+                            Text="<%[This field is required]%>"
+                            Display="Dynamic" />
+                    </td>
+                </tr>
 
-                                <td class="button" id="toolbar-cancel">
-                                    <com:TLinkButton CssClass="toolbar" OnClick="onCancel">
-                                      <span class="icon-32-cancel" title="<%[Cancel]%>"></span><%[Cancel]%>
-                                    </com:TLinkButton> 
-                                </td>
+                <tr>
+                    <td valign="top" class="key"><span onmouseover="Tip('<%[Date when finish this non working day.<br/>Do not insert the date if it is only one day]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Until]%></span></td>
+                    <td>
+                        <com:TDatePicker CssClass="text_area" ID="until" Mode="ImageButton"/>
+                        <com:TDataTypeValidator
+                            ValidationGroup="Group1"
+                            ControlToValidate="until"
+                            DataType="Date"
+                            DateFormat="d-M-yyyy"
+                            Display="Dynamic"
+                            Text="<%[You must enter a valid date (d-M-yyyy).]%>" />
+                        <com:TCustomValidator
+                            ValidationGroup="Group1"
+                            EnableClientScript="false"
+                            ControlToValidate="until"
+                            Display="Dynamic"
+                            OnServerValidate="serverUntilValidate"
+                            Text="<%[This date must be bigger that from]%>" />
+                    </td>
+                </tr>
 
-                                <td class="button" id="toolbar-help">
-                                    <a href="./proxy/index.php?page=<%= $this->getApplication()->getService()->getRequestedPagePath() %>&lang=<%= $this->getApplication()->getGlobalState('lang') %>" title="<%[Help]%>" onClick="Modalbox.show(this.href, {title: this.title, width: 600, height: 600}); return false;" class="toolbar" >
-                                        <span class="icon-32-help" title="<%[Help]%>"></span><%[Help]%>
-                                    </a>
-                                </td>
+                <tr>
+                    <td valign="top" class="key">
+                        <span onmouseover="Tip('<%[You could insert a description for this non working day]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Description]%></span>
+                    </td>
+                    <td>
+                        <com:TTextBox
+                            CssClass="text_area"
+                            ID="comment"
+                            Width="400px" />
+                    </td>
+                </tr>
 
+            </tbody>
+        </table>
+    </fieldset>
 
-                            </tr>
-                        </table>
-                    </div><!-- end class toolbar -->
-
-                    <div class="header icon-48-noneworkingday"><%[Modify a Non Working Day]%></div>
-                    <div class="clr"></div>
-                </div><!-- end class m -->
-
-
-                <div class="b">
-                    <div class="b">
-                        <div class="b"></div>
-                    </div>
-                </div>
-            </div><!-- end class toolbar-box -->
-
-            <com:TLiteral ID="okMsg" Text="" />
-            <com:TLiteral ID="koMsg" Text="" />
-
-            <div id="element-box">
-    
-                <div class="t">
-                    <div class="t">
-                        <div class="t"></div>
-                    </div>
-                </div>
-                <div class="m">
-
-				<com:THiddenField ID="id" value="" />
-				
-                 <fieldset class="adminform">
-	             <legend><%[Parameters]%></legend>
-                      <table class="admintable" cellspacing="1">
-                        <tbody>
-                          <tr>
-                            <td valign="top" class="key">
-                              <span onmouseover="Tip('<%[Enter a name for this non working day]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)">* <%[Name]%></span>
-                            </td>
-                            <td>
-                              <com:TTextBox 
-                                CssClass="text_area" 
-                                ID="name"
-                                Width="50" />
-                              <com:TRequiredFieldValidator
-								ValidationGroup="Group1" 
-								ControlToValidate="name" 
-								Text="<%[This field is required]%>" 
-								Display="Dynamic"/>
-                            </td> 
-                          </tr>
-                          <tr>
-                            <td valign="top" class="key"><span onmouseover="Tip('<%[Date when start this non working day]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)">* <%[From]%></span></td>
-                            <td>
-                              <com:TDatePicker CssClass="text_area" ID="from" Mode="ImageButton" />
-                              <com:TDataTypeValidator
-    							ValidationGroup="Group1"
-    							ControlToValidate="from"
-    							DataType="Date"
-    							DateFormat="d-M-yyyy"
-    							Display="Dynamic"
-    							Text="<%[You must enter a valid date (d-M-yyyy).]%>" />
-                              <com:TRequiredFieldValidator
-								ValidationGroup="Group1" 
-								ControlToValidate="from" 
-								Text="<%[This field is required]%>" 
-								Display="Dynamic" />
-                            </td> 
-                          </tr>
-
-                          <tr>
-                            <td valign="top" class="key"><span onmouseover="Tip('<%[Date when finish this non working day.<br/>Do not insert the date if it is only one day]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Until]%></span></td>
-                            <td>
-                              <com:TDatePicker CssClass="text_area" ID="until" Mode="ImageButton"/>
-                              <com:TDataTypeValidator
-    							ValidationGroup="Group1"
-    							ControlToValidate="until"
-    							DataType="Date"
-    							DateFormat="d-M-yyyy"
-    							Display="Dynamic"
-    							Text="<%[You must enter a valid date (d-M-yyyy).]%>" />
-								<com:TCustomValidator
-								    ValidationGroup="Group1"
-								    EnableClientScript="false"
-								    ControlToValidate="until"
-								    Display="Dynamic"
-								    OnServerValidate="serverUntilValidate"
-								    Text="<%[This date must be bigger that from]%>" />
-                                </td> 
-                          </tr>
-
-                          <tr>
-                            <td valign="top" class="key">
-                              <span onmouseover="Tip('<%[You could insert a description for this non working day]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Description]%></span>
-                            </td>
-                            <td>
-                              <com:TTextBox 
-                                CssClass="text_area" 
-                                ID="comment"
-                                Width="400px" />
-                            </td> 
-                          </tr>
-
-                        </tbody>
-                      </table>
-                  </fieldset>
-
-                  <div class="clr"></div>
-                </div> <!-- end class m -->
-                <div class="b">
-                    <div class="b">
-                        <div class="b"></div>
-                    </div>
-                </div>
-            </div> <!-- end class element-box -->
-            <div class="clr"></div>
-        </div> <!-- end class toolbar-box -->
-        <div class="clr"></div>
-    </div><!-- end class content-box -->
-</div> <!-- end class content-box -->
+    <%include Application.common.template.footerContent %>
 </com:TContent>

@@ -1,181 +1,178 @@
 <com:TContent ID="Main">
 
-<script language="Javascript">
+    <script language="Javascript">
 
-  var serial = new Array();
-  var counter = 0;
-  var serialDetected = false;
-  var specialKey = false;
+        var serial = new Array();
+        var counter = 0;
+        var serialDetected = false;
+        var specialKey = false;
 
-  document.onkeydown = function(evt) {
+        document.onkeydown = function(evt) {
 
-  var kc = 0;
- 
-  if(evt)
-  {
-    kc = evt.keyCode;   // firefox
-  }
-  else
-  {
-    kc = window.event.keyCode;  // IE
-  }
+            var kc = 0;
+
+            if(evt)
+            {
+                kc = evt.keyCode;   // firefox
+            }
+            else
+            {
+                kc = window.event.keyCode;  // IE
+            }
+
+            if(kc == 16 || kc==17 || kc ==18)
+            {
+                specialKey = true;
+                return false;
+            }
   
-  if(kc == 16 || kc==17 || kc ==18)
-  {
-    specialKey = true;
-    return false;
-  }
-  
-  if(kc == 51 && (counter == 0 || counter == 1) && specialKey)
-  {
-    serial.push(51);
-    counter++;
-    if(counter == 2 && serial[0] == 51 && serial[1] == 51)
-    {
-      serialDetected = true;
-      document.getElementById("detected").innerHTML = '[<%= Prado::localize("...Reading...") %>]';
-    }
-  }
-  else
-  {
-    if(kc == 51 && serialDetected && specialKey)
-    {
-      serial.push(51);
-      counter++;
+            if(kc == 51 && (counter == 0 || counter == 1) && specialKey)
+            {
+                serial.push(51);
+                counter++;
+                if(counter == 2 && serial[0] == 51 && serial[1] == 51)
+                {
+                    serialDetected = true;
+                    document.getElementById("detected").innerHTML = '[<%= Prado::localize("...Reading...") %>]';
+                }
+            }
+            else
+            {
+                if(kc == 51 && serialDetected && specialKey)
+                {
+                    serial.push(51);
+                    counter++;
 
-      if(serial[serial.length-1] == 51 && serial[serial.length-2] == 51)
-      {
-        document.getElementById("detected").innerHTML = '';
-        
-        var sn = "";
-        for(i=2; i<serial.length-2; i++)
-          sn += String.fromCharCode(serial[i]);
-        
-        
-        document.getElementById( '<%= $this->serialNumber->getClientID() %>' ).value = sn;
-        counter = 0;
-        delete serial;
-        serial = new Array();
-        serialDetected = false;
-      }
-    }
-    else
-    {
-      if(serialDetected)
-      {
-        serial.push(kc);
-        counter++;
-      }
-      else
-      {
-        specialKey = false;
-        document.getElementById("detected").innerHTML = '';
-        counter = 0;
-        delete serial;
-        serial = new Array();
-        serialDetected = false;
-        return true;
-      }
-    }
-    
-  }
-  
-  return false;
-}
+                    if(serial[serial.length-1] == 51 && serial[serial.length-2] == 51)
+                    {
+                        document.getElementById("detected").innerHTML = '';
+
+                        var sn = "";
+                        for(i=2; i<serial.length-2; i++)
+                            sn += String.fromCharCode(serial[i]);
 
 
-</script>
+                        document.getElementById( '<%= $this->serialNumber->getClientID() %>' ).value = sn;
+                        counter = 0;
+                        delete serial;
+                        serial = new Array();
+                        serialDetected = false;
+                    }
+                }
+                else
+                {
+                    if(serialDetected)
+                    {
+                        serial.push(kc);
+                        counter++;
+                    }
+                    else
+                    {
+                        specialKey = false;
+                        document.getElementById("detected").innerHTML = '';
+                        counter = 0;
+                        delete serial;
+                        serial = new Array();
+                        serialDetected = false;
+                        return true;
+                    }
+                }
 
-<%include Application.common.template.headerContent %>
-            
-<com:TToolbarBox
-ID="tbb"
-Title="<%[Modify a Key]%>"
-CssIcon="icon-48-key"
-ApplyVisible="true"
-SaveVisible="true"
-CancelVisible="true"
-HelpVisible="true"
-/>
+            }
 
-<com:TLiteral ID="okMsg" Text="" />
-<com:TLiteral ID="koMsg" Text="" />
-
-<%include Application.common.template.headerBoxContent %>
-
-<fieldset class="adminform">
-<legend><%[Parameters]%></legend>
-   <com:THiddenField ID="id" value="" />
-  <table class="admintable" cellspacing="1">
-    <tbody>
-      <tr>
-        <td valign="top" class="key">
-          <span onmouseover="Tip('<%[Enter a <strong>unique</strong> identificator for this key]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)">* <%[Identificator]%></span>
-        </td>
-        <td>
-          <com:TTextBox
-            CssClass="text_area"
-            ID="identificator"
-            Width="50" />
-          <com:TCustomValidator
-            ValidationGroup="Group1"
-            EnableClientScript="false"
-            ControlToValidate="identificator"
-            OnServerValidate="serverValidateIdentificator"
-            Display="Dynamic"
-            Text="<%[This identificator is already used]%>" />
-          <com:TRequiredFieldValidator
-            ValidationGroup="Group1"
-            ControlToValidate="identificator"
-            Text="<%[This field is required]%>"
-            Display="Dynamic"/>
-        </td>
-      </tr>
-      <tr>
-        <td valign="top" class="key"><span onmouseover="Tip('<%[Unique serial number of the Key]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)">* <%[Key number]%></span></td>
-        <td>
-          <com:TTextBox CssClass="text_area" ID="serialNumber" Width="50" Text=""/>
-          <com:TCustomValidator
-            ValidationGroup="Group1"
-            EnableClientScript="false"
-            ControlToValidate="serialNumber"
-            OnServerValidate="serverValidateSerialNumber"
-            Display="Dynamic"
-            Text="<%[This serialNumber is already used]%>" />
-          <com:TRequiredFieldValidator
-            ValidationGroup="Group1"
-            ControlToValidate="serialNumber"
-            Text="<%[This field is required]%>"
-            Display="Dynamic"/>
-        </td>
-      </tr>
-
-      <tr>
-        <td valign="top" class="key"><span onmouseover="Tip('<%[Check it if the key must be blocked]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Block]%></span></td>
-        <td>
-            <com:TCheckBox
-                ID="isBlocked"
-                Text=""
-                InputAttributes.value="1"
-            />
-        </td>
-      </tr>
-
-      <tr>
-        <td valign="top" class="key"><span onmouseover="Tip('<%[Attribute this key to somebody]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Attribution]%></span></td>
-        <td>
-            <com:TDropDownList
-                ID="person"
-                DataTextField="Text"
-                DataValueField="Value"
-            />
-        </td>
-      </tr>
+            return false;
+        }
 
 
-    </tbody>
-  </table>
-</fieldset>
+    </script>
 
-<%include Application.common.template.footerContent %>
+    <%include Application.common.template.headerContent %>
+
+    <com:TToolbarBox
+        ID="tbb"
+        Title="<%[Modify a Key]%>"
+        CssIcon="icon-48-key"
+        ApplyVisible="true"
+        SaveVisible="true"
+        CancelVisible="true"
+        HelpVisible="true"
+        />
+
+    <%include Application.common.template.headerBoxContent %>
+
+    <fieldset class="adminform">
+        <legend><%[Parameters]%></legend>
+        <com:THiddenField ID="id" value="" />
+        <table class="admintable" cellspacing="1">
+            <tbody>
+                <tr>
+                    <td valign="top" class="key">
+                        <span onmouseover="Tip('<%[Enter a <strong>unique</strong> identificator for this key]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)">* <%[Identificator]%></span>
+                    </td>
+                    <td>
+                        <com:TTextBox
+                            CssClass="text_area"
+                            ID="identificator"
+                            Width="50" />
+                        <com:TCustomValidator
+                            ValidationGroup="Group1"
+                            EnableClientScript="false"
+                            ControlToValidate="identificator"
+                            OnServerValidate="serverValidateIdentificator"
+                            Display="Dynamic"
+                            Text="<%[This identificator is already used]%>" />
+                        <com:TRequiredFieldValidator
+                            ValidationGroup="Group1"
+                            ControlToValidate="identificator"
+                            Text="<%[This field is required]%>"
+                            Display="Dynamic"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td valign="top" class="key"><span onmouseover="Tip('<%[Unique serial number of the Key]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)">* <%[Key number]%></span></td>
+                    <td>
+                        <com:TTextBox CssClass="text_area" ID="serialNumber" Width="50" Text=""/>
+                        <com:TCustomValidator
+                            ValidationGroup="Group1"
+                            EnableClientScript="false"
+                            ControlToValidate="serialNumber"
+                            OnServerValidate="serverValidateSerialNumber"
+                            Display="Dynamic"
+                            Text="<%[This serialNumber is already used]%>" />
+                        <com:TRequiredFieldValidator
+                            ValidationGroup="Group1"
+                            ControlToValidate="serialNumber"
+                            Text="<%[This field is required]%>"
+                            Display="Dynamic"/>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td valign="top" class="key"><span onmouseover="Tip('<%[Check it if the key must be blocked]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Block]%></span></td>
+                    <td>
+                        <com:TCheckBox
+                            ID="isBlocked"
+                            Text=""
+                            InputAttributes.value="1"
+                            />
+                    </td>
+                </tr>
+
+                <tr>
+                    <td valign="top" class="key"><span onmouseover="Tip('<%[Attribute this key to somebody]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Attribution]%></span></td>
+                    <td>
+                        <com:TDropDownList
+                            ID="person"
+                            DataTextField="Text"
+                            DataValueField="Value"
+                            />
+                    </td>
+                </tr>
+
+
+            </tbody>
+        </table>
+    </fieldset>
+
+    <%include Application.common.template.footerContent %>
 </com:TContent>

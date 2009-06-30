@@ -19,46 +19,46 @@ class mod extends Page
     public function onLoad($param)
     {
         parent::onLoad($param);
-        
+
         $this->setAccessLink(true);
-        
-       if(!$this->isPostBack)
+
+        if(!$this->isPostBack)
         {
 
-		  if(isset($this->Request['id']))
-		  {
-                    $userId=$this->Application->getUser()->getUserId();
-                    $this->blockRecord('hr_keys', $this->Request['id'], $userId);	
+            if(isset($this->Request['id']))
+            {
+                $userId=$this->Application->getUser()->getUserId();
+                $this->blockRecord('hr_keys', $this->Request['id'], $userId);
 
-                    $this->id->Value = $this->Request['id'];
+                $this->id->Value = $this->Request['id'];
+                $this->setData();
+                $this->person->DataSource = $this->PersonList;
+                $this->person->dataBind();
+
+            }
+
+            if(isset($this->Request['sn']))
+            {
+                $userId=$this->Application->getUser()->getUserId();
+
+                $cmd = $this->db->createCommand( "SELECT * FROM hr_keys WHERE serialNumber='".$this->Request['sn']."'" );
+                $data =  $cmd->query();
+                $data = $data->read();
+                if($data)
+                {
+
+                    $this->blockRecord('hr_keys', $data['id'], $userId);
+                    $this->id->Value = $data['id'];
                     $this->setData();
                     $this->person->DataSource = $this->PersonList;
                     $this->person->dataBind();
-
-        }
-
-		  if(isset($this->Request['sn']))
-		  {
-                        $userId=$this->Application->getUser()->getUserId();
-
-                        $cmd = $this->db->createCommand( "SELECT * FROM hr_keys WHERE serialNumber='".$this->Request['sn']."'" );
-                        $data =  $cmd->query();
-                        $data = $data->read();
-			if($data)
-			{
-				
-				$this->blockRecord('hr_keys', $data['id'], $userId);
-				$this->id->Value = $data['id'];
-				$this->setData();
-				$this->person->DataSource = $this->PersonList;
-				$this->person->dataBind();
-                if($this->person->getItemCount())
+                    if($this->person->getItemCount())
                     $this->person->setSelectedIndex(0);
-			}
-			else
-				$this->Response->redirect($this->Service->constructUrl('key.add',array('sn'=>$this->Request['sn'])));
+                }
+                else
+                $this->Response->redirect($this->Service->constructUrl('key.add',array('sn'=>$this->Request['sn'])));
 
-		  }
+            }
         }
     }
 
@@ -71,7 +71,7 @@ class mod extends Page
         }
         else
         {
-           $cmd = $this->db->createCommand( SQL::SQL_GET_PERSON );
+            $cmd = $this->db->createCommand( SQL::SQL_GET_PERSON );
         }
         $data =  $cmd->query();
         $data = $data->readAll();
@@ -88,43 +88,43 @@ class mod extends Page
         $query = $cmd->query();
         if($query)
         {
-          $data = $query->read();
-          $this->id->Value = $data['id'];
-          $this->identificator->Text = $data['identificator'];
-          $this->serialNumber->Text = $data['serialNumber'];
-          $this->isBlocked->setChecked($data['isBlocked']);
-          if($data['isUsed'])
-          { 
-	        $cmd = $this->db->createCommand( SQL::SQL_GET_ATTRIBUTION );
-    	    $cmd->bindParameter(":id",$this->id->Value, PDO::PARAM_INT);
-        	$query = $cmd->query();
-          	$data = $query->read();
-          	
-          	$this->person->setSelectedValue($data['id']);
-          }
-          else
-          {
-            if($this->person->getItemCount())
+            $data = $query->read();
+            $this->id->Value = $data['id'];
+            $this->identificator->Text = $data['identificator'];
+            $this->serialNumber->Text = $data['serialNumber'];
+            $this->isBlocked->setChecked($data['isBlocked']);
+            if($data['isUsed'])
+            {
+                $cmd = $this->db->createCommand( SQL::SQL_GET_ATTRIBUTION );
+                $cmd->bindParameter(":id",$this->id->Value, PDO::PARAM_INT);
+                $query = $cmd->query();
+                $data = $query->read();
+
+                $this->person->setSelectedValue($data['id']);
+            }
+            else
+            {
+                if($this->person->getItemCount())
                 $this->person->setSelectedIndex(0);
 
-          }
-        } 
+            }
+        }
     }
 
     public function onApply($sender, $param)
     {
         if($this->Page->IsValid)
         {
-          if($this->saveData())
-          {
-            $pBack = array('okMsg'=>Prado::localize('The key was modified successfully'), 'id'=>$this->id->Value);
-            $this->Response->redirect($this->Service->constructUrl('key.mod', $pBack));
-          }
-          else
-          {
-            $pBack = array('koMsg'=>Prado::localize('The key was not modified'), 'id'=>$this->id->Value);
-            $this->Response->redirect($this->Service->constructUrl('key.mod', $pBack));
-          }
+            if($this->saveData())
+            {
+                $pBack = array('okMsg'=>Prado::localize('The key was modified successfully'), 'id'=>$this->id->Value);
+                $this->Response->redirect($this->Service->constructUrl('key.mod', $pBack));
+            }
+            else
+            {
+                $pBack = array('koMsg'=>Prado::localize('The key was not modified'), 'id'=>$this->id->Value);
+                $this->Response->redirect($this->Service->constructUrl('key.mod', $pBack));
+            }
         }
     }
 
@@ -132,137 +132,137 @@ class mod extends Page
     {
         if($this->Page->IsValid)
         {
-          if($this->saveData())
-          {
-            $pBack = array('okMsg'=>Prado::localize('The key was modified successfully'));
-          }
-          else
+            if($this->saveData())
+            {
+                $pBack = array('okMsg'=>Prado::localize('The key was modified successfully'));
+            }
+            else
             $pBack = array('koMsg'=>Prado::localize('The key was not modified'));
-            
-          $this->blockRecord('hr_keys', $this->id->Value, 0);
-          $this->Response->redirect($this->Service->constructUrl('key.KeyList',$pBack));
+
+            $this->blockRecord('hr_keys', $this->id->Value, 0);
+            $this->Response->redirect($this->Service->constructUrl('key.KeyList',$pBack));
         }
     }
 
-	public function onCancel($sender, $param)
-	{
-		$this->blockRecord('hr_keys', $this->id->Value, 0);	
-        $this->Response->redirect($this->Service->constructUrl('key.KeyList'));	
-	}
+    public function onCancel($sender, $param)
+    {
+        $this->blockRecord('hr_keys', $this->id->Value, 0);
+        $this->Response->redirect($this->Service->constructUrl('key.KeyList'));
+    }
 
 
     protected function saveData()
     {
-      $res1 = $res2 = $res3 = true;	
-    
-      $cmd = $this->db->createCommand( SQL::SQL_MOD_KEY );
-      $cmd->bindParameter(":identificator",$this->identificator->SafeText,PDO::PARAM_STR);
-      $cmd->bindParameter(":serialNumber",$this->serialNumber->SafeText, PDO::PARAM_STR);
-      $cmd->bindParameter(":id",$this->id->Value, PDO::PARAM_STR);
-      $cmd->bindParameter(":isBlocked",$this->isBlocked->getChecked(), PDO::PARAM_STR);
-	
-		
-	  if($this->person->getSelectedValue() != 'null')
-      	$isUsed = 1;
-      else
-      	$isUsed = 0;
-      	
-   	  $cmd->bindParameter(":isUsed",$isUsed, PDO::PARAM_STR);
+        $res1 = $res2 = $res3 = true;
 
-	  $this->addStandalone('sub', $this->id->Value);
+        $cmd = $this->db->createCommand( SQL::SQL_MOD_KEY );
+        $cmd->bindParameter(":identificator",$this->identificator->SafeText,PDO::PARAM_STR);
+        $cmd->bindParameter(":serialNumber",$this->serialNumber->SafeText, PDO::PARAM_STR);
+        $cmd->bindParameter(":id",$this->id->Value, PDO::PARAM_STR);
+        $cmd->bindParameter(":isBlocked",$this->isBlocked->getChecked(), PDO::PARAM_STR);
 
-      $res1 = $cmd->execute();
-      
-      //remove the current tag attribution
-      $cmd1=$this->db->createCommand(SQL::SQL_REMOVE_TAG_ATTRIBUTION);
-      $cmd1->bindParameter(":id",$this->id->Value);
-      $res2 = $cmd1->execute();      
-      
 
-	  if($this->person->getSelectedValue() != 'null')
-	  {
-      	$cmd2=$this->db->createCommand(SQL::SQL_ADD_TAG_ATTRIBUTION);
-      	$cmd2->bindParameter(":id_key",$this->id->Value);
-      	$cmd2->bindParameter(":id_user",$this->person->getSelectedValue());
-     	$res3 = $cmd2->execute();      
-	  }
-      
+        if($this->person->getSelectedValue() != 'null')
+        $isUsed = 1;
+        else
+        $isUsed = 0;
 
-	  $this->addStandalone('add', $this->id->Value);
+        $cmd->bindParameter(":isUsed",$isUsed, PDO::PARAM_STR);
 
-      $this->log("Modify the key: ".$this->serialNumber->SafeText);
+        $this->addStandalone('sub', $this->id->Value);
 
-      return $res1 || $res3;
+        $res1 = $cmd->execute();
+
+        //remove the current tag attribution
+        $cmd1=$this->db->createCommand(SQL::SQL_REMOVE_TAG_ATTRIBUTION);
+        $cmd1->bindParameter(":id",$this->id->Value);
+        $res2 = $cmd1->execute();
+
+
+        if($this->person->getSelectedValue() != 'null')
+        {
+            $cmd2=$this->db->createCommand(SQL::SQL_ADD_TAG_ATTRIBUTION);
+            $cmd2->bindParameter(":id_key",$this->id->Value);
+            $cmd2->bindParameter(":id_user",$this->person->getSelectedValue());
+            $res3 = $cmd2->execute();
+        }
+
+
+        $this->addStandalone('add', $this->id->Value);
+
+        $this->log("Modify the key: ".$this->serialNumber->SafeText);
+
+        return $res1 || $res3;
     }
 
-	protected function addStandalone($function, $idkey)
-	{
-		$cmd=$this->db->createCommand("SELECT * FROM hr_keys WHERE id=:id");
-		$cmd->bindParameter(":id",$idkey);
-		$data = $cmd->query();
-		$data = $data->read();
-		
-		$rfid = $data['serialNumber'];
-		$idtag = $data['id'];
-		
-		if( ($data['isBlocked'] == 0 && $function=='add' ) || $function=='sub')
-		{
-			
-			$cmd=$this->db->createCommand("SELECT * FROM hr_keys_attribution WHERE id_key=:id");
-			$cmd->bindParameter(":id",$idtag);
-			$data2 = $cmd->query();
-			$data2 = $data2->readAll();
-			
-			//pour chaque groupe
-			foreach($data2 as $d2)
-			{
-				$idperson = $d2['id_user'];
-				$cmd=$this->db->createCommand("SELECT id_device FROM hr_user_group_attribution AS ga LEFT JOIN hr_user_group_access AS gac ON gac.id_group=ga.id_group WHERE ga.id_user=:id");
-				$cmd->bindParameter(":id",$idperson);
-				$data3 = $cmd->query();
-				$data3 = $data3->readAll();
-				
-				foreach($data3 as $d3)
-				{
-					$idreader = $d3['id_device'];
-					if($idreader != NULL)
-					{
-						$cmd=$this->db->createCommand("INSERT INTO hr_standalone_action_service (`type`, `serialNumber`, `rd_id`) VALUES (:func,:rfid,:rdid)");
-						$cmd->bindParameter(":func",$function);
-						$cmd->bindParameter(":rfid",$rfid);
-						$cmd->bindParameter(":rdid",$idreader);
-						$cmd->execute();
-					}
-				}
-				
-			}
-		}
-	}    
+    protected function addStandalone($function, $idkey)
+    {
+        $cmd=$this->db->createCommand("SELECT * FROM hr_keys WHERE id=:id");
+        $cmd->bindParameter(":id",$idkey);
+        $data = $cmd->query();
+        $data = $data->read();
+
+        $rfid = $data['serialNumber'];
+        $idtag = $data['id'];
+
+        if( ($data['isBlocked'] == 0 && $function=='add' ) || $function=='sub')
+        {
+
+            $cmd=$this->db->createCommand("SELECT * FROM hr_keys_attribution WHERE id_key=:id");
+            $cmd->bindParameter(":id",$idtag);
+            $data2 = $cmd->query();
+            $data2 = $data2->readAll();
+
+            //pour chaque groupe
+            foreach($data2 as $d2)
+            {
+                $idperson = $d2['id_user'];
+                $cmd=$this->db->createCommand("SELECT id_device FROM hr_user_group_attribution AS ga LEFT JOIN hr_user_group_access AS gac ON gac.id_group=ga.id_group WHERE ga.id_user=:id");
+                $cmd->bindParameter(":id",$idperson);
+                $data3 = $cmd->query();
+                $data3 = $data3->readAll();
+
+                foreach($data3 as $d3)
+                {
+                    $idreader = $d3['id_device'];
+                    if($idreader != NULL)
+                    {
+                        $cmd=$this->db->createCommand("INSERT INTO hr_standalone_action_service (`type`, `serialNumber`, `rd_id`) VALUES (:func,:rfid,:rdid)");
+                        $cmd->bindParameter(":func",$function);
+                        $cmd->bindParameter(":rfid",$rfid);
+                        $cmd->bindParameter(":rdid",$idreader);
+                        $cmd->execute();
+                    }
+                }
+
+            }
+        }
+    }
 
 
     public function serverValidateSerialNumber($sender, $param)
     {
-      $cmd = $this->db->createCommand( SQL::SQL_IS_SERIALNUMBER_EXIST_EXCEPT_ID);
-      $cmd->bindParameter(":serialNumber",$this->serialNumber->SafeText,PDO::PARAM_STR);
-      $cmd->bindParameter(":id",$this->id->Value,PDO::PARAM_STR);
-      $array = $cmd->query()->readAll();
+        $cmd = $this->db->createCommand( SQL::SQL_IS_SERIALNUMBER_EXIST_EXCEPT_ID);
+        $cmd->bindParameter(":serialNumber",$this->serialNumber->SafeText,PDO::PARAM_STR);
+        $cmd->bindParameter(":id",$this->id->Value,PDO::PARAM_STR);
+        $array = $cmd->query()->readAll();
 
-      if(count($array) > 0)
+        if(count($array) > 0)
         $param->IsValid=false;
-      else 
+        else
         $param->IsValid=true;
     }
 
     public function serverValidateIdentificator($sender, $param)
     {
-      $cmd = $this->db->createCommand( SQL::SQL_IS_IDENTIFICATOR_EXIST_EXCEPT_ID);
-      $cmd->bindParameter(":identificator",$this->identificator->SafeText,PDO::PARAM_STR);
-      $cmd->bindParameter(":id",$this->id->Value,PDO::PARAM_STR);
-      $array = $cmd->query()->readAll();
+        $cmd = $this->db->createCommand( SQL::SQL_IS_IDENTIFICATOR_EXIST_EXCEPT_ID);
+        $cmd->bindParameter(":identificator",$this->identificator->SafeText,PDO::PARAM_STR);
+        $cmd->bindParameter(":id",$this->id->Value,PDO::PARAM_STR);
+        $array = $cmd->query()->readAll();
 
-      if(count($array) > 0)
+        if(count($array) > 0)
         $param->IsValid=false;
-      else 
+        else
         $param->IsValid=true;
     }
 }

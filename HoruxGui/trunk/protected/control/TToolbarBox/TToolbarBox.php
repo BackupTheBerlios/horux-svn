@@ -31,6 +31,16 @@ class TToolbarBox extends TTemplateControl
 		return $this->getViewState('CssIcon','');
 	}
 
+	public function setIconAsset($icon)
+	{
+		$this->setViewState('IconAsset',$icon,'');
+	}
+
+	public function getIconAsset()
+	{
+		return $this->getViewState('IconAsset','');
+	}
+
 	//! button Edit
 	public function setEditVisible($flag)
 	{
@@ -138,6 +148,70 @@ class TToolbarBox extends TTemplateControl
 	public function getSaveVisible()
 	{
 		return $this->getViewState('SaveVisible',false);
+	}
+	//! button attribute
+	public function setAttributeVisible($flag)
+	{
+		$this->setViewState('AttributeVisible',$flag,false);
+	}
+	public function getAttributeVisible()
+	{
+		return $this->getViewState('AttributeVisible',false);
+	}
+	//! button unattribute
+	public function setUnAttributeVisible($flag)
+	{
+		$this->setViewState('UnAttributeVisible',$flag,false);
+	}
+	public function getUnAttributeVisible()
+	{
+		return $this->getViewState('UnAttributeVisible',false);
+	}
+	//! button start
+	public function setStartVisible($flag)
+	{
+		$this->setViewState('StartVisible',$flag,false);
+	}
+	public function getStartVisible()
+	{
+		return $this->getViewState('StartVisible',false);
+	}
+	//! button stop
+	public function setStopVisible($flag)
+	{
+		$this->setViewState('StopVisible',$flag,false);
+	}
+	public function getStopVisible()
+	{
+		return $this->getViewState('StopVisible',false);
+	}
+	//! button add access
+	public function setAddAccessVisible($flag)
+	{
+		$this->setViewState('AddAccessVisible',$flag,false);
+	}
+	public function getAddAccessVisible()
+	{
+		return $this->getViewState('AddAccessVisible',false);
+	}
+	//! button unattribute
+	public function setUnInstallVisible($flag)
+	{
+		$this->setViewState('UnInstallVisible',$flag,false);
+	}
+	public function getUnInstallVisible()
+	{
+		return $this->getViewState('UnInstallVisible',false);
+	}
+
+	//! button default
+	public function setDefaultVisible($flag)
+	{
+		$this->setViewState('DefaultVisible',$flag,false);
+	}
+	public function getDefaultVisible()
+	{
+		return $this->getViewState('DefaultVisible',false);
 	}
 }
 ?>

@@ -55,7 +55,7 @@ class NotificationMod extends Page
         }
         else
         {
-           $cmd = $this->db->createCommand( SQL::SQL_GET_PERSON );
+            $cmd = $this->db->createCommand( SQL::SQL_GET_PERSON );
         }
         $data =  $cmd->query();
         $data = $data->readAll();
@@ -69,11 +69,11 @@ class NotificationMod extends Page
         $query = $cmd->query();
         if($query)
         {
-             $data = $query->read();
-             $this->id->Value = $data['id'];
-             $this->name->Text = $data['name'];
-             $this->emailToSend->Text = $data['emails'];
-             $this->comment->Text = $data['description'];
+            $data = $query->read();
+            $this->id->Value = $data['id'];
+            $this->name->Text = $data['name'];
+            $this->emailToSend->Text = $data['emails'];
+            $this->comment->Text = $data['description'];
         }
 
         for( $i=0; $i< $this->superUserList->ItemCount; $i++)
@@ -84,10 +84,10 @@ class NotificationMod extends Page
             $cmd->bindParameter(":id_superuser", $item->Value, PDO::PARAM_STR);
             $query = $cmd->query();
             if($query)
-            { 
-                 $data = $query->read();
-                 if($data['n'] > 0)
-                    $this->superUserList->Items[$i]->setSelected(true);
+            {
+                $data = $query->read();
+                if($data['n'] > 0)
+                $this->superUserList->Items[$i]->setSelected(true);
             }
         }
 
@@ -100,9 +100,9 @@ class NotificationMod extends Page
             $query = $cmd->query();
             if($query)
             {
-                 $data = $query->read();
-                 if($data['n'] > 0)
-                    $this->userList->Items[$i]->setSelected(true);
+                $data = $query->read();
+                if($data['n'] > 0)
+                $this->userList->Items[$i]->setSelected(true);
             }
         }
 
@@ -139,41 +139,41 @@ class NotificationMod extends Page
 
     protected function setCheckBox($cb, $type, $code)
     {
-            $cmd = $this->db->createCommand( SQL::SQL_GET_NOTIFICATION_CODE );
-            $cmd->bindParameter(":id_notification", $this->id->Value, PDO::PARAM_STR);
-            $cmd->bindParameter(":type", $type, PDO::PARAM_STR);
-            $cmd->bindParameter(":code", $code, PDO::PARAM_STR);
+        $cmd = $this->db->createCommand( SQL::SQL_GET_NOTIFICATION_CODE );
+        $cmd->bindParameter(":id_notification", $this->id->Value, PDO::PARAM_STR);
+        $cmd->bindParameter(":type", $type, PDO::PARAM_STR);
+        $cmd->bindParameter(":code", $code, PDO::PARAM_STR);
 
-            $query = $cmd->query();
-            if($query)
-            {
-                 $data = $query->read();
-                 if($data['n'] > 0) 
-                    $cb->setChecked(true);
-            }
+        $query = $cmd->query();
+        if($query)
+        {
+            $data = $query->read();
+            if($data['n'] > 0)
+            $cb->setChecked(true);
+        }
 
     }
 
-	public function onCancel($sender, $param)
-	{
-		$this->blockRecord('hr_notification', $this->id->Value, 0);
+    public function onCancel($sender, $param)
+    {
+        $this->blockRecord('hr_notification', $this->id->Value, 0);
         $this->Response->redirect($this->Service->constructUrl('system.Notification'));
-	}
+    }
 
     public function onApply($sender, $param)
     {
         if($this->Page->IsValid)
         {
-          if($this->saveData())
-          {
-            $pBack = array('okMsg'=>Prado::localize('The notification was modified successfully'), 'id'=>$this->id->Value);
-            $this->Response->redirect($this->Service->constructUrl('system.NotificationMod', $pBack));
-          }
-          else
-          {
-            $pBack = array('koMsg'=>Prado::localize('The notification was not modified'), 'id'=>$this->id->Value);
-            $this->Response->redirect($this->Service->constructUrl('system.NotificationMod', $pBack));
-          }
+            if($this->saveData())
+            {
+                $pBack = array('okMsg'=>Prado::localize('The notification was modified successfully'), 'id'=>$this->id->Value);
+                $this->Response->redirect($this->Service->constructUrl('system.NotificationMod', $pBack));
+            }
+            else
+            {
+                $pBack = array('koMsg'=>Prado::localize('The notification was not modified'), 'id'=>$this->id->Value);
+                $this->Response->redirect($this->Service->constructUrl('system.NotificationMod', $pBack));
+            }
         }
     }
 
@@ -181,15 +181,15 @@ class NotificationMod extends Page
     {
         if($this->Page->IsValid)
         {
-          if($this->saveData())
-          {
-            $pBack = array('okMsg'=>Prado::localize('The notification was modified successfully'));
-          }
-          else
+            if($this->saveData())
+            {
+                $pBack = array('okMsg'=>Prado::localize('The notification was modified successfully'));
+            }
+            else
             $pBack = array('koMsg'=>Prado::localize('The notification was not modified'));
 
-          $this->blockRecord('hr_notification', $this->id->Value, 0);
-          $this->Response->redirect($this->Service->constructUrl('system.Notification',$pBack));
+            $this->blockRecord('hr_notification', $this->id->Value, 0);
+            $this->Response->redirect($this->Service->constructUrl('system.Notification',$pBack));
         }
     }
 
@@ -272,7 +272,7 @@ class NotificationMod extends Page
 
         $this->log("Modify the notification: ".$this->name->SafeText);
 
-	    return 1;
+        return 1;
     }
 
     protected function insertNotificationCode($not_id, $type, $code, $value='')

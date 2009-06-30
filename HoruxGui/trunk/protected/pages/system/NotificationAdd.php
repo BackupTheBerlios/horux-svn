@@ -169,6 +169,10 @@ class NotificationAdd extends Page
         $cmd->execute();
     }
 
+    public function onCancel($sender, $param)
+    {
+        $this->Response->redirect($this->Service->constructUrl('system.Notification'));
+    }
 }
 
 ?>

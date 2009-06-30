@@ -66,7 +66,7 @@ class Groups extends Page
         }
     }	
     
-    public function attribute($sender,$param)
+    public function onAttribute($sender,$param)
     {
     	$id_user = $this->id->Value;
     	$id_group = $this->UnusedGroup->getSelectedValue();
@@ -161,6 +161,10 @@ class Groups extends Page
           $pBack = array('id'=>$this->Request['id'],'okMsg'=>Prado::localize('{n} group was unattributed',array('n'=>$nUnAttributed)));
           $this->Response->redirect($this->Service->constructUrl('user.groups',$pBack));
         }    	
+    }
+    public function onCancel($sender, $param)
+    {
+        $this->Response->redirect($this->Service->constructUrl('user.UserList'));
     }
 }
 

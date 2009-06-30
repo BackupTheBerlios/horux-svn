@@ -243,6 +243,11 @@ class Add extends Page
 		        imagesavealpha($new_img, true);
 		    }
 		}   	
-    } 
+    }
+
+    public function onCancel($sender, $param)
+    {
+        $this->Response->redirect($this->Service->constructUrl('user.UserList'));
+    }
 	 
 }

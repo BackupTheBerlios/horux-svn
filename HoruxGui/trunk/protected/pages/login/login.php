@@ -16,48 +16,48 @@ Prado::using('horux.pages.login.sql');
 
 class Login extends Page
 {
-	public function onLoad($param)
-	{
-		parent::onLoad($param);
-				
+    public function onLoad($param)
+    {
+        parent::onLoad($param);
+
         $this->getClientScript()->registerStyleSheetFile('loginCss','./themes/letux/css/login.css');
-		  	
-		$this->username->focus (); 
-		
+
+        $this->username->focus ();
+
         if(!$this->IsPostBack)
         {
-        	
-        	$this->lang->DataTextField='name';
-			$this->lang->DataValueField='param';
-			$this->lang->DataSource=$this->Data;
-			$this->lang->dataBind();
+
+            $this->lang->DataTextField='name';
+            $this->lang->DataValueField='param';
+            $this->lang->DataSource=$this->Data;
+            $this->lang->dataBind();
         }
-		
-	}
-	
-	public function getData()
-	{
-		$cmd=$this->db->createCommand("SELECT * FROM hr_install WHERE type='language'");
-		$data = $cmd->query();
-		$data = $data->readAll();
-		
-		$l[] = array('param' => 'default', 'name'=>Prado::localize('default'));
-		foreach($data as $d)
-		{
-			$l[] = array('param' => $d['param'], 'name'=>$d['name']);
-		}
-		return $l;
-	}
-	
-	public function onLogin($sender, $param)
-	{
-		$authManager=$this->Application->getModule('Auth');
-		if(!$authManager->login(strtolower($this->username->SafeText),$this->password->SafeText))
-			$param->IsValid=false;		
-		else
-		{   
+
+    }
+
+    public function getData()
+    {
+        $cmd=$this->db->createCommand("SELECT * FROM hr_install WHERE type='language'");
+        $data = $cmd->query();
+        $data = $data->readAll();
+
+        $l[] = array('param' => 'default', 'name'=>Prado::localize('default'));
+        foreach($data as $d)
+        {
+            $l[] = array('param' => $d['param'], 'name'=>$d['name']);
+        }
+        return $l;
+    }
+
+    public function onLogin($sender, $param)
+    {
+        $authManager=$this->Application->getModule('Auth');
+        if(!$authManager->login(strtolower($this->username->SafeText),$this->password->SafeText))
+        $param->IsValid=false;
+        else
+        {
             $this->log($this->username->SafeText." is logged in");
-			$this->Response->redirect($this->Service->constructUrl('controlPanel.ControlPanel',array('lang'=>$this->lang->getSelectedValue())));
-		}
-	}
+            $this->Response->redirect($this->Service->constructUrl('controlPanel.ControlPanel',array('lang'=>$this->lang->getSelectedValue())));
+        }
+    }
 }

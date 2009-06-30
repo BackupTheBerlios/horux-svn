@@ -16,152 +16,152 @@
 
 class Status extends Page
 {
-	public $plugins = NULL;	
-	public $devices = NULL;
-	public $port = 0;
-	public $host = 0;
+    public $plugins = NULL;
+    public $devices = NULL;
+    public $port = 0;
+    public $host = 0;
 
     public function onLoad($param)
     {
-        parent::onLoad($param); 
+        parent::onLoad($param);
 
         if(!$this->IsPostBack)
         {
-			$result = $this->getSystemStatus();
-			$this->parseResponse($result);
+            $result = $this->getSystemStatus();
+            $this->parseResponse($result);
         }
 
-            $app = $this->getApplication();
-            $db = $app->getModule('horuxDb')->DbConnection;
-            $db->Active=true;
+        $app = $this->getApplication();
+        $db = $app->getModule('horuxDb')->DbConnection;
+        $db->Active=true;
     }
-    
-    
-	public function onRefresh($sender, $param)
-	{
-		$this->hiddenMessage();
-		$result = $this->getSystemStatus();
-		$result = $this->parseResponse($result);
-		$this->Page->CallbackClient->update('list','');
-   	}
-   	
-   	protected function parseResponse($xmlresp)
-   	{
-   		$xml = simplexml_load_string($xmlresp);
-   		
-   		if($xml != "")
-   		{
 
-   			$this->horuxVersion->Text = $xml->appVersion;
-   			$this->horuxTimeLive->Text = $xml->serverLive;
 
-   			$this->plugins = array();
-   				   			
-   			foreach ($xml->plugins as $plugins) 
-   			{
-  				
-	   			foreach ($plugins as $plugin) 
-	   			{
-	   				$p = array();			   			
-	   				$p['name'] = $plugin->name;
-	   				$p['description'] = $plugin->description;
-	   				$p['version'] = $plugin->version;
-	   				$p['author'] = $plugin->author;   
-	   				$p['copyright'] = $plugin->copyright;   
-	   				$p['type'] = (string)$plugins['type'];   
-	   				$this->plugins[] = $p;	   								
-	   			}   				
-   			}
-   			
-   			$this->PluginsR->DataSource=$this->plugins;
-   			$this->PluginsR->dataBind();
-   			
-   			$this->devices = array();
+    public function onRefresh($sender, $param)
+    {
+        $this->hiddenMessage();
+        $result = $this->getSystemStatus();
+        $result = $this->parseResponse($result);
+        $this->Page->CallbackClient->update('list','');
+    }
 
-   			foreach ($xml->devices as $devices) 
-   			{
-  				
-	   			foreach ($devices as $device) 
-	   			{
-	   				$p = array();			   			
-	   				$p['id'] = (string)$device['id']; 
-	   				$p['name'] = $device->name;
-	   				$p['serialNumber'] = $device->serialNumber;
-	   				$p['isConnected'] = $device->isConnected;
-	   				$p['firmwareVersion'] = $device->firmwareVersion; 
-	   				$p['port'] = $this->port;  
-	   				$p['host'] = $this->host;
-	   				$this->devices[] = $p;	   								
-	   			}   				
-   			}
+    protected function parseResponse($xmlresp)
+    {
+        $xml = simplexml_load_string($xmlresp);
 
-   			$this->DeviceR->DataSource=$this->devices;
-   			$this->DeviceR->dataBind();
-   			
-   		}
+        if($xml != "")
+        {
 
-   		
-   	}
-   	
-   	protected function getSystemStatus()
-   	{
-   		
-	   $sql = "SELECT * FROM hr_config";
-	   $command=$this->db->createCommand($sql);
-	   $dataObj=$command->query();
-	   $dataObj = $dataObj->read();
-	   $this->host = $dataObj['xmlrpc_server'];
-	   $this->port = $dataObj['xmlrpc_port'];
+            $this->horuxVersion->Text = $xml->appVersion;
+            $this->horuxTimeLive->Text = $xml->serverLive;
 
-  		$param = $this->Application->getParameters();
-	
-   		if($param['appMode'] != 'demo')
-   		{  			
-   			
-	   		require_once( 'XML/RPC.php' );	
-	   		$result = "";
-	   		$content_error = "";
-	        $client = new XML_RPC_Client("RPC2", $this->host, $this->port);
-	        $msg = new XML_RPC_Message("horux.getSystemInfo");
-	        @$response = $client->send($msg);
-	    
-	        if($response)
-	        {
-	                if (!$response->faultCode()) 
-	                {
-	                        $v = $response->value();
-	 
-	                        $result = html_entity_decode( $v->scalarval() );
+            $this->plugins = array();
 
-	                } 
-	                else 
-	                {
-	                        $content_error = "ERROR - ";
-	                        $content_error .= "Code: " . $response->faultCode() . " Reason '" . $response->faultString() . "'<br/>";
-	                };			
-	        }
-	        
-	        if($content_error != "")
-	        {
-	        	$this->displayMessage( $content_error , false);     
-	        	return ""; 
-	        }
-	        else
-	        {
-	        	if($result != "")
-	        	{
-	        		return $result;
-	        	}
-	        }
-	        
-	        $this->displayMessage(Prado::localize('The server horux seems to be down') , false);
-	        return "";
-   		}
-   		else
-   		{
-   			return file_get_contents('demo.xml');
-   		}
-   	}
+            foreach ($xml->plugins as $plugins)
+            {
+
+                foreach ($plugins as $plugin)
+                {
+                    $p = array();
+                    $p['name'] = $plugin->name;
+                    $p['description'] = $plugin->description;
+                    $p['version'] = $plugin->version;
+                    $p['author'] = $plugin->author;
+                    $p['copyright'] = $plugin->copyright;
+                    $p['type'] = (string)$plugins['type'];
+                    $this->plugins[] = $p;
+                }
+            }
+
+            $this->PluginsR->DataSource=$this->plugins;
+            $this->PluginsR->dataBind();
+
+            $this->devices = array();
+
+            foreach ($xml->devices as $devices)
+            {
+
+                foreach ($devices as $device)
+                {
+                    $p = array();
+                    $p['id'] = (string)$device['id'];
+                    $p['name'] = $device->name;
+                    $p['serialNumber'] = $device->serialNumber;
+                    $p['isConnected'] = $device->isConnected;
+                    $p['firmwareVersion'] = $device->firmwareVersion;
+                    $p['port'] = $this->port;
+                    $p['host'] = $this->host;
+                    $this->devices[] = $p;
+                }
+            }
+
+            $this->DeviceR->DataSource=$this->devices;
+            $this->DeviceR->dataBind();
+
+        }
+
+
+    }
+
+    protected function getSystemStatus()
+    {
+
+        $sql = "SELECT * FROM hr_config";
+        $command=$this->db->createCommand($sql);
+        $dataObj=$command->query();
+        $dataObj = $dataObj->read();
+        $this->host = $dataObj['xmlrpc_server'];
+        $this->port = $dataObj['xmlrpc_port'];
+
+        $param = $this->Application->getParameters();
+
+        if($param['appMode'] != 'demo')
+        {
+
+            require_once( 'XML/RPC.php' );
+            $result = "";
+            $content_error = "";
+            $client = new XML_RPC_Client("RPC2", $this->host, $this->port);
+            $msg = new XML_RPC_Message("horux.getSystemInfo");
+            @$response = $client->send($msg);
+
+            if($response)
+            {
+                if (!$response->faultCode())
+                {
+                    $v = $response->value();
+
+                    $result = html_entity_decode( $v->scalarval() );
+
+                }
+                else
+                {
+                    $content_error = "ERROR - ";
+                    $content_error .= "Code: " . $response->faultCode() . " Reason '" . $response->faultString() . "'<br/>";
+                };
+            }
+
+            if($content_error != "")
+            {
+                $this->displayMessage( $content_error , false);
+                return "";
+            }
+            else
+            {
+                if($result != "")
+                {
+                    return $result;
+                }
+            }
+
+            $this->displayMessage(Prado::localize('The server horux seems to be down') , false);
+            return "";
+        }
+        else
+        {
+            return file_get_contents('demo.xml');
+        }
+    }
 }
 
 ?>

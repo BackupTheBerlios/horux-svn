@@ -14,114 +14,114 @@
 
 class Service extends Page
 {
-	public function onLoad($param)
-	{
-		parent::onLoad($param);
-		$this->appCheck();
-		
-		$param = $this->Application->getParameters();
-		if($param['appMode'] == 'demo')
-		{
-			$this->stop->setEnabled(false);
-			$this->start->setEnabled(false);
-		} 		
-	}	
-	
-	public function appCheck()
-	{
-		$this->isRunning();			
-	}
-		
-	public function isRunning()
-	{
-		
-	   $sql = "SELECT * FROM hr_config";
-	   $command=$this->db->createCommand($sql);
-	   $dataObj=$command->query();
-	   $dataObj = $dataObj->read();
-	   $host = $dataObj['xmlrpc_server'];
-	   $port = $dataObj['xmlrpc_port'];
+    public function onLoad($param)
+    {
+        parent::onLoad($param);
+        $this->appCheck();
 
-  			
-   		$result = "";
-   		$content_error = "";
-   		$param = $this->Application->getParameters();
-   		
-   		if($param['appMode'] == 'demo')
-   		{  			
-   			$this->serverStatus->Text = Prado::localize("The server <i>horuxd</i> is running");
-   		}
-   		else
-   		{
-   			
-   			require_once( 'XML/RPC.php' );
-	        $client = new XML_RPC_Client("RPC2", $host, $port);
+        $param = $this->Application->getParameters();
+        if($param['appMode'] == 'demo')
+        {
+            $this->stop->setEnabled(false);
+            $this->start->setEnabled(false);
+        }
+    }
 
-	        $msg = new XML_RPC_Message("horux.isEngine");
-	        @$response = $client->send($msg);
-	
-	        if($response)
-	        {
-	                if (!$response->faultCode()) 
-	                {
-	                        $v = $response->value();
-	  
-	                        $result = html_entity_decode( $v->scalarval() );
-	                 } 
-	                else 
-	                {
-	                        $content_error = "ERROR - ";
-	                        $content_error .= "Code: " . $response->faultCode() . " Reason '" . $response->faultString() . "'<br/>";
-	                };			
-	        }
-	
-		    //$this->stop->setVisible(true);
-			//$this->start->setVisible(true); 
-	        
-	        if($content_error != "")
-	        {   
-				$this->serverStatus->Text = Prado::localize("The server <i>horuxd</i> is not running");
-	        }
-	        else
-	        {
-	        	if($result != "")
-	        	{
-			 		$isStopped = $result=='ko' ? true : false;
-					$isStarted = $result=='ok' ? false : true;
-					
-					if($isStopped)
-					{
-						//$this->start->setVisible(true);
-						$this->serverStatus->Text = Prado::localize("The server <i>horuxd</i> is not running");
-					}
-					else
-					{
-						//$this->stop->setVisible(true);
-						$this->serverStatus->Text = Prado::localize("The server <i>horuxd</i> is running");
-					}	
-			     }
-			     else
-			     {
-						$this->serverStatus->Text = Prado::localize("The server <i>horuxd</i> is not running");
-			     
-			     }
-	        }
-   		}                					
-	}
+    public function appCheck()
+    {
+        $this->isRunning();
+    }
 
-	public function onStop($sender, $param)
-	{
-	   require_once( 'XML/RPC.php' );	
-	
-	   $sql = "SELECT * FROM hr_config";
-	   $command=$this->db->createCommand($sql);
-	   $dataObj=$command->query();
-	   $dataObj = $dataObj->read();
-	   $host = $dataObj['xmlrpc_server'];
-	   $port = $dataObj['xmlrpc_port'];
-   			
-   		$result = "";
-   		$content_error = "";
+    public function isRunning()
+    {
+
+        $sql = "SELECT * FROM hr_config";
+        $command=$this->db->createCommand($sql);
+        $dataObj=$command->query();
+        $dataObj = $dataObj->read();
+        $host = $dataObj['xmlrpc_server'];
+        $port = $dataObj['xmlrpc_port'];
+
+
+        $result = "";
+        $content_error = "";
+        $param = $this->Application->getParameters();
+
+        if($param['appMode'] == 'demo')
+        {
+            $this->serverStatus->Text = Prado::localize("The server <i>horuxd</i> is running");
+        }
+        else
+        {
+
+            require_once( 'XML/RPC.php' );
+            $client = new XML_RPC_Client("RPC2", $host, $port);
+
+            $msg = new XML_RPC_Message("horux.isEngine");
+            @$response = $client->send($msg);
+
+            if($response)
+            {
+                if (!$response->faultCode())
+                {
+                    $v = $response->value();
+
+                    $result = html_entity_decode( $v->scalarval() );
+                }
+                else
+                {
+                    $content_error = "ERROR - ";
+                    $content_error .= "Code: " . $response->faultCode() . " Reason '" . $response->faultString() . "'<br/>";
+                };
+            }
+
+            //$this->stop->setVisible(true);
+            //$this->start->setVisible(true);
+
+            if($content_error != "")
+            {
+                $this->serverStatus->Text = Prado::localize("The server <i>horuxd</i> is not running");
+            }
+            else
+            {
+                if($result != "")
+                {
+                    $isStopped = $result=='ko' ? true : false;
+                    $isStarted = $result=='ok' ? false : true;
+
+                    if($isStopped)
+                    {
+                        //$this->start->setVisible(true);
+                        $this->serverStatus->Text = Prado::localize("The server <i>horuxd</i> is not running");
+                    }
+                    else
+                    {
+                        //$this->stop->setVisible(true);
+                        $this->serverStatus->Text = Prado::localize("The server <i>horuxd</i> is running");
+                    }
+                }
+                else
+                {
+                    $this->serverStatus->Text = Prado::localize("The server <i>horuxd</i> is not running");
+
+                }
+            }
+        }
+    }
+
+    public function onStop($sender, $param)
+    {
+        require_once( 'XML/RPC.php' );
+
+        $sql = "SELECT * FROM hr_config";
+        $command=$this->db->createCommand($sql);
+        $dataObj=$command->query();
+        $dataObj = $dataObj->read();
+        $host = $dataObj['xmlrpc_server'];
+        $port = $dataObj['xmlrpc_port'];
+
+        $result = "";
+        $content_error = "";
         $client = new XML_RPC_Client("RPC2", $host, $port);
 
         $app = $this->getApplication();
@@ -138,35 +138,35 @@ class Service extends Page
 
         $msg = new XML_RPC_Message("horux.stopEngine", $params);
         @$response = $client->send($msg);
-		$this->isRunning();
+        $this->isRunning();
 
         $this->log("Stop horux");
-	}	
+    }
 
 
-	public function onStart($sender, $param)
-	{
-	   require_once( 'XML/RPC.php' );	
-	
-	   $sql = "SELECT * FROM hr_config";
-	   $command=$this->db->createCommand($sql);
-	   $dataObj=$command->query();
-	   $dataObj = $dataObj->read();
-	   $host = $dataObj['xmlrpc_server'];
-	   $port = $dataObj['xmlrpc_port'];
+    public function onStart($sender, $param)
+    {
+        require_once( 'XML/RPC.php' );
 
-   		$result = "";
-   		$content_error = "";
+        $sql = "SELECT * FROM hr_config";
+        $command=$this->db->createCommand($sql);
+        $dataObj=$command->query();
+        $dataObj = $dataObj->read();
+        $host = $dataObj['xmlrpc_server'];
+        $port = $dataObj['xmlrpc_port'];
+
+        $result = "";
+        $content_error = "";
         $client = new XML_RPC_Client("RPC2", $host, $port);
 
 
         $msg = new XML_RPC_Message("horux.startEngine");
         @$response = $client->send($msg);
-		
-		$this->isRunning();
+
+        $this->isRunning();
 
         $this->log("Start horux");
-	}	
+    }
 
 }
 

@@ -1,239 +1,169 @@
 <com:TContent ID="Main">
-<div id="content-box">
-    <div class="border">
-        <div class="padding">
-            <div id="toolbar-box">
-                
-                <div class="t">
-                    <div class="t">
-                        <div class="t"></div>
-                    </div>
-                </div>
-                <div class="m" >
-                    <div class="toolbar" id="toolbar">
-                        <table class="toolbar">
-                            <tr>
-                                <td class="button" id="toolbar-new">
-                                    <com:TLinkButton CssClass="toolbar" OnClick="onAddAccess" >
-                                      <span class="icon-32-new" title="Add access"></span><%[Add access]%>
-                                    </com:TLinkButton> 
-                                </td>
-                                                            
-                                <td class="button" id="toolbar-apply">
-                                    <com:TLinkButton CssClass="toolbar" id="Apply" OnClick="onApply" ValidationGroup="Group1">
-                                      <span class="icon-32-apply" title="<%[Apply]%>"></span><%[Apply]%>
-                                    </com:TLinkButton> 
-                                </td>
+<%include Application.common.template.headerContent %>
+
+<com:TToolbarBox
+    ID="tbb"
+    Title="<%[Modify a super user group]%>"
+    CssIcon="icon-48-superUserGroup"
+    AddAccessVisible="true"
+    ApplyVisible="true"
+    SaveVisible="true"
+    CancelVisible="true"
+    HelpVisible="true"
+    />
+
+<%include Application.common.template.headerBoxContent %>
 
 
-                                <td class="button" id="toolbar-save">
-                                    <com:TLinkButton CssClass="toolbar" id="Save"  OnClick="onSave" ValidationGroup="Group1">
-                                      <span class="icon-32-save" title="<%[Save]%>"></span><%[Save]%>
-                                    </com:TLinkButton> 
-                                </td>
+<fieldset class="adminform">
+    <legend><%[Global]%></legend>
+    <com:THiddenField ID="id" value="" />
+    <table class="admintable" cellspacing="1">
+        <tbody>
 
-                                <td class="button" id="toolbar-cancel">
-                                    <com:TLinkButton CssClass="toolbar" OnClick="onCancel">
-                                      <span class="icon-32-cancel" title="<%[Cancel]%>"></span><%[Cancel]%>
-                                    </com:TLinkButton> 
-                                </td>
+            <tr>
+                <td valign="top" class="key">
+                    <span onmouseover="Tip('<%[Enter the name for this super user group]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)">* <%[Name]%></span>
+                </td>
+                <td>
+                    <com:TTextBox
+                        CssClass="text_area"
+                        ID="name"
+                        Width="50" />
+                    <com:TCustomValidator
+                        ValidationGroup="Group1"
+                        EnableClientScript="false"
+                        ControlToValidate="name"
+                        OnServerValidate="serverValidateName"
+                        Display="Dynamic"
+                        Text="<%[This name is already used]%>" />
+                    <com:TRequiredFieldValidator
+                        ValidationGroup="Group1"
+                        ControlToValidate="name"
+                        Text="<%[This field is required]%>"
+                        Display="Dynamic"/>
+                </td>
+            </tr>
 
-                                <td class="button" id="toolbar-help">
-                                    <a href="./proxy/index.php?page=<%= $this->getApplication()->getService()->getRequestedPagePath() %>&lang=<%= $this->getApplication()->getGlobalState('lang') %>" title="<%[Help]%>" onClick="Modalbox.show(this.href, {title: this.title, width: 600, height: 600}); return false;" class="toolbar" >
-                                        <span class="icon-32-help" title="<%[Help]%>"></span><%[Help]%>
-                                    </a>
-                                </td>
-
-
-                            </tr>
-                        </table>
-                    </div><!-- end class toolbar -->
-
-                    <div class="header icon-48-superUserGroup"><%[Modify a super user group]%></div>
-                    <div class="clr"></div>
-                </div><!-- end class m -->
-
-
-                <div class="b">
-                    <div class="b">
-                        <div class="b"></div>
-                    </div>
-                </div>
-            </div><!-- end class toolbar-box -->
-
-            <com:TLiteral ID="okMsg" Text="" />
-            <com:TLiteral ID="koMsg" Text="" />
-            <div id="element-box">
-    
-                <div class="t">
-                    <div class="t">
-                        <div class="t"></div>
-                    </div>
-                </div>
-                <div class="m">
-
-                  <fieldset class="adminform">
-	             <legend><%[Global]%></legend>
-	             	  <com:THiddenField ID="id" value="" />
-                      <table class="admintable" cellspacing="1">
-                        <tbody>
-
-                          <tr>
-                            <td valign="top" class="key">
-                              <span onmouseover="Tip('<%[Enter the name for this super user group]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)">* <%[Name]%></span>
-                            </td>
-                            <td>
-                              <com:TTextBox 
-                                CssClass="text_area" 
-                                ID="name"
-                                Width="50" />
-                              <com:TCustomValidator
-                                ValidationGroup="Group1"
-                                EnableClientScript="false"
-                                ControlToValidate="name"
-                                OnServerValidate="serverValidateName"
-                                Display="Dynamic"
-                                Text="<%[This name is already used]%>" />
-                              <com:TRequiredFieldValidator
-								ValidationGroup="Group1" 
-								ControlToValidate="name" 
-								Text="<%[This field is required]%>" 
-								Display="Dynamic"/>
-                            </td> 
-                          </tr>
-
-						 <tr>
-                            <td valign="top" class="key">
-                              <span onmouseover="Tip('<%[If you check this option, you will be able<br> to modify the password for all super user]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Super admin group]%></span>
-                            </td>
-                            <td>
-								<com:TCheckBox
-									ID="superAdmin"
-								    Text=""
-								    InputAttributes.value="1"
-								/>
-                            </td> 
-						 	
-						 </tr>
-
- 						  <tr>
-                            <td valign="top" class="key"><span onmouseover="Tip('<%[You could insert a description for this group.]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Description]%></span></td>
-                            <td>
-                              <com:TTextBox CssClass="text_area" ID="description" Width="400px"/>
-                            </td> 
-                          </tr>
-
-                        </tbody>
-                      </table>
-                  </fieldset>
-
-                  <fieldset class="adminform">
-	             <legend><%[Access]%></legend>
-                      <table class="admintable" cellspacing="1">
-                        <tbody>
- 						  <tr>
-                            <td valign="top" class="key"><span onmouseover="Tip('<%[Select a page]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Page]%></span></td>
-                            <td>
-								<com:TDropDownList ID="accessPage">
-								  <com:TListItem Value="none" Text="<%[--- Select one ----]%>" />
-
-								 
-								  <com:TListItem Value="superUser" Text="<%[Super User]%>" Attributes.Group="Horux"/>
-								  <com:TListItem Value="superUserGroup" Text="<%[Super User Group]%>" Attributes.Group="Horux"/>
-								  <com:TListItem Value="configuration" Text="<%[Configuration]%>" Attributes.Group="Horux"/>
-
-								  <com:TListItem Value="site" Text="<%[Site]%>" Attributes.Group="<%[System]%>"/>
-								  <com:TListItem Value="hardware" Text="<%[Hardware]%>" Attributes.Group="<%[System]%>"/>
-								  <com:TListItem Value="openTime" Text="<%[Opent time]%>" Attributes.Group="<%[System]%>"/>
-								  <com:TListItem Value="alarms" Text="<%[Alarms]%>" Attributes.Group="<%[System]%>"/>
-								  <com:TListItem Value="notification" Text="<%[Notification]%>" Attributes.Group="<%[System]%>"/>
-								  <com:TListItem Value="service" Text="<%[Horux Service]%>" Attributes.Group="<%[System]%>"/>
-								  <com:TListItem Value="status" Text="<%[Horux Status]%>" Attributes.Group="<%[System]%>"/>
-
-								  <com:TListItem Value="user" Text="<%[User]%>" Attributes.Group="<%[Access]%>"/>
-								  <com:TListItem Value="userGroup" Text="<%[User Group]%>" Attributes.Group="<%[Access]%>"/>
-								  <com:TListItem Value="userWizard" Text="<%[User Wizard]%>" Attributes.Group="<%[Access]%>"/>
-								  <com:TListItem Value="key" Text="<%[Key]%>" Attributes.Group="<%[Access]%>"/>
-								  <com:TListItem Value="accessLevel" Text="<%[Access Level]%>" Attributes.Group="<%[Access]%>"/>
-								  <com:TListItem Value="nonWorkingDay" Text="<%[Non Working Day]%>" Attributes.Group="<%[Access]%>"/>
-
-								  <com:TListItem Value="install_uninstall" Text="<%[Install/Uninstall]%>" Attributes.Group="<%[Extensions]%>"/>
-								  <com:TListItem Value="devices" Text="<%[Devices Manager]%>" Attributes.Group="<%[Extensions]%>"/>
-								  <com:TListItem Value="components" Text="<%[Component Manager]%>" Attributes.Group="<%[Extensions]%>"/>
-								  <com:TListItem Value="template" Text="<%[Template Manager]%>" Attributes.Group="<%[Extensions]%>"/>
-								  <com:TListItem Value="language" Text="<%[Language Manager]%>" Attributes.Group="<%[Extensions]%>"/>
-
-								  <com:TListItem Value="guilog" Text="<%[Horux Gui Log]%>" Attributes.Group="<%[Tools]%>"/>
-								  <com:TListItem Value="globalCheckin" Text="<%[Global Checkin]%>" Attributes.Group="<%[Tools]%>"/>
-
-								  <com:TListItem Value="systemInfo" Text="<%[System Info]%>" Attributes.Group="<%[Help]%>"/>
-
-								</com:TDropDownList>
-					       </td> 
-                          </tr>
-
-						  <tr>
-						  	<td colspan="2">
-               <div id="list">
-	                <com:TDataGrid
-	                ID="DataGrid"
-	                DataKeyField="id"
-	                AutoGenerateColumns="false"
-	                CssClass="adminlist"
-                    ItemStyle.CssClass = "row0"
-				    AlternatingItemStyle.CssClass="row1"
-	                AllowPaging="false"
-	                PagerStyle.Mode="Numeric"
-	                PagerStyle.HorizontalAlign="Center"
-	                >
-
-                    <com:TBoundColumn
-                        HeaderText="<%[Type]%>"
-                        DataField="Type"
-                    />
-                    <com:TBoundColumn
-                        HeaderText="<%[Page]%>"
-                        DataField="Text"
-                    />
-
-                  <com:TTemplateColumn HeaderStyle.Width = "20px">
-                    <prop:HeaderTemplate><%[Action]%></prop:HeaderTemplate>
-                    <prop:ItemTemplate>
-                    <span onmouseover="Tip('<%[Remove this access]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)">
-                    <com:TImageButton 
-                        Text="<%#$this->NamingContainer->DataItem['id']%>"
-                        ImageUrl="./themes/letux/images/menu/icon-16-trash.png" 
-                        OnClick="Page.onDeleteAccess" 
-                        Style="border:0px"
+            <tr>
+                <td valign="top" class="key">
+                    <span onmouseover="Tip('<%[If you check this option, you will be able<br> to modify the password for all super user]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Super admin group]%></span>
+                </td>
+                <td>
+                    <com:TCheckBox
+                        ID="superAdmin"
+                        Text=""
+                        InputAttributes.value="1"
                         />
-                    </prop:ItemTemplate>
-                    </span>
-                  </com:TTemplateColumn>
+                </td>
 
-	
-	                </com:TDataGrid>
-	                </div>						  	
-						  	</td>
-						  </tr>
+            </tr>
 
-                        </tbody>
-                      </table>
+            <tr>
+                <td valign="top" class="key"><span onmouseover="Tip('<%[You could insert a description for this group.]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Description]%></span></td>
+                <td>
+                    <com:TTextBox CssClass="text_area" ID="description" Width="400px"/>
+                </td>
+            </tr>
 
-                  </fieldset>
+        </tbody>
+    </table>
+</fieldset>
 
- 
+<fieldset class="adminform">
+<legend><%[Access]%></legend>
+<table class="admintable" cellspacing="1">
+<tbody>
+<tr>
+    <td valign="top" class="key"><span onmouseover="Tip('<%[Select a page]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Page]%></span></td>
+    <td>
+        <com:TDropDownList ID="accessPage">
+            <com:TListItem Value="none" Text="<%[--- Select one ----]%>" />
 
-                  <div class="clr"></div>
-                </div> <!-- end class m -->
-                <div class="b">
-                    <div class="b">
-                        <div class="b"></div>
-                    </div>
-                </div>
-            </div> <!-- end class element-box -->
-            <div class="clr"></div>
-        </div> <!-- end class toolbar-box -->
-        <div class="clr"></div>
-    </div><!-- end class content-box -->
-</div> <!-- end class content-box -->
+
+            <com:TListItem Value="superUser" Text="<%[Super User]%>" Attributes.Group="Horux"/>
+            <com:TListItem Value="superUserGroup" Text="<%[Super User Group]%>" Attributes.Group="Horux"/>
+            <com:TListItem Value="configuration" Text="<%[Configuration]%>" Attributes.Group="Horux"/>
+
+            <com:TListItem Value="site" Text="<%[Site]%>" Attributes.Group="<%[System]%>"/>
+            <com:TListItem Value="hardware" Text="<%[Hardware]%>" Attributes.Group="<%[System]%>"/>
+            <com:TListItem Value="openTime" Text="<%[Opent time]%>" Attributes.Group="<%[System]%>"/>
+            <com:TListItem Value="alarms" Text="<%[Alarms]%>" Attributes.Group="<%[System]%>"/>
+            <com:TListItem Value="notification" Text="<%[Notification]%>" Attributes.Group="<%[System]%>"/>
+            <com:TListItem Value="service" Text="<%[Horux Service]%>" Attributes.Group="<%[System]%>"/>
+            <com:TListItem Value="status" Text="<%[Horux Status]%>" Attributes.Group="<%[System]%>"/>
+
+            <com:TListItem Value="user" Text="<%[User]%>" Attributes.Group="<%[Access]%>"/>
+            <com:TListItem Value="userGroup" Text="<%[User Group]%>" Attributes.Group="<%[Access]%>"/>
+            <com:TListItem Value="userWizard" Text="<%[User Wizard]%>" Attributes.Group="<%[Access]%>"/>
+            <com:TListItem Value="key" Text="<%[Key]%>" Attributes.Group="<%[Access]%>"/>
+            <com:TListItem Value="accessLevel" Text="<%[Access Level]%>" Attributes.Group="<%[Access]%>"/>
+            <com:TListItem Value="nonWorkingDay" Text="<%[Non Working Day]%>" Attributes.Group="<%[Access]%>"/>
+
+            <com:TListItem Value="install_uninstall" Text="<%[Install/Uninstall]%>" Attributes.Group="<%[Extensions]%>"/>
+            <com:TListItem Value="devices" Text="<%[Devices Manager]%>" Attributes.Group="<%[Extensions]%>"/>
+            <com:TListItem Value="components" Text="<%[Component Manager]%>" Attributes.Group="<%[Extensions]%>"/>
+            <com:TListItem Value="template" Text="<%[Template Manager]%>" Attributes.Group="<%[Extensions]%>"/>
+            <com:TListItem Value="language" Text="<%[Language Manager]%>" Attributes.Group="<%[Extensions]%>"/>
+
+            <com:TListItem Value="guilog" Text="<%[Horux Gui Log]%>" Attributes.Group="<%[Tools]%>"/>
+            <com:TListItem Value="globalCheckin" Text="<%[Global Checkin]%>" Attributes.Group="<%[Tools]%>"/>
+
+            <com:TListItem Value="systemInfo" Text="<%[System Info]%>" Attributes.Group="<%[Help]%>"/>
+
+        </com:TDropDownList>
+    </td>
+</tr>
+
+<tr>
+<td colspan="2">
+<div id="list">
+<com:TDataGrid
+    ID="DataGrid"
+    DataKeyField="id"
+    AutoGenerateColumns="false"
+    CssClass="adminlist"
+    ItemStyle.CssClass = "row0"
+    AlternatingItemStyle.CssClass="row1"
+    AllowPaging="false"
+    PagerStyle.Mode="Numeric"
+    PagerStyle.HorizontalAlign="Center"
+    >
+
+<com:TBoundColumn
+    HeaderText="<%[Type]%>"
+    DataField="Type"
+    />
+<com:TBoundColumn
+    HeaderText="<%[Page]%>"
+    DataField="Text"
+    />
+
+<com:TTemplateColumn HeaderStyle.Width = "20px">
+    <prop:HeaderTemplate><%[Action]%></prop:HeaderTemplate>
+    <prop:ItemTemplate>
+        <span onmouseover="Tip('<%[Remove this access]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)">
+        <com:TImageButton
+            Text="<%#$this->NamingContainer->DataItem['id']%>"
+            ImageUrl="./themes/letux/images/menu/icon-16-trash.png"
+            OnClick="Page.onDeleteAccess"
+            Style="border:0px"
+            />
+    </prop:ItemTemplate>
+    </span>
+</com:TTemplateColumn>
+
+
+</com:TDataGrid>
+</div>						  	
+</td>
+</tr>
+
+</tbody>
+</table>
+
+</fieldset>
+
+
+<%include Application.common.template.footerContent %>
 </com:TContent>

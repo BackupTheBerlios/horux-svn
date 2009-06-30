@@ -23,7 +23,7 @@ class Notification extends PageList
 
         $connection->Active=false;
 
-    	return $data;
+        return $data;
     }
 
     public function onLoad($param)
@@ -38,11 +38,11 @@ class Notification extends PageList
 
         if(isset($this->Request['okMsg']))
         {
-          $this->displayMessage($this->Request['okMsg'], true);
+            $this->displayMessage($this->Request['okMsg'], true);
         }
         if(isset($this->Request['koMsg']))
         {
-          $this->displayMessage($this->Request['koMsg'], false);
+            $this->displayMessage($this->Request['koMsg'], false);
         }
     }
 
@@ -53,7 +53,7 @@ class Notification extends PageList
 
         foreach($cbs as $cb)
         {
-           $cb->setChecked($isChecked);
+            $cb->setChecked($isChecked);
         }
 
     }
@@ -63,51 +63,82 @@ class Notification extends PageList
         $cbs = $this->findControlsByType("TActiveCheckBox");
         $nDelete = 0;
         $koMsg = '';
-		$cbChecked = 0;
+        $cbChecked = 0;
 
         foreach($cbs as $cb)
         {
             if( (bool)$cb->getChecked() && $cb->Value != "0")
-				$cbChecked++;
+            $cbChecked++;
         }
 
         if($cbChecked==0)
         {
-        	$koMsg = Prado::localize('Select one item');
+            $koMsg = Prado::localize('Select one item');
         }
         else
         {
-         foreach($cbs as $cb)
-         {
-            if( (bool)$cb->getChecked() && $cb->Value != "0")
+            foreach($cbs as $cb)
             {
-                $cmd=$this->db->createCommand(SQL::SQL_GET_NOTIFICATION);
-                $cmd->bindParameter(":id",$cb->Value);
-                $cmd = $cmd->query();
-                $data = $cmd->read();
+                if( (bool)$cb->getChecked() && $cb->Value != "0")
+                {
+                    $cmd=$this->db->createCommand(SQL::SQL_GET_NOTIFICATION);
+                    $cmd->bindParameter(":id",$cb->Value);
+                    $cmd = $cmd->query();
+                    $data = $cmd->read();
 
-                $this->log("Delete the notification: ".$data['name']);
+                    $this->log("Delete the notification: ".$data['name']);
 
-                $cmd=$this->db->createCommand(SQL::SQL_REMOVE_NOTIFICATION);
-                $cmd->bindParameter(":id",$cb->Value);
-                if($cmd->execute())
-                  $nDelete++;
+                    $cmd=$this->db->createCommand(SQL::SQL_REMOVE_NOTIFICATION);
+                    $cmd->bindParameter(":id",$cb->Value);
+                    if($cmd->execute())
+                    $nDelete++;
 
-                $cmd=$this->db->createCommand(SQL::SQL_REMOVE_NOTIFICATION_CODE);
-                $cmd->bindParameter(":id",$cb->Value);
-                $cmd->execute();
+                    $cmd=$this->db->createCommand(SQL::SQL_REMOVE_NOTIFICATION_CODE);
+                    $cmd->bindParameter(":id",$cb->Value);
+                    $cmd->execute();
 
-                $cmd=$this->db->createCommand(SQL::SQL_REMOVE_NOTIFICATION_SU);
-                $cmd->bindParameter(":id",$cb->Value);
-                $cmd->execute();
+                    $cmd=$this->db->createCommand(SQL::SQL_REMOVE_NOTIFICATION_SU);
+                    $cmd->bindParameter(":id",$cb->Value);
+                    $cmd->execute();
+                }
             }
-         }
         }
 
         if($koMsg !== '')
-          $pBack = array('koMsg'=>$koMsg);
+        $pBack = array('koMsg'=>$koMsg);
         else
-          $pBack = array('okMsg'=>Prado::localize('{n} notification was deleted',array('n'=>$nDelete)));
+        $pBack = array('okMsg'=>Prado::localize('{n} notification was deleted',array('n'=>$nDelete)));
+        $this->Response->redirect($this->Service->constructUrl('system.Notification',$pBack));
+    }
+
+    public function onEdit($sender,$param)
+    {
+        if(count($this->DataGrid->DataKeys) === 0)
+        {
+            $pBack = array('koMsg'=>Prado::localize('Select one item'));
+            $this->Response->redirect($this->Service->constructUrl('system.Notification',$pBack));
+
+        }
+
+        $id = $this->DataGrid->DataKeys[$param->Item->ItemIndex];
+        if(is_numeric($id))
+        {
+            $pBack = array('id'=>$id);
+            $this->Response->redirect($this->Service->constructUrl('system.NotificationMod',$pBack));
+        }
+
+        $cbs = $this->findControlsByType("TActiveCheckBox");
+        $nDelete = 0;
+        foreach($cbs as $cb)
+        {
+            if( (bool)$cb->getChecked() && $cb->Value != "0")
+            {
+                $pBack = array('id'=>$cb->Value);
+                $this->Response->redirect($this->Service->constructUrl('system.NotificationMod',$pBack));
+            }
+        }
+
+        $pBack = array('koMsg'=>Prado::localize('Select one item'));
         $this->Response->redirect($this->Service->constructUrl('system.Notification',$pBack));
     }
 }

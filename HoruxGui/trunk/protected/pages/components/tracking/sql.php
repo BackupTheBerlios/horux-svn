@@ -15,6 +15,6 @@
 
 class SQL {
 
-	const SQL_GET_TRACKING = "SELECT t.id, u.name, u.firstName, t.date, t.time, d.name AS device, t.id_comment, k.identificator, t.is_access FROM hr_tracking AS t LEFT JOIN hr_user AS u ON u.id = t.id_user LEFT JOIN hr_device AS d ON d.id=t.id_entry LEFT JOIN hr_keys AS k ON k.serialNumber=t.key ORDER BY t.id DESC LIMIT 0,1000";
-	const SQL_GET_ACCESS_POINT = "SELECT id AS Value, name AS Text FROM hr_device WHERE accessPoint=1";
+    const SQL_GET_TRACKING = "SELECT t.id, u.name, u.firstName, t.date, t.time, d.name AS device, t.id_comment, k.identificator, t.is_access FROM hr_tracking AS t LEFT JOIN hr_user AS u ON u.id = t.id_user LEFT JOIN hr_device AS d ON d.id=t.id_entry LEFT JOIN hr_keys AS k ON k.serialNumber=t.key ORDER BY t.id DESC LIMIT 0,1000";
+    const SQL_GET_ACCESS_POINT = "SELECT id AS Value, name AS Text FROM hr_device WHERE accessPoint=1";
 }

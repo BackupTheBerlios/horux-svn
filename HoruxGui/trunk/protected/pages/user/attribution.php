@@ -131,7 +131,7 @@ class Attribution extends Page
         }
     }
     
-    public function attribute($sender,$param)
+    public function onAttribute($sender,$param)
     {
     	$id_user = $this->id->Value;
     	$id_key = $this->UnusedKey->getSelectedValue();
@@ -327,6 +327,11 @@ class Attribution extends Page
           $pBack = array('id'=>$this->Request['id'],'okMsg'=>Prado::localize('{n} key was unattributed',array('n'=>$nUnAttributed)));
           $this->Response->redirect($this->Service->constructUrl('user.attribution',$pBack));
         }    	
+    }
+
+    public function onCancel($sender, $param)
+    {
+        $this->Response->redirect($this->Service->constructUrl('user.UserList'));
     }
 }
 

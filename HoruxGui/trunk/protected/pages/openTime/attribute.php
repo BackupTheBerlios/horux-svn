@@ -16,75 +16,75 @@ Prado::using('horux.pages.openTime.sql');
 
 class attribute extends Page
 {
-	
-	public function getData()
-	{
-	  $id = $this->Request['id'];
-      $cmd = $this->db->createCommand( SQL::SQL_GET_ATTRIBUTION );
-      $cmd->bindParameter(":id",$id,PDO::PARAM_INT);		
-      $data=$cmd->query();
-      $connection->Active=false;
 
-      return $data;      
-	}
-	
-	public function getOpenTime()
-	{
-	  $id = $this->Request['id'];
-      $cmd = $this->db->createCommand( SQL::SQL_GET_ALL_OPEN_TIME2 );
-      $cmd->bindParameter(":id",$id,PDO::PARAM_INT);		
-      $data=$cmd->query();
-      $connection->Active=false;
- 
-      return $data;      		
-	}
-	
-	public function onLoad($param)
+    public function getData()
     {
-        parent::onLoad($param); 
-        
+        $id = $this->Request['id'];
+        $cmd = $this->db->createCommand( SQL::SQL_GET_ATTRIBUTION );
+        $cmd->bindParameter(":id",$id,PDO::PARAM_INT);
+        $data=$cmd->query();
+        $connection->Active=false;
+
+        return $data;
+    }
+
+    public function getOpenTime()
+    {
+        $id = $this->Request['id'];
+        $cmd = $this->db->createCommand( SQL::SQL_GET_ALL_OPEN_TIME2 );
+        $cmd->bindParameter(":id",$id,PDO::PARAM_INT);
+        $data=$cmd->query();
+        $connection->Active=false;
+
+        return $data;
+    }
+
+    public function onLoad($param)
+    {
+        parent::onLoad($param);
+
         if(!$this->IsPostBack)
         {
             $this->DataGrid->DataSource=$this->Data;
             $this->DataGrid->dataBind();
-            
+
             $this->id->Value = $this->Request['id'];
         }
 
         $this->OpenTime->DataSource=$this->getOpenTime();
-        $this->OpenTime->dataBind();   
+        $this->OpenTime->dataBind();
 
         if($this->OpenTime->getItemCount())
-            $this->OpenTime->setSelectedIndex(0);
+        $this->OpenTime->setSelectedIndex(0);
 
         if(isset($this->Request['okMsg']))
         {
-          $this->displayMessage($this->Request['okMsg'], true);
+            $this->displayMessage($this->Request['okMsg'], true);
         }
         if(isset($this->Request['koMsg']))
         {
-          $this->displayMessage($this->Request['koMsg'], false);
+            $this->displayMessage($this->Request['koMsg'], false);
         }
     }
-    
-    public function attributeOpenTime($sender,$param)
-    {
-		$id_device = $this->id->Value;
-    	$id_openTime = $this->OpenTime->getSelectedValue();
 
-		if($id_openTime)
-		{
-		
-			$cmd=$this->db->createCommand(SQL::SQL_ATTRIBUTE_OPEN_TIME);
-			$cmd->bindParameter(":id_device",$id_device);
-			$cmd->bindParameter(":id_openTime",$id_openTime);	
-			$cmd->execute();
-          	
-			$this->Response->redirect($this->Service->constructUrl('openTime.attribute',array('id'=>$id_device))); 
-		}
+    public function onAttribute($sender,$param)
+    {
+        $id_device = $this->id->Value;
+        $id_openTime = $this->OpenTime->getSelectedValue();
+
+        if($id_openTime)
+        {
+
+            $cmd=$this->db->createCommand(SQL::SQL_ATTRIBUTE_OPEN_TIME);
+            $cmd->bindParameter(":id_device",$id_device);
+            $cmd->bindParameter(":id_openTime",$id_openTime);
+            $cmd->execute();
+
+            $this->Response->redirect($this->Service->constructUrl('openTime.attribute',array('id'=>$id_device)));
+        }
     }
-    
-    
+
+
     public function checkboxAllCallback($sender, $param)
     {
         $cbs = $this->findControlsByType("TActiveCheckBox");
@@ -92,55 +92,60 @@ class attribute extends Page
 
         foreach($cbs as $cb)
         {
-           $cb->setChecked($isChecked);
+            $cb->setChecked($isChecked);
         }
 
-    }    
-    
-    public function onUnattribute($sender, $param)
+    }
+
+    public function onUnAttribute($sender, $param)
     {
         $cbs = $this->findControlsByType("TActiveCheckBox");
         $nUnAttributed = 0;
         $koMsg = '';
-		$cbChecked = 0;
+        $cbChecked = 0;
 
         foreach($cbs as $cb)
         {
             if( (bool)$cb->getChecked() && $cb->Value != "0")
-				$cbChecked++;
+            $cbChecked++;
         }
 
         if($cbChecked==0)
         {
-        	$koMsg = Prado::localize('Select one item');
+            $koMsg = Prado::localize('Select one item');
         }
         else
         {
-	        foreach($cbs as $cb)
-	        {
-	            if( (bool)$cb->getChecked() && $cb->Value != "0")
-	            {
-				
-			$cmd=$this->db->createCommand(SQL::SQL_DELETE_OPEN_TIME_ATTRIBUTION);
-	                $cmd->bindParameter(":id",$cb->Value);
-          	                
-	                if($cmd->execute())
-	                  $nUnAttributed++;
-	            }
-	        }
+            foreach($cbs as $cb)
+            {
+                if( (bool)$cb->getChecked() && $cb->Value != "0")
+                {
+
+                    $cmd=$this->db->createCommand(SQL::SQL_DELETE_OPEN_TIME_ATTRIBUTION);
+                    $cmd->bindParameter(":id",$cb->Value);
+
+                    if($cmd->execute())
+                    $nUnAttributed++;
+                }
+            }
         }
-        
+
         if($koMsg !== '')
         {
-          $pBack = array('id'=>$this->id->Value, 'koMsg'=>$koMsg);
-          $this->Response->redirect($this->Service->constructUrl('openTime.attribute',$pBack));    	
-          
+            $pBack = array('id'=>$this->id->Value, 'koMsg'=>$koMsg);
+            $this->Response->redirect($this->Service->constructUrl('openTime.attribute',$pBack));
+
         }
         else
         {
-          $pBack = array('id'=>$this->Request['id'],'okMsg'=>Prado::localize('{n} open time was unattributed',array('n'=>$nUnAttributed)));
-          $this->Response->redirect($this->Service->constructUrl('openTime.attribute',$pBack));
-        }    	
+            $pBack = array('id'=>$this->Request['id'],'okMsg'=>Prado::localize('{n} open time was unattributed',array('n'=>$nUnAttributed)));
+            $this->Response->redirect($this->Service->constructUrl('openTime.attribute',$pBack));
+        }
+    }
+
+    public function onCancel($sender, $param)
+    {
+        $this->Response->redirect($this->Service->constructUrl('hardware.HardwareList'));
     }
 }
 

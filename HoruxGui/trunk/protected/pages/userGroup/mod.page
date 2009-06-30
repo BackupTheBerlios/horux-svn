@@ -1,95 +1,92 @@
 <com:TContent ID="Main">
-<%include Application.common.template.headerContent %>
+    <%include Application.common.template.headerContent %>
 
-            <com:TToolbarBox
-                ID="tbb"
-                Title="<%[Modify a User Group]%>"
-                CssIcon="icon-48-userGroup"
-                ApplyVisible="true"
-                SaveVisible="true"
-                CancelVisible="true"
-                HelpVisible="true"
-            />
+    <com:TToolbarBox
+        ID="tbb"
+        Title="<%[Modify a User Group]%>"
+        CssIcon="icon-48-userGroup"
+        ApplyVisible="true"
+        SaveVisible="true"
+        CancelVisible="true"
+        HelpVisible="true"
+        />
 
-            <com:TLiteral ID="okMsg" Text="" />
-            <com:TLiteral ID="koMsg" Text="" />
+    <%include Application.common.template.headerBoxContent %>
 
-<%include Application.common.template.headerBoxContent %>
+    <fieldset class="adminform">
+        <legend><%[Parameters]%></legend>
+        <com:THiddenField ID="id" value="" />
+        <table class="admintable" cellspacing="1">
+            <tbody>
+                <tr>
+                    <td valign="top" class="key">
+                        <span onmouseover="Tip('<%[Enter a unique name for this group]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)">* <%[Name]%></span>
+                    </td>
+                    <td>
+                        <com:TTextBox
+                            CssClass="text_area"
+                            ID="name"
+                            Width="50" />
+                        <com:TCustomValidator
+                            ValidationGroup="Group1"
+                            EnableClientScript="false"
+                            ControlToValidate="name"
+                            OnServerValidate="serverValidateName"
+                            Display="Dynamic"
+                            Text="<%[This name is already used]%>" />
+                        <com:TRequiredFieldValidator
+                            ValidationGroup="Group1"
+                            ControlToValidate="name"
+                            Text="<%[This field is required]%>"
+                            Display="Dynamic"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td valign="top" class="key"><span onmouseover="Tip('<%[You could insert a description for this group.]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Description]%></span></td>
+                    <td>
+                        <com:TTextBox CssClass="text_area" ID="comment" Width="400px"/>
+                    </td>
+                </tr>
 
-                  <fieldset class="adminform">
-	             <legend><%[Parameters]%></legend>
-	             	  <com:THiddenField ID="id" value="" />
-                      <table class="admintable" cellspacing="1">
-                        <tbody>
-                          <tr>
-                            <td valign="top" class="key">
-                              <span onmouseover="Tip('<%[Enter a unique name for this group]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)">* <%[Name]%></span>
-                            </td>
-                            <td>
-                              <com:TTextBox 
-                                CssClass="text_area" 
-                                ID="name"
-                                Width="50" />
-                              <com:TCustomValidator
-                                ValidationGroup="Group1"
-                                EnableClientScript="false"
-                                ControlToValidate="name"
-                                OnServerValidate="serverValidateName"
-                                Display="Dynamic"
-                                Text="<%[This name is already used]%>" />
-                              <com:TRequiredFieldValidator
-								ValidationGroup="Group1" 
-								ControlToValidate="name" 
-								Text="<%[This field is required]%>" 
-								Display="Dynamic"/>
-                            </td> 
-                          </tr>
-                          <tr>
-                            <td valign="top" class="key"><span onmouseover="Tip('<%[You could insert a description for this group.]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Description]%></span></td>
-                            <td>
-                              <com:TTextBox CssClass="text_area" ID="comment" Width="400px"/>
-                            </td> 
-                          </tr>
+            </tbody>
+        </table>
+    </fieldset>
 
-                        </tbody>
-                      </table>
-                  </fieldset>
+    <fieldset class="adminform">
+        <legend><%[Options]%></legend>
+        <table class="admintable" cellspacing="1">
+            <tbody>
+                <tr>
+                    <td valign="top" class="key">
+                        <span onmouseover="Tip('<%[Define the access plugin used for the access control.<br/>If empty, all plugins are likely to give the access]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Access Plugin Name]%></span>
+                    </td>
+                    <td>
+                        <com:TTextBox
+                            CssClass="text_area"
+                            ID="accessPlugin"
+                            Width="50" />
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </fieldset>
 
-                  <fieldset class="adminform">
-	             <legend><%[Options]%></legend>
-                      <table class="admintable" cellspacing="1">
-                        <tbody>
-                          <tr>
-                            <td valign="top" class="key">
-                              <span onmouseover="Tip('<%[Define the access plugin used for the access control.<br/>If empty, all plugins are likely to give the access]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Access Plugin Name]%></span>
-                            </td>
-                            <td>
-                              <com:TTextBox 
-                                CssClass="text_area" 
-                                ID="accessPlugin"
-                                Width="50" />
-                            </td> 
-                          </tr>
-                        </tbody>
-                      </table>
-                  </fieldset>
+    <fieldset class="adminform">
+        <legend><%[Access Right]%></legend>
+        <com:TRepeater ID="readerRepeater" OnItemDataBound="Page.repeaterDataBound">
+            <prop:ItemTemplate>
+                <div class="readerAccessRight">
+                    <com:TCheckBox
+                        ID="reader"
+                        Value="<%# $this->DataItem['id'] %>"
+                        Text="<%# $this->DataItem['name'] %>"/>
+                </div>
+                <div class="accessLevel">
+                    <com:TListBox Rows="1" ID="accessLevel" />
+                </div><br/><br/>
+            </prop:ItemTemplate>
+        </com:TRepeater>
+    </fieldset>
 
-                  <fieldset class="adminform">
-	             <legend><%[Access Right]%></legend>
-                    <com:TRepeater ID="readerRepeater" OnItemDataBound="Page.repeaterDataBound">
-                      <prop:ItemTemplate>
-                        <div class="readerAccessRight">
-                          <com:TCheckBox 
-                            ID="reader" 
-                            Value="<%# $this->DataItem['id'] %>" 
-                            Text="<%# $this->DataItem['name'] %>"/>
-                        </div>
-                        <div class="accessLevel">
-                          <com:TListBox Rows="1" ID="accessLevel" />
-                        </div><br/><br/>
-                      </prop:ItemTemplate>
-                    </com:TRepeater> 
-                  </fieldset>
-
-<%include Application.common.template.footerContent %>
+    <%include Application.common.template.footerContent %>
 </com:TContent>

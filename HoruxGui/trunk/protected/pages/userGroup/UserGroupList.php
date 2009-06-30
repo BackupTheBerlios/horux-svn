@@ -20,7 +20,7 @@ class UserGroupList extends PageList
     {
         $command=$this->db->createCommand(SQL::SQL_SELECT_ALL_GROUP);
         $dataReader=$command->query();
-        
+
         $connection->Active=false;  // connection is established
 
         return $dataReader;
@@ -28,7 +28,7 @@ class UserGroupList extends PageList
 
     public function onLoad($param)
     {
-        parent::onLoad($param); 
+        parent::onLoad($param);
         if(!$this->IsPostBack)
         {
             $this->DataGrid->DataSource=$this->Data;
@@ -37,99 +37,99 @@ class UserGroupList extends PageList
 
         if(isset($this->Request['okMsg']))
         {
-          $this->displayMessage($this->Request['okMsg'], true);
+            $this->displayMessage($this->Request['okMsg'], true);
         }
         if(isset($this->Request['koMsg']))
         {
-          $this->displayMessage($this->Request['koMsg'], false);
+            $this->displayMessage($this->Request['koMsg'], false);
         }
     }
 
-	protected function onPrint()
-	{
-		parent::onPrint();
-		
-		$cellHeaderWidth = 6;
-		$cellHeaderHeight = 20;		
-		
-		$this->pdf->AddPage();
+    protected function onPrint()
+    {
+        parent::onPrint();
 
-		$this->pdf->SetFont('Arial','',11);
-		$this->pdf->Cell(0,10,utf8_decode(Prado::localize('List of the users groups')),0,0,'L');
-		$this->pdf->Ln(10);
-		$this->pdf->setDefaultFont();
-		
-		$groups = $this->getData();
-		
-		foreach($groups as $ot)
-		{
-			$this->pdf->SetTextColor(0);
-			$this->pdf->SetDrawColor(0);
-			$this->pdf->SetFont('Arial','B',11);
-			$this->pdf->SetLineWidth(0.4);
-			$this->pdf->Cell(0,6,utf8_decode($ot['name']),'B',1,'L');
-			$this->pdf->setDefaultFont();
-			$this->pdf->SetLineWidth(0.1);
-			$this->pdf->SetDrawColor(127);
+        $cellHeaderWidth = 6;
+        $cellHeaderHeight = 20;
 
-			$this->pdf->Cell(60,6,utf8_decode(Prado::localize('Access plugin')),'B',0,'L');
-			$this->pdf->Cell(0,6,utf8_decode($ot['accessPlugin']),'B',1,'L');
-			
-			$this->pdf->Cell(60,6,utf8_decode(Prado::localize('Description')),'B',0,'L');
-			$this->pdf->Cell(0,6,utf8_decode($ot['comment']),'B',1,'L');
+        $this->pdf->AddPage();
 
-			$command=$this->db->createCommand("SELECT * FROM hr_device WHERE accessPoint>0");
-			$dataReader=$command->query();
+        $this->pdf->SetFont('Arial','',11);
+        $this->pdf->Cell(0,10,utf8_decode(Prado::localize('List of the users groups')),0,0,'L');
+        $this->pdf->Ln(10);
+        $this->pdf->setDefaultFont();
 
-			$this->pdf->Ln(5);			
-			
-			$this->pdf->setDefaultFont();
-			
-			//! put a marge
-			$this->pdf->Cell(30);
+        $groups = $this->getData();
 
-			$this->pdf->SetFillColor(124,124,124);
-			$this->pdf->SetTextColor(255);
-			$this->pdf->SetDrawColor(255);
-			$this->pdf->SetLineWidth(.3);
-			
-			$nEntry = array();
-			foreach($dataReader as $device)
-			{
-				$this->pdf->VCell($cellHeaderWidth,$cellHeaderHeight,utf8_decode($device['name']),1,0,'D', true);
-				$nEntry[] = $device['id'];
-			}
+        foreach($groups as $ot)
+        {
+            $this->pdf->SetTextColor(0);
+            $this->pdf->SetDrawColor(0);
+            $this->pdf->SetFont('Arial','B',11);
+            $this->pdf->SetLineWidth(0.4);
+            $this->pdf->Cell(0,6,utf8_decode($ot['name']),'B',1,'L');
+            $this->pdf->setDefaultFont();
+            $this->pdf->SetLineWidth(0.1);
+            $this->pdf->SetDrawColor(127);
 
-			$this->pdf->Ln($cellHeaderHeight);
+            $this->pdf->Cell(60,6,utf8_decode(Prado::localize('Access plugin')),'B',0,'L');
+            $this->pdf->Cell(0,6,utf8_decode($ot['accessPlugin']),'B',1,'L');
 
-			
-			$command=$this->db->createCommand("SELECT * FROM hr_access_level");
-			$dataAccess=$command->query();
+            $this->pdf->Cell(60,6,utf8_decode(Prado::localize('Description')),'B',0,'L');
+            $this->pdf->Cell(0,6,utf8_decode($ot['comment']),'B',1,'L');
 
-			foreach($dataAccess as $access)			
-			{
-				$this->pdf->Cell(30,$cellHeaderWidth,$access['name'],1,0,'L', true);
-				
-				for($i=0; $i<count($nEntry); $i++)
-				{
-					$cmd = $this->db->createCommand( "SELECT * FROM hr_user_group_access WHERE id_access_level=".$access['id']." AND id_device=".$nEntry[$i]." AND id_group=".$ot['id'] );
-					$data = $cmd->query();
-					$data = $data->readAll();
-					if($data)			
-						$this->pdf->Image("./fpdf/ok.png", $this->pdf->GetX() + ($i*6) + 1.5 , $this->pdf->GetY()+1.5 , 3, 3);
-					else
-						$this->pdf->Image("./fpdf/ko.png", $this->pdf->GetX() + ($i*6) + 1.5 , $this->pdf->GetY()+1.5 , 3, 3);				
-				}
-				
-				$this->pdf->Ln(6);
-			}
-			
-			$this->pdf->Ln(10);
-		}
-		
-		$this->pdf->render();
-	}
-	
+            $command=$this->db->createCommand("SELECT * FROM hr_device WHERE accessPoint>0");
+            $dataReader=$command->query();
+
+            $this->pdf->Ln(5);
+
+            $this->pdf->setDefaultFont();
+
+            //! put a marge
+            $this->pdf->Cell(30);
+
+            $this->pdf->SetFillColor(124,124,124);
+            $this->pdf->SetTextColor(255);
+            $this->pdf->SetDrawColor(255);
+            $this->pdf->SetLineWidth(.3);
+
+            $nEntry = array();
+            foreach($dataReader as $device)
+            {
+                $this->pdf->VCell($cellHeaderWidth,$cellHeaderHeight,utf8_decode($device['name']),1,0,'D', true);
+                $nEntry[] = $device['id'];
+            }
+
+            $this->pdf->Ln($cellHeaderHeight);
+
+
+            $command=$this->db->createCommand("SELECT * FROM hr_access_level");
+            $dataAccess=$command->query();
+
+            foreach($dataAccess as $access)
+            {
+                $this->pdf->Cell(30,$cellHeaderWidth,$access['name'],1,0,'L', true);
+
+                for($i=0; $i<count($nEntry); $i++)
+                {
+                    $cmd = $this->db->createCommand( "SELECT * FROM hr_user_group_access WHERE id_access_level=".$access['id']." AND id_device=".$nEntry[$i]." AND id_group=".$ot['id'] );
+                    $data = $cmd->query();
+                    $data = $data->readAll();
+                    if($data)
+                    $this->pdf->Image("./fpdf/ok.png", $this->pdf->GetX() + ($i*6) + 1.5 , $this->pdf->GetY()+1.5 , 3, 3);
+                    else
+                    $this->pdf->Image("./fpdf/ko.png", $this->pdf->GetX() + ($i*6) + 1.5 , $this->pdf->GetY()+1.5 , 3, 3);
+                }
+
+                $this->pdf->Ln(6);
+            }
+
+            $this->pdf->Ln(10);
+        }
+
+        $this->pdf->render();
+    }
+
     public function checkboxAllCallback($sender, $param)
     {
         $cbs = $this->findControlsByType("TActiveCheckBox");
@@ -137,7 +137,7 @@ class UserGroupList extends PageList
 
         foreach($cbs as $cb)
         {
-           $cb->setChecked($isChecked);
+            $cb->setChecked($isChecked);
         }
 
     }
@@ -147,90 +147,90 @@ class UserGroupList extends PageList
         $cbs = $this->findControlsByType("TActiveCheckBox");
         $nDelete = 0;
         $koMsg = '';
-		$cbChecked = 0;
+        $cbChecked = 0;
 
         foreach($cbs as $cb)
         {
             if( (bool)$cb->getChecked() && $cb->Value != "0")
-				$cbChecked++;
+            $cbChecked++;
         }
 
         if($cbChecked==0)
         {
-        	$koMsg = Prado::localize('Select one item');
+            $koMsg = Prado::localize('Select one item');
         }
         else
         {
 
-	        foreach($cbs as $cb)
-	        {
-	            if( (bool)$cb->getChecked() && $cb->Value != "0")
-	            {
-	              $cmd=$this->db->createCommand(SQL::SQL_HAS_CHILDREN);
-	              $cmd->bindParameter(":id",$cb->Value);
-	              $query = $cmd->query();
-	              $hasChildren = false;
-	              if($query)
-	              {
-	                $data = $query->read();
-	                if($data['n'] > 0 ) $hasChildren = true;
-	              } 
-	              if(!$hasChildren)
-                  {
-                    $cmd=$this->db->createCommand(SQL::SQL_GET_GROUP);
+            foreach($cbs as $cb)
+            {
+                if( (bool)$cb->getChecked() && $cb->Value != "0")
+                {
+                    $cmd=$this->db->createCommand(SQL::SQL_HAS_CHILDREN);
                     $cmd->bindParameter(":id",$cb->Value);
-                    $cmd = $cmd->query();
-                    $data = $cmd->read();
-                    $this->log("Delete the user group: ".$data['name']);
-
-                    $cmd=$this->db->createCommand(SQL::SQL_REMOVE_ACCESS_GROUP);
-	                $cmd->bindParameter(":id",$cb->Value);
-	                $cmd->execute();
-	                $cmd=$this->db->createCommand(SQL::SQL_REMOVE_GROUP);
-	                $cmd->bindParameter(":id",$cb->Value);
-	                if($cmd->execute())
+                    $query = $cmd->query();
+                    $hasChildren = false;
+                    if($query)
                     {
-	                  $nDelete++;
+                        $data = $query->read();
+                        if($data['n'] > 0 ) $hasChildren = true;
                     }
-	              }
-	              else
-	              {
-	                $cmd = $this->db->createCommand( SQL::SQL_GET_GROUP );
-	                $cmd->bindParameter(":id",$cb->Value, PDO::PARAM_INT);
-	                $query = $cmd->query();
-	                if($query)
-	                {
-	                  $data = $query->read();
-	                  $koMsg = Prado::localize('Cannot delete the group {name}, it contains one or more person', array('name' =>$data['name']));
-	                }
-	              }
-	            }
-	        }
+                    if(!$hasChildren)
+                    {
+                        $cmd=$this->db->createCommand(SQL::SQL_GET_GROUP);
+                        $cmd->bindParameter(":id",$cb->Value);
+                        $cmd = $cmd->query();
+                        $data = $cmd->read();
+                        $this->log("Delete the user group: ".$data['name']);
+
+                        $cmd=$this->db->createCommand(SQL::SQL_REMOVE_ACCESS_GROUP);
+                        $cmd->bindParameter(":id",$cb->Value);
+                        $cmd->execute();
+                        $cmd=$this->db->createCommand(SQL::SQL_REMOVE_GROUP);
+                        $cmd->bindParameter(":id",$cb->Value);
+                        if($cmd->execute())
+                        {
+                            $nDelete++;
+                        }
+                    }
+                    else
+                    {
+                        $cmd = $this->db->createCommand( SQL::SQL_GET_GROUP );
+                        $cmd->bindParameter(":id",$cb->Value, PDO::PARAM_INT);
+                        $query = $cmd->query();
+                        if($query)
+                        {
+                            $data = $query->read();
+                            $koMsg = Prado::localize('Cannot delete the group {name}, it contains one or more person', array('name' =>$data['name']));
+                        }
+                    }
+                }
+            }
         }
-        
+
         if($koMsg !== '')
-          $pBack = array('koMsg'=>$koMsg);
+        $pBack = array('koMsg'=>$koMsg);
         else
-          $pBack = array('okMsg'=>Prado::localize('{n} group was deleted',array('n'=>$nDelete)));
+        $pBack = array('okMsg'=>Prado::localize('{n} group was deleted',array('n'=>$nDelete)));
         $this->Response->redirect($this->Service->constructUrl('userGroup.UserGroupList',$pBack));
     }
 
 
     public function onEdit($sender,$param)
     {
-	if(count($this->DataGrid->DataKeys) === 0)
-	{
-	        $pBack = array('koMsg'=>Prado::localize('Select one item'));
-        	$this->Response->redirect($this->Service->constructUrl('userGroup.UserGroupList',$pBack));
+        if(count($this->DataGrid->DataKeys) === 0)
+        {
+            $pBack = array('koMsg'=>Prado::localize('Select one item'));
+            $this->Response->redirect($this->Service->constructUrl('userGroup.UserGroupList',$pBack));
 
-	}
+        }
 
         $id = $this->DataGrid->DataKeys[$param->Item->ItemIndex];
-      
-        if(is_numeric($id)) 
+
+        if(is_numeric($id))
         {
-              $pBack = array('id'=>$id);
-              $this->Response->redirect($this->Service->constructUrl('userGroup.mod',$pBack));
+            $pBack = array('id'=>$id);
+            $this->Response->redirect($this->Service->constructUrl('userGroup.mod',$pBack));
         }
 
         $cbs = $this->findControlsByType("TActiveCheckBox");
@@ -239,8 +239,8 @@ class UserGroupList extends PageList
         {
             if( (bool)$cb->getChecked() && $cb->Value != "0")
             {
-              $pBack = array('id'=>$cb->Value);
-              $this->Response->redirect($this->Service->constructUrl('userGroup.mod',$pBack));
+                $pBack = array('id'=>$cb->Value);
+                $this->Response->redirect($this->Service->constructUrl('userGroup.mod',$pBack));
             }
         }
 

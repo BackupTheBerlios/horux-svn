@@ -21,14 +21,14 @@ class mod extends Page
     public function onLoad($param)
     {
         parent::onLoad($param);
-                
-       if(!$this->isPostBack)
-        {
-          $userId=$this->Application->getUser()->getUserId();
-    	  $this->blockRecord('hr_access_level', $this->Request['id'], $userId);	
 
-          $this->id->Value = $this->Request['id'];
-          $this->setData();
+        if(!$this->isPostBack)
+        {
+            $userId=$this->Application->getUser()->getUserId();
+            $this->blockRecord('hr_access_level', $this->Request['id'], $userId);
+
+            $this->id->Value = $this->Request['id'];
+            $this->setData();
         }
     }
 
@@ -39,40 +39,40 @@ class mod extends Page
         $query = $cmd->query();
         if($query)
         {
-          $data = $query->read();
-          $this->id->Value = $data['id'];
-          $this->name->Text = $data['name'];
-          $this->comment->Text = $data['comment'];
-          $this->nonWorkingDayAccess->setChecked($data['non_working_day']);
-          $this->weekEndAccess->setChecked($data['week_end']);
-          $this->mondayDefault->setChecked($data['monday_default']);
+            $data = $query->read();
+            $this->id->Value = $data['id'];
+            $this->name->Text = $data['name'];
+            $this->comment->Text = $data['comment'];
+            $this->nonWorkingDayAccess->setChecked($data['non_working_day']);
+            $this->weekEndAccess->setChecked($data['week_end']);
+            $this->mondayDefault->setChecked($data['monday_default']);
 
-		  if($data['validity_date'] != '0000-00-00' && $data['validity_date'] != NULL)
-		  {
-		  	$this->from->Text = $this->dateFromSql($data['validity_date']);	
-		  }
+            if($data['validity_date'] != '0000-00-00' && $data['validity_date'] != NULL)
+            {
+                $this->from->Text = $this->dateFromSql($data['validity_date']);
+            }
 
-		  if($data['validity_date_to'] != '0000-00-00'  && $data['validity_date_to'] != NULL)
-		  {
-	  		  $this->until->Text = $this->dateFromSql($data['validity_date_to']);	
-		  }
-        } 
+            if($data['validity_date_to'] != '0000-00-00'  && $data['validity_date_to'] != NULL)
+            {
+                $this->until->Text = $this->dateFromSql($data['validity_date_to']);
+            }
+        }
     }
 
     public function onApply($sender, $param)
     {
         if($this->Page->IsValid)
         {
-          if($this->saveData())
-          {
-            $id = $this->id->Value;
-            $pBack = array('okMsg'=>Prado::localize('The open time was modified successfully'), 'id'=>$id);
-            $this->Response->redirect($this->Service->constructUrl('openTime.mod', $pBack));
-          }
-          else
-          {
-            $pBack = array('koMsg'=>Prado::localize('The open time was not added'));
-          }
+            if($this->saveData())
+            {
+                $id = $this->id->Value;
+                $pBack = array('okMsg'=>Prado::localize('The open time was modified successfully'), 'id'=>$id);
+                $this->Response->redirect($this->Service->constructUrl('openTime.mod', $pBack));
+            }
+            else
+            {
+                $pBack = array('koMsg'=>Prado::localize('The open time was not added'));
+            }
         }
     }
 
@@ -80,56 +80,56 @@ class mod extends Page
     {
         if($this->Page->IsValid)
         {
-          if($this->saveData())
-          {
-            $pBack = array('okMsg'=>Prado::localize('The open time was modified successfully'));
-          }
-          else
+            if($this->saveData())
+            {
+                $pBack = array('okMsg'=>Prado::localize('The open time was modified successfully'));
+            }
+            else
             $pBack = array('koMsg'=>Prado::localize('The open time was not modified'));
 
-          $this->blockRecord('hr_access_level', $this->id->Value, 0);
-          $this->Response->redirect($this->Service->constructUrl('openTime.openTimeList',$pBack));
+            $this->blockRecord('hr_access_level', $this->id->Value, 0);
+            $this->Response->redirect($this->Service->constructUrl('openTime.openTimeList',$pBack));
         }
     }
-    
-	public function onCancel($sender, $param)
-	{
-		$this->blockRecord('hr_access_level', $this->id->Value, 0);	
-        $this->Response->redirect($this->Service->constructUrl('openTime.openTimeList'));	
-	}
+
+    public function onCancel($sender, $param)
+    {
+        $this->blockRecord('hr_access_level', $this->id->Value, 0);
+        $this->Response->redirect($this->Service->constructUrl('openTime.openTimeList'));
+    }
 
     protected function saveData()
     {
-      	$cmd = $this->db->createCommand( SQL::SQL_MOD_OPEN_TIME );
-      	$cmd->bindParameter(":id",$this->id->Value, PDO::PARAM_INT);
-      	$cmd->bindParameter(":name",$this->name->SafeText,PDO::PARAM_STR);
-      	$cmd->bindParameter(":non_working_day",$this->nonWorkingDayAccess->Checked,PDO::PARAM_STR);
-	    $cmd->bindParameter(":week_end",$this->weekEndAccess->Checked,PDO::PARAM_STR);
-      	$cmd->bindParameter(":monday_default",$this->mondayDefault->Checked,PDO::PARAM_STR);
+        $cmd = $this->db->createCommand( SQL::SQL_MOD_OPEN_TIME );
+        $cmd->bindParameter(":id",$this->id->Value, PDO::PARAM_INT);
+        $cmd->bindParameter(":name",$this->name->SafeText,PDO::PARAM_STR);
+        $cmd->bindParameter(":non_working_day",$this->nonWorkingDayAccess->Checked,PDO::PARAM_STR);
+        $cmd->bindParameter(":week_end",$this->weekEndAccess->Checked,PDO::PARAM_STR);
+        $cmd->bindParameter(":monday_default",$this->mondayDefault->Checked,PDO::PARAM_STR);
 
-		$from = $this->dateToSql($this->from->SafeText);
-		$until = $this->dateToSql($this->until->SafeText);
+        $from = $this->dateToSql($this->from->SafeText);
+        $until = $this->dateToSql($this->until->SafeText);
 
-      	$cmd->bindParameter(":from",$from,PDO::PARAM_STR);
-      	$cmd->bindParameter(":until",$until,PDO::PARAM_STR);
-      	$cmd->bindParameter(":comment",$this->comment->SafeText,PDO::PARAM_STR);
+        $cmd->bindParameter(":from",$from,PDO::PARAM_STR);
+        $cmd->bindParameter(":until",$until,PDO::PARAM_STR);
+        $cmd->bindParameter(":comment",$this->comment->SafeText,PDO::PARAM_STR);
 
-		$res2 = $cmd->execute();
-	
-    	$cmd = $this->db->createCommand( SQL::SQL_REMOVE_OPEN_TIME_TIME );	
-   	    $cmd->bindParameter(":id",$this->id->Value, PDO::PARAM_INT);
-		$res = $cmd->execute();	
+        $res2 = $cmd->execute();
 
-       $this->timeArray = $this->getViewState('timeArray',array());
+        $cmd = $this->db->createCommand( SQL::SQL_REMOVE_OPEN_TIME_TIME );
+        $cmd->bindParameter(":id",$this->id->Value, PDO::PARAM_INT);
+        $res = $cmd->execute();
+
+        $this->timeArray = $this->getViewState('timeArray',array());
         foreach($this->timeArray as $time)
         {
             $this->saveTimeData($time['day'], $time['hourStart'], $time['duration'], $this->Request['id']);
         }
-				
-		return $res || $res2;
+
+        return $res || $res2;
     }
 
-   protected function saveTimeData($day, $hourStart, $duration ,$lastId)
+    protected function saveTimeData($day, $hourStart, $duration ,$lastId)
     {
         switch($day)
         {
@@ -156,10 +156,10 @@ class mod extends Page
                 break;
         }
 
-		$indexStartHours=explode(':',$hourStart);
-		$indexEndHours=explode(':',$duration);
+        $indexStartHours=explode(':',$hourStart);
+        $indexEndHours=explode(':',$duration);
         $indexStartHours = ($indexStartHours[0]*60) + $indexStartHours[1];
-		$indexEndHours= $indexStartHours + ($indexEndHours[0]*60) + $indexEndHours[1];
+        $indexEndHours= $indexStartHours + ($indexEndHours[0]*60) + $indexEndHours[1];
 
         $cmd = $this->db->createCommand( SQL::SQL_ADD_OPEN_TIME_TIME );
         $cmd->bindParameter(":id_openTime",$lastId,PDO::PARAM_STR);
@@ -168,17 +168,17 @@ class mod extends Page
         $cmd->bindParameter(":until",$indexEndHours,PDO::PARAM_INT);
 
         $cmd->execute();
-    } 
+    }
 
-	protected function serverUntilValidate($sender, $param)
-	{
-		if( $this->until->SafeText == "" ) return; 
-	
-		$until = strtotime($this->until->SafeText);	
-		$from = strtotime($this->from->SafeText);
-		if($until<$from)
-			$param->IsValid=false;
-	}
+    protected function serverUntilValidate($sender, $param)
+    {
+        if( $this->until->SafeText == "" ) return;
+
+        $until = strtotime($this->until->SafeText);
+        $from = strtotime($this->from->SafeText);
+        if($until<$from)
+        $param->IsValid=false;
+    }
 
     public function OnLoadAppointments($sender, $param)
     {
@@ -187,7 +187,7 @@ class mod extends Page
         $query = $cmd->query();
         if($query)
         {
-        	$data = $query->readAll();
+            $data = $query->readAll();
             $arrItems = array();
             $days['lundi'] = 0;
             $days['mardi'] = 1;
@@ -216,13 +216,13 @@ class mod extends Page
 
     public function OnSaveAppointment($sender, $param)
     {
-       $this->timeArray = $this->getViewState('timeArray',array());
+        $this->timeArray = $this->getViewState('timeArray',array());
 
-       $p = $param->getCallbackParameter()->CommandParameter;
-       $this->timeArray[$p->id] = array("day"=> $p->day, "duration"=>$p->duration,"hourStart"=>$p->hour);
+        $p = $param->getCallbackParameter()->CommandParameter;
+        $this->timeArray[$p->id] = array("day"=> $p->day, "duration"=>$p->duration,"hourStart"=>$p->hour);
 
-       $this->setViewState('timeArray',$this->timeArray,'');
-   }
+        $this->setViewState('timeArray',$this->timeArray,'');
+    }
 
     public function OnDeleteAppointment($sender, $param)
     {
@@ -234,14 +234,14 @@ class mod extends Page
 
     public function nameValidateIdentificator($sender, $param)
     {
-      $cmd = $this->db->createCommand( SQL::SQL_IS_OPEN_TIME_NAME_EXIST_EXCEPT_ID);
-      $cmd->bindParameter(":name",$this->name->SafeText,PDO::PARAM_STR);
-      $cmd->bindParameter(":id",$this->Request['id'],PDO::PARAM_STR);
-      $array = $cmd->query()->readAll();
+        $cmd = $this->db->createCommand( SQL::SQL_IS_OPEN_TIME_NAME_EXIST_EXCEPT_ID);
+        $cmd->bindParameter(":name",$this->name->SafeText,PDO::PARAM_STR);
+        $cmd->bindParameter(":id",$this->Request['id'],PDO::PARAM_STR);
+        $array = $cmd->query()->readAll();
 
-      if(count($array) > 0)
+        if(count($array) > 0)
         $param->IsValid=false;
-      else
+        else
         $param->IsValid=true;
     }
 }
