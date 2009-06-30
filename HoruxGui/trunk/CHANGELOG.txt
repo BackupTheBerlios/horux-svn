@@ -30,6 +30,8 @@ Legend:
 25.06.2009         # [#015914] Fixed
 25.06.2009         # [#015913] Fixed
 25.06.2009         ^ Refactoring the letux template to reduce the size page
+30.06.2009         + Add a control called TToolbaxBox which contain the main button on page
+30.06.2009         + Add tpl file for the page
 
 -------------------- Horux 1.0.4 Release Released [04-06-2009] ------------------------
 30.01.2009      + Add the pin code in the user wizard
