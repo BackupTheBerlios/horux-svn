@@ -5,6 +5,7 @@
         ID="tbb"
         Title="<%[Modify a Non Working Day]%>"
         CssIcon="icon-48-noneworkingday"
+        DelVisible="true"
         ApplyVisible="true"
         SaveVisible="true"
         CancelVisible="true"
