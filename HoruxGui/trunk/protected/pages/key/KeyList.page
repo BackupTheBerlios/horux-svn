@@ -14,6 +14,9 @@
     var counter = 0;
     var serialDetected = false;
     var ss = "";
+    var specialKey = false;
+
+
     document.onkeydown = function(evt) {
 
         var kc = 0;
@@ -28,10 +31,14 @@
         }
 
         if(kc == 16 || kc==17 || kc ==18)
-            return false;
-
-        if(kc == 51 && (counter == 0 || counter == 1))
         {
+            specialKey = true;
+            return false;
+        }
+
+        if(kc == 51 && (counter == 0 || counter == 1) && specialKey)
+        {
+            specialKey = false;
             serial.push(51);
             counter++;
             if(counter == 2 && serial[0] == 51 && serial[1] == 51)
@@ -42,11 +49,11 @@
         }
         else
         {
-            if(kc == 51 && serialDetected)
+            if(kc == 51 && serialDetected && specialKey)
             {
                 serial.push(51);
                 counter++;
-
+                specialKey = false;
                 if(serial[serial.length-1] == 51 && serial[serial.length-2] == 51)
                 {
                     document.getElementById("detected").innerHTML = '';
@@ -72,6 +79,7 @@
                 }
                 else
                 {
+                    specialKey = false;
                     document.getElementById("detected").innerHTML = '';
                     counter = 0;
                     delete serial;

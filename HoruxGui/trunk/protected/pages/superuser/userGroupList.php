@@ -145,12 +145,14 @@ class UserGroupList extends PageList
         $accessRight[] = "installation.language";
         $this->pdf->VCell($cellHeaderWidth,$cellHeaderHeight,utf8_decode(Prado::localize('Global Checkin')),1,0,'D', true);
         $accessRight[] = "tool.GlobalCheckin";
+        $this->pdf->VCell($cellHeaderWidth,$cellHeaderHeight,utf8_decode(Prado::localize('Horux Gui log')),1,0,'D', true);
+        $accessRight[] = "tool.GuiLog";
         $this->pdf->VCell($cellHeaderWidth,$cellHeaderHeight,utf8_decode(Prado::localize('System Info')),1,0,'D', true);
         $accessRight[] = "help.SystemInfo";
         $this->pdf->VCell($cellHeaderWidth,$cellHeaderHeight,utf8_decode(Prado::localize('About')),1,1,'D', true);
         $accessRight[] = "help.About";
 
-        $nCell += 24;
+        $nCell += 25;
 
         $groups = $this->getData();
 

@@ -25,7 +25,7 @@ class mod extends Page
         if(!$this->isPostBack)
         {
             $userId=$this->Application->getUser()->getUserId();
-            $this->blockRecord('hr_access_level', $this->Request['id'], $userId);
+            $this->blockRecord('hr_openTime', $this->Request['id'], $userId);
 
             $this->id->Value = $this->Request['id'];
             $this->setData();
@@ -87,14 +87,14 @@ class mod extends Page
             else
             $pBack = array('koMsg'=>Prado::localize('The open time was not modified'));
 
-            $this->blockRecord('hr_access_level', $this->id->Value, 0);
+            $this->blockRecord('hr_openTime', $this->id->Value, 0);
             $this->Response->redirect($this->Service->constructUrl('openTime.openTimeList',$pBack));
         }
     }
 
     public function onCancel($sender, $param)
     {
-        $this->blockRecord('hr_access_level', $this->id->Value, 0);
+        $this->blockRecord('hr_openTime', $this->id->Value, 0);
         $this->Response->redirect($this->Service->constructUrl('openTime.openTimeList'));
     }
 

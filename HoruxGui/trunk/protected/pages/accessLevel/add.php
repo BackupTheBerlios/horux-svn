@@ -17,6 +17,7 @@ Prado::using('horux.pages.accessLevel.sql');
 class add extends Page
 {
     protected $timeArray = array();
+    protected $lastId = 0;
 
     public function onLoad($param)
     {
@@ -29,8 +30,7 @@ class add extends Page
         {
             if($this->saveData())
             {
-                $id = $this->db->getLastInsertID();
-                $pBack = array('okMsg'=>Prado::localize('The access level was added successfully'), 'id'=>$id);
+                $pBack = array('okMsg'=>Prado::localize('The access level was added successfully'), 'id'=>$this->lastId);
                 $this->Response->redirect($this->Service->constructUrl('accessLevel.mod', $pBack));
             }
             else
@@ -75,7 +75,7 @@ class add extends Page
 
         if($res)
         {
-            $lastId = $this->db->getLastInsertId();
+            $this->lastId = $this->db->getLastInsertId();
             $this->timeArray = $this->getViewState('timeArray',array());
             foreach($this->timeArray as $time)
             {
@@ -84,7 +84,7 @@ class add extends Page
         }
         $this->log("Add the access level: ".$this->name->SafeText);
 
-        return $res;
+        return $lastId;
     }
 
     protected function saveTimeData($day, $hourStart, $duration ,$lastId)

@@ -5,7 +5,8 @@
     var serial = new Array();
     var counter = 0;
     var serialDetected = false;
-
+    var specialKey = false;
+    
     document.onkeydown = function(evt) {
 
         var kc = 0;
@@ -20,12 +21,16 @@
         }
 
         if(kc == 16 || kc==17 || kc ==18)
+        {
+            specialKey = true;
             return false;
+        }
 
-        if(kc == 51 && (counter == 0 || counter == 1))
+        if(kc == 51 && (counter == 0 || counter == 1) && specialKey)
         {
             serial.push(51);
             counter++;
+            specialKey = false;
             if(counter == 2 && serial[0] == 51 && serial[1] == 51)
             {
                 serialDetected = true;
@@ -34,11 +39,11 @@
         }
         else
         {
-            if(kc == 51 && serialDetected)
+            if(kc == 51 && serialDetected && specialKey)
             {
                 serial.push(51);
                 counter++;
-
+                specialKey = false;
                 if(serial[serial.length-1] == 51 && serial[serial.length-2] == 51)
                 {
                     document.getElementById("detected").innerHTML = '';
@@ -64,6 +69,7 @@
                 }
                 else
                 {
+                    specialKey = false;
                     document.getElementById("detected").innerHTML = '';
                     counter = 0;
                     delete serial;
@@ -96,14 +102,7 @@
 <%include Application.common.template.headerBoxContent %>
 
 <com:THiddenField ID="id" value="" />
-<div id="element-box">
 
-<div class="t">
-    <div class="t">
-        <div class="t"></div>
-    </div>
-</div>
-<div class="m">
 <%[Attribute the key]%>
 <com:TDropDownList ID="UnusedKey"
     DataTextField="identificator"

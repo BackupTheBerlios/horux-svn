@@ -30,6 +30,7 @@
             {
                 serial.push(51);
                 counter++;
+                specialKey = false;
                 if(counter == 2 && serial[0] == 51 && serial[1] == 51)
                 {
                     serialDetected = true;
@@ -42,7 +43,7 @@
                 {
                     serial.push(51);
                     counter++;
-
+                    specialKey = false;
                     if(serial[serial.length-1] == 51 && serial[serial.length-2] == 51)
                     {
                         document.getElementById("detected").innerHTML = '';

@@ -173,6 +173,7 @@ class HardwareList extends PageList
         $cbs = $this->findControlsByType("TActiveCheckBox");
         $nDelete = 0;
         $cbChecked = 0;
+        $koMsg = '';
 
         foreach($cbs as $cb)
         {
@@ -209,7 +210,10 @@ class HardwareList extends PageList
             }
         }
 
-        $pBack = array('okMsg'=>Prado::localize('{n} interface was deleted',array('n'=>$nDelete)));
+        if($koMsg !== '')
+            $pBack = array('koMsg'=>$koMsg);
+        else
+            $pBack = array('okMsg'=>Prado::localize('{n} interface was deleted',array('n'=>$nDelete)));
         $this->Response->redirect($this->Service->constructUrl('hardware.HardwareList',$pBack));
     }
 

@@ -36,9 +36,8 @@ class Add extends Page
 	{
         if($this->Page->IsValid)
         {
-          if($this->saveData())
+          if(($id = $this->saveData()) !== false)
           {
-            $id = $this->db->getLastInsertID();
             $pBack = array('okMsg'=>Prado::localize('The user was added successfully'), 'id'=>$id);
             $this->Response->redirect($this->Service->constructUrl('user.mod', $pBack));
           }
@@ -117,9 +116,11 @@ class Add extends Page
 
       if(!$cmd->execute()) return false;
 
+      $id = $this->db->getLastInsertID();
+
       $this->log("Add the user: ".$this->name->SafeText." ".$this->firstname->SafeText);
 
-      return true;
+      return $id;
 	} 
 	
 	public function fileUploaded($sender,$param)

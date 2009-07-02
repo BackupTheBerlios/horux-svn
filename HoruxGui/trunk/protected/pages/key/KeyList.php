@@ -191,7 +191,7 @@ class KeyList extends PageList
         $this->pdf->SetLineWidth(.3);
         $this->pdf->SetFont('','B');
         //En-t�te
-        $w=array(35,60,35,50);
+        $w=array(45,60,25,50);
         for($i=0;$i<count($header);$i++)
         $this->pdf->Cell($w[$i],7,$header[$i],1,0,'C',1);
         $this->pdf->Ln();

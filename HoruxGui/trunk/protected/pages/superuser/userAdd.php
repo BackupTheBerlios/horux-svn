@@ -72,9 +72,8 @@ class userAdd extends Page
     {
         if($this->Page->IsValid)
         {
-            if($this->saveData())
+            if(($id = $this->saveData()) !== false)
             {
-                $id = $this->db->getLastInsertID();
                 $pBack = array('okMsg'=>Prado::localize('The user was added successfully'), 'id'=>$id);
                 $this->Response->redirect($this->Service->constructUrl('superuser.userMod', $pBack));
             }
@@ -115,9 +114,11 @@ class userAdd extends Page
 
         if(!$cmd->execute()) return false;
 
+        $id = $this->db->getLastInsertID();
+
         $this->log("Add the super user:".$this->name->SafeText);
 
-        return true;
+        return $id;
     }
 
     public function serverValidatePassword($sender, $param)

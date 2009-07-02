@@ -3,6 +3,7 @@
     var serial = new Array();
     var counter = 0;
     var serialDetected = false;
+    var specialKey = false;
 
     document.onkeydown = function(evt) {
 
@@ -18,10 +19,14 @@
         }
 
         if(kc == 16 || kc==17 || kc ==18)
-            return false;
-
-        if(kc == 51 && (counter == 0 || counter == 1))
         {
+            specialKey = true;
+            return false;
+        }
+
+        if(kc == 51 && (counter == 0 || counter == 1) && specialKey)
+        {
+            specialKey = false;
             serial.push(51);
             counter++;
             if(counter == 2 && serial[0] == 51 && serial[1] == 51)
@@ -31,18 +36,17 @@
         }
         else
         {
-            if(kc == 51 && serialDetected)
+            if(kc == 51 && serialDetected && specialKey)
             {
                 serial.push(51);
                 counter++;
-
+                specialKey = false;
                 if(serial[serial.length-1] == 51 && serial[serial.length-2] == 51)
                 {
 
                     var sn = "";
                     for(i=2; i<serial.length-2; i++)
-                    sn += String.fromCharCode(serial[i]);
-
+                        sn += String.fromCharCode(serial[i]);
 
                     //window.location.replace('index.php?page=user.UserWizzard&sn=' + sn);
                     document.getElementById('serialNumber').value = sn;
@@ -63,6 +67,7 @@
                 }
                 else
                 {
+                    specialKey = false;
                     counter = 0;
                     delete serial;
                     serial = new Array();

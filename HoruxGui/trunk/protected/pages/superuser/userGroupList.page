@@ -7,7 +7,7 @@
         CssIcon="icon-48-superUserGroup"
         EditVisible="true"
         AddVisible="true"
-        AddUrl="superuser.userAdd"
+        AddUrl="superuser.userGroupAdd"
         DelVisible="true"
         PrintVisible="true"
         PrintUrl="<%= $this->Service->constructUrl($this->getApplication()->getService()->getRequestedPagePath()) %>&action=print"

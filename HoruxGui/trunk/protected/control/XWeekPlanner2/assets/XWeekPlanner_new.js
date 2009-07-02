@@ -328,16 +328,6 @@ XWeekPlanner.prototype = {
 
 
 	keyPress: function(event){
-		
-		if(this.activeItem){
-			
-			switch(Event.keyCode(event)){
-				case 46:
-					if(confirm(this.options.deleteConfirmMessage))
-						this.deleteAppointment(this.activeItem);
-					break;
-			}
-		}
 	},
 	
 	dblclick: function (event) {
