@@ -125,7 +125,6 @@
                             ID="mondayDefault"
                             Text=""
                             InputAttributes.value="1"
-                            Attributes.OnClick="mondayDefault()"
                             />
                     </td>
                 </tr>

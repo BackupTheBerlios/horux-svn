@@ -420,7 +420,7 @@ XAppointment.prototype = {
 	getDuration: function () {
         var duration = (this.divElement.style.height.replace("px","")) / this.weekPlanner.rowHeight;
         var durationFloor = Math.floor(duration);
-		var duration = (this.divElement.style.height.replace("px","") ) / this.weekPlanner.rowHeight ;
+		duration = (this.divElement.style.height.replace("px","") ) / this.weekPlanner.rowHeight ;
         duration -= ((durationFloor-1)/60);
 		var min = Math.floor( ((duration - Math.floor(duration) ) * 60) );
 		if(min < 10)
@@ -442,8 +442,9 @@ XAppointment.prototype = {
 	getHeight: function () {
 		
 		var height = this.duration.split(':');
+        var addPixel = (height[0]/1)-1;
 		height = (height[0]-0) + height[1] / 60;
-		return Math.floor(height * (this.weekPlanner.rowHeight ) );
+		return Math.floor(height * (this.weekPlanner.rowHeight ) + addPixel);
 	},
 	
 	getTime: function () {
