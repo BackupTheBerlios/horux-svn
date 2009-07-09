@@ -1,4 +1,32 @@
 <com:TContent ID="Main">
+<script language="Javascript">
+
+    document.onkeydown = function(evt) {
+        var kc = 0;
+
+        if(evt)
+        {
+            kc = evt.keyCode;   // firefox
+        }
+        else
+        {
+            kc = window.event.keyCode;  // IE
+        }
+
+        if(kc == 13)
+        {
+            document.getElementById('enterkey').value = 1;
+            document.forms['ctl0_adminForm'].submit();
+            return false;
+        }
+
+        return true;
+
+    }
+
+</script>
+
+    <input type="hidden" name="enterkey"  id="enterkey" value="0">
     <div id="content-box">
         <div class="padding">
             <div id="element-box" class="login">

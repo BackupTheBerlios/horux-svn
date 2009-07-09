@@ -47,7 +47,7 @@
 </div>
 
 <com:TForm ID="adminForm">
-<com:TClientScript ScriptUrl="./js/modalbox/modalbox.js" />
+  <com:TClientScript ScriptUrl="./js/modalbox/modalbox.js" />
   <!-- Add the main menu -->
   <com:Application.portlets.HeaderBox ID="mainMenu"/>
 

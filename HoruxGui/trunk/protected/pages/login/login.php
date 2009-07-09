@@ -20,13 +20,22 @@ class Login extends Page
     {
         parent::onLoad($param);
 
+        if(isset($this->Request['enterkey']) && $this->Request['enterkey']==1 )
+        {
+            $authManager=$this->Application->getModule('Auth');
+            if($authManager->login(strtolower($this->username->SafeText),$this->password->SafeText))
+            {
+                $this->log($this->username->SafeText." is logged in");
+                $this->Response->redirect($this->Service->constructUrl('controlPanel.ControlPanel',array('lang'=>$this->lang->getSelectedValue())));
+            }
+        }
+
         $this->getClientScript()->registerStyleSheetFile('loginCss','./themes/letux/css/login.css');
 
         $this->username->focus ();
 
         if(!$this->IsPostBack)
         {
-
             $this->lang->DataTextField='name';
             $this->lang->DataValueField='param';
             $this->lang->DataSource=$this->Data;
@@ -53,7 +62,7 @@ class Login extends Page
     {
         $authManager=$this->Application->getModule('Auth');
         if(!$authManager->login(strtolower($this->username->SafeText),$this->password->SafeText))
-        $param->IsValid=false;
+            $param->IsValid=false;
         else
         {
             $this->log($this->username->SafeText." is logged in");
