@@ -79,7 +79,7 @@ class add extends Page
             $this->timeArray = $this->getViewState('timeArray',array());
             foreach($this->timeArray as $time)
             {
-                $this->saveTimeData($time['day'], $time['hourStart'], $time['duration'], $lastId);
+                $this->saveTimeData($time['day'], $time['hourStart'], $time['duration'], $this->lastId);
             }
         }
         $this->log("Add the access level: ".$this->name->SafeText);
