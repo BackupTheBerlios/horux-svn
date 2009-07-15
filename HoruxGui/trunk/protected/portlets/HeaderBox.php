@@ -151,6 +151,11 @@ class HeaderBox extends Portlet
      	$this->setVisible(false);
     }
 
+    public function onHome($sender, $param)
+    {
+        $this->Response->redirect($this->Service->constructUrl('controlPanel.ControlPanel'));
+    }
+
     public function generateMenuDisabled()
     {
         $menu = array();

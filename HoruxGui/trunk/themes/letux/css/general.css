@@ -129,6 +129,7 @@ textarea:focus { background-color: #ffd }
 #module-status .alarm     { background: url(../images/menu/icon-16-alarm.png) 3px 3px no-repeat; float: left;}
 #module-status .loggedin-users     { background: url(../images/menu/icon-16-user.png) 3px 3px no-repeat; }
 #module-status .logout             { background: url(../images/menu/icon-16-logout.png) 3px 3px no-repeat; }
+#module-status .homeIcon             { background: url(../images/menu/icon-16-controlPanel.png) 3px 3px no-repeat; }
 
 /* -- various styles -- */
 span.note {

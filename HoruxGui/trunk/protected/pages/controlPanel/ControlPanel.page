@@ -130,6 +130,20 @@
 									</prop:TrueTemplate>
 									</com:TConditional>
 
+									<com:TConditional Condition="$this->isAccess('key.recycling')">
+									<prop:TrueTemplate>
+									<div style="float:left;">
+										<div class="icon">
+											<a href="<%= $this->Service->constructUrl('key.recycling') %>">
+												<img src="./themes/letux/images/header/icon-48-key-recycling.png" alt="<%[Key recycling]%>"  />
+												<span><%[Key recycling]%></span>
+											</a>
+										</div>
+									</div>
+									</prop:TrueTemplate>
+									</com:TConditional>
+
+
 									<com:TConditional Condition="$this->isAccess('components.tracking.tracking')">
 									<prop:TrueTemplate>
 									<div style="float:left;">

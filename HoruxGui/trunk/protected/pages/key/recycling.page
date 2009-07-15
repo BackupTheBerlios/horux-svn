@@ -1,0 +1,108 @@
+<com:TContent ID="Main">
+
+    <com:TTimeTriggeredCallback ID="clearLabel" Interval="15" OnCallback="onClearLavel" StartTimerOnLoad="true" />
+
+    <script language="Javascript">
+
+        var serial = new Array();
+        var counter = 0;
+        var serialDetected = false;
+        var specialKey = false;
+
+        document.onkeydown = function(evt) {
+
+            var kc = 0;
+
+            if(evt)
+            {
+                kc = evt.keyCode;   // firefox
+            }
+            else
+            {
+                kc = window.event.keyCode;  // IE
+            }
+
+            if(kc == 16 || kc==17 || kc ==18)
+            {
+                specialKey = true;
+                return false;
+            }
+
+            if(kc == 51 && (counter == 0 || counter == 1) && specialKey)
+            {
+                serial.push(51);
+                counter++;
+                specialKey = false;
+                if(counter == 2 && serial[0] == 51 && serial[1] == 51)
+                {
+                    serialDetected = true;
+                    document.getElementById("detected").innerHTML = '[<%= Prado::localize("...Reading...") %>]';
+                }
+            }
+            else
+            {
+                if(kc == 51 && serialDetected && specialKey)
+                {
+                    serial.push(51);
+                    counter++;
+                    specialKey = false;
+                    if(serial[serial.length-1] == 51 && serial[serial.length-2] == 51)
+                    {
+                        document.getElementById("detected").innerHTML = '';
+
+                        var sn = "";
+                        for(i=2; i<serial.length-2; i++)
+                            sn += String.fromCharCode(serial[i]);
+
+
+                        window.location.replace('index.php?page=key.recycling&sn=' + sn);
+                        counter = 0;
+                        delete serial;
+                        serial = new Array();
+                        serialDetected = false;
+                    }
+                }
+                else
+                {
+                    if(serialDetected)
+                    {
+                        serial.push(kc);
+                        counter++;
+                    }
+                    else
+                    {
+                        specialKey = false;
+                        document.getElementById("detected").innerHTML = '';
+                        counter = 0;
+                        delete serial;
+                        serial = new Array();
+                        serialDetected = false;
+                        return true;
+                    }
+                }
+
+            }
+
+            return false;
+        }
+
+
+    </script>
+
+    <%include Application.common.template.headerContent %>
+
+    <com:TToolbarBox
+        ID="tbb"
+        Title="<%[Recycling a Key]%>"
+        CssIcon="icon-48-key-recycling"
+        HelpVisible="true"
+        />
+
+    <%include Application.common.template.headerBoxContent %>
+
+    
+
+    <com:TActiveLabel Text="<%[Present the key to the reader for the recycle]%>" ID="label" />
+
+  <%include Application.common.template.footerContent %>
+</com:TContent>

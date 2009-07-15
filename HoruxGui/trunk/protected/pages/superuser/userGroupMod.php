@@ -364,6 +364,7 @@ class userGroupMod extends Page
                     $this->updatePermission($lastId, 'key.KeyList');
                     $this->updatePermission($lastId, 'key.add');
                     $this->updatePermission($lastId, 'key.mod');
+                    $this->updatePermission($lastId, 'key.recycling');
                     break;
                 case "accessLevel":
                     $this->updatePermission($lastId, 'accessLevel.accessLevelList');

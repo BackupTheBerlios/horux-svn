@@ -209,6 +209,7 @@ class userGroupAdd extends Page
                     $this->insertNewPermission($lastId, 'key.KeyList');
                     $this->insertNewPermission($lastId, 'key.add');
                     $this->insertNewPermission($lastId, 'key.mod');
+                    $this->insertNewPermission($lastId, 'key.recycling');
                     break;
                 case "accessLevel":
                     $this->insertNewPermission($lastId, 'accessLevel.accessLevelList');

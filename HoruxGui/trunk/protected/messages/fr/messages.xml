@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <xliff version="1.0">
- <file source-language="FR" target-language="fr" datatype="plaintext" original="messages" date="2009-06-30T14:40:54Z" product-name="messages">
+ <file source-language="FR" target-language="fr" datatype="plaintext" original="messages" date="2009-07-15T15:33:24Z" product-name="messages">
   <body>
   
 <trans-unit id="1">
@@ -3661,6 +3661,26 @@
 <trans-unit id="692">
 <source>The confirmation email cannot be sended. Please check your mail settings</source>
 <target>. La confirmation par email ne peut pas &#xEA;tre envoy&#xE9;e. Veuillez v&#xE9;rifier la configuration de l'envoie d'email</target>
+</trans-unit>
+
+<trans-unit id="693">
+<source>Key recycling</source>
+<target>Recyclage de cl&#xE9;s</target>
+</trans-unit>
+
+<trans-unit id="694">
+<source>Recycling a Key</source>
+<target>Recycler une cl&#xE9;</target>
+</trans-unit>
+
+<trans-unit id="695">
+<source>Present the key to the reader for the recycle</source>
+<target>Pr&#xE9;senter la cl&#xE9; au lecteur pour la recycler</target>
+</trans-unit>
+
+<trans-unit id="696">
+<source>The key was recycled</source>
+<target>La cl&#xE9; a &#xE9;t&#xE9; recycl&#xE9;e</target>
 </trans-unit>
 </body>
 </file>

@@ -2,6 +2,8 @@
     <div id="module-status">
         <com:TTimeTriggeredCallback ID="CheckAlarm" Interval="60" OnCallback="onDispAlarm" StartTimerOnLoad="true" />
 
+        <com:TLinkButton  ID="homeIcon" OnClick="onHome"><span class="homeIcon">&nbsp;</span></com:TLinkButton>
+
         <com:TPanel CssClass="accesslink" ID="accessLink" Visible="false">
           <span class="accesslink">&nbsp;</span>
         </com:TPanel>
