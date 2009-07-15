@@ -16,7 +16,6 @@
         }
     </script>
 
-    <div id="content-box">
     <%include Application.common.template.headerContent %>
     <com:TToolbarBox
         ID="tbb"
