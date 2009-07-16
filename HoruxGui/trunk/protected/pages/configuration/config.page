@@ -97,6 +97,26 @@
     </fieldset>
 
     <fieldset class="adminform">
+        <legend><%[Public web site]%></legend>
+        <table class="admintable" cellspacing="1">
+            <tbody>
+
+                <tr>
+                    <td valign="top" class="key">
+                        <span onmouseover="Tip('<%[Enter the address of the public web site]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Url]%></span>
+                    </td>
+                    <td>
+                        <com:TTextBox
+                            CssClass="text_area"
+                            ID="publicurl"
+                            Width="50" />
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </fieldset>
+
+    <fieldset class="adminform">
         <legend><%[Help]%></legend>
         <table class="admintable" cellspacing="1">
             <tbody>
@@ -277,85 +297,7 @@
         </table>
     </fieldset>
 
-    <!-- <fieldset class="adminform">
-                 <legend><%[User]%></legend>
-                      <table class="admintable" cellspacing="1">
-                        <tbody>
-
-                          <tr>
-                            <td valign="top" class="key">
-                              <span onmouseover="Tip('<%[Select from where the user information come from]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[User method]%></span>
-                            </td>
-                            <td>
-                            </td>
-                          </tr>
-
-                          <tr>
-                            <td valign="top" class="key">
-                              <span onmouseover="Tip('<%[Name or IP address of the LDAP server. You can also specify a URL like ldap://hostname: port/]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[LDAP server name]%></span>
-                            </td>
-                            <td>
-                              <com:TTextBox
-                                CssClass="text_area"
-                                ID="ldap_server_name"
-                                Width="50" />
-                            </td>
-                          </tr>
-
-                          <tr>
-                            <td valign="top" class="key">
-                              <span onmouseover="Tip('<%[Optionally, you can specify a port, which should be used to connect to LDAP server instead of the default port 389.]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Port number of the LDAP server]%></span>
-                            </td>
-                            <td>
-                              <com:TTextBox
-                                CssClass="text_area"
-                                ID="ldap_port"
-                                Width="50" />
-                            </td>
-                          </tr>
-
-                          <tr>
-                            <td valign="top" class="key">
-                              <span onmouseover="Tip('<%[DN is the Distinguished Name, it situates information users, such as: o=My business, c=EN.]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[DN of LDAP]%></span>
-                            </td>
-                            <td>
-                              <com:TTextBox
-                                CssClass="text_area"
-                                ID="ldap_dn"
-                                Width="50" />
-                            </td>
-                          </tr>
-
-                          <tr>
-                            <td valign="top" class="key">
-                              <span onmouseover="Tip('<%[Leave blank if you use an access invited. If specified in phpBB, it will connect to the LDAP server as a user specified example:<br/> uid=User, or = MyUnit, o=MaCompagnie, c = EN. Required for servers with an Active Directory.]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[LDAP user]%></span>
-                            </td>
-                            <td>
-                              <com:TTextBox
-                                CssClass="text_area"
-                                ID="ldap_user"
-                                Width="50" />
-                            </td>
-                          </tr>
-
-                          <tr>
-                            <td valign="top" class="key">
-                              <span onmouseover="Tip('<%[
-Leave blank for access invited. Otherwise, enter the login password. Required for servers with an Active Directory.<br/> <em>WARNING:</em> This password is stored in clear in your database and will, therefore, visible to anyone with access to your base or the configuration page.]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[LDAP password]%></span>
-                            </td>
-                            <td>
-                              <com:TTextBox
-                                CssClass="text_area"
-                                ID="ldap_password"
-                                Width="50" />
-                            </td>
-                          </tr>
-
-
-
-                        </tbody>
-                      </table>
-                  </fieldset>-->
+   
 
 
     <%include Application.common.template.footerContent %>

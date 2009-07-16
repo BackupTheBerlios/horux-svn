@@ -50,6 +50,7 @@ class Config extends Page
             $this->log_path->Text = $data['log_path'];
             $this->debug_mode->setChecked($data['debug_mode']);
             $this->key->Text = $data['key'];
+            $this->publicurl->Text = $data['publicurl'];
 
             $this->mailer->SetSelectedValue($data['mail_mailer']);
             $this->mail_from->Text = $data['mail_mail_from'];
@@ -127,6 +128,9 @@ class Config extends Page
                     $cmd->bindParameter(":log_path",$this->log_path->SafeText,PDO::PARAM_STR);
                     $cmd->bindParameter(":debug_mode",$this->debug_mode->getChecked(),PDO::PARAM_STR);
                     $cmd->bindParameter(":key",$this->key->SafeText,PDO::PARAM_STR);
+
+                    $cmd->bindParameter(":publicurl",$this->publicurl->SafeText,PDO::PARAM_STR);
+
 
                     $cmd->bindParameter(":mail_mailer",$this->mailer->getSelectedValue(),PDO::PARAM_STR);
                     $cmd->bindParameter(":mail_mail_from",$this->mail_from->SafeText,PDO::PARAM_STR);

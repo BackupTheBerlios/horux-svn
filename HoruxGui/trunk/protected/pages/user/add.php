@@ -14,6 +14,7 @@
 
 Prado::using('horux.pages.user.sql');
 
+
 class Add extends Page
 {
 	protected $fileSize;	
@@ -21,17 +22,52 @@ class Add extends Page
 	protected $fileType;
 	protected $fileError;
 	protected $hasFile;
+    protected $url;
+    protected $siteName;
 
     public function onLoad($param)
     {
         parent::onLoad($param);
 
+        $cmd = $this->db->createCommand( "SELECT * FROM hr_config WHERE id=1" );
+        $query = $cmd->query();
+        if($query)
+        {
+            $data = $query->read();
+            if($data['publicurl'] != "")
+            {
+                $this->confirmation->setEnabled(true);
+                $this->password->setEnabled(true);
+                $this->url = $data['publicurl'];
+
+                $cmd = $this->db->createCommand( "SELECT * FROM hr_site WHERE id=1" );
+                $query = $cmd->query();
+                if($query)
+                {
+                    $data = $query->read();
+                    $this->siteName = $data['name'];
+                }
+            }
+            else
+            {
+                $this->confirmation->setEnabled(false);
+                $this->password->setEnabled(false);
+            }
+        }
+
         if(!$this->isPostBack)
         {
 			$this->picture->setImageUrl('./pictures/unknown.jpg');
+
         }
     }	
-	
+
+    public function serverValidatePassword($sender, $param)
+    {
+        if($this->password->Text != $this->confirmation->Text)
+        $param->IsValid=false;
+    }
+
 	public function onApply($sender, $param)
 	{
         if($this->Page->IsValid)
@@ -93,6 +129,7 @@ class Add extends Page
       $cmd->bindParameter(":language",$this->language->getSelectedValue(),PDO::PARAM_STR);
       $cmd->bindParameter(":picture",$this->fileName,PDO::PARAM_STR);
       $cmd->bindParameter(":pin_code",$this->pin_code->SafeText,PDO::PARAM_STR);
+      $cmd->bindParameter(":password",sha1($this->password->SafeText),PDO::PARAM_STR);
 
       
       
@@ -117,6 +154,15 @@ class Add extends Page
       if(!$cmd->execute()) return false;
 
       $id = $this->db->getLastInsertID();
+
+      if( ($this->email1->SafeText != '' || $this->email2->SafeText != '')  && $this->password->SafeText != '')
+      {
+        $mailer = new TMailer();
+
+        $email = $this->email1->SafeText == '' ? $this->email2->SafeText : $this->email1->SafeText;
+
+        $mailer->sendUser($email,$this->name->SafeText, $this->firstname->SafeText, $this->password->SafeText, $this->url, $this->siteName);
+      }
 
       $this->log("Add the user: ".$this->name->SafeText." ".$this->firstname->SafeText);
 

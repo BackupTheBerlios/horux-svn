@@ -32,6 +32,8 @@ class SQL {
                         `mail_smtp_host`=:mail_smtp_host,
                         `mail_smtp_port`=:mail_smtp_port,
 
+                        `publicurl`=:publicurl,
+
 
                         `key`=:key
                         WHERE id=1"

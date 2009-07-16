@@ -121,7 +121,50 @@ class TMailer extends TModule
       return false;
     }
   }
-  
+
+  public function sendSuperUser($email, $username, $password)
+  {
+    if(!$this->openConnection()) return false;
+
+    try
+    {
+      $text = Prado::localize("Hello {username}\n\nA new super user has registered for the access control.\nThis e-mail contains their details:\n\nUsername: {un}\nPassword: {password}\n\nPlease do not respond to this message. It is automatically generated and is for information purposes only.", array('username'=>$username, 'un'=>$username, 'password'=>$password));
+
+      $message =& new Swift_Message(Prado::localize("Horux super user password"), $text);
+      $res = $this->swift->send($message, $email, new Swift_Address($this->mail_from, $this->from_name));
+
+      $this->swift->disconnect();
+      return $res;
+    }
+    catch(Swift_Message_MimeException  $e)
+    {
+      return false;
+    }
+
+  }
+
+  public function sendUser($email, $name, $firstname, $password, $url, $sitename)
+  {
+    if(!$this->openConnection()) return false;
+
+    try
+    {
+      $text = Prado::localize("Hello {name} {firstname}\n\nA new user has registered for {sitename}.\nThis e-mail contains their details:\n\nUsername: {email}\nPassword: {password}\nWeb site: {url}\n\nPlease do not respond to this message. It is automatically generated and is for information purposes only.",
+                        array('name'=>$name, 'firstname'=>$firstname,'email'=>$email, 'password'=>$password, 'sitename'=>$sitename, 'url'=>$url));
+
+      $message =& new Swift_Message(Prado::localize("{sitename} user password", array('sitename'=>$sitename)), $text);
+      $res = $this->swift->send($message, $email, new Swift_Address($this->mail_from, $this->from_name));
+
+      $this->swift->disconnect();
+      return $res;
+    }
+    catch(Swift_Message_MimeException  $e)
+    {
+      return false;
+    }
+
+  }
+
   public function sendHtmlMail($newLetter = false)
   {
     if(!$this->openConnection()) return false;

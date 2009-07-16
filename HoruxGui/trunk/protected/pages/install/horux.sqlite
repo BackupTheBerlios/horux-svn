@@ -49,11 +49,6 @@ CREATE TABLE hr_config (
     'log_path' varchar(100) default '' ,
     'debug_mode' smallint(1) NOT NULL default 0 ,
     'server_path' varchar(50) NOT NULL default '',
-    'ldap_server_name' varchar(100) NOT NULL default '' ,
-    'ldpa_port' int(11) NOT NULL default 0,
-    'ldap_dn' varchar(100) NOT NULL  default '',
-    'ldap_user' varchar(100) NOT NULL  default '',
-    'ldpa_password' varchar(30) NOT NULL  default '',
     'user_method' varchar(30) NOT NULL  default '',
     'key' varchar(10) NOT NULL  default '',
     'mail_mailer' varchar(8) NOT NULL default 'sendmail' ,
@@ -65,8 +60,8 @@ CREATE TABLE hr_config (
     'mail_smtp_username' varchar(50) NOT NULL  default '',
     'mail_smtp_password' varchar(50) NOT NULL  default '',
     'mail_smtp_host' varchar(50) NOT NULL default 'localhost' ,
-    'mail_smtp_port' int(11) NOT NULL default '21' );
-
+    'mail_smtp_port' int(11) NOT NULL default '21',
+    'publicurl' varchar(255) NOT NULL);
 #
 # Contenu de la table: hr_config
 #
@@ -467,7 +462,8 @@ CREATE TABLE hr_user (
     'npa_pr' varchar(10) NOT NULL ,
     'city_pr' varchar(30) NOT NULL ,
     'country_pr' varchar(30) NOT NULL ,
-    'pin_code' varchar(12) default NULL );
+    'pin_code' varchar(12) default NULL,
+    'password' varchar(64) default NULL );
 
 CREATE INDEX hr_user_name ON hr_user ('name');
 CREATE INDEX hr_user_firstname ON hr_user ('firstname');

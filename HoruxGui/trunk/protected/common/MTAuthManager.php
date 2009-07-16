@@ -31,6 +31,7 @@ class MTAuthManager extends TAuthManager {
 		$app = $this->getApplication();
 
         if( $app->getService()->getID() == 'xmlrpc' ) return true;
+        if( $app->getService()->getID() == 'soap' ) return true;
 
         if('controlPanel.ControlPanel' == $app->getService()->getRequestedPagePath() &&  $app->getUser()->getUserID() != null) return true;
         if('help.About' == $app->getService()->getRequestedPagePath() &&  $app->getUser()->getUserID() != null) return true;

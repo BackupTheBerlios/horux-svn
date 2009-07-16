@@ -124,11 +124,6 @@ CREATE TABLE IF NOT EXISTS `hr_config` (
   `log_path` varchar(100) NOT NULL,
   `debug_mode` smallint(1) NOT NULL,
   `server_path` varchar(50) NOT NULL,
-  `ldap_server_name` varchar(100) NOT NULL,
-  `ldpa_port` int(11) NOT NULL,
-  `ldap_dn` varchar(100) NOT NULL,
-  `ldap_user` varchar(100) NOT NULL,
-  `ldpa_password` varchar(30) NOT NULL,
   `user_method` varchar(30) NOT NULL,
   `key` varchar(10) NOT NULL,
   `mail_mailer` set('mail','sendmail','smtp') NOT NULL default 'sendmail',
@@ -141,6 +136,7 @@ CREATE TABLE IF NOT EXISTS `hr_config` (
   `mail_smtp_password` varchar(50) NOT NULL,
   `mail_smtp_host` varchar(50) NOT NULL default 'localhost',
   `mail_smtp_port` int(11) NOT NULL default '21',
+  `publicurl` varchar(255) NOT NULL,
   PRIMARY KEY  (`id`)
 ) TYPE=MyISAM CHARACTER SET `utf8` ;
 
@@ -474,7 +470,8 @@ CREATE TABLE IF NOT EXISTS `hr_user` (
   `npa_pr` varchar(10) NOT NULL,
   `city_pr` varchar(30) NOT NULL,
   `country_pr` varchar(30) NOT NULL,
-  `pin_code` varchar(12) default NULL,  
+  `pin_code` varchar(12) default NULL,
+  `password` varchar(64) default NULL,
   PRIMARY KEY  (`id`),
   KEY `name` (`name`),
   KEY `firstname` (`firstname`)

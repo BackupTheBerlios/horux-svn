@@ -66,6 +66,7 @@ class Mod extends Page
             $this->picture->setImageUrl('./pictures/unknown.jpg');
 
             $this->pin_code->Text = $data['pin_code'];
+            $this->currentPswd->Value = $data['password'];
 
 
             //Personal
@@ -132,6 +133,12 @@ class Mod extends Page
         }
     }
 
+    public function serverValidatePassword($sender, $param)
+    {
+        if($this->password->Text != $this->confirmation->Text)
+        $param->IsValid=false;
+    }
+
     public function onCancel($sender, $param)
     {
         $this->blockRecord('hr_user', $this->id->Value, 0);
@@ -162,6 +169,17 @@ class Mod extends Page
         $cmd->bindParameter(":firstname",$this->firstname->SafeText,PDO::PARAM_STR);
         $cmd->bindParameter(":language",$this->language->getSelectedValue(),PDO::PARAM_STR);
         $cmd->bindParameter(":pin_code",$this->pin_code->SafeText,PDO::PARAM_STR);
+        $cmd->bindParameter(":password",$this->password->SafeText,PDO::PARAM_STR);
+
+        if($this->password->SafeText == "")
+        {
+            $cmd->bindParameter(":password",$this->currentPswd->Value,PDO::PARAM_STR);
+        }
+        else
+        {
+            $cmd->bindParameter(":password",sha1( $this->password->SafeText),PDO::PARAM_STR);
+        }
+
 
         if($this->delPicture->getChecked())
         {

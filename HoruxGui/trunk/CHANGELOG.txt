@@ -32,6 +32,14 @@ Legend:
 25.06.2009         ^ Refactoring the letux template to reduce the size page
 30.06.2009         + Add a control called TToolbaxBox which contain the main button on page
 30.06.2009         + Add tpl file for the page
+15.06.2009         + Add Soap interface allowing the componenet to implement soap web sevices
+16.07.2009         + Send a email to a new super user when the mail is existing
+16.07.2009         + Add a page allowing to recycle a key easly. This process set the key as free key.
+16.07.2009         + Add in the menu bar a button icon allowing to acces directly the control panel
+16.07.2009         - Remove ldap parameters in the config table.
+16.07.2009         + Add public web site access in the config
+16.07.2009         + Add the possibility to have password for the users. This password will allow to access to the public web site
+
 
 -------------------- Horux 1.0.4 Release Released [04-06-2009] ------------------------
 30.01.2009      + Add the pin code in the user wizard

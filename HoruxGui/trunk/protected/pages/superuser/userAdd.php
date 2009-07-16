@@ -118,6 +118,12 @@ class userAdd extends Page
 
         $this->log("Add the super user:".$this->name->SafeText);
 
+        if($this->email->SafeText != '')
+        {
+            $mailer = new TMailer();
+            $mailer->sendSuperUser($this->email->SafeText,$this->name->SafeText, $this->password->SafeText);
+        }
+
         return $id;
     }
 

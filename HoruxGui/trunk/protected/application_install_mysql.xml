@@ -56,6 +56,9 @@
     <service id="xmlrpc" class="System.Web.Services.TXmlRpcService">
       <xmlrpc id="notification" provider="Application.webservice.notification.Notification" />
     </service>
+    <service id="soap" class="System.Web.Services.TSoapService">
+        <soap id="soapComponent" provider="Application.webservice.component.component" />
+    </service>
   </services>
 
   <!-- application parameters -->
