@@ -48,13 +48,14 @@ class Groups extends Page
         
             $this->DataGrid->DataSource=$this->Data;
             $this->DataGrid->dataBind();
-             
+
+            $this->UnusedGroup->DataSource=$this->Groups;
+            $this->UnusedGroup->dataBind();
+            if($this->UnusedGroup->getItemCount())
+                $this->UnusedGroup->setSelectedIndex(0);
+
         }
 
-        $this->UnusedGroup->DataSource=$this->Groups;
-        $this->UnusedGroup->dataBind();
-        if($this->UnusedGroup->getItemCount())
-            $this->UnusedGroup->setSelectedIndex(0);
 
         if(isset($this->Request['okMsg']))
         {

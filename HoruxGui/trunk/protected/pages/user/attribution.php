@@ -112,13 +112,13 @@ class Attribution extends Page
             $this->DataGrid->dataBind();
             
             $this->id->Value = $this->Request['id'];
+
+            $this->UnusedKey->DataSource=$this->Key;
+            $this->UnusedKey->dataBind();
+            if($this->UnusedKey->getItemCount())
+                $this->UnusedKey->setSelectedIndex(0);
+
         }
-
-        $this->UnusedKey->DataSource=$this->Key;
-        $this->UnusedKey->dataBind();   
-        if($this->UnusedKey->getItemCount())
-            $this->UnusedKey->setSelectedIndex(0);
-
 
 
         if(isset($this->Request['okMsg']))
