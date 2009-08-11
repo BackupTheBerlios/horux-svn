@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <xliff version="1.0">
- <file source-language="FR" target-language="fr" datatype="plaintext" original="messages" date="2009-07-15T15:33:24Z" product-name="messages">
+ <file source-language="FR" target-language="fr" datatype="plaintext" original="messages" date="2009-08-11T08:01:03Z" product-name="messages">
   <body>
   
 <trans-unit id="1">
@@ -3681,6 +3681,51 @@
 <trans-unit id="696">
 <source>The key was recycled</source>
 <target>La cl&#xE9; a &#xE9;t&#xE9; recycl&#xE9;e</target>
+</trans-unit>
+
+<trans-unit id="697">
+<source>Hello {username}\n\nA new super user has registered for the access control.\nThis e-mail contains their details:\n\nUsername: {un}\nPassword: {password}\n\nPlease do not respond to this message. It is automatically generated and is for information purposes only.</source>
+<target>Hello {username}\n\nUn nouveau super utilisateur a &#xE9;t&#xE9; cr&#xE9;&#xE9; pour le contr&#xF4;le d'acc&#xE8;s.\nCet email contient les d&#xE9;tails:\n\nNom d'utilisateur:{un}\nMot de passe: {password}\n\nVeuillez ne pas r&#xE9;pondre &#xE0; cet email. C'est un message g&#xE9;n&#xE9;r&#xE9; automatiquement pour information uniquement.</target>
+</trans-unit>
+
+<trans-unit id="698">
+<source>Hello {name} {firstname}\n\nA new user has registered for {sitename}.\nThis e-mail contains their details:\n\nUsername: {email}\nPassword: {password}\nWeb site: {url}\n\nPlease do not respond to this message. It is automatically generated and is for information purposes only.</source>
+<target>Hello {name} {firstname}\n\nUn nouvel utilisateur a &#xE9;t&#xE9; cr&#xE9;&#xE9; pour {sitename}.\nCet email contient les d&#xE9;tails:\n\nNom d'utilisateur:{email}\nMot de passe: {password}\nSite Internet: {url}\n\nVeuillez ne pas r&#xE9;pondre &#xE0; cet email. C'est un message g&#xE9;n&#xE9;r&#xE9; automatiquement pour information uniquement.</target>
+</trans-unit>
+
+<trans-unit id="699">
+<source>Horux super user password</source>
+<target>Mot de passe Horux super utilisateur</target>
+</trans-unit>
+
+<trans-unit id="700">
+<source>{sitename} user password</source>
+<target>Mot de passe utilisateur pour {sitename}</target>
+</trans-unit>
+
+<trans-unit id="701">
+<source>Public web site</source>
+<target>Site Internet publique</target>
+</trans-unit>
+
+<trans-unit id="702">
+<source>Enter the address of the public web site</source>
+<target>Entrez l\'adresse internet du site public</target>
+</trans-unit>
+
+<trans-unit id="703">
+<source>Url</source>
+<target>Url</target>
+</trans-unit>
+
+<trans-unit id="704">
+<source>Enter the password for this user</source>
+<target>Entrez le mot de passe pour cet utilisateur</target>
+</trans-unit>
+
+<trans-unit id="705">
+<source>Enter the confirmation password for this user</source>
+<target>Entrez la confirmation du mot de passe pour cet utilisateur</target>
 </trans-unit>
 </body>
 </file>
