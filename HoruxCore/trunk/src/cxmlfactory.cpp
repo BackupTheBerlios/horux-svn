@@ -189,7 +189,7 @@ QString CXmlFactory::deviceAction(QString id, QString f, QMap<QString, QString>p
     action.appendChild(function);
 
     QDomElement params = doc.createElement("params");
-    deviceAction.appendChild(params);
+    action.appendChild(params);
 
     QMapIterator<QString, QString> i(p);
     while (i.hasNext())
@@ -212,6 +212,7 @@ QString CXmlFactory::deviceAction(QString id, QString f, QMap<QString, QString>p
 
 
     doc.appendChild(deviceAction);
+
     return doc.toString();
 
 }

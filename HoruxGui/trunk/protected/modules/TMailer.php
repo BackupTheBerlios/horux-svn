@@ -128,9 +128,10 @@ class TMailer extends TModule
 
     try
     {
-      $text = Prado::localize("Hello {username}\n\nA new super user has registered for the access control.\nThis e-mail contains their details:\n\nUsername: {un}\nPassword: {password}\n\nPlease do not respond to this message. It is automatically generated and is for information purposes only.", array('username'=>$username, 'un'=>$username, 'password'=>$password));
+      $text = Prado::localize("Hello {username}<br/><br/>A new super user has registered for the access control.<br/>This e-mail contains their details:<br/><br/>Username: {un}<br/>Password: {password}<br/><br/>Please do not respond to this message. It is automatically generated and is for information purposes only.", array('username'=>$username, 'un'=>$username, 'password'=>$password));
 
-      $message =& new Swift_Message(Prado::localize("Horux super user password"), $text);
+      $message =& new Swift_Message(Prado::localize("Horux super user password"));
+      $message->attach(new Swift_Message_Part($text, "text/html"));
       $res = $this->swift->send($message, $email, new Swift_Address($this->mail_from, $this->from_name));
 
       $this->swift->disconnect();
@@ -149,10 +150,11 @@ class TMailer extends TModule
 
     try
     {
-      $text = Prado::localize("Hello {name} {firstname}\n\nA new user has registered for {sitename}.\nThis e-mail contains their details:\n\nUsername: {email}\nPassword: {password}\nWeb site: {url}\n\nPlease do not respond to this message. It is automatically generated and is for information purposes only.",
+      $text = Prado::localize("Hello {name} {firstname}<br/><br/>A new user has registered for {sitename}.<br/>This e-mail contains their details:<br/><br/>Username: {email}<br/>Password: {password}<br/>Web site: {url}<br/><br/>Please do not respond to this message. It is automatically generated and is for information purposes only.",
                         array('name'=>$name, 'firstname'=>$firstname,'email'=>$email, 'password'=>$password, 'sitename'=>$sitename, 'url'=>$url));
 
-      $message =& new Swift_Message(Prado::localize("{sitename} user password", array('sitename'=>$sitename)), $text);
+      $message =& new Swift_Message(Prado::localize("{sitename} user password", array('sitename'=>$sitename)));
+      $message->attach(new Swift_Message_Part($text, "text/html"));
       $res = $this->swift->send($message, $email, new Swift_Address($this->mail_from, $this->from_name));
 
       $this->swift->disconnect();

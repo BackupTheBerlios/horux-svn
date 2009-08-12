@@ -82,7 +82,6 @@ void CAccessLinkRS485::deviceAction(QString xml)
   {
     return;
   }
-
   if(root.attribute("id").toInt() != id)
     return;
 
@@ -137,7 +136,7 @@ void CAccessLinkRS485::deviceAction(QString xml)
         functionNode = functionNode.nextSibling(); 
 
       }
-      
+
       if(interfaces[funcName])
       {
           void (*func)(QObject *, QMap<QString, QVariant>) = interfaces[funcName];
@@ -381,7 +380,7 @@ void CAccessLinkRS485::timerEvent(QTimerEvent *e)
   {
       //! one message was maybe not well sended
       QString cmd;
-      cmd = cmd.sprintf("%02X",currentMessage.at(2));
+      cmd = cmd.sprintf("%02X",(uchar)currentMessage.at(2));
       QString xml = CXmlFactory::deviceEvent(QString::number(id),"1017", "Do not receive the response from the reader (" + cmd + ")");
         
       emit deviceEvent(xml);
@@ -610,7 +609,9 @@ void CAccessLinkRS485::dispatchMessage(QByteArray ba)
         case 0x02: //! cmd wait
           break;
       }
-      break;    case 0x8E: // internal db size
+      break;
+    case 0x8E: // internal db size
+
       switch((uchar)ba.at(3))
       {
         case 0x00: //! cmd not ok
@@ -620,24 +621,24 @@ void CAccessLinkRS485::dispatchMessage(QByteArray ba)
           }
           break;
         case 0x01: //! cmd ok
-          dbSize = 0;
-          dbSize = ((uchar)ba.at(4)<< 8);
-          dbSize |= (uchar)ba.at(5);
-
-          //! if the memory is equal or greater than 90%, send an alarm
-          if( dbSize >=  (int)(90 * memory / 100) )
           {
-            QString xml = CXmlFactory::deviceEvent(QString::number(id),"1011", "The memory database of the reader is almost full");
-            
-            emit deviceEvent(xml);
-          }
+              dbSize = 0;
+              dbSize = ((uchar)ba.at(4)<< 8);
+              dbSize |= (uchar)ba.at(5);
+              //! if the memory is equal or greater than 90%, send an alarm
+              if( dbSize >=  (int)(90 * memory / 100) )
+              {
+                QString xml = CXmlFactory::deviceEvent(QString::number(id),"1011", "The memory database of the reader is almost full");
 
-          if( dbSize ==  memory )
-          {
-            QString xml = CXmlFactory::deviceEvent(QString::number(id),"1010", "The memory database of the reader is full");
-            emit deviceEvent(xml);
-          }
+                emit deviceEvent(xml);
+              }
 
+              if( dbSize ==  memory )
+              {
+                QString xml = CXmlFactory::deviceEvent(QString::number(id),"1010", "The memory database of the reader is full");
+                emit deviceEvent(xml);
+              }
+          }
           break;
         case 0x02: //! cmd wait
           break;
@@ -662,6 +663,8 @@ void CAccessLinkRS485::dispatchMessage(QByteArray ba)
 
   //! receive the reader response, send the next message if has one
   status = FREE;
+  killTimer(msgTimeoutTimer);
+  msgTimeoutTimer = 0;
 
   if(pendingMessage.size() > 0)
   {
@@ -706,7 +709,6 @@ void CAccessLinkRS485::getDbSize()
   cmd[1] = 0x03;
   cmd[2] = 0x8E;
   cmd[3] = 0x8D;
-
   appendMessage(cmd, 4);
 }
 
@@ -972,6 +974,7 @@ void CAccessLinkRS485::s_openDoorLock(QObject *p, QMap<QString, QVariant>params)
 	
 	
   bool isAccess = false;
+
   if(params.contains("isAccess"))
     isAccess = params["isAccess"].toBool();
 
@@ -1001,7 +1004,6 @@ void CAccessLinkRS485::s_openDoorLock(QObject *p, QMap<QString, QVariant>params)
   cmd[5] =  cmd[1] ^ cmd[2] ^ cmd[3] ^ cmd[4];
 
   pThis->appendMessage(cmd, 6);
-
   if(isAccess)
   {
     //! do not open in this mode
@@ -1193,8 +1195,8 @@ void CAccessLinkRS485::checkStandalone()
         return;
     
       uchar cmd[12];
-      long msb = sn.left(8).toLong(0,16);
-      long lsb = sn.right(8).toLong(0,16);
+      unsigned long msb = sn.left(8).toULong(0,16);
+      unsigned long lsb = sn.right(8).toULong(0,16);
     
       cmd[0] = address;
       cmd[1] = 11; //length
