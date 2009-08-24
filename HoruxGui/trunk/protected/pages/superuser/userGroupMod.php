@@ -74,11 +74,11 @@ class userGroupMod extends Page
 
                 if(!$isComponentHasOne)
                 {
-                    $data[] = array('Type'=>Prado::localize('Components'), 'id'=>$data2['page'], 'Text'=>Prado::localize($name->getValue()), 'access'=>$this->isAccess($data2['page']), 'composantname'=>$installName);
+                    $data[] = array('Type'=>Prado::localize('Components'), 'id'=>$data2['page'], 'Text'=>Prado::localize($name->getValue()), 'access'=>$this->isAccess($data2['page']), 'composantname'=>$installName, 'shortcut'=>$this->isShortcut($data2['page']));
                     $isComponentHasOne = true;
                 }
                 else
-                    $data[] = array('Type'=>'', 'id'=>$data2['page'], 'Text'=>Prado::localize($name->getValue()), 'access'=>$this->isAccess($data2['page']), 'composantname'=>$installName);
+                    $data[] = array('Type'=>'', 'id'=>$data2['page'], 'Text'=>Prado::localize($name->getValue()), 'access'=>$this->isAccess($data2['page']), 'composantname'=>$installName, 'shortcut'=>$this->isShortcut($data2['page']));
 
 
                 $cmd = $this->db->createCommand("SELECT * FROM hr_install AS i LEFT JOIN hr_component as c ON c.id_install=i.id WHERE i.type='component' AND c.parentmenu=".$data2['id']." AND c.parentmenu>0 AND i.id=".$d1['id']);
@@ -87,7 +87,7 @@ class userGroupMod extends Page
 
                 foreach($data2 as $d2)
                 {
-                    $data[] = array('Type'=>'', 'id'=>$d2['page'], 'Text'=>'', 'Text2'=>Prado::localize($d2['menuname']), 'access'=>$this->isAccess($d2['page']), 'composantname'=>$installName);
+                    $data[] = array('Type'=>'', 'id'=>$d2['page'], 'Text'=>'', 'Text2'=>Prado::localize($d2['menuname']), 'access'=>$this->isAccess($d2['page']), 'composantname'=>$installName, 'shortcut'=>$this->isShortcut($d2['page']));
                 }
 
             }
@@ -109,6 +109,10 @@ class userGroupMod extends Page
             $this->name->Text = $data['name'];
             $this->description->Text =$data['description'];
             $this->superAdmin->setChecked($data['superAdmin']);
+
+            $this->dispUserLoggedIn->setChecked($data['dispUserLoggedIn']);
+            $this->dispLastAlarm->setChecked($data['dispLastAlarm']);
+            $this->dispLastTracking->setChecked($data['dispLastTracking']);
         }
 
     }
@@ -126,41 +130,54 @@ class userGroupMod extends Page
         }
     }
 
+    protected function isShortcut($page)
+    {
+        $cmd = $this->db->createCommand( "SELECT COUNT(*) AS n FROM hr_gui_permissions WHERE page=:page AND value=:id AND shortcut=1" );
+        $cmd->bindParameter(":id",$this->id->Value, PDO::PARAM_INT);
+        $cmd->bindParameter(":page",$page, PDO::PARAM_INT);
+        $query = $cmd->query();
+        if($query)
+        {
+            $data = $query->read();
+            return $data['n'] > 0;
+        }
+    }
+
     public function getData()
     {
 
-        $data[] = array('Type'=>'Horux', 'id'=>'superUser', 'Text'=>Prado::localize('Super User'), 'access'=>$this->isAccess('superuser.userList'));
-        $data[] = array('Type'=>'', 'id'=>'superUserGroup', 'Text'=>Prado::localize('Super User Group'), 'access'=>$this->isAccess('superuser.userGroupList'));
-        $data[] = array('Type'=>'', 'id'=>'configuration', 'Text'=>Prado::localize('Configuration'), 'access'=>$this->isAccess('configuration.config'));
+        $data[] = array('Type'=>'Horux', 'id'=>'superUser', 'Text'=>Prado::localize('Super User'), 'access'=>$this->isAccess('superuser.userList'), 'shortcut'=>$this->isShortcut('superuser.userList'));
+        $data[] = array('Type'=>'', 'id'=>'superUserGroup', 'Text'=>Prado::localize('Super User Group'), 'access'=>$this->isAccess('superuser.userGroupList'), 'shortcut'=>$this->isShortcut('superuser.userGroupList'));
+        $data[] = array('Type'=>'', 'id'=>'configuration', 'Text'=>Prado::localize('Configuration'), 'access'=>$this->isAccess('configuration.config'), 'shortcut'=>$this->isShortcut('configuration.config'));
 
-        $data[] = array('Type'=>Prado::localize('System'), 'id'=>'site', 'Text'=>Prado::localize('Site'), 'access'=>$this->isAccess('site.Site'));
-        $data[] = array('Type'=>'', 'id'=>'hardware', 'Text'=>Prado::localize('Hardware'), 'access'=>$this->isAccess('hardware.HardwareList'));
-        $data[] = array('Type'=>'', 'id'=>'openTime', 'Text'=>Prado::localize('Opent time'), 'access'=>$this->isAccess('openTime.openTimeList'));
-        $data[] = array('Type'=>'', 'id'=>'alarms', 'Text'=>Prado::localize('Alarms'), 'access'=>$this->isAccess('system.Alarms'));
-        $data[] = array('Type'=>'', 'id'=>'notification', 'Text'=>Prado::localize('Notification'), 'access'=>$this->isAccess('system.Notification'));
-        $data[] = array('Type'=>'', 'id'=>'service', 'Text'=>Prado::localize('Horux Service'), 'access'=>$this->isAccess('system.Service'));
-        $data[] = array('Type'=>'', 'id'=>'status', 'Text'=>Prado::localize('Horux Status'), 'access'=>$this->isAccess('system.Status'));
+        $data[] = array('Type'=>Prado::localize('System'), 'id'=>'site', 'Text'=>Prado::localize('Site'), 'access'=>$this->isAccess('site.Site'), 'shortcut'=>$this->isShortcut('site.Site'));
+        $data[] = array('Type'=>'', 'id'=>'hardware', 'Text'=>Prado::localize('Hardware'), 'access'=>$this->isAccess('hardware.HardwareList'), 'shortcut'=>$this->isShortcut('hardware.HardwareList'));
+        $data[] = array('Type'=>'', 'id'=>'openTime', 'Text'=>Prado::localize('Opent time'), 'access'=>$this->isAccess('openTime.openTimeList'), 'shortcut'=>$this->isShortcut('openTime.openTimeList'));
+        $data[] = array('Type'=>'', 'id'=>'alarms', 'Text'=>Prado::localize('Alarms'), 'access'=>$this->isAccess('system.Alarms'), 'shortcut'=>$this->isShortcut('system.Alarms'));
+        $data[] = array('Type'=>'', 'id'=>'notification', 'Text'=>Prado::localize('Notification'), 'access'=>$this->isAccess('system.Notification'), 'shortcut'=>$this->isShortcut('system.Notification'));
+        $data[] = array('Type'=>'', 'id'=>'service', 'Text'=>Prado::localize('Horux Service'), 'access'=>$this->isAccess('system.Service'), 'shortcut'=>$this->isShortcut('system.Service'));
+        $data[] = array('Type'=>'', 'id'=>'status', 'Text'=>Prado::localize('Horux Status'), 'access'=>$this->isAccess('system.Status'), 'shortcut'=>$this->isShortcut('system.Status'));
 
-        $data[] = array('Type'=>Prado::localize('Access'), 'id'=>'user', 'Text'=>Prado::localize('User'), 'access'=>$this->isAccess('user.UserList'));
-        $data[] = array('Type'=>'', 'id'=>'userGroup', 'Text'=>Prado::localize('User Group'), 'access'=>$this->isAccess('userGroup.UserGroupList'));
-        $data[] = array('Type'=>'', 'id'=>'userWizard', 'Text'=>Prado::localize('User Wizard'), 'access'=>$this->isAccess('user.UserWizzard'));
-        $data[] = array('Type'=>'', 'id'=>'key', 'Text'=>Prado::localize('Key'), 'access'=>$this->isAccess('key.KeyList'));
-        $data[] = array('Type'=>'', 'id'=>'accessLevel', 'Text'=>Prado::localize('Access Level'), 'access'=>$this->isAccess('accessLevel.accessLevelList'));
-        $data[] = array('Type'=>'', 'id'=>'nonWorkingDay', 'Text'=>Prado::localize('Non Working Day'), 'access'=>$this->isAccess('nonWorkingDay.nonWorkingDay'));
-
-
-        $data[] = array('Type'=>Prado::localize('Extensions'), 'id'=>'install_uninstall', 'Text'=>Prado::localize('Install/Uninstall'), 'access'=>$this->isAccess('installation.extensions'));
-        $data[] = array('Type'=>'', 'id'=>'devices', 'Text'=>Prado::localize('Devices Manager'), 'access'=>$this->isAccess('installation.devices'));
-        $data[] = array('Type'=>'', 'id'=>'components', 'Text'=>Prado::localize('Component Manager'), 'access'=>$this->isAccess('installation.components'));
-        $data[] = array('Type'=>'', 'id'=>'template', 'Text'=>Prado::localize('Template Manager'), 'access'=>$this->isAccess('installation.template'));
-        $data[] = array('Type'=>'', 'id'=>'language', 'Text'=>Prado::localize('Language Manager'), 'access'=>$this->isAccess('installation.language'));
+        $data[] = array('Type'=>Prado::localize('Access'), 'id'=>'user', 'Text'=>Prado::localize('User'), 'access'=>$this->isAccess('user.UserList'), 'shortcut'=>$this->isShortcut('user.UserList'));
+        $data[] = array('Type'=>'', 'id'=>'userGroup', 'Text'=>Prado::localize('User Group'), 'access'=>$this->isAccess('userGroup.UserGroupList'), 'shortcut'=>$this->isShortcut('userGroup.UserGroupList'));
+        $data[] = array('Type'=>'', 'id'=>'userWizard', 'Text'=>Prado::localize('User Wizard'), 'access'=>$this->isAccess('user.UserWizzard'), 'shortcut'=>$this->isShortcut('user.UserWizzard'));
+        $data[] = array('Type'=>'', 'id'=>'key', 'Text'=>Prado::localize('Key'), 'access'=>$this->isAccess('key.KeyList'), 'shortcut'=>$this->isShortcut('key.KeyList'));
+        $data[] = array('Type'=>'', 'id'=>'accessLevel', 'Text'=>Prado::localize('Access Level'), 'access'=>$this->isAccess('accessLevel.accessLevelList'), 'shortcut'=>$this->isShortcut('accessLevel.accessLevelList'));
+        $data[] = array('Type'=>'', 'id'=>'nonWorkingDay', 'Text'=>Prado::localize('Non Working Day'), 'access'=>$this->isAccess('nonWorkingDay.nonWorkingDay'), 'shortcut'=>$this->isShortcut('nonWorkingDay.nonWorkingDay'));
 
 
-        $data[] = array('Type'=>Prado::localize('Tools'), 'id'=>'guilog', 'Text'=>Prado::localize('Horux Gui Log'), 'access'=>$this->isAccess('tool.GuiLog'));
-        $data[] = array('Type'=>'', 'id'=>'globalCheckin', 'Text'=>Prado::localize('Global Checkin'), 'access'=>$this->isAccess('tool.GlobalCheckin'));
-        $data[] = array('Type'=>'', 'id'=>'recycling', 'Text'=>Prado::localize('Recycling a Key'), 'access'=>$this->isAccess('key.recycling'));
+        $data[] = array('Type'=>Prado::localize('Extensions'), 'id'=>'install_uninstall', 'Text'=>Prado::localize('Install/Uninstall'), 'access'=>$this->isAccess('installation.extensions'), 'shortcut'=>$this->isShortcut('installation.extensions'));
+        $data[] = array('Type'=>'', 'id'=>'devices', 'Text'=>Prado::localize('Devices Manager'), 'access'=>$this->isAccess('installation.devices'), 'shortcut'=>$this->isShortcut('installation.devices'));
+        $data[] = array('Type'=>'', 'id'=>'components', 'Text'=>Prado::localize('Component Manager'), 'access'=>$this->isAccess('installation.components'), 'shortcut'=>$this->isShortcut('installation.components'));
+        $data[] = array('Type'=>'', 'id'=>'template', 'Text'=>Prado::localize('Template Manager'), 'access'=>$this->isAccess('installation.template'), 'shortcut'=>$this->isShortcut('installation.template'));
+        $data[] = array('Type'=>'', 'id'=>'language', 'Text'=>Prado::localize('Language Manager'), 'access'=>$this->isAccess('installation.language'), 'shortcut'=>$this->isShortcut('installation.language'));
 
-        $data[] = array('Type'=>Prado::localize('Help'), 'id'=>'systemInfo', 'Text'=>Prado::localize('System Info'), 'access'=>$this->isAccess('help.SystemInfo'));
+
+        $data[] = array('Type'=>Prado::localize('Tools'), 'id'=>'guilog', 'Text'=>Prado::localize('Horux Gui Log'), 'access'=>$this->isAccess('tool.GuiLog'), 'shortcut'=>$this->isShortcut('tool.GuiLog'));
+        $data[] = array('Type'=>'', 'id'=>'globalCheckin', 'Text'=>Prado::localize('Global Checkin'), 'access'=>$this->isAccess('tool.GlobalCheckin'), 'shortcut'=>$this->isShortcut('tool.GlobalCheckin'));
+        $data[] = array('Type'=>'', 'id'=>'recycling', 'Text'=>Prado::localize('Recycling a Key'), 'access'=>$this->isAccess('key.recycling'), 'shortcut'=>$this->isShortcut('key.recycling'));
+
+        $data[] = array('Type'=>Prado::localize('Help'), 'id'=>'systemInfo', 'Text'=>Prado::localize('System Info'), 'access'=>$this->isAccess('help.SystemInfo'), 'shortcut'=>$this->isShortcut('help.SystemInfo'));
 
         $data = $this->addComponent($data);
 
@@ -221,6 +238,14 @@ class userGroupMod extends Page
         $cmd->bindParameter(":description",$this->description->SafeText,PDO::PARAM_STR);
         $cmd->bindParameter(":id",$this->id->Value, PDO::PARAM_INT);
 
+        $f1 = $this->dispUserLoggedIn->getChecked();
+        $f2 = $this->dispLastAlarm->getChecked();
+        $f3 = $this->dispLastTracking->getChecked();
+
+        $cmd->bindParameter(":dispUserLoggedIn",$f1,PDO::PARAM_STR);
+        $cmd->bindParameter(":dispLastAlarm",$f2,PDO::PARAM_STR);
+        $cmd->bindParameter(":dispLastTracking",$f3,PDO::PARAM_STR);
+
         $cmd->execute();
 
         $cmd=$this->db->createCommand(SQL::SQL_DELETE_GROUP_PERM);
@@ -252,29 +277,29 @@ class userGroupMod extends Page
                     $v['access'] ? $this->updatePermission($lastId, 'controlPanel.ControlPanel') : '';
                     break;
                 case "superUser":
-                    $v['access'] ? $this->updatePermission($lastId, 'superuser.userList') : '';
+                    $v['access'] ? $this->updatePermission($lastId, 'superuser.userList', $v['shortcut']) : '';
                     $v['access'] ? $this->updatePermission($lastId, 'superuser.userAdd') : '';
                     $v['access'] ?$this->updatePermission($lastId, 'superuser.userMod') : '';
                     break;
                 case "superUserGroup":
-                    $v['access'] ?$this->updatePermission($lastId, 'superuser.userGroupList') : '';
+                    $v['access'] ?$this->updatePermission($lastId, 'superuser.userGroupList', $v['shortcut']) : '';
                     $v['access'] ?$this->updatePermission($lastId, 'superuser.userGroupAdd') : '';
                     $v['access'] ?$this->updatePermission($lastId, 'superuser.userGroupMod') : '';
                     break;
                 case "configuration":
-                    $v['access'] ?$this->updatePermission($lastId, 'configuration.config') : '';
+                    $v['access'] ?$this->updatePermission($lastId, 'configuration.config', $v['shortcut']) : '';
                     break;
                 case "site":
-                    $v['access'] ? $this->updatePermission($lastId, 'site.Site') : '';
+                    $v['access'] ? $this->updatePermission($lastId, 'site.Site', $v['shortcut']) : '';
                     break;
                 case "openTime":
-                    $v['access'] ? $this->updatePermission($lastId, 'openTime.openTimeList') : '';
+                    $v['access'] ? $this->updatePermission($lastId, 'openTime.openTimeList', $v['shortcut']) : '';
                     $v['access'] ? $this->updatePermission($lastId, 'openTime.add') : '';
                     $v['access'] ? $this->updatePermission($lastId, 'openTime.mod') : '';
                     $v['access'] ? $this->updatePermission($lastId, 'openTime.attribute') : '';
                     break;
                 case "hardware":
-                    $v['access'] ? $this->updatePermission($lastId, 'hardware.HardwareList') : '';
+                    $v['access'] ? $this->updatePermission($lastId, 'hardware.HardwareList', $v['shortcut']) : '';
                     $v['access'] ? $this->updatePermission($lastId, 'hardware.HardwareAddList') : '';
 
                     $path = './protected/pages/hardware/device/';
@@ -298,92 +323,93 @@ class userGroupMod extends Page
 
                     break;
                 case "alarms":
-                    $v['access'] ? $this->updatePermission($lastId, 'system.Alarms') : '';
+                    $v['access'] ? $this->updatePermission($lastId, 'system.Alarms', $v['shortcut']) : '';
                     break;
                 case "notification":
-                    $v['access'] ? $this->updatePermission($lastId, 'system.Notification') : '';
+                    $v['access'] ? $this->updatePermission($lastId, 'system.Notification', $v['shortcut']) : '';
                     $v['access'] ? $this->updatePermission($lastId, 'system.NotificationMod') : '';
                     $v['access'] ? $this->updatePermission($lastId, 'system.NotificationAdd') : '';
                     break;
                 case "service":
-                    $v['access'] ? $this->updatePermission($lastId, 'system.Service') : '';
+                    $v['access'] ? $this->updatePermission($lastId, 'system.Service', $v['shortcut']) : '';
                     break;
                 case "status":
-                    $v['access'] ? $this->updatePermission($lastId, 'system.Status') : '';
+                    $v['access'] ? $this->updatePermission($lastId, 'system.Status', $v['shortcut']) : '';
                     break;
                 case "user":
-                    $v['access'] ? $this->updatePermission($lastId, 'user.UserList') : '';
+                    $v['access'] ? $this->updatePermission($lastId, 'user.UserList', $v['shortcut']) : '';
                     $v['access'] ? $this->updatePermission($lastId, 'user.add') : '';
                     $v['access'] ? $this->updatePermission($lastId, 'user.mod') : '';
                     $v['access'] ? $this->updatePermission($lastId, 'user.attribution') : '';
                     $v['access'] ? $this->updatePermission($lastId, 'user.groups') : '';
                     break;
                 case "userGroup":
-                    $v['access'] ? $this->updatePermission($lastId, 'userGroup.UserGroupList') : '';
+                    $v['access'] ? $this->updatePermission($lastId, 'userGroup.UserGroupList', $v['shortcut']) : '';
                     $v['access'] ? $this->updatePermission($lastId, 'userGroup.add') : '';
                     $v['access'] ? $this->updatePermission($lastId, 'userGroup.mod') : '';
                     break;
                 case "userWizard":
-                    $v['access'] ? $this->updatePermission($lastId, 'user.UserWizzard') : '';
+                    $v['access'] ? $this->updatePermission($lastId, 'user.UserWizzard', true) : '';
                     break;
                 case "key":
-                    $v['access'] ? $this->updatePermission($lastId, 'key.KeyList') : '';
+                    $v['access'] ? $this->updatePermission($lastId, 'key.KeyList', $v['shortcut']) : '';
                     $v['access'] ? $this->updatePermission($lastId, 'key.add') : '';
                     $v['access'] ? $this->updatePermission($lastId, 'key.mod') : '';
                     break;
                 case "accessLevel":
-                    $v['access'] ? $this->updatePermission($lastId, 'accessLevel.accessLevelList') : '';
+                    $v['access'] ? $this->updatePermission($lastId, 'accessLevel.accessLevelList', $v['shortcut']) : '';
                     $v['access'] ? $this->updatePermission($lastId, 'accessLevel.add') : '';
                     $v['access'] ? $this->updatePermission($lastId, 'accessLevel.mod') : '';
                     break;
                 case "nonWorkingDay":
-                    $v['access'] ? $this->updatePermission($lastId, 'nonWorkingDay.nonWorkingDay') : '';
+                    $v['access'] ? $this->updatePermission($lastId, 'nonWorkingDay.nonWorkingDay', $v['shortcut']) : '';
                     $v['access'] ? $this->updatePermission($lastId, 'nonWorkingDay.add') : '';
                     $v['access'] ? $this->updatePermission($lastId, 'nonWorkingDay.mod') : '';
                     break;
                 case "install_uninstall":
-                    $v['access'] ? $this->updatePermission($lastId, 'installation.extensions') : '';
+                    $v['access'] ? $this->updatePermission($lastId, 'installation.extensions', $v['shortcut']) : '';
                     break;
                 case "devices":
-                    $v['access'] ? $this->updatePermission($lastId, 'installation.devices') : '';
+                    $v['access'] ? $this->updatePermission($lastId, 'installation.devices', $v['shortcut']) : '';
                     break;
                 case "components":
-                    $v['access'] ? $this->updatePermission($lastId, 'installation.components') : '';
+                    $v['access'] ? $this->updatePermission($lastId, 'installation.components', $v['shortcut']) : '';
                     $v['access'] ? $this->updatePermission($lastId, 'installation.componentconfig') : '';
                     break;
                 case "template":
-                    $v['access'] ? $this->updatePermission($lastId, 'installation.template') : '';
+                    $v['access'] ? $this->updatePermission($lastId, 'installation.template', $v['shortcut']) : '';
                     break;
                 case "language":
-                    $v['access'] ? $this->updatePermission($lastId, 'installation.language') : '';
+                    $v['access'] ? $this->updatePermission($lastId, 'installation.language', $v['shortcut']) : '';
                     break;
                 case "globalCheckin":
-                    $v['access'] ? $this->updatePermission($lastId, 'tool.GlobalCheckin') : '';
+                    $v['access'] ? $this->updatePermission($lastId, 'tool.GlobalCheckin', $v['shortcut']) : '';
                     break;
                 case "guilog":
-                    $v['access'] ? $this->updatePermission($lastId, 'tool.GuiLog') : '';
+                    $v['access'] ? $this->updatePermission($lastId, 'tool.GuiLog', $v['shortcut']) : '';
                     break;
                 case "recycling":
-                    $v['access'] ? $this->updatePermission($lastId, 'key.recycling') : '';
+                    $v['access'] ? $this->updatePermission($lastId, 'key.recycling', $v['shortcut']) : '';
                     break;
                 case "systemInfo":
-                    $v['access'] ? $this->updatePermission($lastId, 'help.SystemInfo') : '';
+                    $v['access'] ? $this->updatePermission($lastId, 'help.SystemInfo', $v['shortcut']) : '';
                     break;
                 case "about":
-                    $v['access'] ? $this->updatePermission($lastId, 'help.About') : '';
+                    $v['access'] ? $this->updatePermission($lastId, 'help.About', $v['shortcut']) : '';
                     break;
                 default:
-                     $v['access'] ? $this->updatePermission($lastId, $v['id']) : '';
+                     $v['access'] ? $this->updatePermission($lastId, $v['id'], $v['shortcut']) : '';
                     break;
             }
         }
     }
 
-    protected function updatePermission($lasetId, $page)
+    protected function updatePermission($lasetId, $page, $shortcut=false)
     {
         $cmd = $this->db->createCommand( SQL::SQL_ADD_PERMISSION );
         $cmd->bindParameter(":page",$page,PDO::PARAM_STR);
         $cmd->bindParameter(":id",$lasetId,PDO::PARAM_STR);
+        $cmd->bindParameter(":shortcut",$shortcut);
 
         $cmd->execute();
     }
@@ -427,6 +453,28 @@ class userGroupMod extends Page
 
     }
 
+   public function onChangeShortcut($sender, $param)
+    {
+        $data = $this->application->getGlobalState('dataPage');
 
+        unset($data[$sender->Text]);
+
+        for($i=0; $i< count($data); $i++)
+        {
+            if($data[$i]['id'] == $sender->Text)
+            {
+                if($data[$i]['shortcut'])
+                   $data[$i]['shortcut'] = false;
+                else
+                   $data[$i]['shortcut'] = true;
+            }
+        }
+
+
+        $this->application->setGlobalState('dataPage', $data);
+
+        $this->DataGrid->DataSource=$data;
+        $this->DataGrid->dataBind();
+    }
 
 }

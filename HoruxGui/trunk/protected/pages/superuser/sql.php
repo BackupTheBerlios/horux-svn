@@ -44,11 +44,17 @@ class SQL {
     const SQL_ADD_USER_GROUP = "INSERT INTO hr_superuser_group (
                         `name` ,
                         `superAdmin` ,
+                        `dispUserLoggedIn` ,
+                        `dispLastAlarm` ,
+                        `dispLastTracking` ,
                         `description`
                   )
                   VALUES (
                         :name,
                         :superAdmin,
+                        :dispUserLoggedIn,
+                        :dispLastAlarm,
+                        :dispLastTracking,
                         :description
                   )";
 
@@ -56,13 +62,15 @@ class SQL {
                         `page` ,
                         `selector`,
                         `value`,
-                        `allowed`
+                        `allowed`,
+                        `shortcut`
                   )
                   VALUES (
                         :page,
                         'group_id',
                         :id,
-                        '1'
+                        '1',
+                        :shortcut
                   )";
 
 
@@ -96,6 +104,9 @@ class SQL {
     const SQL_UPDATE_USER_GROUP = "UPDATE hr_superuser_group SET
                         `name`=:name,
                         `superAdmin`=:superAdmin,
+                        `dispUserLoggedIn`=:dispUserLoggedIn,
+                        `dispLastAlarm`=:dispLastAlarm,
+                        `dispLastTracking`=:dispLastTracking,
                         `description`=:description
                         WHERE id=:id"
     ;

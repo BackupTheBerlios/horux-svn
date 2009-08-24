@@ -57,6 +57,30 @@
             </tr>
 
             <tr>
+                <td valign="top" class="key">
+                    <span onmouseover="Tip('<%[Check the box for the information to appear in the control panel]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Control Panel Info]%></span>
+                </td>
+                <td>
+                    <com:TCheckBox
+                        ID="dispUserLoggedIn"
+                        Text="<%[Logged in users]%>"
+                        InputAttributes.value="1"
+                        />
+                    <com:TCheckBox
+                        ID="dispLastAlarm"
+                        Text="<%[Last alarms]%>"
+                        InputAttributes.value="1"
+                        />
+                    <com:TCheckBox
+                        ID="dispLastTracking"
+                        Text="<%[Last tracking]%>"
+                        InputAttributes.value="1"
+                        />
+                </td>
+
+            </tr>
+
+            <tr>
                 <td valign="top" class="key"><span onmouseover="Tip('<%[You could insert a description for this group.]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Description]%></span></td>
                 <td>
                     <com:TTextBox CssClass="text_area" ID="description" Width="400px"/>
@@ -116,6 +140,19 @@
     </span>
 </com:TTemplateColumn>
 
+<com:TTemplateColumn HeaderStyle.Width = "160px">
+    <prop:HeaderTemplate><%[Control panel shortcut]%></prop:HeaderTemplate>
+    <prop:ItemTemplate>
+        <span onmouseover="Tip('<%[Click here to put shortcut on the control panel]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)">
+        <com:TActiveImageButton
+            Text="<%#$this->NamingContainer->DataItem['id']%>"
+            ImageUrl="<%# $this->NamingContainer->DataItem['shortcut'] ? './themes/letux/images/menu/icon-16-checkin.png' : './themes/letux/images/menu/icon-16-cross.png'%>"
+            OnClick="Page.onChangeShortcut"
+            Style="border:0px"
+            />
+    </prop:ItemTemplate>
+    </span>
+</com:TTemplateColumn>
 
 </com:TDataGrid>
 </div>						  	

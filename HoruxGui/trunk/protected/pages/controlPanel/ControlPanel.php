@@ -22,16 +22,24 @@ class ControlPanel extends Page
     public function onLoad($param)
     {    
         parent::onLoad($param);
-        
-        $this->usersGrid->DataSource=$this->UsersLogged;
-        $this->usersGrid->dataBind();
 
-        $this->trackGrid->DataSource=$this->LastTrack;
-        $this->trackGrid->dataBind();
+        if($this->isPanelDisplay('dispUserLoggedIn'))
+        {
+            $this->usersGrid->DataSource=$this->UsersLogged;
+            $this->usersGrid->dataBind();
+        }
 
+        if($this->isPanelDisplay('dispLastTracking'))
+        {
+            $this->trackGrid->DataSource=$this->LastTrack;
+            $this->trackGrid->dataBind();
+        }
 
-        $this->alarmsGrid->DataSource=$this->LastAlarms;
-        $this->alarmsGrid->dataBind();
+        if($this->isPanelDisplay('dispLastAlarm'))
+        {
+            $this->alarmsGrid->DataSource=$this->LastAlarms;
+            $this->alarmsGrid->dataBind();
+        }
         
         $app = $this->getApplication();
       	$db = $app->getModule('horuxDb')->DbConnection;
@@ -42,10 +50,89 @@ class ControlPanel extends Page
 		$res = $res->read();	
 		$_SESSION['helpKey'] = $res['key'];
 		
-        
+
+        $this->Repeater->DataSource=$this->getComponentShortCut();
+        $this->Repeater->dataBind();
+
 
     }
-    
+
+    protected function getComponentShortCut()
+    {
+		$app = $this->getApplication();
+      	$db = $app->getModule('horuxDb')->DbConnection;
+      	$db->Active=true;
+
+        $cmd = $this->db->createCommand( "SELECT * FROM hr_install WHERE type='component' AND name!='tracking'");
+        $data_ = $cmd->query();
+        $data_ = $data_->readAll();
+
+        $isComponentHasOne = false;
+
+        foreach($data_ as $d)
+        {
+            $doc=new TXmlDocument();
+            $doc->loadFromFile('./protected/pages/components/'.$d['name'].'/install.xml');
+            $name = $doc->getElementByTagName('name');
+            $installName = $doc->getElementByTagName('installName')->getValue();
+
+
+            $cmd = $this->db->createCommand("SELECT * FROM hr_install WHERE type='component' AND name='$installName'");
+            $data1 = $cmd->query();
+            $data1 = $data1->readAll();
+
+            foreach($data1 as $d1)
+            {
+                $cmd = $this->db->createCommand("SELECT * FROM hr_install AS i LEFT JOIN hr_component as c ON c.id_install=i.id WHERE i.type='component' AND c.parentmenu=0 AND i.id=".$d1['id']);
+                $data2 = $cmd->query();
+                $data2 = $data2->read();
+
+                if(!$isComponentHasOne)
+                {
+                    if($this->isAccess($data2['page']))
+                        $data[] = array( 'page'=>$data2['page'], 'Name'=>Prado::localize($name->getValue()));
+                    $isComponentHasOne = true;
+                }
+                else
+                    if($this->isAccess($data2['page']))
+                        $data[] = array( 'page'=>$data2['page'], 'Name'=>Prado::localize($name->getValue()));
+
+
+                $cmd = $this->db->createCommand("SELECT * FROM hr_install AS i LEFT JOIN hr_component as c ON c.id_install=i.id WHERE i.type='component' AND c.parentmenu=".$data2['id']." AND c.parentmenu>0 AND i.id=".$d1['id']);
+                $data2 = $cmd->query();
+                $data2 = $data2->readAll();
+
+                foreach($data2 as $d2)
+                {
+                    if($this->isAccess($d2['page']))
+                        $data[] = array( 'page'=>$d2['page'], 'Name'=>Prado::localize($name->getValue()).'<br/>['.Prado::localize($d2['menuname']).']');
+                }
+
+            }
+
+        }
+
+        return $data;
+    }
+
+    public function isPanelDisplay($panel)
+    {
+ 		$app = $this->getApplication();
+      	$db = $app->getModule('horuxDb')->DbConnection;
+      	$db->Active=true;
+
+		$usedId = $app->getUser()->getUserID() == null ? 0 : $app->getUser()->getUserID();
+		$groupId = $app->getUser()->getGroupID() == null ? 0 : $app->getUser()->getGroupID();
+
+
+        $sql = "SELECT $panel FROM hr_superuser_group WHERE id=$groupId";
+		$cmd = $db->createCommand($sql);
+		$res = $cmd->query();
+		$res = $res->read();
+
+        return $res[$panel];
+    }
+
     public function isAccess($page)
     {  	
 		$app = $this->getApplication();
@@ -55,12 +142,12 @@ class ControlPanel extends Page
 		$usedId = $app->getUser()->getUserID() == null ? 0 : $app->getUser()->getUserID(); 
 		$groupId = $app->getUser()->getGroupID() == null ? 0 : $app->getUser()->getGroupID(); 
 		
-		$sql = 	'SELECT `allowed` FROM hr_gui_permissions WHERE ' .
+		$sql = 	'SELECT `allowed`, `shortcut` FROM hr_gui_permissions WHERE ' .
 				'(`page`=\''.$page.'\' OR `page` IS NULL) ' .
 				"AND (" .
 					"(`selector`='user_id' AND `value`=".$usedId.") " .
 					"OR (`selector`='group_id' AND `value`=".$groupId.") " .
-				")" .
+				") AND `shortcut`=1 " .
 			'ORDER BY `page` DESC';
 
 		$cmd = $db->createCommand($sql);
@@ -80,6 +167,8 @@ class ControlPanel extends Page
 	
 		return true;
     }
+
+
     
     protected function getUsersLogged()
     {

@@ -197,6 +197,7 @@ CREATE TABLE IF NOT EXISTS `hr_gui_permissions` (
   `selector` enum('user_id','group_id') collate utf8_unicode_ci default NULL,
   `value` smallint(5) unsigned default NULL,
   `allowed` enum('','1') collate utf8_unicode_ci NOT NULL,
+  `shortcut` int(1) NOT NULL,
   PRIMARY KEY  (`id`),
   KEY `selector` (`selector`,`value`,`page`)
 ) TYPE=MyISAM CHARACTER SET `utf8`;

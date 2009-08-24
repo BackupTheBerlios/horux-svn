@@ -14,23 +14,36 @@
 			document.getElementById('cpanel-panel-custom_title').className = 'jpane-toggler title';
 		}
 
-		if( 'cpanel-panel-logged' != obj)
-		{
-			new Effect.BlindUp(document.getElementById('cpanel-panel-logged'), {queue: 'end'});
-			document.getElementById('cpanel-panel-logged_title').className = 'jpane-toggler title';
-		}
 
-		if( 'cpanel-panel-alarms' != obj)
-		{
-			new Effect.BlindUp(document.getElementById('cpanel-panel-alarms'), {queue: 'end'});
-			document.getElementById('cpanel-panel-alarms_title').className = 'jpane-toggler title';
-		}
+        <com:TConditional Condition="$this->isPanelDisplay('dispUserLoggedIn')">
+        <prop:TrueTemplate>
+            if( 'cpanel-panel-logged' != obj)
+            {
+                new Effect.BlindUp(document.getElementById('cpanel-panel-logged'), {queue: 'end'});
+                document.getElementById('cpanel-panel-logged_title').className = 'jpane-toggler title';
+            }
+        </prop:TrueTemplate>
+        </com:TConditional>
 
-		if( 'cpanel-panel-tracking' != obj)
-		{
-			new Effect.BlindUp(document.getElementById('cpanel-panel-tracking'), {queue: 'end'});
-			document.getElementById('cpanel-panel-tracking_title').className = 'jpane-toggler title';
-		}
+        <com:TConditional Condition="$this->isPanelDisplay('dispLastAlarm')">
+        <prop:TrueTemplate>
+            if( 'cpanel-panel-alarms' != obj)
+            {
+                new Effect.BlindUp(document.getElementById('cpanel-panel-alarms'), {queue: 'end'});
+                document.getElementById('cpanel-panel-alarms_title').className = 'jpane-toggler title';
+            }
+        </prop:TrueTemplate>
+        </com:TConditional>
+
+        <com:TConditional Condition="$this->isPanelDisplay('dispLastTracking')">
+        <prop:TrueTemplate>
+            if( 'cpanel-panel-tracking' != obj)
+            {
+                new Effect.BlindUp(document.getElementById('cpanel-panel-tracking'), {queue: 'end'});
+                document.getElementById('cpanel-panel-tracking_title').className = 'jpane-toggler title';
+            }
+        </prop:TrueTemplate>
+        </com:TConditional>
 	  }
 -->
 </script>
@@ -52,6 +65,19 @@
 							<td width="55%" valign="top">
 								<div id="cpanel">
 
+									<com:TConditional Condition="$this->isAccess('superuser.userGroupList')">
+									<prop:TrueTemplate>
+									<div style="float:left;">
+										<div class="icon">
+											<a href="<%= $this->Service->constructUrl('superuser.userGroupList') %>">
+												<img src="./themes/letux/images/header/icon-48-superUserGroup.png" alt="<%[Super User Group]%>"  />
+												<span><%[Super User Group]%></span>
+											</a>
+										</div>
+									</div>
+									</prop:TrueTemplate>
+									</com:TConditional>
+
 									<com:TConditional Condition="$this->isAccess('superuser.userList')">
 									<prop:TrueTemplate>
 									<div style="float:left;">
@@ -65,13 +91,105 @@
 									</prop:TrueTemplate>
 									</com:TConditional>
 
-									<com:TConditional Condition="$this->isAccess('accessLevel.accessLevelList')">
+									<com:TConditional Condition="$this->isAccess('configuration.config')">
 									<prop:TrueTemplate>
 									<div style="float:left;">
 										<div class="icon">
-											<a href="<%= $this->Service->constructUrl('accessLevel.accessLevelList') %>">
-												<img src="./themes/letux/images/header/icon-48-accesslevel.png" alt="<%[Access Level]%>"  />
-												<span><%[Access Level]%></span>
+											<a href="<%= $this->Service->constructUrl('configuration.config') %>">
+												<img src="./themes/letux/images/header/icon-48-config.png" alt="<%[Configuration]%>"  />
+												<span><%[Configuration]%></span>
+											</a>
+										</div>
+									</div>
+									</prop:TrueTemplate>
+									</com:TConditional>
+
+									<com:TConditional Condition="$this->isAccess('site.Site')">
+									<prop:TrueTemplate>
+									<div style="float:left;">
+										<div class="icon">
+											<a href="<%= $this->Service->constructUrl('site.Site') %>">
+												<img src="./themes/letux/images/header/icon-48-site.png" alt="<%[Site]%>"  />
+												<span><%[Site]%></span>
+											</a>
+										</div>
+									</div>
+									</prop:TrueTemplate>
+									</com:TConditional>
+
+									<com:TConditional Condition="$this->isAccess('hardware.HardwareList')">
+									<prop:TrueTemplate>
+									<div style="float:left;">
+										<div class="icon">
+											<a href="<%= $this->Service->constructUrl('hardware.HardwareList') %>">
+												<img src="./themes/letux/images/header/icon-48-hardware.png" alt="<%[Hardware]%>"  />
+												<span><%[Hardware]%></span>
+											</a>
+										</div>
+									</div>
+									</prop:TrueTemplate>
+									</com:TConditional>
+
+									<com:TConditional Condition="$this->isAccess('openTime.openTimeList')">
+									<prop:TrueTemplate>
+									<div style="float:left;">
+										<div class="icon">
+											<a href="<%= $this->Service->constructUrl('openTime.openTimeList') %>">
+												<img src="./themes/letux/images/header/icon-48-accesslevel.png" alt="<%[Opent time]%>"  />
+												<span><%[Opent time]%></span>
+											</a>
+										</div>
+									</div>
+									</prop:TrueTemplate>
+									</com:TConditional>
+
+
+									<com:TConditional Condition="$this->isAccess('system.Alarms')">
+									<prop:TrueTemplate>
+									<div style="float:left;">
+										<div class="icon">
+											<a href="<%= $this->Service->constructUrl('system.Alarms') %>">
+												<img src="./themes/letux/images/header/icon-48-alarm.png" alt="<%[Alarms]%>"  />
+												<span><%[Alarms]%></span>
+											</a>
+										</div>
+									</div>
+									</prop:TrueTemplate>
+									</com:TConditional>
+
+									<com:TConditional Condition="$this->isAccess('system.Notification')">
+									<prop:TrueTemplate>
+									<div style="float:left;">
+										<div class="icon">
+											<a href="<%= $this->Service->constructUrl('system.Notification') %>">
+												<img src="./themes/letux/images/header/icon-48-notification.png" alt="<%[Notification]%>"  />
+												<span><%[Notification]%></span>
+											</a>
+										</div>
+									</div>
+									</prop:TrueTemplate>
+									</com:TConditional>
+
+									<com:TConditional Condition="$this->isAccess('system.Service')">
+									<prop:TrueTemplate>
+									<div style="float:left;">
+										<div class="icon">
+											<a href="<%= $this->Service->constructUrl('system.Service') %>">
+												<img src="./themes/letux/images/header/icon-48-service.png" alt="<%[Horux Service]%>"  />
+												<span><%[Horux Service]%></span>
+											</a>
+										</div>
+									</div>
+									</prop:TrueTemplate>
+									</com:TConditional>
+
+									<com:TConditional Condition="$this->isAccess('system.Status')">
+									<prop:TrueTemplate>
+									<div style="float:left;">
+										<div class="icon">
+											<a href="<%= $this->Service->constructUrl('system.Status') %>">
+												<img src="./themes/letux/images/header/icon-48-info.png" alt="<%[System Status]%>"  />
+												<span><%[System Status]%></span>
 											</a>
 										</div>
 									</div>
@@ -143,13 +261,39 @@
 									</prop:TrueTemplate>
 									</com:TConditional>
 
+									<com:TConditional Condition="$this->isAccess('accessLevel.accessLevelList')">
+									<prop:TrueTemplate>
+									<div style="float:left;">
+										<div class="icon">
+											<a href="<%= $this->Service->constructUrl('accessLevel.accessLevelList') %>">
+												<img src="./themes/letux/images/header/icon-48-accesslevel.png" alt="<%[Access Level]%>"  />
+												<span><%[Access Level]%></span>
+											</a>
+										</div>
+									</div>
+									</prop:TrueTemplate>
+									</com:TConditional>
+
+									<com:TConditional Condition="$this->isAccess('nonWorkingDay.nonWorkingDay')">
+									<prop:TrueTemplate>
+									<div style="float:left;">
+										<div class="icon">
+											<a href="<%= $this->Service->constructUrl('nonWorkingDay.nonWorkingDay') %>">
+												<img src="./themes/letux/images/header/icon-48-noneworkingday.png" alt="<%[Non Working Day]%>"  />
+												<span><%[Non Working Day]%></span>
+											</a>
+										</div>
+									</div>
+									</prop:TrueTemplate>
+									</com:TConditional>
+
 
 									<com:TConditional Condition="$this->isAccess('components.tracking.tracking')">
 									<prop:TrueTemplate>
 									<div style="float:left;">
 										<div class="icon">
 											<a href="<%= $this->Service->constructUrl('components.tracking.tracking') %>">
-												<img src="<%~ ../components/tracking/assets/icon-48-tracking.png %>" alt="<%[tracking]%>"  />
+												<img src="<%~ ../components/tracking/assets/icon-48-tracking.png %>" alt="<%[Tracking]%>"  />
 												<span><%[Tracking]%></span>
 											</a>
 										</div>
@@ -157,31 +301,130 @@
 									</prop:TrueTemplate>
 									</com:TConditional>
 
-									<com:TConditional Condition="$this->isAccess('system.Alarms')">
+
+                                    <com:TRepeater ID="Repeater" EnableViewState="false">
+
+                                        <prop:ItemTemplate>
+                                            <div style="float:left;">
+                                                <div class="icon">
+                                                    <a href="<%= $this->Service->constructUrl($this->Data['page']) %>">
+                                                        <img src="./themes/letux/images/header/icon-48-link.png" alt="<%#$this->Data['name']%>"  />
+                                                        <span><%#$this->Data['Name']%></span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </prop:ItemTemplate>
+
+
+                                    </com:TRepeater>
+
+
+									<com:TConditional Condition="$this->isAccess('installation.extensions')">
 									<prop:TrueTemplate>
 									<div style="float:left;">
 										<div class="icon">
-											<a href="<%= $this->Service->constructUrl('system.Alarms') %>">
-												<img src="./themes/letux/images/header/icon-48-alarm.png" alt="<%[Alarms]%>"  />
-												<span><%[Alarms]%></span>
+											<a href="<%= $this->Service->constructUrl('installation.extensions') %>">
+												<img src="./themes/letux/images/header/icon-48-extensions.png"alt="<%[Install/Uninstall]%>"  />
+												<span><%[Install/Uninstall]%></span>
 											</a>
 										</div>
 									</div>
 									</prop:TrueTemplate>
 									</com:TConditional>
 
-									<com:TConditional Condition="$this->isAccess('system.Status')">
+									<com:TConditional Condition="$this->isAccess('installation.devices')">
 									<prop:TrueTemplate>
 									<div style="float:left;">
 										<div class="icon">
-											<a href="<%= $this->Service->constructUrl('system.Status') %>">
-												<img src="./themes/letux/images/header/icon-48-info.png" alt="<%[System Status]%>"  />
-												<span><%[System Status]%></span>
+											<a href="<%= $this->Service->constructUrl('installation.devices') %>">
+												<img src="./themes/letux/images/header/icon-48-hardware.png"alt="<%[Devices Manager]%>"  />
+												<span><%[Devices Manager]%></span>
 											</a>
 										</div>
 									</div>
 									</prop:TrueTemplate>
-									</com:TConditional>									
+									</com:TConditional>
+
+									<com:TConditional Condition="$this->isAccess('installation.components')">
+									<prop:TrueTemplate>
+									<div style="float:left;">
+										<div class="icon">
+											<a href="<%= $this->Service->constructUrl('installation.components') %>">
+												<img src="./themes/letux/images/header/icon-48-component.png"alt="<%[Component Manager]%>"  />
+												<span><%[Component Manager]%></span>
+											</a>
+										</div>
+									</div>
+									</prop:TrueTemplate>
+									</com:TConditional>
+
+									<com:TConditional Condition="$this->isAccess('installation.template')">
+									<prop:TrueTemplate>
+									<div style="float:left;">
+										<div class="icon">
+											<a href="<%= $this->Service->constructUrl('installation.template') %>">
+												<img src="./themes/letux/images/header/icon-48-template.png"alt="<%[Template Manager]%>"  />
+												<span><%[Template Manager]%></span>
+											</a>
+										</div>
+									</div>
+									</prop:TrueTemplate>
+									</com:TConditional>
+
+									<com:TConditional Condition="$this->isAccess('installation.language')">
+									<prop:TrueTemplate>
+									<div style="float:left;">
+										<div class="icon">
+											<a href="<%= $this->Service->constructUrl('installation.language') %>">
+												<img src="./themes/letux/images/header/icon-48-language.png"alt="<%[Language Manager]%>"  />
+												<span><%[Language Manager]%></span>
+											</a>
+										</div>
+									</div>
+									</prop:TrueTemplate>
+									</com:TConditional>
+
+									<com:TConditional Condition="$this->isAccess('tool.GuiLog')">
+									<prop:TrueTemplate>
+									<div style="float:left;">
+										<div class="icon">
+											<a href="<%= $this->Service->constructUrl('tool.GuiLog') %>">
+												<img src="./themes/letux/images/header/icon-48-guilog.png"alt="<%[Horux Gui Log]%>"  />
+												<span><%[Horux Gui Log]%></span>
+											</a>
+										</div>
+									</div>
+									</prop:TrueTemplate>
+									</com:TConditional>
+
+
+									<com:TConditional Condition="$this->isAccess('tool.GlobalCheckin')">
+									<prop:TrueTemplate>
+									<div style="float:left;">
+										<div class="icon">
+											<a href="<%= $this->Service->constructUrl('tool.GlobalCheckin') %>">
+												<img src="./themes/letux/images/header/icon-48-globalcheckin.png"alt="<%[Global Checkin]%>"  />
+												<span><%[Global Checkin]%></span>
+											</a>
+										</div>
+									</div>
+									</prop:TrueTemplate>
+									</com:TConditional>
+
+									<com:TConditional Condition="$this->isAccess('help.SystemInfo')">
+									<prop:TrueTemplate>
+									<div style="float:left;">
+										<div class="icon">
+											<a href="<%= $this->Service->constructUrl('help.SystemInfo') %>">
+												<img src="./themes/letux/images/header/icon-48-info2.png"alt="<%[System Info]%>"  />
+												<span><%[System Info]%></span>
+											</a>
+										</div>
+									</div>
+									</prop:TrueTemplate>
+									</com:TConditional>
+
+
 								</div>
 							</td>
 							<td width="45%" valign="top">
@@ -211,46 +454,53 @@
 										</div>
 									</div>
 
-                                                                        
-									<div class="panel">
-										<h3 class="jpane-toggler title" id="cpanel-panel-logged_title" onclick="blind(this,'cpanel-panel-logged')">
-											<span><%[Logged in users]%></span>
-										</h3>
-										<div class="jpane-slider content" id="cpanel-panel-logged">
-											<div style="padding: 5px">
 
-												<com:TDataGrid
-							                    ID="usersGrid"
-							                    DataKeyField="id"
-							                    AutoGenerateColumns="false"
-							                    CssClass="adminlist"
-							                    AllowPaging="false"
-							                    >
-							
-							                    <com:TBoundColumn
-							                        HeaderText="ID"
-							                        DataField="id"
-							                        HeaderStyle.Width = "20px"
-							                    />
-							
-							                    <com:TBoundColumn
-							                        HeaderText="<%[Name]%>"
-							                        DataField="userName"
-							                        HeaderStyle.Width = "20px"
-							                    />
-							
-							                    <com:TBoundColumn
-							                        HeaderText="<%[Group]%>"
-							                        DataField="name"
-							                        HeaderStyle.Width = "20px"
-							                    />
-							
-							                    </com:TDataGrid>
+   									<com:TConditional Condition="$this->isPanelDisplay('dispUserLoggedIn')">
+									<prop:TrueTemplate>
 
-											</div>
-										</div>
-									</div>
+                                        <div class="panel">
+                                            <h3 class="jpane-toggler title" id="cpanel-panel-logged_title" onclick="blind(this,'cpanel-panel-logged')">
+                                                <span><%[Logged in users]%></span>
+                                            </h3>
+                                            <div class="jpane-slider content" id="cpanel-panel-logged">
+                                                <div style="padding: 5px">
 
+                                                    <com:TDataGrid
+                                                    ID="usersGrid"
+                                                    DataKeyField="id"
+                                                    AutoGenerateColumns="false"
+                                                    CssClass="adminlist"
+                                                    AllowPaging="false"
+                                                    >
+
+                                                    <com:TBoundColumn
+                                                        HeaderText="ID"
+                                                        DataField="id"
+                                                        HeaderStyle.Width = "20px"
+                                                    />
+
+                                                    <com:TBoundColumn
+                                                        HeaderText="<%[Name]%>"
+                                                        DataField="userName"
+                                                        HeaderStyle.Width = "20px"
+                                                    />
+
+                                                    <com:TBoundColumn
+                                                        HeaderText="<%[Group]%>"
+                                                        DataField="name"
+                                                        HeaderStyle.Width = "20px"
+                                                    />
+
+                                                    </com:TDataGrid>
+
+                                                </div>
+                                            </div>
+                                        </div>
+									</prop:TrueTemplate>
+									</com:TConditional>
+
+   									<com:TConditional Condition="$this->isPanelDisplay('dispLastTracking')">
+									<prop:TrueTemplate>
 
 									<div class="panel">
 										<h3 class="jpane-toggler title" id="cpanel-panel-tracking_title" onclick="blind(this,'cpanel-panel-tracking')">
@@ -297,6 +547,12 @@
 											</div>
 										</div>
 									</div>
+									</prop:TrueTemplate>
+									</com:TConditional>
+
+
+   									<com:TConditional Condition="$this->isPanelDisplay('dispLastAlarm')">
+									<prop:TrueTemplate>
 
 									<div class="panel">
 										<h3 class="jpane-toggler title" id="cpanel-panel-alarms_title" onclick="blind(this,'cpanel-panel-alarms')">
@@ -338,6 +594,8 @@
 											</div>
 										</div>
 									</div>
+									</prop:TrueTemplate>
+									</com:TConditional>
 
 								</div>
 							</td>
@@ -362,9 +620,24 @@
 
 <script type="text/javascript">
 <!--
-new Effect.BlindUp(document.getElementById('cpanel-panel-logged'), {queue: 'end'});
-new Effect.BlindUp(document.getElementById('cpanel-panel-alarms'), {queue: 'end'});
-new Effect.BlindUp(document.getElementById('cpanel-panel-tracking'), {queue: 'end'});
+<com:TConditional Condition="$this->isPanelDisplay('dispUserLoggedIn')">
+<prop:TrueTemplate>
+    new Effect.BlindUp(document.getElementById('cpanel-panel-logged'), {queue: 'end'});
+</prop:TrueTemplate>
+</com:TConditional>
+
+
+<com:TConditional Condition="$this->isPanelDisplay('dispLastAlarm')">
+<prop:TrueTemplate>
+    new Effect.BlindUp(document.getElementById('cpanel-panel-alarms'), {queue: 'end'});
+</prop:TrueTemplate>
+</com:TConditional>
+
+<com:TConditional Condition="$this->isPanelDisplay('dispLastTracking')">
+<prop:TrueTemplate>
+    new Effect.BlindUp(document.getElementById('cpanel-panel-tracking'), {queue: 'end'});
+</prop:TrueTemplate>
+</com:TConditional>
 -->
 </script>
 
