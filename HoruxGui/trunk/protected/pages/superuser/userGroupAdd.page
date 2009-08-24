@@ -5,7 +5,6 @@
     ID="tbb"
     Title="<%[Add a super user group]%>"
     CssIcon="icon-48-superUserGroup"
-    AddAccessVisible="true"
     ApplyVisible="true"
     SaveVisible="true"
     CancelVisible="true"
@@ -70,49 +69,8 @@
 
 <fieldset class="adminform">
 <legend><%[Access]%></legend>
-<table class="admintable" cellspacing="1">
+<table class="admintable" cellspacing="1" width="500">
 <tbody>
-<tr>
-    <td valign="top" class="key"><span onmouseover="Tip('<%[Select a page]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Page]%></span></td>
-    <td>
-        <com:TDropDownList ID="accessPage">
-            <com:TListItem Value="none" Text="<%[--- Select one ----]%>" />
-
-            <com:TListItem Value="superUser" Text="<%[Super User]%>" Attributes.Group="Horux"/>
-            <com:TListItem Value="superUserGroup" Text="<%[Super User Group]%>" Attributes.Group="Horux"/>
-            <com:TListItem Value="configuration" Text="<%[Configuration]%>" Attributes.Group="Horux"/>
-
-            <com:TListItem Value="site" Text="<%[Site]%>" Attributes.Group="<%[System]%>"/>
-            <com:TListItem Value="hardware" Text="<%[Hardware]%>" Attributes.Group="<%[System]%>"/>
-            <com:TListItem Value="openTime" Text="<%[Opent time]%>" Attributes.Group="<%[System]%>"/>
-            <com:TListItem Value="alarms" Text="<%[Alarms]%>" Attributes.Group="<%[System]%>"/>
-            <com:TListItem Value="notification" Text="<%[Notification]%>" Attributes.Group="<%[System]%>"/>
-            <com:TListItem Value="service" Text="<%[Horux Service]%>" Attributes.Group="<%[System]%>"/>
-            <com:TListItem Value="status" Text="<%[Horux Status]%>" Attributes.Group="<%[System]%>"/>
-
-            <com:TListItem Value="user" Text="<%[User]%>" Attributes.Group="<%[Access]%>"/>
-            <com:TListItem Value="userGroup" Text="<%[User Group]%>" Attributes.Group="<%[Access]%>"/>
-            <com:TListItem Value="userWizard" Text="<%[User Wizard]%>" Attributes.Group="<%[Access]%>"/>
-            <com:TListItem Value="key" Text="<%[Key]%>" Attributes.Group="<%[Access]%>"/>
-            <com:TListItem Value="accessLevel" Text="<%[Access Level]%>" Attributes.Group="<%[Access]%>"/>
-            <com:TListItem Value="nonWorkingDay" Text="<%[Non Working Day]%>" Attributes.Group="<%[Access]%>"/>
-
-
-            <com:TListItem Value="install_uninstall" Text="<%[Install/Uninstall]%>" Attributes.Group="<%[Extensions]%>"/>
-            <com:TListItem Value="devices" Text="<%[Devices Manager]%>" Attributes.Group="<%[Extensions]%>"/>
-            <com:TListItem Value="components" Text="<%[Component Manager]%>" Attributes.Group="<%[Extensions]%>"/>
-            <com:TListItem Value="template" Text="<%[Template Manager]%>" Attributes.Group="<%[Extensions]%>"/>
-            <com:TListItem Value="language" Text="<%[Language Manager]%>" Attributes.Group="<%[Extensions]%>"/>
-
-            <com:TListItem Value="guilog" Text="<%[Horux Gui Log]%>" Attributes.Group="<%[Tools]%>"/>
-            <com:TListItem Value="globalCheckin" Text="<%[Global Checkin]%>" Attributes.Group="<%[Tools]%>"/>
-
-            <com:TListItem Value="systemInfo" Text="<%[System Info]%>" Attributes.Group="<%[Help]%>"/>
-
-
-        </com:TDropDownList>
-    </td>
-</tr>
 
 <tr>
 <td colspan="2">
@@ -132,20 +90,26 @@
 <com:TBoundColumn
     HeaderText="<%[Type]%>"
     DataField="Type"
+    HeaderStyle.Width = "70px"
     />
 <com:TBoundColumn
     HeaderText="<%[Page]%>"
     DataField="Text"
     />
 
+<com:TBoundColumn
+    HeaderText="<%[Sub page]%>"
+    DataField="Text2"
+    />
+
 <com:TTemplateColumn HeaderStyle.Width = "20px">
-    <prop:HeaderTemplate><%[Action]%></prop:HeaderTemplate>
+    <prop:HeaderTemplate><%[Access]%></prop:HeaderTemplate>
     <prop:ItemTemplate>
-        <span onmouseover="Tip('<%[Remove this access]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)">
-        <com:TImageButton
+        <span onmouseover="Tip('<%[Click here to give access or not]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)">
+        <com:TActiveImageButton
             Text="<%#$this->NamingContainer->DataItem['id']%>"
-            ImageUrl="./themes/letux/images/menu/icon-16-trash.png"
-            OnClick="Page.onDeleteAccess"
+            ImageUrl="<%# $this->NamingContainer->DataItem['access'] ? './themes/letux/images/menu/icon-16-checkin.png' : './themes/letux/images/menu/icon-16-access.png'%>"
+            OnClick="Page.onChangeAccess"
             Style="border:0px"
             />
     </prop:ItemTemplate>

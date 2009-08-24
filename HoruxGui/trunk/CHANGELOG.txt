@@ -39,7 +39,7 @@ Legend:
 16.07.2009         - Remove ldap parameters in the config table.
 16.07.2009         + Add public web site access in the config
 16.07.2009         + Add the possibility to have password for the users. This password will allow to access to the public web site
-
+24.08.2009         ^ Modify the pages to handle the super user access right. The pages add/mod are more simple to use
 
 -------------------- Horux 1.0.4 Release Released [04-06-2009] ------------------------
 30.01.2009      + Add the pin code in the user wizard

@@ -35,8 +35,6 @@ class userGroupMod extends Page
             $this->DataGrid->DataSource=$this->Data;
             $this->DataGrid->dataBind();
 
-            $this->addComponent();
-
             $superAdmin = $this->Application->getUser()->getSuperAdmin();
             $param = $this->Application->getParameters();
 
@@ -48,26 +46,55 @@ class userGroupMod extends Page
         }
     }
 
-    public function addComponent()
+    public function addComponent($data)
     {
         $cmd = $this->db->createCommand( "SELECT * FROM hr_install WHERE type='component'" );
-        $data = $cmd->query();
-        $data = $data->readAll();
+        $data_ = $cmd->query();
+        $data_ = $data_->readAll();
 
-        foreach($data as $d)
+        $isComponentHasOne = false;
+
+        foreach($data_ as $d)
         {
-            $item = new TListItem;
-            $item->setAttribute('Group',Prado::localize('Components'));
-
             $doc=new TXmlDocument();
             $doc->loadFromFile('./protected/pages/components/'.$d['name'].'/install.xml');
             $name = $doc->getElementByTagName('name');
+            $installName = $doc->getElementByTagName('installName')->getValue();
 
-            $item->setText(Prado::localize($name->getValue()));
-            $item->setValue($d['name']);
 
-            $this->accessPage->getItems()->add($item);
+            $cmd = $this->db->createCommand("SELECT * FROM hr_install WHERE type='component' AND name='$installName'");
+            $data1 = $cmd->query();
+            $data1 = $data1->readAll();
+
+            foreach($data1 as $d1)
+            {
+                $cmd = $this->db->createCommand("SELECT * FROM hr_install AS i LEFT JOIN hr_component as c ON c.id_install=i.id WHERE i.type='component' AND c.parentmenu=0 AND i.id=".$d1['id']);
+                $data2 = $cmd->query();
+                $data2 = $data2->read();
+
+                if(!$isComponentHasOne)
+                {
+                    $data[] = array('Type'=>Prado::localize('Components'), 'id'=>$data2['page'], 'Text'=>Prado::localize($name->getValue()), 'access'=>$this->isAccess($data2['page']), 'composantname'=>$installName);
+                    $isComponentHasOne = true;
+                }
+                else
+                    $data[] = array('Type'=>'', 'id'=>$data2['page'], 'Text'=>Prado::localize($name->getValue()), 'access'=>$this->isAccess($data2['page']), 'composantname'=>$installName);
+
+
+                $cmd = $this->db->createCommand("SELECT * FROM hr_install AS i LEFT JOIN hr_component as c ON c.id_install=i.id WHERE i.type='component' AND c.parentmenu=".$data2['id']." AND c.parentmenu>0 AND i.id=".$d1['id']);
+                $data2 = $cmd->query();
+                $data2 = $data2->readAll();
+
+                foreach($data2 as $d2)
+                {
+                    $data[] = array('Type'=>'', 'id'=>$d2['page'], 'Text'=>'', 'Text2'=>Prado::localize($d2['menuname']), 'access'=>$this->isAccess($d2['page']), 'composantname'=>$installName);
+                }
+
+            }
+
         }
+
+        return $data;
     }
 
     public function setData()
@@ -86,120 +113,59 @@ class userGroupMod extends Page
 
     }
 
-    public function getData()
+    protected function isAccess($page)
     {
-        $data = $this->application->getGlobalState('dataPage');
-
-        $cmd = $this->db->createCommand( SQL::SQL_GET_PERM );
+        $cmd = $this->db->createCommand( "SELECT COUNT(*) AS n FROM hr_gui_permissions WHERE page=:page AND value=:id" );
         $cmd->bindParameter(":id",$this->id->Value, PDO::PARAM_INT);
+        $cmd->bindParameter(":page",$page, PDO::PARAM_INT);
         $query = $cmd->query();
         if($query)
         {
-            $perm = $query->readAll();
-
-            foreach($perm as $p)
-            {
-                switch($p['page'])
-                {
-                    case 'controlPanel.ControlPanel':
-                        $data['controlPanel'] = array('id' => 'controlPanel','Type'=>'Horux', 'Text'=>Prado::localize('Control Panel') );
-                        break;
-                    case 'superuser.userList':
-                        $data['superUser'] = array('id' => 'superUser','Type'=>'Horux', 'Text'=>Prado::localize('Super User') );
-                        break;
-                    case 'superuser.userGroupList':
-                        $data['superUserGroup'] = array('id' => 'superUserGroup','Type'=>'Horux', 'Text'=>Prado::localize('Super User Group') );
-                        break;
-                    case 'configuration.config':
-                        $data['configuration'] = array('id' => 'configuration','Type'=>'Horux', 'Text'=>Prado::localize('Configuration') );
-                        break;
-
-                    case 'site.Site':
-                        $data['site'] = array('id' => 'site','Type'=>Prado::localize('System'), 'Text'=>Prado::localize('Site') );
-                        break;
-                    case 'hardware.HardwareList':
-                        $data['hardware'] = array('id' => 'hardware','Type'=>Prado::localize('System'), 'Text'=>Prado::localize('Hardware') );
-                        break;
-                    case 'openTime.openTimeList':
-                        $data['openTime'] = array('id' => 'openTime','Type'=>Prado::localize('System'), 'Text'=>Prado::localize('Open Time') );
-                        break;
-                    case 'system.Alarms':
-                        $data['alarms'] = array('id' => 'alarms','Type'=>Prado::localize('System'), 'Text'=>Prado::localize('Alarms') );
-                        break;
-                    case 'system.Notification':
-                        $data['notification'] = array('id' => 'notification','Type'=>Prado::localize('System'), 'Text'=>Prado::localize('Notification') );
-                        break;
-                    case 'system.Service':
-                        $data['service'] = array('id' => 'service','Type'=>Prado::localize('System'), 'Text'=>Prado::localize('Horux Service') );
-                        break;
-                    case 'system.Status':
-                        $data['status'] = array('id' => 'status','Type'=>Prado::localize('System'), 'Text'=>Prado::localize('Horux Status') );
-                        break;
-                    case 'user.UserList':
-                        $data['user'] = array('id' => 'user','Type'=>Prado::localize('Access'), 'Text'=>Prado::localize('User') );
-                        break;
-                    case 'userGroup.UserGroupList':
-                        $data['userGroup'] = array('id' => 'userGroup','Type'=>Prado::localize('Access'), 'Text'=>Prado::localize('User Group') );
-                        break;
-                    case 'user.UserWizzard':
-                        $data['userWizard'] = array('id' => 'userWizard','Type'=>Prado::localize('Access'), 'Text'=>Prado::localize('User Wizard') );
-                        break;
-                    case 'key.KeyList':
-                        $data['key'] = array('id' => 'key','Type'=>Prado::localize('Access'), 'Text'=>Prado::localize('Key') );
-                        break;
-                    case 'accessLevel.accessLevelList':
-                        $data['accessLevel'] = array('id' => 'accessLevel','Type'=>Prado::localize('Access'), 'Text'=>Prado::localize('Access Level') );
-                        break;
-                    case 'nonWorkingDay.nonWorkingDay':
-                        $data['nonWorkingDay'] = array('id' => 'nonWorkingDay','Type'=>Prado::localize('Access'), 'Text'=>Prado::localize('Non Working Day') );
-                        break;
-
-                    case 'installation.extensions':
-                        $data['install_uninstall'] = array('id' => 'install_uninstall','Type'=>Prado::localize('Extensions'), 'Text'=>Prado::localize('Install/Uninstall') );
-                        break;
-                    case 'installation.devices':
-                        $data['devices'] = array('id' => 'devices','Type'=>Prado::localize('Extensions'), 'Text'=>Prado::localize('Devices Manager') );
-                        break;
-                    case 'installation.components':
-                        $data['components'] = array('id' => 'components','Type'=>Prado::localize('Extensions'), 'Text'=>Prado::localize('Components Manager') );
-                        break;
-                    case 'installation.template':
-                        $data['template'] = array('id' => 'template','Type'=>Prado::localize('Extensions'), 'Text'=>Prado::localize('Template Manager') );
-                        break;
-                    case 'installation.language':
-                        $data['language'] = array('id' => 'language','Type'=>Prado::localize('Extensions'), 'Text'=>Prado::localize('Language Manager') );
-                        break;
-                    case 'tool.GlobalCheckin':
-                        $data['globalCheckin'] = array('id' => 'globalCheckin','Type'=>Prado::localize('Tools'), 'Text'=>Prado::localize('Global Checkin') );
-                        break;
-                    case 'tool.GuiLog':
-                        $data['guilog'] = array('id' => 'guilog','Type'=>Prado::localize('Tools'), 'Text'=>Prado::localize('Horux Gui Log') );
-                        break;
-
-                    case 'help.SystemInfo':
-                        $data['systemInfo'] = array('id' => 'systemInfo','Type'=>Prado::localize('Help'), 'Text'=>Prado::localize('System Info') );
-                        break;
-
-                    case 'help.About':
-                        $data['about'] = array('id' => 'about','Type'=>Prado::localize('Help'), 'Text'=>Prado::localize('About') );
-                        break;
-
-                    default:
-                        $comp = explode('.',$p['page']);
-
-                        if(file_exists('./protected/pages/components/'.$comp[1].'/install.xml'))
-                        {
-
-                            $doc=new TXmlDocument();
-                            $doc->loadFromFile('./protected/pages/components/'.$comp[1].'/install.xml');
-                            $name = $doc->getElementByTagName('name')->getValue();
-                            $data[$comp[1]] = array('id' => $comp[1],'Type'=>Prado::localize('Component'), 'Text'=>Prado::localize($name) );
-                        }
-                        break;
-                }
-            }
+            $data = $query->read();
+            return $data['n'] > 0;
         }
-        $this->application->setGlobalState('dataPage', $data);
+    }
+
+    public function getData()
+    {
+
+        $data[] = array('Type'=>'Horux', 'id'=>'superUser', 'Text'=>Prado::localize('Super User'), 'access'=>$this->isAccess('superuser.userList'));
+        $data[] = array('Type'=>'', 'id'=>'superUserGroup', 'Text'=>Prado::localize('Super User Group'), 'access'=>$this->isAccess('superuser.userGroupList'));
+        $data[] = array('Type'=>'', 'id'=>'configuration', 'Text'=>Prado::localize('Configuration'), 'access'=>$this->isAccess('configuration.config'));
+
+        $data[] = array('Type'=>Prado::localize('System'), 'id'=>'site', 'Text'=>Prado::localize('Site'), 'access'=>$this->isAccess('site.Site'));
+        $data[] = array('Type'=>'', 'id'=>'hardware', 'Text'=>Prado::localize('Hardware'), 'access'=>$this->isAccess('hardware.HardwareList'));
+        $data[] = array('Type'=>'', 'id'=>'openTime', 'Text'=>Prado::localize('Opent time'), 'access'=>$this->isAccess('openTime.openTimeList'));
+        $data[] = array('Type'=>'', 'id'=>'alarms', 'Text'=>Prado::localize('Alarms'), 'access'=>$this->isAccess('system.Alarms'));
+        $data[] = array('Type'=>'', 'id'=>'notification', 'Text'=>Prado::localize('Notification'), 'access'=>$this->isAccess('system.Notification'));
+        $data[] = array('Type'=>'', 'id'=>'service', 'Text'=>Prado::localize('Horux Service'), 'access'=>$this->isAccess('system.Service'));
+        $data[] = array('Type'=>'', 'id'=>'status', 'Text'=>Prado::localize('Horux Status'), 'access'=>$this->isAccess('system.Status'));
+
+        $data[] = array('Type'=>Prado::localize('Access'), 'id'=>'user', 'Text'=>Prado::localize('User'), 'access'=>$this->isAccess('user.UserList'));
+        $data[] = array('Type'=>'', 'id'=>'userGroup', 'Text'=>Prado::localize('User Group'), 'access'=>$this->isAccess('userGroup.UserGroupList'));
+        $data[] = array('Type'=>'', 'id'=>'userWizard', 'Text'=>Prado::localize('User Wizard'), 'access'=>$this->isAccess('user.UserWizzard'));
+        $data[] = array('Type'=>'', 'id'=>'key', 'Text'=>Prado::localize('Key'), 'access'=>$this->isAccess('key.KeyList'));
+        $data[] = array('Type'=>'', 'id'=>'accessLevel', 'Text'=>Prado::localize('Access Level'), 'access'=>$this->isAccess('accessLevel.accessLevelList'));
+        $data[] = array('Type'=>'', 'id'=>'nonWorkingDay', 'Text'=>Prado::localize('Non Working Day'), 'access'=>$this->isAccess('nonWorkingDay.nonWorkingDay'));
+
+
+        $data[] = array('Type'=>Prado::localize('Extensions'), 'id'=>'install_uninstall', 'Text'=>Prado::localize('Install/Uninstall'), 'access'=>$this->isAccess('installation.extensions'));
+        $data[] = array('Type'=>'', 'id'=>'devices', 'Text'=>Prado::localize('Devices Manager'), 'access'=>$this->isAccess('installation.devices'));
+        $data[] = array('Type'=>'', 'id'=>'components', 'Text'=>Prado::localize('Component Manager'), 'access'=>$this->isAccess('installation.components'));
+        $data[] = array('Type'=>'', 'id'=>'template', 'Text'=>Prado::localize('Template Manager'), 'access'=>$this->isAccess('installation.template'));
+        $data[] = array('Type'=>'', 'id'=>'language', 'Text'=>Prado::localize('Language Manager'), 'access'=>$this->isAccess('installation.language'));
+
+
+        $data[] = array('Type'=>Prado::localize('Tools'), 'id'=>'guilog', 'Text'=>Prado::localize('Horux Gui Log'), 'access'=>$this->isAccess('tool.GuiLog'));
+        $data[] = array('Type'=>'', 'id'=>'globalCheckin', 'Text'=>Prado::localize('Global Checkin'), 'access'=>$this->isAccess('tool.GlobalCheckin'));
+        $data[] = array('Type'=>'', 'id'=>'recycling', 'Text'=>Prado::localize('Recycling a Key'), 'access'=>$this->isAccess('key.recycling'));
+
+        $data[] = array('Type'=>Prado::localize('Help'), 'id'=>'systemInfo', 'Text'=>Prado::localize('System Info'), 'access'=>$this->isAccess('help.SystemInfo'));
+
+        $data = $this->addComponent($data);
+
+        $this->application->setGlobalState('dataPage',$data);
+
         return $data;
 
     }
@@ -278,38 +244,38 @@ class userGroupMod extends Page
     {
         $data = $this->application->getGlobalState('dataPage');
 
-        foreach($data as $k=>$v)
+        foreach($data as $v)
         {
-            switch($k)
+            switch($v['id'])
             {
                 case "controlPanel":
-                    $this->updatePermission($lastId, 'controlPanel.ControlPanel');
+                    $v['access'] ? $this->updatePermission($lastId, 'controlPanel.ControlPanel') : '';
                     break;
                 case "superUser":
-                    $this->updatePermission($lastId, 'superuser.userList');
-                    $this->updatePermission($lastId, 'superuser.userAdd');
-                    $this->updatePermission($lastId, 'superuser.userMod');
+                    $v['access'] ? $this->updatePermission($lastId, 'superuser.userList') : '';
+                    $v['access'] ? $this->updatePermission($lastId, 'superuser.userAdd') : '';
+                    $v['access'] ?$this->updatePermission($lastId, 'superuser.userMod') : '';
                     break;
                 case "superUserGroup":
-                    $this->updatePermission($lastId, 'superuser.userGroupList');
-                    $this->updatePermission($lastId, 'superuser.userGroupAdd');
-                    $this->updatePermission($lastId, 'superuser.userGroupMod');
+                    $v['access'] ?$this->updatePermission($lastId, 'superuser.userGroupList') : '';
+                    $v['access'] ?$this->updatePermission($lastId, 'superuser.userGroupAdd') : '';
+                    $v['access'] ?$this->updatePermission($lastId, 'superuser.userGroupMod') : '';
                     break;
                 case "configuration":
-                    $this->updatePermission($lastId, 'configuration.config');
+                    $v['access'] ?$this->updatePermission($lastId, 'configuration.config') : '';
                     break;
                 case "site":
-                    $this->updatePermission($lastId, 'site.Site');
+                    $v['access'] ? $this->updatePermission($lastId, 'site.Site') : '';
                     break;
                 case "openTime":
-                    $this->updatePermission($lastId, 'openTime.openTimeList');
-                    $this->updatePermission($lastId, 'openTime.add');
-                    $this->updatePermission($lastId, 'openTime.mod');
-                    $this->updatePermission($lastId, 'openTime.attribute');
+                    $v['access'] ? $this->updatePermission($lastId, 'openTime.openTimeList') : '';
+                    $v['access'] ? $this->updatePermission($lastId, 'openTime.add') : '';
+                    $v['access'] ? $this->updatePermission($lastId, 'openTime.mod') : '';
+                    $v['access'] ? $this->updatePermission($lastId, 'openTime.attribute') : '';
                     break;
                 case "hardware":
-                    $this->updatePermission($lastId, 'hardware.HardwareList');
-                    $this->updatePermission($lastId, 'hardware.HardwareAddList');
+                    $v['access'] ? $this->updatePermission($lastId, 'hardware.HardwareList') : '';
+                    $v['access'] ? $this->updatePermission($lastId, 'hardware.HardwareAddList') : '';
 
                     $path = './protected/pages/hardware/device/';
 
@@ -325,94 +291,89 @@ class userGroupMod extends Page
                             $permissions = $permissions->getElements();
                             foreach($permissions as $perm)
                             {
-                                $this->updatePermission($lastId, $perm->getValue());
+                               $v['access'] ?  $this->updatePermission($lastId, $perm->getValue()) : '';
                             }
                         }
                     }
 
                     break;
                 case "alarms":
-                    $this->updatePermission($lastId, 'system.Alarms');
+                    $v['access'] ? $this->updatePermission($lastId, 'system.Alarms') : '';
                     break;
                 case "notification":
-                    $this->updatePermission($lastId, 'system.Notification');
-                    $this->updatePermission($lastId, 'system.NotificationMod');
-                    $this->updatePermission($lastId, 'system.NotificationAdd');
+                    $v['access'] ? $this->updatePermission($lastId, 'system.Notification') : '';
+                    $v['access'] ? $this->updatePermission($lastId, 'system.NotificationMod') : '';
+                    $v['access'] ? $this->updatePermission($lastId, 'system.NotificationAdd') : '';
                     break;
                 case "service":
-                    $this->updatePermission($lastId, 'system.Service');
+                    $v['access'] ? $this->updatePermission($lastId, 'system.Service') : '';
                     break;
                 case "status":
-                    $this->updatePermission($lastId, 'system.Status');
+                    $v['access'] ? $this->updatePermission($lastId, 'system.Status') : '';
                     break;
                 case "user":
-                    $this->updatePermission($lastId, 'user.UserList');
-                    $this->updatePermission($lastId, 'user.add');
-                    $this->updatePermission($lastId, 'user.mod');
-                    $this->updatePermission($lastId, 'user.attribution');
-                    $this->updatePermission($lastId, 'user.groups');
+                    $v['access'] ? $this->updatePermission($lastId, 'user.UserList') : '';
+                    $v['access'] ? $this->updatePermission($lastId, 'user.add') : '';
+                    $v['access'] ? $this->updatePermission($lastId, 'user.mod') : '';
+                    $v['access'] ? $this->updatePermission($lastId, 'user.attribution') : '';
+                    $v['access'] ? $this->updatePermission($lastId, 'user.groups') : '';
                     break;
                 case "userGroup":
-                    $this->updatePermission($lastId, 'userGroup.UserGroupList');
-                    $this->updatePermission($lastId, 'userGroup.add');
-                    $this->updatePermission($lastId, 'userGroup.mod');
+                    $v['access'] ? $this->updatePermission($lastId, 'userGroup.UserGroupList') : '';
+                    $v['access'] ? $this->updatePermission($lastId, 'userGroup.add') : '';
+                    $v['access'] ? $this->updatePermission($lastId, 'userGroup.mod') : '';
                     break;
                 case "userWizard":
-                    $this->updatePermission($lastId, 'user.UserWizzard');
+                    $v['access'] ? $this->updatePermission($lastId, 'user.UserWizzard') : '';
                     break;
                 case "key":
-                    $this->updatePermission($lastId, 'key.KeyList');
-                    $this->updatePermission($lastId, 'key.add');
-                    $this->updatePermission($lastId, 'key.mod');
-                    $this->updatePermission($lastId, 'key.recycling');
+                    $v['access'] ? $this->updatePermission($lastId, 'key.KeyList') : '';
+                    $v['access'] ? $this->updatePermission($lastId, 'key.add') : '';
+                    $v['access'] ? $this->updatePermission($lastId, 'key.mod') : '';
                     break;
                 case "accessLevel":
-                    $this->updatePermission($lastId, 'accessLevel.accessLevelList');
-                    $this->updatePermission($lastId, 'accessLevel.add');
-                    $this->updatePermission($lastId, 'accessLevel.mod');
+                    $v['access'] ? $this->updatePermission($lastId, 'accessLevel.accessLevelList') : '';
+                    $v['access'] ? $this->updatePermission($lastId, 'accessLevel.add') : '';
+                    $v['access'] ? $this->updatePermission($lastId, 'accessLevel.mod') : '';
                     break;
                 case "nonWorkingDay":
-                    $this->updatePermission($lastId, 'nonWorkingDay.nonWorkingDay');
-                    $this->updatePermission($lastId, 'nonWorkingDay.add');
-                    $this->updatePermission($lastId, 'nonWorkingDay.mod');
+                    $v['access'] ? $this->updatePermission($lastId, 'nonWorkingDay.nonWorkingDay') : '';
+                    $v['access'] ? $this->updatePermission($lastId, 'nonWorkingDay.add') : '';
+                    $v['access'] ? $this->updatePermission($lastId, 'nonWorkingDay.mod') : '';
                     break;
                 case "install_uninstall":
-                    $this->updatePermission($lastId, 'installation.extensions');
+                    $v['access'] ? $this->updatePermission($lastId, 'installation.extensions') : '';
                     break;
                 case "devices":
-                    $this->updatePermission($lastId, 'installation.devices');
+                    $v['access'] ? $this->updatePermission($lastId, 'installation.devices') : '';
                     break;
                 case "components":
-                    $this->updatePermission($lastId, 'installation.components');
-                    $this->updatePermission($lastId, 'installation.componentconfig');
+                    $v['access'] ? $this->updatePermission($lastId, 'installation.components') : '';
+                    $v['access'] ? $this->updatePermission($lastId, 'installation.componentconfig') : '';
                     break;
                 case "template":
-                    $this->updatePermission($lastId, 'installation.template');
+                    $v['access'] ? $this->updatePermission($lastId, 'installation.template') : '';
                     break;
                 case "language":
-                    $this->updatePermission($lastId, 'installation.language');
+                    $v['access'] ? $this->updatePermission($lastId, 'installation.language') : '';
                     break;
                 case "globalCheckin":
-                    $this->updatePermission($lastId, 'tool.GlobalCheckin');
+                    $v['access'] ? $this->updatePermission($lastId, 'tool.GlobalCheckin') : '';
                     break;
                 case "guilog":
-                    $this->updatePermission($lastId, 'tool.GuiLog');
+                    $v['access'] ? $this->updatePermission($lastId, 'tool.GuiLog') : '';
+                    break;
+                case "recycling":
+                    $v['access'] ? $this->updatePermission($lastId, 'key.recycling') : '';
                     break;
                 case "systemInfo":
-                    $this->updatePermission($lastId, 'help.SystemInfo');
+                    $v['access'] ? $this->updatePermission($lastId, 'help.SystemInfo') : '';
                     break;
                 case "about":
-                    $this->updatePermission($lastId, 'help.About');
+                    $v['access'] ? $this->updatePermission($lastId, 'help.About') : '';
                     break;
                 default:
-                    $doc=new TXmlDocument();
-                    $doc->loadFromFile('./protected/pages/components/'.$k.'/install.xml');
-                    $permissions = $doc->getElementByTagName('permissions');
-                    $permissions = $permissions->getElements();
-                    foreach($permissions as $perm)
-                    {
-                        $this->updatePermission($lastId, $perm->getValue());
-                    }
+                     $v['access'] ? $this->updatePermission($lastId, $v['id']) : '';
                     break;
             }
         }
@@ -440,28 +401,23 @@ class userGroupMod extends Page
         $param->IsValid=false;
     }
 
-    public function onAddAccess($sender, $param)
-    {
-        if($this->accessPage->getSelectedValue() == 'none') return;
-
-        $data = $this->application->getGlobalState('dataPage');
-        $item = $this->accessPage->getSelectedItem();
-
-        $data[$this->accessPage->getSelectedValue()] = array('id' => $this->accessPage->getSelectedValue(),'Type'=>$item->Attributes->Group, 'Text'=>$item->Text );
-
-
-        $this->application->setGlobalState('dataPage', $data);
-
-        $this->DataGrid->DataSource=$data;
-        $this->DataGrid->dataBind();
-
-    }
-
-    public function onDeleteAccess($sender, $param)
+    public function onChangeAccess($sender, $param)
     {
         $data = $this->application->getGlobalState('dataPage');
 
         unset($data[$sender->Text]);
+
+        for($i=0; $i< count($data); $i++)
+        {
+            if($data[$i]['id'] == $sender->Text)
+            {
+                if($data[$i]['access'])
+                   $data[$i]['access'] = false;
+                else
+                   $data[$i]['access'] = true;
+            }
+        }
+
 
         $this->application->setGlobalState('dataPage', $data);
 

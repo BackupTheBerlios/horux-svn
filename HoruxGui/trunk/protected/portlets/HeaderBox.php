@@ -357,11 +357,11 @@ class HeaderBox extends Portlet
 		 */		
 		$componnents = new MenuItem('null', Prado::localize('Components',array(), "messages"), '#');
 
-                $db = $this->Application->getModule('horuxDb')->DbConnection;
-                
-                if(!$db) return $menu->render();	
-                
-                $db->Active=true;
+        $db = $this->Application->getModule('horuxDb')->DbConnection;
+
+        if(!$db) return $menu->render();
+
+        $db->Active=true;
 		
 		$cmd=$db->createCommand("SELECT * FROM hr_install WHERE type='component'");
 		$data = $cmd->query();
@@ -474,6 +474,20 @@ class HeaderBox extends Portlet
 
         if($this->isAccess('tool.GuiLog'))
             $this->toolMenuCount++;
+
+
+
+
+
+		$tools->addMenuItem( new MenuItem("'<img src=\"./themes/letux/images/menu/icon-16-recycling.png\" />'",
+										  Prado::localize('Recycling a Key',array(), "messages"),
+										  $this->Service->constructUrl('key.recycling'),
+										  $this->isAccess('key.recycling')
+										  ));
+
+        if($this->isAccess('key.recycling'))
+            $this->toolMenuCount++;
+
 
 		/******************************************
 		 * Help menu
