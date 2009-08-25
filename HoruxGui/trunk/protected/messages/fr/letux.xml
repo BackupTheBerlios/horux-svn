@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff version="1.0">
-<file source-language="en" target-language="fr" datatype="plaintext" original="messages" date="2008-11-03T11:06:55Z" product-name="messages">
+<file source-language="en" target-language="fr" datatype="plaintext" original="messages" date="2009-08-25T09:58:05Z" product-name="messages">
 <body>
 <trans-unit id="1">
    <source>Installation</source>
@@ -16,7 +16,7 @@
 </trans-unit>
 <trans-unit id="4">
    <source>!Warning! Javascript must be enabled for proper operation of the Administrator</source>
-   <target>Attention! Javascript doit être activer pour une utilisation propre de l'administration</target>
+   <target>Attention! Javascript doit être activé pour une utilisation propre de l'administration</target>
 </trans-unit>
 <trans-unit id="5">
    <source>is Free Software released under the GNU/GPL License</source>
