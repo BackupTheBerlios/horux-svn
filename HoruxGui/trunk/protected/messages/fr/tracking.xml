@@ -1,130 +1,130 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff version="1.0">
-<file source-language="en" target-language="fr" datatype="plaintext" original="messages" date="2008-12-09T16:32:56Z" product-name="messages">
+<file source-language="en" target-language="fr" datatype="plaintext" original="messages" date="2009-08-25T14:34:41Z" product-name="messages">
 <body>
 
-<trans-unit id="1">
+<trans-unit id="1" lock="1">
    <source>Tracking</source>
-   <target>Suivit</target>
+   <target>Suivi des accès</target>
 </trans-unit>
-<trans-unit id="2">
+<trans-unit id="2" lock="1">
    <source>Filter</source>
    <target>Filtre</target>
 </trans-unit>
-<trans-unit id="3">
+<trans-unit id="3" lock="1">
    <source>Name</source>
    <target>Nom</target>
 </trans-unit>
-<trans-unit id="4">
+<trans-unit id="4" lock="1">
    <source>All</source>
-   <target>Tout</target>
+   <target>Tous</target>
 </trans-unit>
 
-<trans-unit id="5">
+<trans-unit id="5" lock="1">
    <source>Status</source>
    <target>Etat</target>
 </trans-unit>
-<trans-unit id="6">
+<trans-unit id="6" lock="1">
    <source>Access ok</source>
-   <target>Accès ok</target>
+   <target>Accès valide</target>
 </trans-unit>
-<trans-unit id="7">
+<trans-unit id="7" lock="1">
    <source>Access ko</source>
-   <target>Accès ko</target>
+   <target>Accès invalide</target>
 </trans-unit>
-<trans-unit id="8">
+<trans-unit id="8" lock="1">
    <source>Access point</source>
    <target>Point d'accès</target>
 </trans-unit>
-<trans-unit id="9">
+<trans-unit id="9" lock="1">
    <source>From</source>
    <target>Depuis</target>
 </trans-unit>
-<trans-unit id="10">
+<trans-unit id="10" lock="1">
    <source>Until</source>
    <target>Jusqu'au</target>
 </trans-unit>
-<trans-unit id="11">
+<trans-unit id="11" lock="1">
    <source>Firstname</source>
    <target>Prénom</target>
 </trans-unit>
-<trans-unit id="12">
+<trans-unit id="12" lock="1">
    <source>Date</source>
    <target>Date</target>
 </trans-unit>
-<trans-unit id="13">
+<trans-unit id="13" lock="1">
    <source>Time</source>
    <target>Heure</target>
 </trans-unit>
-<trans-unit id="14">
+<trans-unit id="14" lock="1">
    <source>Key</source>
    <target>Clé</target>
 </trans-unit>
-<trans-unit id="15">
+<trans-unit id="15" lock="1">
    <source>Authorize access</source>
    <target>Accès autorisé</target>
 </trans-unit>
-<trans-unit id="16">
+<trans-unit id="16" lock="1">
    <source>The key is bloqued</source>
    <target>La clé est bloquée</target>
 </trans-unit>
-<trans-unit id="17">
+<trans-unit id="17" lock="1">
    <source>Unknown key</source>
    <target>Clé inconnue</target>
 </trans-unit>
-<trans-unit id="18">
+<trans-unit id="18" lock="1">
    <source>The key is not attributed</source>
    <target>La clé n'est pas attribuée</target>
 </trans-unit>
-<trans-unit id="19">
+<trans-unit id="19" lock="1">
    <source>The person does not belong to any group</source>
    <target>L'utilisateur n'est compris dans aucun groupe</target>
 </trans-unit>
-<trans-unit id="20">
+<trans-unit id="20" lock="1">
    <source>Access refused during the week-end</source>
    <target>Accès refusé pendant le week-end</target>
 </trans-unit>
-<trans-unit id="21">
+<trans-unit id="21" lock="1">
    <source>Access refused during the non-workinf day</source>
-   <target>Accès refusé pendant les jours non ouvrable</target>
+   <target>Accès refusé pendant les jours non ouvrables</target>
 </trans-unit>
-<trans-unit id="22">
+<trans-unit id="22" lock="1">
    <source>Access refused at this date</source>
    <target>Accès refusé à cette date</target>
 </trans-unit>
-<trans-unit id="23">
+<trans-unit id="23" lock="1">
    <source>Access refused at this time</source>
    <target>Accès refusé à cette heure</target>
 </trans-unit>
-<trans-unit id="24">
+<trans-unit id="24" lock="1">
    <source>No access for this access point</source>
    <target>Pas d'accès pour ce point d'accès</target>
 </trans-unit>
-<trans-unit id="25">
+<trans-unit id="25" lock="1">
    <source>Not handled by Horux</source>
    <target>N'est pas contrôlé par Horux Core</target>
 </trans-unit>
-<trans-unit id="26">
+<trans-unit id="26" lock="1">
    <source>The person is blocked</source>
    <target>L'utilisateur est bloqué</target>
 </trans-unit>
 
-<trans-unit id="27">
+<trans-unit id="27" lock="1">
 <source>List of tracking</source>
-<target>Liste des suivits</target>
+<target>Liste des suivis d'accès</target>
 </trans-unit>
 
-<trans-unit id="28">
+<trans-unit id="28" lock="1">
 <source>Is Access</source>
 <target>A l'accès</target>
 </trans-unit>
 
-<trans-unit id="29">
+<trans-unit id="29" lock="1">
 <source>Yes</source>
 <target>Oui</target>
 </trans-unit>
 
-<trans-unit id="30">
+<trans-unit id="30" lock="1">
 <source>No</source>
 <target>Non</target>
 </trans-unit>
