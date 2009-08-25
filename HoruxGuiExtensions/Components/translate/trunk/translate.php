@@ -1029,7 +1029,9 @@ class translate extends PageList
             $i++;
 
             if($this->google->getChecked())
+            {
                 $translateGoogleText = $this->traduction_google_v1($string);
+            }
             else
                 $translateGoogleText = false;
 
@@ -1119,10 +1121,13 @@ class translate extends PageList
         while(!$isFind && $i < 100)
         {
             $mot_traduit = $doc->getElementsByTagName('div')->item($i)/*->nodeValue*/;
-            if($mot_traduit->hasAttribute('id') && $mot_traduit->getAttribute('id') == 'result_box' )
+            if($mot_traduit)
             {
-                $mot_traduit = $mot_traduit->nodeValue."<br>";
-                $isFind = true;
+                if($mot_traduit->hasAttribute('id') && $mot_traduit->getAttribute('id') == 'result_box' )
+                {
+                    $mot_traduit = $mot_traduit->nodeValue."<br>";
+                    $isFind = true;
+                }
             }
             $i++;
         }
