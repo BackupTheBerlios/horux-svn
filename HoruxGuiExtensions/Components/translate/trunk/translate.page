@@ -83,6 +83,39 @@
 						AutoPostBack="true"
                         OnSelectedIndexChanged="selectionChangedExtension"
                         CssClass="inputbox" />
+					&nbsp;&nbsp;
+                    <%[Filter]%>
+                    <com:TDropDownList
+                        ID="filter"
+						AutoPostBack="true"
+                        OnSelectedIndexChanged="selectionChangedFiltre"
+                        CssClass="inputbox">
+
+						<com:TListItem Value="all" Text="<%[All]%>" />
+						<com:TListItem Value="notexist" Text="<%[Unexisting]%>" />
+						<com:TListItem Value="nottranslate" Text="<%[Untranslate]%>" />
+                    </com:TDropDownList>
+
+					&nbsp;&nbsp;
+                    <%[Lock/Unlock]%>
+                    <com:TDropDownList
+                        ID="lockUnlock"
+						AutoPostBack="true"
+                        OnSelectedIndexChanged="selectionChangedLockUnlock"
+                        CssClass="inputbox">
+
+						<com:TListItem Value="all" Text="<%[All]%>" />
+						<com:TListItem Value="lock" Text="<%[Lock]%>" />
+						<com:TListItem Value="unlock" Text="<%[Unlock]%>" />
+                    </com:TDropDownList>
+
+					&nbsp;&nbsp;
+                    <%[Use Google for a complet new translation]%>
+                    <com:TCheckBox
+                        ID="google"
+                        Text=""
+                        InputAttributes.value="1"
+                        />
 
                     <div id="list">
 
@@ -92,7 +125,7 @@
 							AutoGenerateColumns="false"
 							CssClass="adminlist"
 							AllowPaging="true"
-							PageSize="50"
+							PageSize="15"
 							
 							ItemStyle.CssClass = "row0"
 							AlternatingItemStyle.CssClass="row1"
@@ -106,8 +139,9 @@
 							OnCancelCommand="cancelItem"
    						 	OnUpdateCommand="saveItem"
     						OnDeleteCommand="deleteItem"
+                            OnSelectedIndexChanged="googleTranslate"
 						>
-						
+
 						<com:TBoundColumn
 							ID="sourceColumn"
 							HeaderText="<%[Source]%>"
@@ -122,6 +156,7 @@
 						/>
 
 						<com:TEditCommandColumn
+                        ID="EditColumn"
 						HeaderText="<%[Edit]%>"
 						HeaderStyle.Width="100px"
 						UpdateText="<%[Save]%>"
@@ -140,6 +175,30 @@
 						Text="<%[Delete]%>"
 						CommandName="delete"
 						/>
+
+						<com:TButtonColumn
+						ID="GoogleTranslateColumn"
+						HeaderText="<%[Google translation]%>"
+						HeaderStyle.Width="50px"
+						ItemStyle.HorizontalAlign="Center"
+						ItemStyle.Font.Italic="false"
+						Text="<%[Translate]%>"
+						CommandName="select"
+						/>
+
+                        <com:TTemplateColumn HeaderStyle.Width = "30px">
+                            <prop:HeaderTemplate><%[Lock Unlock]%></prop:HeaderTemplate>
+                            <prop:ItemTemplate>
+                                <span onmouseover="Tip('<%[Click here to lock or<br/> unlock the text]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)">
+                                <com:TImageButton
+                                    Text="<%#$this->NamingContainer->DataItem['id']%>"
+                                    ImageUrl="<%# $this->NamingContainer->DataItem['lock'] ? './themes/letux/images/menu/icon-16-access.png' : './themes/letux/images/menu/icon-16-checkin.png'%>"
+                                    OnClick="Page.setLocked"
+                                    Style="border:0px"
+                                    />
+                            </prop:ItemTemplate>
+                            </span>
+                        </com:TTemplateColumn>
 						</com:TDataGrid>
 
                     </div>

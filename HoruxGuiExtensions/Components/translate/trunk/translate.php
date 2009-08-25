@@ -62,6 +62,16 @@ class translate extends PageList
         return $d;
     }
 
+    public function selectionChangedFiltre($sender, $param)
+    {
+        $this->displayLanguage();
+    }
+
+    public function selectionChangedLockUnlock($sender, $param)
+    {
+        $this->displayLanguage();
+    }
+
     public function selectionChangedModule($sender, $param)
     {
         $value = $sender->getSelectedValue();
@@ -150,6 +160,7 @@ class translate extends PageList
             return $text;
         }
 
+        // translate Horux text
         if($this->module->getSelectedValue() == ".")
         {
 
@@ -170,10 +181,12 @@ class translate extends PageList
                 foreach($translationUnit as $unit)
                 {
                     $lastId = (string)$unit['id'];
+                    $lock = isset($unit['lock']) ? (string)$unit['lock'] : false;
                     $source[] = (string)$unit->source;
                     $text[] = array('id'=>(string)$unit['id'],
-                                                                    'source'=>htmlentities((string)$unit->source),
-                                                                    'text'=>(string)$unit->target);
+                                    'source'=>htmlentities((string)$unit->source),
+                                    'text'=>(string)$unit->target,
+                                    'lock'=>$lock);
                 }
                 $lastId++;
                 foreach($this->strings as $string)
@@ -181,10 +194,72 @@ class translate extends PageList
                     if(!in_array($string,$source))
                     {
                         $text[] = array('id'=>$lastId++,
-                                                                    'source'=>htmlentities($string),
-                                                                    'text'=>"");
+                                        'source'=>htmlentities($string),
+                                        'text'=>"",
+                                        'lock'=>false);
                     }
                 }
+
+                $text_filter = array();
+
+                if($this->filter->getSelectedValue() == "notexist")
+                {
+                    for($i=0; $i< count($text);$i++)
+                    {
+                        if(!in_array(html_entity_decode($text[$i]['source']), $this->strings ) )
+                        {
+                           $text_filter[] = $text[$i];
+                        }
+                    }
+
+                    $text = $text_filter;
+                }
+
+               
+                if($this->filter->getSelectedValue() == "nottranslate")
+                {
+                    for($i=0; $i< count($text);$i++)
+                    {
+                        if($text[$i]['text'] == '')
+                        {
+                            $text_filter[] = $text[$i];
+                        }
+
+                    }
+
+                    $text = $text_filter;
+                }
+
+                $text_filter = array();
+                
+                if($this->lockUnlock->getSelectedValue() == "lock")
+                {
+                    for($i=0; $i< count($text);$i++)
+                    {
+                        if($text[$i]['lock'] )
+                        {
+                           $text_filter[] = $text[$i];
+                        }
+                    }
+
+                    $text = $text_filter;
+                }
+
+
+                if($this->lockUnlock->getSelectedValue() == "unlock")
+                {
+                    for($i=0; $i< count($text);$i++)
+                    {
+                        if( !$text[$i]['lock'] )
+                        {
+                            $text_filter[] = $text[$i];
+                        }
+
+                    }
+
+                    $text = $text_filter;
+                }
+
 
             }
             else
@@ -199,8 +274,9 @@ class translate extends PageList
                 foreach($translationUnit as $unit)
                 {
                     $text[] = array('id'=>(string)$unit['id'],
-                                                                    'source'=>htmlentities((string)$unit->source),
-                                                                    'text'=>(string)$unit->target);
+                                    'source'=>htmlentities((string)$unit->source),
+                                    'text'=>(string)$unit->target,
+                                    'lock'=>false);
                 }
             }
 
@@ -208,7 +284,7 @@ class translate extends PageList
             $this->DataGrid->reset();
             return $text;
 
-        }
+        } // translate theme text
         else if($this->module->getSelectedValue() == "themes")
         {
             if($this->extension->getSelectedValue() == "0")
@@ -239,10 +315,12 @@ class translate extends PageList
                         foreach($translationUnit as $unit)
                         {
                             $lastId = (string)$unit['id'];
+                            $lock = isset($unit['lock']) ? (string)$unit['lock'] : false;
                             $source[] = (string)$unit->source;
                             $text[] = array('id'=>(string)$unit['id'],
-                                                                                    'source'=>htmlentities((string)$unit->source),
-                                                                                    'text'=>(string)$unit->target);
+                                            'source'=>htmlentities((string)$unit->source),
+                                            'text'=>(string)$unit->target,
+                                            'lock'=>$lock);
                         }
 
 
@@ -252,10 +330,72 @@ class translate extends PageList
                             if(!in_array($string,$source))
                             {
                                 $text[] = array('id'=>$lastId++,
-                                                                                    'source'=>htmlentities($string),
-                                                                                    'text'=>"");
+                                                'source'=>htmlentities($string),
+                                                'text'=>"",
+                                                'lock'=>false);
                             }
                         }
+
+                        $text_filter = array();
+
+                        if($this->filter->getSelectedValue() == "notexist")
+                        {
+                            for($i=0; $i< count($text);$i++)
+                            {
+                                if(!in_array(html_entity_decode($text[$i]['source']), $this->strings ) )
+                                {
+                                   $text_filter[] = $text[$i];
+                                }
+                            }
+
+                            $text = $text_filter;
+                        }
+
+
+                        if($this->filter->getSelectedValue() == "nottranslate")
+                        {
+                            for($i=0; $i< count($text);$i++)
+                            {
+                                if($text[$i]['text'] == '')
+                                {
+                                    $text_filter[] = $text[$i];
+                                }
+
+                            }
+
+                            $text = $text_filter;
+                        }
+
+                        $text_filter = array();
+
+                        if($this->lockUnlock->getSelectedValue() == "lock")
+                        {
+                            for($i=0; $i< count($text);$i++)
+                            {
+                                if($text[$i]['lock'] )
+                                {
+                                   $text_filter[] = $text[$i];
+                                }
+                            }
+
+                            $text = $text_filter;
+                        }
+
+
+                        if($this->lockUnlock->getSelectedValue() == "unlock")
+                        {
+                            for($i=0; $i< count($text);$i++)
+                            {
+                                if( !$text[$i]['lock'] )
+                                {
+                                    $text_filter[] = $text[$i];
+                                }
+
+                            }
+
+                            $text = $text_filter;
+                        }
+
 
                     }
                     else
@@ -270,8 +410,9 @@ class translate extends PageList
                         foreach($translationUnit as $unit)
                         {
                             $text[] = array('id'=>(string)$unit['id'],
-                                                                                    'source'=>(string)$unit->source,
-                                                                                    'text'=>(string)$unit->target);
+                                            'source'=>(string)$unit->source,
+                                            'text'=>(string)$unit->target,
+                                            'lock'=>false);
                         }
 
                     }
@@ -312,10 +453,12 @@ class translate extends PageList
                         foreach($translationUnit as $unit)
                         {
                             $lastId = (string)$unit['id'];
+                            $lock = isset($unit['lock']) ? (string)$unit['lock'] : false;
                             $source[] = (string)$unit->source;
                             $text[] = array('id'=>(string)$unit['id'],
-                                                                                    'source'=>htmlentities((string)$unit->source),
-                                                                                    'text'=>(string)$unit->target);
+                                            'source'=>htmlentities((string)$unit->source),
+                                            'text'=>(string)$unit->target,
+                                            'lock'=>$lock);
                         }
 
 
@@ -325,10 +468,72 @@ class translate extends PageList
                             if(!in_array($string,$source))
                             {
                                 $text[] = array('id'=>$lastId++,
-                                                                                    'source'=>htmlentities($string),
-                                                                                    'text'=>"");
+                                                'source'=>htmlentities($string),
+                                                'text'=>"",
+                                                'lock'=>false);
                             }
                         }
+
+                        $text_filter = array();
+
+                        if($this->filter->getSelectedValue() == "notexist")
+                        {
+                            for($i=0; $i< count($text);$i++)
+                            {
+                                if(!in_array(html_entity_decode($text[$i]['source']), $this->strings ) )
+                                {
+                                   $text_filter[] = $text[$i];
+                                }
+                            }
+
+                            $text = $text_filter;
+                        }
+
+
+                        if($this->filter->getSelectedValue() == "nottranslate")
+                        {
+                            for($i=0; $i< count($text);$i++)
+                            {
+                                if($text[$i]['text'] == '')
+                                {
+                                    $text_filter[] = $text[$i];
+                                }
+
+                            }
+
+                            $text = $text_filter;
+                        }
+
+                        $text_filter = array();
+
+                        if($this->lockUnlock->getSelectedValue() == "lock")
+                        {
+                            for($i=0; $i< count($text);$i++)
+                            {
+                                if($text[$i]['lock'] )
+                                {
+                                   $text_filter[] = $text[$i];
+                                }
+                            }
+
+                            $text = $text_filter;
+                        }
+
+
+                        if($this->lockUnlock->getSelectedValue() == "unlock")
+                        {
+                            for($i=0; $i< count($text);$i++)
+                            {
+                                if( !$text[$i]['lock'] )
+                                {
+                                    $text_filter[] = $text[$i];
+                                }
+
+                            }
+
+                            $text = $text_filter;
+                        }
+
 
                     }
                     else
@@ -343,8 +548,9 @@ class translate extends PageList
                         foreach($translationUnit as $unit)
                         {
                             $text[] = array('id'=>(string)$unit['id'],
-                                                                                    'source'=>(string)$unit->source,
-                                                                                    'text'=>(string)$unit->target);
+                                            'source'=>(string)$unit->source,
+                                            'text'=>(string)$unit->target,
+                                            'lock'=>false);
                         }
 
                     }
@@ -409,8 +615,8 @@ class translate extends PageList
         {
             $targetted = false;
             $currentId = 0;
-            foreach($unit->attributes as $attribute)
-            $currentId = $attribute->nodeValue;
+            
+            $currentId = $unit->getAttribute('id');
 
             //in each unit, need to find the source, target and comment nodes
             //it will assume that the source is before the target.
@@ -454,7 +660,7 @@ class translate extends PageList
         $fileNode->setAttribute('date', @date('Y-m-d\TH:i:s\Z'));
 
         if($dom->save($file) >0)
-        return true;
+            return true;
 
         return false;
 
@@ -629,22 +835,107 @@ class translate extends PageList
             {
                 $item->textColumn->setBackColor("red");
             }
-
-            if($param->Item->DataItem['text'] == "")
+            else
             {
-                $item->textColumn->setBackColor("green");
+                if($param->Item->DataItem['text'] == "")
+                {
+                    $item->textColumn->setBackColor("green");
+                }
             }
 
         }
+
+
 
         if($item->ItemType==='Item' ||
             $item->ItemType==='AlternatingItem' ||
             $item->ItemType==='EditItem')
         {
-            // add an aleart dialog to delete buttons
-            $msg = Prado::Localize('Are you sure?');
-            $item->DeleteColumn->Button->Attributes->onclick=
-                "if(!confirm('$msg')) return false;";
+            if($param->Item->DataItem['lock'])
+            {             
+                $item->DeleteColumn->Button->enabled = false;
+                $item->GoogleTranslateColumn->Button->enabled = false;
+                $item->EditColumn->enabled = false;
+            }
+            else
+            {
+                if($item->textColumn->getBackColor() != 'green' && $item->textColumn->getBackColor() != 'red')
+                    $item->textColumn->setBackColor("orange");
+                // add an aleart dialog to delete buttons
+                $msg = Prado::Localize('Are you sure?');
+                $item->DeleteColumn->Button->Attributes->onclick=
+                    "if(!confirm('$msg')) return false; else return true;";
+            }
+        }
+    }
+
+    public function setLocked($sender,$param)
+    {
+        $lang = $this->language->getSelectedValue();
+        $module = $this->module->getSelectedValue();
+        $extension = $this->extension->getSelectedValue();
+
+        $id = $sender->Text;
+
+
+        $file = "";
+
+        if($module == ".")
+            $file = $lang.DIRECTORY_SEPARATOR.'messages.xml';
+        else
+            $file = $lang.DIRECTORY_SEPARATOR.$extension.'.xml';
+
+        $dom = DOMDocument::load($file);
+
+        //find the body element
+        $xpath = new DomXPath($dom);
+        $units = $xpath->query('//trans-unit');
+
+
+
+        $found = false;
+
+        //for each of the existin units
+        foreach($units as $unit)
+        {
+            $targetted = false;
+            $currentId = 0;
+            
+            $currentId = $unit->getAttribute('id');
+
+            if($currentId == $id)
+            {
+                if($unit->hasAttribute('lock'))
+                {
+                  if((bool)$unit->getAttribute('lock'))
+                    $unit->setAttribute('lock', "0");
+                  else
+                    $unit->setAttribute('lock', "1");
+
+                }
+                else
+                {
+                    $unit->setAttribute('lock', "1");
+                }
+
+                $found = true;
+            }
+
+            
+            //finished searching
+            if($found) break;
+        }
+
+        if($found)
+        {
+            $fileNode = $xpath->query('//file')->item(0);
+            $fileNode->setAttribute('date', @date('Y-m-d\TH:i:s\Z'));
+
+            $dom->save($file);
+
+            $this->DataGrid->EditItemIndex=-1;
+            $this->DataGrid->DataSource=$this->getData();
+            $this->DataGrid->dataBind();
         }
     }
 
@@ -737,7 +1028,10 @@ class translate extends PageList
         {
             $i++;
 
-            $translateGoogleText = $this->traduction_google_v1($string);
+            if($this->google->getChecked())
+                $translateGoogleText = $this->traduction_google_v1($string);
+            else
+                $translateGoogleText = false;
 
             if(!$translateGoogleText)
             {
@@ -770,7 +1064,23 @@ class translate extends PageList
         }
     }
 
-    function traduction_google_v1($mot_a_traduire)
+    public function googleTranslate($sender,$param)
+    {
+        $item=$param->Item;
+
+        $text = $this->traduction_google_v1($item->sourceColumn->Text);
+
+        $this->updateText(
+            $this->DataGrid->DataKeys[$item->ItemIndex], // id
+            $item->sourceColumn->Text, // source
+            $text // text
+        );
+        $this->DataGrid->EditItemIndex=-1;
+        $this->DataGrid->DataSource=$this->getData();
+        $this->DataGrid->dataBind();
+    }
+
+    protected function traduction_google_v1($mot_a_traduire)
     {
 
         $lg_lg = "en|".substr($this->language->getSelectedValue(),-2,2);

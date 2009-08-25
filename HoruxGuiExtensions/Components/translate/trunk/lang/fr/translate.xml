@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff version="1.0">
-<file source-language="en" target-language="fr" datatype="plaintext" original="messages" date="2008-11-03T11:31:45Z" product-name="messages">
+<file source-language="en" target-language="fr" datatype="plaintext" original="messages" date="2009-08-25T10:54:31Z" product-name="messages">
 <body>
 <trans-unit id="1">
    <source>Add a language</source>
@@ -158,6 +158,61 @@
 <trans-unit id="38">
 <source>Are you sure?</source>
 <target>Etes-vous sûre?</target>
+</trans-unit>
+
+<trans-unit id="39">
+<source>Filter</source>
+<target>Filtre</target>
+</trans-unit>
+
+<trans-unit id="40">
+<source>All</source>
+<target>Tous</target>
+</trans-unit>
+
+<trans-unit id="41">
+<source>Unexisting</source>
+<target>N'existe plus</target>
+</trans-unit>
+
+<trans-unit id="42">
+<source>Untranslate</source>
+<target>Non traduit</target>
+</trans-unit>
+
+<trans-unit id="43">
+<source>Lock/Unlock</source>
+<target>Bloquer/Débloquer</target>
+</trans-unit>
+
+<trans-unit id="44">
+<source>Lock</source>
+<target>Bloquer</target>
+</trans-unit>
+
+<trans-unit id="45">
+<source>Unlock</source>
+<target>Débloquer</target>
+</trans-unit>
+
+<trans-unit id="46">
+<source>Use Google for a complet new translation</source>
+<target>Utiliser Google pour une traduction complète</target>
+</trans-unit>
+
+<trans-unit id="47">
+<source>Google translation</source>
+<target>Traduction Google</target>
+</trans-unit>
+
+<trans-unit id="48">
+<source>Lock Unlock</source>
+<target>Bloquer Débloquer</target>
+</trans-unit>
+
+<trans-unit id="49">
+<source>Click here to lock or&lt;br/&gt; unlock the text</source>
+<target>Cliquer ici pour bloquer ou&lt;br/&gt;débloquer le texte</target>
 </trans-unit>
 </body>
 </file>
