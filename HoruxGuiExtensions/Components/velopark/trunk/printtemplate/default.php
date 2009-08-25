@@ -22,7 +22,7 @@
 						  "price"=>$sub["price"], 
 						  "currency"=>$site["devise"], 
 						  "value"=>($sub["price"]*$site['tva']/100),
-						  "name"=>utf8_decode($sub["name"])
+						  "name"=>$sub["name"]
 						);
 
 

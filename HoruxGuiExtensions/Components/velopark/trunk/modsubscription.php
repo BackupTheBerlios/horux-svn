@@ -53,6 +53,11 @@ class modsubscription extends Page
           $this->multiple->Text = $data['credit'];
           $this->price->Text = $data['price'];
 
+          if($data['start'] == 'immediatly')
+            $this->StartImmediatly->setChecked(true);
+          else
+            $this->StartFirstAccess->setChecked(true);
+
 
 		  $validity = explode(":", $data['validity']);	
 		  $this->year->setSelectedValue($validity[0]);	  
@@ -106,7 +111,7 @@ class modsubscription extends Page
 
     protected function saveData()
     {
-		$cmd = $this->db->createCommand( "UPDATE hr_vp_subscription SET `name` = :name,`description` = :description,`validity` = :validity, `credit` = :credit, `price`=:price WHERE id =:id" );
+		$cmd = $this->db->createCommand( "UPDATE hr_vp_subscription SET `name` = :name,`description` = :description,`validity` = :validity, `credit` = :credit, `price`=:price, `start`=:start  WHERE id =:id" );
 
       	$cmd->bindParameter(":name",$this->name->SafeText,PDO::PARAM_STR);
       	$cmd->bindParameter(":description",$this->description->SafeText, PDO::PARAM_STR);
@@ -118,6 +123,10 @@ class modsubscription extends Page
 		$cmd->bindParameter(":price",$this->price->SafeText, PDO::PARAM_STR);
       	$cmd->bindParameter(":id",$this->id->Value, PDO::PARAM_STR);
 
+
+        $checked = $this->StartFirstAccess->getChecked() ? 'firstaccess' : 'immediatly';
+
+        $cmd->bindParameter(":start",$checked, PDO::PARAM_STR);
 
 		return $cmd->execute();
     }

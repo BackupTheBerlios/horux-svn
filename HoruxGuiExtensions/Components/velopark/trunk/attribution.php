@@ -53,7 +53,7 @@ class attribution extends PageList
 
 	protected function getData()
 	{
-        $sql = "SELECT sa.*, s.name AS type, s.description, s.credit AS totalCredit FROM hr_vp_subscription_attribution AS sa LEFT JOIN hr_vp_subscription AS s ON s.id=sa.subcription_id WHERE user_id=".$this->Request['id']." ORDER BY id DESC";
+        $sql = "SELECT sa.*, s.name AS type, s.description, s.credit AS totalCredit, end FROM hr_vp_subscription_attribution AS sa LEFT JOIN hr_vp_subscription AS s ON s.id=sa.subcription_id WHERE user_id=".$this->Request['id']." ORDER BY id DESC";
 
         $cmd=$this->db->createCommand($sql);
         $data = $cmd->query();
@@ -62,6 +62,17 @@ class attribution extends PageList
 		foreach($data as $k=>$v)
 		{
 			$tmp = $data[$k]["status"];
+
+            $end = explode(" ", $data[$k]["end"]);
+            $endDate = explode("-",$end[0]);
+            $endTime = explode(":",$end[1]);
+            $end = mktime($endTime[0],$endTime[1],$endTime[2],$endDate[1], $endDate[2],$endDate[0]);
+
+            $curentTimeDate = mktime();
+
+            if($end < $curentTimeDate && $tmp != 'not_start' && $tmp != 'canceled' )
+               $tmp = 'finished';
+
 
 			switch($tmp)
 			{
@@ -73,6 +84,9 @@ class attribution extends PageList
 					break;
 				case "finished":
 					$tmp = "<span style=\"color:red\">".Prado::localize("Finished")."</span>";
+					break;
+				case "canceled":
+					$tmp = "<span style=\"color:red\">".Prado::localize("Canceled")."</span>";
 					break;
 			}
 
@@ -97,19 +111,44 @@ class attribution extends PageList
 			return;
 		}
 
+		$sql = "SELECT COUNT(*) AS n FROM hr_vp_subscription_attribution WHERE user_id=:id AND status='started'";
+		$cmd=$this->db->createCommand($sql);
+        $cmd->bindParameter(":id",$this->userId->Value);
+		$data = $cmd->query();
+		$data = $data->read();
+
+        $nStarted = $data['n'];
+
 		$sql = "SELECT * FROM hr_vp_subscription WHERE id=:id";
 		$cmd=$this->db->createCommand($sql);
         $cmd->bindParameter(":id",$subId);
 		$data = $cmd->query();
 		$data = $data->read();	
 
-		$sql = "INSERT INTO hr_vp_subscription_attribution (user_id, subcription_id, create_date, status, credit, start, end, create_by) VALUES (:user_id,  :subcription_id, NOW(), 'not_start', :credit, 'NULL', 'NULL', :create_by)";
+
+
+        if($data["start"] == 'firstaccess' || $nStarted>0)
+    		$sql = "INSERT INTO hr_vp_subscription_attribution (user_id, subcription_id, create_date, status, credit, start, end, create_by) VALUES (:user_id,  :subcription_id, NOW(), 'not_start', :credit, 'NULL', 'NULL', :create_by)";
+        else
+        {
+            $validity = explode(':', $data["validity"]);
+            $nHours = ($validity[0]*365*24) + ($validity[1]*30*24) + ($validity[2]*24) + ($validity[3]);
+            
+
+    		$sql = "INSERT INTO hr_vp_subscription_attribution (user_id, subcription_id, create_date, status, credit, start, end, create_by) VALUES (:user_id,  :subcription_id, NOW(), 'started', :credit, NOW(), NOW()+ INTERVAL ".$nHours." HOUR, :create_by)";
+        }
 
 		$cmd=$this->db->createCommand($sql);
 
         $cmd->bindParameter(":user_id",$this->userId->Value,PDO::PARAM_STR);
         $cmd->bindParameter(":subcription_id",$subId,PDO::PARAM_STR);
-		$cmd->bindParameter(":credit",$data["credit"],PDO::PARAM_STR);
+        if($data["start"] == 'firstaccess'  || $nStarted>0)
+    		$cmd->bindParameter(":credit",$data["credit"],PDO::PARAM_STR);
+        else
+        {
+            $credit = $data["credit"]-1;
+            $cmd->bindParameter(":credit",$credit,PDO::PARAM_STR);
+        }
 
 
 		$user = $this->Application->getUser();
@@ -157,7 +196,7 @@ class attribution extends PageList
          {
             if( (bool)$cb->getChecked() && $cb->Value != "0")
             {
-                $cmd=$this->db->createCommand("DELETE FROM hr_vp_subscription_attribution WHERE id=:id");
+                $cmd=$this->db->createCommand("UPDATE hr_vp_subscription_attribution SET status='canceled' WHERE id=:id");
                 $cmd->bindParameter(":id",$cb->Value);
                 $cmd->execute();
 				$nDelete++;

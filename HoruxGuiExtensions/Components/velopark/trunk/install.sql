@@ -22,6 +22,7 @@ CREATE TABLE IF NOT EXISTS `hr_vp_subscription` (
   `credit` int(11) NOT NULL,
   `locked` int(11) NOT NULL,
   `price` float NOT NULL,
+  `start` set('immediatly','firstaccess') NOT NULL,
   PRIMARY KEY  (`id`)
 ) TYPE=MyISAM CHARACTER SET `utf8`;
 

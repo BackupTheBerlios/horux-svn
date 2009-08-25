@@ -18,8 +18,9 @@
 		<menu iconmenu="icon-16-ticket.jpg" url="user.UserList" name="Velo Park">
 			<submenus>
 				<submenu iconmenu="icon-16-config.png" url="components.velopark.config" name="Configuration" ></submenu>
-				<submenu iconmenu="icon-16-status.png" url="components.velopark.status" name="Status" ></submenu>
 				<submenu iconmenu="icon-16-subscrption.png" url="components.velopark.subscription" name="Subscription" ></submenu>
+				<submenu iconmenu="icon-16-invoice.png" url="components.velopark.invoice" name="Invoice" ></submenu>
+				<submenu iconmenu="icon-16-status.png" url="components.velopark.status" name="Status" ></submenu>
 			</submenus>
 		</menu>	
 	</mainmenu>
@@ -34,6 +35,7 @@
 		<permission>components.velopark.modsubscription</permission>
 		<permission>components.velopark.attribution</permission>
 		<permission>components.velopark.modattribution</permission>
+		<permission>components.velopark.invoice</permission>
 	</permissions>
 	
 </install>

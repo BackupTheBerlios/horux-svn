@@ -68,7 +68,7 @@ class addsubscription extends Page
 
     protected function saveData()
     {
-		$cmd = $this->db->createCommand( "INSERT INTO `hr_vp_subscription` (`name` ,`description` ,`validity`, `credit`, `price` ) VALUES (:name, :description, :validity, :credit, :price)" );
+		$cmd = $this->db->createCommand( "INSERT INTO `hr_vp_subscription` (`name` ,`description` ,`validity`, `credit`, `price`, `start` ) VALUES (:name, :description, :validity, :credit, :price, :start)" );
 
       	$cmd->bindParameter(":name",$this->name->SafeText,PDO::PARAM_STR);
       	$cmd->bindParameter(":description",$this->description->SafeText, PDO::PARAM_STR);
@@ -78,6 +78,11 @@ class addsubscription extends Page
 		$cmd->bindParameter(":validity",$validity, PDO::PARAM_STR);
 		$cmd->bindParameter(":credit",$this->multiple->SafeText, PDO::PARAM_STR);
 		$cmd->bindParameter(":price",$this->price->SafeText, PDO::PARAM_STR);
+
+        $checked = $this->StartFirstAccess->getChecked() ? 'firstaccess' : 'immediatly';
+        
+		$cmd->bindParameter(":start",$checked, PDO::PARAM_STR);
+
 
 		$cmd->execute();
 

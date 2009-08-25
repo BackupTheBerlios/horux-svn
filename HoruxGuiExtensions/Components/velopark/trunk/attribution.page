@@ -271,14 +271,19 @@
 
                         <prop:ItemTemplate>
 
-							<span onmouseover="Tip('<%[Print the subscription]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)">
-							<com:TImageButton 
-								Text="<%#$this->NamingContainer->DataItem['id']%>"
-								ImageUrl="<%~./assets/icon-16-printticket.png%>" 
-								OnClick="Page.printTicket" 
-								Style="border:0px"
-								/>
-							</span>
+							<com:TConditional Condition="$this->NamingContainer->DataItem['status'] != 'canceled'" >
+								<prop:TrueTemplate>
+
+                                    <span onmouseover="Tip('<%[Print the subscription]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)">
+                                    <com:TImageButton
+                                        Text="<%#$this->NamingContainer->DataItem['id']%>"
+                                        ImageUrl="<%~./assets/icon-16-printticket.png%>"
+                                        OnClick="Page.printTicket"
+                                        Style="border:0px"
+                                        />
+                                    </span>
+								</prop:TrueTemplate>
+							</com:TConditional>
 
                         </prop:ItemTemplate>
 	                </com:TTemplateColumn>
