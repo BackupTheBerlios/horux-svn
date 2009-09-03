@@ -205,6 +205,18 @@ class HardwareList extends PageList
 
                     $cmd=$this->db->createCommand("DELETE FROM hr_".$type." WHERE id_device=".$id);
                     $cmd->execute();
+
+                    $cmd=$this->db->createCommand("DELETE FROM hr_standalone_action_service WHERE rd_id=".$id);
+                    $cmd->execute();
+
+                    $cmd=$this->db->createCommand("DELETE FROM hr_openTime_attribution WHERE id_device=".$id);
+                    $cmd->execute();
+
+                    $cmd=$this->db->createCommand("DELETE FROM hr_user_group_access WHERE id_device=".$id);
+                    $cmd->execute();
+
+
+
                     $nDelete++;
                 }
             }
