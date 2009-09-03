@@ -77,6 +77,9 @@ class Groups extends Page
     	$cmd->bindParameter(":id_group",$id_group);	
     	$cmd->execute();
 
+        $this->addStandalone('add', $id_group);
+
+
         $cmd=$this->db->createCommand(SQL::SQL_GET_PERSON);
         $cmd->bindParameter(":id",$id_user);
         $cmd = $cmd->query();
@@ -91,7 +94,59 @@ class Groups extends Page
 
 		$this->Response->redirect($this->Service->constructUrl('user.groups',array('id'=>$id_user)));    	
     }    
-    
+
+    protected function addStandalone($function, $idgroup)
+    {
+        $cmd=$this->db->createCommand("SELECT * FROM hr_user_group_access WHERE id_group=:id");
+        $cmd->bindParameter(":id",$idgroup);
+        $data = $cmd->query();
+        $data = $data->readAll();
+        foreach($data as $d)
+        {
+            $idreader = $d['id_device'];
+
+            $cmd=$this->db->createCommand("SELECT * FROM hr_user_group_attribution WHERE id_group=:id");
+            $cmd->bindParameter(":id",$idgroup);
+            $data2 = $cmd->query();
+            $data2 = $data2->readAll();
+
+            foreach($data2 as $d2)
+            {
+                $idperson = $d2['id_user'];
+
+                $cmd=$this->db->createCommand("SELECT * FROM hr_user WHERE id=:id");
+                $cmd->bindParameter(":id",$idperson);
+                $data_u = $cmd->query();
+                $data_u = $data_u->read();
+
+                //i the user is blocked, do add any standalone action
+                if($data_u['isBlocked'] && $function=='add')
+                    return;
+
+
+                $cmd=$this->db->createCommand("SELECT t.serialNumber, t.isBlocked FROM hr_keys_attribution AS ta LEFT JOIN hr_keys AS t ON t.id=ta.id_key WHERE id_user=:id");
+                $cmd->bindParameter(":id",$idperson);
+                $data3 = $cmd->query();
+                $data3 = $data3->readAll();
+
+                foreach($data3 as $d3)
+                {
+                    $rfid = $d3['serialNumber'];
+
+                    if( ($d3['isBlocked'] == 0 && $function=='add' ) || $function=='sub')
+                    {
+                        $cmd=$this->db->createCommand("INSERT INTO hr_standalone_action_service (`type`, `serialNumber`, `rd_id`) VALUES (:func,:rfid,:rdid)");
+                        $cmd->bindParameter(":func",$function);
+                        $cmd->bindParameter(":rfid",$rfid);
+                        $cmd->bindParameter(":rdid",$idreader);
+                        $cmd->execute();
+                    }
+                }
+            }
+
+        }
+    }
+
     public function checkboxAllCallback($sender, $param)
     {
         $cbs = $this->findControlsByType("TActiveCheckBox");
@@ -130,6 +185,8 @@ class Groups extends Page
 					$cmd=$this->db->createCommand(SQL::SQL_DELETE_GROUP_ATTRIBUTION);
 	                $cmd->bindParameter(":id_group",$cb->Value);
 	                $cmd->bindParameter(":id_user",$this->id->Value);
+
+                    $this->addStandalone('sub', $cb->Value);
 
                     if($cmd->execute())
                     {

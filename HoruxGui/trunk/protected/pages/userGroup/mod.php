@@ -191,6 +191,16 @@ class mod extends Page
             {
                 $idperson = $d2['id_user'];
 
+                $cmd=$this->db->createCommand("SELECT * FROM hr_user WHERE id=:id");
+                $cmd->bindParameter(":id",$idperson);
+                $data_u = $cmd->query();
+                $data_u = $data_u->read();
+
+                //i the user is blocked, do add any standalone action
+                if($data_u['isBlocked'] && $function=='add')
+                    return;
+
+
                 $cmd=$this->db->createCommand("SELECT t.serialNumber, t.isBlocked FROM hr_keys_attribution AS ta LEFT JOIN hr_keys AS t ON t.id=ta.id_key WHERE id_user=:id");
                 $cmd->bindParameter(":id",$idperson);
                 $data3 = $cmd->query();

@@ -41,6 +41,7 @@ Legend:
 16.07.2009         + Add the possibility to have password for the users. This password will allow to access to the public web site
 24.08.2009         ^ Modify the pages to handle the super user access right. The pages add/mod are more simple to use
 24.08.2009         + Dynamic shortcut ine the control panel and dynamic info panel
+03.09.2009         # Solve some standalone action problem when block/unblock key or user and when modify the user group and user group attribution
 
 -------------------- Horux 1.0.4 Release Released [04-06-2009] ------------------------
 30.01.2009      + Add the pin code in the user wizard

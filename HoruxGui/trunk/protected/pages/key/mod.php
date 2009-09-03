@@ -169,14 +169,16 @@ class mod extends Page
 
         $cmd->bindParameter(":isUsed",$isUsed, PDO::PARAM_STR);
 
-        $this->addStandalone('sub', $this->id->Value);
-
         $res1 = $cmd->execute();
+
+        //remove in all case
+        $this->addStandalone('sub', $this->id->Value);
 
         //remove the current tag attribution
         $cmd1=$this->db->createCommand(SQL::SQL_REMOVE_TAG_ATTRIBUTION);
         $cmd1->bindParameter(":id",$this->id->Value);
         $res2 = $cmd1->execute();
+
 
 
         if($this->person->getSelectedValue() != 'null')
@@ -185,10 +187,14 @@ class mod extends Page
             $cmd2->bindParameter(":id_key",$this->id->Value);
             $cmd2->bindParameter(":id_user",$this->person->getSelectedValue());
             $res3 = $cmd2->execute();
+
+            if(!$this->isBlocked->getChecked())
+            {
+                $this->addStandalone('add', $this->id->Value);
+            }
+
         }
-
-
-        $this->addStandalone('add', $this->id->Value);
+        
 
         $this->log("Modify the key: ".$this->serialNumber->SafeText);
 
@@ -217,6 +223,17 @@ class mod extends Page
             foreach($data2 as $d2)
             {
                 $idperson = $d2['id_user'];
+
+                $cmd=$this->db->createCommand("SELECT * FROM hr_user WHERE id=:id");
+                $cmd->bindParameter(":id",$idperson);
+                $data_u = $cmd->query();
+                $data_u = $data_u->read();
+
+                //i the user is blocked, do add any standalone action
+                if($data_u['isBlocked'] && $function=='add')
+                    return;
+
+
                 $cmd=$this->db->createCommand("SELECT id_device FROM hr_user_group_attribution AS ga LEFT JOIN hr_user_group_access AS gac ON gac.id_group=ga.id_group WHERE ga.id_user=:id");
                 $cmd->bindParameter(":id",$idperson);
                 $data3 = $cmd->query();

@@ -146,13 +146,16 @@ class Attribution extends Page
         $flag = 1;
         $cmd->bindParameter(":flag",$flag);
 		$cmd->execute();
-      	
-      	$this->addStandalone('add', $id_key);
 
         $cmd=$this->db->createCommand(SQL::SQL_GET_PERSON);
         $cmd->bindParameter(":id",$id_user);
         $cmd = $cmd->query();
         $data = $cmd->read();
+
+        if(!$data['isBlocked'])
+        {
+            $this->addStandalone('add', $id_key);
+        }
 
         $cmd=$this->db->createCommand(SQL::SQL_GET_KEY2);
         $cmd->bindParameter(":id",$id_key);
@@ -202,8 +205,17 @@ class Attribution extends Page
 
      }
      $cmd->execute();
-	 
-	 $this->addStandalone($func, $id);
+
+     $cmd=$this->db->createCommand(SQL::SQL_GET_PERSON);
+     $cmd->bindParameter(":id",$this->id->Value);
+     $cmd = $cmd->query();
+     $data = $cmd->read();
+
+     if($data['isBlocked'] == '0' || $func == 'sub')
+     {
+          $this->addStandalone($func, $id);
+     }
+
 	 
      $this->DataGrid->DataSource=$this->Data;
      $this->DataGrid->dataBind();

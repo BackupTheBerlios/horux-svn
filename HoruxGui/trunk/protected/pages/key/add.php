@@ -29,8 +29,11 @@ class add extends Page
         $this->person->DataSource = $this->PersonList;
         $this->person->dataBind();
 
-        if($this->person->getItemCount())
-        $this->person->setSelectedIndex(0);
+
+        if($this->person->getItemCount() && $this->person->getSelectedValue() == '')
+        {
+            $this->person->setSelectedIndex(0);
+        }
     }
 
     protected function getPersonList()
@@ -114,6 +117,8 @@ class add extends Page
         $res1 = $cmd->execute();
         $lastId = $this->db->LastInsertID;
 
+        $dd = $this->person->getSelectedValue();
+
         if($this->person->getSelectedValue() != 'null')
         {
             $cmd2=$this->db->createCommand(SQL::SQL_ADD_TAG_ATTRIBUTION);
@@ -152,6 +157,16 @@ class add extends Page
             foreach($data2 as $d2)
             {
                 $idperson = $d2['id_user'];
+
+                $cmd=$this->db->createCommand("SELECT * FROM hr_user WHERE id=:id");
+                $cmd->bindParameter(":id",$idperson);
+                $data_u = $cmd->query();
+                $data_u = $data_u->read();
+
+                //i the user is blocked, do add any standalone action
+                if($data_u['isBlocked'])
+                    return;
+
                 $cmd=$this->db->createCommand("SELECT id_device FROM hr_user_group_attribution AS ga LEFT JOIN hr_user_group_access AS gac ON gac.id_group=ga.id_group WHERE ga.id_user=:id");
                 $cmd->bindParameter(":id",$idperson);
                 $data3 = $cmd->query();
