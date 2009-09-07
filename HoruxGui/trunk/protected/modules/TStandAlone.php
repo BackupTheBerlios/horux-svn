@@ -13,37 +13,42 @@
 * See COPYRIGHT.php for copyright notices and details.
 */
 
-class TGuiLog extends TModule
+class TStandAlone extends TModule
 {
-  private $db = NULL;
-
   public function init($config)
   {
     parent::init($config);
+
   }
 
-  public function log($log)
+  public function addStandalone($function, $id, $param=NULL)
   {
     $db = $this->Application->getModule('horuxDb')->DbConnection;
     $db->Active=true;
 
-    $username = $this->Application->getUser()->getName();
-
-    $sql = "INSERT INTO hr_gui_log (
-                        `who` ,
-                        `what`
-                  )
-                  VALUES (
-                        :who,
-                        :what
-                  )";
+    $sql = "SELECT type FROM hr_device GROUP BY type";
 
     $cmd = $db->createCommand( $sql );
-    $cmd->bindParameter(":who",$username,PDO::PARAM_STR);
-    $cmd->bindParameter(":what",$log, PDO::PARAM_STR);
-    $cmd->execute();
+    $data = $cmd->query();
+    $data = $data->readAll();
+
+    foreach($data as $d)
+    {
+        $type = $d['type'];
+
+        try
+        {
+            Prado::using('horux.pages.hardware.device.'.$type.'.'.$type.'_standalone');
+            $class = $type.'_standalone';
+            $sa = new $class();
+            $sa->addStandalone($function, $id, $param);
+        }
+        catch(Exception $e)
+        {
+            //! do noting
+        }
+    }
   }
 }
-
 
 ?>

@@ -211,11 +211,7 @@ class Attribution extends Page
      $cmd = $cmd->query();
      $data = $cmd->read();
 
-     if($data['isBlocked'] == '0' || $func == 'sub')
-     {
-          $this->addStandalone($func, $id);
-     }
-
+     $this->addStandalone($func, $id);
 	 
      $this->DataGrid->DataSource=$this->Data;
      $this->DataGrid->dataBind();
@@ -224,43 +220,9 @@ class Attribution extends Page
     
 	protected function addStandalone($function, $idkey)
 	{
-		$cmd=$this->db->createCommand("SELECT * FROM hr_keys WHERE id=:id");
-		$cmd->bindParameter(":id",$idkey);
-		$data = $cmd->query();
-		$data = $data->read();
-		
-		$rfid = $data['serialNumber'];
-		
-		if( ($data['isBlocked'] == 0 && $function=='add' ) || $function=='sub')
-		{
-			
-			$cmd=$this->db->createCommand(SQL::SQL_GET_GROUPS);
-			$cmd->bindParameter(":id",$this->id->Value);
-			$data2 = $cmd->query();
-			$data2 = $data2->readAll();
-			
-			//pour chaque groupe
-			foreach($data2 as $d2)
-			{
-				$idgroup = $d2['id'];
-				$cmd=$this->db->createCommand("SELECT * FROM hr_user_group_access WHERE id_group=:id");
-				$cmd->bindParameter(":id",$idgroup);
-				$data3 = $cmd->query();
-				$data3 = $data3->readAll();
-				
-				foreach($data3 as $d3)
-				{
-					$idreader = $d3['id_device'];
-					
-					$cmd=$this->db->createCommand("INSERT INTO hr_standalone_action_service (`type`, `serialNumber`, `rd_id`) VALUES (:func,:rfid,:rdid)");
-					$cmd->bindParameter(":func",$function);
-					$cmd->bindParameter(":rfid",$rfid);
-					$cmd->bindParameter(":rdid",$idreader);
-					$cmd->execute();
-				}
-				
-			}
-		}
+
+        $sa = new TStandAlone();
+        $sa->addStandalone($function, $idkey, 'UserAttributionKey');
 	}    
     
     public function checkboxAllCallback($sender, $param)
@@ -298,6 +260,8 @@ class Attribution extends Page
 	        {
 	            if( (bool)$cb->getChecked() && $cb->Value != "0")
 	            {
+            	    $this->addStandalone('sub', $cb->Value);
+
 					$cmd=$this->db->createCommand(SQL::SQL_DELETE_KEY_ATTRIBUTION);
 	                $cmd->bindParameter(":id",$cb->Value);
 	                $cmd->execute();
@@ -307,7 +271,6 @@ class Attribution extends Page
 	                $flag = 0;
 	                $cmd->bindParameter(":flag",$flag);
             	                
-            	    $this->addStandalone('sub', $cb->Value);            
             	                
 	                if($cmd->execute())
                     {

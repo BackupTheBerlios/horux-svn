@@ -43,6 +43,7 @@ Legend:
 24.08.2009         + Dynamic shortcut ine the control panel and dynamic info panel
 03.09.2009         # Solve some standalone action problem when block/unblock key or user and when modify the user group and user group attribution
 03.09.2009         # When removing a device, clean correctly all data in the db
+07.09.2009         + Each device handle its own standalone functionality. The device plugine need a file called DEVICE_NAME_standalone.php with a class derived form TModule
 
 -------------------- Horux 1.0.4 Release Released [04-06-2009] ------------------------
 30.01.2009      + Add the pin code in the user wizard

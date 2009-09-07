@@ -172,7 +172,7 @@ class mod extends Page
         $res1 = $cmd->execute();
 
         //remove in all case
-        $this->addStandalone('sub', $this->id->Value);
+        //$this->addStandalone('sub', $this->id->Value);
 
         //remove the current tag attribution
         $cmd1=$this->db->createCommand(SQL::SQL_REMOVE_TAG_ATTRIBUTION);
@@ -192,6 +192,10 @@ class mod extends Page
             {
                 $this->addStandalone('add', $this->id->Value);
             }
+            else
+            {
+                $this->addStandalone('sub', $this->id->Value);
+            }
 
         }
         
@@ -203,57 +207,8 @@ class mod extends Page
 
     protected function addStandalone($function, $idkey)
     {
-        $cmd=$this->db->createCommand("SELECT * FROM hr_keys WHERE id=:id");
-        $cmd->bindParameter(":id",$idkey);
-        $data = $cmd->query();
-        $data = $data->read();
-
-        $rfid = $data['serialNumber'];
-        $idtag = $data['id'];
-
-        if( ($data['isBlocked'] == 0 && $function=='add' ) || $function=='sub')
-        {
-
-            $cmd=$this->db->createCommand("SELECT * FROM hr_keys_attribution WHERE id_key=:id");
-            $cmd->bindParameter(":id",$idtag);
-            $data2 = $cmd->query();
-            $data2 = $data2->readAll();
-
-            //pour chaque groupe
-            foreach($data2 as $d2)
-            {
-                $idperson = $d2['id_user'];
-
-                $cmd=$this->db->createCommand("SELECT * FROM hr_user WHERE id=:id");
-                $cmd->bindParameter(":id",$idperson);
-                $data_u = $cmd->query();
-                $data_u = $data_u->read();
-
-                //i the user is blocked, do add any standalone action
-                if($data_u['isBlocked'] && $function=='add')
-                    return;
-
-
-                $cmd=$this->db->createCommand("SELECT id_device FROM hr_user_group_attribution AS ga LEFT JOIN hr_user_group_access AS gac ON gac.id_group=ga.id_group WHERE ga.id_user=:id");
-                $cmd->bindParameter(":id",$idperson);
-                $data3 = $cmd->query();
-                $data3 = $data3->readAll();
-
-                foreach($data3 as $d3)
-                {
-                    $idreader = $d3['id_device'];
-                    if($idreader != NULL)
-                    {
-                        $cmd=$this->db->createCommand("INSERT INTO hr_standalone_action_service (`type`, `serialNumber`, `rd_id`) VALUES (:func,:rfid,:rdid)");
-                        $cmd->bindParameter(":func",$function);
-                        $cmd->bindParameter(":rfid",$rfid);
-                        $cmd->bindParameter(":rdid",$idreader);
-                        $cmd->execute();
-                    }
-                }
-
-            }
-        }
+        $sa = new TStandAlone();
+        $sa->addStandalone($function, $idkey, 'KeyMod');
     }
 
 

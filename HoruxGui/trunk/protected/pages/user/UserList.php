@@ -441,45 +441,9 @@ class UserList extends PageList
         protected function addStandalone($function, $userId)
         {
 
-            $cmd=$this->db->createCommand(SQL::SQL_GET_KEY);
-            $cmd->bindParameter(":id",$userId);
-            $data = $cmd->query();
-            $data = $data->readAll();
+            $sa = new TStandAlone();
+            $sa->addStandalone($function, $userId, 'UserList');
 
-            //pour chaque rfid
-            foreach($data as $d)
-            {
-                $rfid = $d['serialNumber'];
-                if( $d['isBlocked'] == 0 )
-                {
-                    $cmd=$this->db->createCommand(SQL::SQL_GET_GROUPS);
-                    $cmd->bindParameter(":id",$userId);
-                    $data2 = $cmd->query();
-                    $data2 = $data2->readAll();
-
-                    //pour chaque groupe
-                    foreach($data2 as $d2)
-                    {
-                        $idgroup = $d2['id'];
-                        $cmd=$this->db->createCommand("SELECT * FROM hr_user_group_access WHERE id_group=:id");
-                        $cmd->bindParameter(":id",$idgroup);
-                        $data3 = $cmd->query();
-                        $data3 = $data3->readAll();
-
-                        foreach($data3 as $d3)
-                        {
-                            $idreader = $d3['id_device'];
-
-                            $cmd=$this->db->createCommand("INSERT INTO hr_standalone_action_service (`type`, `serialNumber`, `rd_id`) VALUES (:func,:rfid,:rdid)");
-                            $cmd->bindParameter(":func",$function);
-                            $cmd->bindParameter(":rfid",$rfid);
-                            $cmd->bindParameter(":rdid",$idreader);
-                            $cmd->execute();
-                        }
-
-                    }
-                }
-            }
         }
 
         public function selectionChangedAccessPoint($sender,$param)
@@ -597,6 +561,8 @@ class UserList extends PageList
                         $cmd=$this->db->createCommand(SQL::SQL_DELETE_KEY_ATTRIBUTION_FROM_IDPERSON);
                         $cmd->bindParameter(":id",$id_user);
                         $cmd->execute();
+
+                        $this->addStandalone('sub',$id_user);
 
                         $nDelete++;
                     }
