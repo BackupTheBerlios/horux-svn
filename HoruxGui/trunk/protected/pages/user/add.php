@@ -166,9 +166,19 @@ class Add extends Page
 
       $this->log("Add the user: ".$this->name->SafeText." ".$this->firstname->SafeText);
 
+      $this->addStandalone('add',$id);
+
       return $id;
 	} 
-	
+
+    protected function addStandalone($function, $userId)
+    {
+
+        $sa = new TStandAlone();
+        $sa->addStandalone($function, $userId, 'UserListAdd');
+
+    }
+
 	public function fileUploaded($sender,$param)
     {
       $this->hasFile = $sender->HasFile; 

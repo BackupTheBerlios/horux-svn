@@ -144,8 +144,9 @@ CREATE TABLE IF NOT EXISTS `hr_config` (
 -- Contenu de la table `hr_config`
 --
 
-INSERT INTO `hr_config` (`id`, `xmlrpc_server`, `xmlrpc_port`,`log_path`, `debug_mode`, `server_path`, `ldap_server_name`, `ldpa_port`, `ldap_dn`, `ldap_user`, `ldpa_password`, `user_method`, `key`, `mail_mailer`, `mail_mail_from`, `mail_from_name`, `mail_sendmail_path`, `mail_smtp_auth`, `mail_smtp_safe`, `mail_smtp_username`, `mail_smtp_password`, `mail_smtp_host`, `mail_smtp_port`) VALUES
-(1, 'localhost', 1083, '', 0, '.', '', 0, '', '', '', 'db', '', 'sendmail', '', '', '/usr/sbin/sendmail', 0, 'none', '', '', '', 21);
+
+INSERT INTO `hr_config` (`id`, `xmlrpc_server`, `xmlrpc_port`, `log_path`, `debug_mode`, `server_path`, `key`, `mail_mailer`, `mail_mail_from`, `mail_from_name`, `mail_sendmail_path`, `mail_smtp_auth`, `mail_smtp_safe`, `mail_smtp_username`, `mail_smtp_password`, `mail_smtp_host`, `mail_smtp_port`, `publicurl`) VALUES
+(1, 'localhost', 1083, '', 0, '.', '', 'mail', '', '', '/usr/sbin/sendmail', 0, 'none', '', '', '', 0, '');
 
 # --------------------------------------------------------
 
@@ -206,57 +207,57 @@ CREATE TABLE IF NOT EXISTS `hr_gui_permissions` (
 # Contenu de la table `hr_gui_permissions`
 #
 
-INSERT INTO `hr_gui_permissions` (`page`, `selector`, `value`, `allowed`) VALUES
-('controlPanel.ControlPanel', 'group_id', 1, '1'),
-('site.Site', 'group_id', 1, '1'),
-('system.Alarms', 'group_id', 1, '1'),
-('system.Service', 'group_id', 1, '1'),
-('system.Status', 'group_id', 1, '1'),
-('user.UserList', 'group_id', 1, '1'),
-('user.add', 'group_id', 1, '1'),
-('user.mod', 'group_id', 1, '1'),
-('user.attribution', 'group_id', 1, '1'),
-('user.groups', 'group_id', 1, '1'),
-('user.UserWizzard', 'group_id', 1, '1'),
-('userGroup.UserGroupList', 'group_id', 1, '1'),
-('userGroup.add', 'group_id', 1, '1'),
-('userGroup.mod', 'group_id', 1, '1'),
-('key.KeyList', 'group_id', 1, '1'),
-('key.add', 'group_id', 1, '1'),
-('key.mod', 'group_id', 1, '1'),
-('key.recycling', 'group_id', 1, '1'),
-('accessLevel.accessLevelList', 'group_id', 1, '1'),
-('accessLevel.add', 'group_id', 1, '1'),
-('accessLevel.mod', 'group_id', 1, '1'),
-('nonWorkingDay.nonWorkingDay', 'group_id', 1, '1'),
-('nonWorkingDay.add', 'group_id', 1, '1'),
-('nonWorkingDay.mod', 'group_id', 1, '1'),
-('tool.GlobalCheckin', 'group_id', 1, '1'),
-('tool.GuiLog', 'group_id', 1, '1');
-('installation.extensions', 'group_id', 1, '1'),
-('installation.template', 'group_id', 1, '1'),
-('installation.language', 'group_id', 1, '1'),
-('installation.componentconfig', 'group_id', 1, '1'),
-('superuser.userList', 'group_id', 1, '1'),
-('superuser.userAdd', 'group_id', 1, '1'),
-('superuser.userMod', 'group_id', 1, '1'),
-('superuser.userGroupList', 'group_id', 1, '1'),
-('superuser.userGroupAdd', 'group_id', 1, '1'),
-('superuser.userGroupMod', 'group_id', 1, '1'),
-('configuration.config', 'group_id', 1, '1'),
-('installation.components', 'group_id', 1, '1'),
-('installation.devices', 'group_id', 1, '1'),
-('hardware.HardwareList', 'group_id', 1, '1'),
-('hardware.HardwareAddList', 'group_id', 1, '1'),
-('components.tracking.tracking', 'group_id', 1, '1'),
-('help.SystemInfo', 'group_id', 1, '1'),
-('help.About', 'group_id', 1, '1'),
-('openTime.openTimeList', 'group_id', 1, '1'),
-('openTime.add', 'group_id', 1, '1'),
-('openTime.mod', 'group_id', 1, '1'),
-('system.Notification', 'group_id', 1, '1'),
-('system.NotificationAdd', 'group_id', 1, '1'),
-('system.NotificationMod', 'group_id', 1, '1'),
+INSERT INTO `hr_gui_permissions` (`page`, `selector`, `value`, `allowed`, `shortcut`) VALUES
+('controlPanel.ControlPanel', 'group_id', 1, '1', 0),
+('site.Site', 'group_id', 1, '1', 1),
+('system.Alarms', 'group_id', 1, '1', 1),
+('system.Service', 'group_id', 1, '1', 1),
+('system.Status', 'group_id', 1, '1', 1),
+('user.UserList', 'group_id', 1, '1', 1),
+('user.add', 'group_id', 1, '1',0),
+('user.mod', 'group_id', 1, '1',0),
+('user.attribution', 'group_id', 1, '1',0),
+('user.groups', 'group_id', 1, '1', 0),
+('user.UserWizzard', 'group_id', 1, '1', 1),
+('userGroup.UserGroupList', 'group_id', 1, '1', 1),
+('userGroup.add', 'group_id', 1, '1',0),
+('userGroup.mod', 'group_id', 1, '1',0),
+('key.KeyList', 'group_id', 1, '1', 1),
+('key.add', 'group_id', 1, '1',0),
+('key.mod', 'group_id', 1, '1',0),
+('key.recycling', 'group_id', 1, '1', 1),
+('accessLevel.accessLevelList', 'group_id', 1, '1', 1),
+('accessLevel.add', 'group_id', 1, '1',0),
+('accessLevel.mod', 'group_id', 1, '1',0),
+('nonWorkingDay.nonWorkingDay', 'group_id', 1, '1', 1),
+('nonWorkingDay.add', 'group_id', 1, '1',0),
+('nonWorkingDay.mod', 'group_id', 1, '1',0),
+('tool.GlobalCheckin', 'group_id', 1, '1', 1),
+('tool.GuiLog', 'group_id', 1, '1', 1),
+('installation.extensions', 'group_id', 1, '1', 1),
+('installation.template', 'group_id', 1, '1',0),
+('installation.language', 'group_id', 1, '1',0),
+('installation.componentconfig', 'group_id', 1, '1',0),
+('superuser.userList', 'group_id', 1, '1', 1),
+('superuser.userAdd', 'group_id', 1, '1',0),
+('superuser.userMod', 'group_id', 1, '1',0),
+('superuser.userGroupList', 'group_id', 1, '1', 1),
+('superuser.userGroupAdd', 'group_id', 1, '1',0),
+('superuser.userGroupMod', 'group_id', 1, '1',0),
+('configuration.config', 'group_id', 1, '1', 1),
+('installation.components', 'group_id', 1, '1',0),
+('installation.devices', 'group_id', 1, '1',0),
+('hardware.HardwareList', 'group_id', 1, '1', 1),
+('hardware.HardwareAddList', 'group_id', 1, '1',0),
+('components.tracking.tracking', 'group_id', 1, '1', 1),
+('help.SystemInfo', 'group_id', 1, '1',0),
+('help.About', 'group_id', 1, '1',0),
+('openTime.openTimeList', 'group_id', 1, '1',0),
+('openTime.add', 'group_id', 1, '1',0),
+('openTime.mod', 'group_id', 1, '1',0),
+('system.Notification', 'group_id', 1, '1',0),
+('system.NotificationAdd', 'group_id', 1, '1',0),
+('system.NotificationMod', 'group_id', 1, '1',0);
 
 
 # --------------------------------------------------------
@@ -410,6 +411,9 @@ CREATE TABLE IF NOT EXISTS `hr_superuser_group` (
   `superAdmin` smallint(1) NOT NULL default '0',
   `description` varchar(200) collate utf8_unicode_ci NOT NULL,
   `locked` int(11) NOT NULL default '0',
+  `dispUserLoggedIn` int(1) NOT NULL,
+  `dispLastAlarm` int(1) NOT NULL,
+  `dispLastTracking` int(1) NOT NULL,
   PRIMARY KEY  (`id`)
 ) TYPE=MyISAM CHARACTER SET `utf8`;
 
@@ -417,8 +421,8 @@ CREATE TABLE IF NOT EXISTS `hr_superuser_group` (
 # Contenu de la table `hr_superuser_group`
 #
 
-INSERT INTO `hr_superuser_group` (`id`, `name`, `superAdmin`, `description`, `locked`) VALUES
-(1, 'admin', 1, 'Admin', 0);
+INSERT INTO `hr_superuser_group` (`id`, `name`, `superAdmin`, `description`, `locked`, `dispUserLoggedIn`, `dispLastAlarm`, `dispLastTracking`) VALUES
+(1, 'admin', 1, 'Admin', 0, 1, 1, 1);
 
 # --------------------------------------------------------
 

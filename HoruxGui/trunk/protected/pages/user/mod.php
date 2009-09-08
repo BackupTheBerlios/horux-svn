@@ -224,9 +224,19 @@ class Mod extends Page
 
         if(!$cmd->execute()) return false;
 
+        $this->addStandalone('add',$this->id->Value);
+
         $this->log("Modify the user: ".$this->name->SafeText." ".$this->firstname->SafeText);
 
         return true;
+    }
+
+    protected function addStandalone($function, $userId)
+    {
+
+        $sa = new TStandAlone();
+        $sa->addStandalone($function, $userId, 'UserListMod');
+
     }
 
     public function fileUploaded($sender,$param)
