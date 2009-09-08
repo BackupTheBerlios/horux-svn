@@ -103,13 +103,17 @@
 <com:TTemplateColumn HeaderStyle.Width = "80px">
     <prop:HeaderTemplate><%[Open time]%></prop:HeaderTemplate>
     <prop:ItemTemplate>
-        <span onmouseover="Tip('<%[Attribute one or more open time]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)">
-        <com:TImageButton
-            Text="<%#$this->NamingContainer->DataItem['id']%>"
-            ImageUrl="./themes/letux/images/menu/icon-16-accessLevel.png"
-            OnClick="Page.setOpenTime"
-            Style="border:0px"
-            />
+        <com:TConditional Condition="$this->NamingContainer->DataItem['accessPoint']==1">
+            <prop:TrueTemplate>
+                <span onmouseover="Tip('<%[Attribute one or more open time]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)">
+                <com:TImageButton
+                    Text="<%#$this->NamingContainer->DataItem['id']%>"
+                    ImageUrl="./themes/letux/images/menu/icon-16-accessLevel.png"
+                    OnClick="Page.setOpenTime"
+                    Style="border:0px"
+                    />
+            </prop:TrueTemplate>
+        </com:TConditional>
     </prop:ItemTemplate>
     </span>
 </com:TTemplateColumn>					

@@ -199,33 +199,33 @@ class userGroupAdd extends Page
             switch($v['id'])
             {
                 case "controlPanel":
-                    $this->insertNewPermission($lastId, 'controlPanel.ControlPanel');
+                    $v['access'] ? $this->insertNewPermission($lastId, 'controlPanel.ControlPanel') : '';
                     break;
                 case "superUser":
-                    $this->insertNewPermission($lastId, 'superuser.userList', $v['shortcut']);
-                    $this->insertNewPermission($lastId, 'superuser.userAdd');
-                    $this->insertNewPermission($lastId, 'superuser.userMod');
+                    $v['access'] ? $this->insertNewPermission($lastId, 'superuser.userList', $v['shortcut']) : '';
+                    $v['access'] ? $this->insertNewPermission($lastId, 'superuser.userAdd') : '';
+                    $v['access'] ? $this->insertNewPermission($lastId, 'superuser.userMod') : '';
                     break;
                 case "superUserGroup":
-                    $this->insertNewPermission($lastId, 'superuser.userGroupList', $v['shortcut']);
-                    $this->insertNewPermission($lastId, 'superuser.userGroupAdd');
-                    $this->insertNewPermission($lastId, 'superuser.userGroupMod');
+                    $v['access'] ? $this->insertNewPermission($lastId, 'superuser.userGroupList', $v['shortcut']) : '';
+                    $v['access'] ? $this->insertNewPermission($lastId, 'superuser.userGroupAdd') : '';
+                    $v['access'] ? $this->insertNewPermission($lastId, 'superuser.userGroupMod') : '';
                     break;
                 case "configuration":
-                    $this->insertNewPermission($lastId, 'configuration.config', $v['shortcut']);
+                    $v['access'] ? $this->insertNewPermission($lastId, 'configuration.config', $v['shortcut']) : '';
                     break;
                 case "site":
-                    $this->insertNewPermission($lastId, 'site.Site', $v['shortcut']);
+                    $v['access'] ? $this->insertNewPermission($lastId, 'site.Site', $v['shortcut']) : '';
                     break;
                 case "openTime":
-                    $this->insertNewPermission($lastId, 'openTime.openTimeList', $v['shortcut']);
-                    $this->insertNewPermission($lastId, 'openTime.add');
-                    $this->insertNewPermission($lastId, 'openTime.mod');
-                    $this->insertNewPermission($lastId, 'openTime.attribute');
+                    $v['access'] ? $this->insertNewPermission($lastId, 'openTime.openTimeList', $v['shortcut']) : '';
+                    $v['access'] ? $this->insertNewPermission($lastId, 'openTime.add') : '';
+                    $v['access'] ? $this->insertNewPermission($lastId, 'openTime.mod') : '';
+                    $v['access'] ? $this->insertNewPermission($lastId, 'openTime.attribute') : '';
                     break;
                 case "hardware":
-                    $this->insertNewPermission($lastId, 'hardware.HardwareList', $v['shortcut']);
-                    $this->insertNewPermission($lastId, 'hardware.HardwareAddList');
+                    $v['access'] ? $this->insertNewPermission($lastId, 'hardware.HardwareList', $v['shortcut']) : '';
+                    $v['access'] ? $this->insertNewPermission($lastId, 'hardware.HardwareAddList') : '';
 
                     $path = './protected/pages/hardware/device/';
 
@@ -241,88 +241,127 @@ class userGroupAdd extends Page
                             $permissions = $permissions->getElements();
                             foreach($permissions as $perm)
                             {
-                                $this->insertNewPermission($lastId, $perm->getValue());
+                                $v['access'] ? $this->insertNewPermission($lastId, $perm->getValue()) : '';
                             }
                         }
                     }
                     break;
                 case "alarms":
-                    $this->insertNewPermission($lastId, 'system.Alarms', $v['shortcut']);
+                    $v['access'] ? $this->insertNewPermission($lastId, 'system.Alarms', $v['shortcut']) : '';
                     break;
                 case "notification":
-                    $this->insertNewPermission($lastId, 'system.Notification', $v['shortcut']);
-                    $this->insertNewPermission($lastId, 'system.NotificationAdd');
-                    $this->insertNewPermission($lastId, 'system.NotificationMod');
+                    $v['access'] ? $this->insertNewPermission($lastId, 'system.Notification', $v['shortcut']) : '';
+                    $v['access'] ? $this->insertNewPermission($lastId, 'system.NotificationAdd') : '';
+                    $v['access'] ? $this->insertNewPermission($lastId, 'system.NotificationMod') : '';
                     break;
                 case "service":
-                    $this->insertNewPermission($lastId, 'system.Service', $v['shortcut']);
+                    $v['access'] ? $this->insertNewPermission($lastId, 'system.Service', $v['shortcut']) : '';
                     break;
                 case "status":
-                    $this->insertNewPermission($lastId, 'system.Status', $v['shortcut']);
+                    $v['access'] ? $this->insertNewPermission($lastId, 'system.Status', $v['shortcut']) : '';
                     break;
                 case "user":
-                    $this->insertNewPermission($lastId, 'user.UserList', $v['shortcut']);
-                    $this->insertNewPermission($lastId, 'user.add');
-                    $this->insertNewPermission($lastId, 'user.mod');
-                    $this->insertNewPermission($lastId, 'user.attribution');
-                    $this->insertNewPermission($lastId, 'user.groups');
+                    $v['access'] ? $this->insertNewPermission($lastId, 'user.UserList', $v['shortcut']) : '';
+                    $v['access'] ? $this->insertNewPermission($lastId, 'user.add') : '';
+                    $v['access'] ? $this->insertNewPermission($lastId, 'user.mod') : '';
+                    $v['access'] ? $this->insertNewPermission($lastId, 'user.attribution') : '';
+                    $v['access'] ? $this->insertNewPermission($lastId, 'user.groups') : '';
                     break;
                 case "userGroup":
-                    $this->insertNewPermission($lastId, 'userGroup.UserGroupList', $v['shortcut']);
-                    $this->insertNewPermission($lastId, 'userGroup.add');
-                    $this->insertNewPermission($lastId, 'userGroup.mod');
+                    $v['access'] ? $this->insertNewPermission($lastId, 'userGroup.UserGroupList', $v['shortcut']) : '';
+                    $v['access'] ? $this->insertNewPermission($lastId, 'userGroup.add') : '';
+                    $v['access'] ? $this->insertNewPermission($lastId, 'userGroup.mod') : '';
                     break;
                 case "userWizard":
-                    $this->insertNewPermission($lastId, 'user.UserWizzard',true);
+                    $v['access'] ? $this->insertNewPermission($lastId, 'user.UserWizzard',true) : '';
                     break;
                 case "key":
-                    $this->insertNewPermission($lastId, 'key.KeyList', $v['shortcut']);
-                    $this->insertNewPermission($lastId, 'key.add');
-                    $this->insertNewPermission($lastId, 'key.mod');
+                    $v['access'] ? $this->insertNewPermission($lastId, 'key.KeyList', $v['shortcut']) : '';
+                    $v['access'] ? $this->insertNewPermission($lastId, 'key.add') : '';
+                    $v['access'] ? $this->insertNewPermission($lastId, 'key.mod') : '';
                     break;
                 case "accessLevel":
-                    $this->insertNewPermission($lastId, 'accessLevel.accessLevelList', $v['shortcut']);
-                    $this->insertNewPermission($lastId, 'accessLevel.add');
-                    $this->insertNewPermission($lastId, 'accessLevel.mod');
+                    $v['access'] ? $this->insertNewPermission($lastId, 'accessLevel.accessLevelList', $v['shortcut']) : '';
+                    $v['access'] ? $this->insertNewPermission($lastId, 'accessLevel.add') : '';
+                    $v['access'] ? $this->insertNewPermission($lastId, 'accessLevel.mod') : '';
                     break;
                 case "nonWorkingDay":
-                    $this->insertNewPermission($lastId, 'nonWorkingDay.nonWorkingDay', $v['shortcut']);
-                    $this->insertNewPermission($lastId, 'nonWorkingDay.add');
-                    $this->insertNewPermission($lastId, 'nonWorkingDay.mod');
+                    $v['access'] ? $this->insertNewPermission($lastId, 'nonWorkingDay.nonWorkingDay', $v['shortcut']) : '';
+                    $v['access'] ? $this->insertNewPermission($lastId, 'nonWorkingDay.add') : '';
+                    $v['access'] ? $this->insertNewPermission($lastId, 'nonWorkingDay.mod') : '';
                     break;
                 case "install_uninstall":
-                    $this->insertNewPermission($lastId, 'installation.extensions', $v['shortcut']);
+                    $v['access'] ? $this->insertNewPermission($lastId, 'installation.extensions', $v['shortcut']) : '';
                     break;
                 case "devices":
-                    $this->insertNewPermission($lastId, 'installation.devices', $v['shortcut']);
+                    $v['access'] ? $this->insertNewPermission($lastId, 'installation.devices', $v['shortcut']) : '';
                     break;
                 case "components":
-                    $this->insertNewPermission($lastId, 'installation.components', $v['shortcut']);
-                    $this->insertNewPermission($lastId, 'installation.componentconfig');
+                    $v['access'] ? $this->insertNewPermission($lastId, 'installation.components', $v['shortcut']) : '';
+                    $v['access'] ? $this->insertNewPermission($lastId, 'installation.componentconfig') : '';
                     break;
                 case "template":
-                    $this->insertNewPermission($lastId, 'installation.template', $v['shortcut']);
+                    $v['access'] ? $this->insertNewPermission($lastId, 'installation.template', $v['shortcut']) : '';
                     break;
                 case "language":
-                    $this->insertNewPermission($lastId, 'installation.language', $v['shortcut']);
+                    $v['access'] ? $this->insertNewPermission($lastId, 'installation.language', $v['shortcut']) : '';
                     break;
                 case "recycling":
-                    $this->insertNewPermission($lastId, 'key.recycling', $v['shortcut']);
+                    $v['access'] ? $this->insertNewPermission($lastId, 'key.recycling', $v['shortcut']) : '';
                     break;
                 case "globalCheckin":
-                    $this->insertNewPermission($lastId, 'tool.GlobalCheckin', $v['shortcut']);
+                    $v['access'] ? $this->insertNewPermission($lastId, 'tool.GlobalCheckin', $v['shortcut']) : '';
                     break;
                 case "guilog":
-                    $this->insertNewPermission($lastId, 'tool.GuiLog', $v['shortcut']);
+                    $v['access'] ? $this->insertNewPermission($lastId, 'tool.GuiLog', $v['shortcut']) : '';
                     break;
                 case "systemInfo":
-                    $this->insertNewPermission($lastId, 'help.SystemInfo', $v['shortcut']);
+                    $v['access'] ? $this->insertNewPermission($lastId, 'help.SystemInfo', $v['shortcut']) : '';
                     break;
                 case "about":
-                    $this->insertNewPermission($lastId, 'help.About', $v['shortcut']);
+                    $v['access'] ? $this->insertNewPermission($lastId, 'help.About', $v['shortcut']) : '';
                     break;
                 default:
-                    $this->insertNewPermission($lastId, $v['id'], $v['shortcut']);
+                    
+
+                    /*add child permission*/
+
+                    $path = './protected/pages/components/'.$v['composantname'];
+
+                    $files = scandir($path);
+
+                    $doc=new TXmlDocument();
+                    $doc->loadFromFile($path.'/install.xml');
+                    $permissions = $doc->getElementByTagName('permissions');
+                    $permissions = $permissions->getElements();
+
+                    $id = 0;
+                    $addParent = null;
+                    //! find the parent id of $v['id']
+                    foreach($permissions as $perm)
+                    {
+                        if($perm->getValue() == $v['id'])
+                        {
+                            $id = $perm->getAttribute('id');
+                            $addParent = $perm->getAttribute('add');
+                        }
+                    }
+
+                    //add each permission where the parentid equal the id
+                    foreach($permissions as $perm)
+                    {
+                        if( $id == $perm->getAttribute('parent') )
+                        {
+                            $v['access'] ? $this->insertNewPermission($lastId, $perm->getValue()) : '';
+                        }
+                    }
+
+                    if($addParent === null || $addParent == "true")
+                    {
+                       $v['access'] ?  $this->insertNewPermission($lastId, $v['id'], $v['shortcut']) : '';
+                    }
+
+                 
                     break;
             }
 
@@ -362,9 +401,15 @@ class userGroupAdd extends Page
             if($data[$i]['id'] == $sender->Text)
             {
                 if($data[$i]['access'])
+                {
                    $data[$i]['access'] = false;
+                }
                 else
+                {
                    $data[$i]['access'] = true;
+                }
+
+                $i = count($data);
             }
         }
 

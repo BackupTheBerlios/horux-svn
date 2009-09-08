@@ -398,7 +398,45 @@ class userGroupMod extends Page
                     $v['access'] ? $this->updatePermission($lastId, 'help.About', $v['shortcut']) : '';
                     break;
                 default:
-                     $v['access'] ? $this->updatePermission($lastId, $v['id'], $v['shortcut']) : '';
+
+                    /*add child permission*/
+
+                    $path = './protected/pages/components/'.$v['composantname'];
+
+                    $files = scandir($path);
+
+                    $doc=new TXmlDocument();
+                    $doc->loadFromFile($path.'/install.xml');
+                    $permissions = $doc->getElementByTagName('permissions');
+                    $permissions = $permissions->getElements();
+
+                    $id = 0;
+                    $addParent = null;
+                    //! find the parent id of $v['id']
+                    foreach($permissions as $perm)
+                    {
+                        if($perm->getValue() == $v['id'])
+                        {
+                            $id = $perm->getAttribute('id');
+                            $addParent = $perm->getAttribute('add');
+                        }
+                    }
+
+                    //add each permission where the parentid equal the id
+                    foreach($permissions as $perm)
+                    {
+                        if( $id == $perm->getAttribute('parent') )
+                        {
+                            $v['access'] ? $this->updatePermission($lastId, $perm->getValue()) : '';
+                        }
+                    }
+
+                    if($addParent === null || $addParent == "true")
+                    {
+                        $v['access'] ? $this->updatePermission($lastId, $v['id'], $v['shortcut']) : '';
+                    }
+
+
                     break;
             }
         }
@@ -438,9 +476,15 @@ class userGroupMod extends Page
             if($data[$i]['id'] == $sender->Text)
             {
                 if($data[$i]['access'])
+                {
                    $data[$i]['access'] = false;
+                }
                 else
+                {
                    $data[$i]['access'] = true;
+                }
+
+                $i = count($data);
             }
         }
 
