@@ -51,4 +51,9 @@ class TStandAlone extends TModule
   }
 }
 
+abstract class TDeviceStandalone extends TModule
+{
+    abstract public function addStandalone($function, $id, $param=NULL);
+}
+
 ?>

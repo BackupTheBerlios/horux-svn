@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <xliff version="1.0">
- <file source-language="FR" target-language="fr" datatype="plaintext" original="messages" date="2009-08-25T14:30:37Z" product-name="messages">
+ <file source-language="FR" target-language="fr" datatype="plaintext" original="messages" date="2009-09-10T13:25:03Z" product-name="messages">
   <body>
   
 <trans-unit id="1" lock="1">
@@ -3703,6 +3703,11 @@
 <trans-unit id="692" lock="1">
 <source>Click here to put shortcut on the control panel</source>
 <target>Cliquez ici pour ajouter le raccourcit dans le panel de contr&#xF4;le</target>
+</trans-unit>
+
+<trans-unit id="693">
+<source>Step</source>
+<target>Etape</target>
 </trans-unit>
 </body>
 </file>

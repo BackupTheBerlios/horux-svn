@@ -25,6 +25,7 @@
     PrintVisible="true"
     JsClickPrint="onPrintRedirect()"
     HelpVisible="true"
+    UserWizardVisible="true"
     />
 
 

@@ -213,5 +213,16 @@ class TToolbarBox extends TTemplateControl
 	{
 		return $this->getViewState('DefaultVisible',false);
 	}
+
+
+	//! button user wizard
+	public function setUserWizardVisible($flag)
+	{
+		$this->setViewState('UserWizardVisible',$flag,false);
+	}
+	public function getUserWizardVisible()
+	{
+		return $this->getViewState('UserWizardVisible',false);
+	}
 }
 ?>

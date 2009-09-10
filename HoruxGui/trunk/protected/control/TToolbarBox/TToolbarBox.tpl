@@ -8,6 +8,18 @@
         <div class="toolbar" id="toolbar">
             <table class="toolbar">
                 <tr>
+
+                    <com:TConditional Condition="$this->getViewState('UserWizardVisible','false') == 'true'">
+                        <prop:TrueTemplate>
+                            <td class="button" id="toolbar-new">
+                                <a href="<%= $this->Service->constructUrl('user.UserWizzard') %>" class="toolbar">
+                                    <span class="icon-32-wizard" title="<com:TTranslate Catalogue='messages' Text='User Wizard' />"></span><com:TTranslate Catalogue="messages" Text="User Wizard" />
+                                </a>
+                            </td>
+                        </prop:TrueTemplate>
+                    </com:TConditional>
+
+
                     <com:TConditional Condition="$this->getViewState('DefaultVisible','false') == 'true'">
                         <prop:TrueTemplate>
                                 <td class="button" id="toolbar-default">

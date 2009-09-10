@@ -99,12 +99,11 @@
                                 <%include horux.pages.user.UserWizzardStep2 %>
                             </com:TWizardStep>
 
-                            <com:TWizardStep ID="Step3" Title="<%[Step 3 : Key Attribution]%>" StepType="Finish">
+                            <com:TWizardStep ID="Step3" Title="<%[Step 3 : Key Attribution]%>" StepType="Step">
                                 <%include horux.pages.user.UserWizzardStep3 %>
                             </com:TWizardStep>
 
-
-                            <com:TWizardStep ID="Step4" Title="<%[Complete]%>" StepType="Complete">
+                            <com:TWizardStep ID="StepComplete" Title="<%[Complete]%>" StepType="Complete">
                                 <h3><%[The new user is registred]%></h3>
                             </com:TWizardStep>
                         </com:TWizard>

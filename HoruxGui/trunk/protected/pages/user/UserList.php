@@ -336,7 +336,7 @@ class UserList extends PageList
 
         public function dataBindSubRepeater($sender,$param)
         {
-            $sql = "SELECT * FROM hr_user_action";
+            $sql = "SELECT * FROM hr_user_action WHERE type='userList'";
             $cmd=$this->db->createCommand($sql);
             $data=$cmd->query();
             $data = $data->readAll();
@@ -561,6 +561,28 @@ class UserList extends PageList
                         $cmd=$this->db->createCommand(SQL::SQL_DELETE_KEY_ATTRIBUTION_FROM_IDPERSON);
                         $cmd->bindParameter(":id",$id_user);
                         $cmd->execute();
+
+
+                        //alow to clean extended data handled by a component
+                        $sql = "SELECT * FROM hr_user_action WHERE type='module'";
+                        $cmd=$this->db->createCommand($sql);
+                        $data=$cmd->query();
+                        $data = $data->readAll();
+
+                        for($i=0; $i<count($data); $i++)
+                        {
+                            try
+                            {
+                                Prado::using('horux.pages.'.$data[$i]['page']);
+                                $class = $data[$i]['name'];
+                                $sa = new $class();
+                                $sa->cleanData($this->db, $id_user);
+                            }
+                            catch(Exception $e)
+                            {
+                                //! do noting
+                            }
+                        }
 
                         $this->addStandalone('sub',$id_user);
 

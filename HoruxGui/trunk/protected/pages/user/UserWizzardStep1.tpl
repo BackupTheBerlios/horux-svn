@@ -117,6 +117,39 @@
                 </td>
             </tr>
 
+                <tr>
+                    <td valign="top" class="key">
+                        <span onmouseover="Tip('<%[Enter the password for this user]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Password]%></span>
+                    </td>
+                    <td>
+                        <com:TTextBox
+                            CssClass="text_area"
+                            ID="password"
+                            TextMode="Password"
+                            Width="50" />
+                        <com:TCustomValidator
+                            ValidationGroup="Group1"
+                            EnableClientScript="false"
+                            ControlToValidate="password"
+                            OnServerValidate="serverValidatePassword"
+                            Display="Dynamic"
+                            Text="<%[The password must be equal to the confirmation]%>" />
+                    </td>
+                </tr>
+
+                <tr>
+                    <td valign="top" class="key">
+                        <span onmouseover="Tip('<%[Enter the confirmation password for this user]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Confirmation]%></span>
+                    </td>
+                    <td>
+                        <com:TTextBox
+                            CssClass="text_area"
+                            ID="confirmation"
+                            TextMode="Password"
+                            Width="50" />
+                    </td>
+                </tr>
+
         </tbody>
     </table>
 </fieldset>

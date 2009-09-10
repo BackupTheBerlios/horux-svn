@@ -43,10 +43,10 @@
                 specialKey = false;
                 if(serial[serial.length-1] == 51 && serial[serial.length-2] == 51)
                 {
-
                     var sn = "";
                     for(i=2; i<serial.length-2; i++)
                         sn += String.fromCharCode(serial[i]);
+
 
                     //window.location.replace('index.php?page=user.UserWizzard&sn=' + sn);
                     document.getElementById('serialNumber').value = sn;

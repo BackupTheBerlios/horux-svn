@@ -23,22 +23,92 @@ class UserWizzard extends Page
     protected $hasFile;
     protected $koMessage = '';
 
+    public function onInit($param)
+    {
+
+        $sql = "SELECT * FROM hr_user_action WHERE type='userWizardTpl'";
+        $cmd=$this->db->createCommand($sql);
+        $data=$cmd->query();
+        $data = $data->readAll();
+
+        $step = 4;
+        if(count($data) > 0)
+        {
+
+            $this->Step3->StepType = "Step";
+
+            for($i=0; $i<count($data); $i++)
+            {
+                $wizardStep = new TWizardStep();
+                $wizardStep->setTitle(Prado::localize('Step').' '.$step.': '.Prado::localize ($data[$i]['name'],array(),$data[$i]['catalog']) );
+                if($i+1 == count($data))
+                    $wizardStep->setStepType("Finish");
+                else
+                    $wizardStep->setStepType("Step");
+
+                $wizardStep->setID('Step' . $step);
+                $steps = $this->Wizard1->getWizardSteps();
+
+                $tpl = $this->Service->TemplateManager->getTemplateByFileName ($data[$i]['page']);
+               
+                $tpl->instantiateIn($wizardStep);
+
+                $steps->insertAt($steps->getCount()-1, $wizardStep);
+                $step++;
+            }
+        }
+        else
+            $this->Step3->StepType = 'Finish';
+
+        parent::onInit($param);
+    }
+
     public function onLoad($param)
     {
         parent::onLoad($param);
 
-        if(isset($this->Request['serialNumber']))
+        $cmd = $this->db->createCommand( "SELECT * FROM hr_config WHERE id=1" );
+        $query = $cmd->query();
+        if($query)
         {
-            $lastId = $this->savePerson();
-            if($lastId)
+            $data = $query->read();
+            if($data['publicurl'] != "")
             {
-                $this->saveGroup($lastId);
-                $this->saveKey($lastId, $this->Request['serialNumber']);
-                $this->addStandalone('add', $lastId);
-                $this->log("Create with the wizard the user: ".$this->name->SafeText." ".$this->firstname->SafeText);
-                $this->Response->redirect($this->Service->constructUrl('user.UserList'));
-            }
+                $this->confirmation->setEnabled(true);
+                $this->password->setEnabled(true);
+                $this->url = $data['publicurl'];
 
+                $cmd = $this->db->createCommand( "SELECT * FROM hr_site WHERE id=1" );
+                $query = $cmd->query();
+                if($query)
+                {
+                    $data = $query->read();
+                    $this->siteName = $data['name'];
+                }
+            }
+            else
+            {
+                $this->confirmation->setEnabled(false);
+                $this->password->setEnabled(false);
+            }
+        }
+
+        if(isset($this->Request['serialNumber']) && $this->Request['serialNumber'] != '')
+        {
+            if($this->Step3->StepType == 'Finish')
+            {
+                $lastId = $this->savePerson();
+                if($lastId)
+                {
+                    $this->saveGroup($lastId);
+                    $this->saveKey($lastId, $this->Request['serialNumber']);
+                    $this->addStandalone('add', $lastId);
+                    $this->log("Create with the wizard the user: ".$this->name->SafeText." ".$this->firstname->SafeText);
+                    $this->Response->redirect($this->Service->constructUrl('user.UserList'));
+                }
+            }
+            else
+                $this->Wizard1->setActiveStep($this->Step4);
         }
 
         if(!$this->IsPostBack)
@@ -48,6 +118,28 @@ class UserWizzard extends Page
 
             $this->UnusedKey->DataSource=$this->Keys;
             $this->UnusedKey->dataBind();
+
+
+            $sql = "SELECT * FROM hr_user_action WHERE type='module'";
+            $cmd=$this->db->createCommand($sql);
+            $data=$cmd->query();
+            $data = $data->readAll();
+
+            for($i=0; $i<count($data); $i++)
+            {
+                try
+                {
+                    Prado::using('horux.pages.'.$data[$i]['page']);
+                    $class = $data[$i]['name'];
+                    $sa = new $class();
+                    $sa->setData($this->db, $this->getForm());
+                }
+                catch(Exception $e)
+                {
+                    //! do noting
+                }
+            }
+
         }
 
         if($this->koMessage != '')
@@ -83,6 +175,27 @@ class UserWizzard extends Page
         {
             $this->saveGroup($lastId);
             $this->saveKey($lastId);
+
+            $sql = "SELECT * FROM hr_user_action WHERE type='module'";
+            $cmd=$this->db->createCommand($sql);
+            $data=$cmd->query();
+            $data = $data->readAll();
+            
+            for($i=0; $i<count($data); $i++)
+            {
+                try
+                {
+                    Prado::using('horux.pages.'.$data[$i]['page']);
+                    $class = $data[$i]['name'];
+                    $sa = new $class();
+                    $sa->saveData($this->db, $this->getForm(), $lastId);
+                }
+                catch(Exception $e)
+                {
+                    //! do noting
+                }
+            }
+
             $this->addStandalone('add', $lastId);
 
             $this->log("Create with the wizard the user: ".$this->name->SafeText." ".$this->firstname->SafeText);
@@ -116,6 +229,7 @@ class UserWizzard extends Page
         $cmd->bindParameter(":language",$this->language->getSelectedValue(),PDO::PARAM_STR);
         $cmd->bindParameter(":picture",$this->pictureName->Value,PDO::PARAM_STR);
         $cmd->bindParameter(":pin_code",$this->pin_code->SafeText,PDO::PARAM_STR);
+        $cmd->bindParameter(":password",sha1($this->password->SafeText),PDO::PARAM_STR);
 
 
 
@@ -141,6 +255,13 @@ class UserWizzard extends Page
 
         return $this->db->getLastInsertID();
     }
+
+    public function serverValidatePassword($sender, $param)
+    {
+        if($this->password->Text != $this->confirmation->Text)
+        $param->IsValid=false;
+    }
+
 
     protected function saveGroup($lastId)
     {
@@ -371,9 +492,9 @@ class UserWizzard extends Page
         public function activeStepChanged($sender,$param)
         {
             if($sender->getActiveStepIndex() == 2)
-            $this->setAccessLink(true);
+                $this->setAccessLink(true);
             else
-            $this->setAccessLink(false);
+                $this->setAccessLink(false);
 
             if($this->koMessage != "")
             {
