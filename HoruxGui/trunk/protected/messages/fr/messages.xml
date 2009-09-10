@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <xliff version="1.0">
- <file source-language="FR" target-language="fr" datatype="plaintext" original="messages" date="2009-09-10T13:25:03Z" product-name="messages">
+ <file source-language="FR" target-language="fr" datatype="plaintext" original="messages" date="2009-09-10T16:28:30Z" product-name="messages">
   <body>
   
 <trans-unit id="1" lock="1">
@@ -1343,7 +1343,7 @@
 
 <trans-unit id="246" lock="1">
 <source>Global</source>
-<target>Global</target>
+<target>G&#xE9;n&#xE9;ral</target>
 </trans-unit>
 
 <trans-unit id="247" lock="1">
@@ -1522,7 +1522,7 @@
 
 <trans-unit id="277" lock="1">
 <source>Sex</source>
-<target>Sex</target>
+<target>Titre civil</target>
 </trans-unit>
 
 <trans-unit id="278" lock="1">
@@ -1587,7 +1587,7 @@
 
 <trans-unit id="290" lock="1">
 <source>Professional information</source>
-<target>Informaiton professionnelle</target>
+<target>Information professionnelle</target>
 </trans-unit>
 
 <trans-unit id="291" lock="1">
@@ -3705,9 +3705,19 @@
 <target>Cliquez ici pour ajouter le raccourcit dans le panel de contr&#xF4;le</target>
 </trans-unit>
 
-<trans-unit id="693">
+<trans-unit id="693" lock="1">
 <source>Step</source>
 <target>Etape</target>
+</trans-unit>
+
+<trans-unit id="694" lock="1">
+<source>Mrs.</source>
+<target>Madame</target>
+</trans-unit>
+
+<trans-unit id="695" lock="1">
+<source>Mr.</source>
+<target>Monsieur</target>
 </trans-unit>
 </body>
 </file>

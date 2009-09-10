@@ -24,13 +24,13 @@
                     <com:TRadioButton
                         ID="sexF"
                         GroupName="RadioGroup"
-                        Text="F"
+                        Text="<%[Mrs.]%>"
                         Checked="1"
                         />
                     <com:TRadioButton
                         ID="sexM"
                         GroupName="RadioGroup"
-                        Text="M"
+                        Text="<%[Mr.]%>"
                         />
                 </td>
             </tr>
