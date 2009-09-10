@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <xliff version="1.0">
- <file source-language="FR" target-language="fr" datatype="plaintext" original="messages" date="2009-09-10T16:28:30Z" product-name="messages">
+ <file source-language="FR" target-language="fr" datatype="plaintext" original="messages" date="2009-09-10T17:31:14Z" product-name="messages">
   <body>
   
 <trans-unit id="1" lock="1">
@@ -3718,6 +3718,16 @@
 <trans-unit id="695" lock="1">
 <source>Mr.</source>
 <target>Monsieur</target>
+</trans-unit>
+
+<trans-unit id="696" lock="1">
+<source>Choose a color for this non working day</source>
+<target>Choisir une couleur pour ce jour non ouvrable</target>
+</trans-unit>
+
+<trans-unit id="697" lock="1">
+<source>Color</source>
+<target>Couleur</target>
 </trans-unit>
 </body>
 </file>

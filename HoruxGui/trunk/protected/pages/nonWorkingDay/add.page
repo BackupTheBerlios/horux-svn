@@ -75,6 +75,15 @@
 
                 <tr>
                     <td valign="top" class="key">
+                        <span onmouseover="Tip('<%[Choose a color for this non working day]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Color]%></span>
+                    </td>
+                    <td>
+                        <com:TColorPicker Text= "#FF6666" ID="color" />
+                    </td>
+                </tr>
+
+                <tr>
+                    <td valign="top" class="key">
                         <span onmouseover="Tip('<%[You could insert a description for this non working day]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Description]%></span>
                     </td>
                     <td>
@@ -84,6 +93,8 @@
                             Width="400px" />
                     </td>
                 </tr>
+
+
 
             </tbody>
         </table>

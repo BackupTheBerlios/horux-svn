@@ -45,6 +45,7 @@ class mod extends Page
 
             $this->id->Value = $data['id'];
             $this->name->Text = $data['name'];
+            $this->color->Text = $data['color'];
             $this->from->Text = $from;
             $this->until->Text = $until;
             $this->comment->Text = $data['comment'];
@@ -119,6 +120,7 @@ class mod extends Page
         $cmd->bindParameter(":until",$until, PDO::PARAM_STR);
         $cmd->bindParameter(":comment",$this->comment->SafeText, PDO::PARAM_STR);
         $cmd->bindParameter(":id",$this->id->Value, PDO::PARAM_INT);
+        $cmd->bindParameter(":color",$this->color->SafeText, PDO::PARAM_STR);
 
         $this->log("Modify the non working day: ".$this->name->SafeText);
 

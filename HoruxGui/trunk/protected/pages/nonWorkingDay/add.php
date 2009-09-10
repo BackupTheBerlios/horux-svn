@@ -76,6 +76,7 @@ class add extends Page
         $cmd->bindParameter(":from",$from, PDO::PARAM_STR);
         $cmd->bindParameter(":until",$until, PDO::PARAM_STR);
         $cmd->bindParameter(":comment",$this->comment->SafeText, PDO::PARAM_STR);
+        $cmd->bindParameter(":color",$this->color->SafeText, PDO::PARAM_STR);
 
         $this->log("Add the non working day: ".$this->name->SafeText);
 

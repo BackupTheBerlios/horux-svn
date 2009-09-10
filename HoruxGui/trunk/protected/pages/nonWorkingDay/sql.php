@@ -19,18 +19,20 @@ class SQL
                         `name` ,
                         `from` ,
                         `until`,
+                        `color`,
                         `comment`
                   )
                   VALUES (
                         :name,
                         :from,
                         :until,
+                        :color,
                         :comment
                   )";
 
     const SQL_GET_NONWORKINGDAY = "SELECT * FROM hr_non_working_day WHERE id=:id";
 
-    const SQL_UPDATE_NONWORKINGDAY = "UPDATE hr_non_working_day SET `name`=:name, `until`=:until, `from`=:from, `comment`=:comment WHERE id=:id";
+    const SQL_UPDATE_NONWORKINGDAY = "UPDATE hr_non_working_day SET `name`=:name, `until`=:until, `from`=:from, `color`=:color, `comment`=:comment WHERE id=:id";
 
     const SQL_DELETE_NONWORKINGDAY = "DELETE FROM hr_non_working_day WHERE id=:id";
 }
