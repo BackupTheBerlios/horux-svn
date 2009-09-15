@@ -26,6 +26,23 @@ class Mod extends Page
     {
         parent::onLoad($param);
 
+        $cmd = $this->db->createCommand( "SELECT * FROM hr_config WHERE id=1" );
+        $query = $cmd->query();
+        if($query)
+        {
+            $data = $query->read();
+            if($data['publicurl'] != "")
+            {
+                $this->confirmation->setEnabled(true);
+                $this->password->setEnabled(true);
+            }
+            else
+            {
+                $this->confirmation->setEnabled(false);
+                $this->password->setEnabled(false);
+            }
+        }
+
         if(!$this->isPostBack)
         {
             $userId=$this->Application->getUser()->getUserId();
