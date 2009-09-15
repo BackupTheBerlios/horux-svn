@@ -104,7 +104,7 @@ class Attribution extends Page
 		}
 
         
-        $this->setAccessLink(true);
+        $this->setHoruxSysTray(true);
         
         if(!$this->IsPostBack)
         {

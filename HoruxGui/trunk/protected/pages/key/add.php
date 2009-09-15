@@ -19,7 +19,7 @@ class add extends Page
     public function onLoad($param)
     {
         parent::onLoad($param);
-        $this->setAccessLink(true);
+        $this->setHoruxSysTray(true);
 
         if(isset($this->Request['sn']))
         {

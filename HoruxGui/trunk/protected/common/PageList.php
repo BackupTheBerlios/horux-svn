@@ -148,10 +148,10 @@ class PageList extends TPage
     }  
 
 
-    protected function setAccessLink($flag)
+    protected function setHoruxSysTray($flag)
     {
         $c = $this->findControlsById("mainMenu");
-        $c[0]->setAccessLink($flag);
+        $c[0]->setHoruxSysTray($flag);
     }
 
     protected function displayMessage($text, $isOk)

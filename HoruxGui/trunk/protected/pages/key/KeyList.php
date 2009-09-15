@@ -73,7 +73,7 @@ class KeyList extends PageList
     {
         parent::onLoad($param);
 
-        $this->setAccessLink(true);
+        $this->setHoruxSysTray(true);
 
 
         if(!$this->IsPostBack)

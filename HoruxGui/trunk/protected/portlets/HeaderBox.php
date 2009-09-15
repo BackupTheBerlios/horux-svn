@@ -521,7 +521,7 @@ class HeaderBox extends Portlet
 	}
 
 
-    public function setAccessLink($flag)
+    public function setHoruxSysTray($flag)
     {
       $this->accessLink->Visible = $flag;
     }

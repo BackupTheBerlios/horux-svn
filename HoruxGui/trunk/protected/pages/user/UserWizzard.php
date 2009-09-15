@@ -492,9 +492,9 @@ class UserWizzard extends Page
         public function activeStepChanged($sender,$param)
         {
             if($sender->getActiveStepIndex() == 2)
-                $this->setAccessLink(true);
+                $this->setHoruxSysTray(true);
             else
-                $this->setAccessLink(false);
+                $this->setHoruxSysTray(false);
 
             if($this->koMessage != "")
             {

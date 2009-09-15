@@ -50,6 +50,7 @@ Legend:
 10.09.2009         + Add the user wizard button in user list page
 10.09.2009         ^ Simplify the user page
 10.09.2009         ^ Add the possibility to choose a color for a non working day.
+15.09.2009         ^ Renname the function setAccessLink by setHoruxSysTray
 
 -------------------- Horux 1.0.4 Release Released [04-06-2009] ------------------------
 30.01.2009      + Add the pin code in the user wizard

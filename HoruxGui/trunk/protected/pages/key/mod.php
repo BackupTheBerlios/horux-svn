@@ -20,7 +20,7 @@ class mod extends Page
     {
         parent::onLoad($param);
 
-        $this->setAccessLink(true);
+        $this->setHoruxSysTray(true);
 
         if(!$this->isPostBack)
         {
