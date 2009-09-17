@@ -50,7 +50,18 @@ class Mod extends Page
 
             $this->id->Value = $this->Request['id'];
             $this->setData();
+
+            $this->language->DataSource = $this->LanguageList;
+            $this->language->dataBind();
         }
+    }
+
+
+    protected function getLanguageList()
+    {
+       $cmd = $this->db->createCommand( "SELECT * FROM hr_install WHERE type='language' ORDER BY name");
+       $data =  $cmd->query();
+       return $data->readAll();
     }
 
     public function setData()

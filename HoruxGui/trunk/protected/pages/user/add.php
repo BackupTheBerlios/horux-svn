@@ -58,9 +58,28 @@ class Add extends Page
         if(!$this->isPostBack)
         {
 			$this->picture->setImageUrl('./pictures/unknown.jpg');
+            $this->language->DataSource = $this->LanguageList;
+            $this->language->dataBind();
+
+            $this->language->setSelectedValue($this->getLanguageDefault());
 
         }
-    }	
+    }
+
+    protected function getLanguageDefault()
+    {
+       $cmd = $this->db->createCommand( "SELECT * FROM hr_install WHERE type='language' AND `default`=1");
+       $data =  $cmd->query();
+       $data = $data->read();
+       return $data['param'];
+    }
+
+    protected function getLanguageList()
+    {
+       $cmd = $this->db->createCommand( "SELECT * FROM hr_install WHERE type='language' ORDER BY name");
+       $data =  $cmd->query();
+       return $data->readAll();
+    }
 
     public function serverValidatePassword($sender, $param)
     {
