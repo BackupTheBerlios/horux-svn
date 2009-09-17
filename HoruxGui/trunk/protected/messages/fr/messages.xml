@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <xliff version="1.0">
- <file source-language="FR" target-language="fr" datatype="plaintext" original="messages" date="2009-09-10T17:31:14Z" product-name="messages">
+ <file source-language="FR" target-language="fr" datatype="plaintext" original="messages" date="2009-09-17T09:13:37Z" product-name="messages">
   <body>
   
 <trans-unit id="1" lock="1">
@@ -3728,6 +3728,11 @@
 <trans-unit id="697" lock="1">
 <source>Color</source>
 <target>Couleur</target>
+</trans-unit>
+
+<trans-unit id="698" lock="1">
+<source>Enter the professional fax number</source>
+<target>Entrez le num&#xE9;ro de fax professionnel</target>
 </trans-unit>
 </body>
 </file>

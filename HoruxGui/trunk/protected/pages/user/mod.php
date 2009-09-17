@@ -115,6 +115,8 @@ class Mod extends Page
             $this->phone2->Text = $data['phone2'];
             $this->email2->Text = $data['email2'];
             $this->country_pr->Text = $data['country_pr'];
+            $this->fax->Text =  $data['fax'];
+
         }
 
     }
@@ -248,6 +250,7 @@ class Mod extends Page
         $cmd->bindParameter(":phone2",$this->phone2->SafeText,PDO::PARAM_STR);
         $cmd->bindParameter(":email2",$this->email2->SafeText,PDO::PARAM_STR);
         $cmd->bindParameter(":country_pr",$this->country_pr->SafeText,PDO::PARAM_STR);
+        $cmd->bindParameter(":fax",$this->fax->SafeText,PDO::PARAM_STR);
 
 
         if(!$cmd->execute()) return false;

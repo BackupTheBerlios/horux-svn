@@ -455,6 +455,18 @@
 
                                     <tr>
                                         <td valign="top" class="key">
+                                            <span onmouseover="Tip('<%[Enter the professional fax number]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Fax]%></span>
+                                        </td>
+                                        <td>
+                                            <com:TTextBox
+                                                CssClass="text_area"
+                                                ID="fax"
+                                                Width="50" />
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td valign="top" class="key">
                                             <span onmouseover="Tip('<%[Enter the professional email]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Email]%></span>
                                         </td>
                                         <td>

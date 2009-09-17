@@ -169,6 +169,7 @@ class Add extends Page
       $cmd->bindParameter(":phone2",$this->phone2->SafeText,PDO::PARAM_STR);
       $cmd->bindParameter(":email2",$this->email2->SafeText,PDO::PARAM_STR);
       $cmd->bindParameter(":country_pr",$this->country_pr->SafeText,PDO::PARAM_STR);
+      $cmd->bindParameter(":fax",$this->fax->SafeText,PDO::PARAM_STR);
 
       if(!$cmd->execute()) return false;
 
