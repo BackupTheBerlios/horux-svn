@@ -40,8 +40,11 @@ class TStandAlone extends TModule
         {
             Prado::using('horux.pages.hardware.device.'.$type.'.'.$type.'_standalone');
             $class = $type.'_standalone';
-            $sa = new $class();
-            $sa->addStandalone($function, $id, $param);
+            if(class_exists($class))
+            {
+                $sa = new $class();
+                $sa->addStandalone($function, $id, $param);
+            }
         }
         catch(Exception $e)
         {
