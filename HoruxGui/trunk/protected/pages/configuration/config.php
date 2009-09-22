@@ -157,12 +157,14 @@ class Config extends Page
 
                     $cmd->execute();
 
-                    $res = $this->sendEmailConf();
+                    $res = false;
+                    if($this->mail_from->SafeText != "")
+                        $res = $this->sendEmailConf();
 
                     if(!$res)
-                    $this->emailError = Prado::localize('The confirmation email cannot be sended. Please check your mail settings');
+                        $this->emailError = Prado::localize('The confirmation email cannot be sended. Please check your mail settings');
                     else
-                    $this->emailError = '';
+                        $this->emailError = '';
 
                     $this->log("Modify the global configuration");
 
