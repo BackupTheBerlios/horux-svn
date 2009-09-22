@@ -41,6 +41,7 @@ CREATE TABLE IF NOT EXISTS `hr_vp_subscription_attribution` (
   KEY `start` (`start`,`end`,`user_id`,`subcription_id`)
 ) TYPE=MyISAM CHARACTER SET `utf8`;
 
-INSERT INTO `hr_user_action` (`id` ,`name` ,`page` ,`icon` ,`tip` ,`catalog`)
-VALUES (NULL , 'Subscription', 'components.velopark.attribution', './protected/pages/components/velopark/assets/icon-16-ticket.jpg', 'Subscription of the user', 'velopark');
-
+INSERT INTO `hr_user_action` (`name`, `page`, `icon`, `tip`, `catalog`, `type`) VALUES
+('Subscription', 'components.velopark.attribution', './protected/pages/components/velopark/assets/icon-16-ticket.jpg', 'Velo Park - Subscription Attribution', 'velopark', 'userList'),
+('Attribute a subscription', 'protected/pages/components/velopark/wizard.tpl', '', '', 'velopark', 'userWizardTpl'),
+('VeloparkModule', 'components.velopark.VeloparkModule', '', '', 'velopark', 'userWizardSave');

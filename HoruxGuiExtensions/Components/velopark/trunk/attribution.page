@@ -42,7 +42,7 @@
                         </table>
                     </div><!-- end class toolbar -->
 
-                    <div class="header"  style="background-image: url(<%~ ./assets/icon-48-ticket.jpg %>)"><%[Velo Park - Attribution]%></div>
+                    <div class="header"  style="background-image: url(<%~ ./assets/icon-48-ticket.jpg %>)"><%= stripslashes(Prado::localize('Velo Park - Subscription Attribution')) %></div>
                     <div class="clr"></div>
                 </div><!-- end class m -->
 

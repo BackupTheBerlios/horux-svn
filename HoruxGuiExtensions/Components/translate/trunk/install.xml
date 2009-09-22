@@ -16,8 +16,8 @@
 	</mainmenu>
 	
 	<permissions>
-		<permission>components.translate.translate</permission>
-		<permission>components.translate.add</permission>
+		<permission  id="1" parent="0" >components.translate.translate</permission>
+		<permission  id="2" parent="1" >components.translate.add</permission>
 	</permissions>
 	
 </install>

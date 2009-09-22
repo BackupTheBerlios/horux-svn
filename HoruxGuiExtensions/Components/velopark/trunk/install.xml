@@ -26,16 +26,21 @@
 	</mainmenu>
 	
 	<permissions>
-		<permission>components.velopark.config</permission>
-		<permission>components.velopark.modconfig</permission>
-		<permission>components.velopark.addconfig</permission>
-		<permission>components.velopark.status</permission>
-		<permission>components.velopark.subscription</permission>
-		<permission>components.velopark.addsubscription</permission>
-		<permission>components.velopark.modsubscription</permission>
-		<permission>components.velopark.attribution</permission>
-		<permission>components.velopark.modattribution</permission>
-		<permission>components.velopark.invoice</permission>
+		<permission id="1" parent="0">components.velopark.config</permission>
+        <permission id="2" parent="1">components.velopark.modconfig</permission>
+        <permission id="3" parent="1">components.velopark.addconfig</permission>
+
+		<permission id="4" parent="0">components.velopark.status</permission>
+
+		<permission id="5" parent="0">components.velopark.subscription</permission>
+        <permission id="6" parent="5">components.velopark.addsubscription</permission>
+        <permission id="7" parent="5">components.velopark.modsubscription</permission>
+
+		<permission id="8" parent="0" add="false" >user.UserList</permission>
+		<permission id="9" parent="8">components.velopark.attribution</permission>
+        <permission id="10" parent="8">components.velopark.modattribution</permission>
+
+		<permission id="11" parent="0">components.velopark.invoice</permission>
 	</permissions>
 	
 </install>
