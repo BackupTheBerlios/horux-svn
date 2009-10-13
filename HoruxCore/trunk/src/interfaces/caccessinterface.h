@@ -38,6 +38,9 @@ class CAccessInterface
 
         virtual void deviceConnectionMonitor ( int, bool ) {}
 
+        virtual void deviceInputMonitor ( int , int , bool  ) {}
+
+
         /*!
           Return the meta object
         */

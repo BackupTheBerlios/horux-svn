@@ -108,22 +108,27 @@ QMap<QString, CDeviceInterface *> CDeviceHandling::loadPlugin()
 
         QString fileName = list.at ( i );
 
-        QPluginLoader pluginLoader ( pluginDirectory.absoluteFilePath ( fileName ), this );
-        QObject *plugin = pluginLoader.instance();
-        if ( plugin )
+        if(fileName != "." && fileName!="..")
         {
-            int index = plugin->metaObject()->indexOfClassInfo ( "PluginName" );
-            QString pName;
-            if ( index != -1 )
+            QPluginLoader pluginLoader ( pluginDirectory.absoluteFilePath ( fileName ), this );
+            QObject *plugin = pluginLoader.instance();
+            if ( plugin )
             {
-                pName  =  plugin->metaObject()->classInfo ( index ).value() ;
+                int index = plugin->metaObject()->indexOfClassInfo ( "PluginName" );
+                QString pName;
+                if ( index != -1 )
+                {
+                    pName  =  plugin->metaObject()->classInfo ( index ).value() ;
 
-                loadedPlugins[pName] =  qobject_cast<CDeviceInterface *> ( plugin );
+                    loadedPlugins[pName] =  qobject_cast<CDeviceInterface *> ( plugin );
+                }
+                else
+                {
+                    qWarning ( "Unknown plugin device name: %s", pName.toLatin1().constData() );
+                }
             }
             else
-            {
-                qWarning ( "Unknown plugin device name: %s", pName.toLatin1().constData() );
-            }
+                qDebug() << pluginLoader.errorString ();
         }
     }
 

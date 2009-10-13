@@ -172,7 +172,7 @@ void CAccessHandling::deviceEvent ( QString xml )
         
         funcParam["event"] = event.text();
         
-        //! check if the request contain the tag "keyDetected"
+        //! check if the request is not empty
         if ( event.text() != "" )
         {
 
@@ -256,6 +256,16 @@ void CAccessHandling::deviceConnectionMonitor ( int deviceId, bool status )
     {
         i.next();
         i.value()->deviceConnectionMonitor ( deviceId, status );
+    }
+}
+
+void CAccessHandling::deviceInputMonitor ( int deviceId, int in, bool status )
+{
+    QMapIterator<QString, CAccessInterface*> i ( accessInterfaces );
+    while ( i.hasNext() )
+    {
+        i.next();
+        i.value()->deviceInputMonitor ( deviceId,in,status );
     }
 }
 

@@ -100,7 +100,21 @@ class CAccessHandling : public QObject
         */
         void deviceConnectionMonitor ( int, bool );
 
+        /*!
+            This slot is called when a notification must be sent.
+            The notification call a web service of Horux Gui to send
+            an email, sms, etc
+            @param param Parameter of the notification
+        */
         void notification(QMap<QString, QVariant>param);    
+
+        /*!
+          This slot is called when an device input changed
+          @param device Id of the device in the database
+          @param in input number
+          @param status input status
+        */
+        void deviceInputMonitor ( int deviceId, int in, bool status );
 
     signals:
         /*!
