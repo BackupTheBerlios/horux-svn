@@ -758,7 +758,7 @@ void CAccessLinkTCPIP::getOutputStatus()
 
 
 
-Q_EXPORT_PLUGIN2(accesslinkrs232, CAccessLinkTCPIP);
+Q_EXPORT_PLUGIN2(accesslinktcpip, CAccessLinkTCPIP);
 
 
 
