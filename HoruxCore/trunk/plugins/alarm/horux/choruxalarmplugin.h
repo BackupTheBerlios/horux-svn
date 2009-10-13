@@ -24,7 +24,7 @@
 #include <QMap>
 #include <QVariant>
 #include "calarminterface.h"
-
+#include "cxmlfactory.h"
 
 //! device
 #define ALARM_DEVICE_ANTI_VANDALE_ON		"1001" //! 

@@ -18,8 +18,6 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 #include <QtCore>
-
-//! adapter
 #include "cunittest.h"
 
 CUnitTest::CUnitTest(QObject *parent) : QObject(parent)
@@ -43,6 +41,8 @@ CDeviceInterface *CUnitTest::createInstance (QMap<QString, QVariant> config, QOb
 
 void CUnitTest::deviceAction(QString xml)
 {
+
+    qDebug() << "Unit test device receive a deviceAction";
     qDebug() << xml;
 }
 

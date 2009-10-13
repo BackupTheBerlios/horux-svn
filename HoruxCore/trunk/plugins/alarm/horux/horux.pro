@@ -17,4 +17,4 @@ unix {
     INSTALLS += library
 }
 
-INCLUDEPATH += ../../../src/interfaces
+INCLUDEPATH += ../../../src/interfaces  ../../../src

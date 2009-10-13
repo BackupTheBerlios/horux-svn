@@ -61,7 +61,7 @@ public:
 public slots:
     void deviceConnectionMonitor(int, bool);
     void deviceEvent(QString xml);
-    void deviceInputMonitor ( int , int , bool  ) {}
+    void deviceInputMonitor ( int  , int , bool  ) { }
 
 protected:
   bool checkAccess(QMap<QString, QVariant> params, bool emitAction);

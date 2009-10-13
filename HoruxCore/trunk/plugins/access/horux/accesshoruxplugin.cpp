@@ -45,6 +45,7 @@ void AccessHoruxPlugin::timerEvent(QTimerEvent *e)
 
 void AccessHoruxPlugin::deviceConnectionMonitor(int deviceId, bool status)
 {
+
   if(!status)
   {
     if(currentFreeAccess.contains(QString::number(deviceId)))

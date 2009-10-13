@@ -122,7 +122,7 @@ void CHoruxAlarmPlugin::deviceConnectionMonitor(int deviceId, bool isConnected)
 
 void CHoruxAlarmPlugin::deviceInputMonitor(int , int , bool )
 {
-  //qDebug("Input changed on %u (%u:%u)", deviceId, in, status);
+ // qDebug("(Alarm plugin) Input changed on %u (%u:%u)", deviceId, in, status);
 }
 
 Q_EXPORT_PLUGIN2(horuxalarmplugin, CHoruxAlarmPlugin);
