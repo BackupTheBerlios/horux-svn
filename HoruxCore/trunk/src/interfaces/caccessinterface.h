@@ -32,22 +32,20 @@ class CAccessInterface
 
         virtual ~CAccessInterface() {}
 
-        virtual void deviceEvent ( QMap<QString, QVariant> params ) = 0;
-
         virtual bool isAccess ( QMap<QString, QVariant> params, bool emitAction ) = 0;
-
-        virtual void deviceConnectionMonitor ( int, bool ) {}
-
-        virtual void deviceInputMonitor ( int , int , bool  ) {}
-
 
         /*!
           Return the meta object
         */
-
         virtual QObject *getMetaObject() = 0;
 
         void setAccessInterfaces ( QMap<QString, CAccessInterface*> ai ) {accessInterfaces = ai;}
+
+    public slots:
+        virtual void deviceEvent ( QString ) = 0;
+        virtual void deviceConnectionMonitor ( int, bool ) = 0;
+        virtual void deviceInputMonitor ( int , int , bool  ) = 0;
+
 
     signals:
         void accessAction ( QString xml );

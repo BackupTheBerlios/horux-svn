@@ -30,15 +30,16 @@ class CAlarmInterface
     public:
         virtual ~CAlarmInterface() {}
 
+        /*!
+          Return the meta object
+        */
+        virtual QObject *getMetaObject() = 0;
+
+    public slots:
         virtual void alarmMonitor ( QString xml ) = 0;
         virtual void deviceConnectionMonitor ( int deviceId, bool isConnected ) = 0;
         virtual void deviceInputMonitor ( int deviceId, int in, bool status ) = 0;
 
-        /*!
-          Return the meta object
-        */
-
-        virtual QObject *getMetaObject() = 0;
 
     signals:
         /*!

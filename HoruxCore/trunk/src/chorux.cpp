@@ -57,25 +57,25 @@ bool CHorux::startEngine()
     connect ( CFactory::getDeviceHandling(),
               SIGNAL ( deviceEvent ( QString ) ),
               CFactory::getAlarmHandling(),
-              SLOT ( alarmMonitor ( QString ) ) );
+              SIGNAL ( alarmMonitor ( QString ) ) );
 
     // the alarm handling monitor the device connection
     connect ( CFactory::getDeviceHandling(),
               SIGNAL ( deviceConnection ( int, bool ) ),
               CFactory::getAlarmHandling(),
-              SLOT ( deviceConnectionMonitor ( int, bool ) ) );
+              SIGNAL ( deviceConnectionMonitor ( int, bool ) ) );
 
     // the alarm handling monitor the device input
     connect ( CFactory::getDeviceHandling(),
               SIGNAL ( deviceInputChange ( int, int, bool ) ),
               CFactory::getAlarmHandling(),
-              SLOT ( deviceInputMonitor ( int, int, bool ) ) );
+              SIGNAL ( deviceInputMonitor ( int, int, bool ) ) );
 
     // the alarm handling monitor the access alarm
     connect ( CFactory::getAccessHandling(),
               SIGNAL ( sendAlarm ( QString ) ),
               CFactory::getAlarmHandling(),
-              SLOT ( alarmMonitor ( QString ) ) );
+              SIGNAL ( alarmMonitor ( QString ) ) );
 
 
     // the device handling reemit the access action
@@ -95,14 +95,25 @@ bool CHorux::startEngine()
     connect ( CFactory::getDeviceHandling(),
               SIGNAL ( deviceEvent ( QString ) ),
               CFactory::getAccessHandling(),
-              SLOT ( deviceEvent ( QString ) ) );
+              SIGNAL ( deviceEvent ( QString ) ) );
 
     // the access handling monitor the device connection
     connect ( CFactory::getDeviceHandling(),
               SIGNAL ( deviceConnection ( int, bool ) ),
               CFactory::getAccessHandling(),
-              SLOT ( deviceConnectionMonitor ( int, bool ) ) );
+              SIGNAL ( deviceConnectionMonitor ( int, bool ) ) );
 
+   // the access handling monitor the device connection
+    connect ( CFactory::getDeviceHandling(),
+              SIGNAL ( deviceInputChange ( int, int, bool ) ),
+              CFactory::getAccessHandling(),
+              SIGNAL ( deviceInputMonitor ( int, int, bool ) ) );
+
+    // connect the alarms which could happen in this class
+    connect ( this,
+              SIGNAL ( sendAlarm(QString) ),
+              CFactory::getAlarmHandling(),
+              SIGNAL ( alarmMonitor(QString) ) );
 
     //! 1, initialize the db engine
     if ( !CFactory::getDbHandling()->init() )
@@ -138,7 +149,7 @@ bool CHorux::startEngine()
         else
         {
             QString xml = CXmlFactory::systemAlarm("0","1200", "The Horux XMLRPC server cannot be started");
-            CFactory::getAlarmHandling()->alarmMonitor(xml);
+            emit sendAlarm(xml);
         }
 
     }

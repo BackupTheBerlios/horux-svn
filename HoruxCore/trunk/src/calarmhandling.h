@@ -86,29 +86,7 @@ class CAlarmHandling : public QObject
         //! list of the alarm plugins (plugin name, plugin instance)
         QMap<QString, CAlarmInterface*> alarmInterfaces;
 
-    public slots:
-        /*!
-          This slot is called when an alarm happens
-          @param xml xml alarm definition
-        */
-        void alarmMonitor ( QString xml );
-
-        /*!
-          This slot is called when a device is un/connected
-          @param deviceId  Id of the device in the database
-          @param isConnected true if connected else false
-        */
-        void deviceConnectionMonitor ( int deviceId, bool isConnected );
-
-        /*!
-          This slot is called when an device input changed
-          @param device Id of the device in the database
-          @param in input number
-          @param status input status
-        */
-        void deviceInputMonitor ( int deviceId, int in, bool status );
-
-
+    protected slots:
         void notification(QMap<QString, QVariant>param);
 
     signals:
@@ -117,6 +95,27 @@ class CAlarmHandling : public QObject
           @param xml Xml action
         */
         void alarmAction ( QString xml );
+
+        /*!
+          Emit when an alarm happens
+          @param xml xml alarm definition
+        */
+        void alarmMonitor ( QString xml );
+
+        /*!
+          Emit when a device is un/connected
+          @param deviceId  Id of the device in the database
+          @param isConnected true if connected else false
+        */
+        void deviceConnectionMonitor ( int deviceId, bool isConnected );
+
+        /*!
+          Emit when an device input changed
+          @param device Id of the device in the database
+          @param in input number
+          @param status input status
+        */
+        void deviceInputMonitor ( int deviceId, int in, bool status );
 };
 
 #endif

@@ -120,6 +120,21 @@ bool CAlarmHandling::loadPlugin()
                           this,
                           SLOT ( notification ( QMap<QString, QVariant> ) ) );
 
+                connect ( this,
+                          SIGNAL ( alarmMonitor(QString) ),
+                          plugin,
+                          SLOT ( alarmMonitor(QString) ) );
+
+                connect ( this,
+                          SIGNAL ( deviceConnectionMonitor(int,bool) ),
+                          plugin,
+                          SLOT ( deviceConnectionMonitor(int,bool) ) );
+
+                connect ( this,
+                          SIGNAL ( deviceInputMonitor(int,int,bool) ),
+                          plugin,
+                          SLOT ( deviceInputMonitor(int,int,bool) ) );
+
                 alarmInterfaces[pName] =  qobject_cast<CAlarmInterface *> ( plugin );
             }
             else
@@ -132,38 +147,6 @@ bool CAlarmHandling::loadPlugin()
     return true;
 
 }
-
-void CAlarmHandling::alarmMonitor ( QString xml )
-{
-    QMapIterator<QString, CAlarmInterface*> i ( alarmInterfaces );
-    while ( i.hasNext() )
-    {
-        i.next();
-        i.value()->alarmMonitor ( xml );
-    }
-}
-
-void CAlarmHandling::deviceConnectionMonitor ( int deviceId, bool isConnected )
-{
-    QMapIterator<QString, CAlarmInterface*> i ( alarmInterfaces );
-    while ( i.hasNext() )
-    {
-        i.next();
-        i.value()->deviceConnectionMonitor ( deviceId,isConnected );
-    }
-}
-
-void CAlarmHandling::deviceInputMonitor ( int deviceId, int in, bool status )
-{
-    QMapIterator<QString, CAlarmInterface*> i ( alarmInterfaces );
-    while ( i.hasNext() )
-    {
-        i.next();
-        i.value()->deviceInputMonitor ( deviceId,in,status );
-    }
-}
-
-
 
 /*!
     \fn CAlarmHandling::getInfo(QDomDocument xml_info )

@@ -1,3 +1,6 @@
+# To activate the unit test, uncomment the two following lines
+# DEFINES += HORUX_UNIT_TEST
+
 SOURCES += main.cpp \
     cfactory.cpp \
     chorux.cpp \
@@ -9,13 +12,18 @@ SOURCES += main.cpp \
     cxmlfactory.cpp \
     choruxservice.cpp \
     cnotification.cpp
+
 TEMPLATE = app
+
 CONFIG += warn_on \
     thread \
     qt \
-    release
+    debug
+
 TARGET = ../bin/horuxd
+
 RESOURCES -= application.qrc
+
 HEADERS += cfactory.h \
     chorux.h \
     cdbhandling.h \
@@ -33,9 +41,12 @@ QT += core \
     xml \
     network
 QT -= gui
+
 INCLUDEPATH += ../maia_xmlrpc \
     interfaces
+
 LIBS += ../maia_xmlrpc/libmaia_xmlrpc.a
+
 win32:RC_FILE = myapp.rc
 unix { 
     binary.path = /usr/share/horux/core

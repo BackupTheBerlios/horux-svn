@@ -87,18 +87,6 @@ class CAccessHandling : public QObject
         QMap<QString, CAccessInterface*> accessInterfaces;
 
     public slots:
-        /*!
-          Slot called when a event happens on the device like keyDetection
-          @param xml Xml event
-        */
-        void deviceEvent ( QString xml );
-
-        /*!
-          This slot is called when a device is un/connected
-          @param deviceId  Id of the device in the database
-          @param isConnected true if connected else false
-        */
-        void deviceConnectionMonitor ( int, bool );
 
         /*!
             This slot is called when a notification must be sent.
@@ -108,13 +96,7 @@ class CAccessHandling : public QObject
         */
         void notification(QMap<QString, QVariant>param);    
 
-        /*!
-          This slot is called when an device input changed
-          @param device Id of the device in the database
-          @param in input number
-          @param status input status
-        */
-        void deviceInputMonitor ( int deviceId, int in, bool status );
+
 
     signals:
         /*!
@@ -128,6 +110,28 @@ class CAccessHandling : public QObject
           @param xml Xml action
         */
         void accessAction ( QString xml );
+
+        /*!
+          Emit when a event happens on the device like keyDetection
+          @param xml Xml event
+        */
+        void deviceEvent ( QString xml );
+
+        /*!
+          Emit when a device is un/connected
+          @param deviceId  Id of the device in the database
+          @param isConnected true if connected else false
+        */
+        void deviceConnectionMonitor ( int, bool );
+
+        /*!
+          Emit when an device input changed
+          @param device Id of the device in the database
+          @param in input number
+          @param status input status
+        */
+        void deviceInputMonitor ( int deviceId, int in, bool status );
+
 };
 
 #endif

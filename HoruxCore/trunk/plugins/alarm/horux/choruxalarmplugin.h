@@ -72,11 +72,13 @@ class CHoruxAlarmPlugin : public QObject, CAlarmInterface
     Q_CLASSINFO ( "PluginType", "alarm" );
     Q_CLASSINFO ( "PluginDescription", "Handle the alarm for Horux Core" );
 public:
+    QObject *getMetaObject() { return this;}
 
+public slots:
     void alarmMonitor(QString xml);
     void deviceConnectionMonitor(int deviceId, bool isConnected);
     void deviceInputMonitor(int deviceId, int in, bool status);
-    QObject *getMetaObject() { return this;}
+
 
 protected:
     void handleHalarm(QString name, QMap<QString, QVariant>params);

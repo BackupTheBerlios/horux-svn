@@ -104,6 +104,13 @@ class CHorux : public QObject
 
         //! pointer of the instance
         static CHorux *ptr_this;
+
+    signals:
+        /*!
+          Emit when a alarm musst be catch by the alarm plugin
+          @param xml Xml alarm
+        */
+        void sendAlarm ( QString xml );
 };
 
 #endif

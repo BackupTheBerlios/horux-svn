@@ -128,6 +128,21 @@ bool CAccessHandling::loadPlugin()
                           this,
                           SLOT ( notification ( QMap<QString, QVariant> ) ) );
 
+                connect ( this,
+                          SIGNAL (deviceEvent(QString ) ),
+                          plugin,
+                          SLOT ( deviceEvent(QString ) ) );
+
+                connect ( this,
+                          SIGNAL ( deviceConnectionMonitor(int,bool) ),
+                          plugin,
+                          SLOT ( deviceConnectionMonitor(int,bool) ) );
+
+                connect ( this,
+                          SIGNAL ( deviceInputMonitor(int,int,bool) ),
+                          plugin,
+                          SLOT ( deviceInputMonitor(int,int,bool) ) );
+
                 accessInterfaces[pName] =  qobject_cast<CAccessInterface *> ( plugin );
 
                 qobject_cast<CAccessInterface *> ( plugin )->setAccessInterfaces ( accessInterfaces );
@@ -143,131 +158,6 @@ bool CAccessHandling::loadPlugin()
 
 }
 
-void CAccessHandling::deviceEvent ( QString xml )
-{
-    QDomDocument doc;
-    doc.setContent ( xml );
-
-    QDomElement root = doc.documentElement();
-
-    QDomNode node = root.firstChild();
-
-    //! check if it is a device event
-    if ( root.tagName() != "deviceEvent" )
-    {
-        return;
-    }
-
-    QString deviceId = root.attribute ( "id" );
-
-    QMap<QString, QVariant>funcParam;
-
-    QDomNode eventNode = root.firstChild();
-
-    QDomElement event = eventNode.toElement();
-
-    //! check if the request contain the tag "event"
-    if ( event.tagName() == "event" )
-    {
-        
-        funcParam["event"] = event.text();
-        
-        //! check if the request is not empty
-        if ( event.text() != "" )
-        {
-
-            eventNode = eventNode.nextSibling();
-
-            QDomElement params = eventNode.toElement();
-
-            QDomNode paramsNode = params.firstChild();
-            while ( !paramsNode.isNull() )
-            {
-                QDomElement params = paramsNode.toElement();
-
-                if ( params.tagName() == "param" )
-                {
-                    QString pName;
-                    QVariant pValue;
-                    QDomNode p = params.firstChild();
-                    if ( p.toElement().tagName() == "name" )
-                    {
-                        pName = p.toElement().text();
-                        p = p.nextSibling();
-                        if ( p.toElement().tagName() == "value" )
-                        {
-                            pValue = p.toElement().text();
-                            funcParam[pName] = pValue;
-
-                        }
-                    }
-                }
-
-                paramsNode = paramsNode.nextSibling();
-            }
-
-            funcParam["deviceId"] = deviceId;
-        }
-        else
-            return;
-    }
-    else
-        return;
-
-    //! ask the access plugin
-    QMapIterator<QString, CAccessInterface*> i ( accessInterfaces );
-    while ( i.hasNext() )
-    {
-        i.next();
-        bool mustBeCheck = false;
-
-        //! Check if the device must be checked by a specfic access plugin
-        QString pName = "";
-        int index = i.value()->getMetaObject()->metaObject()->indexOfClassInfo ( "PluginName" );
-
-        if ( index != -1 )
-            pName = i.value()->getMetaObject()->metaObject()->classInfo ( index ).value();
-
-        //! if specified in the xml deviceEvent
-        if ( funcParam.contains ( "AccessPluginName" ) )
-        {
-            if ( funcParam["AccessPluginName"] == "" || funcParam["AccessPluginName"] == pName )
-                mustBeCheck = true;
-        }
-        else
-            mustBeCheck = true;
-
-
-        if ( mustBeCheck )
-        {
-            if ( i.value() )
-                i.value()->deviceEvent ( funcParam );
-        }
-    }
-
-}
-
-
-void CAccessHandling::deviceConnectionMonitor ( int deviceId, bool status )
-{
-    //! ask the access plugin
-    QMapIterator<QString, CAccessInterface*> i ( accessInterfaces );
-    while ( i.hasNext() )
-    {
-        i.next();
-        i.value()->deviceConnectionMonitor ( deviceId, status );
-    }
-}
-
-void CAccessHandling::deviceInputMonitor ( int deviceId, int in, bool status )
-{
-    QMapIterator<QString, CAccessInterface*> i ( accessInterfaces );
-    while ( i.hasNext() )
-    {
-        i.next();
-        i.value()->deviceInputMonitor ( deviceId,in,status );
-    }
-}
 
 /*!
     \fn CAccessHandling::getInfo(QDomDocument xml_info )
