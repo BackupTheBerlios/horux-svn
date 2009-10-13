@@ -390,6 +390,7 @@ table.adminlist thead th {
 	border-left: 1px solid #fff;
 }
 
+
 table.adminlist thead a:hover { text-decoration: none; }
 
 table.adminlist thead th img { vertical-align: middle; }
@@ -407,7 +408,7 @@ table.adminlist tbody tr.row1 td { background: #f9f9f9; border-top: 1px solid #F
 
 table.adminlist tfoot tr { text-align: center;  color: #333; }
 table.adminlist tfoot td,
-table.adminlist tfoot th { background-color: #f3f3f3; border-top: 1px solid #999; text-align: center; }
+table.adminlist tfoot th { background-color: #f3f3f3; border-top: 1px solid #999; text-align: right; }
 
 table.adminlist td.order 		{ text-align: center; }
 table.adminlist td.order span { float: left; display: block; width: 20px; text-align: center; }
