@@ -23,6 +23,8 @@
 
 #include <QtCore>
 
+typedef QMap<QString,QVariant> MapParam;
+
 class CXmlFactory
 {
 public:
@@ -36,15 +38,23 @@ public:
 
     /*!
         Create the xml structure to send a device event
-        @id Id of the destination object
+        @id Id of the device
         @e Event number
         @m Message text
      */
     static QString deviceEvent(QString id, QString e, QString m);
 
     /*!
+        Create the xml structure to send a device event
+        @id Id of the device
+        @e Event name
+        @m Message text
+     */
+    static QString deviceEvent(QString id, QString e, QMap<QString, QString>p);
+
+    /*!
         Create the xml structure to send a access alarm
-        @id Id of the destination object
+        @id Id of the object
         @e Event number
         @m Message text
      */
@@ -66,6 +76,14 @@ public:
      */
     static QString keyDetection(QString id, QString pn, QString k);
 
+    /*!
+      Parse the xml device action and return it as a QMap
+      MapParam is a type QMap<QString,QVariant
+      @xml Xml device action
+      @id Id of the device who receive the device action
+      @return Return a QMap list of device action
+    */
+    static QMap<QString, MapParam> deviceAction(QString xml , int id);
 };
 
 #endif // CXMLFACTORY_H

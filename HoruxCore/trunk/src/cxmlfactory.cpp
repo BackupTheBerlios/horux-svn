@@ -91,6 +91,45 @@ QString CXmlFactory::deviceEvent(QString id, QString e, QString m)
     return doc.toString();
 }
 
+QString CXmlFactory::deviceEvent(QString id, QString e, QMap<QString, QString>p)
+{
+    QDomDocument doc;
+
+    QDomElement deviceEvent = doc.createElement("deviceEvent");
+    deviceEvent.setAttribute("id", id);
+
+    QDomElement event = doc.createElement("event");
+    QDomText e_dt = doc.createTextNode(e);
+    event.appendChild(e_dt);
+
+    deviceEvent.appendChild(event);
+
+    QDomElement params = doc.createElement("params");
+    deviceEvent.appendChild(params);
+
+    QMapIterator<QString, QString> i(p);
+    while (i.hasNext())
+    {
+        i.next();
+        QDomElement param = doc.createElement("param");
+        params.appendChild(param);
+
+        QDomElement name = doc.createElement("name");
+        QDomText n_dt = doc.createTextNode( i.key() );
+        name.appendChild(n_dt);
+
+        param.appendChild(name);
+
+        QDomElement value = doc.createElement("value");
+        QDomText v_dt = doc.createTextNode( i.value());
+        value.appendChild(v_dt);
+        param.appendChild(value);
+     }
+
+    doc.appendChild(deviceEvent);
+    return doc.toString();
+}
+
 QString CXmlFactory::keyDetection(QString id, QString pn, QString k)
 {
     QDomDocument doc;
@@ -215,4 +254,87 @@ QString CXmlFactory::deviceAction(QString id, QString f, QMap<QString, QString>p
 
     return doc.toString();
 
+}
+
+QMap<QString, MapParam> CXmlFactory::deviceAction(QString xml, int id)
+{
+  QMap<QString, MapParam> funcList;
+
+  QDomDocument doc;
+  doc.setContent(xml);
+
+  QDomElement root = doc.documentElement();
+
+  QDomNode node = root.firstChild();
+
+  if(root.tagName() != "deviceAction")
+  {
+    return funcList;
+  }
+
+  if(root.attribute("id").toInt() != id)
+    return funcList;
+
+  QDomNode actionNode = root.firstChild();
+
+  while(!actionNode.isNull())
+  {
+    QDomElement action = actionNode.toElement();
+
+    if(action.tagName() == "action")
+    {
+      QString funcName;
+      QMap<QString, QVariant>funcParam;
+
+      QDomNode functionNode = action.firstChild();
+      while(!functionNode.isNull())
+      {
+        QDomElement function = functionNode.toElement();
+
+        // On récupère le nom de la fonction qui devra être exécutée
+        if(function.tagName() == "function")
+          funcName = function.text();
+
+        // On récupère les paramètres pour la fonction
+        if(function.tagName() == "params")
+        {
+          QDomNode paramsNode = function.firstChild();
+          while(!paramsNode.isNull())
+          {
+            QDomElement params = paramsNode.toElement();
+
+            if(params.tagName() == "param")
+            {
+              QString pName;
+              QVariant pValue;
+              QDomNode p = params.firstChild();
+              if(p.toElement().tagName() == "name")
+              {
+                pName = p.toElement().text();
+                p = p.nextSibling();
+                if(p.toElement().tagName() == "value")
+                {
+                  pValue = p.toElement().text();
+                  funcParam[pName] = pValue;
+                }
+              }
+            }
+
+            paramsNode = paramsNode.nextSibling();
+          }
+
+        }
+
+        functionNode = functionNode.nextSibling();
+
+      }
+
+      funcList[funcName] = funcParam;
+
+    }
+
+    actionNode = actionNode.nextSibling();
+  }
+
+  return funcList;
 }
