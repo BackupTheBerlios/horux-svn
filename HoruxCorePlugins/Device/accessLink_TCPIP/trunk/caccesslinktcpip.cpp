@@ -64,84 +64,18 @@ CDeviceInterface *CAccessLinkTCPIP::createInstance (QMap<QString, QVariant> conf
 
 void CAccessLinkTCPIP::deviceAction(QString xml)
 {
-
-  QDomDocument doc;
-  doc.setContent(xml);
-
-  QDomElement root = doc.documentElement();
-
-  QDomNode node = root.firstChild();
-
-  if(root.tagName() != "deviceAction")
+  QMap<QString, MapParam> func = CXmlFactory::deviceAction(xml, id);
+  QMapIterator<QString, MapParam> i(func);
+  while (i.hasNext())
   {
-    return;
-  }
-
-  if(root.attribute("id").toInt() != id)
-    return;
-
-  QDomNode actionNode = root.firstChild();
-
-  while(!actionNode.isNull())
-  {
-    QDomElement action = actionNode.toElement();
-
-    if(action.tagName() == "action") 
-    {
-      QString funcName;
-      QMap<QString, QVariant>funcParam;
-
-      QDomNode functionNode = action.firstChild();
-      while(!functionNode.isNull())
-      {
-        QDomElement function = functionNode.toElement();
-
-        if(function.tagName() == "function")
-          funcName = function.text();
-
-        if(function.tagName() == "params")
-        {
-          QDomNode paramsNode = function.firstChild();
-          while(!paramsNode.isNull())
-          {
-            QDomElement params = paramsNode.toElement();
-
-            if(params.tagName() == "param")
-            {
-              QString pName;
-              QVariant pValue;
-              QDomNode p = params.firstChild();
-              if(p.toElement().tagName() == "name")
-              {  
-                pName = p.toElement().text();
-                p = p.nextSibling();
-                if(p.toElement().tagName() == "value")
-                {
-                  pValue = p.toElement().text();
-                  funcParam[pName] = pValue;
-                }
-              } 
-            }
-            
-            paramsNode = paramsNode.nextSibling(); 
-          }
-
-        }
-
-        functionNode = functionNode.nextSibling(); 
-
-      }
-      
-      if(interfaces[funcName])
-      {
-          void (*func)(QObject *, QMap<QString, QVariant>) = interfaces[funcName];
-          func(getMetaObject(), funcParam);
+     i.next();
+     if(interfaces[i.key()])
+     {
+          void (*func)(QObject *, QMap<QString, QVariant>) = interfaces[i.key()];
+          func(getMetaObject(), i.value());
       }
       else
-        qDebug("The function %s is not define in the device %s", funcName.toLatin1() .constData(), name.toLatin1().constData());
-    }
-
-    actionNode = actionNode.nextSibling(); 
+        qDebug("The function %s is not define in the device %s", i.key().toLatin1() .constData(), name.toLatin1().constData());
   }
 
 }
@@ -902,7 +836,7 @@ void CAccessLinkTCPIP::handleSn(QString sn)
 
 void CAccessLinkTCPIP::s_openDoorLock(QObject *p, QMap<QString, QVariant>params)
 {
-
+qDebug() << params;
   CAccessLinkTCPIP *pThis = qobject_cast<CAccessLinkTCPIP *>(p);
   //! check by which access plugin the device musst be controlled
   if(pThis->getAccessPluginName() != "")
