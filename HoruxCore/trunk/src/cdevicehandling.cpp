@@ -145,10 +145,6 @@ bool CDeviceHandling::createDevice()
 
     QMap<int, QString> deviceList = CFactory::getDbHandling()->plugin()->getDeviceList();
 
-    #if defined(HORUX_UNIT_TEST)
-        deviceList[0] = "unittest";
-    #endif
-
     QMapIterator<int, QString> i ( deviceList );
 
     while ( i.hasNext() )
@@ -162,22 +158,7 @@ bool CDeviceHandling::createDevice()
             QMap<QString, QVariant> config;
 
             //! get the device paramter from the database
-            #if defined(HORUX_UNIT_TEST)
-                if( type != "unittest")
-                    config = CFactory::getDbHandling()->plugin()->getDeviceConfiguration ( id, type );
-            #else
-                config = CFactory::getDbHandling()->plugin()->getDeviceConfiguration ( id, type );
-            #endif
-
-            #if defined(HORUX_UNIT_TEST)
-                if( type == "unittest")
-                {
-                    config["id_device"] = 0;
-                    config["isLog"] = false;
-                    config["accessPlugin"] = "";
-                    config["name"] = "Unit test device";
-                }
-            #endif
+            config = CFactory::getDbHandling()->plugin()->getDeviceConfiguration ( id, type );
 
             CDeviceInterface *device = loadedPlugins[type]->createInstance ( config,this );
 
@@ -253,12 +234,7 @@ bool CDeviceHandling::connectChild2Parent()
 
         int parentId = 0;
 
-        #if defined(HORUX_UNIT_TEST)
-            if( i.key() != 0)
-                parentId = CFactory::getDbHandling()->plugin()->getParentDevice ( i.key() );
-        #else
-            parentId = CFactory::getDbHandling()->plugin()->getParentDevice ( i.key() );
-        #endif
+        parentId = CFactory::getDbHandling()->plugin()->getParentDevice ( i.key() );
 
         if ( parentId >0 )
         {
@@ -285,12 +261,7 @@ bool CDeviceHandling::startDevice()
         i.next();
         int parentId = 0;
 
-        #if defined(HORUX_UNIT_TEST)
-            if(  i.key() != 0 )
-                parentId = CFactory::getDbHandling()->plugin()->getParentDevice ( i.key() );
-        #else
-            parentId = CFactory::getDbHandling()->plugin()->getParentDevice ( i.key() );
-        #endif
+        parentId = CFactory::getDbHandling()->plugin()->getParentDevice ( i.key() );
 
         //! open the device only if the device is not handled by a parent device
         if ( !i.value()->isOpened() && parentId == 0 )
@@ -306,6 +277,65 @@ bool CDeviceHandling::startDevice()
     return true;
 }
 
+
+void CDeviceHandling::stopDevice ( QString id )
+{
+    QMapIterator<int, CDeviceInterface *> i ( devicesInterface );
+    while ( i.hasNext() )
+    {
+        i.next();
+        int parentId = 0;
+
+        parentId = CFactory::getDbHandling()->plugin()->getParentDevice ( i.key() );
+
+        //! open the device only if the device is not handled by a parent device
+        if ( i.value()->isOpened() && parentId == 0 )
+        {
+            if(i.key() == id.toInt())
+            {
+                i.value()->close();
+                return;
+            }
+        }
+    }
+}
+
+void CDeviceHandling::startDevice ( QString id )
+{
+    QMapIterator<int, CDeviceInterface *> i ( devicesInterface );
+
+    while ( i.hasNext() )
+    {
+        i.next();
+        int parentId = 0;
+
+        parentId = CFactory::getDbHandling()->plugin()->getParentDevice ( i.key() );
+
+        //! open the device only if the device is not handled by a parent device
+        if (i.key() == id.toInt() && !i.value()->isOpened() && parentId == 0)
+        {
+            QMap<QString, QVariant> config;
+            QMap<int, QString> deviceList = CFactory::getDbHandling()->plugin()->getDeviceList();
+
+            config = CFactory::getDbHandling()->plugin()->getDeviceConfiguration ( id.toInt(), deviceList[id.toInt()] );
+
+            QMapIterator<QString, QVariant> j(config);
+             while (j.hasNext()) {
+                 j.next();
+                 if( j.key() != "id")
+                    i.value()->setParameter(j.key(),j.value() );
+             }
+
+            if ( !i.value()->open() )
+            {
+                QString xml = CXmlFactory::deviceEvent( i.value()->getParameter ( "id" ).toString().toLatin1(), "1016", "The communication with the device cannot be opened");
+                emit deviceEvent(xml);
+            }
+
+            return;
+        }
+    }
+}
 
 /*!
     \fn CDeviceHandling::getInfo(QDomDocument xml_info )

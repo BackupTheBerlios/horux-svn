@@ -1,6 +1,3 @@
-# To activate the unit test, uncomment the two following lines
-# DEFINES += HORUX_UNIT_TEST
-
 SOURCES += main.cpp \
     cfactory.cpp \
     chorux.cpp \

@@ -84,6 +84,15 @@ public:
       @return Return a QMap list of device action
     */
     static QMap<QString, MapParam> deviceAction(QString xml , int id);
+
+    /*!
+      Parse the xml device event and return it as a QMap
+      MapParam is a type QMap<QString,QVariant
+      @xml Xml device action
+      @id Id of the device who receive the device action
+      @return Return a QMap list of device action
+    */
+    static QMap<QString, QVariant> deviceEvent(QString xml);
 };
 
 #endif // CXMLFACTORY_H

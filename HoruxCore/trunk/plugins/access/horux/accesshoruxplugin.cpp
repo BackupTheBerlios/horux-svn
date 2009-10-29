@@ -200,74 +200,7 @@ void AccessHoruxPlugin::checkFreeAccess()
 
 void AccessHoruxPlugin::deviceEvent(QString xml)
 {
-    QDomDocument doc;
-    doc.setContent ( xml );
-
-    QDomElement root = doc.documentElement();
-
-    QDomNode node = root.firstChild();
-
-    //! check if it is a device event
-    if ( root.tagName() != "deviceEvent" )
-    {
-        return;
-    }
-
-    QString deviceId = root.attribute ( "id" );
-
-    QMap<QString, QVariant>funcParams;
-
-    QDomNode eventNode = root.firstChild();
-
-    QDomElement event = eventNode.toElement();
-
-    //! check if the request contain the tag "event"
-    if ( event.tagName() == "event" )
-    {
-
-        funcParams["event"] = event.text();
-
-        //! check if the request is not empty
-        if ( event.text() != "" )
-        {
-
-            eventNode = eventNode.nextSibling();
-
-            QDomElement params = eventNode.toElement();
-
-            QDomNode paramsNode = params.firstChild();
-            while ( !paramsNode.isNull() )
-            {
-                QDomElement params = paramsNode.toElement();
-
-                if ( params.tagName() == "param" )
-                {
-                    QString pName;
-                    QVariant pValue;
-                    QDomNode p = params.firstChild();
-                    if ( p.toElement().tagName() == "name" )
-                    {
-                        pName = p.toElement().text();
-                        p = p.nextSibling();
-                        if ( p.toElement().tagName() == "value" )
-                        {
-                            pValue = p.toElement().text();
-                            funcParams[pName] = pValue;
-
-                        }
-                    }
-                }
-
-                paramsNode = paramsNode.nextSibling();
-            }
-
-            funcParams["deviceId"] = deviceId;
-        }
-        else
-            return;
-    }
-    else
-        return;
+    QMap<QString, QVariant>params = CXmlFactory::deviceEvent(xml) ;
 
     bool mustBeCheck = false;
 
@@ -279,9 +212,9 @@ void AccessHoruxPlugin::deviceEvent(QString xml)
         pName = metaObject()->classInfo ( index ).value();
 
     //! if specified in the xml deviceEvent
-    if ( funcParams.contains ( "AccessPluginName" ) )
+    if ( params.contains ( "AccessPluginName" ) )
     {
-        if ( funcParams["AccessPluginName"] == "" || funcParams["AccessPluginName"] == pName )
+        if ( params["AccessPluginName"] == "" || params["AccessPluginName"] == pName )
             mustBeCheck = true;
     }
     else
@@ -295,10 +228,10 @@ void AccessHoruxPlugin::deviceEvent(QString xml)
 
 
     //! handle only the key detection
-    if(event.text() != "keyDetected")
+    if(params["event"] != "keyDetected")
         return;
 
-    QString key = funcParams["key"].toString();
+    QString key = params["key"].toString();
 
     //! get the access plugin name used for the key
     QString sql = "SELECT accessPlugin FROM hr_keys AS k LEFT JOIN hr_keys_attribution AS ka ON ka.id_key=k.id LEFT JOIN hr_user_group_attribution AS uga ON uga.id_user=ka.id_user LEFT JOIN hr_user_group AS ug ON ug.id=uga.id_group WHERE serialNumber='" + key + "' AND accessPlugin!='NULL' AND accessPlugin!=''";
@@ -307,7 +240,7 @@ void AccessHoruxPlugin::deviceEvent(QString xml)
 
     if(query.next() && query.value(0).toString() != metaObject()->classInfo ( index ).value()) return;
 
-    isAccess(funcParams, true);
+    isAccess(params, true);
 }
 
 bool AccessHoruxPlugin::isAccess(QMap<QString, QVariant> params, bool emitAction)

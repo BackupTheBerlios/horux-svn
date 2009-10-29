@@ -105,7 +105,6 @@ class CDeviceInterface
         /*!
           Dispatch a message to the device
         */
-
         virtual void dispatchMessage ( QByteArray ba ) = 0;
 
         /*!
@@ -114,6 +113,9 @@ class CDeviceInterface
         */
         virtual void deviceAction ( QString xml ) = 0;
 
+        /*!
+            set the path for the log
+        */
         void setLogPath ( QString path ) {logPath = path;}
 
     protected:

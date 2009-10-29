@@ -73,6 +73,17 @@ class CDeviceHandling : public QObject
         */
         QDomElement getDeviceInfo ( QDomDocument xml_info );
 
+
+       /*!
+          Stop a device.
+        */
+        void stopDevice ( QString id );
+
+        /*!
+          Start a device.
+        */
+        void startDevice ( QString id );
+
     protected:
         /*!
           Constructor
@@ -103,6 +114,7 @@ class CDeviceHandling : public QObject
           @return return true if the device is well started else false
         */
         bool startDevice();
+
 
     private:
         //! Device handler instance (singleton)

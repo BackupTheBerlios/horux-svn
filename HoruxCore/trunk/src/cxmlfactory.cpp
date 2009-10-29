@@ -338,3 +338,77 @@ QMap<QString, MapParam> CXmlFactory::deviceAction(QString xml, int id)
 
   return funcList;
 }
+
+QMap<QString, QVariant> CXmlFactory::deviceEvent(QString xml)
+{
+    QMap<QString, QVariant>funcParams;
+
+    QDomDocument doc;
+    doc.setContent ( xml );
+
+    QDomElement root = doc.documentElement();
+
+    QDomNode node = root.firstChild();
+
+    //! check if it is a device event
+    if ( root.tagName() != "deviceEvent" )
+    {
+        return funcParams;
+    }
+
+    QString deviceId = root.attribute ( "id" );
+
+    QDomNode eventNode = root.firstChild();
+
+    QDomElement event = eventNode.toElement();
+
+    //! check if the request contain the tag "event"
+    if ( event.tagName() == "event" )
+    {
+
+        funcParams["event"] = event.text();
+
+        //! check if the request is not empty
+        if ( event.text() != "" )
+        {
+
+            eventNode = eventNode.nextSibling();
+
+            QDomElement params = eventNode.toElement();
+
+            QDomNode paramsNode = params.firstChild();
+            while ( !paramsNode.isNull() )
+            {
+                QDomElement params = paramsNode.toElement();
+
+                if ( params.tagName() == "param" )
+                {
+                    QString pName;
+                    QVariant pValue;
+                    QDomNode p = params.firstChild();
+                    if ( p.toElement().tagName() == "name" )
+                    {
+                        pName = p.toElement().text();
+                        p = p.nextSibling();
+                        if ( p.toElement().tagName() == "value" )
+                        {
+                            pValue = p.toElement().text();
+                            funcParams[pName] = pValue;
+
+                        }
+                    }
+                }
+
+                paramsNode = paramsNode.nextSibling();
+            }
+
+            funcParams["deviceId"] = deviceId;
+        }
+        else
+            return funcParams;
+    }
+    else
+        return funcParams;
+
+  return funcParams;
+}

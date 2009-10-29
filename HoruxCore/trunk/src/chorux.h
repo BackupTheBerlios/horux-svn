@@ -85,6 +85,16 @@ class CHorux : public QObject
         */
         QString getInfo( );
 
+        /*!
+          Stop a device. Can be called by XMLRPC but with username and password auhtentication
+        */
+        void stopDevice ( QString username, QString password, QString id );
+
+        /*!
+          Start a device. Can be called by XMLRPC but with username and password auhtentication
+        */
+        void startDevice ( QString username, QString password, QString id );
+
 
     protected:
         //! call th slot internaly or not

@@ -145,6 +145,8 @@ bool CHorux::startEngine()
             ptr_xmlRpcServer->addMethod ( "horux.startEngine", this, "startEngine" );
             ptr_xmlRpcServer->addMethod ( "horux.stopEngine", this, "stopEngine" );
             ptr_xmlRpcServer->addMethod ( "horux.isEngine", this, "isEngine" );
+            ptr_xmlRpcServer->addMethod ( "horux.stopDevice", this, "stopDevice" );
+            ptr_xmlRpcServer->addMethod ( "horux.startDevice", this, "startDevice" );
         }
         else
         {
@@ -158,6 +160,46 @@ bool CHorux::startEngine()
     return true;
 }
 
+void CHorux::stopDevice ( QString username, QString password, QString id )
+{
+    if ( !isStarted ) return;
+
+    if ( !isInternal )
+    {
+        //! check user access
+        if ( !CFactory::getDbHandling()->plugin()->isXMLRPCAccess ( username, password ) )
+        {
+            qWarning() << "XMLRPC request :" << username << "/" << password;
+            return;
+        }
+    }
+
+    if ( CFactory::getDeviceHandling()->isStarted() )
+    {
+       CFactory::getDeviceHandling()->stopDevice(id);
+    }
+}
+
+void CHorux::startDevice ( QString username, QString password, QString id )
+{
+    if ( !isStarted ) return;
+
+    if ( !isInternal )
+    {
+        //! check user access
+        if ( !CFactory::getDbHandling()->plugin()->isXMLRPCAccess ( username, password ) )
+        {
+            qWarning() << "XMLRPC request :" << username << "/" << password;
+            return;
+        }
+    }
+
+    if ( CFactory::getDeviceHandling()->isStarted() )
+    {
+       CFactory::getDeviceHandling()->startDevice(id);
+    }
+
+}
 
 void CHorux::stopEngine ( QString username, QString password )
 {
