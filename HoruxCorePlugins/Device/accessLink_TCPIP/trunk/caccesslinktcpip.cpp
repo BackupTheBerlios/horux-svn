@@ -836,7 +836,6 @@ void CAccessLinkTCPIP::handleSn(QString sn)
 
 void CAccessLinkTCPIP::s_openDoorLock(QObject *p, QMap<QString, QVariant>params)
 {
-qDebug() << params;
   CAccessLinkTCPIP *pThis = qobject_cast<CAccessLinkTCPIP *>(p);
   //! check by which access plugin the device musst be controlled
   if(pThis->getAccessPluginName() != "")
