@@ -44,6 +44,7 @@
     
         <module id="Mailer" class="TMailer" />
         <module id="GuiLog" class="TGuiLog" />
+        <module id="HoruxService" class="THoruxService" />
   </modules>
 
   <!-- configuration for available services -->

@@ -15,10 +15,10 @@
 
 class SQL {
 
-    const SQL_GET_ALARMS = "SELECT * FROM hr_alarms  ORDER BY datetime_ DESC";
-    const SQL_GET_ALARMS_BY_DATE = "SELECT * FROM hr_alarms WHERE datetime_>=:from AND datetime_<=:until ORDER BY datetime_ DESC";
-    const SQL_GET_ALARMS_BY_DATE_FROM = "SELECT * FROM hr_alarms WHERE datetime_>=:from ORDER BY datetime_ DESC";
-    const SQL_GET_ALARMS_BY_DATE_UNTIL = "SELECT * FROM hr_alarms WHERE datetime_<=:until ORDER BY datetime_ DESC";
+    const SQL_GET_ALARMS = "SELECT * FROM hr_alarms  ORDER BY id DESC";
+    const SQL_GET_ALARMS_BY_DATE = "SELECT * FROM hr_alarms WHERE datetime_>=:from AND datetime_<=:until ORDER BY id DESC";
+    const SQL_GET_ALARMS_BY_DATE_FROM = "SELECT * FROM hr_alarms WHERE datetime_>=:from ORDER BY id DESC";
+    const SQL_GET_ALARMS_BY_DATE_UNTIL = "SELECT * FROM hr_alarms WHERE datetime_<=:until ORDER BY id DESC";
 
     const SQL_GET_ALL_NOTIFICATION = "SELECT * FROM hr_notification";
 

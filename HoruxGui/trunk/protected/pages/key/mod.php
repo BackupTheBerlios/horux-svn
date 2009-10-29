@@ -172,7 +172,7 @@ class mod extends Page
         $res1 = $cmd->execute();
 
         //remove in all case
-        //$this->addStandalone('sub', $this->id->Value);
+        $this->addStandalone('sub', $this->id->Value);
 
         //remove the current tag attribution
         $cmd1=$this->db->createCommand(SQL::SQL_REMOVE_TAG_ATTRIBUTION);

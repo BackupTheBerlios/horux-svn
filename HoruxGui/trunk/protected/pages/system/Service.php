@@ -111,60 +111,20 @@ class Service extends Page
 
     public function onStop($sender, $param)
     {
-        require_once( 'XML/RPC.php' );
+        $horuxService = new THoruxService();
+        $horuxService->onStop();
 
-        $sql = "SELECT * FROM hr_config";
-        $command=$this->db->createCommand($sql);
-        $dataObj=$command->query();
-        $dataObj = $dataObj->read();
-        $host = $dataObj['xmlrpc_server'];
-        $port = $dataObj['xmlrpc_port'];
-
-        $result = "";
-        $content_error = "";
-        $client = new XML_RPC_Client("RPC2", $host, $port);
-
-        $app = $this->getApplication();
-
-        $userId = $app->getUser()->getUserID();
-        $sql = "SELECT * FROM hr_superusers WHERE id=".$userId;
-        $command=$this->db->createCommand($sql);
-        $dataObj=$command->query();
-        $dataObj = $dataObj->read();
-
-
-        $params = array(new XML_RPC_Value($dataObj['name'], 'string'), new XML_RPC_Value($dataObj['password'], 'string'));
-
-
-        $msg = new XML_RPC_Message("horux.stopEngine", $params);
-        @$response = $client->send($msg);
         $this->isRunning();
-
         $this->log("Stop horux");
     }
 
 
     public function onStart($sender, $param)
     {
-        require_once( 'XML/RPC.php' );
-
-        $sql = "SELECT * FROM hr_config";
-        $command=$this->db->createCommand($sql);
-        $dataObj=$command->query();
-        $dataObj = $dataObj->read();
-        $host = $dataObj['xmlrpc_server'];
-        $port = $dataObj['xmlrpc_port'];
-
-        $result = "";
-        $content_error = "";
-        $client = new XML_RPC_Client("RPC2", $host, $port);
-
-
-        $msg = new XML_RPC_Message("horux.startEngine");
-        @$response = $client->send($msg);
+        $horuxService = new THoruxService();
+        $horuxService->onStart();
 
         $this->isRunning();
-
         $this->log("Start horux");
     }
 

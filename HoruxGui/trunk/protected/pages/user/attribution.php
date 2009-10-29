@@ -179,7 +179,7 @@ class Attribution extends Page
         $flag = 1;
         $sender->ImageUrl = "./themes/letux/images/menu/icon-16-access.png";
         $cmd->bindParameter(":flag",$flag);
-        $func = 'sub';
+        $func = 'block';
 
         $cmd2=$this->db->createCommand(SQL::SQL_GET_KEY2);
         $cmd2->bindParameter(":id",$id);
@@ -194,7 +194,7 @@ class Attribution extends Page
         $flag = 0;
         $sender->ImageUrl = "./themes/letux/images/menu/icon-16-checkin.png";
         $cmd->bindParameter(":flag",$flag);
-        $func = 'add';
+        $func = 'unblock';
 
         $cmd2=$this->db->createCommand(SQL::SQL_GET_KEY2);
         $cmd2->bindParameter(":id",$id);

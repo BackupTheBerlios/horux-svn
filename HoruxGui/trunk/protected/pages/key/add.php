@@ -126,7 +126,8 @@ class add extends Page
             $cmd2->bindParameter(":id_user",$this->person->getSelectedValue());
             $res2 = $cmd2->execute();
 
-            $this->addStandalone('add',$lastId);
+            if($isBlocked == 0)
+                $this->addStandalone('add',$lastId);
         }
 
         $this->log("Add the key: ".$this->serialNumber->SafeText);

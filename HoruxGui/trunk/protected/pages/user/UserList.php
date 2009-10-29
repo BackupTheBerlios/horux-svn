@@ -410,7 +410,7 @@ class UserList extends PageList
                 $flag = 1;
                 $sender->ImageUrl = "./themes/letux/images/menu/icon-16-access.png";
                 $cmd->bindParameter(":flag",$flag);
-                $this->addStandalone('sub',$id);
+                $this->addStandalone('block',$id);
 
                 $cmd2=$this->db->createCommand(SQL::SQL_GET_PERSON);
                 $cmd2->bindParameter(":id",$id);
@@ -424,7 +424,7 @@ class UserList extends PageList
                 $flag = 0;
                 $sender->ImageUrl = "./themes/letux/images/menu/icon-16-checkin.png";
                 $cmd->bindParameter(":flag",$flag);
-                $this->addStandalone('add',$id);
+                $this->addStandalone('unblock',$id);
 
                 $cmd2=$this->db->createCommand(SQL::SQL_GET_PERSON);
                 $cmd2->bindParameter(":id",$id);
@@ -541,6 +541,8 @@ class UserList extends PageList
                             }
                         }
 
+                        $this->addStandalone('sub',$id_user);
+
                         //remove the person
                         $cmd=$this->db->createCommand(SQL::SQL_DELETE_PERSON);
                         $cmd->bindParameter(":id",$id_user);
@@ -583,8 +585,6 @@ class UserList extends PageList
                                 //! do noting
                             }
                         }
-
-                        $this->addStandalone('sub',$id_user);
 
                         $nDelete++;
                     }
