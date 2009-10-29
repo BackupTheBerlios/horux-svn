@@ -66,7 +66,7 @@ public:
         @f Function name
         @p list of the parameters QMap<[Param name], [Param value]>
      */
-    static QString deviceAction(QString id, QString f, QMap<QString, QString>p);
+    static QString deviceAction(QString id, QString f, QMap<QString, QString> p);
 
     /*!
         Create the xml structure to send a key detection
