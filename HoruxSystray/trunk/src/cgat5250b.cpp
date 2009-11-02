@@ -42,8 +42,12 @@ void CGAT5250B::handleMsg()
 
 void CGAT5250B::handleKey()
 {
+#if defined(Q_OS_WIN)
     gat->dynamicCall("Beep(int)",100);
     gat->dynamicCall("LEDGreen(int)",1000);
+#elif defined(Q_WS_X11)
+
+#endif
     emit keyDetected(key.toLatin1());
 }
 
@@ -70,7 +74,7 @@ void CGAT5250B::run()
 #endif
 }
 
-void CGAT5250B::close(bool isError)
+void CGAT5250B::close(bool )
 {
  #if defined(Q_OS_WIN)
        stop = true;
