@@ -59,7 +59,6 @@ void CAccessLinkUsb::run()
     overlapped.hEvent       = m_readDataEvent;
 
     QByteArray tmp;
-    int lenOfLinkMsg = 0;
 
     tmp.clear();
 

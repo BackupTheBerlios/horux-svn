@@ -61,14 +61,13 @@ CHoruxGui::CHoruxGui(QWidget *parent)
   
   process = NULL;
   
-  port = NULL;
-  
   QSettings settings ( "Horux", "HoruxGuiSys" );
   customPort->setText(settings.value("port", "").toString());
   techComboBox->setCurrentIndex(settings.value("tech", 0).toInt());
   
   al_usb_reader = NULL;
   al_serial_reader = NULL;
+  gat5250_serial_reader = NULL;
   
   openCom();
 }
@@ -76,6 +75,9 @@ CHoruxGui::CHoruxGui(QWidget *parent)
 
 CHoruxGui::~CHoruxGui()
 {
+  if(gat5250_serial_reader)
+      gat5250_serial_reader->close();
+
   if(al_serial_reader)
     al_serial_reader->close();
 
@@ -105,30 +107,37 @@ void CHoruxGui::openCom()
   QString portStr = settings.value("port", "").toString();
   int techno = settings.value("tech", 0).toInt();
 
-
-  if(techno == 1) //!Serial
+  switch( techno )
   {
-          al_serial_reader = new CAccessLinkSerial(this);
+      case 0: //GAT Writer 5250 B
+          gat5250_serial_reader = new CGAT5250B(this);
 
-          connect(al_serial_reader, SIGNAL(deviceError()), this, SLOT(deviceError()));
-          connect(al_serial_reader, SIGNAL(readError()), this, SLOT(readError()));
-          connect(al_serial_reader, SIGNAL(keyDetected(QByteArray)), this, SLOT(keyDetected(QByteArray)));
-          
-          al_serial_reader->start();
-    }
-    else
-    {   
-        if(techno == 0)
-        {
+          connect(gat5250_serial_reader, SIGNAL(deviceError()), this, SLOT(deviceError()));
+          connect(gat5250_serial_reader, SIGNAL(readError()), this, SLOT(readError()));
+          connect(gat5250_serial_reader, SIGNAL(keyDetected(QByteArray)), this, SLOT(keyDetected(QByteArray)));
+
+          gat5250_serial_reader->start();
+
+          break;
+      case 1: // Acces Link USB
           al_usb_reader = new CAccessLinkUsb(this);
 
           connect(al_usb_reader, SIGNAL(deviceError()), this, SLOT(deviceError()));
           connect(al_usb_reader, SIGNAL(readError()), this, SLOT(readError()));
           connect(al_usb_reader, SIGNAL(keyDetected(QByteArray)), this, SLOT(keyDetected(QByteArray)));
-          
+
           al_usb_reader->start();
-        }
-    }
+          break;
+      case 2: // Acces Link Serial
+          al_serial_reader = new CAccessLinkSerial(this);
+
+          connect(al_serial_reader, SIGNAL(deviceError()), this, SLOT(deviceError()));
+          connect(al_serial_reader, SIGNAL(readError()), this, SLOT(readError()));
+          connect(al_serial_reader, SIGNAL(keyDetected(QByteArray)), this, SLOT(keyDetected(QByteArray)));
+
+          al_serial_reader->start();
+          break;
+  }
 }
 
 void CHoruxGui::on_apply_clicked()
@@ -136,6 +145,13 @@ void CHoruxGui::on_apply_clicked()
   QSettings settings ( "Horux", "HoruxGuiSys" );
   settings.setValue ( "port", customPort->text() );
   settings.setValue ( "tech", techComboBox->currentIndex() );
+
+  if(gat5250_serial_reader)
+  {
+      gat5250_serial_reader->close();
+      delete gat5250_serial_reader;
+      gat5250_serial_reader = NULL;
+  }
 
   if(al_serial_reader)
   {
@@ -158,6 +174,13 @@ void CHoruxGui::on_save_clicked()
   QSettings settings ( "Horux", "HoruxGuiSys" );
   settings.setValue ( "port", customPort->text() );
   settings.setValue ( "tech", techComboBox->currentText() );
+
+  if(gat5250_serial_reader)
+  {
+      gat5250_serial_reader->close();
+      delete gat5250_serial_reader;
+      gat5250_serial_reader = NULL;
+  }
 
   if(al_serial_reader)
   {
@@ -219,8 +242,8 @@ void CHoruxGui::sendKey(QString key)
         keybd_event(0x33,0,KEYEVENTF_KEYUP,0);
 
 		for(int i=0; i<key.length(); i++)
-		{
-				keybd_event(key.at(i).toLatin1() ,0,0,0);
+                {
+                                keybd_event(key.at(i).toLatin1() ,0,0,0);
 				keybd_event(key.at(i).toLatin1(),0,KEYEVENTF_KEYUP,0);
 		}
 
@@ -278,12 +301,21 @@ void CHoruxGui::readError()
 
 void CHoruxGui::keyDetected(QByteArray key)
 {
+  QSettings settings ( "Horux", "HoruxGuiSys" );
+
+  int techno = settings.value("tech", 0).toInt();
+
   QString s, s1;
 
-  for(int i=0; i<key.length(); i++)
-    s += s1.sprintf("%02X", (uchar)key[i]);
+  if(techno == 1 || techno == 2)
+  {
+      for(int i=0; i<key.length(); i++)
+        s += s1.sprintf("%02X", (uchar)key[i]);
 
-  s = s.rightJustified(16,'0');
+      s = s.rightJustified(16,'0');
+  }
+  else
+      s = key;
 
   if(!antipassback.contains(s))
   {

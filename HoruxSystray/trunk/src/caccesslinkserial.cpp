@@ -24,7 +24,6 @@ CAccessLinkSerial::CAccessLinkSerial(QObject * parent) : CAccessLinkDevice(paren
   QSettings settings ( "Horux", "HoruxGuiSys" );
 
   QString portStr = settings.value("port", "").toString();
-  int techno = settings.value("tech", 0).toInt();
 
   port = new QextSerialPort(portStr);
 
