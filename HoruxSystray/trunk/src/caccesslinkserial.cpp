@@ -74,7 +74,7 @@ void CAccessLinkSerial::run()
   }
 }
 
-void CAccessLinkSerial::close(bool isError)
+void CAccessLinkSerial::close(bool )
 {
   if(port)
   {

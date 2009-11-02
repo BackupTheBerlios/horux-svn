@@ -28,7 +28,9 @@ LIBS += ../qextserialport/build/libqextserialport.a
 LIBS += -lhid
 win32:LIBS += -lsetupapi
 CONFIG += release
+win32 {
 CONFIG += qaxcontainer
+}
 TRANSLATIONS += horux_fr_FR.ts
 win32:RC_FILE = myapp.rc
 unix { 
