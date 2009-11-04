@@ -113,6 +113,10 @@ class UserWizzard extends Page
 
         if(!$this->IsPostBack)
         {
+			$this->picture->setImageUrl('./pictures/unknown.jpg');
+            $this->language->DataSource = $this->LanguageList;
+            $this->language->dataBind();			
+			
             $this->UnusedGroup->DataSource=$this->Groups;
             $this->UnusedGroup->dataBind();
 
@@ -147,6 +151,13 @@ class UserWizzard extends Page
             $this->displayMessage($this->koMessage, false);
         }
     }
+	
+    protected function getLanguageList()
+    {
+       $cmd = $this->db->createCommand( "SELECT * FROM hr_install WHERE type='language' ORDER BY name");
+       $data =  $cmd->query();
+       return $data->readAll();
+    }	
 
     public function getGroups()
     {
@@ -250,6 +261,7 @@ class UserWizzard extends Page
         $cmd->bindParameter(":phone2",$this->phone2->SafeText,PDO::PARAM_STR);
         $cmd->bindParameter(":email2",$this->email2->SafeText,PDO::PARAM_STR);
         $cmd->bindParameter(":country_pr",$this->country_pr->SafeText,PDO::PARAM_STR);
+        $cmd->bindParameter(":fax",$this->fax->SafeText,PDO::PARAM_STR);
 
         if(!$cmd->execute()) return false;
 
@@ -381,14 +393,13 @@ class UserWizzard extends Page
                 {
                     $fileName = rand().$sender->FileName;
                 }
-
-                $sender->saveAs('./protected/pictures/'.$fileName);
+                $sender->saveAs('./pictures/'.$fileName); 
                 $this->fileName = $fileName;
                 $this->fileType = $sender->FileType;
                 $this->fileSize = $sender->FileSize;
                 $this->fileError = "";
                 $this->pictureName->Value = $fileName;
-                $this->checkImage('./protected/pictures/'.$fileName);
+                $this->checkImage('./pictures/'.$fileName);
             }
             else
             {

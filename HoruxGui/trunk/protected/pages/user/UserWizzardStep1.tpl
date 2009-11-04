@@ -70,14 +70,9 @@
                     <span onmouseover="Tip('<%[Select the language for this user]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Language]%></span>
                 </td>
                 <td>
-                    <com:TDropDownList ID="language">
-                        <com:TListItem Text="<%[---- Select a language ----]%>" Value="none" />
-                        <com:TListItem Text="<%[English]%>" Value="en" />
-                        <com:TListItem Text="<%[French]%>" Value="fr" />
-                        <com:TListItem Text="<%[German]%>" Value="ge" />
-                        <com:TListItem Text="<%[Italian]%>" Value="it" />
-                        <com:TListItem Text="<%[Spanish]%>" Value="sp" />
-                    </com:TDropDownList>
+                    <com:TDropDownList ID="language"
+						DataTextField="name"
+						DataValueField="param" />
                 </td>
             </tr>
 
@@ -336,6 +331,17 @@
                         Width="50" />
                 </td>
             </tr>
+			<tr>
+				<td valign="top" class="key">
+					<span onmouseover="Tip('<%[Enter the professional fax number]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Fax]%></span>
+				</td>
+				<td>
+					<com:TTextBox
+						CssClass="text_area"
+						ID="fax"
+						Width="50" />
+				</td>
+			</tr>
 
             <tr>
                 <td valign="top" class="key">
