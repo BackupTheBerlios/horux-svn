@@ -384,10 +384,9 @@
                                             <span onmouseover="Tip('<%[Enter the department]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Department]%></span>
                                         </td>
                                         <td>
-                                            <com:TTextBox
-                                                CssClass="text_area"
-                                                ID="department"
-                                                Width="50" />
+                                            <com:TDropDownList ID="department"
+                                            DataTextField="name"
+                                            DataValueField="value" />
                                         </td>
                                     </tr>
 

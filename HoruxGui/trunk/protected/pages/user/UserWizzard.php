@@ -114,9 +114,16 @@ class UserWizzard extends Page
         if(!$this->IsPostBack)
         {
 			$this->picture->setImageUrl('./pictures/unknown.jpg');
+            
             $this->language->DataSource = $this->LanguageList;
             $this->language->dataBind();			
-			
+
+            $this->language->setSelectedValue($this->getLanguageDefault());
+
+            $this->department->DataSource = $this->DepartmentList;
+            $this->department->dataBind();
+            $this->department->setSelectedValue(0);
+
             $this->UnusedGroup->DataSource=$this->Groups;
             $this->UnusedGroup->dataBind();
 
@@ -151,7 +158,26 @@ class UserWizzard extends Page
             $this->displayMessage($this->koMessage, false);
         }
     }
-	
+
+    protected function getDepartmentList()
+    {
+       $cmd = $this->db->createCommand( "SELECT name, id AS value FROM hr_department ORDER BY name");
+       $data =  $cmd->query();
+       $data = $data->readAll();
+       $d[0]['value'] = '0';
+       $d[0]['name'] = Prado::localize('---- No department ----');
+       $data = array_merge($d, $data);
+       return $data;
+    }
+
+    protected function getLanguageDefault()
+    {
+       $cmd = $this->db->createCommand( "SELECT * FROM hr_install WHERE type='language' AND `default`=1");
+       $data =  $cmd->query();
+       $data = $data->read();
+       return $data['param'];
+    }
+
     protected function getLanguageList()
     {
        $cmd = $this->db->createCommand( "SELECT * FROM hr_install WHERE type='language' ORDER BY name");
@@ -254,7 +280,7 @@ class UserWizzard extends Page
 
         //Private
         $cmd->bindParameter(":firme",$this->firme->SafeText,PDO::PARAM_STR);
-        $cmd->bindParameter(":department",$this->department->SafeText,PDO::PARAM_STR);
+        $cmd->bindParameter(":department",$this->department->getSelectedValue(),PDO::PARAM_STR);
         $cmd->bindParameter(":street_pr",$this->street_pr->SafeText,PDO::PARAM_STR);
         $cmd->bindParameter(":npa_pr",$this->zip_pr->SafeText,PDO::PARAM_STR);
         $cmd->bindParameter(":city_pr",$this->city_pr->SafeText,PDO::PARAM_STR);

@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <xliff version="1.0">
- <file source-language="FR" target-language="fr" datatype="plaintext" original="messages" date="2009-09-17T09:13:37Z" product-name="messages">
+ <file source-language="FR" target-language="fr" datatype="plaintext" original="messages" date="2009-11-05T09:09:18Z" product-name="messages">
   <body>
   
 <trans-unit id="1" lock="1">
@@ -3733,6 +3733,66 @@
 <trans-unit id="698" lock="1">
 <source>Enter the professional fax number</source>
 <target>Entrez le num&#xE9;ro de fax professionnel</target>
+</trans-unit>
+
+<trans-unit id="699">
+<source>Enter the time when the non working day start and finish. Let empty for full day</source>
+<target>Entrez l'heure de d&#xE9;but et de fin du jour non ouvrable. Laissez vide pour un jour complet</target>
+</trans-unit>
+
+<trans-unit id="700">
+<source>Add a Department</source>
+<target>Ajouter un d&#xE9;partement</target>
+</trans-unit>
+
+<trans-unit id="701">
+<source>Enter a name for this department</source>
+<target>Entrez un nom pour ce d&#xE9;partement</target>
+</trans-unit>
+
+<trans-unit id="702">
+<source>You could insert a description for this department.</source>
+<target>Vous pouvez entrer une description pour ce d&#xE9;partement</target>
+</trans-unit>
+
+<trans-unit id="703">
+<source>The department was added successfully</source>
+<target>Le d&#xE9;partement a &#xE9;t&#xE9; ajout&#xE9; avec succ&#xE8;s</target>
+</trans-unit>
+
+<trans-unit id="704">
+<source>The department was not added</source>
+<target>Le d&#xE9;partement n'a pas &#xE9;t&#xE9; ajout&#xE9;</target>
+</trans-unit>
+
+<trans-unit id="705">
+<source>Department List</source>
+<target>Liste des d&#xE9;partements</target>
+</trans-unit>
+
+<trans-unit id="706">
+<source>{n} department(s) was deleted</source>
+<target>{n} d&#xE9;partement(s) ont &#xE9;t&#xE9; supprim&#xE9;s</target>
+</trans-unit>
+
+<trans-unit id="707">
+<source>Modify the Department</source>
+<target>Modifier le d&#xE9;partement</target>
+</trans-unit>
+
+<trans-unit id="708">
+<source>The department was modified successfully</source>
+<target>Le d&#xE9;partement a &#xE9;t&#xE9; modifi&#xE9; avec succ&#xE8;s</target>
+</trans-unit>
+
+<trans-unit id="709">
+<source>The department was not modified</source>
+<target>Le d&#xE9;partement n'a pas &#xE9;t&#xE9; modifi&#xE9;</target>
+</trans-unit>
+
+<trans-unit id="710">
+<source>---- No department ----</source>
+<target>---- Pas de d&#xE9;partement ----</target>
 </trans-unit>
 </body>
 </file>

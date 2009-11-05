@@ -63,7 +63,23 @@ class Add extends Page
 
             $this->language->setSelectedValue($this->getLanguageDefault());
 
+            $this->department->DataSource = $this->DepartmentList;
+            $this->department->dataBind();
+            $this->department->setSelectedValue(0);
+
+
         }
+    }
+
+    protected function getDepartmentList()
+    {
+       $cmd = $this->db->createCommand( "SELECT name, id AS value FROM hr_department ORDER BY name");
+       $data =  $cmd->query();
+       $data = $data->readAll();
+       $d[0]['value'] = '0';
+       $d[0]['name'] = Prado::localize('---- No department ----');
+       $data = array_merge($d, $data);
+       return $data;
     }
 
     protected function getLanguageDefault()
@@ -162,7 +178,7 @@ class Add extends Page
       
       //Private
       $cmd->bindParameter(":firme",$this->firme->SafeText,PDO::PARAM_STR);
-      $cmd->bindParameter(":department",$this->department->SafeText,PDO::PARAM_STR);
+      $cmd->bindParameter(":department",$this->department->getSelectedValue(),PDO::PARAM_STR);
       $cmd->bindParameter(":street_pr",$this->street_pr->SafeText,PDO::PARAM_STR);
       $cmd->bindParameter(":npa_pr",$this->zip_pr->SafeText,PDO::PARAM_STR);
       $cmd->bindParameter(":city_pr",$this->city_pr->SafeText,PDO::PARAM_STR);
