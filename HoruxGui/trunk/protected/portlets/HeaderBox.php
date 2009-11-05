@@ -230,6 +230,15 @@ class HeaderBox extends Portlet
         if($this->isAccess('site.Site'))
             $this->systemMenuCount++;
 
+		$system->addMenuItem( new MenuItem("'<img src=\"./themes/letux/images/menu/icon-16-department.png\" />'",
+										  Prado::localize('Department',array(), "messages"),
+										  $this->Service->constructUrl('site.department'),
+										  $this->isAccess('site.department')
+										  ));
+        if($this->isAccess('site.department'))
+            $this->systemMenuCount++;
+
+
 		$system->addSplit();
 
 

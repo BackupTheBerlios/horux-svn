@@ -91,6 +91,7 @@ class userGroupAdd extends Page
         $data[] = array('Type'=>'', 'id'=>'configuration', 'Text'=>Prado::localize('Configuration'), 'access'=>true, 'shortcut'=>false);
 
         $data[] = array('Type'=>Prado::localize('System'), 'id'=>'site', 'Text'=>Prado::localize('Site'), 'access'=>true, 'shortcut'=>false);
+        $data[] = array('Type'=>'', 'id'=>'department', 'Text'=>Prado::localize('Department'), 'access'=>true, 'shortcut'=>false);
         $data[] = array('Type'=>'', 'id'=>'hardware', 'Text'=>Prado::localize('Hardware'), 'access'=>true, 'shortcut'=>false);
         $data[] = array('Type'=>'', 'id'=>'openTime', 'Text'=>Prado::localize('Opent time'), 'access'=>true, 'shortcut'=>false);
         $data[] = array('Type'=>'', 'id'=>'alarms', 'Text'=>Prado::localize('Alarms'), 'access'=>true, 'shortcut'=>false);
@@ -216,6 +217,11 @@ class userGroupAdd extends Page
                     break;
                 case "site":
                     $v['access'] ? $this->insertNewPermission($lastId, 'site.Site', $v['shortcut']) : '';
+                    break;
+                case "department":
+                    $v['access'] ? $this->insertNewPermission($lastId, 'site.department', $v['shortcut']) : '';
+                    $v['access'] ? $this->insertNewPermission($lastId, 'site.add', $v['shortcut']) : '';
+                    $v['access'] ? $this->insertNewPermission($lastId, 'site.mod', $v['shortcut']) : '';
                     break;
                 case "openTime":
                     $v['access'] ? $this->insertNewPermission($lastId, 'openTime.openTimeList', $v['shortcut']) : '';

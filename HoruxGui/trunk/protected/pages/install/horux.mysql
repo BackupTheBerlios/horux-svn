@@ -169,6 +169,20 @@ CREATE TABLE IF NOT EXISTS `hr_device` (
 
 # --------------------------------------------------------
 
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `hr_department`
+--
+
+CREATE TABLE IF NOT EXISTS `hr_department` (
+  `id` smallint(6) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL,
+  `description` varchar(255) NOT NULL,
+  `locked` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) TYPE=MyISAM CHARACTER SET `utf8`;
+
 #
 # Structure de la table `hr_gui_log`
 #

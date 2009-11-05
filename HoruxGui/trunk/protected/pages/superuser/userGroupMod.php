@@ -151,6 +151,7 @@ class userGroupMod extends Page
         $data[] = array('Type'=>'', 'id'=>'configuration', 'Text'=>Prado::localize('Configuration'), 'access'=>$this->isAccess('configuration.config'), 'shortcut'=>$this->isShortcut('configuration.config'));
 
         $data[] = array('Type'=>Prado::localize('System'), 'id'=>'site', 'Text'=>Prado::localize('Site'), 'access'=>$this->isAccess('site.Site'), 'shortcut'=>$this->isShortcut('site.Site'));
+        $data[] = array('Type'=>'', 'id'=>'department', 'Text'=>Prado::localize('Department'), 'access'=>$this->isAccess('site.department'), 'shortcut'=>$this->isShortcut('site.department'));
         $data[] = array('Type'=>'', 'id'=>'hardware', 'Text'=>Prado::localize('Hardware'), 'access'=>$this->isAccess('hardware.HardwareList'), 'shortcut'=>$this->isShortcut('hardware.HardwareList'));
         $data[] = array('Type'=>'', 'id'=>'openTime', 'Text'=>Prado::localize('Opent time'), 'access'=>$this->isAccess('openTime.openTimeList'), 'shortcut'=>$this->isShortcut('openTime.openTimeList'));
         $data[] = array('Type'=>'', 'id'=>'alarms', 'Text'=>Prado::localize('Alarms'), 'access'=>$this->isAccess('system.Alarms'), 'shortcut'=>$this->isShortcut('system.Alarms'));
@@ -291,6 +292,11 @@ class userGroupMod extends Page
                     break;
                 case "site":
                     $v['access'] ? $this->updatePermission($lastId, 'site.Site', $v['shortcut']) : '';
+                    break;
+                case "department":
+                    $v['access'] ? $this->updatePermission($lastId, 'site.department', $v['shortcut']) : '';
+                    $v['access'] ? $this->updatePermission($lastId, 'site.add', $v['shortcut']) : '';
+                    $v['access'] ? $this->updatePermission($lastId, 'site.mod', $v['shortcut']) : '';
                     break;
                 case "openTime":
                     $v['access'] ? $this->updatePermission($lastId, 'openTime.openTimeList', $v['shortcut']) : '';

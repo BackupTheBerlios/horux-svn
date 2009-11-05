@@ -208,27 +208,6 @@ class UserGroupList extends PageList
         $this->pdf->render();
     }
 
-    public function selectionChangedName($sender,$param)
-    {
-        $this->DataGrid->DataSource=$this->Data;
-        $this->DataGrid->dataBind();
-        $this->Page->CallbackClient->update('list', $this->DataGrid);
-    }
-
-    public function selectionChangedFirstName($sender,$param)
-    {
-        $this->DataGrid->DataSource=$this->Data;
-        $this->DataGrid->dataBind();
-        $this->Page->CallbackClient->update('list', $this->DataGrid);
-    }
-
-    public function selectionChangedStatus($sender,$param)
-    {
-        $this->DataGrid->DataSource=$this->Data;
-        $this->DataGrid->dataBind();
-        $this->Page->CallbackClient->update('list', $this->DataGrid);
-    }
-
 
     public function checkboxAllCallback($sender, $param)
     {
