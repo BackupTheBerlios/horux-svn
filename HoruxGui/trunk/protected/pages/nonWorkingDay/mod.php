@@ -49,6 +49,17 @@ class mod extends Page
             $this->from->Text = $from;
             $this->until->Text = $until;
             $this->comment->Text = $data['comment'];
+
+
+            $ts = explode(":",$data['timeStart']);
+            $te = explode(":",$data['timeEnd']);
+
+            $this->timeStartHour->Text = $ts[0];
+            $this->timeStartMinute->Text = $ts[1];
+            $this->timeEndHour->Text = $te[0];
+            $this->timeEndMinute->Text = $te[1];
+
+
         }
     }
 
@@ -121,6 +132,13 @@ class mod extends Page
         $cmd->bindParameter(":comment",$this->comment->SafeText, PDO::PARAM_STR);
         $cmd->bindParameter(":id",$this->id->Value, PDO::PARAM_INT);
         $cmd->bindParameter(":color",$this->color->SafeText, PDO::PARAM_STR);
+
+        $timeStart = $this->timeStartHour->SafeText.":".$this->timeStartMinute->SafeText.":00";
+        $timeEnd = $this->timeEndHour->SafeText.":".$this->timeEndMinute->SafeText.":00";
+
+        $cmd->bindParameter(":timeStart",$timeStart, PDO::PARAM_INT);
+        $cmd->bindParameter(":timeEnd",$timeEnd, PDO::PARAM_STR);
+
 
         $this->log("Modify the non working day: ".$this->name->SafeText);
 

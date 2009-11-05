@@ -146,10 +146,19 @@ class nonWorkingDay extends Page
             if(count($data)>1)
             {
                 $username = $this->Page->getUserName($data['locked']);
+
+                $time = "";
+                if($data['timeStart'] != "00:00:00" && $data['timeEnd'] != "00:00:00")
+                    $time = "<br>".substr($data['timeStart'],0,5)." - ". substr($data['timeEnd'],0,5);
+
                 if(!$this->isRecordBlock('hr_non_working_day', $data['id']))
-                echo '<td width="20" style="background-color:'.$data['color'].';"  align="center"><span onmouseover="Tip(\''.addslashes($data['name']).'<br/>'.addslashes($data['comment']).'\', BALLOON, true, BALLOONIMGPATH, \'./js/tip_balloon\', OFFSETX, -10, TEXTALIGN, \'justify\', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><a href="'.$this->Service->constructUrl('nonWorkingDay.mod',array('id'=>$data['id'])).'">'.($i-$index+1).'</a></span></td>';
-                    else
-                echo '<td width="20" style="background-color:'.$data['color'].';"  align="center"><span onmouseover="Tip(\''.addslashes($data['name']).'<br/>'.addslashes($data['comment']).'<br><i>This record is currently modify by <strong>'.$username.'</strong><i>\', BALLOON, true, BALLOONIMGPATH, \'./js/tip_balloon\', OFFSETX, -10, TEXTALIGN, \'justify\', FADEIN, 600, FADEOUT, 600, PADDING, 8)">'.($i-$index+1).'</span></td>';
+                {
+                    echo '<td width="20" style="background-color:'.$data['color'].';"  align="center"><span onmouseover="Tip(\''.addslashes($data['name']).'<br/>'.addslashes($data['comment']).$time.'\', BALLOON, true, BALLOONIMGPATH, \'./js/tip_balloon\', OFFSETX, -10, TEXTALIGN, \'justify\', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><a href="'.$this->Service->constructUrl('nonWorkingDay.mod',array('id'=>$data['id'])).'">'.($i-$index+1).'</a></span></td>';
+                }
+                else
+                {
+                    echo '<td width="20" style="background-color:'.$data['color'].';"  align="center"><span onmouseover="Tip(\''.addslashes($data['name']).'<br/>'.addslashes($data['comment']).$time.'<br><i>This record is currently modify by <strong>'.$username.'</strong><i>\', BALLOON, true, BALLOONIMGPATH, \'./js/tip_balloon\', OFFSETX, -10, TEXTALIGN, \'justify\', FADEIN, 600, FADEOUT, 600, PADDING, 8)">'.($i-$index+1).'</span></td>';
+                }
             }
             else
                 echo '<td width="20"  align="center">'.($i-$index+1).'</td>';

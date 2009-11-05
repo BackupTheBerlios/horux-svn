@@ -333,6 +333,9 @@ CREATE TABLE IF NOT EXISTS `hr_non_working_day` (
   `until` date default NULL,
   `comment` varchar(100) default NULL,
   `locked` int(11) NOT NULL default '0',
+  `color` varchar(7) NOT NULL DEFAULT '#FF6666',
+  `timeStart` time NOT NULL,
+  `timeEnd` time NOT NULL,
   PRIMARY KEY  (`id`)
 ) TYPE=MyISAM CHARACTER SET `utf8`;
 

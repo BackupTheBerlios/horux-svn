@@ -78,6 +78,13 @@ class add extends Page
         $cmd->bindParameter(":comment",$this->comment->SafeText, PDO::PARAM_STR);
         $cmd->bindParameter(":color",$this->color->SafeText, PDO::PARAM_STR);
 
+        $timeStart = $this->timeStartHour->SafeText.":".$this->timeStartMinute->SafeText.":00";
+        $timeEnd = $this->timeEndHour->SafeText.":".$this->timeEndMinute->SafeText.":00";
+
+        $cmd->bindParameter(":timeStart",$timeStart, PDO::PARAM_INT);
+        $cmd->bindParameter(":timeEnd",$timeEnd, PDO::PARAM_STR);
+
+
         $this->log("Add the non working day: ".$this->name->SafeText);
 
         return $cmd->execute();

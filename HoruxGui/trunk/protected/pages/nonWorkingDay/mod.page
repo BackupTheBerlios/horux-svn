@@ -75,7 +75,30 @@
                             Text="<%[This date must be bigger that from]%>" />
                     </td>
                 </tr>
+                <tr>
+                    <td valign="top" class="key">
+                        <span onmouseover="Tip('<%[Enter the time when the non working day start and finish. Let empty for full day]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)">* <%[Time]%></span>
+                    </td>
+                    <td>
+                        <com:TTextBox
+                            CssClass="text_area"
+                            ID="timeStartHour"
+                            Width="30px" /> :
+                        <com:TTextBox
+                            CssClass="text_area"
+                            ID="timeStartMinute"
+                            Width="30px" /> -
+                        <com:TTextBox
+                            CssClass="text_area"
+                            ID="timeEndHour"
+                            Width="30px" /> :
+                        <com:TTextBox
+                            CssClass="text_area"
+                            ID="timeEndMinute"
+                            Width="30px" />
 
+                    </td>
+                </tr>
                 <tr>
                     <td valign="top" class="key">
                         <span onmouseover="Tip('<%[Choose a color for this non working day]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Color]%></span>
