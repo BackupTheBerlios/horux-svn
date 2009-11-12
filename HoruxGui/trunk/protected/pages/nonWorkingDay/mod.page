@@ -77,7 +77,7 @@
                 </tr>
                 <tr>
                     <td valign="top" class="key">
-                        <span onmouseover="Tip('<%[Enter the time when the non working day start and finish. Let empty for full day]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)">* <%[Time]%></span>
+                        <span onmouseover="Tip('<%[Enter the time when the non working day start and finish. Let empty for full day]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Time]%></span>
                     </td>
                     <td>
                         <com:TTextBox
