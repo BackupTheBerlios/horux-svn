@@ -1,0 +1,55 @@
+<com:TContent ID="Main">
+    <%include Application.common.template.headerContent %>
+    <com:TToolbarBox
+        ID="tbb"
+        Title="<%[Modify the leave counter]%>"
+        IconAsset="<%~ ../assets/counter.png %>"
+        ApplyVisible="true"
+        SaveVisible="true"
+        CancelVisible="true"
+        HelpVisible="true"
+        />
+
+    <%include Application.common.template.headerBoxContent %>
+
+     <com:THiddenField ID="id" value="" />
+    <fieldset class="adminform">
+        <legend><%[Leave counter]%></legend>
+        <table class="admintable" cellspacing="1">
+            <tbody>
+                <tr>
+                    <td valign="top" class="key"><%[Time code]%></td>
+                    <td>
+                        <com:TLabel
+                            CssClass="text_area"
+                            ID="timeCode"
+                            />
+                    </td>
+                </tr>
+                <tr>
+                    <td valign="top" class="key"><span onmouseover="Tip('<%[Enter the number]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)">* <%[Number]%></span></td>
+                    <td>
+                        <com:TTextBox
+                            CssClass="text_area"
+                            ID="nbre"
+                            />
+                        <com:TRequiredFieldValidator
+                            ValidationGroup="Group1"
+                            ControlToValidate="nbre"
+                            Text="<%[This field is required]%>"
+                            Display="Dynamic"/>
+                        <com:TDataTypeValidator
+                            ValidationGroup="Group1"
+                            EnableClientScript="true"
+                            ControlToValidate="nbre"
+                            DataType="Float"
+                            Text="<%[You must enter a floating number.]%>"
+                            Display="Dynamic"/>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </fieldset>
+
+    <%include Application.common.template.footerContent %>
+</com:TContent>

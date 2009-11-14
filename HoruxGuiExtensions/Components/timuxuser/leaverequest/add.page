@@ -1,0 +1,118 @@
+<com:TContent ID="Main">
+    <%include Application.common.template.headerContent %>
+    <com:TToolbarBox
+        ID="tbb"
+        Title="<%[Add a leave request]%>"
+        IconAsset="<%~ ../assets/leaverequest.png %>"
+        ApplyVisible="true"
+        SaveVisible="true"
+        CancelVisible="true"
+        HelpVisible="true"
+        />
+
+    <%include Application.common.template.headerBoxContent %>
+
+    <fieldset class="adminform">
+        <legend><%[Leave request]%></legend>
+        <table class="admintable" cellspacing="1">
+            <tbody>
+                <tr>
+                    <td valign="top" class="key"><span onmouseover="Tip('<%[Set the date when start the leave request]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)">* <%[Date from]%></span></td>
+                    <td>
+                        <com:TDatePicker CssClass="text_area" ID="from" Mode="ImageButton" />
+                        <com:TDataTypeValidator
+                            ValidationGroup="Group1"
+                            ControlToValidate="from"
+                            DataType="Date"
+                            DateFormat="d-M-yyyy"
+                            Display="Dynamic"
+                            Text="<%[You must enter a valid date (d-M-yyyy).]%>" />
+                        <com:TRequiredFieldValidator
+                            ValidationGroup="Group1"
+                            ControlToValidate="from"
+                            Text="<%[This field is required]%>"
+                            Display="Dynamic" />
+                    </td>
+                </tr>
+                <tr>
+                    <td valign="top" class="key"><span onmouseover="Tip('<%[Set the date when finish the leave request. Set blank for one day]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Date to]%></span></td>
+                    <td>
+                        <com:TDatePicker CssClass="text_area" ID="to" Mode="ImageButton" />
+                        <com:TDataTypeValidator
+                            ValidationGroup="Group1"
+                            ControlToValidate="to"
+                            DataType="Date"
+                            DateFormat="d-M-yyyy"
+                            Display="Dynamic"
+                            Text="<%[You must enter a valid date (d-M-yyyy).]%>" />
+                    </td>
+                </tr>
+
+                <tr>
+                    <td valign="top" class="key"><span onmouseover="Tip('<%[Select the period]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)">* <%[Period]%></span></td>
+                    <td>
+                        <com:TRadioButton
+                            ID="allday"
+                            GroupName="RadioGroup"
+                            Text="All the day"
+                            Checked="true"
+                            />
+                        <br/>
+                        <com:TRadioButton
+                            ID="morning"
+                            GroupName="RadioGroup"
+                            Text="Morning"
+                            />
+                        <br/>
+                        <com:TRadioButton
+                            ID="afternoon"
+                            GroupName="RadioGroup"
+                            Text="Afternoon"
+                            />
+                    </td>
+                </tr>
+
+                <tr>
+                    <td valign="top" class="key"><span onmouseover="Tip('<%[Select the time code]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)">* <%[Time code]%></span></td>
+                    <td>
+                        <com:TDropDownList
+                            ID="timecode"
+                            DataTextField="Text"
+                            DataValueField="Value"
+                            />
+                        <com:TDataTypeValidator
+                            ValidationGroup="Group1"
+                            EnableClientScript="true"
+                            ControlToValidate="timecode"
+                            DataType="Integer"
+                            Text="<%[Please select a time code]%>"
+                            Display="Dynamic"/>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td valign="top" class="key"><span onmouseover="Tip('<%[Select the status of the request]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)">* <%[Status]%></span></td>
+                    <td>
+                        <com:TDropDownList
+                            ID="status"
+                            DataTextField="Text"
+                            DataValueField="Value"
+                            >
+                            <com:TListItem Text="<%[Draft]%>" Value="draft" Selected="true" />
+                            <com:TListItem Text="<%[Sended]%>" Value="sended" />
+
+                        </com:TDropDownList>
+                    </td>
+                </tr>
+                <tr>
+                    <td valign="top" class="key"><span onmouseover="Tip('<%[Enter a remark if needed]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Remark]%></span></td>
+                    <td>
+                        <com:THtmlArea ID="remark" />
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </fieldset>
+
+    <%include Application.common.template.footerContent %>
+</com:TContent>

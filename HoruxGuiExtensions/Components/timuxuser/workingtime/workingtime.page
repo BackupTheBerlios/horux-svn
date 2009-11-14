@@ -1,0 +1,183 @@
+<com:TContent ID="Main">
+    <%include Application.common.template.headerContent %>
+
+    <com:TToolbarBox
+        ID="tbb"
+        Title="<%[Working Time]%>"
+        IconAsset="<%~ ../assets/workingtime.png %>"
+        EditVisible="true"
+        AddVisible="true"
+        AddUrl="components.timuxuser.workingtime.add"
+        DelVisible="true"
+        PrintVisible="true"
+        PrintUrl="<%= $this->Service->constructUrl($this->getApplication()->getService()->getRequestedPagePath()) %>&action=print"
+        HelpVisible="true"
+        CancelVisible="true"
+        />
+
+
+    <%include Application.common.template.headerBoxContent %>
+
+    <%[Filter]%>:
+
+    <%[Employee]%>
+    <com:TActiveTextBox ID="FilterEmployee" AutoPostBack="true" OnTextChanged="selectionChangedEmployee" />
+
+    <%[Department]%>
+    <com:TActiveDropDownList
+        ID="FilterDepartment"
+        OnSelectedIndexChanged="selectionChangedDepartment"
+        CssClass="inputbox"
+        DataTextField="Text"
+        DataValueField="Value" />
+
+    <div id="list">
+    <com:TDataGrid
+        ID="DataGrid"
+        DataKeyField="id"
+        AutoGenerateColumns="false"
+        CssClass="adminlist"
+        ItemStyle.CssClass = "row0"
+        AlternatingItemStyle.CssClass="row1"
+        AllowPaging="true"
+        PageSize="15"
+        PagerStyle.Mode="Numeric"
+        PagerStyle.HorizontalAlign="Center"
+        OnPageIndexChanged="changePage"
+        OnPagerCreated="pagerCreated"
+        OnEditCommand="onEdit"
+        OnItemCreated="itemCreated"
+        >
+
+        <com:TBoundColumn
+            HeaderText="ID"
+            DataField="id"
+            HeaderStyle.Width = "20px"
+            />
+
+        <com:TTemplateColumn
+            HeaderText=""
+            HeaderStyle.Width = "20px"
+            >
+            <prop:HeaderTemplate>
+                <com:TActiveCheckBox
+                    ID="headerCB"
+                    AutoPostBack="true"
+                    OnCallback="Page.checkboxAllCallback"
+                    InputAttributes.value="0"
+                    />
+            </prop:HeaderTemplate>
+            <prop:ItemTemplate>
+                <com:TConditional Condition="!$this->Page->isRecordBlock('hr_timux_workingtime', $this->NamingContainer->DataItem['id'])">
+                    <prop:TrueTemplate>
+                        <com:TActiveCheckBox
+                            ID="item"
+                            InputAttributes.value="<%#$this->NamingContainer->DataItem['id']%>"
+                            />
+                    </prop:TrueTemplate>
+                    <prop:FalseTemplate>
+                        <span onmouseover="Tip('<%[This record is modified by <b>]%><%= $this->Page->getUserName($this->NamingContainer->DataItem['locked']) %></b> ', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)">
+                            <com:TImage ID="noAccess" ImageUrl="./themes/letux/images/menu/icon-16-access.png" />
+                        </span>
+                    </prop:FalseTemplate>
+                </com:TConditional>
+            </prop:ItemTemplate>
+        </com:TTemplateColumn>
+
+        <com:TTemplateColumn
+            HeaderText=""
+            >
+            <prop:HeaderTemplate>
+                <com:TLabel
+                    Text="<%[Employee]%>"
+                    />
+            </prop:HeaderTemplate>
+
+            <prop:ItemTemplate>
+                <com:TConditional Condition="!$this->Page->isRecordBlock('hr_timux_workingtime', $this->NamingContainer->DataItem['id'])">
+                    <prop:TrueTemplate>
+                        <com:THyperLink
+                            NavigateUrl="<%= $this->Service->constructUrl('components.timuxuser.workingtime.mod',array('id'=>$this->NamingContainer->DataItem['id'])) %>"
+                            Text="<%#$this->NamingContainer->DataItem['employee']%>"
+                            />
+                    </prop:TrueTemplate>
+                    <prop:FalseTemplate>
+                        <com:TLabel
+                            Text="<%#$this->NamingContainer->DataItem['employee']%>"
+                            />
+                    </prop:FalseTemplate>
+                </com:TConditional>
+            </prop:ItemTemplate>
+        </com:TTemplateColumn>
+
+        <com:TTemplateColumn HeaderText="<%[Role]%>" ID="rrole">
+                <prop:ItemTemplate>
+                    <com:TLabel
+                        ID="role"
+                        />
+                </prop:ItemTemplate>
+        </com:TTemplateColumn>
+
+
+        <com:TBoundColumn
+            HeaderText="<%[Department]%>"
+            DataField="department"
+            />
+
+        <com:TTemplateColumn HeaderText="<%[From]%>" ID="ddate">
+                <prop:ItemTemplate>
+                    <com:TLabel
+                        ID="date"
+                        />
+                </prop:ItemTemplate>
+        </com:TTemplateColumn>
+
+        <com:TBoundColumn
+            HeaderText="<%[Hours by week at 100%]%>"
+            DataField="hoursByWeek"
+            />
+
+        <com:TBoundColumn
+            HeaderText="<%[% of the activity]%>"
+            DataField="workingPercent"
+            />
+
+        <com:TTemplateColumn HeaderText="<%[Hours by week]%>" ID="hhoursByWeek2">
+                <prop:ItemTemplate>
+                    <com:TLabel
+                        ID="hoursByWeek2"
+                        />
+                </prop:ItemTemplate>
+        </com:TTemplateColumn>
+
+
+        <com:TTemplateColumn HeaderStyle.Width = "80px">
+            <prop:HeaderTemplate><%[Activity status]%></prop:HeaderTemplate>
+            <prop:ItemTemplate>
+                <com:TImage
+                    ImageUrl="<%# $this->NamingContainer->DataItem['endOfActivity'] ? './themes/letux/images/menu/icon-16-access.png' : './themes/letux/images/menu/icon-16-checkin.png'%>"
+                    Style="border:0px"
+                    />
+            </prop:ItemTemplate>
+            </span>
+        </com:TTemplateColumn>
+
+
+        <com:TTemplateColumn HeaderStyle.Width = "80px" Visible="true" ID="tplColExt">
+            <prop:HeaderTemplate><%[Time]%></prop:HeaderTemplate>
+                <prop:ItemTemplate>
+                    <span onmouseover="Tip('<%[Change the time counter]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)">
+                        <com:THyperLink
+                            NavigateUrl="<%= $this->Service->constructUrl('components.timuxuser.counter.counter',array('id'=>$this->NamingContainer->DataItem['user_id'])) %>"
+                            ImageUrl="<%~ ../assets/icon-16-panel.png %>"
+                            Style="border:0px"
+                            Text="<%[Change the time counter]%>"
+                            />
+                    </span>
+                </prop:ItemTemplate>
+        </com:TTemplateColumn>
+
+    </com:TDataGrid>
+    </div>
+    <%include Application.common.template.footerContent %>
+</com:TContent>

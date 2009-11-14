@@ -1,0 +1,87 @@
+<com:TContent ID="Main">
+
+    <%include Application.common.template.headerContent %>
+
+    <com:TToolbarBox
+        ID="tbb"
+        Title="<%[My sign in/ sign out]%>"
+        IconAsset="<%~ ../assets/mybooking.png %>"
+        HelpVisible="true"
+        CancelVisible="true"
+        RefreshVisible="true"
+        />
+
+    <%include Application.common.template.headerBoxContent %>
+
+    <%[Filter]%>:
+
+    <%[Status]%>
+    <com:TActiveDropDownList
+        ID="FilterStatus"
+        OnSelectedIndexChanged="selectionChangedStatus"
+        CssClass="inputbox">
+        <com:TListItem Value="all" Text="<%[All]%>" Selected="true"/>
+        <com:TListItem Value="1" Text="<%[Sign in]%>"/>
+        <com:TListItem Value="0" Text="<%[Sign out]%>" />
+    </com:TActiveDropDownList>
+
+
+    <%[From]%>
+    <com:TDatePicker CssClass="text_area" ID="from" Mode="ImageButton"/>
+    <%[Until]%>
+    <com:TDatePicker CssClass="text_area" ID="until" Mode="ImageButton"/>
+
+    <div id="list">
+        <com:TDataGrid
+            ID="DataGrid"
+            DataKeyField="id"
+            AutoGenerateColumns="false"
+            CssClass="adminlist"
+            AllowPaging="true"
+            PageSize="15"
+
+            ItemStyle.CssClass = "row0"
+            AlternatingItemStyle.CssClass="row1"
+
+            PagerStyle.Mode="Numeric"
+            PagerStyle.HorizontalAlign="Center"
+            OnPageIndexChanged="changePage"
+            OnPagerCreated="pagerCreated"
+            OnItemCreated="itemCreated"
+            >
+
+            <com:TTemplateColumn HeaderText="<%[Date]%>" ID="ddate">
+                <prop:ItemTemplate>
+                    <com:TLabel
+                        ID="date"
+                        />
+                </prop:ItemTemplate>
+            </com:TTemplateColumn>
+
+            <com:TBoundColumn
+                HeaderText="<%[Time]%>"
+                DataField="time"
+                />
+
+            <com:TTemplateColumn HeaderText="<%[Action]%>" ID="aaction">
+                <prop:ItemTemplate>
+                    <com:TLabel
+                        ID="action"
+                        />
+                </prop:ItemTemplate>
+            </com:TTemplateColumn>
+
+            <com:TTemplateColumn HeaderText="<%[Action Reason]%>" ID="aactionr">
+                <prop:ItemTemplate>
+                    <com:TLabel
+                        ID="actionr"
+                        />
+                </prop:ItemTemplate>
+            </com:TTemplateColumn>
+
+        </com:TDataGrid>
+    </div>
+                
+    <%include Application.common.template.footerContent %>
+
+</com:TContent>

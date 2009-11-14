@@ -1,0 +1,99 @@
+<com:TContent ID="Main">
+    <%include Application.common.template.headerContent %>
+
+    <com:TToolbarBox
+        ID="tbb"
+        Title="<%[Add a workflow]%>"
+        IconAsset="<%~ ../assets/workflow.png %>"
+        ApplyVisible="true"
+        SaveVisible="true"
+        CancelVisible="true"
+        HelpVisible="true"
+        />
+
+    <%include Application.common.template.headerBoxContent %>
+
+    <fieldset class="adminform">
+        <legend><%[Parameters]%></legend>
+        <table class="admintable" cellspacing="1">
+            <tbody>
+                <tr>
+                    <td valign="top" class="key">
+                        <span onmouseover="Tip('<%[Enter a name for this workflow]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)">* <%[Name]%></span>
+                    </td>
+                    <td>
+                        <com:TTextBox
+                            CssClass="text_area"
+                            ID="name"
+                            Width="200px" />
+                        <com:TRequiredFieldValidator
+                            ValidationGroup="Group1"
+                            ControlToValidate="name"
+                            Text="<%[This field is required]%>"
+                            Display="Dynamic"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td valign="top" class="key"><span onmouseover="Tip('<%[Select the type of the workflow.]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Type]%></span></td>
+                    <td>
+                        <com:TDropDownList ID="type">
+                          <com:TListItem Text="Leave request" Value="leave" Selected="true" />
+                          <com:TListItem Text="Sign in/Sign out" Value="sign"  />
+                        </com:TDropDownList>
+                    </td>
+                </tr>
+                <tr>
+                    <td valign="top" class="key">
+                        <span onmouseover="Tip('<%[Select the department]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Department]%></span>
+                    </td>
+                    <td>
+                        <com:TDropDownList ID="departmentId"
+                        DataTextField="name"
+                        DataValueField="value" />
+                    </td>
+                </tr>
+
+                <tr>
+                    <td valign="top" class="key">
+                        <span onmouseover="Tip('<%[Select the first validator]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Validator 1]%></span>
+                    </td>
+                    <td>
+                        <com:TDropDownList ID="validator1" /> <%[or]%>
+                        <com:TDropDownList ID="validator11" /> <%[or]%>
+                        <com:TDropDownList ID="validator12" />
+                    </td>
+                </tr>
+                <tr>
+                    <td valign="top" class="key">
+                        <span onmouseover="Tip('<%[Select the second validator]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Validator 2]%></span>
+                    </td>
+                    <td>
+                        <com:TDropDownList ID="validator2" /> <%[or]%>
+                        <com:TDropDownList ID="validator21" /> <%[or]%>
+                        <com:TDropDownList ID="validator22" />
+                    </td>
+                </tr>
+                <tr>
+                    <td valign="top" class="key">
+                        <span onmouseover="Tip('<%[Select the third validator]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Validator 3]%></span>
+                    </td>
+                    <td>
+                        <com:TDropDownList ID="validator3" /> <%[or]%>
+                        <com:TDropDownList ID="validator31" /> <%[or]%>
+                        <com:TDropDownList ID="validator32" />
+                    </td>
+                </tr>
+
+                <tr>
+                    <td valign="top" class="key"><span onmouseover="Tip('<%[You could insert a description for this workflow.]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Description]%></span></td>
+                    <td>
+                        <com:TTextBox CssClass="text_area" ID="comment" Width="400px"/>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+    </fieldset>
+
+    <%include Application.common.template.footerContent %>
+</com:TContent>

@@ -1,0 +1,508 @@
+<com:TContent ID="Main">
+    <%include Application.common.template.headerContent %>
+    <com:TToolbarBox
+        ID="tbb"
+        Title="<%[Modify a working time]%>"
+        IconAsset="<%~ ../assets/workingtime.png %>"
+        ApplyVisible="true"
+        SaveVisible="true"
+        CancelVisible="true"
+        HelpVisible="true"
+        />
+
+    <%include Application.common.template.headerBoxContent %>
+
+    <com:THiddenField ID="id" value="" />
+    <fieldset class="adminform">
+        <legend><%[Employee]%></legend>
+        <table class="admintable" cellspacing="1">
+            <tbody>
+
+                <tr>
+                    <td valign="top" class="key"><span onmouseover="Tip('<%[Select an employee for this working time]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)">* <%[Employee]%></span></td>
+                    <td>
+                        <com:TDropDownList
+                            ID="employee"
+                            DataTextField="Text"
+                            DataValueField="Value"
+                            />
+                        <com:TDataTypeValidator
+                            ValidationGroup="Group1"
+                            EnableClientScript="true"
+                            ControlToValidate="employee"
+                            DataType="Integer"
+                            Text="<%[Please select a employee]%>"
+                            Display="Dynamic"/>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td valign="top" class="key"><span onmouseover="Tip('<%[Date when start this working time]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)">* <%[From]%></span></td>
+                    <td>
+                        <com:TDatePicker CssClass="text_area" ID="from" Mode="ImageButton" />
+                        <com:TDataTypeValidator
+                            ValidationGroup="Group1"
+                            ControlToValidate="from"
+                            DataType="Date"
+                            DateFormat="d-M-yyyy"
+                            Display="Dynamic"
+                            Text="<%[You must enter a valid date (d-M-yyyy).]%>" />
+                        <com:TRequiredFieldValidator
+                            ValidationGroup="Group1"
+                            ControlToValidate="from"
+                            Text="<%[This field is required]%>"
+                            Display="Dynamic" />
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td valign="top" class="key"><span onmouseover="Tip('<%[Check it if employee activity is end]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[End of activity]%></span></td>
+                    <td>
+                        <com:TCheckBox
+                            ID="endActivity"
+                            Text=""
+                            InputAttributes.value="1"
+                            />
+                    </td>
+                </tr>
+
+                <tr>
+                    <td valign="top" class="key"><span onmouseover="Tip('<%[Set the role of the employee]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Role]%></span></td>
+                    <td>
+                        <com:TRadioButton
+                            ID="r_employee"
+                            Text="Employee"
+                            GroupName="RadioGroup"
+                            />
+                        <com:TRadioButton
+                            ID="r_manager"
+                            Text="Manager"
+                            GroupName="RadioGroup"
+                            />
+                        <com:TRadioButton
+                            ID="r_rh"
+                            Text="Human resources / Direction"
+                            GroupName="RadioGroup"
+                            />
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td valign="top" class="key"><span onmouseover="Tip('<%[Enter a remark if needed]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Remark]%></span></td>
+                    <td>
+                        <com:TTextBox
+                            CssClass="text_area"
+                            ID="remark"
+                            Columns="40"
+                            Rows="4"
+                            TextMode="MultiLine"
+                            />
+                    </td>
+                </tr>
+
+
+            </tbody>
+        </table>
+    </fieldset>
+
+    <fieldset class="adminform">
+        <legend><%[Hours]%></legend>
+        <table class="admintable" cellspacing="1">
+            <tbody>
+
+                <tr>
+                    <td valign="top" class="key">
+                        <span onmouseover="Tip('<%[Check it if hours blocks have to be applied]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Use the hours blocks]%></span></td>
+                    <td>
+                        <com:TCheckBox
+                            ID="hourblocks"
+                            Text=""
+                            InputAttributes.value="1"
+                            />
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td valign="top" class="key">
+                        <span onmouseover="Tip('<%[Enter the number of hours by week for a 100% activity]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)">* <%[At 100%]%></span>
+                    </td>
+                    <td>
+                        <com:TActiveTextBox
+                            CssClass="text_area"
+                            ID="hoursByWeek"
+                            Width="50"
+                            AutoPostBack="true"
+                            OnTextChanged="onHoursByWeekChanged"
+                            />
+                        <com:TRequiredFieldValidator
+                            ValidationGroup="Group1"
+                            ControlToValidate="hoursByWeek"
+                            Text="<%[This field is required]%>"
+                            Display="Dynamic"/>
+                        <com:TDataTypeValidator
+                            ValidationGroup="Group1"
+                            EnableClientScript="true"
+                            ControlToValidate="hoursByWeek"
+                            DataType="Float"
+                            Text="<%[You must enter a floating number.]%>"
+                            Display="Dynamic"/>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td valign="top" class="key">
+                        <span onmouseover="Tip('<%[Enter the percentage of the employee]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)">* <%[Percentage]%></span>
+                    </td>
+                    <td>
+                        <com:TActiveTextBox
+                            CssClass="text_area"
+                            ID="workingPercent"
+                            Width="50"
+                            Text="100"
+                            AutoPostBack="true"
+                            OnTextChanged="onWorkingPercentChanged"
+                            />
+                        <com:TRequiredFieldValidator
+                            ValidationGroup="Group1"
+                            ControlToValidate="workingPercent"
+                            Text="<%[This field is required]%>"
+                            Display="Dynamic"/>
+                        <com:TDataTypeValidator
+                            ValidationGroup="Group1"
+                            EnableClientScript="true"
+                            ControlToValidate="hoursByWeek"
+                            DataType="Float"
+                            Text="<%[You must enter a floating number.]%>"
+                            Display="Dynamic"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td valign="top" class="key">
+                        <span onmouseover="Tip('<%[Total of hours by week according to the percentage]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Total]%></span>
+                    </td>
+                    <td>
+                        <com:TActiveLabel
+                            CssClass="text_area"
+                            ID="totalHourByWeek"
+                             Width="50px"
+                            Text = ""
+                            />
+
+                    </td>
+                </tr>
+
+                <tr>
+                    <td valign="top" class="key">
+                    </td>
+                    <td>
+                        <com:TActiveButton
+                            Text="Divide the days"
+                            OnClick="onDivideTheDays" />
+
+                    </td>
+                </tr>
+
+                <tr>
+                    <td valign="top" class="key">
+                        <span onmouseover="Tip('<%[Enter the number of hours for the day]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Monday]%></span>
+                    </td>
+                                        <td>
+                        <com:TActiveTextBox
+                            CssClass="text_area"
+                            ID="monday_m"
+                            Width="30px"
+                            AutoPostBack="true"
+                            OnTextChanged="onWorkingDayTimeChanged"
+                            />
+
+                        <com:TDataTypeValidator
+                            ValidationGroup="Group1"
+                            EnableClientScript="true"
+                            ControlToValidate="monday_m"
+                            DataType="Float"
+                            Text="<%[You must enter a floating number.]%>"
+                            Display="Dynamic"/>
+                        /
+                        <com:TActiveTextBox
+                            CssClass="text_area"
+                            ID="monday_a"
+                            Width="30px"
+                            AutoPostBack="true"
+                            OnTextChanged="onWorkingDayTimeChanged"
+                            />
+
+                        <com:TDataTypeValidator
+                            ValidationGroup="Group1"
+                            EnableClientScript="true"
+                            ControlToValidate="monday_a"
+                            DataType="Float"
+                            Text="<%[You must enter a floating number.]%>"
+                            Display="Dynamic"/>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td valign="top" class="key">
+                        <span onmouseover="Tip('<%[Enter the number of hours for the day]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Tuesday]%></span>
+                    </td>
+                    <td>
+                        <com:TActiveTextBox
+                            CssClass="text_area"
+                            ID="tuesday_m"
+                            Width="30px"
+                            AutoPostBack="true"
+                            OnTextChanged="onWorkingDayTimeChanged"
+                            />
+                        <com:TDataTypeValidator
+                            ValidationGroup="Group1"
+                            EnableClientScript="true"
+                            ControlToValidate="tuesday_m"
+                            DataType="Float"
+                            Text="<%[You must enter a floating number.]%>"
+                            Display="Dynamic"/>
+                            /
+                        <com:TActiveTextBox
+                            CssClass="text_area"
+                            ID="tuesday_a"
+                            Width="30px"
+                            AutoPostBack="true"
+                            OnTextChanged="onWorkingDayTimeChanged"
+                            />
+                        <com:TDataTypeValidator
+                            ValidationGroup="Group1"
+                            EnableClientScript="true"
+                            ControlToValidate="tuesday_a"
+                            DataType="Float"
+                            Text="<%[You must enter a floating number.]%>"
+                            Display="Dynamic"/>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td valign="top" class="key">
+                        <span onmouseover="Tip('<%[Enter the number of hours for the day]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Wednesday]%></span>
+                    </td>
+                    <td>
+                        <com:TActiveTextBox
+                            CssClass="text_area"
+                            ID="wednesday_m"
+                            Width="30px"
+                            AutoPostBack="true"
+                            OnTextChanged="onWorkingDayTimeChanged"
+                            />
+
+                        <com:TDataTypeValidator
+                            ValidationGroup="Group1"
+                            EnableClientScript="true"
+                            ControlToValidate="wednesday_m"
+                            DataType="Float"
+                            Text="<%[You must enter a floating number.]%>"
+                            Display="Dynamic"/>
+                        /
+                        <com:TActiveTextBox
+                            CssClass="text_area"
+                            ID="wednesday_a"
+                            Width="30px"
+                            AutoPostBack="true"
+                            OnTextChanged="onWorkingDayTimeChanged"
+                            />
+
+                        <com:TDataTypeValidator
+                            ValidationGroup="Group1"
+                            EnableClientScript="true"
+                            ControlToValidate="wednesday_a"
+                            DataType="Float"
+                            Text="<%[You must enter a floating number.]%>"
+                            Display="Dynamic"/>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td valign="top" class="key">
+                        <span onmouseover="Tip('<%[Enter the number of hours for the day]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Thursday]%></span>
+                    </td>
+                    <td>
+                        <com:TActiveTextBox
+                            CssClass="text_area"
+                            ID="thursday_m"
+                            Width="30px"
+                            AutoPostBack="true"
+                            OnTextChanged="onWorkingDayTimeChanged"
+                            />
+                        <com:TDataTypeValidator
+                            ValidationGroup="Group1"
+                            EnableClientScript="true"
+                            ControlToValidate="thursday_m"
+                            DataType="Float"
+                            Text="<%[You must enter a floating number.]%>"
+                            Display="Dynamic"/>
+                          /
+                          <com:TActiveTextBox
+                            CssClass="text_area"
+                            ID="thursday_a"
+                            Width="30px"
+                            AutoPostBack="true"
+                            OnTextChanged="onWorkingDayTimeChanged"
+                            />
+                        <com:TDataTypeValidator
+                            ValidationGroup="Group1"
+                            EnableClientScript="true"
+                            ControlToValidate="thursday_a"
+                            DataType="Float"
+                            Text="<%[You must enter a floating number.]%>"
+                            Display="Dynamic"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td valign="top" class="key">
+                        <span onmouseover="Tip('<%[Enter the number of hours for the day]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Friday]%></span>
+                    </td>
+                    <td>
+                        <com:TActiveTextBox
+                            CssClass="text_area"
+                            ID="friday_m"
+                            Width="30px"
+                            AutoPostBack="true"
+                            OnTextChanged="onWorkingDayTimeChanged"
+                            />
+                        <com:TDataTypeValidator
+                            ValidationGroup="Group1"
+                            EnableClientScript="true"
+                            ControlToValidate="friday_m"
+                            DataType="Float"
+                            Text="<%[You must enter a floating number.]%>"
+                            Display="Dynamic"/>
+                        /
+                        <com:TActiveTextBox
+                            CssClass="text_area"
+                            ID="friday_a"
+                            Width="30px"
+                            AutoPostBack="true"
+                            OnTextChanged="onWorkingDayTimeChanged"
+                            />
+                        <com:TDataTypeValidator
+                            ValidationGroup="Group1"
+                            EnableClientScript="true"
+                            ControlToValidate="friday_a"
+                            DataType="Float"
+                            Text="<%[You must enter a floating number.]%>"
+                            Display="Dynamic"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td valign="top" class="key">
+                        <span onmouseover="Tip('<%[Enter the number of hours for the day]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Saturday]%></span>
+                    </td>
+                    <td>
+                        <com:TActiveTextBox
+                            CssClass="text_area"
+                            ID="saturday_m"
+                            Width="30px" />
+                        <com:TDataTypeValidator
+                            ValidationGroup="Group1"
+                            EnableClientScript="true"
+                            ControlToValidate="saturday_m"
+                            DataType="Float"
+                            Text="<%[You must enter a floating number.]%>"
+                            Display="Dynamic"/>
+                        /
+                        <com:TActiveTextBox
+                            CssClass="text_area"
+                            ID="saturday_a"
+                            Width="30px" />
+                        <com:TDataTypeValidator
+                            ValidationGroup="Group1"
+                            EnableClientScript="true"
+                            ControlToValidate="saturday_a"
+                            DataType="Float"
+                            Text="<%[You must enter a floating number.]%>"
+                            Display="Dynamic"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td valign="top" class="key">
+                        <span onmouseover="Tip('<%[Enter the number of hours for the day]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Sunday]%></span>
+                    </td>
+                    <td>
+                        <com:TActiveTextBox
+                            CssClass="text_area"
+                            ID="sunday_m"
+                            Width="30px"
+                            AutoPostBack="true"
+                            OnTextChanged="onWorkingDayTimeChanged"
+                            />
+                        <com:TDataTypeValidator
+                            ValidationGroup="Group1"
+                            EnableClientScript="true"
+                            ControlToValidate="sunday_m"
+                            DataType="Float"
+                            Text="<%[You must enter a floating number.]%>"
+                            Display="Dynamic"/>
+                            /
+                        <com:TActiveTextBox
+                            CssClass="text_area"
+                            ID="sunday_a"
+                            Width="30px"
+                            AutoPostBack="true"
+                            OnTextChanged="onWorkingDayTimeChanged"
+                            />
+                        <com:TDataTypeValidator
+                            ValidationGroup="Group1"
+                            EnableClientScript="true"
+                            ControlToValidate="sunday_a"
+                            DataType="Float"
+                            Text="<%[You must enter a floating number.]%>"
+                            Display="Dynamic"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td valign="top" class="key">
+                        <span onmouseover="Tip('<%[This total allow to be sure that the total time by day is respected]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Total check]%></span>
+                    </td>
+                    <td>
+                        <com:TActiveLabel
+                            CssClass="text_area"
+                            ID="totalCheck"
+                             Width="50px"
+                            Text = ""
+                            />
+
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+    </fieldset>
+
+    <fieldset class="adminform">
+        <legend><%[Holidays]%></legend>
+        <table class="admintable" cellspacing="1">
+            <tbody>
+                <tr>
+                    <td valign="top" class="key">
+                        <span onmouseover="Tip('<%[Enter the number of holidays by year]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Nbre of days]%></span>
+                    </td>
+                    <td>
+                        <com:TTextBox
+                            CssClass="text_area"
+                            ID="holidaysByYear"
+                            Width="30px"
+                            />
+                        <com:TDataTypeValidator
+                            ValidationGroup="Group1"
+                            EnableClientScript="true"
+                            ControlToValidate="holidaysByYear"
+                            DataType="Float"
+                            Text="<%[You must enter a floating number.]%>"
+                            Display="Dynamic"/>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </fieldset>
+
+    <%include Application.common.template.footerContent %>
+</com:TContent>

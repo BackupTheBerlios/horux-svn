@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+  <install type="component">
+  <installName>timuxuser</installName>
+  <name>Timux User</name>
+  <version>1.0.0</version>
+  <creationDate>09/11/09</creationDate>
+  <author>Jean-Luc Gyger / Letux</author>
+  <authorEmail>info@letux.ch</authorEmail>
+  <authorUrl>http://www.letux.ch</authorUrl>
+  <copyright>Letux</copyright>
+  <license>GNU/GPL</license>
+  <description>User component for Timux</description>
+
+  <sqlinstall>install.sql</sqlinstall>
+  <sqluninstall>uninstall.sql</sqluninstall>
+
+  <mainmenu>
+    <menu iconmenu="icon-16-panel.png" url="components.timuxuser.panel" name="Timux User">
+        <submenus>
+            <submenu iconmenu="" url="components.timuxuser.workingtime.workingtime" name="Workingtime" ></submenu>
+            <submenu iconmenu="" url="components.timuxuser.counter.counter" name="Leave counter" ></submenu>
+            <submenu iconmenu="" url="components.timuxuser.booking.booking" name="Sign in/out" ></submenu>
+            <submenu iconmenu="" url="components.timuxuser.mybooking.mybooking" name="My sign in/out" ></submenu>
+            <submenu iconmenu="" url="components.timuxuser.leaverequest.leaverequest" name="Leave Request" ></submenu>
+            <submenu iconmenu="" url="components.timuxuser.leaverequestvalidation.leaverequestvalidation" name="Leave Request Validation" ></submenu>
+        </submenus>       
+    </menu>
+  </mainmenu>
+
+  <permissions>
+    <permission id="1" parent="0">components.timuxuser.panel</permission>
+    <permission id="2" parent="0">components.timuxuser.booking.booking</permission>
+    <permission id="3" parent="2">components.timuxuser.booking.add</permission>
+    <permission id="4" parent="2">components.timuxuser.booking.mod</permission>
+    <permission id="5" parent="0">components.timuxuser.mybooking.mybooking</permission>
+    <permission id="6" parent="0">components.timuxuser.workingtime.workingtime</permission>
+    <permission id="7" parent="6">components.timuxuser.workingtime.add</permission>
+    <permission id="8" parent="6">components.timuxuser.workingtime.mod</permission>
+    <permission id="9" parent="0">components.timuxuser.counter.counter</permission>
+    <permission id="10" parent="9">components.timuxuser.counter.mod</permission>
+    <permission id="11" parent="0">components.timuxuser.leaverequest.leaverequest</permission>
+    <permission id="12" parent="11">components.timuxuser.leaverequest.add</permission>
+    <permission id="13" parent="11">components.timuxuser.leaverequest.mod</permission>
+    <permission id="14" parent="0">components.timuxuser.leaverequestvalidation.leaverequestvalidation</permission>
+    <permission id="15" parent="14">components.timuxuser.leaverequestvalidation.mod</permission>
+  </permissions>
+
+</install>

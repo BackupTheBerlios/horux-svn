@@ -1,0 +1,111 @@
+<com:TContent ID="Main">
+    <%include Application.common.template.headerContent %>
+
+    <com:TToolbarBox
+        ID="tbb"
+        Title="<%[Leave Request Validation]%>"
+        IconAsset="<%~ ../assets/leaverequestvalidation.png %>"
+        HelpVisible="true"
+        CancelVisible="true"
+        EditVisible="true"
+        />
+
+    <%include Application.common.template.headerBoxContent %>
+
+    <%[Filter]%>:
+
+
+    <div id="list">
+        <com:TDataGrid
+            ID="DataGrid"
+            DataKeyField="id"
+            AutoGenerateColumns="false"
+            CssClass="adminlist"
+            AllowPaging="true"
+            PageSize="15"
+
+            ItemStyle.CssClass = "row0"
+            AlternatingItemStyle.CssClass="row1"
+
+            PagerStyle.Mode="Numeric"
+            PagerStyle.HorizontalAlign="Center"
+            OnPageIndexChanged="changePage"
+            OnPagerCreated="pagerCreated"
+            OnItemCreated="itemCreated"
+            >
+
+            <com:TTemplateColumn
+                HeaderText=""
+                HeaderStyle.Width = "20px"
+                >
+                <prop:HeaderTemplate>
+                </prop:HeaderTemplate>
+                <prop:ItemTemplate>
+                    <com:TActiveCheckBox
+                        ID="item"
+                        InputAttributes.value="<%#$this->NamingContainer->DataItem['id']%>"
+                        />
+                </prop:ItemTemplate>
+            </com:TTemplateColumn>
+
+            <com:TBoundColumn
+                HeaderText="<%[Employee]%>"
+                DataField="employee"
+                />
+
+            <com:TBoundColumn
+                HeaderText="<%[Time code]%>"
+                DataField="timcodeName"
+                />
+
+            <com:TTemplateColumn HeaderText="<%[From date]%>" ID="ffdate">
+                <prop:ItemTemplate>
+                    <com:TLabel
+                        ID="fdate"
+                        />
+                </prop:ItemTemplate>
+            </com:TTemplateColumn>
+
+            <com:TTemplateColumn HeaderText="<%[To date]%>" ID="ttdate">
+                <prop:ItemTemplate>
+                    <com:TLabel
+                        ID="tdate"
+                        />
+                </prop:ItemTemplate>
+            </com:TTemplateColumn>
+
+            <com:TTemplateColumn HeaderText="<%[Creation date]%>" ID="ccdate">
+                <prop:ItemTemplate>
+                    <com:TLabel
+                        ID="cdate"
+                        />
+                </prop:ItemTemplate>
+            </com:TTemplateColumn>
+
+
+            <com:TTemplateColumn HeaderText="<%[Modification date]%>" ID="mmdate">
+                <prop:ItemTemplate>
+                    <com:TLabel
+                        ID="mdate"
+                        />
+                </prop:ItemTemplate>
+            </com:TTemplateColumn>
+
+            <com:TBoundColumn
+                HeaderText="<%[Modify by]%>"
+                DataField="modUser"
+                />
+
+            <com:TTemplateColumn HeaderText="<%[State]%>" ID="sstate">
+                <prop:ItemTemplate>
+                    <com:TLabel
+                        ID="state"
+                        />
+                </prop:ItemTemplate>
+            </com:TTemplateColumn>
+
+        </com:TDataGrid>
+    </div>
+
+    <%include Application.common.template.footerContent %>
+</com:TContent>
