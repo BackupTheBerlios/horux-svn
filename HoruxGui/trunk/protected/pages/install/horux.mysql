@@ -208,7 +208,7 @@ CREATE TABLE IF NOT EXISTS `hr_gui_log` (
 
 CREATE TABLE IF NOT EXISTS `hr_gui_permissions` (
   `id` smallint(5) unsigned NOT NULL auto_increment,
-  `page` varchar(64) collate utf8_unicode_ci default NULL,
+  `page` varchar(255) collate utf8_unicode_ci default NULL,
   `selector` enum('user_id','group_id') collate utf8_unicode_ci default NULL,
   `value` smallint(5) unsigned default NULL,
   `allowed` enum('','1') collate utf8_unicode_ci NOT NULL,
