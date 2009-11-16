@@ -1,6 +1,10 @@
 <div id="header-box">
     <div id="module-status">
-        <com:TTimeTriggeredCallback ID="CheckAlarm" Interval="60" OnCallback="onDispAlarm" StartTimerOnLoad="true" />
+        <com:TConditional Condition="$this->isAccess('system.Alarms')">
+            <prop:TrueTemplate>
+                <com:TTimeTriggeredCallback ID="CheckAlarm" Interval="60" OnCallback="onDispAlarm" StartTimerOnLoad="true" />
+            </prop:TrueTemplate>
+        </com:TConditional>
 
         <com:TLinkButton  ID="homeIcon" OnClick="onHome"><span class="homeIcon">&nbsp;</span></com:TLinkButton>
 
@@ -8,10 +12,14 @@
           <span class="accesslink">&nbsp;</span>
         </com:TPanel>
 
-        <com:TActiveLinkButton ID="alarmLabelButton" CssClass="alarm" OnClick="onCheckAlaram" >
-            <com:TActiveLabel ID="alarmLabel"  Text="<%= $this->getAlarm() %>" />
-        </com:TActiveLinkButton>
-        
+        <com:TConditional Condition="$this->isAccess('system.Alarms')">
+            <prop:TrueTemplate>
+            <com:TActiveLinkButton ID="alarmLabelButton" CssClass="alarm" OnClick="onCheckAlaram" >
+                <com:TActiveLabel ID="alarmLabel"  Text="<%= $this->getAlarm() %>" />
+            </com:TActiveLinkButton>
+            </prop:TrueTemplate>
+        </com:TConditional>
+
        	<com:TLabel ID="UserLogged" CssClass="loggedin-users" Text="<%= $this->getUserLogged() %>" />
         
         <span class="logout"><com:TActiveLinkButton  ID="logout" OnClick="onLogout" /></span>

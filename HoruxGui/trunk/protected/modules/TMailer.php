@@ -186,16 +186,20 @@ class TMailer extends TModule
   
     try
     {
-      $message =& new Swift_Message($this->object, '', "text/html");
-      $message->attach(new Swift_Message_Part($this->body));
+      $message =& new Swift_Message($this->object);
+      $message->attach(new Swift_Message_Part($this->body, "text/html"));
 
       $recipients =& new Swift_RecipientList();
       foreach($this->addRecipient as $r)
       {
         if($r['name'] != '')
+        {
           $recipients->addTo($r['mail'], $r['name']);
+        }
         else
+        {
           $recipients->addTo($r['mail']);
+        }
       }
       
       foreach( $this->attachment as $a)
@@ -208,9 +212,13 @@ class TMailer extends TModule
       }
       
       if($newLetter)
+      {
         $res = $this->swift->batchSend($message, $recipients, new Swift_Address($this->mail_from, $this->from_name));
+      }
       else
+      {
         $res = $this->swift->send($message, $recipients, new Swift_Address($this->mail_from, $this->from_name));
+      }
     
       $this->swift->disconnect();
     
