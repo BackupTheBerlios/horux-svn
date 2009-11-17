@@ -160,7 +160,7 @@ class tracking extends PageList
 
             }
 
-            $cmd=$this->db->createCommand("SELECT t.id, u.name, u.firstName, t.date, t.time, d.name AS device, t.id_comment, k.identificator, t.is_access FROM hr_tracking AS t LEFT JOIN hr_user AS u ON u.id = t.id_user LEFT JOIN hr_device AS d ON d.id=t.id_entry LEFT JOIN hr_keys AS k ON k.serialNumber=t.key WHERE $date $entry $status $user 1=1 ORDER BY t.id DESC LIMIT 0,1000");
+            $cmd=$this->db->createCommand("SELECT t.id, u.name, u.firstName, t.date, t.time, d.name AS device, t.id_comment, k.identificator, t.is_access FROM hr_tracking AS t LEFT JOIN hr_user AS u ON u.id = t.id_user LEFT JOIN hr_device AS d ON d.id=t.id_entry LEFT JOIN hr_keys AS k ON k.serialNumber=t.key WHERE $date $entry $status $user d.name!='' ORDER BY t.id DESC LIMIT 0,1000");
             $data = $cmd->query();
             $data = $data->readAll();
 
