@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <xliff version="1.0">
- <file source-language="FR" target-language="fr" datatype="plaintext" original="messages" date="2009-11-05T09:09:18Z" product-name="messages">
+ <file source-language="FR" target-language="fr" datatype="plaintext" original="messages" date="2009-11-17T16:00:22Z" product-name="messages">
   <body>
   
 <trans-unit id="1" lock="1">
@@ -3793,6 +3793,31 @@
 <trans-unit id="710">
 <source>---- No department ----</source>
 <target>---- Pas de d&#xE9;partement ----</target>
+</trans-unit>
+
+<trans-unit id="711">
+<source>Select the period</source>
+<target>S&#xE9;lectionner une p&#xE9;riode</target>
+</trans-unit>
+
+<trans-unit id="712">
+<source>Period</source>
+<target>P&#xE9;riode</target>
+</trans-unit>
+
+<trans-unit id="713">
+<source>All the day</source>
+<target>Toute la journ&#xE9;e</target>
+</trans-unit>
+
+<trans-unit id="714">
+<source>Morning only</source>
+<target>Seulement le matin</target>
+</trans-unit>
+
+<trans-unit id="715">
+<source>Afternoon only</source>
+<target>Seulement l'apr&#xE8;s-midi</target>
 </trans-unit>
 </body>
 </file>
