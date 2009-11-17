@@ -341,17 +341,16 @@ CREATE TABLE IF NOT EXISTS `hr_keys_attribution` (
 #
 
 CREATE TABLE IF NOT EXISTS `hr_non_working_day` (
-  `id` bigint(20) NOT NULL auto_increment,
-  `name` varchar(50) NOT NULL default '',
-  `from` date default NULL,
-  `until` date default NULL,
-  `comment` varchar(100) default NULL,
-  `locked` int(11) NOT NULL default '0',
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL DEFAULT '',
+  `from` date DEFAULT NULL,
+  `until` date DEFAULT NULL,
+  `comment` varchar(100) DEFAULT NULL,
+  `locked` int(11) NOT NULL DEFAULT '0',
   `color` varchar(7) NOT NULL DEFAULT '#FF6666',
-  `timeStart` time NOT NULL,
-  `timeEnd` time NOT NULL,
-  PRIMARY KEY  (`id`)
-) TYPE=MyISAM CHARACTER SET `utf8`;
+  `period` set('allday','morning','afternoon') NOT NULL DEFAULT 'allday',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 
 # --------------------------------------------------------

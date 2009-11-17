@@ -148,8 +148,12 @@ class nonWorkingDay extends Page
                 $username = $this->Page->getUserName($data['locked']);
 
                 $time = "";
-                if($data['timeStart'] != "00:00:00" && $data['timeEnd'] != "00:00:00")
-                    $time = "<br>".substr($data['timeStart'],0,5)." - ". substr($data['timeEnd'],0,5);
+                if($data['period'] == "allday")
+                    $time = "<br>".Prado::localize('All the day');
+                if($data['period'] == "morning")
+                    $time = "<br>".Prado::localize('Moring only');
+                if($data['period'] == "afternoon")
+                    $time = "<br>".Prado::localize('Afternoon only');
 
                 if(!$this->isRecordBlock('hr_non_working_day', $data['id']))
                 {

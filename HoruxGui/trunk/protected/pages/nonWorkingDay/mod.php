@@ -50,15 +50,19 @@ class mod extends Page
             $this->until->Text = $until;
             $this->comment->Text = $data['comment'];
 
-
-            $ts = explode(":",$data['timeStart']);
-            $te = explode(":",$data['timeEnd']);
-
-            $this->timeStartHour->Text = $ts[0];
-            $this->timeStartMinute->Text = $ts[1];
-            $this->timeEndHour->Text = $te[0];
-            $this->timeEndMinute->Text = $te[1];
-
+            
+            switch($data['period'])
+            {
+                case 'allday':
+                    $this->allday->setChecked(true);
+                    break;
+                case 'morning':
+                    $this->morning->setChecked(true);
+                    break;
+                case 'afternoon':
+                    $this->afternoon->setChecked(true);
+                    break;
+            }
 
         }
     }
@@ -133,11 +137,16 @@ class mod extends Page
         $cmd->bindParameter(":id",$this->id->Value, PDO::PARAM_INT);
         $cmd->bindParameter(":color",$this->color->SafeText, PDO::PARAM_STR);
 
-        $timeStart = $this->timeStartHour->SafeText.":".$this->timeStartMinute->SafeText.":00";
-        $timeEnd = $this->timeEndHour->SafeText.":".$this->timeEndMinute->SafeText.":00";
+        $period = "";
 
-        $cmd->bindParameter(":timeStart",$timeStart, PDO::PARAM_INT);
-        $cmd->bindParameter(":timeEnd",$timeEnd, PDO::PARAM_STR);
+        if($this->allday->getChecked())
+            $period = 'allday';
+        if($this->morning->getChecked())
+            $period = 'morning';
+        if($this->afternoon->getChecked())
+            $period = 'afternoon';
+
+        $cmd->bindParameter(":period",$period,PDO::PARAM_STR);
 
 
         $this->log("Modify the non working day: ".$this->name->SafeText);
