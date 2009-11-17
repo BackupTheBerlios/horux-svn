@@ -151,7 +151,7 @@ class nonWorkingDay extends Page
                 if($data['period'] == "allday")
                     $time = "<br>".Prado::localize('All the day');
                 if($data['period'] == "morning")
-                    $time = "<br>".Prado::localize('Moring only');
+                    $time = "<br>".Prado::localize('Morning only');
                 if($data['period'] == "afternoon")
                     $time = "<br>".Prado::localize('Afternoon only');
 
