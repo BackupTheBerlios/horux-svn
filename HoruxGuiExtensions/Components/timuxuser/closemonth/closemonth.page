@@ -1,0 +1,114 @@
+<com:TContent ID="Main">
+    <%include Application.common.template.headerContent %>
+
+    <com:TToolbarBox
+        ID="tbb"
+        Title="<%[Close Month]%>"
+        IconAsset="<%~ ../assets/closemonth.png %>"
+        HelpVisible="true"
+        CancelVisible="true"
+        />
+
+    <%include Application.common.template.headerBoxContent %>
+
+    <%[Filter]%>:
+
+    <%[Year]%>
+    <com:TActiveDropDownList
+        ID="FilterYear"
+        OnSelectedIndexChanged="selectionChangedYear"
+        CssClass="inputbox"
+        DataTextField="Text"
+        DataValueField="Value"/>
+    <%[Month]%>
+    <com:TActiveDropDownList
+        ID="FilterMonth"
+        OnSelectedIndexChanged="selectionChangedMonth"
+        CssClass="inputbox" >
+        <com:TListItem Value="1" Text="<%[January]%>"/>
+        <com:TListItem Value="2" Text="<%[February]%>"/>
+        <com:TListItem Value="3" Text="<%[March]%>"/>
+        <com:TListItem Value="4" Text="<%[April]%>"/>
+        <com:TListItem Value="5" Text="<%[May]%>"/>
+        <com:TListItem Value="6" Text="<%[June]%>"/>
+        <com:TListItem Value="7" Text="<%[July]%>"/>
+        <com:TListItem Value="8" Text="<%[August]%>"/>
+        <com:TListItem Value="9" Text="<%[September]%>"/>
+        <com:TListItem Value="10" Text="<%[October]%>"/>
+        <com:TListItem Value="11" Text="<%[November]%>"/>
+        <com:TListItem Value="12" Text="<%[December]%>"/>
+    </com:TActiveDropDownList>
+
+    <%[Department]%>
+    <com:TActiveDropDownList
+        ID="FilterDepartment"
+        OnSelectedIndexChanged="selectionChangedDepartment"
+        CssClass="inputbox"
+        DataTextField="Text"
+        DataValueField="Value" />
+
+
+    <br/><br/>
+    <com:TButton OnClick="onCloseMonth" Text="<%[Close the month]%>" />
+    <br/>
+
+    <div id="list">
+        <com:TDataGrid
+            ID="DataGrid"
+            DataKeyField="id"
+            AutoGenerateColumns="false"
+            CssClass="adminlist"
+            AllowPaging="true"
+            PageSize="30"
+
+            ItemStyle.CssClass = "row0"
+            AlternatingItemStyle.CssClass="row1"
+
+            PagerStyle.Mode="Numeric"
+            PagerStyle.HorizontalAlign="Center"
+            OnPageIndexChanged="changePage"
+            OnPagerCreated="pagerCreated"
+            OnItemCreated="itemCreated"
+            >
+
+            <com:TTemplateColumn
+                HeaderText=""
+                HeaderStyle.Width = "20px"
+                >
+                <prop:HeaderTemplate>
+                    <com:TActiveCheckBox
+                        ID="headerCB"
+                        AutoPostBack="true"
+                        OnCallback="Page.checkboxAllCallback"
+                        InputAttributes.value="0"
+                        />
+                </prop:HeaderTemplate>
+                <prop:ItemTemplate>
+                    <com:TActiveCheckBox
+                        ID="item"
+                        InputAttributes.value="<%#$this->NamingContainer->DataItem['user_id']%>"
+                        />
+                </prop:ItemTemplate>
+            </com:TTemplateColumn>
+
+            <com:TBoundColumn  HeaderStyle.Width = "20px"
+                HeaderText="<%[ID]%>"
+                DataField="user_id"
+                />
+
+            <com:TBoundColumn 
+                HeaderText="<%[Employee]%>"
+                DataField="employee"
+                />
+
+            <com:TTemplateColumn HeaderText="<%[Can be closed]%>" ID="cclose" HeaderStyle.Width = "300px" >
+                <prop:ItemTemplate>
+                    <com:TLabel ID="close"  />
+                </prop:ItemTemplate>
+            </com:TTemplateColumn>
+
+        </com:TDataGrid>
+    </div>
+
+    <%include Application.common.template.footerContent %>
+</com:TContent>

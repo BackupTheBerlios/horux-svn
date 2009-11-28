@@ -1,0 +1,93 @@
+<com:TContent ID="Main">
+    <%include Application.common.template.headerContent %>
+
+    <com:TToolbarBox
+        ID="tbb"
+        Title="<%[Errors]%>"
+        IconAsset="<%~ ../assets/bug.png %>"
+        HelpVisible="true"
+        CancelVisible="true"
+        />
+
+    <%include Application.common.template.headerBoxContent %>
+
+    <%[Filter]%>:
+
+    <%[Year]%>
+    <com:TActiveDropDownList
+        ID="FilterYear"
+        OnSelectedIndexChanged="selectionChangedYear"
+        CssClass="inputbox"
+        DataTextField="Text"
+        DataValueField="Value"/>
+    <%[Month]%>
+    <com:TActiveDropDownList
+        ID="FilterMonth"
+        OnSelectedIndexChanged="selectionChangedMonth"
+        CssClass="inputbox" >
+        <com:TListItem Value="1" Text="<%[January]%>"/>
+        <com:TListItem Value="2" Text="<%[February]%>"/>
+        <com:TListItem Value="3" Text="<%[March]%>"/>
+        <com:TListItem Value="4" Text="<%[April]%>"/>
+        <com:TListItem Value="5" Text="<%[May]%>"/>
+        <com:TListItem Value="6" Text="<%[June]%>"/>
+        <com:TListItem Value="7" Text="<%[July]%>"/>
+        <com:TListItem Value="8" Text="<%[August]%>"/>
+        <com:TListItem Value="9" Text="<%[September]%>"/>
+        <com:TListItem Value="10" Text="<%[October]%>"/>
+        <com:TListItem Value="11" Text="<%[November]%>"/>
+        <com:TListItem Value="12" Text="<%[December]%>"/>
+    </com:TActiveDropDownList>
+
+    <div id="list">
+        <com:TDataGrid
+            ID="DataGrid"
+            DataKeyField="id"
+            AutoGenerateColumns="false"
+            CssClass="adminlist"
+            AllowPaging="true"
+            PageSize="30"
+
+            ItemStyle.CssClass = "row0"
+            AlternatingItemStyle.CssClass="row1"
+
+            PagerStyle.Mode="Numeric"
+            PagerStyle.HorizontalAlign="Center"
+            OnPageIndexChanged="changePage"
+            OnPagerCreated="pagerCreated"
+            OnItemCreated="itemCreated"
+            >
+
+            <com:TTemplateColumn HeaderText="<%[Date]%>" ID="ddate" HeaderStyle.Width = "200px" >
+                <prop:ItemTemplate>
+                    <com:TDateFormat ID="date" Pattern="fulldate" />
+                </prop:ItemTemplate>
+            </com:TTemplateColumn>
+
+            <com:TBoundColumn  HeaderStyle.Width = "200px"
+                HeaderText="<%[Type]%>"
+                DataField="typeText"
+                />
+
+            <com:TBoundColumn
+                HeaderText="<%[Remark]%>"
+                DataField="remark"
+                />
+
+            <com:TTemplateColumn HeaderStyle.Width = "100px" Visible="true" ID="tplColExt">
+                <prop:HeaderTemplate><%[Add signing]%></prop:HeaderTemplate>
+                <prop:ItemTemplate>
+                    <com:THyperLink
+                        NavigateUrl="index.php?page=components.timuxuser.mybooking.add&back=components.timuxuser.error.error"
+                        ImageUrl="<%~ ../assets/edit_add.png %>"
+                        Style="border:0px"
+                        Text="<%[Add signing]%>"
+                        />
+                </prop:ItemTemplate>
+            </com:TTemplateColumn>
+
+        </com:TDataGrid>
+    </div>
+
+    <%include Application.common.template.footerContent %>
+</com:TContent>

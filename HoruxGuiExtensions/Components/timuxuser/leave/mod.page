@@ -1,0 +1,114 @@
+<com:TContent ID="Main">
+    <%include Application.common.template.headerContent %>
+    <com:TToolbarBox
+        ID="tbb"
+        Title="<%[Modify a leave]%>"
+        IconAsset="<%~ ../assets/leave.png %>"
+        SaveVisible="true"
+        CancelVisible="true"
+        HelpVisible="true"
+        ApplyVisible="true"
+        />
+
+    <%include Application.common.template.headerBoxContent %>
+
+    <com:THiddenField ID="id" value="" />
+    <fieldset class="adminform">
+        <legend><%[Leave request]%></legend>
+        <table class="admintable" cellspacing="1">
+            <tbody>
+                <tr>
+                    <td valign="top" class="key"><span onmouseover="Tip('<%[Employee who ask the leave request]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Employee]%></span></td>
+                    <td>
+                        <com:TLabel ID="user" />
+                    </td>
+                </tr>
+                <tr>
+                    <td valign="top" class="key"><span onmouseover="Tip('<%[Set the date when start the leave request]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Date from]%></span></td>
+                    <td>
+                        <com:TDatePicker CssClass="text_area" ID="from" Mode="ImageButton" />
+                    </td>
+                </tr>
+                <tr>
+                    <td valign="top" class="key"><span onmouseover="Tip('<%[Set the date when finish the leave request. Set blank for one day]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Date to]%></span></td>
+                    <td>
+                        <com:TDatePicker CssClass="text_area" ID="to" Mode="ImageButton" />
+                    </td>
+                </tr>
+
+                <tr>
+                    <td valign="top" class="key"><span onmouseover="Tip('<%[Select the period]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Period]%></span></td>
+                    <td>
+                        <com:TRadioButton
+                            ID="allday"
+                            GroupName="RadioGroup"
+                            Text="All the day"
+                            />
+                        <br/>
+                        <com:TRadioButton
+                            ID="morning"
+                            GroupName="RadioGroup"
+                            Text="Morning"
+                            />
+                        <br/>
+                        <com:TRadioButton
+                            ID="afternoon"
+                            GroupName="RadioGroup"
+                            Text="Afternoon"
+                            />
+                    </td>
+                </tr>
+
+                <tr>
+                    <td valign="top" class="key"><span onmouseover="Tip('<%[Select the time code]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Time code]%></span></td>
+                    <td>
+                        <com:TDropDownList
+                            ID="timecode"
+                            DataTextField="Text"
+                            DataValueField="Value"
+                            />
+                    </td>
+                </tr>
+
+                <tr>
+                    <td valign="top" class="key"><span onmouseover="Tip('<%[Select the status of the request]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Status]%></span></td>
+                    <td>
+                        <com:TDropDownList
+                            ID="status"
+                            DataTextField="Text"
+                            DataValueField="Value"
+                            >
+                            <com:TListItem Text="<%[Sended]%>" Value="sended" />
+                            <com:TListItem Text="<%[Validating]%>" Value="validating"/>
+                            <com:TListItem Text="<%[Validated]%>" Value="validate"/>
+                            <com:TListItem Text="<%[Refused]%>" Value="refused"/>
+                            <com:TListItem Text="<%[Canceled]%>" Value="canceled"/>
+                        </com:TDropDownList>
+                    </td>
+                </tr>
+                <tr>
+                    <td valign="top" class="key"><%[Remark]%></td>
+                    <td>
+                        <com:TLabel ID="remark" />
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </fieldset>
+
+    <fieldset class="adminform">
+        <legend><%[Remark]%></legend>
+        <table class="admintable" cellspacing="1">
+            <tbody>
+                <tr>
+                    <td valign="top" class="key"><span onmouseover="Tip('<%[Enter your remark if needed]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[My Remark]%></span></td>
+                    <td>
+                        <com:THtmlArea ID="myremark" />
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </fieldset>
+
+    <%include Application.common.template.footerContent %>
+</com:TContent>

@@ -1,0 +1,172 @@
+<com:TContent ID="Main">
+    <%include Application.common.template.headerContent %>
+
+    <com:TToolbarBox
+        ID="tbb"
+        Title="<%[Leave]%>"
+        IconAsset="<%~ ../assets/leave.png %>"
+        HelpVisible="true"
+        CancelVisible="true"
+        EditVisible="true"
+        AddVisible="true"
+        AddUrl="components.timuxuser.leave.add"
+        DelVisible="true"
+        RefreshVisible="true"
+        />
+
+    <%include Application.common.template.headerBoxContent %>
+
+    <%[Filter]%>:
+
+    <%[Employee]%>
+    <com:TActiveTextBox ID="FilterEmployee" AutoPostBack="true" OnTextChanged="selectionChangedEmployee" />
+
+    <%[State]%>
+    <com:TActiveDropDownList
+        ID="FilterState"
+        OnSelectedIndexChanged="selectionChangedState"
+        CssClass="inputbox"
+        DataTextField="Text"
+        DataValueField="Value"
+        AutoPostBack="true"
+        >
+        <com:TListItem Text="<%[--- All ---]%>" Value="all" />
+        <com:TListItem Text="<%[Sended]%>" Value="sended" />
+        <com:TListItem Text="<%[Validating]%>" Value="validating"/>
+        <com:TListItem Text="<%[Validated]%>" Value="validate"/>
+        <com:TListItem Text="<%[Refused]%>" Value="refused"/>
+        <com:TListItem Text="<%[Closed]%>" Value="closed"/>
+        <com:TListItem Text="<%[Canceled]%>" Value="cancled"/>
+    </com:TActiveDropDownList>
+
+
+    <%[Time code]%>
+    <com:TActiveDropDownList
+        ID="FilterTimecode"
+        DataTextField="Text"
+        DataValueField="Value"
+        OnSelectedIndexChanged="selectionChangedTimeCode"
+        AutoPostBack="true"
+        />
+
+    <%[Year]%>
+    <com:TActiveDropDownList
+        ID="FilterYear"
+        OnSelectedIndexChanged="selectionChangedYear"
+        CssClass="inputbox"
+        DataTextField="Text"
+        DataValueField="Value"/>
+    <%[Month]%>
+    <com:TActiveDropDownList
+        ID="FilterMonth"
+        OnSelectedIndexChanged="selectionChangedMonth"
+        CssClass="inputbox" >
+        <com:TListItem Value="1" Text="<%[January]%>"/>
+        <com:TListItem Value="2" Text="<%[February]%>"/>
+        <com:TListItem Value="3" Text="<%[March]%>"/>
+        <com:TListItem Value="4" Text="<%[April]%>"/>
+        <com:TListItem Value="5" Text="<%[May]%>"/>
+        <com:TListItem Value="6" Text="<%[June]%>"/>
+        <com:TListItem Value="7" Text="<%[July]%>"/>
+        <com:TListItem Value="8" Text="<%[August]%>"/>
+        <com:TListItem Value="9" Text="<%[September]%>"/>
+        <com:TListItem Value="10" Text="<%[October]%>"/>
+        <com:TListItem Value="11" Text="<%[November]%>"/>
+        <com:TListItem Value="12" Text="<%[December]%>"/>
+    </com:TActiveDropDownList>
+
+    
+    <div id="list">
+        <com:TDataGrid
+            ID="DataGrid"
+            DataKeyField="id"
+            AutoGenerateColumns="false"
+            CssClass="adminlist"
+            AllowPaging="true"
+            PageSize="15"
+
+            ItemStyle.CssClass = "row0"
+            AlternatingItemStyle.CssClass="row1"
+
+            PagerStyle.Mode="Numeric"
+            PagerStyle.HorizontalAlign="Center"
+            OnPageIndexChanged="changePage"
+            OnPagerCreated="pagerCreated"
+            OnItemCreated="itemCreated"
+            >
+
+            <com:TTemplateColumn
+                HeaderText=""
+                HeaderStyle.Width = "20px"
+                >
+                <prop:HeaderTemplate>
+                </prop:HeaderTemplate>
+                <prop:ItemTemplate>
+                    <com:TActiveCheckBox
+                        ID="item"
+                        InputAttributes.value="<%#$this->NamingContainer->DataItem['id']%>"
+                        />
+                </prop:ItemTemplate>
+            </com:TTemplateColumn>
+
+            <com:TBoundColumn
+                HeaderText="<%[Employee]%>"
+                DataField="employee"
+                />
+
+            <com:TBoundColumn
+                HeaderText="<%[Time code]%>"
+                DataField="timcodeName"
+                />
+
+            <com:TTemplateColumn HeaderText="<%[From date]%>" ID="ffdate">
+                <prop:ItemTemplate>
+                    <com:TLabel
+                        ID="fdate"
+                        />
+                </prop:ItemTemplate>
+            </com:TTemplateColumn>
+
+            <com:TTemplateColumn HeaderText="<%[To date]%>" ID="ttdate">
+                <prop:ItemTemplate>
+                    <com:TLabel
+                        ID="tdate"
+                        />
+                </prop:ItemTemplate>
+            </com:TTemplateColumn>
+
+            <com:TTemplateColumn HeaderText="<%[Creation date]%>" ID="ccdate">
+                <prop:ItemTemplate>
+                    <com:TLabel
+                        ID="cdate"
+                        />
+                </prop:ItemTemplate>
+            </com:TTemplateColumn>
+
+
+            <com:TTemplateColumn HeaderText="<%[Modification date]%>" ID="mmdate">
+                <prop:ItemTemplate>
+                    <com:TLabel
+                        ID="mdate"
+                        />
+                </prop:ItemTemplate>
+            </com:TTemplateColumn>
+
+            <com:TBoundColumn
+                HeaderText="<%[Modify by]%>"
+                DataField="modUser"
+                />
+
+            <com:TTemplateColumn HeaderText="<%[State]%>" ID="sstate">
+                <prop:ItemTemplate>
+                    <com:TLabel
+                        ID="state"
+                        />
+                </prop:ItemTemplate>
+            </com:TTemplateColumn>
+
+        </com:TDataGrid>
+    </div>
+
+    <%include Application.common.template.footerContent %>
+</com:TContent>
