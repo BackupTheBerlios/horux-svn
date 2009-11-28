@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<configuration>
+    <modules>
+        <module id="globalization_helloworld" class="TGlobalization">
+            <translation type="XLIFF" source="horux.messages" catalogue="helloworld" />
+        </module>
+    </modules>
+</configuration>

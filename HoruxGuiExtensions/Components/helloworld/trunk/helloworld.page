@@ -1,0 +1,34 @@
+<com:TContent ID="Main">
+    <%include Application.common.template.headerContent %>
+
+   <com:TToolbarBox
+        ID="tbb"
+        Title="<%[Hello World]%>"
+        IconAsset="<%~ ./assets/icon-48-helloworld.png %>"
+        HelpVisible="true"
+        SaveVisible="true"
+        />
+    <%include Application.common.template.headerBoxContent %>
+
+    <fieldset class="adminform">
+        <legend><%[Parameters]%></legend>
+        <table class="admintable" cellspacing="1">
+            <tbody>
+                <tr>
+                    <td valign="top" class="key">
+                       <%[Helloworld text]%>
+                    </td>
+                    <td>
+                        <com:TTextBox
+                            CssClass="text_area"
+                            ID="helloworld"
+                            Width="50" />
+                    </td>
+                </tr>
+           </tbody>
+        </table>
+    </fieldset>
+
+    <%include Application.common.template.footerContent %>
+
+</com:TContent>
