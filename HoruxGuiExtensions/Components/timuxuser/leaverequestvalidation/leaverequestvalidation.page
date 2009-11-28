@@ -12,9 +12,6 @@
 
     <%include Application.common.template.headerBoxContent %>
 
-    <%[Filter]%>:
-
-
     <div id="list">
         <com:TDataGrid
             ID="DataGrid"

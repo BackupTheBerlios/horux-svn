@@ -35,20 +35,32 @@
                     </td>
                 </tr>
                 <tr>
-                    <td valign="top" class="key"><span onmouseover="Tip('<%[Select if in or out]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)">* <%[Sign]%></span></td>
+                    <td valign="top" class="key"><span onmouseover="Tip('<%[Select if the sign is a in, out or time code]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)">* <%[Sign]%></span></td>
                     <td>
-                        <com:TDropDownList
+                        <com:TActiveDropDownList
                             ID="sign"
                             DataTextField="Text"
                             DataValueField="Value"
+                            OnSelectedIndexChanged="onSignChange"
                             >
-                            <com:TListItem Text="<%[--- Select the sign type ---]%>" Value="0" Selected="true" />
-                            <com:TListItem Text="<%[In]%>" Value="502" />
-                            <com:TListItem Text="<%[Out]%>" Value="503"  />
-                         </com:TDropDownList>
+                            <com:TListItem Text="<%[In]%>" Value="255" Selected="true" />
+                            <com:TListItem Text="<%[Out]%>" Value="254"  />
+                            <com:TListItem Text="<%[Time code / In]%>" Value="_IN"  />
+                            <com:TListItem Text="<%[Time code / Out]%>" Value="_OUT"  />
+                         </com:TActiveDropDownList>
                     </td>
                 </tr>
 
+               <tr>
+                    <td valign="top" class="key"><span onmouseover="Tip('<%[Select the time code]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Time code]%></span></td>
+                    <td>
+                        <com:TActiveDropDownList
+                            ID="timecode"
+                            DataTextField="Text"
+                            DataValueField="Value"
+                            />
+                    </td>
+                </tr>
                 <tr>
                     <td valign="top" class="key"><span onmouseover="Tip('<%[Set the date of the sign]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)">* <%[Date]%></span></td>
                     <td>
@@ -76,6 +88,11 @@
                             ID="time"
                             Text="00:00"
                             />
+                        <com:TRegularExpressionValidator
+                            ValidationGroup="Group1"
+                            ControlToValidate="time"
+                            RegularExpression="\d{1,2}:\d{1,2}:?\d{1,2}"
+                            Text="The time format is not correct (ex: 12:00)" />
                     </td>
                 </tr>
             </tbody>

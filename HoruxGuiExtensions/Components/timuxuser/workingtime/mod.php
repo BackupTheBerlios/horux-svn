@@ -75,8 +75,6 @@ class mod extends Page
             $this->saturday_a->Text = sprintf("%.2f",$data['saturdayTime_a']);
             $this->sunday_a->Text = sprintf("%.2f",$data['sundayTime_a']);
 
-            $this->hourblocks->setChecked($data['hourblocks']);
-
             $this->holidaysByYear->Text = $data['holidaysByYear'];
 
             switch($data['role'])
@@ -163,7 +161,6 @@ class mod extends Page
                                             `startDate`=:startDate ,
                                             `remark`=:remark ,
                                             `endOfActivity`=:endOfActivity ,
-                                            `hourblocks`=:hourblocks,
                                             `holidaysByYear`=:holidaysByYear,
                                             `role`=:role
                                             WHERE id=:id" );
@@ -196,10 +193,6 @@ class mod extends Page
 
         $cmd->bindParameter(":endOfActivity",$endActivity, PDO::PARAM_STR);
 
-        $hourblocks = $this->hourblocks->getChecked();
-
-        $cmd->bindParameter(":hourblocks",$hourblocks,PDO::PARAM_STR);
-
         $role = 'employee';
 
         if($this->r_employee->getChecked())
@@ -212,6 +205,9 @@ class mod extends Page
         $cmd->bindParameter(":role",$role, PDO::PARAM_STR);
 
         $res1 = $cmd->execute();
+
+
+
 
         return $res1;
     }

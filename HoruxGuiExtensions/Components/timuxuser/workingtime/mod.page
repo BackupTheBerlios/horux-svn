@@ -112,18 +112,6 @@
         <table class="admintable" cellspacing="1">
             <tbody>
 
-                <tr>
-                    <td valign="top" class="key">
-                        <span onmouseover="Tip('<%[Check it if hours blocks have to be applied]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Use the hours blocks]%></span></td>
-                    <td>
-                        <com:TCheckBox
-                            ID="hourblocks"
-                            Text=""
-                            InputAttributes.value="1"
-                            />
-                    </td>
-                </tr>
-
 
                 <tr>
                     <td valign="top" class="key">

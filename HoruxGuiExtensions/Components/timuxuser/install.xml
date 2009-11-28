@@ -23,6 +23,10 @@
             <submenu iconmenu="" url="components.timuxuser.mybooking.mybooking" name="My sign in/out" ></submenu>
             <submenu iconmenu="" url="components.timuxuser.leaverequest.leaverequest" name="Leave Request" ></submenu>
             <submenu iconmenu="" url="components.timuxuser.leaverequestvalidation.leaverequestvalidation" name="Leave Request Validation" ></submenu>
+            <submenu iconmenu="" url="components.timuxuser.leave.leave" name="Leave" ></submenu>
+            <submenu iconmenu="" url="components.timuxuser.error.error" name="Errors" ></submenu>
+            <submenu iconmenu="" url="components.timuxuser.closemonth.closemonth" name="Close Month" ></submenu>
+            <submenu iconmenu="" url="components.timuxuser.balances.balances" name="Balances" ></submenu>
         </submenus>       
     </menu>
   </mainmenu>
@@ -33,16 +37,25 @@
     <permission id="3" parent="2">components.timuxuser.booking.add</permission>
     <permission id="4" parent="2">components.timuxuser.booking.mod</permission>
     <permission id="5" parent="0">components.timuxuser.mybooking.mybooking</permission>
-    <permission id="6" parent="0">components.timuxuser.workingtime.workingtime</permission>
-    <permission id="7" parent="6">components.timuxuser.workingtime.add</permission>
-    <permission id="8" parent="6">components.timuxuser.workingtime.mod</permission>
-    <permission id="9" parent="0">components.timuxuser.counter.counter</permission>
-    <permission id="10" parent="9">components.timuxuser.counter.mod</permission>
-    <permission id="11" parent="0">components.timuxuser.leaverequest.leaverequest</permission>
-    <permission id="12" parent="11">components.timuxuser.leaverequest.add</permission>
-    <permission id="13" parent="11">components.timuxuser.leaverequest.mod</permission>
-    <permission id="14" parent="0">components.timuxuser.leaverequestvalidation.leaverequestvalidation</permission>
-    <permission id="15" parent="14">components.timuxuser.leaverequestvalidation.mod</permission>
+    <permission id="6" parent="5">components.timuxuser.mybooking.add</permission>
+    <permission id="7" parent="5">components.timuxuser.mybooking.mod</permission>
+    <permission id="8" parent="0">components.timuxuser.workingtime.workingtime</permission>
+    <permission id="9" parent="8">components.timuxuser.workingtime.add</permission>
+    <permission id="10" parent="8">components.timuxuser.workingtime.mod</permission>
+    <permission id="11" parent="0">components.timuxuser.counter.counter</permission>
+    <permission id="12" parent="11">components.timuxuser.counter.mod</permission>
+    <permission id="13" parent="0">components.timuxuser.leaverequest.leaverequest</permission>
+    <permission id="14" parent="13">components.timuxuser.leaverequest.add</permission>
+    <permission id="15" parent="13">components.timuxuser.leaverequest.mod</permission>
+    <permission id="16" parent="0">components.timuxuser.leaverequestvalidation.leaverequestvalidation</permission>
+    <permission id="17" parent="16">components.timuxuser.leaverequestvalidation.mod</permission>
+    <permission id="18" parent="0">components.timuxuser.leave.leave</permission>
+    <permission id="19" parent="18">components.timuxuser.leave.add</permission>
+    <permission id="20" parent="18">components.timuxuser.leave.mod</permission>
+    <permission id="21" parent="0">components.timuxuser.error.error</permission>
+    <permission id="22" parent="0">components.timuxuser.closemonth.closemonth</permission>
+    <permission id="23" parent="0">components.timuxuser.balances.balances</permission>
+    <permission id="24" parent="23">components.timuxuser.balances.year</permission>
   </permissions>
 
 </install>

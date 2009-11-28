@@ -83,7 +83,7 @@
                 />
 
 
-            <com:TTemplateColumn HeaderText="<%[Total]%>" ID="nnbre">
+            <com:TTemplateColumn HeaderText="<%[Hours/Days - Last month]%>" ID="nnbre">
                 <prop:ItemTemplate>
                     <com:TLabel
                         ID="nbre"

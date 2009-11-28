@@ -12,23 +12,30 @@
 * See COPYRIGHT.php for copyright notices and details.
 */
 
+Prado::using('horux.pages.components.timuxuser.employee');
+
 class add extends Page
 {
+    protected $userId = 0;
+    protected $employee = null;
+
+
     public function onLoad($param)
     {
         parent::onLoad($param);
 
+        $app = $this->getApplication();
+        $usedId = $app->getUser()->getUserID() == null ? 0 : $app->getUser()->getUserID();
+
+        $cmd=$this->db->createCommand("SELECT user_id FROM hr_superusers WHERE id=$usedId");
+        $data = $cmd->query();
+        $dataUser = $data->read();
+        $this->userId = $dataUser['user_id'];
+
+        $this->employee = new employee($this->userId );
+
         if(!$this->isPostBack)
         {
-
-            $this->employee->DataSource = $this->PersonList;
-            $this->employee->dataBind();
-
-
-            if($this->employee->getItemCount() && $this->employee->getSelectedValue() == '')
-            {
-                $this->employee->setSelectedIndex(0);
-            }
 
             $this->timecode->DataSource = $this->TimeCodeList;
             $this->timecode->dataBind();
@@ -45,12 +52,20 @@ class add extends Page
             {
                 $id = $lastId;
                 $pBack = array('okMsg'=>Prado::localize('The sign was added successfully'), 'id'=>$id);
-                $this->Response->redirect($this->Service->constructUrl('components.timuxuser.booking.mod', $pBack));
+
+                if(isset($this->Request['back']))
+                    $pBack['back'] = $this->Request['back'];
+
+                $this->Response->redirect($this->Service->constructUrl('components.timuxuser.mybooking.mod', $pBack));
             }
             else
             {
                 $pBack = array('koMsg'=>Prado::localize('The sign was not added'));
-                $this->Response->redirect($this->Service->constructUrl('components.timuxuser.booking.mod', $pBack));
+
+                if(isset($this->Request['back']))
+                    $pBack = $this->Request['back'];
+
+                $this->Response->redirect($this->Service->constructUrl('components.timuxuser.mybooking.add', $pBack));
             }
         }
     }
@@ -91,19 +106,6 @@ class add extends Page
         }
     }
 
-
-    protected function getPersonList()
-    {
-        $cmd = NULL;
-        $cmd = $this->db->createCommand( "SELECT id AS Value, CONCAT(name, ' ', firstname) AS Text FROM hr_user WHERE name<>'??' AND department>0" );
-        $data =  $cmd->query();
-        $data = $data->readAll();
-        $d[0]['Value'] = 'null';
-        $d[0]['Text'] = Prado::localize('---- Choose a employee ----');
-        $data = array_merge($d, $data);
-        return $data;
-    }
-
     public function onSave($sender, $param)
     {
         if($this->Page->IsValid)
@@ -114,8 +116,11 @@ class add extends Page
             }
             else
                 $pBack = array('koMsg'=>Prado::localize('The sign was not added'));
-                
-            $this->Response->redirect($this->Service->constructUrl('components.timuxuser.booking.booking',$pBack));
+
+            if(isset($this->Request['back']))
+                $this->Response->redirect($this->Service->constructUrl($this->Request['back'],$pBack));
+            else
+                $this->Response->redirect($this->Service->constructUrl('components.timuxuser.mybooking.mybooking',$pBack));
         }
     }
 
@@ -135,7 +140,7 @@ class add extends Page
                                             '1'
                                             );" );
 
-        $cmd->bindParameter(":id_user",$this->employee->getSelectedValue(),PDO::PARAM_STR);
+        $cmd->bindParameter(":id_user",$this->userId,PDO::PARAM_STR);
         $cmd->bindParameter(":time",$this->time->SafeText, PDO::PARAM_STR);
         $cmd->bindParameter(":date",$this->dateToSql( $this->date->SafeText ), PDO::PARAM_STR);
 
@@ -198,6 +203,9 @@ class add extends Page
 
     public function onCancel($sender, $param)
     {
-        $this->Response->redirect($this->Service->constructUrl('components.timuxuser.booking.booking'));
+        if(isset($this->Request['back']))
+            $this->Response->redirect($this->Service->constructUrl($this->Request['back']));
+        else
+            $this->Response->redirect($this->Service->constructUrl('components.timuxuser.mybooking.mybooking'));
     }
 }

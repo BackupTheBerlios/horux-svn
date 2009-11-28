@@ -16,7 +16,21 @@
     <%include Application.common.template.headerBoxContent %>
 
     <%[Filter]%>:
+    <%[State]%>
+    <com:TActiveDropDownList
+        ID="FilterState"
+        OnSelectedIndexChanged="selectionChangedState"
+        CssClass="inputbox"
+        DataTextField="Text"
+        DataValueField="Value" >
+        <com:TListItem Text="<%[All]%>" Value="all" />
+        <com:TListItem Text="<%[Draft]%>" Value="draft"/>
+        <com:TListItem Text="<%[Sended]%>" Value="sended" />
+        <com:TListItem Text="<%[Validating]%>" Value="validating"/>
+        <com:TListItem Text="<%[Validated]%>" Value="validate"/>
+        <com:TListItem Text="<%[Refused]%>" Value="refused"/>
 
+    </com:TActiveDropDownList>
 
     <div id="list">
         <com:TDataGrid

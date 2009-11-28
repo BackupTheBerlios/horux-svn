@@ -37,6 +37,10 @@ class leaverequest extends PageList
 
         if(!$this->IsPostBack)
         {
+            $FilterState = $this->getApplication()->getGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterState', 'all');
+
+            $this->FilterState->setSelectedValue($FilterState);
+
             $this->DataGrid->DataSource=$this->Data;
             $this->DataGrid->dataBind();
         }
@@ -54,7 +58,18 @@ class leaverequest extends PageList
    
     public function getData()
     {
-        return $this->employee->getLeaveRequest();
+        $state = $this->FilterState->getSelectedValue();
+
+        return $this->employee->getLeaveRequest($state);
+    }
+
+    public function selectionChangedState($sender, $param)
+    {
+        $this->getApplication()->setGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterState', $this->FilterState->getSelectedValue());
+
+        $this->DataGrid->DataSource=$this->Data;
+        $this->DataGrid->dataBind();
+        $this->Page->CallbackClient->update('list', $this->DataGrid);
     }
 
     public function onCancel($sender, $param)
@@ -106,20 +121,60 @@ class leaverequest extends PageList
                     }
                     else
                     {
-
-                        $cmd=$this->db->createCommand("UPDATE hr_timux_request SET state='canceled' WHERE id =:id");
-                        $cmd->bindParameter(":id",$cb->Value);
-                        if($cmd->execute())
+                        if($data['state'] != 'refused')
                         {
-                            $nDelete++;
-
-                            $cmd=$this->db->createCommand("DELETE FROM hr_timux_request_workflow WHERE request_id =:id");
+                            $cmd=$this->db->createCommand("UPDATE hr_timux_request SET state='canceled' WHERE id =:id");
                             $cmd->bindParameter(":id",$cb->Value);
-                            $cmd->execute();
-                            // @todo informer les personnes nécessaires
+                            if($cmd->execute())
+                            {
+                                $nDelete++;
 
+                                $cmd=$this->db->createCommand("SELECT * FROM hr_timux_request_workflow WHERE request_id=:id");
+                                $cmd->bindParameter(":id",$cb->Value);
+                                $query = $cmd->query();
+                                $data = $query->readAll();
+
+                                $mailer = new TMailer();
+                                foreach($data as $d)
+                                {
+                                    $user_id = $d['user_id'];
+
+                                    $cmd=$this->db->createCommand("SELECT u.email1, u.email2, su.email AS email3 FROM hr_user AS u LEFT JOIN hr_superusers AS su ON su.user_id=u.id WHERE u.id=:id");
+                                    $cmd->bindParameter(":id",$user_id);
+                                    $query = $cmd->query();
+                                    $data2 = $query->read();
+
+                                    if($data2['email1'] != '' || $data2['email2'] != '' || $data2['email3'] != '')
+                                    {
+                                        if($data2['email2'] != '')
+                                        {
+                                            $mailer->addRecipient($data2['email2']);
+                                        }
+                                        elseif($data2['email3'] != '')
+                                        {
+                                            $mailer->addRecipient($data2['email3']);
+                                        }
+                                        elseif($data2['email1'] != '')
+                                        {
+                                            $mailer->addRecipient($data2['email1']);
+                                        }
+                                        
+                                    }
+                                }
+                                $mailer->setObject(Prado::localize("Leave request canceled"));
+
+                                $body = Prado::localize("The leave request from {name} was canceled<br/><br/>Timux", array('name'=>$this->employee->getFullName()));
+                                $mailer->setBody($body);
+                                $mailer->sendHtmlMail();
+
+
+                                $cmd=$this->db->createCommand("DELETE FROM hr_timux_request_workflow WHERE request_id =:id");
+                                $cmd->bindParameter(":id",$cb->Value);
+                                $cmd->execute();
+ 
+
+                            }
                         }
-
                     }
                     
                     //$this->log("Delete the key: ".$data['serialNumber']);

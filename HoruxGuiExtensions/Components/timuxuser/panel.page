@@ -13,6 +13,12 @@
 			new Effect.BlindUp(document.getElementById('cpanel-panel-custom'), {queue: 'end'});
 			document.getElementById('cpanel-panel-custom_title').className = 'jpane-toggler title';
 		}
+
+		if( 'cpanel-panel-timecode' != obj)
+		{
+			new Effect.BlindUp(document.getElementById('cpanel-panel-timecode'), {queue: 'end'});
+			document.getElementById('cpanel-panel-timecode_title').className = 'jpane-toggler title';
+		}
 	  }
 -->
 </script>
@@ -119,12 +125,65 @@
 									</prop:TrueTemplate>
 									</com:TConditional>
 
+									<com:TConditional Condition="$this->isAccess('components.timuxuser.leave.leave')">
+									<prop:TrueTemplate>
+									<div style="float:left;">
+										<div class="icon">
+											<a href="<%= $this->Service->constructUrl('components.timuxuser.leave.leave') %>">
+												<img src="<%~ ./assets/leave.png %>" alt="<%[Leave]%>"  />
+												<span><%[Leave]%></span>
+											</a>
+										</div>
+									</div>
+									</prop:TrueTemplate>
+									</com:TConditional>
+
+									<com:TConditional Condition="$this->isAccess('components.timuxuser.error.error')">
+									<prop:TrueTemplate>
+									<div style="float:left;">
+										<div class="icon">
+											<a href="<%= $this->Service->constructUrl('components.timuxuser.error.error') %>">
+												<img src="<%~ ./assets/bug.png %>" alt="<%[Errors]%>"  />
+												<span><%[Errors]%></span>
+											</a>
+										</div>
+									</div>
+									</prop:TrueTemplate>
+									</com:TConditional>
+
+									<com:TConditional Condition="$this->isAccess('components.timuxuser.closemonth.closemonth')">
+									<prop:TrueTemplate>
+									<div style="float:left;">
+										<div class="icon">
+											<a href="<%= $this->Service->constructUrl('components.timuxuser.closemonth.closemonth') %>">
+												<img src="<%~ ./assets/closemonth.png %>" alt="<%[Close month]%>"  />
+												<span><%[Close month]%></span>
+											</a>
+										</div>
+									</div>
+									</prop:TrueTemplate>
+									</com:TConditional>
+
+									<com:TConditional Condition="$this->isAccess('components.timuxuser.balances.balances')">
+									<prop:TrueTemplate>
+									<div style="float:left;">
+										<div class="icon">
+											<a href="<%= $this->Service->constructUrl('components.timuxuser.balances.balances') %>">
+												<img src="<%~ ./assets/balances.png %>" alt="<%[Balances]%>"  />
+												<span><%[Balances]%></span>
+											</a>
+										</div>
+									</div>
+									</prop:TrueTemplate>
+									</com:TConditional>
+
 								</div>
 							</td>
 							<td width="45%" valign="top">
+
 								<div id="content-pane" class="pane-sliders">
 									<div class="panel">
-										<h3 class="jpane-toggler-down title" id="cpanel-panel-custom_title" onclick="blind(this,'cpanel-panel-custom')">
+										<h3 class="jpane-toggler title" id="cpanel-panel-custom_title" onclick="blind(this,'cpanel-panel-custom')">
 											<span><%[Welcome to Timux User]%></span>
 										</h3>
 										<div class="jpane-slider content" id="cpanel-panel-custom">
@@ -142,10 +201,50 @@
 										</div>
 									</div>
 
+                                    <div class="panel">
+                                        <h3 class="jpane-toggler-down title" id="cpanel-panel-timecode_title" onclick="blind(this,'cpanel-panel-timecode')">
+                                            <span><%[Time code]%></span>
+                                        </h3>
+                                        <div class="jpane-slider content" id="cpanel-panel-timecode">
+                                            <div style="padding: 5px">
 
-   									
+                                                <com:TDataGrid
+                                                ID="timecodeGrid"
+                                                DataKeyField="id"
+                                                AutoGenerateColumns="false"
+                                                CssClass="adminlist"
+                                                AllowPaging="false"
+                                                OnItemCreated="itemCreated"
+                                                >
 
-								</div>
+                                                <com:TBoundColumn
+                                                    HeaderText="<%[Time code]%>"
+                                                    DataField="timecode"
+                                                    />
+
+
+                                                <com:TTemplateColumn HeaderText="<%[Hours/Days - Last month]%>" ID="nnbre">
+                                                    <prop:ItemTemplate>
+                                                        <com:TLabel
+                                                            ID="nbre"
+                                                            />
+                                                    </prop:ItemTemplate>
+                                                </com:TTemplateColumn>
+
+                                                <com:TTemplateColumn HeaderText="<%[Hours/Days - Current month]%>" ID="nnbre2">
+                                                    <prop:ItemTemplate>
+                                                        <com:TLabel
+                                                            ID="nbre2"
+                                                            />
+                                                    </prop:ItemTemplate>
+                                                </com:TTemplateColumn>
+
+                                                </com:TDataGrid>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 							</td>
 						</tr>
 					</table>
@@ -165,5 +264,11 @@
 		</div>
 	</div>
 </div>
+
+<script type="text/javascript">
+<!--
+new Effect.BlindUp(document.getElementById('cpanel-panel-custom'), {queue: 'end'});
+-->
+</script>
 
 </com:TContent>

@@ -50,7 +50,43 @@ class timecode extends PageList
 
         if($item->ItemType==='Item' || $item->ItemType==='AlternatingItem' )
         {
-            $item->ttype->type->Text = $item->DataItem['type'] == 'leave' ? Prado::localize('Leave') : Prado::localize('Absence');
+
+            if($item->DataItem['timeworked'] == 1)
+                $item->ttimeworked->timeworked->Text = Prado::localize('Yes');
+            else
+                $item->ttimeworked->timeworked->Text = Prado::localize('No');
+
+            switch($item->DataItem['type'])
+            {
+                case 'leave':
+                    $item->ttype->type->Text = $item->DataItem['type'] = Prado::localize('Leave');
+                    break;
+                case 'absence':
+                    $item->ttype->type->Text = $item->DataItem['type'] = Prado::localize('Absence');
+                    break;
+                case 'overtime':
+                    $item->ttype->type->Text = $item->DataItem['type'] = Prado::localize('Overtime');
+                    break;
+                case 'load':
+                    $item->ttype->type->Text = $item->DataItem['type'] = Prado::localize('Load');
+                    break;
+            }
+
+            switch($item->DataItem['signtype'])
+            {
+                case 'none':
+                    $item->ssign->sign->Text = Prado::localize("No signing");
+                    break;
+                case 'in':
+                    $item->ssign->sign->Text = Prado::localize("Signing in only");
+                    break;
+                case 'out':
+                    $item->ssign->sign->Text = Prado::localize("Signing out only");
+                    break;
+                case 'both':
+                    $item->ssign->sign->Text = Prado::localize("Signing in/out");
+                    break;
+            }
         }
     }
 
@@ -94,6 +130,9 @@ class timecode extends PageList
             {
                 if( (bool)$cb->getChecked() && $cb->Value != "0")
                 {
+                    $sa = new TStandAlone();
+                    $sa->addStandalone("sub", $cb->Value, 'timuxAddSubReason');
+                    
                     $cmd=$this->db->createCommand("DELETE FROM hr_timux_timecode WHERE id=:id");
                     $cmd->bindParameter(":id",$cb->Value);
                     if($cmd->execute())
@@ -101,6 +140,8 @@ class timecode extends PageList
                         $nDelete++;
                     }
                     //$this->log("Delete the key: ".$data['serialNumber']);
+
+
 
                 }
             }

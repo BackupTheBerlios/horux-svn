@@ -35,10 +35,31 @@ class booking extends PageList
 
         if(!$this->IsPostBack)
         {
+            $cmd=$this->db->createCommand("SELECT t.date FROM hr_tracking AS t ORDER BY t.date LIMIT 0,1");
+            $data = $cmd->query();
+            $data = $data->readAll();
+
+            $year = date("Y");
+            if(count($data)>0)
+            {
+                $year = explode("-",$data[0]['date']);
+                $year = $year[0];
+            }
+            $currentYear = date("Y");
+
+            $yearList = array();
+            for($i=$year; $i<= $currentYear;$i++ )
+            {
+                $yearList[] = array('Value'=>$i, 'Text'=>$i);
+            }
+
+            $this->FilterYear->DataSource=$yearList;
+            $this->FilterYear->dataBind();
+
             $FilterEmployee = $this->getApplication()->getGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterEmployee', false);
             $FilterStatus = $this->getApplication()->getGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterStatus', false);
-            $FilterFrom = $this->getApplication()->getGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterFrom', false);
-            $FilterUntil = $this->getApplication()->getGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterUntil', false);
+            $FilterYear= $this->getApplication()->getGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterYear', date('Y'));
+            $FilterMonth = $this->getApplication()->getGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterMonth', date('n'));
             $FilterDepartment = $this->getApplication()->getGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterDepartment', false);
 
             $this->FilterDepartment->DataSource=$this->DepartmentList;
@@ -52,10 +73,11 @@ class booking extends PageList
             else
                 $this->FilterStatus->setSelectedValue('all');
 
-            if($FilterFrom)
-                $this->from->Text = $FilterFrom;
-            if($FilterUntil)
-                $this->until->Text = $FilterUntil;
+            if($FilterYear)
+                $this->FilterYear->setSelectedValue($FilterYear);
+                
+            if($FilterMonth)
+                $this->FilterMonth->setSelectedValue($FilterMonth);
 
             if($FilterDepartment)
                 $this->FilterDepartment->setSelectedValue($FilterDepartment);
@@ -122,21 +144,19 @@ class booking extends PageList
         switch($status)
         {
             case '1':
-                $status = ' (tb.action=255 OR tb.action=500 OR tb.action=502 ) AND ';
+                $status = ' (tb.action=255  OR  tb.action=100 ) AND';
                 break;
             case '0':
-                $status = ' (tb.action=254 OR tb.action=501 OR tb.action=503  ) AND ';
+                $status = ' (tb.action=254  OR  tb.action=100 ) AND ';
                 break;
             default:
                 $status = '';
 
          }
 
-        $from = "";
-        $until = "";
-
-        $from = $this->dateToSql( $this->from->SafeText );
-        $until = $this->dateToSql( $this->until->SafeText );
+        $from =  $this->FilterYear->getSelectedValue()."-".$this->FilterMonth->getSelectedValue()."-1";
+        $day = date("t", mktime(0,0,0,(int)$this->FilterMonth->getSelectedValue(),1,(int)$this->FilterYear->getSelectedValue()));
+        $until = $this->FilterYear->getSelectedValue()."-".$this->FilterMonth->getSelectedValue()."-".$day;
 
         $date = "";
 
@@ -170,12 +190,67 @@ class booking extends PageList
 
         }
 
-        $cmd=$this->db->createCommand("SELECT CONCAT(u.name, ' ' , u.firstname) AS employee, t.id, t.date, tb.roundBooking AS time, tb.action, tb.actionReason, d.name AS department FROM hr_tracking AS t LEFT JOIN hr_timux_booking AS tb ON tb.tracking_id=t.id LEFT JOIN hr_user AS u ON u.id=t.id_user LEFT JOIN hr_department AS d ON d.id=u.department WHERE $date $status $employee $department 1=1 AND tb.action!='NULL' ORDER BY t.date DESC, t.time DESC  LIMIT 0,1000");
+        $cmd=$this->db->createCommand("SELECT CONCAT(u.name, ' ' , u.firstname) AS employee, t.id, t.date, tb.roundBooking AS time, tb.action, tb.actionReason, d.name AS department, tb.internet FROM hr_tracking AS t LEFT JOIN hr_timux_booking AS tb ON tb.tracking_id=t.id LEFT JOIN hr_user AS u ON u.id=t.id_user LEFT JOIN hr_department AS d ON d.id=u.department WHERE $date $status $employee $department 1=1 AND tb.action!='NULL' ORDER BY t.date DESC, t.time DESC  LIMIT 0,1000");
 
         $data = $cmd->query();
         $data = $data->readAll();
 
-        return $data;
+        $dataTmp = array();
+        foreach($data as $d)
+        {
+            if($d['action'] == '255' || $d['action'] == '254')
+            {
+               $dataTmp[] = $d;
+            }
+
+            if($d['action'] == '100')
+            {
+                $ar = explode("_",$d['actionReason']);
+
+                if(count($ar)>1)
+                {
+                    if($ar[1] == 'IN' && $this->FilterStatus->getSelectedValue() == 1)
+                    {
+                        $dataTmp[] = $d;
+                    }
+                    else
+                    {
+                        if($ar[1] == 'OUT' && $this->FilterStatus->getSelectedValue() == 0)
+                        {
+                            $dataTmp[] = $d;
+                        }
+                        else
+                            if($this->FilterStatus->getSelectedValue() == 'all')
+                                $dataTmp[] = $d;
+                    }
+                }
+                else
+                {
+                    $cmd=$this->db->createCommand("SELECT *  FROM hr_timux_timecode WHERE id=".$ar[0]);
+
+                    $data = $cmd->query();
+                    $data = $data->read();
+
+                    if($data['signtype'] == 'in' && $this->FilterStatus->getSelectedValue() == 1)
+                    {
+                        $dataTmp[] = $d;
+                    }
+                    else
+                    {
+                        if($data['signtype'] == 'out' && $this->FilterStatus->getSelectedValue() == 0)
+                        {
+                           $dataTmp[] = $d;
+                        }
+                        else
+                            if($this->FilterStatus->getSelectedValue() == 'all')
+                                $dataTmp[] = $d;
+                    }
+                    
+                }
+            }
+        }
+
+        return $dataTmp;
     }
 
     public function onCancel($sender, $param)
@@ -199,12 +274,22 @@ class booking extends PageList
         $this->onRefresh($sender, $param);
     }
 
+    public function selectionChangedYear($sender, $param)
+    {
+        $this->onRefresh($sender, $param);
+    }
+
+    public function selectionChangedMonth($sender, $param)
+    {
+        $this->onRefresh($sender, $param);
+    }
+
     public function onRefresh($sender, $param)
     {
         $this->getApplication()->setGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterEmployee', $this->FilterEmployee->SafeText);
         $this->getApplication()->setGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterStatus', $this->FilterStatus->getSelectedValue());
-        $this->getApplication()->setGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterFrom', $this->from->Text);
-        $this->getApplication()->setGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterUntil', $this->until->Text);
+        $this->getApplication()->setGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterYear', $this->FilterYear->getSelectedValue());
+        $this->getApplication()->setGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterMonth', $this->FilterMonth->getSelectedValue());
         $this->getApplication()->setGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterDepartment', $this->FilterDepartment->getSelectedValue());
 
         $this->DataGrid->DataSource=$this->Data;
@@ -219,12 +304,22 @@ class booking extends PageList
         if($item->ItemType==='Item' || $item->ItemType==='AlternatingItem' )
         {
 
+            $signInText =  Prado::localize("Sign in");
+            $signOutText =  Prado::localize("Sign out");
+
+            if($item->DataItem['internet'])
+            {
+                $signInText = "* ".$signInText;
+                $signOutText = "* ".$signOutText;
+                $item->aaction->action->ForeColor = "green";
+            }
+
             $item->ddate->date->Text = $this->dateFromSql($item->DataItem['date']);
 
             if($item->DataItem['action'] == 255)
-                $item->aaction->action->Text = Prado::localize("Sign in");
+                $item->aaction->action->Text = $signInText;
             if($item->DataItem['action'] == 254)
-                $item->aaction->action->Text = Prado::localize("Sign out");
+                $item->aaction->action->Text = $signOutText;
 
             if($item->DataItem['action'] == 100)
             {
@@ -239,16 +334,16 @@ class booking extends PageList
                     if(isset($actionReason[1]))
                     {
                         if($actionReason[1] == "IN")
-                            $item->aaction->action->Text = Prado::localize("Sign in");
+                            $item->aaction->action->Text = $signInText;
                         if($actionReason[1] == "OUT")
-                            $item->aaction->action->Text = Prado::localize("Sign out");
+                            $item->aaction->action->Text = $signOutText;
                     }
                     else
                     {
                         if($data['signtype'] == "in")
-                            $item->aaction->action->Text = Prado::localize("Sign in");
+                            $item->aaction->action->Text = $signInText;
                         if($data['signtype'] == "out")
-                            $item->aaction->action->Text = Prado::localize("Sign out");
+                            $item->aaction->action->Text = $signOutText;
 
                     }
 
@@ -257,29 +352,7 @@ class booking extends PageList
                 }
             }
 
-            if($item->DataItem['action'] == 500)
-            {
-                $item->aaction->action->Text = Prado::localize("Sign in");
-                $item->aactionr->actionr->Text =Prado::localize("Added manually");
-            }
-
-            if($item->DataItem['action'] == 501)
-            {
-                $item->aaction->action->Text = Prado::localize("Sign out");
-                $item->aactionr->actionr->Text = Prado::localize("Added manually");
-            }
-
-            if($item->DataItem['action'] == 502)
-            {
-                $item->aaction->action->Text = Prado::localize("Sign in");
-                $item->aactionr->actionr->Text =Prado::localize("Modified manually");
-            }
-
-            if($item->DataItem['action'] == 503)
-            {
-                $item->aaction->action->Text = Prado::localize("Sign out");
-                $item->aactionr->actionr->Text = Prado::localize("Modified manually");
-            }
+            
         }
     }
 
@@ -318,6 +391,19 @@ class booking extends PageList
             {
                 if( (bool)$cb->getChecked() && $cb->Value != "0")
                 {
+
+                    $cmd=$this->db->createCommand("SELECT * FROM hr_timux_booking WHERE tracking_id =:id");
+                    $cmd->bindParameter(":id",$cb->Value);
+                    $query = $cmd->query();
+                    $data = $query->read();
+
+                    if($data['internet'])
+                    {
+                        $cmd=$this->db->createCommand("DELETE FROM hr_tracking WHERE id =:id");
+                        $cmd->bindParameter(":id",$cb->Value);
+                        $cmd->execute();
+                    }
+
 
                     $cmd=$this->db->createCommand("DELETE FROM hr_timux_booking WHERE tracking_id =:id");
                     $cmd->bindParameter(":id",$cb->Value);

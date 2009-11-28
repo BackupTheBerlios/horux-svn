@@ -38,7 +38,6 @@ class add extends Page
                 $this->hoursByWeek->Text = $data['hoursByWeek'];
                     
                 $this->totalHourByWeek->text = $data['hoursByWeek'];
-                $this->hourblocks->setChecked($data['hourblocks']);
                 $this->onDivideTheDays(NULL,NULL);
                 $this->onWorkingDayTimeChanged(NULL,NULL);
             }
@@ -132,7 +131,6 @@ class add extends Page
                                             `startDate` ,
                                             `remark` ,
                                             `endOfActivity` ,
-                                            `hourblocks`,
                                             `holidaysByYear`,
                                             `role`
                                             )
@@ -157,7 +155,6 @@ class add extends Page
                                             :startDate,
                                             :remark,
                                             :endOfActivity,
-                                            :hourblocks,
                                             :holidaysByYear,
                                             :role
                                             );" );
@@ -189,11 +186,6 @@ class add extends Page
 
         $cmd->bindParameter(":endOfActivity",$endActivity, PDO::PARAM_STR);
 
-        $hourblocks = $this->hourblocks->getChecked();
-
-        $cmd->bindParameter(":hourblocks",$hourblocks,PDO::PARAM_STR);
-
-
         $role = 'employee';
 
         if($this->r_employee->getChecked())
@@ -210,7 +202,7 @@ class add extends Page
         $lastId = $this->db->LastInsertID;
 
         //create the employee counter
-        $cmd = $this->db->createCommand( "SELECT * FROM hr_timux_timecode WHERE type='leave'");
+        $cmd = $this->db->createCommand( "SELECT * FROM hr_timux_timecode");
         $data = $cmd->query();
         $data = $data->readAll();
 
@@ -245,6 +237,13 @@ class add extends Page
 
                 $cmd->bindParameter(":nbre",$nbre,PDO::PARAM_STR);
                 $res1 = $cmd->execute();
+            }
+            else
+            {
+                if($d['defaultHoliday'] == 1)
+                {
+                    // @todo faire la balance
+                }
             }
         }
 

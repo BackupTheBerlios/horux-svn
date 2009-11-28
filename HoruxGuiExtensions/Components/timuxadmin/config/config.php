@@ -48,8 +48,6 @@ class config extends Page
             $this->defaultHourByWeek->Text = $data['hoursByWeek'];
             $this->defaultHolidayByYear->Text = $data['holidayByYear'];
 
-            $this->hourblocks->setChecked($data['hourblocks']);
-
             $this->hoursBlockMorning1->Text = $data['hoursBlockMorning1'];
             $this->hoursBlockMorning2->Text = $data['hoursBlockMorning2'];
             $this->hoursBlockMorning3->Text = $data['hoursBlockMorning3'];
@@ -98,7 +96,6 @@ class config extends Page
                                             bookingRounding=:bookingRounding,
                                             hoursByWeek=:hoursByWeek,
                                             holidayByYear=:holidayByYear,
-                                            hourblocks=:hourblocks,
                                             hoursBlockMorning1=:hoursBlockMorning1,
                                             hoursBlockMorning2=:hoursBlockMorning2,
                                             hoursBlockMorning3=:hoursBlockMorning3,
@@ -123,9 +120,6 @@ class config extends Page
         $cmd->bindParameter(":hoursBlockAfternoon3",$this->hoursBlockAfternoon3->SafeText,PDO::PARAM_STR);
         $cmd->bindParameter(":hoursBlockAfternoon4",$this->hoursBlockAfternoon4->SafeText,PDO::PARAM_STR);
 
-        $hourblocks = $this->hourblocks->getChecked();
-
-        $cmd->bindParameter(":hourblocks",$hourblocks,PDO::PARAM_STR);
         $cmd->execute();
 
         $this->log("Modify the Timux configuration");

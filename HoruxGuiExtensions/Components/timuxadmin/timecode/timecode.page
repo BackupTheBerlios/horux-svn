@@ -104,10 +104,26 @@
             />
 
 
-        <com:TTemplateColumn HeaderText="<%[Type]%>" ID="ttype">
+        <com:TTemplateColumn HeaderText="<%[Time worked]%>" ID="ttimeworked" HeaderStyle.Width = "90px">
+                <prop:ItemTemplate>
+                    <com:TLabel
+                        ID="timeworked"
+                        />
+                </prop:ItemTemplate>
+        </com:TTemplateColumn>
+
+        <com:TTemplateColumn HeaderText="<%[Type]%>" ID="ttype" HeaderStyle.Width = "90px">
                 <prop:ItemTemplate>
                     <com:TLabel
                         ID="type"
+                        />
+                </prop:ItemTemplate>
+        </com:TTemplateColumn>
+
+        <com:TTemplateColumn HeaderText="<%[Sign]%>" ID="ssign" HeaderStyle.Width = "90px">
+                <prop:ItemTemplate>
+                    <com:TLabel
+                        ID="sign"
                         />
                 </prop:ItemTemplate>
         </com:TTemplateColumn>

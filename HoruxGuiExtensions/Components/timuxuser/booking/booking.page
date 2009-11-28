@@ -40,11 +40,43 @@
     </com:TActiveDropDownList>
 
 
-    <%[From]%>
-    <com:TDatePicker CssClass="text_area" ID="from" Mode="ImageButton"/>
-    <%[Until]%>
-    <com:TDatePicker CssClass="text_area" ID="until" Mode="ImageButton"/>
+    <%[Year]%>
+    <com:TActiveDropDownList
+        ID="FilterYear"
+        OnSelectedIndexChanged="selectionChangedYear"
+        CssClass="inputbox"
+        DataTextField="Text"
+        DataValueField="Value"/>
+    <%[Month]%>
+    <com:TActiveDropDownList
+        ID="FilterMonth"
+        OnSelectedIndexChanged="selectionChangedMonth"
+        CssClass="inputbox" >
+        <com:TListItem Value="1" Text="<%[January]%>"/>
+        <com:TListItem Value="2" Text="<%[February]%>"/>
+        <com:TListItem Value="3" Text="<%[March]%>"/>
+        <com:TListItem Value="4" Text="<%[April]%>"/>
+        <com:TListItem Value="5" Text="<%[May]%>"/>
+        <com:TListItem Value="6" Text="<%[June]%>"/>
+        <com:TListItem Value="7" Text="<%[July]%>"/>
+        <com:TListItem Value="8" Text="<%[August]%>"/>
+        <com:TListItem Value="9" Text="<%[September]%>"/>
+        <com:TListItem Value="10" Text="<%[October]%>"/>
+        <com:TListItem Value="11" Text="<%[November]%>"/>
+        <com:TListItem Value="12" Text="<%[December]%>"/>
+    </com:TActiveDropDownList>
 
+    &nbsp;
+    &nbsp;
+    &nbsp;
+    &nbsp;
+    &nbsp;
+    &nbsp;
+    &nbsp;
+    &nbsp;
+    &nbsp;
+
+    * <%[Add manually]%>
     <div id="list">
         <com:TDataGrid
             ID="DataGrid"

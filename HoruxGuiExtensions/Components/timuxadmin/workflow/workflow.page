@@ -97,13 +97,6 @@
             </prop:ItemTemplate>
         </com:TTemplateColumn>
 
-        <com:TTemplateColumn HeaderText="<%[Type]%>" ID="ttype">
-                <prop:ItemTemplate>
-                    <com:TLabel
-                        ID="type"
-                        />
-                </prop:ItemTemplate>
-        </com:TTemplateColumn>
 
         <com:TBoundColumn
             HeaderText="<%[Department]%>"

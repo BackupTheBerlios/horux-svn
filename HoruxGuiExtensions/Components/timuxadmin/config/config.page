@@ -141,20 +141,9 @@
     </fieldset>
 
     <fieldset class="adminform">
-        <legend><%[Hours blocks]%></legend>
+        <legend><%[Booking In/out]%></legend>
         <table class="admintable" cellspacing="1">
             <tbody>
-                <tr>
-                    <td valign="top" class="key">
-                        <span onmouseover="Tip('<%[Check it if hours blocks have to be used by default]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Use the hours blocks]%></span></td>
-                    <td>
-                        <com:TCheckBox
-                            ID="hourblocks"
-                            Text=""
-                            InputAttributes.value="1"
-                            />
-                    </td>
-                </tr>
                 <tr>
                     <td valign="top" class="key">
                         <span onmouseover="Tip('<%[Enter the hours blocks at the morning]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Morning hours blocks<br/> (Format: 6:30)]%></span>

@@ -109,7 +109,7 @@ class mod extends Page
     protected function getTimeCodeList()
     {
         $cmd = NULL;
-        $cmd = $this->db->createCommand( "SELECT id AS Value, CONCAT('[',abbreviation, '] ', name) AS Text FROM hr_timux_timecode WHERE type='leave'" );
+        $cmd = $this->db->createCommand( "SELECT id AS Value, CONCAT('[',abbreviation, '] ', name) AS Text FROM hr_timux_timecode" );
         $data =  $cmd->query();
         $data = $data->readAll();
         $d[0]['Value'] = 'null';
@@ -160,11 +160,19 @@ class mod extends Page
         if($this->validate->getChecked())
         {
 
-            $cmd2 = $this->db->createCommand( "SELECT u.department FROM hr_timux_request AS tr LEFT JOIN hr_timux_request_leave AS rl ON rl.request_id=tr.id LEFT JOIN hr_user AS u ON u.id=tr.userId WHERE tr.id=:id");
+            $cmd2 = $this->db->createCommand( "SELECT * FROM hr_timux_request_workflow WHERE request_id =:id");
+            $cmd2->bindParameter(":id",$this->id->Value, PDO::PARAM_INT);
+            $query = $cmd2->query();
+            $data = $query->read();
+            $validatorLevel = $data['validatorLevel'];
+
+            $cmd2 = $this->db->createCommand( "SELECT u.id, u.department, CONCAT(u.name, ' ', u.firstname) AS employee FROM hr_timux_request AS tr LEFT JOIN hr_timux_request_leave AS rl ON rl.request_id=tr.id LEFT JOIN hr_user AS u ON u.id=tr.userId WHERE tr.id=:id");
             $cmd2->bindParameter(":id",$this->id->Value, PDO::PARAM_INT);
             $query = $cmd2->query();
             $data = $query->read();
             $department = $data['department'];
+            $fullName = $data['employee'];
+            $employeeId = $data['id'];
 
             $cmd2 = $this->db->createCommand( "SELECT * FROM hr_timux_workflow WHERE departmentId=:id OR departmentId=0");
             $cmd2->bindParameter(":id",$department, PDO::PARAM_INT);
@@ -172,36 +180,26 @@ class mod extends Page
             $data = $query->read();
 
             $v = array(0,0,0);
+            $level = 2;
 
-            if( $data['validator1'] == $this->userId || $data['validator11'] == $this->userId || $data['validator12'] == $this->userId)
+            switch($validatorLevel)
             {
-                if( $data['validator2'] == $this->userId || $data['validator21'] == $this->userId || $data['validator22'] == $this->userId)
-                {
-                    if( $data['validator3'] == $this->userId || $data['validator31'] == $this->userId || $data['validator32'] == $this->userId)
-                    {
-                        // @todo PROBLEM AUCUN VALIDATOR POSSIBLE
-                    }
-                    else
-                    {
-                        $v[] =  $data['validator3'];
-                        $v[] =  $data['validator31'];
-                        $v[] =  $data['validator32'];
-                    }
-                }
-                else
-                {
-                    $v[] =  $data['validator2'];
-                    $v[] =  $data['validator21'];
-                    $v[] =  $data['validator22'];
-                }
+                case 1:
+                    $v[0] =  $data['validator2'];
+                    $v[1] =  $data['validator21'];
+                    $v[2] =  $data['validator22'];
+                    $level = 2;
+                    break;
+                case 2:
+                    $v[0] =  $data['validator3'];
+                    $v[1] =  $data['validator31'];
+                    $v[2] =  $data['validator32'];
+                    $level = 3;
+                    break;
+                case 3:
+                    break;
+            }
 
-            }
-            else
-            {
-                $v[] =  $data['validator1'];
-                $v[] =  $data['validator11'];
-                $v[] =  $data['validator12'];
-            }
 
             $isNextValidator = false;
             foreach($v as $s)
@@ -213,6 +211,8 @@ class mod extends Page
 
             if($isNextValidator)
             {
+
+
                 $cmd2=$this->db->createCommand("DELETE FROM hr_timux_request_workflow WHERE request_id =:id");
                 $cmd2->bindParameter(":id",$this->id->Value);
                 $cmd2->execute();
@@ -222,22 +222,100 @@ class mod extends Page
                     if($s != 0)
                     {
                         $cmd2 = $this->db->createCommand( "INSERT `hr_timux_request_workflow` SET
-                                                          request_id=:request_id,
-                                                          user_id=:user_id
+                                                            request_id=:request_id,
+                                                            user_id=:user_id,
+                                                            validatorLevel=:validatorLevel
                                                           ;" );
 
                         $cmd2->bindParameter(":request_id",$this->id->Value,PDO::PARAM_STR);
                         $cmd2->bindParameter(":user_id",$s,PDO::PARAM_STR);
+                        $cmd2->bindParameter(":validatorLevel",$level,PDO::PARAM_STR);
                         $cmd2->execute();
 
-                        // @todo envoyer les emails
+                        
                     }
                 }
 
+                $cmd2=$this->db->createCommand("SELECT * FROM hr_timux_request_workflow WHERE request_id=:id");
+                $cmd2->bindParameter(":id",$this->id->Value);
+                $query = $cmd2->query();
+                $data = $query->readAll();
+
+                $mailer = new TMailer();
+                foreach($data as $d)
+                {
+                    $user_id = $d['user_id'];
+
+                    $cmd2=$this->db->createCommand("SELECT u.email1, u.email2, su.email AS email3 FROM hr_user AS u LEFT JOIN hr_superusers AS su ON su.user_id=u.id WHERE u.id=:id");
+                    $cmd2->bindParameter(":id",$user_id);
+                    $query = $cmd2->query();
+                    $data2 = $query->read();
+
+                    if($data2['email1'] != '' || $data2['email2'] != '' || $data2['email3'] != '')
+                    {
+                        if($data2['email2'] != '')
+                        {
+                            $mailer->addRecipient($data2['email2']);
+                        }
+                        elseif($data2['email3'] != '')
+                        {
+                            $mailer->addRecipient($data2['email3']);
+                        }
+                        elseif($data2['email1'] != '')
+                        {
+                            $mailer->addRecipient($data2['email1']);
+                        }
+
+                    }
+                }
+                $mailer->setObject(Prado::localize("New Leave request"));
+
+                $body = Prado::localize("A new leave request from {name} was added in your validation task<br/><br/>Timux", array('name'=>$fullName));
+                $mailer->setBody($body);
+                $mailer->sendHtmlMail();
+
                 $validation = 'validating';
+
+
             }
             else
+            {
+                $mailer = new TMailer();
+
+                $cmd2=$this->db->createCommand("SELECT u.email1, u.email2, su.email AS email3 FROM hr_user AS u LEFT JOIN hr_superusers AS su ON su.user_id=u.id WHERE u.id=:id");
+                $cmd2->bindParameter(":id",$employeeId);
+                $query = $cmd2->query();
+                $data2 = $query->read();
+
+                if($data2['email1'] != '' || $data2['email2'] != '' || $data2['email3'] != '')
+                {
+                    if($data2['email2'] != '')
+                    {
+                        $mailer->addRecipient($data2['email2']);
+                    }
+                    elseif($data2['email3'] != '')
+                    {
+                        $mailer->addRecipient($data2['email3']);
+                    }
+                    elseif($data2['email1'] != '')
+                    {
+                        $mailer->addRecipient($data2['email1']);
+                    }
+
+                }
+              
+
+                $mailer->setObject(Prado::localize("Leave request validated"));
+
+                $body = Prado::localize("{name}<br/><br>Your leave request was validated<br/><br/>Timux",array('name'=>$fullName));
+                $mailer->setBody($body);
+                $mailer->sendHtmlMail();
+
+                $cmd2=$this->db->createCommand("DELETE FROM hr_timux_request_workflow WHERE request_id =:id");
+                $cmd2->bindParameter(":id",$this->id->Value);
+                $cmd2->execute();
                 $validation = 'validate';
+            }
 
         }
 
@@ -255,7 +333,44 @@ class mod extends Page
             $cmd->bindParameter(":id",$this->id->Value);
             $cmd->execute();
 
-            // @todo envoyer les emails
+            $cmd2 = $this->db->createCommand( "SELECT u.id, u.department, CONCAT(u.name, ' ', u.firstname) AS employee FROM hr_timux_request AS tr LEFT JOIN hr_timux_request_leave AS rl ON rl.request_id=tr.id LEFT JOIN hr_user AS u ON u.id=tr.userId WHERE tr.id=:id");
+            $cmd2->bindParameter(":id",$this->id->Value, PDO::PARAM_INT);
+            $query = $cmd2->query();
+            $data = $query->read();
+            $department = $data['department'];
+            $fullName = $data['employee'];
+            $employeeId = $data['id'];
+
+            $mailer = new TMailer();
+
+            $cmd2=$this->db->createCommand("SELECT u.email1, u.email2, su.email AS email3 FROM hr_user AS u LEFT JOIN hr_superusers AS su ON su.user_id=u.id WHERE u.id=:id");
+            $cmd2->bindParameter(":id",$employeeId);
+            $query = $cmd2->query();
+            $data2 = $query->read();
+
+            if($data2['email1'] != '' || $data2['email2'] != '' || $data2['email3'] != '')
+            {
+                if($data2['email2'] != '')
+                {
+                    $mailer->addRecipient($data2['email2']);
+                }
+                elseif($data2['email3'] != '')
+                {
+                    $mailer->addRecipient($data2['email3']);
+                }
+                elseif($data2['email1'] != '')
+                {
+                    $mailer->addRecipient($data2['email1']);
+                }
+
+            }
+
+
+            $mailer->setObject(Prado::localize("Leave request refused"));
+
+            $body = Prado::localize("{name}<br/><br>Your leave request was refused<br/><br/>Timux",array('name'=>$fullName));
+            $mailer->setBody($body);
+            $mailer->sendHtmlMail();
 
         }
 

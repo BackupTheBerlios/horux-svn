@@ -112,11 +112,11 @@ class workflow extends PageList
         if($item->ItemType==='Item' || $item->ItemType==='AlternatingItem' )
         {
 
-            if($item->DataItem['type'] == 'leave')
+            /*if($item->DataItem['type'] == 'leave')
                 $item->ttype->type->Text = Prado::localize('Leave request');
 
             if($item->DataItem['type'] == 'sign')
-                $item->ttype->type->Text = Prado::localize('Sign in/Sign out');
+                $item->ttype->type->Text = Prado::localize('Sign in/Sign out');*/
 
 
         }

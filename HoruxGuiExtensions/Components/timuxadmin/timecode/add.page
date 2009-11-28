@@ -42,6 +42,7 @@
                             ControlToValidate="abbreviation"
                             Text="<%[This field is required]%>"
                             Display="Dynamic"/>
+
                     </td>
                 </tr>
 
@@ -57,6 +58,8 @@
                             >
                             <com:TListItem Text="<%[Leave]%>" Value="leave"  />
                             <com:TListItem Text="<%[Absence]%>" Value="absence"  />
+                            <com:TListItem Text="<%[Overtime]%>" Value="overtime"  />
+                            <com:TListItem Text="<%[Load]%>" Value="load"  />
 
                         </com:TDropDownList>
                     </td>
@@ -87,7 +90,7 @@
                 </tr>
 
                 <tr>
-                    <td valign="top" class="key"><span onmouseover="Tip('<%[Select the time code will represent]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Format]%></span></td>
+                    <td valign="top" class="key"><span onmouseover="Tip('<%[Select the time code format]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Format]%></span></td>
                     <td>
                         <com:TRadioButton
                             ID="formatHour"
@@ -96,7 +99,7 @@
                             Checked="true"
                             />
                         <com:TRadioButton
-                            ID="formatTime"
+                            ID="formatDay"
                             GroupName="RadioGroup1"
                             Text="Day"
                             />
@@ -120,24 +123,31 @@
                     </td>
                 </tr>
 
+                <tr>
+                    <td valign="top" class="key"><span onmouseover="Tip('<%[Check it when this time code must be count as time worked]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Time worked]%></span></td>
+                    <td>
+                        <com:TActiveCheckBox ID="timeworked"  AutoPostBack="false"/>
+                    </td>
+                </tr>
+
             </tbody>
         </table>
     </fieldset>
 
     <fieldset class="adminform">
-        <legend><%[Leave counter parameters]%></legend>
+        <legend><%[Overtime counter parameters]%></legend>
         <table class="admintable" cellspacing="1">
             <tbody>
 
                 <tr>
-                    <td valign="top" class="key"><span onmouseover="Tip('<%[Check it to use the min/max hours.<br/> These values are used to inform when the hours is too hight or too low]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Use min/max]%></span></td>
+                    <td valign="top" class="key"><span onmouseover="Tip('<%[Check it to use the min/max.<br/> These values are used to inform when the time is too hight or too low]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Use min/max]%></span></td>
                     <td>
                         <com:TActiveCheckBox ID="useMinMax"  AutoPostBack="false"/>
                     </td>
                 </tr>
 
                 <tr>
-                    <td valign="top" class="key"><span onmouseover="Tip('<%[Enter minimum of possible hours ]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Minimum of hours]%></span></td>
+                    <td valign="top" class="key"><span onmouseover="Tip('<%[Enter the minimum]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Minimum]%></span></td>
                     <td>
                         <com:TActiveTextBox
                             CssClass="text_area"
@@ -148,30 +158,13 @@
                 </tr>
 
                 <tr>
-                    <td valign="top" class="key"><span onmouseover="Tip('<%[Enter maximum of possible hours ]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Maximum of hours]%></span></td>
+                    <td valign="top" class="key"><span onmouseover="Tip('<%[Enter the maximum]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Maximum]%></span></td>
                     <td>
                         <com:TActiveTextBox
                             CssClass="text_area"
                             ID="maxHour"
                             />
 
-                    </td>
-                </tr>
-
-                <tr>
-                    <td valign="top" class="key"><span onmouseover="Tip('<%[Select how the compensation can be used]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Compensation]%></span></td>
-                    <td>
-                        <com:TRadioButton
-                            ID="compensationHour"
-                            GroupName="RadioGroup"
-                            Text="One hour minimum"
-                            Checked="true"
-                            />
-                        <com:TRadioButton
-                            ID="compensationHalfDay"
-                            GroupName="RadioGroup"
-                            Text="One half day minimum"
-                            />
                     </td>
                 </tr>
 

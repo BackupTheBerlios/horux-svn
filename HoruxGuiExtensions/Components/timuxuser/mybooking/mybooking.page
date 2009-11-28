@@ -9,6 +9,10 @@
         HelpVisible="true"
         CancelVisible="true"
         RefreshVisible="true"
+        AddVisible="true"
+        AddUrl="components.timuxuser.mybooking.add"
+        EditVisible="true"
+        DelVisible="true"
         />
 
     <%include Application.common.template.headerBoxContent %>
@@ -25,11 +29,43 @@
         <com:TListItem Value="0" Text="<%[Sign out]%>" />
     </com:TActiveDropDownList>
 
+    <%[Year]%>
+    <com:TActiveDropDownList
+        ID="FilterYear"
+        OnSelectedIndexChanged="selectionChangedYear"
+        CssClass="inputbox"
+        DataTextField="Text"
+        DataValueField="Value"/>
+    <%[Month]%>
+    <com:TActiveDropDownList
+        ID="FilterMonth"
+        OnSelectedIndexChanged="selectionChangedMonth"
+        CssClass="inputbox" >
+        <com:TListItem Value="1" Text="<%[January]%>"/>
+        <com:TListItem Value="2" Text="<%[February]%>"/>
+        <com:TListItem Value="3" Text="<%[March]%>"/>
+        <com:TListItem Value="4" Text="<%[April]%>"/>
+        <com:TListItem Value="5" Text="<%[May]%>"/>
+        <com:TListItem Value="6" Text="<%[June]%>"/>
+        <com:TListItem Value="7" Text="<%[July]%>"/>
+        <com:TListItem Value="8" Text="<%[August]%>"/>
+        <com:TListItem Value="9" Text="<%[September]%>"/>
+        <com:TListItem Value="10" Text="<%[October]%>"/>
+        <com:TListItem Value="11" Text="<%[November]%>"/>
+        <com:TListItem Value="12" Text="<%[December]%>"/>
+    </com:TActiveDropDownList>
 
-    <%[From]%>
-    <com:TDatePicker CssClass="text_area" ID="from" Mode="ImageButton"/>
-    <%[Until]%>
-    <com:TDatePicker CssClass="text_area" ID="until" Mode="ImageButton"/>
+    &nbsp;
+    &nbsp;
+    &nbsp;
+    &nbsp;
+    &nbsp;
+    &nbsp;
+    &nbsp;
+    &nbsp;
+    &nbsp;
+
+    * <%[Add manually]%>
 
     <div id="list">
         <com:TDataGrid
@@ -49,6 +85,42 @@
             OnPagerCreated="pagerCreated"
             OnItemCreated="itemCreated"
             >
+
+        <com:TBoundColumn
+            HeaderText="ID"
+            DataField="id"
+            HeaderStyle.Width = "20px"
+            />
+
+        <com:TTemplateColumn
+            HeaderText=""
+            HeaderStyle.Width = "20px"
+            >
+            <prop:HeaderTemplate>
+                <com:TActiveCheckBox
+                    ID="headerCB"
+                    AutoPostBack="true"
+                    OnCallback="Page.checkboxAllCallback"
+                    InputAttributes.value="0"
+                    />
+            </prop:HeaderTemplate>
+            <prop:ItemTemplate>
+                <com:TConditional Condition="1">
+                    <prop:TrueTemplate>
+                        <com:TActiveCheckBox
+                            ID="item"
+                            InputAttributes.value="<%#$this->NamingContainer->DataItem['id']%>"
+                            />
+                    </prop:TrueTemplate>
+                    <prop:FalseTemplate>
+                        <span onmouseover="Tip('<%[This record cannot be deleted or modified]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)">
+                            <com:TImage ID="noAccess" ImageUrl="./themes/letux/images/menu/icon-16-access.png" />
+                        </span>
+
+                    </prop:FalseTemplate>
+                </com:TConditional>
+            </prop:ItemTemplate>
+        </com:TTemplateColumn>
 
             <com:TTemplateColumn HeaderText="<%[Date]%>" ID="ddate">
                 <prop:ItemTemplate>

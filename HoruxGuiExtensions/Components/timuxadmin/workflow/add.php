@@ -153,7 +153,7 @@ class add extends Page
         $cmd = $this->db->createCommand( "INSERT hr_timux_workflow SET
                                             name=:name,
                                             description=:description,
-                                            type=:type,
+                                            type='leave',
                                             departmentId=:departmentId,
                                             validator1=:validator1,
                                             validator11=:validator11,
@@ -168,7 +168,7 @@ class add extends Page
         
         $cmd->bindParameter(":name",$this->name->SafeText,PDO::PARAM_STR);
         $cmd->bindParameter(":description",$this->comment->SafeText,PDO::PARAM_STR);
-        $cmd->bindParameter(":type",$this->type->getSelectedValue(),PDO::PARAM_STR);
+        //$cmd->bindParameter(":type",$this->type->getSelectedValue(),PDO::PARAM_STR);
         $cmd->bindParameter(":departmentId",$this->departmentId->getSelectedValue(),PDO::PARAM_STR);
         $cmd->bindParameter(":validator1",$this->validator1->getSelectedValue(),PDO::PARAM_STR);
         $cmd->bindParameter(":validator11",$this->validator11->getSelectedValue(),PDO::PARAM_STR);

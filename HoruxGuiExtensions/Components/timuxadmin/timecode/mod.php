@@ -39,19 +39,10 @@ class mod extends Page
             $this->name->Text = $data['name'];
             $this->abbreviation->Text = $data['abbreviation'];
             $this->useMinMax->setChecked($data['useMinMax']);
+            $this->timeworked->setChecked($data['timeworked']);
             $this->minHour->Text = $data['minHour'];
             $this->maxHour->Text = $data['maxHour'];
 
-            if($data['compensation'] == 1)
-            {
-                $this->compensationHour->setChecked(true);
-                $this->compensationHalfDay->setChecked(false);
-            }
-            if($data['compensation'] == 2)
-            {
-                $this->compensationHour->setChecked(false);
-                $this->compensationHalfDay->setChecked(true);
-            }
 
             if($data['formatDisplay'] == 'hour')
             {
@@ -69,6 +60,8 @@ class mod extends Page
 
             if($data['defaultOvertime'] == 1)
                 $this->defaultOvertime->setChecked(true);
+
+
 
             $this->signtype->setSelectedValue($data['signtype']);
         }
@@ -115,11 +108,11 @@ class mod extends Page
                                             `useMinMax`=:useMinMax,
                                             `minHour`=:minHour,
                                             `maxHour`=:maxHour,
-                                            `compensation`=:compensation,
                                             `defaultHoliday` =:defaultHoliday,
                                             `defaultOvertime` =:defaultOvertime,
                                             `formatDisplay` =:formatDisplay,
-                                            `signtype`=:signtype
+                                            `signtype`=:signtype,
+                                            `timeworked`=:timeworked
                                             WHERE id=:id
                                             ;" );
 
@@ -137,15 +130,16 @@ class mod extends Page
            $this->maxHour->Text = 0;
         }
 
+        $timeworked = false;
+        if($this->timeworked->getChecked())
+            $timeworked = true;
+
+        $cmd->bindParameter(":timeworked",$timeworked, PDO::PARAM_STR);
+
         $cmd->bindParameter(":useMinMax",$useMinMax, PDO::PARAM_STR);
         $cmd->bindParameter(":minHour",$this->minHour->SafeText, PDO::PARAM_STR);
         $cmd->bindParameter(":maxHour",$this->maxHour->SafeText, PDO::PARAM_STR);
-        $compensation = 1;
-        if($this->compensationHour->getChecked())
-            $compensation = 1;
-        if($this->compensationHalfDay->getChecked())
-            $compensation = 2;
-        $cmd->bindParameter(":compensation",$compensation, PDO::PARAM_STR);
+       
         $cmd->bindParameter(":id",$this->id->Value,PDO::PARAM_STR);
 
 
@@ -209,27 +203,21 @@ class mod extends Page
 
     public function onTypeChanged($sender, $param)
     {
-        if($this->type->getSelectedValue() == 'leave')
+        if($this->type->getSelectedValue() == 'overtime')
         {
             $this->useMinMax->setEnabled(true);
             $this->minHour->setEnabled(true);
             $this->maxHour->setEnabled(true);
-            $this->compensationHour->setEnabled(true);
-            $this->compensationHalfDay->setEnabled(true);
         }
         else
         {
             $this->useMinMax->setEnabled(false);
             $this->minHour->setEnabled(false);
             $this->maxHour->setEnabled(false);
-            $this->compensationHour->setEnabled(false);
-            $this->compensationHalfDay->setEnabled(false);
 
             $this->useMinMax->setChecked(false);
             $this->minHour->Text = "";
             $this->maxHour->Text = "";
-            $this->compensationHour->setChecked(true);
-            $this->compensationHalfDay->setChecked(false);
         }
     }
 

@@ -12,19 +12,30 @@
 * See COPYRIGHT.php for copyright notices and details.
 */
 
+Prado::using('horux.pages.components.timuxuser.employee');
+
 class mod extends Page
 {
+    protected $userId = 0;
+    protected $employee = null;
+
+
     public function onLoad($param)
     {
         parent::onLoad($param);
 
+        $app = $this->getApplication();
+        $usedId = $app->getUser()->getUserID() == null ? 0 : $app->getUser()->getUserID();
+
+        $cmd=$this->db->createCommand("SELECT user_id FROM hr_superusers WHERE id=$usedId");
+        $data = $cmd->query();
+        $dataUser = $data->read();
+        $this->userId = $dataUser['user_id'];
+
+        $this->employee = new employee($this->userId );
+
         if(!$this->isPostBack)
         {
-
-            $this->employee->DataSource = $this->PersonList;
-            $this->employee->dataBind();
-
-
             $this->id->Value = $this->Request['id'];
             $this->setData();
         }
@@ -48,7 +59,6 @@ class mod extends Page
             }
 
             $this->id->Value = $data['id'];
-            $this->employee->setSelectedValue($data['id_user']);
             $this->date->Text = $this->dateFromSql($data['date']);
             $this->time->Text = $data['roundBooking'];
 
@@ -100,12 +110,20 @@ class mod extends Page
             if($this->saveData())
             {
                 $pBack = array('okMsg'=>Prado::localize('The sign was modified successfully'), 'id'=>$this->id->Value);
-                $this->Response->redirect($this->Service->constructUrl('components.timuxuser.booking.mod', $pBack));
+
+                if(isset($this->Request['back']))
+                    $pBack = $this->Request['back'];
+                    
+                $this->Response->redirect($this->Service->constructUrl('components.timuxuser.mybooking.mod', $pBack));
             }
             else
             {
                 $pBack = array('koMsg'=>Prado::localize('The sign was not modified'), 'id'=>$this->id->Value);
-                $this->Response->redirect($this->Service->constructUrl('components.timuxuser.booking.mod', $pBack));
+
+                if(isset($this->Request['back']))
+                    $pBack = $this->Request['back'];
+
+                $this->Response->redirect($this->Service->constructUrl('components.timuxuser.mybooking.mod', $pBack));
             }
         }
     }
@@ -175,7 +193,10 @@ class mod extends Page
             else
                 $pBack = array('koMsg'=>Prado::localize('The sign was not modified'));
 
-            $this->Response->redirect($this->Service->constructUrl('components.timuxuser.booking.booking',$pBack));
+            if(isset($this->Request['back']))
+                $this->Response->redirect($this->Service->constructUrl($this->Request['back'],$pBack));
+            else
+                $this->Response->redirect($this->Service->constructUrl('components.timuxuser.mybooking.mybooking',$pBack));
         }
     }
 
@@ -232,14 +253,17 @@ class mod extends Page
 
         $cmd->bindParameter(":roundBooking",$this->time->SafeText, PDO::PARAM_STR);
 
-        $res2 = $cmd->execute();
+        $res1 = $cmd->execute();
 
-        return $res1 || $res2;
+        return $res1;
     }
 
 
     public function onCancel($sender, $param)
     {
-        $this->Response->redirect($this->Service->constructUrl('components.timuxuser.booking.booking'));
+        if(isset($this->Request['back']))
+            $this->Response->redirect($this->Service->constructUrl($this->Request['back']));
+        else
+            $this->Response->redirect($this->Service->constructUrl('components.timuxuser.mybooking.mybooking'));
     }
 }

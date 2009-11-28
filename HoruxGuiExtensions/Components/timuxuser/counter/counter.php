@@ -112,7 +112,7 @@ class counter extends PageList
     protected function getTimeCode()
     {
 
-        $cmd = $this->db->createCommand( "SELECT CONCAT('[',abbreviation,'] - ', name) AS Text, id AS Value FROM hr_timux_timecode WHERE type='leave'");
+        $cmd = $this->db->createCommand( "SELECT CONCAT('[',abbreviation,'] - ', name) AS Text, id AS Value FROM hr_timux_timecode");
         $data = $cmd->query();
         $data = $data->readAll();
 
@@ -151,7 +151,7 @@ class counter extends PageList
         else
             $department = '';
 
-        $cmd=$this->db->createCommand("SELECT CONCAT(u.name, ' ' , u.firstname) AS employee, ac.nbre, CONCAT('[',tt.abbreviation,'] - ', tt.name) AS timecode, tt.formatDisplay,ac.id, d.name AS department FROM hr_timux_activity_counter AS ac LEFT JOIN hr_user AS u ON u.id=ac.user_id LEFT JOIN hr_timux_timecode AS tt ON tt.id=ac.timecode_id LEFT JOIN hr_department AS d ON d.id=u.department WHERE $employee $timecode $department 1=1 ORDER BY u.name,u.firstname,tt.abbreviation");
+        $cmd=$this->db->createCommand("SELECT CONCAT(u.name, ' ' , u.firstname) AS employee, ac.nbre, CONCAT('[',tt.abbreviation,'] - ', tt.name) AS timecode, tt.formatDisplay,ac.id, d.name AS department, tt.useMinMax, tt.minHour, tt.maxHour FROM hr_timux_activity_counter AS ac LEFT JOIN hr_user AS u ON u.id=ac.user_id LEFT JOIN hr_timux_timecode AS tt ON tt.id=ac.timecode_id LEFT JOIN hr_department AS d ON d.id=u.department WHERE $employee $timecode $department  ac.year=0 AND ac.month=0 ORDER BY u.name,u.firstname,tt.abbreviation");
 
         $data = $cmd->query();
         $data = $data->readAll();
@@ -202,9 +202,28 @@ class counter extends PageList
             if( $item->DataItem['formatDisplay'] == 'hour' )
             {
                 if($item->DataItem['nbre'] > 0)
+                {
                     $item->nnbre->nbre->Text = sprintf("+%.2f ",$item->DataItem['nbre']).Prado::localize('hours');
+                    if($item->DataItem['useMinMax'] )
+                    {
+                        if($item->DataItem['nbre']>$item->DataItem['maxHour'])
+                            $item->nnbre->nbre->ForeColor = "red";
+                    }
+
+                }
+
                 if($item->DataItem['nbre'] < 0)
-                    $item->nnbre->nbre->Text = sprintf("-%.2f ",$item->DataItem['nbre']).Prado::localize('hours');
+                {
+                    $item->nnbre->nbre->Text = sprintf("%.2f ",$item->DataItem['nbre']).Prado::localize('hours');
+
+                    if($item->DataItem['useMinMax'] )
+                    {
+                        if($item->DataItem['nbre']<$item->DataItem['minHour'])
+                            $item->nnbre->nbre->ForeColor = "red";
+                    }
+                    else
+                        $item->nnbre->nbre->ForeColor = "red";
+                }
                 if($item->DataItem['nbre'] == 0)
                     $item->nnbre->nbre->Text = sprintf("%.2f ",$item->DataItem['nbre']).Prado::localize('hours');
                     
@@ -213,10 +232,27 @@ class counter extends PageList
             if( $item->DataItem['formatDisplay'] == 'day' )
             {
                 if($item->DataItem['nbre'] > 0)
+                {
                     $item->nnbre->nbre->Text = sprintf("+%.2f ",$item->DataItem['nbre']).Prado::localize('days');
+                    if($item->DataItem['useMinMax'] )
+                    {
+                        if($item->DataItem['nbre']>$item->DataItem['maxHour'])
+                            $item->nnbre->nbre->ForeColor = "red";
+                    }
+
+                }
 
                 if($item->DataItem['nbre'] < 0)
-                   $item->nnbre->nbre->Text = sprintf("-%.2f ",$item->DataItem['nbre']).Prado::localize('days');
+                {
+                    $item->nnbre->nbre->Text = sprintf("%.2f ",$item->DataItem['nbre']).Prado::localize('days');
+                    if($item->DataItem['useMinMax'] )
+                    {
+                        if($item->DataItem['nbre']<$item->DataItem['minHour'])
+                            $item->nnbre->nbre->ForeColor = "red";
+                    }
+                    else
+                        $item->nnbre->nbre->ForeColor = "red";
+                }
 
                 if($item->DataItem['nbre'] == 0)
                     $item->nnbre->nbre->Text = sprintf("%.2f ",$item->DataItem['nbre']).Prado::localize('days');

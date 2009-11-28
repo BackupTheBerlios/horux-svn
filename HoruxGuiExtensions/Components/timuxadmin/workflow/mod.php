@@ -90,7 +90,7 @@ class mod extends Page
             $this->name->Text = $data['name'];
             $this->comment->Text = $data['description'];
 
-            $this->type->setSelectedValue($data['type']);
+            //$this->type->setSelectedValue($data['type']);
             $this->departmentId->setSelectedValue($data['departmentId']);
             $this->validator1->setSelectedValue($data['validator1']);
             $this->validator11->setSelectedValue($data['validator11']);
@@ -173,7 +173,7 @@ class mod extends Page
         $cmd = $this->db->createCommand( "UPDATE hr_timux_workflow SET
                                             name=:name,
                                             description=:description,
-                                            type=:type,
+                                            type='leave',
                                             departmentId=:departmentId,
                                             validator1=:validator1,
                                             validator11=:validator11,
@@ -189,7 +189,7 @@ class mod extends Page
 
         $cmd->bindParameter(":name",$this->name->SafeText,PDO::PARAM_STR);
         $cmd->bindParameter(":description",$this->comment->SafeText,PDO::PARAM_STR);
-        $cmd->bindParameter(":type",$this->type->getSelectedValue(),PDO::PARAM_STR);
+        //$cmd->bindParameter(":type",$this->type->getSelectedValue(),PDO::PARAM_STR);
         $cmd->bindParameter(":departmentId",$this->departmentId->getSelectedValue(),PDO::PARAM_STR);
         $cmd->bindParameter(":validator1",$this->validator1->getSelectedValue(),PDO::PARAM_STR);
         $cmd->bindParameter(":validator11",$this->validator11->getSelectedValue(),PDO::PARAM_STR);

@@ -91,7 +91,7 @@ class mod extends Page
 
         $cmd = $this->db->createCommand( "UPDATE `hr_timux_activity_counter` SET
                                             `nbre`=:nbre
-                                            WHERE id=:id
+                                            WHERE id=:id AND year=0 AND month=0
                                             ;" );
 
         $cmd->bindParameter(":nbre",$this->nbre->SafeText, PDO::PARAM_STR);
