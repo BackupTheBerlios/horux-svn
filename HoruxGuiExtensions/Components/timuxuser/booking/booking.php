@@ -397,19 +397,19 @@ class booking extends PageList
                     $query = $cmd->query();
                     $data = $query->read();
 
-                    if($data['internet'])
+                    if($data['closed'] == '0')
                     {
                         $cmd=$this->db->createCommand("DELETE FROM hr_tracking WHERE id =:id");
                         $cmd->bindParameter(":id",$cb->Value);
                         $cmd->execute();
-                    }
 
 
-                    $cmd=$this->db->createCommand("DELETE FROM hr_timux_booking WHERE tracking_id =:id");
-                    $cmd->bindParameter(":id",$cb->Value);
-                    if($cmd->execute())
-                    {
-                        $nDelete++;
+                        $cmd=$this->db->createCommand("DELETE FROM hr_timux_booking WHERE tracking_id =:id");
+                        $cmd->bindParameter(":id",$cb->Value);
+                        if($cmd->execute())
+                        {
+                            $nDelete++;
+                        }
                     }
                     //$this->log("Delete the key: ".$data['serialNumber']);
 

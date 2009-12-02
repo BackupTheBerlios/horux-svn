@@ -24,7 +24,7 @@
     <com:TActiveDropDownList
         ID="FilterMonth"
         OnSelectedIndexChanged="selectionChangedMonth"
-        CssClass="inputbox" >
+        CssClass="inputbox" AutoPostBack="true" >
         <com:TListItem Value="1" Text="<%[January]%>"/>
         <com:TListItem Value="2" Text="<%[February]%>"/>
         <com:TListItem Value="3" Text="<%[March]%>"/>
@@ -100,6 +100,12 @@
                 HeaderText="<%[Employee]%>"
                 DataField="employee"
                 />
+
+            <com:TTemplateColumn HeaderText="<%[Month]%>" ID="mmonth" HeaderStyle.Width = "300px" >
+                <prop:ItemTemplate>
+                    <com:TLabel ID="month"  />
+                </prop:ItemTemplate>
+            </com:TTemplateColumn>
 
             <com:TTemplateColumn HeaderText="<%[Can be closed]%>" ID="cclose" HeaderStyle.Width = "300px" >
                 <prop:ItemTemplate>

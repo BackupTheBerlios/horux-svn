@@ -18,7 +18,7 @@
             <tbody>
 
                 <tr>
-                    <td valign="top" class="key">
+                    <td valign="top" class="key" style="width:300px">
                         <span onmouseover="Tip('<%[Enter the number of days worked in a week]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)">* <%[Number of days per week]%></span>
                     </td>
                     <td>
@@ -32,13 +32,15 @@
                             ControlToValidate="daysByWeek"
                             Text="<%[This field is required]%>"
                             Display="Dynamic"/>
-                        <com:TDataTypeValidator
+                        <com:TRangeValidator
                             ValidationGroup="Group1"
                             EnableClientScript="true"
                             ControlToValidate="daysByWeek"
                             DataType="Integer"
-                            Text="<%[Please select a number]%>"
-                            Display="Dynamic"/>
+                            MinValue="1"
+                            MaxValue="7"
+                            Text="<%[Input must be between 1 and 7]%>" />
+
                     </td>
                 </tr>
 
@@ -145,7 +147,7 @@
         <table class="admintable" cellspacing="1">
             <tbody>
                 <tr>
-                    <td valign="top" class="key">
+                    <td valign="top" class="key" style="width:300px">
                         <span onmouseover="Tip('<%[Enter the hours blocks at the morning]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Morning hours blocks<br/> (Format: 6:30)]%></span>
                     </td>
                     <td>
@@ -155,6 +157,12 @@
                             Width="50px"
                             Text="0"
                             />
+                        <com:TRegularExpressionValidator
+                            ValidationGroup="Group1"
+                            ControlToValidate="hoursBlockMorning1"
+                            RegularExpression="\d{1,2}:\d{1,2}:?\d{1,2}"
+                            Text="The time format is not correct (ex: 12:00)"
+                            Display="Dynamic" />
                         &nbsp;<%[to]%>&nbsp;
                         <com:TTextBox
                             CssClass="text_area"
@@ -162,6 +170,12 @@
                             Width="50px"
                             Text="0"
                             />
+                        <com:TRegularExpressionValidator
+                            ValidationGroup="Group1"
+                            ControlToValidate="hoursBlockMorning2"
+                            RegularExpression="\d{1,2}:\d{1,2}:?\d{1,2}"
+                            Text="The time format is not correct (ex: 12:00)"
+                            Display="Dynamic" />
                         &nbsp;/&nbsp;
                         <com:TTextBox
                             CssClass="text_area"
@@ -169,6 +183,12 @@
                             Width="50px"
                             Text="0"
                             />
+                        <com:TRegularExpressionValidator
+                            ValidationGroup="Group1"
+                            ControlToValidate="hoursBlockMorning3"
+                            RegularExpression="\d{1,2}:\d{1,2}:?\d{1,2}"
+                            Text="The time format is not correct (ex: 12:00)"
+                            Display="Dynamic" />
                         &nbsp;<%[to]%>&nbsp;
                         <com:TTextBox
                             CssClass="text_area"
@@ -176,6 +196,12 @@
                             Width="50px"
                             Text="0"
                             />
+                        <com:TRegularExpressionValidator
+                            ValidationGroup="Group1"
+                            ControlToValidate="hoursBlockMorning4"
+                            RegularExpression="\d{1,2}:\d{1,2}:?\d{1,2}"
+                            Text="The time format is not correct (ex: 12:00)"
+                            Display="Dynamic" />
                     </td>
                 </tr
                 <tr>
@@ -189,6 +215,12 @@
                             Width="50px"
                             Text="0"
                             />
+                        <com:TRegularExpressionValidator
+                            ValidationGroup="Group1"
+                            ControlToValidate="hoursBlockAfternoon1"
+                            RegularExpression="\d{1,2}:\d{1,2}:?\d{1,2}"
+                            Text="The time format is not correct (ex: 12:00)"
+                            Display="Dynamic" />
                         &nbsp;<%[to]%>&nbsp;
                         <com:TTextBox
                             CssClass="text_area"
@@ -196,6 +228,12 @@
                             Width="50px"
                             Text="0"
                             />
+                        <com:TRegularExpressionValidator
+                            ValidationGroup="Group1"
+                            ControlToValidate="hoursBlockAfternoon2"
+                            RegularExpression="\d{1,2}:\d{1,2}:?\d{1,2}"
+                            Text="The time format is not correct (ex: 12:00)"
+                            Display="Dynamic" />
                         &nbsp;/&nbsp;
                         <com:TTextBox
                             CssClass="text_area"
@@ -203,6 +241,12 @@
                             Width="50px"
                             Text="0"
                             />
+                        <com:TRegularExpressionValidator
+                            ValidationGroup="Group1"
+                            ControlToValidate="hoursBlockAfternoon3"
+                            RegularExpression="\d{1,2}:\d{1,2}:?\d{1,2}"
+                            Text="The time format is not correct (ex: 12:00)"
+                            Display="Dynamic" />
                         &nbsp;<%[to]%>&nbsp;
                         <com:TTextBox
                             CssClass="text_area"
@@ -210,6 +254,12 @@
                             Width="50px"
                             Text="0"
                             />
+                        <com:TRegularExpressionValidator
+                            ValidationGroup="Group1"
+                            ControlToValidate="hoursBlockAfternoon4"
+                            RegularExpression="\d{1,2}:\d{1,2}:?\d{1,2}"
+                            Text="The time format is not correct (ex: 12:00)"
+                            Display="Dynamic" />
                     </td>
                 </tr
             </tbody>

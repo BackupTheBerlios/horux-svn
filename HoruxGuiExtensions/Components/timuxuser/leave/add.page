@@ -37,6 +37,11 @@
                     <td valign="top" class="key"><span onmouseover="Tip('<%[Set the date when start the leave request]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)">* <%[Date from]%></span></td>
                     <td>
                         <com:TDatePicker CssClass="text_area" ID="from" Mode="ImageButton" />
+                        <com:TRequiredFieldValidator
+                            ValidationGroup="Group1"
+                            ControlToValidate="from"
+                            Text="<%[This field is required]%>"
+                            Display="Dynamic" />
                     </td>
                 </tr>
                 <tr>

@@ -60,6 +60,12 @@
                             ControlToValidate="date"
                             Text="<%[This field is required]%>"
                             Display="Dynamic" />
+                        <com:TCustomValidator
+                            ValidationGroup="Group1"
+                            ControlToValidate="date"
+                            OnServerValidate="isNotClosed"
+                            Text="<%[Cannot add a signing in a closed month]%>" />
+
                     </td>
                 </tr>
 

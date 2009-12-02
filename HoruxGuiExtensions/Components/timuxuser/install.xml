@@ -17,16 +17,16 @@
   <mainmenu>
     <menu iconmenu="icon-16-panel.png" url="components.timuxuser.panel" name="Timux User">
         <submenus>
-            <submenu iconmenu="" url="components.timuxuser.workingtime.workingtime" name="Workingtime" ></submenu>
-            <submenu iconmenu="" url="components.timuxuser.counter.counter" name="Leave counter" ></submenu>
-            <submenu iconmenu="" url="components.timuxuser.booking.booking" name="Sign in/out" ></submenu>
-            <submenu iconmenu="" url="components.timuxuser.mybooking.mybooking" name="My sign in/out" ></submenu>
-            <submenu iconmenu="" url="components.timuxuser.leaverequest.leaverequest" name="Leave Request" ></submenu>
-            <submenu iconmenu="" url="components.timuxuser.leaverequestvalidation.leaverequestvalidation" name="Leave Request Validation" ></submenu>
-            <submenu iconmenu="" url="components.timuxuser.leave.leave" name="Leave" ></submenu>
-            <submenu iconmenu="" url="components.timuxuser.error.error" name="Errors" ></submenu>
-            <submenu iconmenu="" url="components.timuxuser.closemonth.closemonth" name="Close Month" ></submenu>
-            <submenu iconmenu="" url="components.timuxuser.balances.balances" name="Balances" ></submenu>
+            <submenu iconmenu="icon-16-workingtime.png" url="components.timuxuser.workingtime.workingtime" name="Workingtime" ></submenu>
+            <submenu iconmenu="icon-16-counter.png" url="components.timuxuser.counter.counter" name="Leave counter" ></submenu>
+            <submenu iconmenu="icon-16-booking.png" url="components.timuxuser.booking.booking" name="Sign in/out" ></submenu>
+            <submenu iconmenu="icon-16-mybooking.png" url="components.timuxuser.mybooking.mybooking" name="My sign in/out" ></submenu>
+            <submenu iconmenu="icon-16-leaverquest.png" url="components.timuxuser.leaverequest.leaverequest" name="Leave Request" ></submenu>
+            <submenu iconmenu="icon-16-leaverequestvalidation.png" url="components.timuxuser.leaverequestvalidation.leaverequestvalidation" name="Leave Request Validation" ></submenu>
+            <submenu iconmenu="icon-16-leave.png" url="components.timuxuser.leave.leave" name="Leave" ></submenu>
+            <submenu iconmenu="icon-16-bug.png" url="components.timuxuser.error.error" name="Errors" ></submenu>
+            <submenu iconmenu="icon-16-closemonth.png" url="components.timuxuser.closemonth.closemonth" name="Close Month" ></submenu>
+            <submenu iconmenu="icon-16-balances.png" url="components.timuxuser.balances.balances" name="Balances" ></submenu>
         </submenus>       
     </menu>
   </mainmenu>

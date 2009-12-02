@@ -56,9 +56,46 @@
         <tbody>
             <tr>
                 <td valign="top" class="key">
+                    <com:TLabel Text="<%[Department]%>" />
+                </td>
+                <td>
+                <com:TActiveDropDownList
+                    ID="FilterDepartment"
+                    OnSelectedIndexChanged="selectionChangedDepartment"
+                    CssClass="inputbox"
+                    DataTextField="Text"
+                    DataValueField="Value" >
+                    <prop:ClientSide
+                        OnLoading="Effect.Appear(document.getElementById('loading'), {duration:0, from:0.3, to:0.3})"
+                        OnComplete="Effect.Fade(document.getElementById('loading'), {duration:0})"
+                     />
+                 </com:TActiveDropDownList>
+                </td>
+            </tr>
+            <tr>
+                <td valign="top" class="key">
+                    <com:TLabel Text="<%[Employee]%>" />
+                </td>
+                <td>
+                    <com:TActiveDropDownList
+                        ID="FilterEmployee"
+                        OnSelectedIndexChanged="selectionChangedEmployee"
+                        CssClass="inputbox"
+                        DataTextField="Text"
+                        DataValueField="Value">
+                        <prop:ClientSide
+                            OnLoading="Effect.Appear(document.getElementById('loading'), {duration:0, from:0.3, to:0.3})"
+                            OnComplete="Effect.Fade(document.getElementById('loading'), {duration:0})"
+                         />
+
+                    </com:TActiveDropDownList>
+                </td>
+            </tr>
+            <tr>
+                <td valign="top" class="key">
                     <com:TLabel Text="<%[Year]%>" />
                 </td>
-                <td style="text-align:right">
+                <td>
                     <com:TActiveDropDownList
                         ID="FilterYear"
                         OnSelectedIndexChanged="selectionChangedYear"
@@ -75,15 +112,15 @@
             </tr>
             <tr>
                 <td valign="top" class="key">
-                    <com:TLabel Text="<%[Number of days of vacation]%>" />
+                    <com:TLabel Text="<%[Number of holidays]%>" />
                 </td>
                 <td>
                     <com:TActiveLabel ID="daysVacation" />
                 </td>
             </tr>
             <tr>
-                <td valign="top" class="key" style="width:200px">
-                    <com:TLabel Text="<%[Number of days of vacation last year]%>" />
+                <td valign="top" class="key" style="width:300px">
+                    <com:TLabel Text="<%[Number of days of holidays for the last year]%>" />
                 </td>
                 <td>
                     <com:TActiveLabel ID="daysVacationLastYear" />
@@ -91,7 +128,7 @@
             </tr>
             <tr>
                 <td valign="top" class="key" style="width:200px">
-                    <com:TLabel Text="<%[Total of vacation]%>" />
+                    <com:TLabel Text="<%[Total of holidays (days)]%>" />
                 </td>
                 <td>
                     <com:TActiveLabel ID="totalVacation" />
@@ -161,6 +198,16 @@
             <com:TBoundColumn
                 HeaderText="<%[Nbre of holidays (hours)]%>"
                 DataField="nbreHolidaysHour"
+                />
+
+            <com:TBoundColumn
+                HeaderText="<%[Nbre of leave (day)]%>"
+                DataField="nbreLeaveDay"
+                />
+
+            <com:TBoundColumn
+                HeaderText="<%[Nbre of leave (hours)]%>"
+                DataField="nbreLeaveHour"
                 />
 
             <com:TBoundColumn

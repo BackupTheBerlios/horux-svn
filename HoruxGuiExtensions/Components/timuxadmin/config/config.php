@@ -68,20 +68,13 @@ class config extends Page
 
             $res = $this->saveData();
 
-            if($res && $this->emailError == '')
+            if($res)
             {
                 $pBack = array('okMsg'=>Prado::localize('The config was modified successfully'));
             }
             else
             {
-                if($res && $this->emailError != '')
-                {
-                    $Text = Prado::localize('The config was modified successfully.');
-                    $Text .= $this->emailError;
-                    $pBack = array('koMsg'=>$Text);
-                }
-                else
-                $pBack = array('koMsg'=>Prado::localize('The config was not modified. ').$this->emailError);
+                $pBack = array('koMsg'=>Prado::localize('The config was not modified').$this->emailError);
 
             }
             $this->Response->redirect($this->Service->constructUrl('components.timuxadmin.config.config',$pBack));

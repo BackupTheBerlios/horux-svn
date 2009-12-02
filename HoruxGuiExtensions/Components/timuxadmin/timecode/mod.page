@@ -95,17 +95,17 @@
                         <com:TRadioButton
                             ID="formatHour"
                             GroupName="RadioGroup1"
-                            Text="Hour"
+                            Text="<%[Hour]%>"
                             />
                         <com:TRadioButton
                             ID="formatDay"
                             GroupName="RadioGroup1"
-                            Text="Day"
+                            Text="<%[Day]%>"
                             />
                     </td>
                 </tr>
                 <tr>
-                    <td valign="top" class="key"><span onmouseover="Tip('<%[Select the sign type]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)">* <%[Sign type]%></span></td>
+                    <td valign="top" class="key"><span onmouseover="Tip('<%[Select the sign type]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Sign type]%></span></td>
                     <td>
                         <com:TDropDownList
                             ID="signtype"
@@ -151,7 +151,13 @@
                             CssClass="text_area"
                             ID="minHour"
                             />
-
+                        <com:TDataTypeValidator
+                            ValidationGroup="Group1"
+                            EnableClientScript="true"
+                            ControlToValidate="minHour"
+                            DataType="Integer"
+                            Text="<%[Please select a number]%>"
+                            Display="Dynamic"/>
                     </td>
                 </tr>
 
@@ -162,7 +168,13 @@
                             CssClass="text_area"
                             ID="maxHour"
                             />
-
+                        <com:TDataTypeValidator
+                            ValidationGroup="Group1"
+                            EnableClientScript="true"
+                            ControlToValidate="maxHour"
+                            DataType="Integer"
+                            Text="<%[Please select a number]%>"
+                            Display="Dynamic"/>
                     </td>
                 </tr>
 

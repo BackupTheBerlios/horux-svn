@@ -233,7 +233,7 @@ class mybooking extends PageList
                     $query = $cmd->query();
                     $data = $query->read();
 
-                    if($data['internet'])
+                    if($data['internet'] && $data['closed'] == '0' )
                     {
 
                         $cmd=$this->db->createCommand("DELETE FROM hr_timux_booking WHERE tracking_id =:id");

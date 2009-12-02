@@ -60,7 +60,7 @@ class leaverequest extends PageList
     {
         $state = $this->FilterState->getSelectedValue();
 
-        return $this->employee->getLeaveRequest($state);
+        return $this->employee->getEmployeeLeaveRequest($state);
     }
 
     public function selectionChangedState($sender, $param)

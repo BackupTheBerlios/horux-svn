@@ -64,6 +64,12 @@
                             ControlToValidate="fromHour"
                             Text="<%[This field is required]%>"
                             Display="Dynamic"/>
+                        <com:TRegularExpressionValidator
+                            ValidationGroup="Group1"
+                            ControlToValidate="fromHour"
+                            RegularExpression="\d{1,2}:\d{1,2}:?\d{1,2}"
+                            Text="The time format is not correct (ex: 12:00)"
+                            Display="Dynamic" />
                     </td>
                 </tr>
 
@@ -80,6 +86,12 @@
                             ControlToValidate="toHour"
                             Text="<%[This field is required]%>"
                             Display="Dynamic"/>
+                        <com:TRegularExpressionValidator
+                            ValidationGroup="Group1"
+                            ControlToValidate="toHour"
+                            RegularExpression="\d{1,2}:\d{1,2}:?\d{1,2}"
+                            Text="The time format is not correct (ex: 12:00)"
+                            Display="Dynamic" />
                     </td>
                 </tr>
 

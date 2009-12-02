@@ -144,14 +144,48 @@ class closemonth extends PageList
             }
             else
             {
-                $cmd=$this->db->createCommand("SELECT* FROM hr_timux_closed_month WHERE user_id=".$d['user_id']);
+                $cmd=$this->db->createCommand("SELECT* FROM hr_timux_closed_month WHERE user_id=".$d['user_id']." AND year=$year AND month=$month");
                 $data2 = $cmd->query();
                 $data2 = $data2->readAll();
 
                 if(count($data2)==0)
                 {
-                    $isError = $employee->getError($this->FilterYear->getSelectedValue(),$this->FilterMonth->getSelectedValue());
-                    $count = count($isError);
+                    $m = $month;
+                    $y = $year;
+
+                    // check if the last month is closed
+                    if($m == 1)
+                    {
+                        $m = 12;
+                        $y--;
+                    }
+                    else
+                    {
+                        $m--;
+                    }
+
+                    $cmd=$this->db->createCommand("SELECT* FROM hr_timux_closed_month WHERE user_id=".$d['user_id']." AND year=$y AND month=$m");
+                    $data2 = $cmd->query();
+                    $data2 = $data2->readAll();
+
+                    if(count($data2)==0)
+                    {
+                        $wt = $employee->getWorkingTime($y, $m);
+                        if($wt)
+                        {
+                            $count = -3;
+                        }
+                        else
+                        {
+                            $isError = $employee->getError($this->FilterYear->getSelectedValue(),$this->FilterMonth->getSelectedValue());
+                            $count = count($isError);
+                        }
+                    }
+                    else
+                    {
+                        $isError = $employee->getError($this->FilterYear->getSelectedValue(),$this->FilterMonth->getSelectedValue());
+                        $count = count($isError);
+                    }
                 }
                 else
                     $count = -2;
@@ -185,9 +219,12 @@ class closemonth extends PageList
             $item->cclose->close->Text = Prado::localize("Cannot close the current and the next months");
            elseif($item->DataItem['canBeClosed']==-2)
             $item->cclose->close->Text = Prado::localize("This month is already closed");
+           elseif($item->DataItem['canBeClosed']==-3)
+            $item->cclose->close->Text = Prado::localize("This last month must be closed");
            else
             $item->cclose->close->Text = Prado::localize("Yes");
 
+           $item->mmonth->month->Text = $this->FilterMonth->getSelectedItem()->getText();
         }
     }
 

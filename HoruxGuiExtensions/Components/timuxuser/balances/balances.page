@@ -50,6 +50,34 @@
 
     <%include Application.common.template.headerBoxContent %>
 
+
+    <%[Department]%>
+    <com:TActiveDropDownList
+        ID="FilterDepartment"
+        OnSelectedIndexChanged="selectionChangedDepartment"
+        CssClass="inputbox"
+        DataTextField="Text"
+        DataValueField="Value" >
+        <prop:ClientSide
+            OnLoading="Effect.Appear(document.getElementById('loading'), {duration:0, from:0.3, to:0.3})"
+            OnComplete="Effect.Fade(document.getElementById('loading'), {duration:0})"
+         />
+
+    </com:TActiveDropDownList>
+    <%[Employee]%>
+    <com:TActiveDropDownList
+        ID="FilterEmployee"
+        OnSelectedIndexChanged="selectionChangedEmployee"
+        CssClass="inputbox"
+        DataTextField="Text"
+        DataValueField="Value">
+        <prop:ClientSide
+            OnLoading="Effect.Appear(document.getElementById('loading'), {duration:0, from:0.3, to:0.3})"
+            OnComplete="Effect.Fade(document.getElementById('loading'), {duration:0})"
+         />
+
+    </com:TActiveDropDownList>
+
     <%[Year]%>
     <com:TActiveDropDownList
         ID="FilterYear"
@@ -211,7 +239,7 @@
     </table>
 </div>
 
-<div>
+<div style="float:left;margin-right:50px">
     <table class="admintable" cellspacing="1">
         <tbody>
             <tr>
@@ -257,5 +285,29 @@
         </tbody>
     </table>
 </div>
+
+<div style="float:left;margin-right:50px" id="timecode">
+    <com:TRepeater ID="TimeCode">
+        <prop:HeaderTemplate>
+            <table class="admintable" cellspacing="1">
+                <tbody>
+        </prop:HeaderTemplate>
+        <prop:ItemTemplate>
+            <tr>
+                <td valign="top" class="key">
+                    <com:TLabel Text="<%#$this->Data['name']%>" />
+                </td>
+                <td style="text-align:right;">
+                    <com:TActiveLabel Text="<%#$this->Data['value']%>" />
+                </td>
+            </tr>
+        </prop:ItemTemplate>
+        <prop:FooterTemplate>
+                </tbody>
+            </table>
+        </prop:FooterTemplate>
+    </com:TRepeater>
+ </div>
+
     <%include Application.common.template.footerContent %>
 </com:TContent>

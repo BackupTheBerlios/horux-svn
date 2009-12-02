@@ -35,6 +35,94 @@ class panel extends Page
 
         $this->timecodeGrid->DataSource=$this->TimecodeGrid;
         $this->timecodeGrid->dataBind();
+
+        if(!$this->IsPostBack)
+        {
+            // seulement pour les testes
+            //$this->addTestData();
+        }
+    }
+
+    public function addTestData()
+    {
+       
+        for($i=1;$i<=11; $i++)
+        {
+            $nbreOfDay = date("t",mktime(0,0,0,$i,1,2009));
+
+            for($j=1; $j<=$nbreOfDay;$j++)
+            {
+                $nDay = date("N",mktime(0,0,0,$i,$j,2009));
+                if($nDay>=1 && $nDay<=5)
+                {
+                    if($this->employee->isWorking(2009, $i, $j) && $this->employee->getNonWorkingDay(2009, $i, $j) == 0)
+                    {
+                        $sqlDate = date("Y-n-j",mktime(0,0,0,$i,$j,2009));
+
+                        $index = 0;
+                        $time = array();
+                        $time[$index]['time'] = str_pad(rand(7,8),2,"0", STR_PAD_LEFT).":".str_pad(rand(0,59),2,"0", STR_PAD_LEFT);
+                        $time[$index]['action'] = 255;
+                        $index++;
+
+                        if(rand(1,1000) % 2 == 0)
+                        {
+                            $time[$index]['time'] = "11:".str_pad(rand(45,59),2,"0", STR_PAD_LEFT);
+                            $time[$index]['action'] = 254;
+                            $index++;
+                            $time[$index]['time'] = "13:".str_pad(rand(0,30),2,"0", STR_PAD_LEFT);
+                            $time[$index]['action'] = 255;
+                            $index++;
+                        }
+                        $time[$index]['time'] = str_pad(rand(16,17),2,"0", STR_PAD_LEFT).":".str_pad(rand(0,59),2,"0", STR_PAD_LEFT);
+                        $time[$index]['action'] = 254;
+
+                        foreach($time as $t)
+                        {
+                            $cmd = $this->db->createCommand( "INSERT INTO `hr_tracking` (
+                                                                `id_user` ,
+                                                                `time`,
+                                                                `date`,
+                                                                `is_access`
+                                                                )
+                                                                VALUES (
+                                                                33,
+                                                                :time,
+                                                                :date,
+                                                                '1'
+                                                                );" );
+
+                            $cmd->bindParameter(":time",$t['time'], PDO::PARAM_STR);
+                            $cmd->bindParameter(":date",$sqlDate, PDO::PARAM_STR);
+
+                            $res1 = $cmd->execute();
+                            $lastId = $this->db->LastInsertID;
+
+                            $cmd = $this->db->createCommand( "INSERT INTO `hr_timux_booking` (
+                                                                `tracking_id` ,
+                                                                `action`,
+                                                                `roundBooking`,
+                                                                `actionReason`,
+                                                                `internet`
+                                                                )
+                                                                VALUES (
+                                                                :tracking_id,
+                                                                :action,
+                                                                :roundBooking,
+                                                                0,
+                                                                1
+                                                                );" );
+
+                            $cmd->bindParameter(":tracking_id",$lastId,PDO::PARAM_STR);
+                            $cmd->bindParameter(":action",$t['action'], PDO::PARAM_STR);
+                            $cmd->bindParameter(":roundBooking",$t['time'], PDO::PARAM_STR);
+
+                            $res1 = $cmd->execute();
+                        }
+                    }
+                }
+            }
+        }
     }
 
     public function getTimecodeGrid()

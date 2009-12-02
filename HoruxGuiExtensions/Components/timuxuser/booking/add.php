@@ -196,6 +196,22 @@ class add extends Page
     }
 
 
+    public function isNotClosed($sender,$param)
+    {
+        $date = explode("-",$this->date->SafeText);
+
+        $cmd = $this->db->createCommand( "SELECT * FROM hr_timux_closed_month WHERE user_id=:id AND year=:year AND month=:month");
+        $cmd->bindParameter(":id",$this->userId, PDO::PARAM_INT);
+        $cmd->bindParameter(":year",$date[2], PDO::PARAM_INT);
+        $cmd->bindParameter(":month",$date[1], PDO::PARAM_INT);
+        $query = $cmd->query();
+        $query = $query->read();
+
+        if($query)
+            $param->IsValid=false;
+
+    }
+
     public function onCancel($sender, $param)
     {
         $this->Response->redirect($this->Service->constructUrl('components.timuxuser.booking.booking'));

@@ -93,7 +93,7 @@ class mod extends Page
                 $pBack = array('okMsg'=>Prado::localize('The time code was modified successfully'));
             }
             else
-                $pBack = array('koMsg'=>Prado::localize('The time code was modified added'));
+                $pBack = array('koMsg'=>Prado::localize('The time code was modified'));
             $this->Response->redirect($this->Service->constructUrl('components.timuxadmin.timecode.timecode',$pBack));
         }
     }

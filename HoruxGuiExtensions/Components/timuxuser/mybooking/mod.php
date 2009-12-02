@@ -58,6 +58,13 @@ class mod extends Page
                 $this->Response->redirect($this->Service->constructUrl('components.timuxuser.booking.booking',$pBack));
             }
 
+            if($data['closed'] == '1')
+            {
+                $pBack = array('koMsg'=>Prado::localize('Cannot modified a closed signing'));
+
+                $this->Response->redirect($this->Service->constructUrl('components.timuxuser.booking.booking',$pBack));
+            }
+
             $this->id->Value = $data['id'];
             $this->date->Text = $this->dateFromSql($data['date']);
             $this->time->Text = $data['roundBooking'];

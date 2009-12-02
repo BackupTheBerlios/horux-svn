@@ -33,10 +33,10 @@ class year extends PageList
         $dataUser = $data->read();
         $this->userId = $dataUser['user_id'];
 
-        $this->employee = new employee($this->userId );
-
         if(!$this->IsPostBack)
         {
+            $this->employee = new employee($this->userId );
+
             $cmd=$this->db->createCommand("SELECT t.date FROM hr_tracking AS t ORDER BY t.date LIMIT 0,1");
             $data = $cmd->query();
             $data = $data->readAll();
@@ -59,6 +59,26 @@ class year extends PageList
             $this->FilterYear->dataBind();
 
             $FilterYear= $this->getApplication()->getGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterYear', date('Y'));
+            $FilterEmployee = $this->getApplication()->getGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterEmployee', false);
+            $FilterDepartment = $this->getApplication()->getGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterDepartment', false);
+
+            $this->FilterDepartment->DataSource=$this->DepartmentList;
+            $this->FilterDepartment->dataBind();
+
+            if($FilterDepartment !== false)
+                $this->FilterDepartment->setSelectedValue($FilterDepartment);
+            else
+                $this->FilterDepartment->setSelectedIndex(0);
+
+            $this->FilterEmployee->DataSource=$this->EmployeeList;
+            $this->FilterEmployee->dataBind();
+
+
+            if($FilterEmployee)
+                $this->FilterEmployee->setSelectedValue($FilterEmployee);
+            else
+                $this->FilterEmployee->setSelectedValue($this->userId);
+
 
             if($FilterYear)
                 $this->FilterYear->setSelectedValue($FilterYear);
@@ -78,6 +98,73 @@ class year extends PageList
         }
     }
 
+    public function getEmployeeList()
+    {
+        $employee = new employee($this->userId);
+
+        $role = $employee->getRole();
+        if($role == 'employee')
+        {
+            $id = 'id='.$this->userId.' AND ';
+        }
+        
+        $department = $this->FilterDepartment->getSelectedValue();
+        $cmd = $this->db->createCommand( "SELECT CONCAT(name, ' ', firstname) AS Text, id AS Value FROM hr_user WHERE $id department=$department");
+
+        $data = $cmd->query();
+        $data = $data->readAll();
+        return $data;
+
+    }
+
+    public function getDepartmentList()
+    {
+        $employee = new employee($this->userId);
+
+        $role = $employee->getRole();
+        $department = $employee->getDepartmentId();
+        $cmd = NULL;
+        if($role == 'manager' || $role == 'employee')
+            $cmd = $this->db->createCommand( "SELECT name AS Text, id AS Value FROM hr_department WHERE id=$department");
+        else
+            $cmd = $this->db->createCommand( "SELECT name AS Text, id AS Value FROM hr_department ORDER BY name");
+        $data = $cmd->query();
+        $data = $data->readAll();
+
+        if($role == 'rh')
+        {
+            $dataAll[] = array("Value"=>0, "Text"=>Prado::localize("--- All ---"));
+
+            $data = array_merge($dataAll, $data);
+        }
+
+        return $data;
+
+    }
+
+    public function selectionChangedEmployee($sender, $param)
+    {
+            $this->employee = new employee($this->FilterEmployee->getSelectedValue() );
+
+            $this->DataGrid->DataSource=$this->Data;
+            $this->DataGrid->dataBind();
+            $this->Page->CallbackClient->update('list', $this->DataGrid);
+    }
+
+    public function selectionChangedDepartment($sender, $param)
+    {
+            $this->FilterEmployee->DataSource=$this->EmployeeList;
+            $this->FilterEmployee->dataBind();
+
+            if(count($this->EmployeeList)>0)
+                $this->FilterEmployee->setSelectedIndex(0);
+
+            $this->employee = new employee($this->FilterEmployee->getSelectedValue() );
+
+            $this->DataGrid->DataSource=$this->Data;
+            $this->DataGrid->dataBind();
+            $this->Page->CallbackClient->update('list', $this->DataGrid);
+    }
 
     public function getData()
     {
@@ -86,9 +173,9 @@ class year extends PageList
         $months = array();
         $app = $this->getApplication()->getGlobalization();
 
-        $this->hoursBalance->Text = 4.5;// sprintf("%.02f",$this->employee->getOvertimeMonth($year-1, 12));
+        $this->hoursBalance->Text = sprintf("%.02f",$this->employee->getOvertimeMonth($year-1, 12));
 
-        $this->daysVacationLastYear->Text = '32';//sprintf("%.02f",$this->employee->geHolidaystMonth($year-1,12));
+        $this->daysVacationLastYear->Text = sprintf("%.02f",$this->employee->geHolidaystMonth($year-1,12));
 
         $totalYearHours100 = 0.0;
         $totalYearHoursX = $totalYearHoursX2 = 0.0;
@@ -96,7 +183,7 @@ class year extends PageList
         for($i=1; $i<=12; $i++)
         {
             $p = $this->employee->getPercentage($year,$i);
-            $h = $this->employee->getHoursMonth($year, $i);
+            $h = $this->employee->getHoursMonth($year, $i, false);
             $totalYearHours100 = bcadd($h, $totalYearHours100,2);
             $h = bcdiv(bcmul($h,$p,2),100.00,2);
             $totalYearHoursX = bcadd($h, $totalYearHoursX,2);
@@ -111,7 +198,7 @@ class year extends PageList
 
 
 
-        $this->daysVacation->Text = sprintf("%.02f",$vacations);
+        $this->daysVacation->Text = sprintf("%.02f %s / %.02f ".Prado::localize('weeks'),$vacations,Prado::localize('days'), bcdiv($vacations, $this->employee->getDaysByWeek(),4));
         $this->totalVacation->Text = sprintf("%.02f",$vacations+$this->daysVacationLastYear->Text);
 
         $hoursWorked = 0.0;
@@ -126,25 +213,49 @@ class year extends PageList
         {
             $month = new DateFormat($app->getCulture());
             $months[$i]['month'] = $month->format("1.$i.$year", "MMMM");
+            
             $months[$i]['occupancy'] = $this->employee->getPercentage($year,$i);
-            $months[$i]['hours100'] = $this->employee->getHoursMonth($year, $i);
-            $months[$i]['hoursX'] = bcdiv(bcmul($months[$i]['hours100'],$months[$i]['occupancy'],2),100.00,2);
-            $months[$i]['hoursWorked'] = sprintf("%.02f",/*$this->employee->getTimeWorkedMonth($year,$i)*/0.0) ;
-            $hoursWorked  = bcadd($hoursWorked,$months[$i]['hoursWorked'],2);
-            $request = $this->employee->getRequest($year,$i,3);
-            $nbreOfDay = $request[$this->employee->getDefaultHolidaysCounter()]['nbre'];
-            $months[$i]['nbreHolidaysDay'] = sprintf("%.02f",$nbreOfDay);
-            $nbreHolidaysDay = bcadd($nbreHolidaysDay,$months[$i]['nbreHolidaysDay'],2);
-            $months[$i]['nbreHolidaysHour'] = sprintf("%.02f",bcmul($nbreOfDay, $this->employee->getHoursByDay()));
-            $nbreHolidaysHour = bcadd($nbreHolidaysHour,$months[$i]['nbreHolidaysHour'],2);
-            $months[$i]['holidayBalance'] = 0;//$this->employee->geHolidaystMonth($year,$i);
 
-            //@todo put the right timecode
-            $months[$i]['nbreAbsenceDay'] = sprintf("%.02f",$request[5]['nbre']);
-            $nbreAbsenceDay = bcadd($nbreAbsenceDay,$months[$i]['nbreAbsenceDay'],2);
-            $months[$i]['nbreAbsenceHour'] = sprintf("%.02f",bcmul($request[5]['nbre'], $this->employee->getHoursByDay()));
-            $nbreAbsenceHour = bcadd($nbreAbsenceHour,$months[$i]['nbreAbsenceHour'],2);
-            $months[$i]['totalHours'] = $months[$i]['hoursWorked'] + $months[$i]['nbreHolidaysHour'] + $months[$i]['nbreAbsenceHour'];
+            $HoursMonth = $this->employee->getHoursMonth($year, $i, false);
+            $HoursMonthX = bcdiv(bcmul($HoursMonthX, $this->employee->getPercentage($year,$i),2),100.00,4);
+            
+            $months[$i]['hours100'] = sprintf("%.02f",$HoursMonth);
+            $months[$i]['hoursX'] = sprintf("%.02f",$HoursMonthX);
+
+            $monthTimeWorked = $this->employee->getMonthTimeWorked($year,$i);
+
+            $months[$i]['hoursWorked'] = sprintf("%.02f",$monthTimeWorked['done']) ;
+            $hoursWorked  = bcadd($hoursWorked,$months[$i]['hoursWorked'],2);
+
+            $defaultHolidayTimeCode = $this->employee->getDefaultHolidaysCounter();
+            $holidays = $this->employee->getRequest($year,$i,$defaultHolidayTimeCode);
+            $months[$i]['nbreHolidaysDay'] = sprintf("%.02f",$holidays['nbre']);
+
+            $nbreHolidaysDay = bcadd($nbreHolidaysDay,$months[$i]['nbreHolidaysDay'],2);
+
+            $months[$i]['nbreHolidaysHour'] = sprintf("%.02f",bcmul($holidays['nbre'], $this->employee->getTimeHoursDayTodo($year,$i),4));
+            $nbreHolidaysHour = bcadd($nbreHolidaysHour,$months[$i]['nbreHolidaysHour'],2);
+
+            if($i==1)
+                $months[$i]['holidayBalance'] = sprintf("%.02f",$this->totalVacation->Text-$months[$i]['nbreHolidaysDay']);
+            else
+                $months[$i]['holidayBalance'] = sprintf("%.02f",$months[$i-1]['holidayBalance']-$months[$i]['nbreHolidaysDay']);
+
+            $leaveRequest = $this->employee->getLeaveRequest($year, $i);
+            $months[$i]['nbreLeaveDay'] = sprintf("%.02f",$leaveRequest['nbre']);
+            $months[$i]['nbreLeaveHour'] = sprintf("%.02f",bcmul($leaveRequest['nbre'], $this->employee->getTimeHoursDayTodo($year,$i),4));
+
+            $absence = $this->employee->getAbsenceMonth($year, $i);
+            if($this->employee->getTimeHoursDayTodo($year,$i)>0)
+                $absence = sprintf("%.02f",bcadd($absence,bcdiv($monthTimeWorked['absence'],$this->employee->getTimeHoursDayTodo($year,$i),4),4));
+            else
+                $absence = 0;
+            $months[$i]['nbreAbsenceDay'] = sprintf("%.02f",$absence);
+
+            $nbreAbsenceDay = bcadd($nbreAbsenceDay,$absence,4);
+            $months[$i]['nbreAbsenceHour'] = sprintf("%.02f",bcmul($absence, $this->employee->getTimeHoursDayTodo($year,$i),4));
+            $nbreAbsenceHour = sprintf("%.02f",bcadd($nbreAbsenceHour,bcmul($absence, $this->employee->getTimeHoursDayTodo($year,$i),4),4));
+            $months[$i]['totalHours'] = sprintf("%.02f",$months[$i]['hoursWorked'] + $months[$i]['nbreHolidaysHour'] + $months[$i]['nbreAbsenceHour'] + $months[$i]['nbreLeaveHour']);
             $totalHours = bcadd($totalHours,$months[$i]['totalHours'],2);
 
             $months[$i]['monthBalance'] = bcsub($months[$i]['totalHours'],$months[$i]['hoursX'],2);
@@ -163,19 +274,19 @@ class year extends PageList
         $months[13] = array();
 
         $months[14]['month'] = Prado::localize('Totals');
-        $months[14]['hours100'] = $totalYearHours100;
-        $months[14]['hoursX'] = $totalYearHoursX2 ;
-        $months[14]['hoursWorked'] = $hoursWorked;
-        $months[14]['nbreHolidaysDay'] = $nbreHolidaysDay;
-        $months[14]['nbreHolidaysHour'] = $nbreHolidaysHour;
-        $months[14]['nbreAbsenceDay'] = $nbreAbsenceDay;
-        $months[14]['nbreAbsenceHour'] = $nbreAbsenceHour;
-        $months[14]['totalHours'] = $totalHours;
+        $months[14]['hours100'] = sprintf("%.02f",$totalYearHours100);
+        $months[14]['hoursX'] = sprintf("%.02f",$totalYearHoursX2);
+        $months[14]['hoursWorked'] = sprintf("%.02f",$hoursWorked);
+        $months[14]['nbreHolidaysDay'] = sprintf("%.02f",$nbreHolidaysDay);
+        $months[14]['nbreHolidaysHour'] = sprintf("%.02f",$nbreHolidaysHour);
+        $months[14]['nbreAbsenceDay'] = sprintf("%.02f",$nbreAbsenceDay);
+        $months[14]['nbreAbsenceHour'] = sprintf("%.02f",$nbreAbsenceHour);
+        $months[14]['totalHours'] = sprintf("%.02f",$totalHours);
 
         $months[15] = array();
 
         $months[16]['month'] = Prado::localize('Total do be done');
-        $months[16]['hoursX'] = $totalYearHoursX2-$this->hoursBalance->Text;
+        $months[16]['hoursX'] = sprintf("%.02f",$totalYearHoursX2-$this->hoursBalance->Text);
 
         return $months;
     }
@@ -194,6 +305,8 @@ class year extends PageList
 
     public function onRefresh($sender, $param)
     {
+        $this->employee = new employee($this->FilterEmployee->getSelectedValue() );
+
         $this->getApplication()->setGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterYear', $this->FilterYear->getSelectedValue());
 
         $this->DataGrid->DataSource=$this->Data;
