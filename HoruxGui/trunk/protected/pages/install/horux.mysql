@@ -457,7 +457,8 @@ CREATE TABLE IF NOT EXISTS `hr_tracking` (
   `id_comment` int(11) NOT NULL default '0',
   `key` varchar(128) NOT NULL,
   PRIMARY KEY  (`id`),
-  KEY `time` (`time`,`date`)
+  KEY `time` (`time`,`date`),
+  KEY `user` (`id_user`)
 ) TYPE=MyISAM CHARACTER SET `utf8`;
 
 

@@ -12,9 +12,9 @@
                     <com:TConditional Condition="$this->getViewState('UserWizardVisible','false') == 'true'">
                         <prop:TrueTemplate>
                             <td class="button" id="toolbar-new">
-                                <a href="<%= $this->Service->constructUrl('user.UserWizzard') %>" class="toolbar">
+                                <com:THyperLink ID="userwizard" NavigateUrl="<%= $this->Service->constructUrl('user.UserWizzard') %>" CssClass="toolbar" >
                                     <span class="icon-32-wizard" title="<com:TTranslate Catalogue='messages' Text='User Wizard' />"></span><com:TTranslate Catalogue="messages" Text="User Wizard" />
-                                </a>
+                                </com:THyperLink>
                             </td>
                         </prop:TrueTemplate>
                     </com:TConditional>
@@ -116,9 +116,9 @@
                     <com:TConditional Condition="$this->getViewState('AddVisible','false') == 'true'">
                         <prop:TrueTemplate>
                             <td class="button" id="toolbar-new">
-                                <a href="<%= $this->Service->constructUrl($this->getViewState('AddUrl','')) %>" class="toolbar">
+                                <com:THyperLink ID="add" NavigateUrl="<%= $this->Service->constructUrl($this->getViewState('AddUrl','')) %>" CssClass="toolbar" >
                                     <span class="icon-32-new" title="<com:TTranslate Catalogue='messages' Text='New' />"></span><com:TTranslate Catalogue="messages" Text="New" />
-                                </a>
+                                </com:THyperLink>
                             </td>
                         </prop:TrueTemplate>
                     </com:TConditional>
@@ -136,9 +136,18 @@
                     <com:TConditional Condition="$this->getViewState('PrintVisible','false') == 'true'">
                         <prop:TrueTemplate>
                             <td class="button" id="toolbar-print">
-                              <a href="<%= $this->getViewState('PrintUrl','') %>"  <%=  $this->getViewState('JsClickPrint',false) == false ? '' : "onClick=\"".$this->getViewState('JsClickPrint',false)."\"" %>  class="toolbar">
-                                <span class="icon-32-print" title="<com:TTranslate Catalogue='messages' Text='Print' />"></span><com:TTranslate Catalogue="messages" Text="Print" />
-                              </a>
+                                <com:TConditional Condition="$this->getViewState('JsClickPrint',false) == false">
+                                    <prop:TrueTemplate>
+                                        <com:THyperLink ID="print" NavigateUrl="<%= $this->getViewState('PrintUrl','') %>" CssClass="toolbar" >
+                                            <span class="icon-32-print" title="<com:TTranslate Catalogue='messages' Text='Print' />"></span><com:TTranslate Catalogue="messages" Text="Print" />
+                                        </com:THyperLink>
+                                    </prop:TrueTemplate>
+                                    <prop:FalseTemplate>
+                                        <com:THyperLink ID="print" NavigateUrl="javascript:<%= $this->getViewState('JsClickPrint',false) %>" CssClass="toolbar" >
+                                            <span class="icon-32-print" title="<com:TTranslate Catalogue='messages' Text='Print' />"></span><com:TTranslate Catalogue="messages" Text="Print" />
+                                        </com:THyperLink>
+                                    </prop:FalseTemplate>
+                                </com:TConditional>
                             </td>
                         </prop:TrueTemplate>
                     </com:TConditional>

@@ -16,6 +16,19 @@ Prado::using('horux.pages.superuser.sql');
 
 class UserList extends PageList
 {
+    public function onInit ($param)
+    {
+        $superAdmin = $this->Application->getUser()->getSuperAdmin();
+
+        if(!$superAdmin)
+        {
+            $this->tbb->add->setVisible(false);
+            $this->tbb->delete->setVisible(false);
+            $this->tbb->print->setVisible(false);
+        }
+        
+    }
+
     protected function getData()
     {
 
@@ -25,6 +38,7 @@ class UserList extends PageList
         {
             $cmd=$this->db->createCommand(SQL::SQL_GET_ALL_USER);
             $dataReader=$cmd->query();
+
         }
         else
         {
@@ -32,14 +46,16 @@ class UserList extends PageList
             $cmd->bindParameter(":id",$this->Application->getUser()->getUserId(), PDO::PARAM_INT);
             $dataReader=$cmd->query();
 
-            $this->delete->setVisible(false);
-            $this->newUser->setVisible(false);
+            $this->tbb->setAddVisible(false);
+            $this->tbb->setDelVisible(false);
+            $this->tbb->setPrintVisible(false);
         }
 
         $connection->Active=false;
 
         return $dataReader;
     }
+
 
     public function onLoad($param)
     {

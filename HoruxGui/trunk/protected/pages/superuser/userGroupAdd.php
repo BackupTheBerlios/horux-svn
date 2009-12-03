@@ -279,7 +279,7 @@ class userGroupAdd extends Page
                     $v['access'] ? $this->insertNewPermission($lastId, 'userGroup.mod') : '';
                     break;
                 case "userWizard":
-                    $v['access'] ? $this->insertNewPermission($lastId, 'user.UserWizzard',true) : '';
+                    $v['access'] ? $this->insertNewPermission($lastId, 'user.UserWizzard',$v['shortcut']) : '';
                     break;
                 case "key":
                     $v['access'] ? $this->insertNewPermission($lastId, 'key.KeyList', $v['shortcut']) : '';

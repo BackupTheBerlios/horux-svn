@@ -355,7 +355,7 @@ class userGroupMod extends Page
                     $v['access'] ? $this->updatePermission($lastId, 'userGroup.mod') : '';
                     break;
                 case "userWizard":
-                    $v['access'] ? $this->updatePermission($lastId, 'user.UserWizzard', true) : '';
+                    $v['access'] ? $this->updatePermission($lastId, 'user.UserWizzard', $v['shortcut']) : '';
                     break;
                 case "key":
                     $v['access'] ? $this->updatePermission($lastId, 'key.KeyList', $v['shortcut']) : '';
