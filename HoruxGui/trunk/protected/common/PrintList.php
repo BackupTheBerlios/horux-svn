@@ -25,10 +25,10 @@ class PrintListPDF extends FPDF
 	    $this->SetFont('Arial','',12);
 	    //Titre
 		$date = date("d-m-Y G:i:s");
-	    $this->Cell(0,10,utf8_decode(Prado::localize('Report generate at {date} by {user}', array('date'=>$date, 'user'=>$this->userName))),'B',0,'L');
+	    $this->Cell(0,10,utf8_decode(Prado::localize('Report generate at {date} by {user}', array('date'=>$date, 'user'=>$this->userName), "messages")),'B',0,'L');
 	    $this->Cell(0,10,$this->siteName,'B',0,'R');
 	    //Saut de ligne
-	    $this->Ln(20);
+	    $this->Ln(10);
 	}
 
 	function setDefaultFont()
@@ -39,12 +39,12 @@ class PrintListPDF extends FPDF
 	//Pied de page
 	function Footer()
 	{
-	    //Positionnement à 1,5 cm du bas
+	    //Positionnement ï¿½ 1,5 cm du bas
 	    $this->SetY(-15);
 	    //Police Arial italique 8
 	    $this->SetFont('Arial','I',8);
-	    //Numéro de page
-	    $this->Cell(0,10,Prado::localize('Page').' '.$this->PageNo(),'T',0,'C');
+	    //Numï¿½ro de page
+	    $this->Cell(0,10,Prado::localize('Page',array(), "messages").' '.$this->PageNo(),'T',0,'C');
 	}
 
 	function render()
@@ -247,9 +247,15 @@ class PrintListPDF extends FPDF
 	            $txts = explode("\n", $txt);
 	            $lines = count($txts);
 	            //$dy=($h-2*$this->cMargin)/$lines;
+
 	            for($l=0;$l<$lines;$l++) {
 	                $txt=$txts[$l];
 	                $w_txt=$this->GetStringWidth($txt);
+                    $Tz=100;
+                    if ($w_txt>$w-2*$this->cMargin) { // Need compression
+                        $Tz=($w-2*$this->cMargin)/$w_txt*100;
+                        $w_txt=$w-2*$this->cMargin;
+                    }
 	                if($align=='R')
 	                    $dx=$w-$w_txt-$this->cMargin;
 	                elseif($align=='C')
@@ -260,10 +266,10 @@ class PrintListPDF extends FPDF
 	                $txt=str_replace(')','\\)',str_replace('(','\\(',str_replace('\\','\\\\',$txt)));
 	                if($this->ColorFlag)
 	                    $s.='q '.$this->TextColor.' ';
-	                $s.=sprintf('BT %.2f %.2f Td (%s) Tj ET ',
+	                $s.=sprintf('BT %.2f %.2f Td %.2f Tz (%s) Tj ET ',
 	                    ($this->x+$dx)*$k,
 	                    ($this->h-($this->y+.5*$h+(.7+$l-$lines/2)*$this->FontSize))*$k,
-	                    $txt);
+	                    $Tz,$txt);
 	                if($this->underline)
 	                    $s.=' '.$this->_dounderline($this->x+$dx,$this->y+.5*$h+.3*$this->FontSize,$txt);
 	                if($this->ColorFlag)
