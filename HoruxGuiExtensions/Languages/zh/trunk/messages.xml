@@ -1,0 +1,3825 @@
+﻿<?xml version="1.0"?>
+<xliff version="1.0">
+ <file source-language="FR" target-language="zh" datatype="plaintext" original="messages" date="2009-11-17T16:00:22Z" product-name="messages">
+  <body>
+  
+<trans-unit id="1" lock="1">
+<source>Name</source>
+<target>名称</target>
+</trans-unit>
+
+<trans-unit id="2" lock="1">
+<source>Group</source>
+<target>组</target>
+</trans-unit>
+
+<trans-unit id="3" lock="1">
+<source>Date</source>
+<target>日期</target>
+</trans-unit>
+
+<trans-unit id="4" lock="1">
+<source>Time</source>
+<target>时间</target>
+</trans-unit>
+
+<trans-unit id="5" lock="1">
+<source>Entry</source>
+<target>入口</target>
+</trans-unit>
+
+
+
+<trans-unit id="6" lock="1">
+<source>Description</source>
+<target>描述</target>
+</trans-unit>
+
+<trans-unit id="7" lock="1">
+<source>Object</source>
+<target>对象</target>
+</trans-unit>
+
+<trans-unit id="8" lock="1">
+<source>Logout</source>
+<target>退出</target>
+</trans-unit>
+
+<trans-unit id="9" lock="1">
+<source>Control Panel</source>
+<target>控制面板</target>
+</trans-unit>
+
+<trans-unit id="10" lock="1">
+<source>Super User</source>
+<target>超级用户</target>
+</trans-unit>
+
+<trans-unit id="11" lock="1">
+<source>Super User Group</source>
+<target>超级用户组</target>
+</trans-unit>
+
+<trans-unit id="12" lock="1">
+<source>Configuration</source>
+<target>配置</target>
+</trans-unit>
+
+<trans-unit id="13" lock="1">
+<source>System</source>
+<target>系统</target>
+</trans-unit>
+
+<trans-unit id="14" lock="1">
+<source>Site</source>
+<target>站点</target>
+</trans-unit>
+
+<trans-unit id="15" lock="1">
+<source>Hardware</source>
+<target>硬件</target>
+</trans-unit>
+
+<trans-unit id="16" lock="1">
+<source>Alarms</source>
+<target>报警</target>
+</trans-unit>
+
+<trans-unit id="17" lock="1">
+<source>Horux Service</source>
+<target>Horux服务</target>
+</trans-unit>
+
+<trans-unit id="18" lock="1">
+<source>Standalone</source>
+<target>独立模式</target>
+</trans-unit>
+
+<trans-unit id="19" lock="1">
+<source>System Status</source>
+<target>系统状态</target>
+</trans-unit>
+
+<trans-unit id="20" lock="1">
+<source>Access</source>
+<target>权限</target>
+</trans-unit>
+
+<trans-unit id="21" lock="1">
+<source>User</source>
+<target>用户</target>
+</trans-unit>
+
+<trans-unit id="22" lock="1">
+<source>User group</source>
+<target>用户组</target>
+</trans-unit>
+
+<trans-unit id="23" lock="1">
+<source>Key</source>
+<target>钥匙</target>
+</trans-unit>
+
+<trans-unit id="24" lock="1">
+<source>Access Level</source>
+<target>权限级别</target>
+</trans-unit>
+
+<trans-unit id="25" lock="1">
+<source>Non Working Days</source>
+<target>非工作日</target>
+</trans-unit>
+
+<trans-unit id="26" lock="1">
+<source>Components</source>
+<target>组件</target>
+</trans-unit>
+
+<trans-unit id="27" lock="1">
+<source>Tracking</source>
+<target>跟踪</target>
+</trans-unit>
+
+<trans-unit id="28" lock="1">
+<source>Extensions</source>
+<target>扩展</target>
+</trans-unit>
+
+<trans-unit id="29" lock="1">
+<source>Install/Uninstal</source>
+<target>安装/卸载</target>
+</trans-unit>
+
+<trans-unit id="30" lock="1">
+<source>Devices Manager</source>
+<target>设备管理者</target>
+</trans-unit>
+
+<trans-unit id="31" lock="1">
+<source>Component Manager</source>
+<target>组件管理者</target>
+</trans-unit>
+
+<trans-unit id="32" lock="1">
+<source>Template Manager</source>
+<target>模板管理者</target>
+</trans-unit>
+
+<trans-unit id="33" lock="1">
+<source>Language Manager</source>
+<target>语言管理者</target>
+</trans-unit>
+
+<trans-unit id="34" lock="1">
+<source>Tools</source>
+<target>工具</target>
+</trans-unit>
+
+<trans-unit id="35" lock="1">
+<source>Gloal Check-in</source>
+<target>全部提交</target>
+</trans-unit>
+
+<trans-unit id="36" lock="1">
+<source>Help</source>
+<target>帮助</target>
+</trans-unit>
+
+
+
+<trans-unit id="37" lock="1">
+<source>System Info</source>
+<target>系统信息</target>
+</trans-unit>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<trans-unit id="38" lock="1">
+<source>Super User Manager</source>
+<target>超级用户管理者</target>
+</trans-unit>
+
+<trans-unit id="39" lock="1">
+<source>User Wizard</source>
+<target>用户向导</target>
+</trans-unit>
+
+<trans-unit id="40" lock="1">
+<source>User Groups</source>
+<target>用户组</target>
+</trans-unit>
+
+
+
+<trans-unit id="41" lock="1">
+<source>Welcome to Horux</source>
+<target>欢迎来到Horux系统</target>
+</trans-unit>
+
+<trans-unit id="42" lock="1">
+<source>Logged in users</source>
+<target>已登陆用户</target>
+</trans-unit>
+
+<trans-unit id="43" lock="1">
+<source>Last tracking</source>
+<target>最后跟踪记录</target>
+</trans-unit>
+
+<trans-unit id="44" lock="1">
+<source>Last alarms</source>
+<target>最后报警记录</target>
+</trans-unit>
+
+
+
+
+
+<trans-unit id="45" lock="1">
+<source>Congratulations on choosing Horux as your access control system. We hope you are able to manage your access with our program and maybe you will be able to give something back to the community later.</source>
+<target>欢迎您选用Horux系统作为您的权限控制系统。希望您能通过我们的系统很好的管理您的权限，并且稍后能在社区给我们一些反馈信息
+.</target>
+</trans-unit>
+
+
+<trans-unit id="46" lock="1">
+<source>If you still have questions then take a look on our &lt;a href="http://forum.horux.ch" target="_blank"&gt;forum&lt;/a&gt; which is most likely the biggest resource on Horux there is and you will find almost every question answered at least once, so please try using the search function before asking your question.</source>
+<target>如果您仍然有疑问，请访问我们的论坛&lt;a href="http://forum.horux.ch" target="_blank"&gt;forum&lt;/a&gt;，在这里您几乎能找到任何问题的回答，所以在您提出问题前请先使用搜索功能看是否已有对此问题的解答。</target>
+</trans-unit>
+
+<trans-unit id="47" lock="1">
+<source>We hope you have much fun and success with Horux and hope to see you in the forum.</source>
+<target>希望通过使用Horux系统您拥有乐趣和成功，也希望能在论坛中看到您。</target>
+</trans-unit>
+
+<trans-unit id="48" lock="1">
+<source>All</source>
+<target>所有</target>
+</trans-unit>
+
+<trans-unit id="49" lock="1">
+<source>Access Point</source>
+<target>进入点</target>
+</trans-unit>
+
+<trans-unit id="50" lock="1">
+<source>Others</source>
+<target>其他</target>
+</trans-unit>
+
+<trans-unit id="51" lock="1">
+<source>Type</source>
+<target>类型</target>
+</trans-unit>
+
+<trans-unit id="52" lock="1">
+<source>Edit</source>
+<target>编辑</target>
+</trans-unit>
+
+<trans-unit id="53" lock="1">
+<source>New</source>
+<target>新建</target>
+</trans-unit>
+
+<trans-unit id="54" lock="1">
+<source>Delete</source>
+<target>删除</target>
+</trans-unit>
+
+<trans-unit id="55" lock="1">
+<source>Hardware List</source>
+<target>硬件列表</target>
+</trans-unit>
+
+<trans-unit id="56" lock="1">
+<source>Filter</source>
+<target>过滤</target>
+</trans-unit>
+
+<trans-unit id="57" lock="1">
+<source>Unblocked</source>
+<target>解除阻止</target>
+</trans-unit>
+
+<trans-unit id="58" lock="1">
+<source>Blocked</source>
+<target>已阻止</target>
+</trans-unit>
+
+<trans-unit id="59" lock="1">
+<source>First Name</source>
+<target>姓</target>
+</trans-unit>
+
+<trans-unit id="60" lock="1">
+<source>Email</source>
+<target>邮箱地址</target>
+</trans-unit>
+
+<trans-unit id="61" lock="1">
+<source>Users List</source>
+<target>用户列表</target>
+</trans-unit>
+
+<trans-unit id="62" lock="1">
+<source>Status</source>
+<target>状态</target>
+</trans-unit>
+
+<trans-unit id="63" lock="1">
+<source>Groups</source>
+<target>组</target>
+</trans-unit>
+
+<trans-unit id="64" lock="1">
+<source>Keys</source>
+<target>关键字</target>
+</trans-unit>
+
+<trans-unit id="65" lock="1">
+<source>Block</source>
+<target>阻止</target>
+</trans-unit>
+
+<trans-unit id="66" lock="1">
+<source>Attribute the user&lt;br/&gt;to one or more groups</source>
+<target>用户属性&lt;br/&gt;归属到一个或多个组</target>
+</trans-unit>
+
+<trans-unit id="67" lock="1">
+<source>Attribute one or more keys&lt;br/&gt;to the user</source>
+<target>一个或多个关键字归属 &lt;br/&gt;到用户</target>
+</trans-unit>
+
+<trans-unit id="68" lock="1">
+<source>Click here to block or&lt;br/&gt; unblock</source>
+<target>点击此处阻止或&lt;br/&gt;解除阻止</target>
+</trans-unit>
+
+<trans-unit id="69" lock="1">
+<source>Select one item</source>
+<target>选择一个项目</target>
+</trans-unit>
+
+<trans-unit id="70" lock="1">
+<source>Attributed</source>
+<target>已归属</target>
+</trans-unit>
+
+<trans-unit id="71" lock="1">
+<source>Unattributed</source>
+<target>解除归属</target>
+</trans-unit>
+
+<trans-unit id="72" lock="1">
+<source>RFID Number</source>
+<target>RFID号码</target>
+</trans-unit>
+
+<trans-unit id="73" lock="1">
+<source>Identificator</source>
+<target>身份认证</target>
+</trans-unit>
+
+<trans-unit id="74" lock="1">
+<source>Key List</source>
+<target>关键字列表</target>
+</trans-unit>
+
+<trans-unit id="75" lock="1">
+<source>Attribution</source>
+<target>归属</target>
+</trans-unit>
+
+<trans-unit id="76" lock="1">
+<source>Click here to edit the user</source>
+<target>点击此处编辑用户</target>
+</trans-unit>
+
+<trans-unit id="77" lock="1">
+<source>Click here to block or&lt;br/&gt; unblock the key</source>
+<target>点击此处锁住或&lt;br/&gt; 解锁该密钥</target>
+</trans-unit>
+
+<trans-unit id="78" lock="1">
+<source>Comment</source>
+<target>注释</target>
+</trans-unit>
+
+<trans-unit id="79" lock="1">
+<source>User Group List</source>
+<target>用户组列表</target>
+</trans-unit>
+
+<trans-unit id="80" lock="1">
+<source>Access Level List</source>
+<target>权限级别表</target>
+</trans-unit>
+
+<trans-unit id="81" lock="1">
+<source>Year</source>
+<target>年</target>
+</trans-unit>
+
+<trans-unit id="82" lock="1">
+<source>Non Working Day</source>
+<target>非工作日</target>
+</trans-unit>
+
+<trans-unit id="83" lock="1">
+<source>January</source>
+<target>一月</target>
+</trans-unit>
+
+<trans-unit id="84" lock="1">
+<source>Mon</source>
+<target>星期一</target>
+</trans-unit>
+
+<trans-unit id="85" lock="1">
+<source>Tue</source>
+<target>星期二</target>
+</trans-unit>
+
+<trans-unit id="86" lock="1">
+<source>Wed</source>
+<target>星期三</target>
+</trans-unit>
+
+<trans-unit id="87" lock="1">
+<source>Thu</source>
+<target>星期四</target>
+</trans-unit>
+
+<trans-unit id="88" lock="1">
+<source>Fri</source>
+<target>星期五</target>
+</trans-unit>
+
+<trans-unit id="89" lock="1">
+<source>Sat</source>
+<target>星期六</target>
+</trans-unit>
+
+<trans-unit id="90" lock="1">
+<source>Sun</source>
+<target>星期日</target>
+</trans-unit>
+
+<trans-unit id="91" lock="1">
+<source>February</source>
+<target>二月</target>
+</trans-unit>
+
+<trans-unit id="92" lock="1">
+<source>March</source>
+<target>三月</target>
+</trans-unit>
+
+<trans-unit id="93" lock="1">
+<source>April</source>
+<target>四月</target>
+</trans-unit>
+
+<trans-unit id="94" lock="1">
+<source>May</source>
+<target>五月</target>
+</trans-unit>
+
+<trans-unit id="95" lock="1">
+<source>June</source>
+<target>六月</target>
+</trans-unit>
+
+<trans-unit id="96" lock="1">
+<source>Jully</source>
+<target>七月</target>
+</trans-unit>
+
+<trans-unit id="97" lock="1">
+<source>August</source>
+<target>八月</target>
+</trans-unit>
+
+<trans-unit id="98" lock="1">
+<source>September</source>
+<target>九月</target>
+</trans-unit>
+
+<trans-unit id="99" lock="1">
+<source>October</source>
+<target>十月</target>
+</trans-unit>
+
+<trans-unit id="100" lock="1">
+<source>November</source>
+<target>十一月</target>
+</trans-unit>
+
+<trans-unit id="101" lock="1">
+<source>December</source>
+<target>十二月</target>
+</trans-unit>
+
+<trans-unit id="102" lock="1">
+<source>{n} interface was deleted</source>
+<target>{n} 接口被删除</target>
+</trans-unit>
+
+<trans-unit id="103" lock="1">
+<source>Cancel</source>
+<target>取消</target>
+</trans-unit>
+
+<trans-unit id="104" lock="1">
+<source>Add a new Hardware</source>
+<target>增加一个新硬件</target>
+</trans-unit>
+
+<trans-unit id="105" lock="1">
+<source>Selection of the hardware type</source>
+<target>硬件类型选择</target>
+</trans-unit>
+
+<trans-unit id="106" lock="1">
+<source>{type} technology</source>
+<target>{type}技术</target>
+</trans-unit>
+
+<trans-unit id="107" lock="1">
+<source>Install</source>
+<target>安装</target>
+</trans-unit>
+
+<trans-unit id="108" lock="1">
+<source>Templates</source>
+<target>模板</target>
+</trans-unit>
+
+<trans-unit id="109" lock="1">
+<source>Languages</source>
+<target>语言</target>
+</trans-unit>
+
+<trans-unit id="110" lock="1">
+<source>Devices</source>
+<target>设备</target>
+</trans-unit>
+
+
+<trans-unit id="111" lock="1">
+<source>Version</source>
+<target>版本</target>
+</trans-unit>
+
+<trans-unit id="112" lock="1">
+<source>Author</source>
+<target>作者</target>
+</trans-unit>
+
+<trans-unit id="113" lock="1">
+<source>License</source>
+<target>许可证</target>
+</trans-unit>
+
+<trans-unit id="114" lock="1">
+<source>Extensions Manager</source>
+<target>延伸管理者</target>
+</trans-unit>
+
+<trans-unit id="115" lock="1">
+<source>Upload Package File</source>
+<target>上传包文件</target>
+</trans-unit>
+
+<trans-unit id="116" lock="1">
+<source>Package File</source>
+<target>包文件</target>
+</trans-unit>
+
+<trans-unit id="117" lock="1">
+<source>Uninstall</source>
+<target>卸载安装</target>
+</trans-unit>
+
+
+<trans-unit id="118" lock="1">
+<source>Device</source>
+<target>设备</target>
+</trans-unit>
+
+<trans-unit id="119" lock="1">
+<source>Default</source>
+<target>默认</target>
+</trans-unit>
+
+<trans-unit id="120" lock="1">
+<source>Template</source>
+<target>模板</target>
+</trans-unit>
+
+<trans-unit id="121" lock="1">
+<source>Language</source>
+<target>语言</target>
+</trans-unit>
+
+<trans-unit id="122" lock="1">
+<source>The device is well installed. You have now to give the right access for this device.</source>
+<target>设备已安装好。现在请为设备赋予权限。</target>
+</trans-unit>
+
+
+<trans-unit id="123" lock="1">
+<source>Warning! - This device is already installed</source>
+<target>警告！- 此设备已经安装</target>
+</trans-unit>
+
+
+<trans-unit id="124" lock="1">
+<source>This field is required</source>
+<target>此项为必填</target>
+</trans-unit>
+
+<trans-unit id="125" lock="1">
+<source>You must enter an integer</source>
+<target>你必须输入一个整数</target>
+</trans-unit>
+
+<trans-unit id="126" lock="1">
+<source>Save</source>
+<target>保存</target>
+</trans-unit>
+
+<trans-unit id="127" lock="1">
+<source>Horux Server</source>
+<target>Horux服务器</target>
+</trans-unit>
+
+<trans-unit id="128" lock="1">
+<source>Enter the port number&lt;br /&gt; of the XMLRPC server for Horux</source>
+<target>请输入Horux系统XMLRPC服务的端口号</target>
+</trans-unit>
+
+
+
+<trans-unit id="129" lock="1">
+<source>Logs</source>
+<target>日志</target>
+</trans-unit>
+
+<trans-unit id="130" lock="1">
+<source>Enter the path where the logs are saved</source>
+<target>请输入日志保存的路径</target>
+</trans-unit>
+
+<trans-unit id="131" lock="1">
+<source>Path</source>
+<target>路径</target>
+</trans-unit>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<trans-unit id="132" lock="1">
+<source>Information</source>
+<target>信息</target>
+</trans-unit>
+
+<trans-unit id="133" lock="1">
+<source>PHP Settings</source>
+<target>PHP设置</target>
+</trans-unit>
+
+<trans-unit id="134" lock="1">
+<source>Directory Permissions</source>
+<target>目录允许权限</target>
+</trans-unit>
+
+<trans-unit id="135" lock="1">
+<source>PHP Information</source>
+<target>PHP信息</target>
+</trans-unit>
+
+<trans-unit id="136" lock="1">
+<source>System Information</source>
+<target>系统信息</target>
+</trans-unit>
+
+<trans-unit id="137" lock="1">
+<source>Setting</source>
+<target>设置</target>
+</trans-unit>
+
+<trans-unit id="138" lock="1">
+<source>Value</source>
+<target>值</target>
+</trans-unit>
+
+<trans-unit id="139" lock="1">
+<source>PHP built On</source>
+<target>PHP内置</target>
+</trans-unit>
+
+<trans-unit id="140" lock="1">
+<source>Database Version</source>
+<target>数据库版本</target>
+</trans-unit>
+
+
+
+<trans-unit id="141" lock="1">
+<source>PHP Version</source>
+<target>PHP版本</target>
+</trans-unit>
+
+<trans-unit id="142" lock="1">
+<source>Web Server</source>
+<target>Web服务器</target>
+</trans-unit>
+
+<trans-unit id="143" lock="1">
+<source>WebServer to PHP interface</source>
+<target>PHP接口的Web服务器</target>
+</trans-unit>
+
+
+
+<trans-unit id="144" lock="1">
+<source>User Agent</source>
+<target>用户代理</target>
+</trans-unit>
+
+<trans-unit id="145" lock="1">
+<source>Relevant PHP Settings</source>
+<target>相关PHP设置</target>
+</trans-unit>
+
+<trans-unit id="146" lock="1">
+<source>Safe Mode</source>
+<target>安全模式 (safe mode)</target>
+</trans-unit>
+
+<trans-unit id="147" lock="1">
+<source>Open basedir</source>
+<target>打开基本目录(open basedir)</target>
+</trans-unit>
+
+<trans-unit id="148" lock="1">
+<source>Display Errors</source>
+<target>显示错误</target>
+</trans-unit>
+
+<trans-unit id="149" lock="1">
+<source>Short Open Tags</source>
+<target>短打开标签</target>
+</trans-unit>
+
+<trans-unit id="150" lock="1">
+<source>File Uploads</source>
+<target>文件上传</target>
+</trans-unit>
+
+<trans-unit id="151" lock="1">
+<source>Magic Quotes</source>
+<target>魔术引用</target>
+</trans-unit>
+
+<trans-unit id="152" lock="1">
+<source>Register Globals</source>
+<target>注册全局变量(register globals)</target>
+</trans-unit>
+
+<trans-unit id="153" lock="1">
+<source>Output Buffering</source>
+<target>输出缓存(output buffering)</target>
+</trans-unit>
+
+<trans-unit id="154" lock="1">
+<source>Session save path</source>
+<target>会话保存路径 (session save path)</target>
+</trans-unit>
+
+<trans-unit id="155" lock="1">
+<source>Session auto start</source>
+<target>会话自动启动</target>
+</trans-unit>
+
+<trans-unit id="156" lock="1">
+<source>XML enabled</source>
+<target>XML 启用</target>
+</trans-unit>
+
+<trans-unit id="157" lock="1">
+<source>Zlib enabled</source>
+<target>Zlib 启用</target>
+</trans-unit>
+
+<trans-unit id="158" lock="1">
+<source>Disabled Functions</source>
+<target>禁用功能</target>
+</trans-unit>
+
+<trans-unit id="159" lock="1">
+<source>Mbstring enabled</source>
+<target>Mbstring 启用</target>
+</trans-unit>
+
+<trans-unit id="160" lock="1">
+<source>Iconv available</source>
+<target>Iconv 可用</target>
+</trans-unit>
+
+<trans-unit id="161" lock="1">
+<source>Directory</source>
+<target>目录</target>
+</trans-unit>
+
+<trans-unit id="162" lock="1">
+<source>Devices Directory</source>
+<target>设备目录</target>
+</trans-unit>
+
+<trans-unit id="163" lock="1">
+<source>Components Directory</source>
+<target>组件目录</target>
+</trans-unit>
+
+<trans-unit id="164" lock="1">
+<source>Cache Directory</source>
+<target>缓存目录</target>
+</trans-unit>
+
+<trans-unit id="165" lock="1">
+<source>Templates Directory</source>
+<target>模板目录</target>
+</trans-unit>
+
+<trans-unit id="166" lock="1">
+<source>Languages Directory</source>
+<target>语言目录</target>
+</trans-unit>
+
+<trans-unit id="167" lock="1">
+<source>Pictures Directory</source>
+<target>图片目录</target>
+</trans-unit>
+
+<trans-unit id="168" lock="1">
+<source>temp Directory</source>
+<target>临时目录</target>
+</trans-unit>
+
+<trans-unit id="169" lock="1">
+<source>OFF</source>
+<target>关闭</target>
+</trans-unit>
+
+
+
+<trans-unit id="170" lock="1">
+<source>ON</source>
+<target>启用</target>
+</trans-unit>
+
+<trans-unit id="171" lock="1">
+<source>Yes</source>
+<target>是</target>
+</trans-unit>
+
+<trans-unit id="172" lock="1">
+<source>Writeable</source>
+<target>可写</target>
+</trans-unit>
+
+<trans-unit id="173" lock="1">
+<source>Table name</source>
+<target>表名</target>
+</trans-unit>
+
+<trans-unit id="174" lock="1">
+<source># of Items</source>
+<target># 项目</target>
+</trans-unit>
+
+<trans-unit id="175" lock="1">
+<source>Checked in {n} Items</source>
+<target>已提交 {n} 项目</target>
+</trans-unit>
+
+<trans-unit id="176" lock="1">
+<source>Global Check-in</source>
+<target>全部提交</target>
+</trans-unit>
+
+<trans-unit id="177" lock="1">
+<source>Firstname</source>
+<target>姓</target>
+</trans-unit>
+
+
+
+<trans-unit id="178" lock="1">
+<source>Username</source>
+<target>用户名</target>
+</trans-unit>
+
+<trans-unit id="179" lock="1">
+<source>Password</source>
+<target>密码</target>
+</trans-unit>
+
+<trans-unit id="180" lock="1">
+<source>Horux Administration Login</source>
+<target>Horux管理员登陆</target>
+</trans-unit>
+
+<trans-unit id="181" lock="1">
+<source>Login</source>
+<target>登陆</target>
+</trans-unit>
+
+<trans-unit id="182" lock="1">
+<source>The server &lt;i&gt;horuxd&lt;/i&gt; is not running</source>
+<target>&lt;i&gt;horuxd&lt;/i&gt;服务器没有运行</target>
+</trans-unit>
+
+
+
+<trans-unit id="183" lock="1">
+<source>Service Horux</source>
+<target>Horux服务</target>
+</trans-unit>
+
+<trans-unit id="184" lock="1">
+<source>Invalid email address.</source>
+<target>非法Email地址</target>
+</trans-unit>
+
+<trans-unit id="185" lock="1">
+<source>Parameters</source>
+<target>参数</target>
+</trans-unit>
+
+<trans-unit id="186" lock="1">
+<source>Enter the name for the site</source>
+<target>请输入网站名</target>
+</trans-unit>
+
+<trans-unit id="187" lock="1">
+<source>Enter the street</source>
+<target>请输入街道名</target>
+</trans-unit>
+
+<trans-unit id="188" lock="1">
+<source>Street</source>
+<target>街道</target>
+</trans-unit>
+
+<trans-unit id="189" lock="1">
+<source>Enter the zip number</source>
+<target>请输入邮政编码</target>
+</trans-unit>
+
+<trans-unit id="190" lock="1">
+<source>ZIP</source>
+<target>邮政编码</target>
+</trans-unit>
+
+<trans-unit id="191" lock="1">
+<source>Enter the city</source>
+<target>请输入城市名</target>
+</trans-unit>
+
+<trans-unit id="192" lock="1">
+<source>City</source>
+<target>城市</target>
+</trans-unit>
+
+<trans-unit id="193" lock="1">
+<source>Enter the phone number of the site</source>
+<target>请输入站点联系号码</target>
+</trans-unit>
+
+<trans-unit id="194" lock="1">
+<source>Phone</source>
+<target>手机号码</target>
+</trans-unit>
+
+<trans-unit id="195" lock="1">
+<source>Enter the fax number of the site</source>
+<target>请输入站点传真号</target>
+</trans-unit>
+
+<trans-unit id="196" lock="1">
+<source>Fax</source>
+<target>传真号</target>
+</trans-unit>
+
+<trans-unit id="197" lock="1">
+<source>Enter the email of the site</source>
+<target>请输入站点email地址</target>
+</trans-unit>
+
+<trans-unit id="198" lock="1">
+<source>Enter the web site of the site</source>
+<target>请输入站点网址</target>
+</trans-unit>
+
+<trans-unit id="199" lock="1">
+<source>Add the logo of the site</source>
+<target>为站点添加logo</target>
+</trans-unit>
+
+<trans-unit id="200" lock="1">
+<source>Picture</source>
+<target>图片</target>
+</trans-unit>
+
+<trans-unit id="201" lock="1">
+<source>You must enter a valid date (d-M-yyyy).</source>
+<target>你必须输入一个有效日期 (d-M-yyyy)</target>
+</trans-unit>
+
+<trans-unit id="202" lock="1">
+<source>This date must be bigger that from</source>
+<target>此日期应大于起始日期</target>
+</trans-unit>
+
+<trans-unit id="203" lock="1">
+<source>Apply</source>
+<target>应用</target>
+</trans-unit>
+
+<trans-unit id="204" lock="1">
+<source>Add an access level</source>
+<target>增加权限级别</target>
+</trans-unit>
+
+<trans-unit id="205" lock="1">
+<source>Enter a name for this access level</source>
+<target>输入权限级别名称</target>
+</trans-unit>
+
+<trans-unit id="206" lock="1">
+<source>Check it if you want a full access level</source>
+<target>如果需要全部权限级别，请勾选此框</target>
+</trans-unit>
+
+<trans-unit id="207" lock="1">
+<source>Full access</source>
+<target>全部权限</target>
+</trans-unit>
+
+<trans-unit id="208" lock="1">
+<source>Check it if you want an access level having&lt;br /&gt; access during the non working day</source>
+<target>请勾选此框，如果你需要在非工作日也有进入权限</target>
+</trans-unit>
+
+<trans-unit id="209" lock="1">
+<source>Non working day access</source>
+<target>非工作日进入</target>
+</trans-unit>
+
+<trans-unit id="210" lock="1">
+<source>Check it if you want an access level having&lt;br /&gt; access during the week-end</source>
+<target>请勾选此框，如果您需要在周末有权限进入</target>
+</trans-unit>
+
+<trans-unit id="211" lock="1">
+<source>Week-end access</source>
+<target>周末权限</target>
+</trans-unit>
+
+<trans-unit id="212" lock="1">
+<source>Date when this access level is valid</source>
+<target>该权限级别有效的开始日期</target>
+</trans-unit>
+
+<trans-unit id="213" lock="1">
+<source>Valid from</source>
+<target>从此日开始有效</target>
+</trans-unit>
+
+<trans-unit id="214" lock="1">
+<source>Date when this access level is unvalid</source>
+<target>权限级别无效的日期</target>
+</trans-unit>
+
+<trans-unit id="215" lock="1">
+<source>Valid until</source>
+<target>有效期直至</target>
+</trans-unit>
+
+<trans-unit id="216" lock="1">
+<source>You could insert a description for this access level</source>
+<target>你可以为该权限级别添加描述</target>
+</trans-unit>
+
+<trans-unit id="217" lock="1">
+<source>Time area</source>
+<target>时间范围</target>
+</trans-unit>
+
+<trans-unit id="218" lock="1">
+<source>Check it if you want to take Monday configuration&lt;br/&gt; as default for the rest of the week.</source>
+<target>请勾选此框，如果您希望星期一的设置为本周其他日期的默认设置</target>
+</trans-unit>
+
+<trans-unit id="219" lock="1">
+<source>All days as Monday</source>
+<target>所有日期都默认按星期一的设置</target>
+</trans-unit>
+
+<trans-unit id="220" lock="1">
+<source>Monday</source>
+<target>星期一</target>
+</trans-unit>
+
+<trans-unit id="221" lock="1">
+<source>Tuesday</source>
+<target>星期二</target>
+</trans-unit>
+
+<trans-unit id="222" lock="1">
+<source>Wednesday</source>
+<target>星期三</target>
+</trans-unit>
+
+<trans-unit id="223" lock="1">
+<source>Thursday</source>
+<target>星期四</target>
+</trans-unit>
+
+<trans-unit id="224" lock="1">
+<source>Friday</source>
+<target>星期五</target>
+</trans-unit>
+
+<trans-unit id="225" lock="1">
+<source>Saturday</source>
+<target>星期六</target>
+</trans-unit>
+
+<trans-unit id="226" lock="1">
+<source>Sunday</source>
+<target>星期日</target>
+</trans-unit>
+
+<trans-unit id="227" lock="1">
+<source>Modify an access level</source>
+<target>修改一个权限级别</target>
+</trans-unit>
+
+<trans-unit id="228" lock="1">
+<source>This identificator is already used</source>
+<target>此识别标识已被使用</target>
+</trans-unit>
+
+<trans-unit id="229" lock="1">
+<source>This serialNumber is already used</source>
+<target>此序列号码已被使用</target>
+</trans-unit>
+
+<trans-unit id="230" lock="1">
+<source>---- No attribution ----</source>
+<target>---- 无属性 ----</target>
+</trans-unit>
+
+<trans-unit id="231" lock="1">
+<source>Add a Key</source>
+<target>增加关键字</target>
+</trans-unit>
+
+<trans-unit id="232" lock="1">
+<source>Enter a &lt;strong&gt;unique&lt;/strong&gt; identificator for this key</source>
+<target>请为此关键字输入一个 &lt;strong&gt;唯一&lt;/strong&gt; 识别标识</target>
+</trans-unit>
+
+<trans-unit id="233" lock="1">
+<source>Attribute this key to somebody</source>
+<target>将此关键字赋属性给个人</target>
+</trans-unit>
+
+<trans-unit id="234" lock="1">
+<source>Modify a Key</source>
+<target>修改关键字</target>
+</trans-unit>
+
+<trans-unit id="235" lock="1">
+<source>Modify a Non Working Day</source>
+<target>修改非工作日</target>
+</trans-unit>
+
+<trans-unit id="236" lock="1">
+<source>Enter a name for this non working day</source>
+<target>请为非工作日输入一个名字</target>
+</trans-unit>
+
+<trans-unit id="237" lock="1">
+<source>Date when start this non working day</source>
+<target>非工作日起始日期</target>
+</trans-unit>
+
+<trans-unit id="238" lock="1">
+<source>From</source>
+<target>从</target>
+</trans-unit>
+
+<trans-unit id="239" lock="1">
+<source>Date when finish this non working day.&lt;br/&gt;Do not insert the date if it is only one day</source>
+<target>非工作日结束日期。&lt;br/&gt;当只有一天时此日期无需输入。</target>
+</trans-unit>
+
+<trans-unit id="240" lock="1">
+<source>Until</source>
+<target>直至</target>
+</trans-unit>
+
+<trans-unit id="241" lock="1">
+<source>You could insert a description for this non working day</source>
+<target>您可以为非工作日添加一个描述</target>
+</trans-unit>
+
+<trans-unit id="242" lock="1">
+<source>Add a Non Working Day</source>
+<target>添加非工作日</target>
+</trans-unit>
+
+<trans-unit id="243" lock="1">
+<source>This name is already used</source>
+<target>此名称已经存在</target>
+</trans-unit>
+
+<trans-unit id="244" lock="1">
+<source>The password must be equal to the confirmation</source>
+<target>密码与确认密码需一致</target>
+</trans-unit>
+
+<trans-unit id="245" lock="1">
+<source>Add a super user</source>
+<target>添加超级用户</target>
+</trans-unit>
+
+<trans-unit id="246" lock="1">
+<source>Global</source>
+<target>全局</target>
+</trans-unit>
+
+<trans-unit id="247" lock="1">
+<source>Enter the username for this super user</source>
+<target>输入超级用户姓名</target>
+</trans-unit>
+
+<trans-unit id="248" lock="1">
+<source>Enter the password for this super user</source>
+<target>输入超级用户密码</target>
+</trans-unit>
+
+<trans-unit id="249" lock="1">
+<source>Enter the confirmation password for this super user</source>
+<target>输入超级用户确认密码</target>
+</trans-unit>
+
+<trans-unit id="250" lock="1">
+<source>Confirmation</source>
+<target>确认</target>
+</trans-unit>
+
+<trans-unit id="251" lock="1">
+<source>Select super user group</source>
+<target>选择超级用户组</target>
+</trans-unit>
+
+<trans-unit id="252" lock="1">
+<source>Select user link</source>
+<target>选择用户链接</target>
+</trans-unit>
+
+<trans-unit id="253" lock="1">
+<source>Modify a super user</source>
+<target>选择超级用户</target>
+</trans-unit>
+
+
+<trans-unit id="254" lock="1">
+<source>User Group</source>
+<target>用户组</target>
+</trans-unit>
+
+<trans-unit id="255" lock="1">
+<source>Install/Uninstall</source>
+<target>安装/卸载安装</target>
+</trans-unit>
+
+
+<trans-unit id="256" lock="1">
+<source>Page</source>
+<target>页面</target>
+</trans-unit>
+
+<trans-unit id="257" lock="1">
+<source>Add access</source>
+<target>添加权限</target>
+</trans-unit>
+
+<trans-unit id="258" lock="1">
+<source>Add a super user group</source>
+<target>添加超级用户组</target>
+</trans-unit>
+
+<trans-unit id="259" lock="1">
+<source>Enter the name for this super user group</source>
+<target>输入超级用户组的名称</target>
+</trans-unit>
+
+<trans-unit id="260" lock="1">
+<source>You could insert a description for this group.</source>
+<target>你可以为组添加描述</target>
+</trans-unit>
+
+
+
+
+
+
+
+
+
+<trans-unit id="261" lock="1">
+<source>Modify a super user group</source>
+<target>修改超级用户组</target>
+</trans-unit>
+
+<trans-unit id="262" lock="1">
+<source>Action</source>
+<target>动作</target>
+</trans-unit>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<trans-unit id="263" lock="1">
+<source>Attribute</source>
+<target>属性</target>
+</trans-unit>
+
+<trans-unit id="264" lock="1">
+<source>Unattribute</source>
+<target>去除属性</target>
+</trans-unit>
+
+<trans-unit id="265" lock="1">
+<source>Key Attribution</source>
+<target>关键字属性</target>
+</trans-unit>
+
+<trans-unit id="266" lock="1">
+<source>Attribute the key</source>
+<target>为关键字设置属性</target>
+</trans-unit>
+
+<trans-unit id="267" lock="1">
+<source>Groups Attribution</source>
+<target>组属性</target>
+</trans-unit>
+
+<trans-unit id="268" lock="1">
+<source>Attribute the group</source>
+<target>为组设置属性</target>
+</trans-unit>
+
+<trans-unit id="269" lock="1">
+<source>---- Select a language ----</source>
+<target>---- 选择一种语言 ----</target>
+</trans-unit>
+
+<trans-unit id="270" lock="1">
+<source>English</source>
+<target>英文</target>
+</trans-unit>
+
+<trans-unit id="271" lock="1">
+<source>French</source>
+<target>法文</target>
+</trans-unit>
+
+<trans-unit id="272" lock="1">
+<source>German</source>
+<target>德文</target>
+</trans-unit>
+
+<trans-unit id="273" lock="1">
+<source>Italian</source>
+<target>意大利文</target>
+</trans-unit>
+
+<trans-unit id="274" lock="1">
+<source>Spanish</source>
+<target>西班牙文</target>
+</trans-unit>
+
+<trans-unit id="275" lock="1">
+<source>Add a user</source>
+<target>添加一个用户</target>
+</trans-unit>
+
+<trans-unit id="276" lock="1">
+<source>Select the sex for this user</source>
+<target>为用户选择性别</target>
+</trans-unit>
+
+<trans-unit id="277" lock="1">
+<source>Sex</source>
+<target>性别</target>
+</trans-unit>
+
+<trans-unit id="278" lock="1">
+<source>Enter the name for this user</source>
+<target>输入用户姓名</target>
+</trans-unit>
+
+<trans-unit id="279" lock="1">
+<source>Enter the firstname for this user</source>
+<target>输入用户姓</target>
+</trans-unit>
+
+<trans-unit id="280" lock="1">
+<source>Select the language for this user</source>
+<target>为该用户选择语言</target>
+</trans-unit>
+
+<trans-unit id="281" lock="1">
+<source>Add the picture of the user</source>
+<target>为用户添加照片</target>
+</trans-unit>
+
+<trans-unit id="282" lock="1">
+<source>Personal information</source>
+<target>个人信息</target>
+</trans-unit>
+
+<trans-unit id="283" lock="1">
+<source>Enter the personal street</source>
+<target>输入个人街道</target>
+</trans-unit>
+
+<trans-unit id="284" lock="1">
+<source>Enter the personal zip number</source>
+<target>输入个人邮政编码</target>
+</trans-unit>
+
+<trans-unit id="285" lock="1">
+<source>Enter the personal city</source>
+<target>输入个人城市名</target>
+</trans-unit>
+
+<trans-unit id="286" lock="1">
+<source>Enter the personal country</source>
+<target>输入个人国家</target>
+</trans-unit>
+
+<trans-unit id="287" lock="1">
+<source>Country</source>
+<target>国家</target>
+</trans-unit>
+
+<trans-unit id="288" lock="1">
+<source>Enter the personal phone number</source>
+<target>输入个人电话号码</target>
+</trans-unit>
+
+<trans-unit id="289" lock="1">
+<source>Enter the personal email</source>
+<target>输入个人邮箱</target>
+</trans-unit>
+
+<trans-unit id="290" lock="1">
+<source>Professional information</source>
+<target>专业信息</target>
+</trans-unit>
+
+<trans-unit id="291" lock="1">
+<source>Enter the firme</source>
+<target>输入公司名</target>
+</trans-unit>
+
+<trans-unit id="292" lock="1">
+<source>Firme</source>
+<target>公司名</target>
+</trans-unit>
+
+<trans-unit id="293" lock="1">
+<source>Enter the department</source>
+<target>输入部门名称</target>
+</trans-unit>
+
+<trans-unit id="294" lock="1">
+<source>Department</source>
+<target>部门名称</target>
+</trans-unit>
+
+<trans-unit id="295" lock="1">
+<source>Enter the professional street</source>
+<target>输入街道全名</target>
+</trans-unit>
+
+<trans-unit id="296" lock="1">
+<source>Enter the professional zip number</source>
+<target>输入邮政编码</target>
+</trans-unit>
+
+<trans-unit id="297" lock="1">
+<source>Enter the professional city</source>
+<target>输入城市全称</target>
+</trans-unit>
+
+<trans-unit id="298" lock="1">
+<source>Enter the professional country</source>
+<target>输入国家全称</target>
+</trans-unit>
+
+<trans-unit id="299" lock="1">
+<source>Enter the professional phone number</source>
+<target>输入手机号码（带国家区号）</target>
+</trans-unit>
+
+<trans-unit id="300" lock="1">
+<source>Enter the professional email</source>
+<target>输入邮箱地址</target>
+</trans-unit>
+
+<trans-unit id="301" lock="1">
+<source>Modify a user</source>
+<target>修改用户</target>
+</trans-unit>
+
+<trans-unit id="302" lock="1">
+<source>Check it if you want to&lt;br/&gt;delete an existing picture</source>
+<target>如果您想删除一副已存在的图片&lt;br/&gt;请选中此框。</target>
+</trans-unit>
+
+<trans-unit id="303" lock="1">
+<source>Step 1 : User information</source>
+<target>步骤 1 : 用户信息</target>
+</trans-unit>
+
+<trans-unit id="304" lock="1">
+<source>Complete</source>
+<target>完成</target>
+</trans-unit>
+
+<trans-unit id="305" lock="1">
+<source>Next</source>
+<target>下一步</target>
+</trans-unit>
+
+<trans-unit id="306" lock="1">
+<source>Previous</source>
+<target>上一步</target>
+</trans-unit>
+
+<trans-unit id="307" lock="1">
+<source>Add a User Group</source>
+<target>添加一个用户组</target>
+</trans-unit>
+
+<trans-unit id="308" lock="1">
+<source>Enter a unique name for this group</source>
+<target>为该组设置一个唯一的名字</target>
+</trans-unit>
+
+<trans-unit id="309" lock="1">
+<source>Access Right</source>
+<target>权限正确</target>
+</trans-unit>
+
+<trans-unit id="310" lock="1">
+<source>Modify a User Group</source>
+<target>修改用户组</target>
+</trans-unit>
+
+<trans-unit id="311" lock="1">
+<source>Horux About</source>
+<target>关于Horux</target>
+</trans-unit>
+
+<trans-unit id="312" lock="1">
+<source>About</source>
+<target>关于</target>
+</trans-unit>
+
+<trans-unit id="313" lock="1">
+<source>The group was added successfully</source>
+<target>组添加成功</target>
+</trans-unit>
+
+<trans-unit id="314" lock="1">
+<source>Horux</source>
+<target>Horux</target>
+</trans-unit>
+
+<trans-unit id="315" lock="1">
+<source>Horux Version</source>
+<target>Horux系统版本</target>
+</trans-unit>
+
+<trans-unit id="316" lock="1">
+<source>Community Forum</source>
+<target>社区论坛</target>
+</trans-unit>
+
+<trans-unit id="317" lock="1">
+<source>Copyright</source>
+<target>版权</target>
+</trans-unit>
+
+<trans-unit id="318" lock="1">
+<source>The user was added successfully</source>
+<target>用户添加成功</target>
+</trans-unit>
+
+<trans-unit id="319" lock="1">
+<source>Info</source>
+<target>信息</target>
+</trans-unit>
+
+<trans-unit id="320" lock="1">
+<source>This record is modified by &lt;b&gt;</source>
+<target>此条记录被 &lt;b&gt;修改</target>
+</trans-unit>
+
+<trans-unit id="321" lock="1">
+<source>Unique serial number of the Key</source>
+<target>关键字的唯一序列号</target>
+</trans-unit>
+
+<trans-unit id="322" lock="1">
+<source>Key number</source>
+<target>关键字号码</target>
+</trans-unit>
+
+<trans-unit id="323" lock="1">
+<source>Check it if the key must be blocked</source>
+<target>检查该关键字是否需被阻止</target>
+</trans-unit>
+
+<trans-unit id="324" lock="1">
+<source>Key Number</source>
+<target>密钥</target>
+</trans-unit>
+
+
+
+
+
+<trans-unit id="325" lock="1">
+<source>Super admin group</source>
+<target>超级管理组</target>
+</trans-unit>
+
+<trans-unit id="326" lock="1">
+<source>The user was not modified</source>
+<target>用户未被修改</target>
+</trans-unit>
+
+
+
+<trans-unit id="327" lock="1">
+<source>The user was not modified. The password was not changed</source>
+<target>用户未被修改，密码未改变</target>
+</trans-unit>
+
+<trans-unit id="328" lock="1">
+<source>The user was modified successfully. The password was changed</source>
+<target>用户修改成功。密码已修改。</target>
+</trans-unit>
+
+<trans-unit id="329" lock="1">
+<source>The user was modified successfully. The password was not changed</source>
+<target>用户修改成功。密码未改变。</target>
+</trans-unit>
+
+<trans-unit id="330" lock="1">
+<source>If you check this option, you will be able&lt;br&gt; to modify the password for all super user</source>
+<target>如果设置该选项，您将能够&lt;br&gt;为所有超级用户修改密码。</target>
+</trans-unit>
+
+<trans-unit id="331" lock="1">
+<source>The access level was added successfully</source>
+<target>权限级别添加成功</target>
+</trans-unit>
+
+<trans-unit id="332" lock="1">
+<source>{n} access level was deleted</source>
+<target>{n} 权限级别被删除</target>
+</trans-unit>
+
+
+
+
+
+<trans-unit id="333" lock="1">
+<source>Use a valid username and password to gain access Horux.</source>
+<target>请使用有效的用户名和密码登陆 Horux系统</target>
+</trans-unit>
+
+<trans-unit id="334" lock="1">
+<source>default</source>
+<target>默认</target>
+</trans-unit>
+
+
+<trans-unit id="335" lock="1">
+<source>For your most common questions the best place to start looking for answers is the &lt;a href="http://forum.horux.ch" target="_blank"&gt;Frequently Asked Questions (FAQ)&lt;/a&gt; area.  If you are stuck on a particular screen in the Administration area of Horux (which is where you are now), then try clicking on the Help toolbar button which you will find on almost all screens.</source>
+<target>对于你的常见问题，最好去论坛&lt;a href="http://forum.horux.ch" target="_blank"&gt;的常见问答里查找答案，如果你卡在某个管理页面中，可点击工具条上的帮助按钮。</target>
+</trans-unit>
+
+<trans-unit id="336" lock="1">
+<source>Warning! JavaScript must be enabled for proper operation of the Administrator Back-end</source>
+<target>警告! 为了是管理员操作正常，请启用Javascript。</target>
+</trans-unit>
+
+<trans-unit id="337" lock="1">
+<source>The user was modified successfully</source>
+<target>用户修改成功</target>
+</trans-unit>
+
+
+
+<trans-unit id="338" lock="1">
+<source>There was an error uploading this file to the server.</source>
+<target>上传文件至服务器时发生错误。</target>
+</trans-unit>
+
+<trans-unit id="339" lock="1">
+<source>Warning! - Failed to move file. Unknown Archive Type</source>
+<target>警告! - 移动文件失败。未知文件类型。</target>
+</trans-unit>
+
+<trans-unit id="340" lock="1">
+<source>Global Checkin</source>
+<target>全部提交</target>
+</trans-unit>
+
+
+
+<trans-unit id="341" lock="1">
+<source>The group was modified successfully</source>
+<target>组被成功修改</target>
+</trans-unit>
+
+<trans-unit id="342" lock="1">
+<source>The group was not modified</source>
+<target>组没有被修改</target>
+</trans-unit>
+
+
+<trans-unit id="343" lock="1">
+<source>The key was modified successfully</source>
+<target>关键字修改成功</target>
+</trans-unit>
+
+
+
+
+
+<trans-unit id="344" lock="1">
+<source>The config was modified successfully</source>
+<target>配置修改成功</target>
+</trans-unit>
+
+
+
+
+
+
+
+
+
+<trans-unit id="345" lock="1">
+<source>{n} key was unattributed</source>
+<target>{n} 关键字被解除属性</target>
+</trans-unit>
+
+<trans-unit id="346" lock="1">
+<source>{n} group was unattributed</source>
+<target>{n} 组被解除属性</target>
+</trans-unit>
+
+<trans-unit id="347" lock="1">
+<source>{n} user(s) was deleted</source>
+<target>{n} 用户被删除</target>
+</trans-unit>
+
+<trans-unit id="348" lock="1">
+<source>{n} group was deleted</source>
+<target>{n} 组被删除</target>
+</trans-unit>
+
+<trans-unit id="349" lock="1">
+<source>{n} key was deleted</source>
+<target>{n} 关键字被删除</target>
+</trans-unit>
+
+<trans-unit id="350" lock="1">
+<source>The access level was not modified</source>
+<target>此权限级别未修改</target>
+</trans-unit>
+
+<trans-unit id="351" lock="1">
+<source>The non working day was not modified</source>
+<target>此非工作日没有被修改</target>
+</trans-unit>
+
+<trans-unit id="352" lock="1">
+<source>The non working day was deleted successfully</source>
+<target>此非工作日删除成功</target>
+</trans-unit>
+
+<trans-unit id="353" lock="1">
+<source>{n} devices was deleted</source>
+<target>{n} 设备已删除</target>
+</trans-unit>
+
+<trans-unit id="354" lock="1">
+<source>New default language updated</source>
+<target>新默认语言更新成功</target>
+</trans-unit>
+
+<trans-unit id="355" lock="1">
+<source>Upload File and Install</source>
+<target>上传文件及安装</target>
+</trans-unit>
+
+<trans-unit id="356" lock="1">
+<source>Warning! - This language is already installed</source>
+<target>警告! - 此语言已经安装</target>
+</trans-unit>
+
+<trans-unit id="357" lock="1">
+<source>The non working day was added successfully</source>
+<target>此非工作日添加成功</target>
+</trans-unit>
+
+<trans-unit id="358" lock="1">
+<source>The key was added successfully</source>
+<target>此关键字添加成功</target>
+</trans-unit>
+
+<trans-unit id="359" lock="1">
+<source>The access level was modified successfully</source>
+<target>此权限级别修改成功</target>
+</trans-unit>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<trans-unit id="360" lock="1">
+<source>Log all debug message from horuxd</source>
+<target>从Horux系统记录所有调试信息</target>
+</trans-unit>
+
+<trans-unit id="361" lock="1">
+<source>Debug info</source>
+<target>调试信息</target>
+</trans-unit>
+
+<trans-unit id="362" lock="1">
+<source>Horux Status</source>
+<target>Horux状态</target>
+</trans-unit>
+
+<trans-unit id="363" lock="1">
+<source>The server horux seems to be down</source>
+<target>Horux服务器似乎已关闭</target>
+</trans-unit>
+
+<trans-unit id="364" lock="1">
+<source>Horux Core Info</source>
+<target>Horux系统核心信息</target>
+</trans-unit>
+
+<trans-unit id="365" lock="1">
+<source>Plugins</source>
+<target>插件</target>
+</trans-unit>
+
+<trans-unit id="366" lock="1">
+<source>Horux Core Information</source>
+<target>Horux 核心信息</target>
+</trans-unit>
+
+<trans-unit id="367" lock="1">
+<source>Horux Core Plugins Information</source>
+<target>Horux 核心插件信息</target>
+</trans-unit>
+
+<trans-unit id="368" lock="1">
+<source>Horux Core Devices Information</source>
+<target>Horux 核心设备信息</target>
+</trans-unit>
+
+<trans-unit id="369" lock="1">
+<source>Horux Core Version</source>
+<target>Horux 核心版本</target>
+</trans-unit>
+
+<trans-unit id="370" lock="1">
+<source>Horux time live</source>
+<target>Horux活动时间</target>
+</trans-unit>
+
+<trans-unit id="371" lock="1">
+<source>ID</source>
+<target>ID</target>
+</trans-unit>
+
+<trans-unit id="372" lock="1">
+<source>Serial Number</source>
+<target>序列号</target>
+</trans-unit>
+
+<trans-unit id="373" lock="1">
+<source>Connection status</source>
+<target>连接状态</target>
+</trans-unit>
+
+<trans-unit id="374" lock="1">
+<source>Firmware Version</source>
+<target>公司版本</target>
+</trans-unit>
+
+<trans-unit id="375" lock="1">
+<source>No</source>
+<target>号码</target>
+</trans-unit>
+
+<trans-unit id="376" lock="1">
+<source>Details</source>
+<target>详细信息</target>
+</trans-unit>
+
+<trans-unit id="377" lock="1">
+<source>show</source>
+<target>显示</target>
+</trans-unit>
+
+<trans-unit id="378" lock="1">
+<source>Device Info</source>
+<target>设备信息</target>
+</trans-unit>
+
+<trans-unit id="379" lock="1">
+<source>The server &lt;i&gt;horuxd&lt;/i&gt; is running</source>
+<target>&lt;i&gt;horuxd&lt;/i&gt;服务器正在运行</target>
+</trans-unit>
+
+
+
+<trans-unit id="380" lock="1">
+<source>Step 1 :Pre-installation Check</source>
+<target>步骤1 : 安装环境检查</target>
+</trans-unit>
+
+<trans-unit id="381" lock="1">
+<source>Step 2 : License</source>
+<target>步骤 2 : 许可证</target>
+</trans-unit>
+
+<trans-unit id="382" lock="1">
+<source>Ok</source>
+<target>OK</target>
+</trans-unit>
+
+<trans-unit id="383" lock="1">
+<source>Pre-installation check for Horux 1.0.0 Production/Stable</source>
+<target>Horux 1.0.0系统安装环境检查 /稳定</target>
+</trans-unit>
+
+<trans-unit id="384" lock="1">
+<source>If any of these items is not supported (marked as &lt;strong&gt;&lt;font color="#ff0000"&gt;No&lt;/font&gt;&lt;/strong&gt;) your system does not match the minimum requirements necessary. Please take the appropriate actions to correct the errors. Failure to do so could lead to your Horux installation not functioning correctly.</source>
+<target>如果以下项目有任何一项不支持 ( 被&lt;strong&gt;&lt;font color="#ff0000"&gt;No&lt;/font&gt;&lt;/strong&gt;) 标示，则你的系统没有满足最低需求。请先解决这些错误，否则Horux系统的安装可能不能正常运行。</target>
+</trans-unit>
+
+<trans-unit id="385" lock="1">
+<source>{n} group(s) was deleted</source>
+<target>{n} 组被删除</target>
+</trans-unit>
+
+
+<trans-unit id="386" lock="1">
+<source>One or more groups cannot be deleted. The group musst not contains super user to be deleted.</source>
+<target>一个或多个组不能被删除。该组中不能包含超级用户。</target>
+</trans-unit>
+
+<trans-unit id="387" lock="1">
+<source>The main super user group cannot be deleted</source>
+<target>该主要超级用户组不能被删除。</target>
+</trans-unit>
+
+<trans-unit id="388" lock="1">
+<source>The site was not modified</source>
+<target>该站点没有被修改</target>
+</trans-unit>
+
+<trans-unit id="389" lock="1">
+<source>The site was modifed successfully</source>
+<target>站点修改成功</target>
+</trans-unit>
+
+<trans-unit id="390" lock="1">
+<source>Unwriteable</source>
+<target>不可写</target>
+</trans-unit>
+
+<trans-unit id="391" lock="1">
+<source>Enter the key allowing to access the online help</source>
+<target>输入允许进入在线帮助的密钥</target>
+</trans-unit>
+
+<trans-unit id="392" lock="1">
+<source>These settings are recommended for PHP in order to ensure full compatibility with Horux. However, Horux! will still operate if your settings do not quite match the recommended.</source>
+<target>为保证与Horux系统的兼容性，推荐以下PHP设置。当然，如果您的设置未能完全匹配，Horux系统也能正常运行。</target>
+</trans-unit>
+
+<trans-unit id="393" lock="1">
+<source>Recommended Settings:</source>
+<target>推荐设置:</target>
+</trans-unit>
+
+
+<trans-unit id="394" lock="1">
+<source>XML support</source>
+<target>支持XML</target>
+</trans-unit>
+
+<trans-unit id="395" lock="1">
+<source>MySQL support</source>
+<target>支持MySQL</target>
+</trans-unit>
+
+<trans-unit id="396" lock="1">
+<source>Writeable</source>
+<target>可写</target>
+</trans-unit>
+
+<trans-unit id="397" lock="1">
+<source>PHP Version</source>
+<target>PHP版本</target>
+</trans-unit>
+
+<trans-unit id="398" lock="1">
+<source>Off</source>
+<target>关闭</target>
+</trans-unit>
+
+<trans-unit id="399" lock="1">
+<source>Directive</source>
+<target>指示</target>
+</trans-unit>
+
+<trans-unit id="400" lock="1">
+<source>Suggest</source>
+<target>建议</target>
+</trans-unit>
+
+<trans-unit id="401" lock="1">
+<source>Current</source>
+<target>当前</target>
+</trans-unit>
+
+<trans-unit id="402" lock="1">
+<source>Display the errors:</source>
+<target>显示错误</target>
+</trans-unit>
+
+<trans-unit id="403" lock="1">
+<source>File transfert:</source>
+<target>文件传输</target>
+</trans-unit>
+
+<trans-unit id="404" lock="1">
+<source>On</source>
+<target>启用</target>
+</trans-unit>
+
+<trans-unit id="405" lock="1">
+<source>Connection Settings:</source>
+<target>连接设置</target>
+</trans-unit>
+
+
+
+
+
+<trans-unit id="406" lock="1">
+<source>Host Name</source>
+<target>主机名</target>
+</trans-unit>
+
+<trans-unit id="407" lock="1">
+<source>This is usually localhost or a host name provided by the administrator</source>
+<target>这通常是localhost或由管理员提供的主机名</target>
+</trans-unit>
+
+<trans-unit id="408" lock="1">
+<source>User Name</source>
+<target>用户名</target>
+</trans-unit>
+
+<trans-unit id="409" lock="1">
+<source>This can be the default MySQL username root or a username provided by the administrator, or one that you have created whilst setting up your database server.</source>
+<target>这里可以填写MySql默认的用户名root或由管理员提供的用户名，或者是创建数据库服务器时创建的用户名 </target>
+</trans-unit>
+
+<trans-unit id="410" lock="1">
+<source>Database Name</source>
+<target>数据库名</target>
+</trans-unit>
+
+<trans-unit id="411" lock="1">
+<source>Basic Settings</source>
+<target>基础设置</target>
+</trans-unit>
+
+<trans-unit id="412" lock="1">
+<source>Step 3 : Database</source>
+<target>步骤3: 数据库</target>
+</trans-unit>
+
+<trans-unit id="413" lock="1">
+<source>Step 4 : Site</source>
+<target>步骤4: 网站</target>
+</trans-unit>
+
+<trans-unit id="414" lock="1">
+<source>Step 5 : Administrator</source>
+<target>步骤 5 : 管理员</target>
+</trans-unit>
+
+
+
+
+<trans-unit id="415" lock="1">
+<source>Enter the name of the access site.</source>
+<target>输入进入站点的名字</target>
+</trans-unit>
+
+<trans-unit id="416" lock="1">
+<source>Site Name</source>
+<target>站点名</target>
+</trans-unit>
+
+<trans-unit id="417" lock="1">
+<source>Site configuration:</source>
+<target>站点设置：</target>
+</trans-unit>
+
+<trans-unit id="418" lock="1">
+<source>Administrator Settings:</source>
+<target>管理员设置：</target>
+</trans-unit>
+
+<trans-unit id="419" lock="1">
+<source>Administrator</source>
+<target>管理员</target>
+</trans-unit>
+
+<trans-unit id="420" lock="1">
+<source>Administrator Username</source>
+<target>管理员用户名</target>
+</trans-unit>
+
+<trans-unit id="421" lock="1">
+<source>Cannot connect to the database, please check your parameters.</source>
+<target>无法连接数据库，请检查您的参数。</target>
+</trans-unit>
+
+<trans-unit id="422" lock="1">
+<source>ZIP support</source>
+<target>支持ZIP</target>
+</trans-unit>
+
+<trans-unit id="423" lock="1">
+<source>Steps</source>
+<target>步骤</target>
+</trans-unit>
+
+<trans-unit id="424" lock="1">
+<source>Configuration not ok</source>
+<target>配置不ok</target>
+</trans-unit>
+
+
+<trans-unit id="425" lock="1">
+<source>The directory ./pictures must be writeable to save your logo</source>
+<target>目录 ./picture 需要可以用来保存你的logo</target>
+</trans-unit>
+
+<trans-unit id="426" lock="1">
+<source>The directory ./tmp must be writeable to install an extension</source>
+<target>目录 ./tmp 需要可以用来安装扩展</target>
+</trans-unit>
+
+<trans-unit id="427" lock="1">
+<source>The directory ./protected/pages/hardware/device must be writeable to install a device extension</source>
+<target>目录./protected/pages/hardware/device 需要可写用来安装设备扩展</target>
+</trans-unit>
+
+<trans-unit id="428" lock="1">
+<source>The directory ./protected/messages must be writeable to install a language extension</source>
+<target>目录 ./protected/messages 需要设置为可写，用于安装扩展语言。</target>
+</trans-unit>
+
+<trans-unit id="429" lock="1">
+	<source>The directory ./protected/pages/components must be writeable to install a component extension</source>
+	<target>目录./protected/pages/components 需要设置可写，用于安装扩展控件</target>
+</trans-unit>
+
+<trans-unit id="430" lock="1">
+	<source>The directory ./themes must be writeable to install a template extension</source>
+	<target>目录 ./themes 需要设置可写，用于安装扩展模板</target>
+</trans-unit>
+
+
+
+<trans-unit id="431" lock="1">
+	<source>The component is well installed. You have now to give the right access for this component.</source>
+	<target>组件已安装好，请为组件赋值。</target>
+</trans-unit>
+
+<trans-unit id="432" lock="1">
+	<source>{n} components was deleted</source>
+	<target>{n} 组件被删除</target>
+</trans-unit>
+
+<trans-unit id="433" lock="1">
+	<source>Access Plugin Name</source>
+	<target>权限插件名</target>
+</trans-unit>
+
+<trans-unit id="434" lock="1">
+	<source>Define the access plugin used for the access control.&lt;br/&gt;If empty, all plugins are likely to give the access</source>
+	<target>为权限控制定义权限插件。&lt;br/&gt;如果为空，所有插件都有此权限</target>
+</trans-unit>
+
+<trans-unit id="435" lock="1">
+	<source>VAT</source>
+	<target>VAT</target>
+</trans-unit>
+
+<trans-unit id="436" lock="1">
+	<source>Currency</source>
+	<target>货币</target>
+</trans-unit>
+
+<trans-unit id="437" lock="1">
+	<source>Commercial</source>
+	<target>商业的</target>
+</trans-unit>
+
+<trans-unit id="438" lock="1">
+	<source>Enter your VAT number</source>
+	<target>输入VAT号码</target>
+</trans-unit>
+
+<trans-unit id="439" lock="1">
+	<source>Enter your currency</source>
+	<target>输入你的货币</target>
+</trans-unit>
+
+<trans-unit id="440" lock="1">
+	<source>VAT Number</source>
+	<target>VAT号码</target>
+</trans-unit>
+
+<trans-unit id="441" lock="1">
+	<source>Enter the VAT value</source>
+	<target>输入一个VAT值</target>
+</trans-unit>
+
+<trans-unit id="442" lock="1">
+	<source>Cannot delete the group {name}, it contains one or more person</source>
+	<target>无法删除该组{name}，它包含一个或多个成员</target>
+</trans-unit>
+
+
+
+
+<trans-unit id="443" lock="1">
+<source>The access level was not added</source>
+<target>权限级别没有添加</target>
+</trans-unit>
+
+
+
+
+
+<trans-unit id="444" lock="1">
+<source>n/a</source>
+<target>n/a</target>
+</trans-unit>
+
+<trans-unit id="445" lock="1">
+<source>Cannot create the database:</source>
+<target>无法创建数据库</target>
+</trans-unit>
+
+<trans-unit id="446" lock="1">
+<source>Impossible to select the database {n}</source>
+<target>无法选择数据库 {n}</target>
+</trans-unit>
+
+
+
+<trans-unit id="447" lock="1">
+<source>Query error:</source>
+<target>SQL查询错误:</target>
+</trans-unit>
+
+
+
+<trans-unit id="448" lock="1">
+<source>Cannot open the application configuration file : ./protected/application_p.xml</source>
+<target>无法打开配置文件 : ./protected/application_p.xml</target>
+</trans-unit>
+
+<trans-unit id="449" lock="1">
+<source>Cannot write the application configuration file : ./protected/application_p.xml</source>
+<target>无法读入配置文件 : ./protected/application_p.xml</target>
+</trans-unit>
+
+<trans-unit id="450" lock="1">
+<source>The configuration was saved successfully</source>
+<target>配置保存成功</target>
+</trans-unit>
+
+<trans-unit id="451" lock="1">
+<source>The configuration was not saved</source>
+<target>配置没有保存</target>
+</trans-unit>
+
+<trans-unit id="452" lock="1">
+<source>{n} themes was deleted</source>
+<target>{n} 主题被删除</target>
+</trans-unit>
+
+<trans-unit id="453" lock="1">
+<source>{n} language was deleted</source>
+<target>{n} 语言被删除</target>
+</trans-unit>
+
+<trans-unit id="454" lock="1">
+<source>Warning! - This component is already installed</source>
+<target>警告! - 这个组件已经安装</target>
+</trans-unit>
+
+<trans-unit id="455" lock="1">
+<source>The language is well installed.</source>
+<target>该语言被成功安装。</target>
+</trans-unit>
+
+<trans-unit id="456" lock="1">
+<source>Warning! - This template is already installed</source>
+<target>警告! - 该模板已成功安装</target>
+</trans-unit>
+
+<trans-unit id="457" lock="1">
+<source>The theme is well installed.</source>
+<target>该主题已被成功安装</target>
+</trans-unit>
+
+<trans-unit id="458" lock="1">
+<source>Warning! - Unknown install type:{type}</source>
+<target>警告! - 位置安装类型 {type}</target>
+</trans-unit>
+
+<trans-unit id="459" lock="1">
+<source>Warning! - Failed to move file. Impossible to unzip the archive</source>
+<target>警告! 移动文件失败. 无法解压缩文件</target>
+</trans-unit>
+
+<trans-unit id="460" lock="1">
+<source>Warning! - Failed to move file. Cannot save the archive</source>
+<target>警告! - 移动文件失败.无法保存文件</target>
+</trans-unit>
+
+<trans-unit id="461" lock="1">
+<source>This archive does not contain the file install.xml</source>
+<target>该存档没有包含文件 install.xml</target>
+</trans-unit>
+
+<trans-unit id="462" lock="1">
+<source>Select only one item</source>
+<target>请只选择一个项目</target>
+</trans-unit>
+
+<trans-unit id="463" lock="1">
+<source>New default template updated</source>
+<target>新默认模板已更新</target>
+</trans-unit>
+
+<trans-unit id="464" lock="1">
+<source>The key was not added</source>
+<target>关键字没有添加</target>
+</trans-unit>
+
+<trans-unit id="465" lock="1">
+<source>The key was not modified</source>
+<target>关键字没有修改</target>
+</trans-unit>
+
+<trans-unit id="466" lock="1">
+<source>The non working day was not added</source>
+<target>非工作日没有添加</target>
+</trans-unit>
+
+<trans-unit id="467" lock="1">
+<source>The non working day was modified successfully</source>
+<target>非工作日修改成功</target>
+</trans-unit>
+
+<trans-unit id="468" lock="1">
+<source>The non workong day was not modified</source>
+<target>非工作日没有被修改</target>
+</trans-unit>
+
+<trans-unit id="469" lock="1">
+<source>The picture is bigger than 10K bytes</source>
+<target>该图片大小大于10k</target>
+</trans-unit>
+
+<trans-unit id="470" lock="1">
+<source>The picture is not a picture (jpg, png, gif)</source>
+<target>该图片不是以下图片类型 jpg, png, gif</target>
+</trans-unit>
+
+<trans-unit id="471" lock="1">
+<source>The user was not added</source>
+<target>该用户没有添加</target>
+</trans-unit>
+
+<trans-unit id="472" lock="1">
+<source>The user was not saved</source>
+<target>该用户没有保存</target>
+</trans-unit>
+
+<trans-unit id="473" lock="1">
+<source>The group was not added</source>
+<target>该组没有添加</target>
+</trans-unit>
+
+<trans-unit id="474" lock="1">
+<source>The group was not saved</source>
+<target>该组没有保存</target>
+</trans-unit>
+
+<trans-unit id="475" lock="1">
+<source>You don't have the right to modify this user'</source>
+<target>您没有权利修改该用户</target>
+</trans-unit>
+
+
+
+<trans-unit id="476" lock="1">
+<source>Extension</source>
+<target>扩展</target>
+</trans-unit>
+
+<trans-unit id="477" lock="1">
+<source>The new user is registred</source>
+<target>新用户已注册</target>
+</trans-unit>
+
+<trans-unit id="478" lock="1">
+<source>Select all the groups&lt;br/&gt;attributes to this user</source>
+<target>选择所有的组&lt;br/&gt;属性赋予该用户</target>
+</trans-unit>
+
+<trans-unit id="479" lock="1">
+<source>Select all the keys&lt;br/&gt;attributes to this user</source>
+<target>选择所有的关键字&lt;br/&gt;属性赋予该用户</target>
+</trans-unit>
+
+<trans-unit id="480" lock="1">
+<source>Options</source>
+<target>选项</target>
+</trans-unit>
+
+<trans-unit id="481" lock="1">
+<source>Open time</source>
+<target>打开时间</target>
+</trans-unit>
+
+<trans-unit id="482" lock="1">
+<source>Attribute one or more open time</source>
+<target>属性赋予一个或多个打开时间</target>
+</trans-unit>
+
+<trans-unit id="483" lock="1">
+<source>Add an open time</source>
+<target>添加一个打开时间</target>
+</trans-unit>
+
+<trans-unit id="484" lock="1">
+<source>Enter a name for this open time</source>
+<target>为此打开时间输入名称</target>
+</trans-unit>
+
+<trans-unit id="485" lock="1">
+<source>Check it if you want that the access point is opened during the non working day</source>
+<target>如果您希望此进入点在非工作日打开，请勾选此框</target>
+</trans-unit>
+
+<trans-unit id="486" lock="1">
+<source>Non working day open time</source>
+<target>非工作日打开时间</target>
+</trans-unit>
+
+<trans-unit id="487" lock="1">
+<source>Check it if you want that the access point is opened during the week-end</source>
+<target>如果您希望此进入点在周末打开，请勾选此框</target>
+</trans-unit>
+
+<trans-unit id="488" lock="1">
+<source>Week-end open time</source>
+<target>周末打开时间</target>
+</trans-unit>
+
+<trans-unit id="489" lock="1">
+<source>Date when this open time is valid</source>
+<target>打开时间有效起始日期</target>
+</trans-unit>
+
+<trans-unit id="490" lock="1">
+<source>Date when this open time is unvalid</source>
+<target>打开时间有效终止日期</target>
+</trans-unit>
+
+<trans-unit id="491" lock="1">
+<source>You could insert a description for this open time</source>
+<target>请为此打开时间添加描述</target>
+</trans-unit>
+
+<trans-unit id="492" lock="1">
+<source>The open time was added successfully</source>
+<target>打开时间已成功添加</target>
+</trans-unit>
+
+<trans-unit id="493" lock="1">
+<source>The open time was not added</source>
+<target>该打开时间未添加</target>
+</trans-unit>
+
+<trans-unit id="494" lock="1">
+<source>Open time Attribution</source>
+<target>打开时间属性</target>
+</trans-unit>
+
+<trans-unit id="495" lock="1">
+<source>Available Open time</source>
+<target>有效打开时间</target>
+</trans-unit>
+
+<trans-unit id="496" lock="1">
+<source>{n} open time was unattributed</source>
+<target>{n} 打开时间解除属性</target>
+</trans-unit>
+
+<trans-unit id="497" lock="1">
+<source>Modify an open time</source>
+<target>修改一个打开时间</target>
+</trans-unit>
+
+<trans-unit id="498" lock="1">
+<source>The open time was modified successfully</source>
+<target>该打开时间已成功修改</target>
+</trans-unit>
+
+<trans-unit id="499" lock="1">
+<source>The open time was not modified</source>
+<target>该打开时间没有被修改</target>
+</trans-unit>
+
+<trans-unit id="500" lock="1">
+<source>Open Time List</source>
+<target>打开时间列表</target>
+</trans-unit>
+
+<trans-unit id="501" lock="1">
+<source>{n} open time was deleted</source>
+<target>{n} 打开时间被删除</target>
+</trans-unit>
+
+<trans-unit id="502" lock="1">
+<source>Opent time</source>
+<target>打开时间</target>
+</trans-unit>
+
+
+
+<trans-unit id="503" lock="1">
+<source>Report generate at {date} by {user}</source>
+<target>由 {user}在{date} 生成的报表 </target>
+</trans-unit>
+
+<trans-unit id="504" lock="1">
+<source>Print</source>
+<target>打印</target>
+</trans-unit>
+
+<trans-unit id="505" lock="1">
+<source>List of the access level</source>
+<target>权限级别列表</target>
+</trans-unit>
+
+<trans-unit id="506" lock="1">
+<source>Apply to the week-end</source>
+<target>应用到周末</target>
+</trans-unit>
+
+<trans-unit id="507" lock="1">
+<source>Apply to the non working day</source>
+<target>应用到非工作日</target>
+</trans-unit>
+
+<trans-unit id="508" lock="1">
+<source>List of the hardware</source>
+<target>硬件列表</target>
+</trans-unit>
+
+<trans-unit id="509" lock="1">
+<source>Debug</source>
+<target>调试</target>
+</trans-unit>
+
+<trans-unit id="510" lock="1">
+<source>Access plugin</source>
+<target>权限插件</target>
+</trans-unit>
+
+<trans-unit id="511" lock="1">
+<source>List of the keys</source>
+<target>关键字列表</target>
+</trans-unit>
+
+<trans-unit id="512" lock="1">
+<source>List of the non working days since the {year}</source>
+<target>自从 {year}以来非工作日列表</target>
+</trans-unit>
+
+<trans-unit id="513" lock="1">
+<source>List of the open time</source>
+<target>打开时间列表</target>
+</trans-unit>
+
+<trans-unit id="514" lock="1">
+<source>Apply on the devices</source>
+<target>应用到设备</target>
+</trans-unit>
+
+<trans-unit id="515" lock="1">
+<source>List of the super users groups</source>
+<target>超级用户组列表</target>
+</trans-unit>
+
+<trans-unit id="516" lock="1">
+<source>Super users in \</source>
+<target>超级用户</target>
+</trans-unit>
+
+<trans-unit id="517" lock="1">
+<source>List of the super users</source>
+<target>超级用户列表</target>
+</trans-unit>
+
+<trans-unit id="518" lock="1">
+<source>List of the users</source>
+<target>用户列表</target>
+</trans-unit>
+
+<trans-unit id="519" lock="1">
+<source>Is Blocked</source>
+<target>已阻止</target>
+</trans-unit>
+
+<trans-unit id="520" lock="1">
+<source>Enter the pin code for this user, if used</source>
+<target>输入此用户pin码，如果启用了</target>
+</trans-unit>
+
+<trans-unit id="521" lock="1">
+<source>PIN Code</source>
+<target>PIN码</target>
+</trans-unit>
+
+<trans-unit id="522" lock="1">
+<source>List of the users groups</source>
+<target>用户组列表</target>
+</trans-unit>
+
+<trans-unit id="523" lock="1">
+<source>Step 2 : Group Attribution</source>
+<target>步骤2: 组属性</target>
+</trans-unit>
+
+<trans-unit id="524" lock="1">
+<source>Step 3 : Key Attribution</source>
+<target>步骤 3: 关键字属性</target>
+</trans-unit>
+
+<trans-unit id="525" lock="1">
+<source>...Reading...</source>
+<target>...读取中...</target>
+</trans-unit>
+
+<trans-unit id="526" lock="1">
+<source>The key is already attributed</source>
+<target>该关键字已成为属性</target>
+</trans-unit>
+
+<trans-unit id="527" lock="1">
+<source>Horux Configuration Changed</source>
+<target>Horux配置已改变</target>
+</trans-unit>
+
+<trans-unit id="528" lock="1">
+<source>The Horux configuration was changed succeffuly!</source>
+<target>Horux配置成功改变！</target>
+</trans-unit>
+
+<trans-unit id="529" lock="1">
+<source>Mail Settings</source>
+<target>邮箱设置</target>
+</trans-unit>
+
+<trans-unit id="530" lock="1">
+<source>Select which mailer you wish to use for the delivery of site emails.</source>
+<target>请选择站点发送邮箱</target>
+</trans-unit>
+
+<trans-unit id="531" lock="1">
+<source>Mailer</source>
+<target>邮件发送者</target>
+</trans-unit>
+
+<trans-unit id="532" lock="1">
+<source>PHP Mail Function</source>
+<target>PHP邮箱功能</target>
+</trans-unit>
+
+<trans-unit id="533" lock="1">
+<source>The e-mail address that will be used to send site e-mails from.</source>
+<target>设置站点发送邮件所用邮箱地址。</target>
+</trans-unit>
+
+<trans-unit id="534" lock="1">
+<source>Mail From</source>
+<target>发送人地址</target>
+</trans-unit>
+
+<trans-unit id="535" lock="1">
+<source>From Name</source>
+<target>发送人姓名</target>
+</trans-unit>
+
+<trans-unit id="536" lock="1">
+<source>Sendmail Path</source>
+<target>发送邮箱路径</target>
+</trans-unit>
+
+<trans-unit id="537" lock="1">
+<source>SMTP Authentication</source>
+<target>SMTP用户认证</target>
+</trans-unit>
+
+<trans-unit id="538" lock="1">
+<source>TLS</source>
+<target>TLS</target>
+</trans-unit>
+
+<trans-unit id="539" lock="1">
+<source>SSL</source>
+<target>SSL</target>
+</trans-unit>
+
+<trans-unit id="540" lock="1">
+<source>None</source>
+<target>没有</target>
+</trans-unit>
+
+<trans-unit id="541" lock="1">
+<source>Safe Connection</source>
+<target>安全连接</target>
+</trans-unit>
+
+<trans-unit id="542" lock="1">
+<source>SMTP Username</source>
+<target>SMTP用户名</target>
+</trans-unit>
+
+<trans-unit id="543" lock="1">
+<source>SMTP Password</source>
+<target>SMTP密码</target>
+</trans-unit>
+
+<trans-unit id="544" lock="1">
+<source>SMTP Host</source>
+<target>SMTP主机地址</target>
+</trans-unit>
+
+<trans-unit id="545" lock="1">
+<source>SMTP Port</source>
+<target>SMTP主机端口</target>
+</trans-unit>
+
+<trans-unit id="546" lock="1">
+<source>By default, this field is populated with the site name entered during installation.</source>
+<target>此区域值默认根据安装时输入的站点名而自动生成</target>
+</trans-unit>
+
+<trans-unit id="547" lock="1">
+<source>Enter the path to the sendmail program directory on the host server.</source>
+<target>请输入主机上包含发送邮件程序的目录路径。</target>
+</trans-unit>
+
+<trans-unit id="548" lock="1">
+<source>Select Yes if your SMTP Host requires SMTP Authentication.</source>
+<target>如果您的SMTP主机需要用户认证请选择是</target>
+</trans-unit>
+
+<trans-unit id="549" lock="1">
+<source>Enter the username for access to the SMTP host</source>
+<target>请输入连接SMTP主机所需用户名</target>
+</trans-unit>
+
+<trans-unit id="550" lock="1">
+<source>Enter the password for access to the SMTP host</source>
+<target>请输入连接SMTP主机所需密码</target>
+</trans-unit>
+
+<trans-unit id="551" lock="1">
+<source>Enter the name of the SMTP host.</source>
+<target>请输入 SMTP主机名</target>
+</trans-unit>
+
+<trans-unit id="552" lock="1">
+<source>Enter the number of the port of the SMTP host.</source>
+<target>请输入SMTP主机端口号</target>
+</trans-unit>
+
+<trans-unit id="553" lock="1">
+<source>The config was not modified.</source>
+<target>该配置未修改</target>
+</trans-unit>
+
+<trans-unit id="554" lock="1">
+<source>Prado</source>
+<target>Prado</target>
+</trans-unit>
+
+<trans-unit id="555" lock="1">
+<source>Choice the server database.</source>
+<target>选择服务端数据库</target>
+</trans-unit>
+
+<trans-unit id="556" lock="1">
+<source>DB Server</source>
+<target>数据库服务器</target>
+</trans-unit>
+
+<trans-unit id="557" lock="1">
+<source>Enter the database username, password, and database name you wish to use with Horux. These must already exist for the database you are going to use.</source>
+<target>输入登陆数据库的用户名、密码及Horux系统使用的数据库名。此数据库需要已经存在。 </target>
+</trans-unit>
+
+<trans-unit id="558" lock="1">
+<source>Sqlite support (optional)</source>
+<target>支持Sqlite (可选)</target>
+</trans-unit>
+
+<trans-unit id="559" lock="1">
+<source>Cannot read the sql installation file :</source>
+<target>无法读取sql安装文件:</target>
+</trans-unit>
+
+<trans-unit id="560" lock="1">
+<source>Cannot read the application configuration file :</source>
+<target>无法读取应用配置文件:</target>
+</trans-unit>
+
+
+
+
+
+<trans-unit id="561" lock="1">
+<source>1001</source>
+<target>1001</target>
+</trans-unit>
+
+<trans-unit id="562" lock="1">
+<source>1002</source>
+<target>1002</target>
+</trans-unit>
+
+<trans-unit id="563" lock="1">
+<source>1003</source>
+<target>1003</target>
+</trans-unit>
+
+<trans-unit id="564" lock="1">
+<source>1004</source>
+<target>1004</target>
+</trans-unit>
+
+<trans-unit id="565" lock="1">
+<source>1005</source>
+<target>1005</target>
+</trans-unit>
+
+<trans-unit id="566" lock="1">
+<source>1006</source>
+<target>1006</target>
+</trans-unit>
+
+<trans-unit id="567" lock="1">
+<source>1007</source>
+<target>1007</target>
+</trans-unit>
+
+<trans-unit id="568" lock="1">
+<source>1008</source>
+<target>1008</target>
+</trans-unit>
+
+<trans-unit id="569" lock="1">
+<source>1009</source>
+<target>1009</target>
+</trans-unit>
+
+<trans-unit id="570" lock="1">
+<source>1010</source>
+<target>1010</target>
+</trans-unit>
+
+<trans-unit id="571" lock="1">
+<source>1011</source>
+<target>1011</target>
+</trans-unit>
+
+<trans-unit id="572" lock="1">
+<source>1012</source>
+<target>Impossible d'ajouter une cl&#xE9; dans la base de donn&#xE9;es du p&#xE9;riph&#xE9;rique</target>
+</trans-unit>
+
+<trans-unit id="573" lock="1">
+<source>1013</source>
+<target>Impossible de supprimer une cl&#xE9; de la base de donn&#xE9;es du p&#xE9;riph&#xE9;rique</target>
+</trans-unit>
+
+<trans-unit id="574" lock="1">
+<source>1014</source>
+<target>L'antenne du p&#xE9;riph&#xE9;rique fonctionne correctement</target>
+</trans-unit>
+
+<trans-unit id="575" lock="1">
+<source>1015</source>
+<target>L'antenne du p&#xE9;riph&#xE9;rique est hors service</target>
+</trans-unit>
+
+<trans-unit id="576" lock="1">
+<source>1100</source>
+<target>Quelqu'un utilise une cl&#xE9; bloqu&#xE9;e</target>
+</trans-unit>
+
+<trans-unit id="577" lock="1">
+<source>1101</source>
+<target>Une personne non autoris&#xE9;e tente d'entrer </target>
+</trans-unit>
+
+<trans-unit id="578" lock="1">
+<source>1200</source>
+<target>Le webservice XMLRPC de horux core ne peut pas &#xEA;tre d&#xE9;marr&#xE9; </target>
+</trans-unit>
+
+<trans-unit id="579" lock="1">
+<source>Enter the email</source>
+<target>输入邮箱地址</target>
+</trans-unit>
+
+<trans-unit id="580" lock="1">
+<source>Notification</source>
+<target>通知</target>
+</trans-unit>
+
+<trans-unit id="581" lock="1">
+<source>Notification List</source>
+<target>通知列表</target>
+</trans-unit>
+
+<trans-unit id="582" lock="1">
+<source>{n} notification was deleted</source>
+<target>{n} 通知已被删除</target>
+</trans-unit>
+
+<trans-unit id="583" lock="1">
+<source>Add a notification</source>
+<target>添加通知</target>
+</trans-unit>
+
+<trans-unit id="584" lock="1">
+<source>Enter a name for this notification</source>
+<target>输入该通知的名称</target>
+</trans-unit>
+
+<trans-unit id="585" lock="1">
+<source>Select all super user who should receive the notification</source>
+<target>请选择接收此通知的超级用户</target>
+</trans-unit>
+
+<trans-unit id="586" lock="1">
+<source>Super user</source>
+<target>超级用户</target>
+</trans-unit>
+
+<trans-unit id="587" lock="1">
+<source>Enter more email address who should receive the notification. 	Separated by a comma</source>
+<target>请输入更多需要接收此通知的邮箱地址，用逗号分割。</target>
+</trans-unit>
+
+<trans-unit id="588" lock="1">
+<source>You could insert a description for this notification</source>
+<target>你可以为此通知添加一个描述</target>
+</trans-unit>
+
+<trans-unit id="589" lock="1">
+<source>Right user access</source>
+<target>正确的用户登陆</target>
+</trans-unit>
+
+<trans-unit id="590" lock="1">
+<source>Event access</source>
+<target>事件登陆</target>
+</trans-unit>
+
+<trans-unit id="591" lock="1">
+<source>User not in a group</source>
+<target>用户不在一个组</target>
+</trans-unit>
+
+<trans-unit id="592" lock="1">
+<source>Access blocked during the week-end</source>
+<target>周末权限被禁</target>
+</trans-unit>
+
+<trans-unit id="593" lock="1">
+<source>Access blocked during the non working day</source>
+<target>在非工作日禁止进入</target>
+</trans-unit>
+
+<trans-unit id="594" lock="1">
+<source>Access blocked, out of date</source>
+<target>权限禁止，超出有效期</target>
+</trans-unit>
+
+<trans-unit id="595" lock="1">
+<source>Access blocked, out of time</source>
+<target>权限禁止，超出时间</target>
+</trans-unit>
+
+<trans-unit id="596" lock="1">
+<source>Access blocked, no access right defined for the group</source>
+<target>权限禁止，该组没有定义进入权限</target>
+</trans-unit>
+
+<trans-unit id="597" lock="1">
+<source>Access by an unknown key</source>
+<target>未知关键字进入</target>
+</trans-unit>
+
+<trans-unit id="598" lock="1">
+<source>Key not attributed</source>
+<target>关键字未被属性化</target>
+</trans-unit>
+
+<trans-unit id="599" lock="1">
+<source>Key access blocked</source>
+<target>关键字权限阻止</target>
+</trans-unit>
+
+<trans-unit id="600" lock="1">
+<source>User access blocked</source>
+<target>用户权限禁止</target>
+</trans-unit>
+
+<trans-unit id="601" lock="1">
+<source>Event exception</source>
+<target>事件出错</target>
+</trans-unit>
+
+<trans-unit id="602" lock="1">
+<source>Device anti vandal forced</source>
+<target>Device anti vandal forced</target>
+</trans-unit>
+
+<trans-unit id="603" lock="1">
+<source>Device anti vandal cleared</source>
+<target>Device anti vandal cleared</target>
+</trans-unit>
+
+<trans-unit id="604" lock="1">
+<source>Device connection opened</source>
+<target>设备连接打开</target>
+</trans-unit>
+
+<trans-unit id="605" lock="1">
+<source>Device connection closed</source>
+<target>设备连接关闭</target>
+</trans-unit>
+
+<trans-unit id="606" lock="1">
+<source>Door forced open</source>
+<target>门被迫打开</target>
+</trans-unit>
+
+<trans-unit id="607" lock="1">
+<source>Door ajar</source>
+<target>门半开</target>
+</trans-unit>
+
+<trans-unit id="608" lock="1">
+<source>End door ajar</source>
+<target>关闭门</target>
+</trans-unit>
+
+<trans-unit id="609" lock="1">
+<source>Too many invalid PIN</source>
+<target>太多非法PIN码</target>
+</trans-unit>
+
+<trans-unit id="610" lock="1">
+<source>Device temperature too hot</source>
+<target>设备温度太高</target>
+</trans-unit>
+
+<trans-unit id="611" lock="1">
+<source>Device internal memory full</source>
+<target>设备内存已满</target>
+</trans-unit>
+
+<trans-unit id="612" lock="1">
+<source>Device internal memory warning</source>
+<target>设备内存警告</target>
+</trans-unit>
+
+<trans-unit id="613" lock="1">
+<source>Device internal insert key error</source>
+<target>设备内部插入密钥失败</target>
+</trans-unit>
+
+<trans-unit id="614" lock="1">
+<source>Device internal remove key error</source>
+<target>设备内部移除密钥失败</target>
+</trans-unit>
+
+<trans-unit id="615" lock="1">
+<source>Device antenna on</source>
+<target>设备天线启用</target>
+</trans-unit>
+
+<trans-unit id="616" lock="1">
+<source>Device antenna off</source>
+<target>设备天线关闭</target>
+</trans-unit>
+
+<trans-unit id="617" lock="1">
+<source>Horux XMLRPC server not started</source>
+<target>Horux系统XMLRPC服务未启动</target>
+</trans-unit>
+
+<trans-unit id="618" lock="1">
+<source>The notification was added successfully</source>
+<target>该通知已成功添加</target>
+</trans-unit>
+
+<trans-unit id="619" lock="1">
+<source>The notification was not added</source>
+<target>该通知未被添加</target>
+</trans-unit>
+
+<trans-unit id="620" lock="1">
+<source>Mod a notification</source>
+<target>修改通知</target>
+</trans-unit>
+
+<trans-unit id="621" lock="1">
+<source>The notification was modified successfully</source>
+<target>通知修改成功</target>
+</trans-unit>
+
+<trans-unit id="622" lock="1">
+<source>The notification was not modified</source>
+<target>通知未修改成功</target>
+</trans-unit>
+
+<trans-unit id="623" lock="1">
+<source>Horux notification: Antivandale acivated on {device}</source>
+<target>Horux系统通知: 反破坏功能已激活 {device}</target>
+</trans-unit>
+
+<trans-unit id="624" lock="1">
+<source>Horux notification: Antivandale cleared on {device}</source>
+<target>Horux系统通知: 反破坏功能已关闭{device}</target>
+</trans-unit>
+
+<trans-unit id="625" lock="1">
+<source>Horux notification: Device communication opened on {device}</source>
+<target>Horux系统通知: 设备通讯已打开 {device}</target>
+</trans-unit>
+
+<trans-unit id="626" lock="1">
+<source>Horux notification: Device communication closed on {device}</source>
+<target>Horux系统通知: 设备通讯已关闭 {device}</target>
+</trans-unit>
+
+<trans-unit id="627" lock="1">
+<source>Horux notification: Device ajar on {device}</source>
+<target>Horux系统通知: 设备半开{device}</target>
+</trans-unit>
+
+<trans-unit id="628" lock="1">
+<source>Horux notification: End device ajar on {device}</source>
+<target>Horux系统通知: 设备关闭{device}</target>
+</trans-unit>
+
+<trans-unit id="629" lock="1">
+<source>Horux notification: Door forced on {device}</source>
+<target>Horux系统通知: 门已关闭 {device}</target>
+</trans-unit>
+
+<trans-unit id="630" lock="1">
+<source>Horux notification: Too many PIN on {device}</source>
+<target>Horux系统通知: 太多PIN值 {device}</target>
+</trans-unit>
+
+<trans-unit id="631" lock="1">
+<source>Horux notification: Temperature alarm on {device}</source>
+<target>Horux系统通知: 温度报警启动{device}</target>
+</trans-unit>
+
+<trans-unit id="632" lock="1">
+<source>Horux notification: Memory full on {device}</source>
+<target>Horux系统通知: 内存已满{device}</target>
+</trans-unit>
+
+<trans-unit id="633" lock="1">
+<source>Horux notification: Memory warning on {device}</source>
+<target>Horux系统通知: 内存警告 {device}</target>
+</trans-unit>
+
+<trans-unit id="634" lock="1">
+<source>Horux notification: Memory key inserted error on {device}</source>
+<target>Horux系统通知: 内存密钥插入错误 {device}</target>
+</trans-unit>
+
+<trans-unit id="635" lock="1">
+<source>Horux notification: Memory key removed error on {device}</source>
+<target>Horux系统通知: 内存密钥移除错误 {device}</target>
+</trans-unit>
+
+<trans-unit id="636" lock="1">
+<source>Horux notification: Device antenna enabled on {device}</source>
+<target>Horux系统通知: 设备天线启用 {device}</target>
+</trans-unit>
+
+<trans-unit id="637" lock="1">
+<source>Horux notification: Device antenna disabled on {device}</source>
+<target>Horux系统通知: 设备天线禁用 {device}</target>
+</trans-unit>
+
+<trans-unit id="638" lock="1">
+<source>Horux notification: Cannot start Horux XMLRPC server</source>
+<target>Horux系统通知: 无法启动XMLRPC服务器</target>
+</trans-unit>
+
+<trans-unit id="639" lock="1">
+<source>Horux notification: Access by {user}</source>
+<target>Horux系统通知: 用户{user}进入</target>
+</trans-unit>
+
+<trans-unit id="640" lock="1">
+<source>Horux notification: Acces bloked - Key blocked</source>
+<target>Horux系统通知: 进入阻止 -密钥阻止</target>
+</trans-unit>
+
+<trans-unit id="641" lock="1">
+<source>Horux notification: Acces bloked - Key unknown</source>
+<target>Horux系统通知: 进入阻止 - 未知密钥</target>
+</trans-unit>
+
+<trans-unit id="642" lock="1">
+<source>Horux notification: Acces bloked - Key not attributed</source>
+<target>Horux系统通知: 进入阻止 - 密钥未属性化</target>
+</trans-unit>
+
+<trans-unit id="643" lock="1">
+<source>Horux notification: Acces bloked - User not in a group</source>
+<target>Horux系统通知: 进入阻止 - 用户未归属到组</target>
+</trans-unit>
+
+<trans-unit id="644" lock="1">
+<source>Horux notification: Acces bloked - Key blocked during the week-end</source>
+<target>Horux系统通知 : 登陆被阻止 - 周末密钥被锁</target>
+</trans-unit>
+
+<trans-unit id="645" lock="1">
+<source>Horux notification: Acces bloked - Key blocked during the non working day</source>
+<target>Horux系统通知: 登陆被阻止 - 非工作日密钥被锁</target>
+</trans-unit>
+
+<trans-unit id="646" lock="1">
+<source>Horux notification: Acces bloked - Out of date</source>
+<target>Horux系统通知: 登陆被阻止 - 过期</target>
+</trans-unit>
+
+<trans-unit id="647" lock="1">
+<source>Horux notification: Acces bloked - Out of time</source>
+<target>Horux系统通知: 登陆被阻止 - 超时</target>
+</trans-unit>
+
+<trans-unit id="648" lock="1">
+<source>Horux notification: Acces bloked - No access right defined for the group</source>
+<target>Horux系统通知 : 登陆被阻止 - 该组没有定义正确的权限</target>
+</trans-unit>
+
+<trans-unit id="649" lock="1">
+<source>Horux notification: Acces bloked - User blocked</source>
+<target>Horux系统通知 : 登陆被阻止-用户被阻止;</target>
+</trans-unit>
+
+<trans-unit id="650" lock="1">
+<source>1016</source>
+<target>1016</target>
+</trans-unit>
+
+<trans-unit id="651" lock="1">
+<source>Device connection error</source>
+<target>设备连接出错</target>
+</trans-unit>
+
+<trans-unit id="652" lock="1">
+<source>Horux notification: Device connection not opened on {device}</source>
+<target>Horux系统的通知: 设备连接无法打开{device}</target>
+</trans-unit>
+
+<trans-unit id="653" lock="1">
+<source>Description 2</source>
+<target>描述 2</target>
+</trans-unit>
+
+<trans-unit id="654" lock="1">
+<source>1017</source>
+<target>1017</target>
+</trans-unit>
+
+<trans-unit id="655" lock="1">
+<source>Horux Gui Log</source>
+<target>Horux系统Gui日志</target>
+</trans-unit>
+
+<trans-unit id="656" lock="1">
+<source>Who</source>
+<target>谁</target>
+</trans-unit>
+
+<trans-unit id="657" lock="1">
+<source>Horux Gui log</source>
+<target>Horux系统Gui日志</target>
+</trans-unit>
+
+<trans-unit id="658" lock="1">
+<source>The directory ./protected/sqlitedb must be writeable</source>
+<target>目录./protected/sqlitedb需要可写入 </target>
+</trans-unit>
+
+<trans-unit id="659" lock="1">
+<source>The database is already existing in ./protected/sqlitedb</source>
+<target>数据库已存在于./protected/sqlitedb中 </target>
+</trans-unit>
+
+<trans-unit id="660" lock="1">
+<source>Are you sure you want to delete this item?</source>
+<target>你确定你要删除此项目吗?</target>
+</trans-unit>
+
+<trans-unit id="661" lock="1">
+<source>Start time</source>
+<target>开始时间</target>
+</trans-unit>
+
+<trans-unit id="662" lock="1">
+<source>End time</source>
+<target>结束时间</target>
+</trans-unit>
+
+<trans-unit id="663" lock="1">
+<source>Enter the host&lt;br /&gt; of the XMLRPC server for Horux</source>
+<target>输入Horux系统&lt;br/&gt;XMLRPC服务器的主机名</target>
+</trans-unit>
+
+<trans-unit id="664" lock="1">
+<source>XMLRPC server</source>
+<target>XMLRPC服务器</target>
+</trans-unit>
+
+<trans-unit id="665" lock="1">
+<source>Port XMLRPC</source>
+<target>XMLRPC端口</target>
+</trans-unit>
+
+<trans-unit id="666" lock="1">
+<source>The config was modified successfully.</source>
+<target>配置修改成功</target>
+</trans-unit>
+
+<trans-unit id="667" lock="1">
+<source>Inform about bugs and request</source>
+<target>通知Bug和请求</target>
+</trans-unit>
+
+<trans-unit id="668" lock="1">
+<source>Super users List</source>
+<target>超级用户列表</target>
+</trans-unit>
+
+<trans-unit id="669" lock="1">
+<source>Stop</source>
+<target>停止</target>
+</trans-unit>
+
+<trans-unit id="670" lock="1">
+<source>Start</source>
+<target>开始</target>
+</trans-unit>
+
+<trans-unit id="671" lock="1">
+<source>Refresh</source>
+<target>刷新</target>
+</trans-unit>
+
+<trans-unit id="672" lock="1">
+<source>Super User Group List</source>
+<target>超级用户组列表</target>
+</trans-unit>
+
+<trans-unit id="673" lock="1">
+<source>The confirmation email cannot be sended. Please check your mail settings</source>
+<target>这封确认邮件无法发出，请检查您的邮箱设置。</target>
+</trans-unit>
+
+<trans-unit id="674" lock="1">
+<source>Key recycling</source>
+<target>关键字循环中</target>
+</trans-unit>
+
+<trans-unit id="675" lock="1">
+<source>Recycling a Key</source>
+<target>循环使用一个关键字</target>
+</trans-unit>
+
+<trans-unit id="676" lock="1">
+<source>Present the key to the reader for the recycle</source>
+<target>输入为读者循环使用的关键字</target>
+</trans-unit>
+
+<trans-unit id="677" lock="1">
+<source>The key was recycled</source>
+<target>此关键字被循环使用</target>
+</trans-unit>
+
+
+
+
+
+<trans-unit id="678" lock="1">
+<source>Horux super user password</source>
+<target>Horux系统超级用户密码</target>
+</trans-unit>
+
+<trans-unit id="679" lock="1">
+<source>{sitename} user password</source>
+<target>{sitename}用户密码</target>
+</trans-unit>
+
+<trans-unit id="680" lock="1">
+<source>Public web site</source>
+<target>公共网站</target>
+</trans-unit>
+
+<trans-unit id="681" lock="1">
+<source>Enter the address of the public web site</source>
+<target>输入公共网站地址</target>
+</trans-unit>
+
+<trans-unit id="682" lock="1">
+<source>Url</source>
+<target>网址</target>
+</trans-unit>
+
+<trans-unit id="683" lock="1">
+<source>Enter the password for this user</source>
+<target>输入用户密码</target>
+</trans-unit>
+
+<trans-unit id="684" lock="1">
+<source>Enter the confirmation password for this user</source>
+<target>输入该用户确认密码</target>
+</trans-unit>
+
+<trans-unit id="685" lock="1">
+<source>Hello {username}&lt;br/&gt;&lt;br/&gt;A new super user has registered for the access control.&lt;br/&gt;This e-mail contains their details:&lt;br/&gt;&lt;br/&gt;Username: {un}&lt;br/&gt;Password: {password}&lt;br/&gt;&lt;br/&gt;Please do not respond to this message. It is automatically generated and is for information purposes only.</source>
+<target>你好 {username}&lt;br/&gt;&lt;br/&gt;一个新超级用户注册了权限控制系统。&lt;br/&gt;这封邮件包含了新用户的信息：&lt;br/&gt;用户名: {un}&lt;br/&gt;密码: {password}&lt;br/&gt;&lt;br/&gt;请不要回复此邮件。这是自动发送的邮件且只为提供信息的作用。</target>
+</trans-unit>
+
+<trans-unit id="686" lock="1">
+<source>Hello {name} {firstname}&lt;br/&gt;&lt;br/&gt;A new user has registered for {sitename}.&lt;br/&gt;This e-mail contains their details:&lt;br/&gt;&lt;br/&gt;Username: {email}&lt;br/&gt;Password: {password}&lt;br/&gt;Web site: {url}&lt;br/&gt;&lt;br/&gt;Please do not respond to this message. It is automatically generated and is for information purposes only.</source>
+<target>你好 {name} {firstname}&lt;br/&gt;&lt;br/&gt;一个新用户注册了站点 {sitename}.&lt;br/&gt;这封邮件包含了该新用户的信息:&lt;br/&gt;&lt;br/&gt;用户名: {email}&lt;br/&gt;密码:  {password}&lt;br/&gt;网站地址: {url}&lt;br/&gt;&lt;br/&gt;请不要回复此邮件. 这是自动发送的邮件而且只为提供信息的作用。</target>
+</trans-unit>
+
+<trans-unit id="687" lock="1">
+<source>Sub page</source>
+<target>子页</target>
+</trans-unit>
+
+<trans-unit id="688" lock="1">
+<source>Click here to give access or not</source>
+<target>点击此处可以赋予或解除权限</target>
+</trans-unit>
+
+<trans-unit id="689" lock="1">
+<source>Check the box for the information to appear in the control panel</source>
+<target>在信息前打钩，将在控制面板中显示该信息</target>
+</trans-unit>
+
+<trans-unit id="690" lock="1">
+<source>Control Panel Info</source>
+<target>控制面板信息</target>
+</trans-unit>
+
+<trans-unit id="691" lock="1">
+<source>Control panel shortcut</source>
+<target>控制面板快捷方式</target>
+</trans-unit>
+
+<trans-unit id="692" lock="1">
+<source>Click here to put shortcut on the control panel</source>
+<target>点击这里为控制面板添加快捷方式</target>
+</trans-unit>
+
+<trans-unit id="693" lock="1">
+<source>Step</source>
+<target>步骤</target>
+</trans-unit>
+
+<trans-unit id="694" lock="1">
+<source>Mrs.</source>
+<target>女士</target>
+</trans-unit>
+
+<trans-unit id="695" lock="1">
+<source>Mr.</source>
+<target>男士</target>
+</trans-unit>
+
+<trans-unit id="696" lock="1">
+<source>Choose a color for this non working day</source>
+<target>为非工作日选择一个颜色</target>
+</trans-unit>
+
+<trans-unit id="697" lock="1">
+<source>Color</source>
+<target>色彩</target>
+</trans-unit>
+
+<trans-unit id="698" lock="1">
+<source>Enter the professional fax number</source>
+<target>输入传真号码（记得带上区号）</target>
+</trans-unit>
+
+<trans-unit id="699">
+<source>Enter the time when the non working day start and finish. Let empty for full day</source>
+<target>输入非工作日的起始和结束时间，不输入则表示全天。</target>
+</trans-unit>
+
+<trans-unit id="700">
+<source>Add a Department</source>
+<target>添加部门</target>
+</trans-unit>
+
+<trans-unit id="701">
+<source>Enter a name for this department</source>
+<target>为这个部门输入一个名字</target>
+</trans-unit>
+
+<trans-unit id="702">
+<source>You could insert a description for this department.</source>
+<target>你可以为这个部门添加一个描述</target>
+</trans-unit>
+
+<trans-unit id="703">
+<source>The department was added successfully</source>
+<target>部门添加成功</target>
+</trans-unit>
+
+<trans-unit id="704">
+<source>The department was not added</source>
+<target>部门没有添加成功</target>
+</trans-unit>
+
+<trans-unit id="705">
+<source>Department List</source>
+<target>部门列表</target>
+</trans-unit>
+
+<trans-unit id="706">
+<source>{n} department(s) was deleted</source>
+<target>{n} 部门被删除</target>
+</trans-unit>
+
+<trans-unit id="707">
+<source>Modify the Department</source>
+<target>修改部门</target>
+</trans-unit>
+
+<trans-unit id="708">
+<source>The department was modified successfully</source>
+<target>部门修改成功</target>
+</trans-unit>
+
+<trans-unit id="709">
+<source>The department was not modified</source>
+<target>部门没有修改</target>
+</trans-unit>
+
+<trans-unit id="710">
+<source>---- No department ----</source>
+<target>---- 没有部门 ----</target>
+</trans-unit>
+
+<trans-unit id="711">
+<source>Select the period</source>
+<target>选择不同时期</target>
+</trans-unit>
+
+<trans-unit id="712">
+<source>Period</source>
+<target>一段时间</target>
+</trans-unit>
+
+<trans-unit id="713">
+<source>All the day</source>
+<target>一整天</target>
+</trans-unit>
+
+<trans-unit id="714">
+<source>Morning only</source>
+<target>早上</target>
+</trans-unit>
+
+<trans-unit id="715">
+<source>Afternoon only</source>
+<target>下午</target>
+</trans-unit>
+</body>
+</file>
+</xliff>

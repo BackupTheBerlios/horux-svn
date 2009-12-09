@@ -1,0 +1,133 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.0">
+<file source-language="en" target-language="zh" datatype="plaintext" original="messages" date="2009-08-25T14:34:41Z" product-name="messages">
+<body>
+
+<trans-unit id="1" lock="1">
+   <source>Tracking</source>
+   <target>跟踪</target>
+</trans-unit>
+<trans-unit id="2" lock="1">
+   <source>Filter</source>
+   <target>过滤</target>
+</trans-unit>
+<trans-unit id="3" lock="1">
+   <source>Name</source>
+   <target>姓名</target>
+</trans-unit>
+<trans-unit id="4" lock="1">
+   <source>All</source>
+   <target>所有</target>
+</trans-unit>
+
+<trans-unit id="5" lock="1">
+   <source>Status</source>
+   <target>状态</target>
+</trans-unit>
+<trans-unit id="6" lock="1">
+   <source>Access ok</source>
+   <target>进入正常</target>
+</trans-unit>
+<trans-unit id="7" lock="1">
+   <source>Access ko</source>
+   <target>进入不正常</target>
+</trans-unit>
+<trans-unit id="8" lock="1">
+   <source>Access point</source>
+   <target>进入点</target>
+</trans-unit>
+<trans-unit id="9" lock="1">
+   <source>From</source>
+   <target>从</target>
+</trans-unit>
+<trans-unit id="10" lock="1">
+   <source>Until</source>
+   <target>至</target>
+</trans-unit>
+<trans-unit id="11" lock="1">
+   <source>Firstname</source>
+   <target>姓</target>
+</trans-unit>
+<trans-unit id="12" lock="1">
+   <source>Date</source>
+   <target>日期</target>
+</trans-unit>
+<trans-unit id="13" lock="1">
+   <source>Time</source>
+   <target>时间</target>
+</trans-unit>
+<trans-unit id="14" lock="1">
+   <source>Key</source>
+   <target>密钥</target>
+</trans-unit>
+<trans-unit id="15" lock="1">
+   <source>Authorize access</source>
+   <target>认证权限</target>
+</trans-unit>
+<trans-unit id="16" lock="1">
+   <source>The key is bloqued</source>
+   <target>密钥生成成功</target>
+</trans-unit>
+<trans-unit id="17" lock="1">
+   <source>Unknown key</source>
+   <target>未知密钥</target>
+</trans-unit>
+<trans-unit id="18" lock="1">
+   <source>The key is not attributed</source>
+   <target>密钥没有归属</target>
+</trans-unit>
+<trans-unit id="19" lock="1">
+   <source>The person does not belong to any group</source>
+   <target>该用户不属于任何组</target>
+</trans-unit>
+<trans-unit id="20" lock="1">
+   <source>Access refused during the week-end</source>
+   <target>周末拒绝登陆</target>
+</trans-unit>
+<trans-unit id="21" lock="1">
+   <source>Access refused during the non-workinf day</source>
+   <target>非工作日拒绝登陆</target>
+</trans-unit>
+<trans-unit id="22" lock="1">
+   <source>Access refused at this date</source>
+   <target>该日期拒绝登陆</target>
+</trans-unit>
+<trans-unit id="23" lock="1">
+   <source>Access refused at this time</source>
+   <target>该时间决绝登陆</target>
+</trans-unit>
+<trans-unit id="24" lock="1">
+   <source>No access for this access point</source>
+   <target>该进入点没有权限</target>
+</trans-unit>
+<trans-unit id="25" lock="1">
+   <source>Not handled by Horux</source>
+   <target>Horux系统没有处理</target>
+</trans-unit>
+<trans-unit id="26" lock="1">
+   <source>The person is blocked</source>
+   <target>该用户被锁</target>
+</trans-unit>
+
+<trans-unit id="27" lock="1">
+<source>List of tracking</source>
+<target>跟踪列表</target>
+</trans-unit>
+
+<trans-unit id="28" lock="1">
+<source>Is Access</source>
+<target>是否进入</target>
+</trans-unit>
+
+<trans-unit id="29" lock="1">
+<source>Yes</source>
+<target>是</target>
+</trans-unit>
+
+<trans-unit id="30" lock="1">
+<source>No</source>
+<target>否</target>
+</trans-unit>
+</body>
+</file>
+</xliff>
