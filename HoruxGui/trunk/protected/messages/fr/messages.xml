@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <xliff version="1.0">
- <file source-language="FR" target-language="fr" datatype="plaintext" original="messages" date="2009-11-17T16:00:22Z" product-name="messages">
+ <file source-language="FR" target-language="fr" datatype="plaintext" original="messages" date="2009-12-09T08:29:13Z" product-name="messages">
   <body>
   
 <trans-unit id="1" lock="1">
@@ -3818,6 +3818,16 @@
 <trans-unit id="715">
 <source>Afternoon only</source>
 <target>Seulement l'apr&#xE8;s-midi</target>
+</trans-unit>
+
+<trans-unit id="716">
+<source>Morning</source>
+<target>Matin</target>
+</trans-unit>
+
+<trans-unit id="717">
+<source>Afternoon</source>
+<target>Apr&#xE8;s-midi</target>
 </trans-unit>
 </body>
 </file>
