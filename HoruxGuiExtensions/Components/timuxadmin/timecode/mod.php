@@ -37,6 +37,7 @@ class mod extends Page
             $this->id->Value = $data['id'];
             $this->type->setSelectedValue($data['type']);
             $this->name->Text = $data['name'];
+            $this->deviceDisplay->Text = $data['deviceDisplay'];
             $this->abbreviation->Text = $data['abbreviation'];
             $this->useMinMax->setChecked($data['useMinMax']);
             $this->timeworked->setChecked($data['timeworked']);
@@ -112,13 +113,15 @@ class mod extends Page
                                             `defaultOvertime` =:defaultOvertime,
                                             `formatDisplay` =:formatDisplay,
                                             `signtype`=:signtype,
-                                            `timeworked`=:timeworked
+                                            `timeworked`=:timeworked,
+                                            `deviceDisplay`=:deviceDisplay
                                             WHERE id=:id
                                             ;" );
 
 
         $cmd->bindParameter(":type",$this->type->getSelectedValue(),PDO::PARAM_STR);
         $cmd->bindParameter(":name",$this->name->SafeText, PDO::PARAM_STR);
+        $cmd->bindParameter(":deviceDisplay",$this->deviceDisplay->SafeText, PDO::PARAM_STR);
         $cmd->bindParameter(":abbreviation",$this->abbreviation->SafeText, PDO::PARAM_STR);
 
         $useMinMax = false;
@@ -185,13 +188,16 @@ class mod extends Page
 
         $cmd->bindParameter(":signtype",$this->signtype->getSelectedValue(), PDO::PARAM_STR);
 
+        $res = $cmd->execute();
+
         if($this->signtype->getSelectedValue() != 'none')
         {
             $sa = new TStandAlone();
+            $sa->addStandalone("sub", $this->id->Value, 'timuxAddSubReason');
             $sa->addStandalone("add", $this->id->Value, 'timuxAddSubReason');
         }
 
-        return $cmd->execute();
+        return $res;
     }
 
 

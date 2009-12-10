@@ -9,8 +9,6 @@
         AddVisible="true"
         AddUrl="components.timuxadmin.timecode.add"
         DelVisible="true"
-        PrintVisible="true"
-        PrintUrl="<%= $this->Service->constructUrl($this->getApplication()->getService()->getRequestedPagePath()) %>&action=print"
         HelpVisible="true"
         CancelVisible="true"
         />

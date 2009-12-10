@@ -65,11 +65,13 @@ class add extends Page
                                             `defaultOvertime` =:defaultOvertime,
                                             `formatDisplay` =:formatDisplay,
                                             `signtype`=:signtype,
-                                            `timeworked`=:timeworked
+                                            `timeworked`=:timeworked,
+                                            `deviceDisplay`=:deviceDisplay
                                             ;" );
         
         $cmd->bindParameter(":type",$this->type->getSelectedValue(),PDO::PARAM_STR);
         $cmd->bindParameter(":name",$this->name->SafeText, PDO::PARAM_STR);
+        $cmd->bindParameter(":deviceDisplay",$this->deviceDisplay->SafeText, PDO::PARAM_STR);
         $cmd->bindParameter(":abbreviation",$this->abbreviation->SafeText, PDO::PARAM_STR);
 
         $useMinMax = false;
