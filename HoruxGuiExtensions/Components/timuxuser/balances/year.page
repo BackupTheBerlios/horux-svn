@@ -6,6 +6,16 @@
     <div id="loading" class="loading"></div>
     <script type="text/javascript">
 
+        function onPrintRedirect()
+        {
+            var f1 = document.getElementById( '<%= $this->FilterDepartment->getClientID() %>' );
+            var f2 = document.getElementById( '<%= $this->FilterEmployee->getClientID() %>' );
+            var f3 = document.getElementById( '<%= $this->FilterYear->getClientID() %>' );
+
+            var param = "&f1=" + f1.value + "&f2=" + f2.value + "&f3=" + f3.value;
+            window.open( "<%= $this->Service->constructUrl($this->getApplication()->getService()->getRequestedPagePath()) %>&action=print" + param, target="_blank" ) ;
+        }
+
         Effect.Fade(document.getElementById('loading'), {duration:0});
 
     </script>
@@ -17,6 +27,7 @@
         HelpVisible="true"
         CancelVisible="true"
         PrintVisible="true"
+        JsClickPrint="onPrintRedirect()"
         />
 
 
@@ -201,6 +212,11 @@
                 />
 
             <com:TBoundColumn
+                HeaderText="<%[Holidays balance]%>"
+                DataField="holidayBalance"
+                />
+
+            <com:TBoundColumn
                 HeaderText="<%[Nbre of leave (day)]%>"
                 DataField="nbreLeaveDay"
                 />
@@ -208,11 +224,6 @@
             <com:TBoundColumn
                 HeaderText="<%[Nbre of leave (hours)]%>"
                 DataField="nbreLeaveHour"
-                />
-
-            <com:TBoundColumn
-                HeaderText="<%[Holidays balance]%>"
-                DataField="holidayBalance"
                 />
 
             <com:TBoundColumn

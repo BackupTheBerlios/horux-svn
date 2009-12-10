@@ -72,17 +72,17 @@
                     <td>
                         <com:TRadioButton
                             ID="r_employee"
-                            Text="Employee"
+                            Text="<%[Employee]%>"
                             GroupName="RadioGroup"
                             />
                         <com:TRadioButton
                             ID="r_manager"
-                            Text="Manager"
+                            Text="<%[Manager]%>"
                             GroupName="RadioGroup"
                             />
                         <com:TRadioButton
                             ID="r_rh"
-                            Text="Human resources / Direction"
+                            Text="<%[Human ressources / Direction]%>"
                             GroupName="RadioGroup"
                             />
                     </td>

@@ -12,6 +12,8 @@
 * See COPYRIGHT.php for copyright notices and details.
 */
 
+Prado::using('System.I18N.core.DateFormat');
+
 class employee
 {
     protected $employeeId = NULL;
@@ -19,6 +21,9 @@ class employee
 
     private $hoursByDay = NULL;
     private $daysByWeek = NULL;
+
+    private $signedValue = 0.0;
+    private $timcode = array();
 
     function __construct($userId) {
         $this->db = Prado::getApplication()->getModule('horuxDb')->DbConnection;
@@ -288,6 +293,20 @@ class employee
         return "";
     }
 
+    public function getDepartment()
+    {
+        $cmd = $this->db->createCommand( "SELECT d.name FROM hr_user AS u LEFT JOIN hr_department AS d ON d.id=u.department WHERE u.id=:id" );
+        $cmd->bindParameter(":id",$this->employeeId,PDO::PARAM_STR);
+        $query = $cmd->query();
+        if($query)
+        {
+            $data = $query->read();
+            return $data['name'];
+        }
+
+        return "";
+    }
+
     /*
      * Return the working time of the employee according to the year and the month
      *
@@ -412,6 +431,18 @@ class employee
      */
     public function getHoursMonth($year, $month, $atxpercent=true)
     {
+        if($atxpercent)
+        {
+            $cmd = $this->db->createCommand( "SELECT hoursByMonth FROM hr_timux_closed_month  WHERE year=$year AND month=$month AND user_id=".$this->employeeId );
+            $query = $cmd->query();
+            $data = $query->read();
+
+            if($data)
+            {
+                return $data['hoursByMonth'];
+            }
+        }
+
         $nbreOfDay =  date("t",mktime(0,0,0,$month,1,$year));
 
         $hoursByDay = $this->getHoursByDay();
@@ -899,22 +930,32 @@ class employee
 
         for($i=1; $i<=$nbreOfDay; $i++)
         {
-            if($this->isWorking($year, $month, $i))
+            $n = $this->isWorking($year, $month, $i);
+            $nPeriod = $this->isWorkingPeriod($year, $month, $i);
+            if($n)
             {
                 $nwd = $this->getNonWorkingDay($year, $month, $i);
+                $nwdPeriod = $this->getNonWorkingDayPeriod($year, $month, $i);
                 if($nwd>0 && $nwd<1)
                 {
-                    $nDay += $nwd;
+                    if($nPeriod != $nwdPeriod)
+                        $nDay += $nwd;
                 }
                 elseif($nwd==0)
-                    $nDay++;
+                {
+                    $nDay+=$n;
+                }
             }
         }
 
         if($nDay>0)
+        {
             return bcdiv($hoursByMonth, $nDay,4);
+        }
         else
+        {
             return 0;
+        }
     }
 
 
@@ -927,13 +968,45 @@ class employee
 
         if($wt[$dayName.'Time_m'] > 0 || $wt[$dayName.'Time_a'] > 0)
         {
-            return true;
+            if($wt[$dayName.'Time_m'] > 0 && $wt[$dayName.'Time_a'] > 0)
+                return 1;
+            return 0.5;
+
         }
         else
         {
             return false;
         }
        
+    }
+
+    public function isWorkingPeriod($year, $month, $day)
+    {
+        $wt = $this->getWorkingTime($year, $month);
+
+        $dayName = strtolower(date("l",mktime(0,0,0,$month,$day,$year)));
+
+        if($wt[$dayName.'Time_m'] > 0 || $wt[$dayName.'Time_a'] > 0)
+        {
+            if($wt[$dayName.'Time_m'] > 0 && $wt[$dayName.'Time_a'] > 0)
+            {
+                return 'allday';
+            }
+            elseif($wt[$dayName.'Time_m'] > 0)
+            {
+                return 'morning';
+            }
+            else
+            {
+                return 'afternoon';
+            }
+
+        }
+        else
+        {
+            return false;
+        }
+
     }
 
     /*
@@ -965,9 +1038,211 @@ class employee
     public function getAbsenceMonth($year,$month)
     {
         $dateFrom = $year."-".$month."-1";
+        $dateTo = $year."-".$month."-".date("t",mktime(0,0,0,$month,1,$year));
+
+        $wt = $this->getWorkingTime($year, $month);
+
+        $cmd=$this->db->createCommand("SELECT * FROM hr_timux_request AS r LEFT JOIN hr_timux_request_leave AS rl ON rl.request_id=r.id LEFT JOIN hr_timux_timecode AS t ON t.id=r.timecodeId WHERE rl.datefrom>='".$dateFrom."' AND rl.dateto<='".$dateTo."' AND ( r.state='validate' OR  r.state='closed') AND r.userId=".$this->employeeId." AND  t.type='absence'");
+
+        $data = $cmd->query();
+        $data = $data->readAll();
+
+        $nbreOfHours['nbre'] = 0.0;
+        $nbreOfHours['disp'] = $format;
+
+        foreach($data AS $d)
+        {
+            $dateStart = $d['datefrom'];
+            $dateTo = $d['dateto'];
+            $period = $d['period'];
+            $format = $d['formatDisplay'];
+
+            if($dateTo == '0000-00-00' ) $dateTo = $dateStart;
+
+
+            if($dateTo == $dateStart)
+            {
+                $date = explode("-",$dateTo);
+
+                if($this->isWorking($date[0], $date[1], $date[2]))
+                {
+                    $nwd = $this->getNonWorkingDay($date[0], $date[1], $date[2]);
+                    $nwdPeriod = $this->getNonWorkingDayPeriod($date[0], $date[1], $date[2]);
+                    $nPeriod = $this->isWorkingPeriod($date[0], $date[1], $date[2]);
+
+                    if($nwdPeriod == 'morning' && $period == 'afternoon')
+                    {
+                        if($nPeriod != $nwdPeriod)
+                            $nbreOfHours['nbre'] += 0.5;
+                    }
+
+                    if($nwdPeriod == 'afternoon' && $period == 'morning')
+                    {
+                        if($nPeriod != $nwdPeriod)
+                            $nbreOfHours['nbre'] += 0.5;
+                    }
+
+                    if($nwdPeriod == 'afternoon' && $period == 'allday')
+                    {
+                        if($nPeriod != $nwdPeriod)
+                            $nbreOfHours['nbre'] += 0.5;
+                    }
+
+                    if($nwdPeriod == 'morning' && $period == 'allday')
+                    {
+                        if($nPeriod != $nwdPeriod)
+                            $nbreOfHours['nbre'] += 0.5;
+                    }
+
+                    if($nwd==0 && $period == 'morning')
+                    {
+                        if($nPeriod =='allday')
+                            $nbreOfHours['nbre'] += 0.5;
+                    }
+
+                    if($nwd==0 && $period == 'afternoon')
+                    {
+                        if($nPeriod =='allday')
+                            $nbreOfHours['nbre'] += 0.5;
+                    }
+
+                    if($nwd==0 && $period == 'allday')
+                    {
+                        if($nPeriod == $period)
+                            $nbreOfHours['nbre'] += 1;
+                        else
+                            $nbreOfHours['nbre'] += 0.5;
+                    }
+                }
+
+            }
+            else
+            {
+
+                while($dateStart != $dateTo)
+                {
+                    $date = explode("-",$dateStart);
+
+                    if($this->isWorking($date[0], $date[1], $date[2]))
+                    {
+                        $nwd = $this->getNonWorkingDay($date[0], $date[1], $date[2]);
+                        $nwdPeriod = $this->getNonWorkingDayPeriod($date[0], $date[1], $date[2]);
+                        $nPeriod = $this->isWorkingPeriod($date[0], $date[1], $date[2]);
+
+                       if($nwdPeriod == 'morning' && $period == 'afternoon')
+                       {
+                            if($nPeriod != $nwdPeriod)
+                                $nbreOfHours['nbre'] += 0.5;
+                       }
+
+                        if($nwdPeriod == 'afternoon' && $period == 'morning')
+                        {
+                            if($nPeriod != $nwdPeriod)
+                                $nbreOfHours['nbre'] += 0.5;
+                        }
+
+                        if($nwdPeriod == 'afternoon' && $period == 'allday')
+                        {
+                            if($nPeriod != $nwdPeriod)
+                                $nbreOfHours['nbre'] += 0.5;
+                        }
+
+                        if($nwdPeriod == 'morning' && $period == 'allday')
+                        {
+                            if($nPeriod != $nwdPeriod)
+                                $nbreOfHours['nbre'] += 0.5;
+                        }
+
+                        if($nwd==0 && $period == 'morning')
+                        {
+                             if($nPeriod =='allday')
+                               $nbreOfHours['nbre'] += 0.5;
+                        }
+
+                        if($nwd==0 && $period == 'afternoon')
+                        {
+                            if($nPeriod =='allday')
+                                $nbreOfHours['nbre'] += 0.5;
+                        }
+
+                        if($nwd==0 && $period == 'allday')
+                        {
+                            if($nPeriod == $period)
+                                $nbreOfHours['nbre'] += 1;
+                            else
+                                $nbreOfHours['nbre'] += 0.5;
+
+                        }
+
+                    }
+
+                    $dateStart = date("Y-m-d",strtotime(date("Y-m-d", strtotime($dateStart)) . " +1 day"));
+
+                }
+
+                $date = explode("-",$dateTo);
+
+                if($this->isWorking($date[0], $date[1], $date[2]))
+                {
+                   $nwd = $this->getNonWorkingDay($date[0], $date[1], $date[2]);
+                   $nwdPeriod = $this->getNonWorkingDayPeriod($date[0], $date[1], $date[2]);
+                   $nPeriod = $this->isWorkingPeriod($date[0], $date[1], $date[2]);
+
+                   if($nwdPeriod == 'morning' && $period == 'afternoon')
+                   {
+                        if($nPeriod != $nwdPeriod)
+                            $nbreOfHours['nbre'] += 0.5;
+                   }
+
+                   if($nwdPeriod == 'afternoon' && $period == 'morning')
+                   {
+                        if($nPeriod != $nwdPeriod)
+                            $nbreOfHours['nbre'] += 0.5;
+                   }
+
+                   if($nwdPeriod == 'afternoon' && $period == 'allday')
+                   {
+                        if($nPeriod != $nwdPeriod)
+                            $nbreOfHours['nbre'] += 0.5;
+                   }
+
+                   if($nwdPeriod == 'morning' && $period == 'allday')
+                   {
+                        if($nPeriod != $nwdPeriod)
+                            $nbreOfHours['nbre'] += 0.5;
+                   }
+
+                   if($nwd==0 && $period == 'morning')
+                   {
+                        if($nPeriod =='allday')
+                            $nbreOfHours['nbre'] += 0.5;
+                   }
+
+                   if($nwd==0 && $period == 'afternoon')
+                   {
+                        if($nPeriod =='allday')
+                           $nbreOfHours['nbre'] += 0.5;
+                   }
+
+                   if($nwd==0 && $period == 'allday')
+                   {
+                        if($nPeriod == $period)
+                            $nbreOfHours['nbre'] += 1;
+                        else
+                            $nbreOfHours['nbre'] += 0.5;
+                   }
+                }
+
+            }
+
+        }
+        return $nbreOfHours['nbre'];
+
+
+       /* $dateFrom = $year."-".$month."-1";
         $dateTo= $year."-".$month."-".date("t",mktime(0,0,0,$month,1,$year));
 
-        $cmd = $this->db->createCommand( "SELECT l.period FROM hr_timux_request AS r LEFT JOIN hr_timux_request_leave AS l ON l.request_id=r.id LEFT JOIN hr_timux_timecode  AS t ON t.id=r.timecodeId  WHERE t.type='absence' AND r.userId=".$this->employeeId." AND l.datefrom>='$dateFrom' AND l.dateto<='$dateTo' AND ( r.state='validate' OR r.state='closed' )" );
+        $cmd = $this->db->createCommand( "SELECT l.period, l.datefrom, l.dateto FROM hr_timux_request AS r LEFT JOIN hr_timux_request_leave AS l ON l.request_id=r.id LEFT JOIN hr_timux_timecode  AS t ON t.id=r.timecodeId  WHERE t.type='absence' AND r.userId=".$this->employeeId." AND l.datefrom>='$dateFrom' AND l.dateto<='$dateTo' AND ( r.state='validate' OR r.state='closed' )" );
         $query = $cmd->query();
         $data = $query->readAll();
 
@@ -980,7 +1255,7 @@ class employee
                 $res += 0.5;
         }
 
-        return $res;
+        return $res;*/
     }
 
     /*
@@ -1087,16 +1362,52 @@ class employee
             {
                 $date = explode("-",$dateTo);
 
-                $nwd = $this->getNonWorkingDay($date[0], $date[1], $date[2]);
-
                 if($this->isWorking($date[0], $date[1], $date[2]))
                 {
-                   if($period == 'allday')
-                     $nbreOfHours['nbre'] += 1;
-                   else
-                     $nbreOfHours['nbre'] += 0.5;
+                   $nwdPeriod = $this->getNonWorkingDay($date[0], $date[1], $date[2]);
 
-                   $nbreOfHours['nbre'] -= $nwd;
+                   $nPeriod = $this->isWorkingPeriod($date[0], $date[1], $date[2]);
+
+                   $m = 0.0;
+                   $a = 0.0;
+
+                   if($nPeriod == 'allday' && $period == 'allday' )
+                   {
+                       $m = 0.5;
+                       $a = 0.5;
+                   }
+
+                   if($nPeriod == 'allday' && $period == 'morning' )
+                   {
+                       $m = 0.5;
+                   }
+
+                   if($nPeriod == 'allday' && $period == 'afternoon' )
+                   {
+                       $a = 0.5;
+                   }
+
+                   if($nPeriod == 'morning' && ($period == 'allday' || $period == 'morning'))
+                   {
+                       $m = 0.5;
+                   }
+
+                   if($nPeriod == 'afternoon' && ($period == 'allday' || $period == 'afternoon'))
+                   {
+                       $a = 0.5;
+                   }
+
+                   if( ($nwdPeriod == 'morning' || $nwdPeriod == 'allday' ) && $m>0)
+                   {
+                       $m = 0.0;
+                   }
+
+                   if( ($nwdPeriod == 'afternoon' || $nwdPeriod == 'allday' ) && $a>0)
+                   {
+                       $a = 0.0;
+                   }
+
+                   $nbreOfHours['nbre'] = bcadd($m,$a, 4);
                 }
 
             }
@@ -1106,17 +1417,53 @@ class employee
                 while($dateStart != $dateTo)
                 {
                     $date = explode("-",$dateStart);
-                    $nwd = $this->getNonWorkingDay($date[0], $date[1], $date[2]);
-
                     if($this->isWorking($date[0], $date[1], $date[2]))
                     {
-                       if($period == 'allday')
-                         $nbreOfHours['nbre'] += 1;
-                       else
-                         $nbreOfHours['nbre'] += 0.5;
-                    }
+                       $nwdPeriod = $this->getNonWorkingDay($date[0], $date[1], $date[2]);
 
-                    $nbreOfHours['nbre'] -= $nwd;
+                       $nPeriod = $this->isWorkingPeriod($date[0], $date[1], $date[2]);
+
+                       $m = 0.0;
+                       $a = 0.0;
+
+                       if($nPeriod == 'allday' && $period == 'allday' )
+                       {
+                           $m = 0.5;
+                           $a = 0.5;
+                       }
+
+                       if($nPeriod == 'allday' && $period == 'morning' )
+                       {
+                           $m = 0.5;
+                       }
+
+                       if($nPeriod == 'allday' && $period == 'afternoon' )
+                       {
+                           $a = 0.5;
+                       }
+
+                       if($nPeriod == 'morning' && ($period == 'allday' || $period == 'morning'))
+                       {
+                           $m = 0.5;
+                       }
+
+                       if($nPeriod == 'afternoon' && ($period == 'allday' || $period == 'afternoon'))
+                       {
+                           $a = 0.5;
+                       }
+
+                       if( ($nwdPeriod == 'morning' || $nwdPeriod == 'allday' ) && $m>0)
+                       {
+                           $m = 0.0;
+                       }
+
+                       if( ($nwdPeriod == 'afternoon' || $nwdPeriod == 'allday' ) && $a>0)
+                       {
+                           $a = 0.0;
+                       }
+
+                       $nbreOfHours['nbre'] += bcadd($m,$a, 4);
+                    }
 
                     $dateStart = date("Y-m-d",strtotime(date("Y-m-d", strtotime($dateStart)) . " +1 day"));
 
@@ -1126,14 +1473,51 @@ class employee
 
                 if($this->isWorking($date[0], $date[1], $date[2]))
                 {
-                   $nwd = $this->getNonWorkingDay($date[0], $date[1], $date[2]);
+                   $nwdPeriod = $this->getNonWorkingDay($date[0], $date[1], $date[2]);
 
-                   if($period == 'allday')
-                     $nbreOfHours['nbre'] += 1;
-                   else
-                     $nbreOfHours['nbre'] += 0.5;
+                   $nPeriod = $this->isWorkingPeriod($date[0], $date[1], $date[2]);
 
-                   $nbreOfHours['nbre'] -= $nwd;
+                   $m = 0.0;
+                   $a = 0.0;
+
+                   if($nPeriod == 'allday' && $period == 'allday' )
+                   {
+                       $m = 0.5;
+                       $a = 0.5;
+                   }
+
+                   if($nPeriod == 'allday' && $period == 'morning' )
+                   {
+                       $m = 0.5;
+                   }
+
+                   if($nPeriod == 'allday' && $period == 'afternoon' )
+                   {
+                       $a = 0.5;
+                   }
+
+                   if($nPeriod == 'morning' && ($period == 'allday' || $period == 'morning'))
+                   {
+                       $m = 0.5;
+                   }
+
+                   if($nPeriod == 'afternoon' && ($period == 'allday' || $period == 'afternoon'))
+                   {
+                       $a = 0.5;
+                   }
+
+                   if( ($nwdPeriod == 'morning' || $nwdPeriod == 'allday' ) && $m>0)
+                   {
+                       $m = 0.0;
+                   }
+
+                   if( ($nwdPeriod == 'afternoon' || $nwdPeriod == 'allday' ) && $a>0)
+                   {
+                       $a = 0.0;
+                   }
+
+                   $nbreOfHours['nbre'] += bcadd($m,$a, 4);
+
                 }
 
             }
@@ -1181,27 +1565,51 @@ class employee
                 {
                     $nwd = $this->getNonWorkingDay($date[0], $date[1], $date[2]);
                     $nwdPeriod = $this->getNonWorkingDayPeriod($date[0], $date[1], $date[2]);
+                    $nPeriod = $this->isWorkingPeriod($date[0], $date[1], $date[2]);
+                    
+                    if($nwdPeriod == 'morning' && $period == 'afternoon')
+                    {
+                        if($nPeriod != $nwdPeriod)
+                            $nbreOfHours['nbre'] += 0.5;
+                    }
 
-                   if($nwdPeriod == 'morning' && $period == 'afternoon')
-                        $nbreOfHours['nbre'] += 0.5;
+                    if($nwdPeriod == 'afternoon' && $period == 'morning')
+                    {
+                        if($nPeriod != $nwdPeriod)
+                            $nbreOfHours['nbre'] += 0.5;
+                    }
 
-                   if($nwdPeriod == 'afternoon' && $period == 'morning')
-                        $nbreOfHours['nbre'] += 0.5;
+                    if($nwdPeriod == 'afternoon' && $period == 'allday')
+                    {
+                        if($nPeriod != $nwdPeriod)
+                            $nbreOfHours['nbre'] += 0.5;
+                    }
 
-                   if($nwdPeriod == 'afternoon' && $period == 'allday')
-                        $nbreOfHours['nbre'] += 0.5;
+                    if($nwdPeriod == 'morning' && $period == 'allday')
+                    {
+                        if($nPeriod != $nwdPeriod)
+                            $nbreOfHours['nbre'] += 0.5;
+                    }
 
-                   if($nwdPeriod == 'morning' && $period == 'allday')
-                        $nbreOfHours['nbre'] += 0.5;
+                    if($nwd==0 && $period == 'morning')
+                    {
+                        if($nPeriod =='allday')
+                            $nbreOfHours['nbre'] += 0.5;
+                    }
 
-                   if($nwd==0 && $period == 'morning')
-                        $nbreOfHours['nbre'] += 0.5;
+                    if($nwd==0 && $period == 'afternoon')
+                    {
+                        if($nPeriod =='allday')
+                            $nbreOfHours['nbre'] += 0.5;
+                    }
 
-                   if($nwd==0 && $period == 'afternoon')
-                        $nbreOfHours['nbre'] += 0.5;
-
-                   if($nwd==0 && $period == 'allday')
-                        $nbreOfHours['nbre'] += 1;
+                    if($nwd==0 && $period == 'allday')
+                    {
+                        if($nPeriod == $period)
+                            $nbreOfHours['nbre'] += 1;
+                        else
+                            $nbreOfHours['nbre'] += 0.5;
+                    }
                 }
 
             }
@@ -1216,27 +1624,52 @@ class employee
                     {
                         $nwd = $this->getNonWorkingDay($date[0], $date[1], $date[2]);
                         $nwdPeriod = $this->getNonWorkingDayPeriod($date[0], $date[1], $date[2]);
+                        $nPeriod = $this->isWorkingPeriod($date[0], $date[1], $date[2]);
 
                        if($nwdPeriod == 'morning' && $period == 'afternoon')
-                            $nbreOfHours['nbre'] += 0.5;
+                       {
+                            if($nPeriod != $nwdPeriod)
+                                $nbreOfHours['nbre'] += 0.5;
+                       }
 
-                       if($nwdPeriod == 'afternoon' && $period == 'morning')
-                            $nbreOfHours['nbre'] += 0.5;
+                        if($nwdPeriod == 'afternoon' && $period == 'morning')
+                        {
+                            if($nPeriod != $nwdPeriod)
+                                $nbreOfHours['nbre'] += 0.5;
+                        }
 
-                       if($nwdPeriod == 'afternoon' && $period == 'allday')
-                            $nbreOfHours['nbre'] += 0.5;
+                        if($nwdPeriod == 'afternoon' && $period == 'allday')
+                        {
+                            if($nPeriod != $nwdPeriod)
+                                $nbreOfHours['nbre'] += 0.5;
+                        }
 
-                       if($nwdPeriod == 'morning' && $period == 'allday')
-                            $nbreOfHours['nbre'] += 0.5;
+                        if($nwdPeriod == 'morning' && $period == 'allday')
+                        {
+                            if($nPeriod != $nwdPeriod)
+                                $nbreOfHours['nbre'] += 0.5;
+                        }
 
-                       if($nwd==0 && $period == 'morning')
-                            $nbreOfHours['nbre'] += 0.5;
+                        if($nwd==0 && $period == 'morning')
+                        {
+                             if($nPeriod =='allday')
+                               $nbreOfHours['nbre'] += 0.5;
+                        }
 
-                       if($nwd==0 && $period == 'afternoon')
-                            $nbreOfHours['nbre'] += 0.5;
+                        if($nwd==0 && $period == 'afternoon')
+                        {
+                            if($nPeriod =='allday')
+                                $nbreOfHours['nbre'] += 0.5;
+                        }
 
-                       if($nwd==0 && $period == 'allday')
-                            $nbreOfHours['nbre'] += 1;
+                        if($nwd==0 && $period == 'allday')
+                        {
+                            if($nPeriod == $period)
+                                $nbreOfHours['nbre'] += 1;
+                            else
+                                $nbreOfHours['nbre'] += 0.5;
+
+                        }
 
                     }
 
@@ -1250,27 +1683,51 @@ class employee
                 {
                    $nwd = $this->getNonWorkingDay($date[0], $date[1], $date[2]);
                    $nwdPeriod = $this->getNonWorkingDayPeriod($date[0], $date[1], $date[2]);
+                   $nPeriod = $this->isWorkingPeriod($date[0], $date[1], $date[2]);
 
                    if($nwdPeriod == 'morning' && $period == 'afternoon')
-                        $nbreOfHours['nbre'] += 0.5;
+                   {
+                        if($nPeriod != $nwdPeriod)
+                            $nbreOfHours['nbre'] += 0.5;
+                   }
 
                    if($nwdPeriod == 'afternoon' && $period == 'morning')
-                        $nbreOfHours['nbre'] += 0.5;
+                   {
+                        if($nPeriod != $nwdPeriod)
+                            $nbreOfHours['nbre'] += 0.5;
+                   }
 
                    if($nwdPeriod == 'afternoon' && $period == 'allday')
-                        $nbreOfHours['nbre'] += 0.5;
+                   {
+                        if($nPeriod != $nwdPeriod)
+                            $nbreOfHours['nbre'] += 0.5;
+                   }
 
                    if($nwdPeriod == 'morning' && $period == 'allday')
-                        $nbreOfHours['nbre'] += 0.5;
+                   {
+                        if($nPeriod != $nwdPeriod)
+                            $nbreOfHours['nbre'] += 0.5;
+                   }
 
                    if($nwd==0 && $period == 'morning')
-                        $nbreOfHours['nbre'] += 0.5;
+                   {
+                        if($nPeriod =='allday')
+                            $nbreOfHours['nbre'] += 0.5;
+                   }
 
                    if($nwd==0 && $period == 'afternoon')
-                        $nbreOfHours['nbre'] += 0.5;
+                   {
+                        if($nPeriod =='allday')
+                           $nbreOfHours['nbre'] += 0.5;
+                   }
 
                    if($nwd==0 && $period == 'allday')
-                        $nbreOfHours['nbre'] += 1;
+                   {
+                        if($nPeriod == $period)
+                            $nbreOfHours['nbre'] += 1;
+                        else
+                            $nbreOfHours['nbre'] += 0.5;
+                   }
                 }
 
             }
@@ -1354,6 +1811,17 @@ class employee
 
     public function getMonthTimeWorked($year, $month)
     {
+
+        $cmd = $this->db->createCommand( "SELECT hours, absences FROM hr_timux_closed_month  WHERE year=$year AND month=$month AND user_id=".$this->employeeId );
+        $query = $cmd->query();
+        $data = $query->read();
+
+        if($data)
+        {
+            return array('done'=>$data['hours'], 'absence'=>$data['absences']);
+        }
+
+
         $nbreOfDay = date("t",mktime(0,0,0,$month,1,$year));
 
         $todoMonth = $this->getHoursMonth($year, $month);
@@ -1498,26 +1966,25 @@ class employee
             $absence = bcmul($absence, $this->getTimeHoursDayTodo($year,$month),4);
             $nbre = bcadd($nbre, $absence ,4);
 
+            $hoursMonth = $this->getHoursMonth($year, $month);
+            $diff = bcsub($nbre,$hoursMonth, 4);
 
-            $nbre = bcsub($nbre,$this->getHoursMonth($year, $month), 4);
-
-            $this->updateCounter($timeCodeOvId,$nbre,$year, $month,"+");
+            $this->updateCounter($timeCodeOvId,$diff,$year, $month,"+");
 
             // add the vacation day to the counter
             if($month == 12)
             {
                 $wt = $this->getWorkingTime($year, $month);
-                $nbre = $wt['holidaysByYear'];
-                $nbre = bcdiv( bcmul($nbre, $wt['workingPercent'],2), 100.0, 2);
+                $n = $wt['holidaysByYear'];
+                $n = bcdiv( bcmul($n, $wt['workingPercent'],2), 100.0, 2);
                 $timeCodeId = $this->getDefaultHolidaysCounter();
-                $cmd=$this->db->createCommand("UPDATE hr_timux_activity_counter SET nbre=nbre+$nbre WHERE year=0 AND month=0 AND user_id=".$this->employeeId." AND timecode_id=".$timeCodeId);
+                $cmd=$this->db->createCommand("UPDATE hr_timux_activity_counter SET nbre=nbre+$n WHERE year=0 AND month=0 AND user_id=".$this->employeeId." AND timecode_id=".$timeCodeId);
                 $cmd->execute();
 
             }
 
-
             // set the month as closed
-            $cmd = $this->db->createCommand( "INSERT INTO hr_timux_closed_month SET user_id=".$this->employeeId." , year=$year, month=$month" );
+            $cmd = $this->db->createCommand( "INSERT INTO hr_timux_closed_month SET user_id=".$this->employeeId." , year=$year, month=$month, hours={$nbreOfHours['done']}, absences={$nbreOfHours['absence']}, hoursByMonth=$hoursMonth" );
             $query = $cmd->execute();
 
             // set the validate request to closed
@@ -1526,6 +1993,732 @@ class employee
             // close the booking
             $this->closeBooking($year, $month);
 
+            // send email to the employee
+            $this->sendEmailMonthReport($year, $month);
+
+            $sa = new TStandAlone();
+            $sa->addStandalone("add", $this->employeeId, 'timuxAddBalances');
+        }
+    }
+
+
+    public function getMonthReportData($year, $month)
+    {
+
+        $nbreOfDay = date("t",mktime(0,0,0,$month,1,$year));
+
+        $signed = 0.0;
+        $due = 0.0;
+
+        $todo = $this->getTimeHoursDayTodo($year, $month);
+        $config = $this->getConfig();
+        $holidays = 0.0;
+        $timecode = array();
+
+        for($i=1; $i<=$nbreOfDay;$i++)
+        {
+            $date = $year."-".$month."-".$i;
+
+            $line = array();
+
+            // date of th day
+            $line['date'] = $date;
+
+            // booking done in the day
+            $booking = $this->getBookings('all',$date,$date,'ASC');
+            $bookingIn = $this->getBookings(1,$date,$date,'ASC');
+            $bookingOut = $this->getBookings(0,$date,$date,'ASC');
+
+            $line['sign'] = '';
+
+            $line['remark'] = '';
+
+            foreach($booking as $b)
+            {
+                if($b['internet'] == 1) $line['sign'].= "*";
+                $inout = $b['inout'] == 'out' ? Prado::localize("out") : Prado::localize("in");
+                $line['sign'] .= substr($b['time'],0,5)."/".$inout."&nbsp;&nbsp;&nbsp;";
+
+                if(isset($b['timeworked']))
+                {
+                    if($line['remark'] != '') $line['remark'].="<br>";
+                    if($b['inout'] == 'out')
+                    {
+                        $line['remark'].= '&larr; ';
+                        $line['remark'].= $b['time']." ".$b['timecode'];
+                    }
+                    else
+                    {
+                        $line['remark'].= '&rarr; ';
+                        $line['remark'].= $b['time']." ".$b['timecode'];
+
+                    }
+                }
+            }
+
+            // check the missing booking
+            if(count($booking) % 2 > 0)
+            {
+                if($line['remark'] != '') $line['remark'].="<br>";
+                 $line['remark'] .= "<span style=\"color:red\">".Prado::localize('Signing missing')."</span>";
+            }
+
+            // check the error booking
+            if(count($bookingIn) != count($bookingOut))
+            {
+                if($line['remark'] != '') $line['remark'].="<br>";
+                 $line['remark'] .= "<span style=\"color:red\">".Prado::localize('Signing error')."</span>";
+            }
+
+            // check the break
+            if(!$this->isBreakOk($year, $month, $i) && count($booking) % 2 == 0)
+            {
+                if($line['remark'] != '') $line['remark'].="<br>";
+                 $line['remark'] .= "<span style=\"color:red\">".$config['minimumBreaks']." ".Prado::localize('min. for the break are required')."</span>";
+            }
+
+            // get the time signed by the employee
+            $timeWorked = $this->getTimeWorked($year, $month, $i);
+            $line['done'] = $timeWorked['time'] > 0 ? sprintf("%.02f",$timeWorked['time']) : '';
+
+
+            // get the non working day
+            $nwd = $this->getNonWorkingDay($year, $month, $i);
+            $nwdPeriod = $this->getNonWorkingDayPeriod($year, $month, $i);
+
+            // get the absences
+            $a = $this->getAbsence($year, $month, $i);
+            $aPeriod = $this->getAbsencePeriod($year, $month, $i);
+
+            // check if the employee is working this day
+            $isWorking = $this->isWorking($year, $month, $i);
+            
+            // compute the hours that the employee must work according to the n.w.d. and the absence
+            if($isWorking)
+            {
+                // what is the time period for the day
+                $todoPeriod = $this->isWorkingPeriod($year, $month, $i);
+
+                // do we have absence or n.w.d.
+                if($nwd == 0 && $a == 0)
+                {
+                    // if the time period is all the day, the employ should work all the day
+                    if($todoPeriod == 'allday')
+                    {
+                        $line['todo'] = $todo > 0 ? sprintf("%.02f",$todo) : '';
+                        $signed = bcadd($timeWorked['time'],$signed,4);
+                    }
+                    else // the employee must work a half a day
+                    {
+                        $line['todo'] = bcmul($todo,0.5,4) > 0 ? sprintf("%.02f",bcmul($todo,0.5,4)) : '';
+                        $signed = bcadd($timeWorked['time'],$signed,4);
+                    }
+                }
+                else // we have n.w.d. or absence
+                {
+
+                    $todoMorning = 0.0;
+                    $todoAfternoon = 0.0;
+
+                    // compute the nbre of hours todo for the morning
+                    if($todoPeriod == 'morning' || $todoPeriod == 'allday')
+                    {
+                       $todoMorning = bcmul($todo,0.5,4);
+                    }
+
+                    // compute the nbre of hours todo for the morning
+                    if($todoPeriod == 'afternoon' || $todoPeriod == 'allday')
+                    {
+                       $todoAfternoon = bcmul($todo,0.5,4);
+                    }
+
+                    // recompute according to the non working day
+                    if($nwdPeriod == 'morning' || $nwdPeriod == 'allday' )
+                    {
+                        $todoMorning = 0.0;
+                    }
+
+                    // recompute according to the non working day
+                    if($nwdPeriod == 'afternoon' || $nwdPeriod == 'allday' )
+                    {
+                        $todoAfternoon = 0.0;
+                    }
+
+                    $line['todo'] = bcadd($todoMorning,$todoAfternoon,4) > 0 ? sprintf("%.02f",bcadd($todoMorning,$todoAfternoon,4)) : '';
+
+
+                    // compute the time done according to the absence
+                    $doneMorning = 0.0;
+                    $doneAfternoon = 0.0;
+
+                    foreach($aPeriod as $a)
+                    {
+                        // if the time day worked should be greater than 0 hours
+                        if(bcadd($todoMorning,$todoAfternoon,4) > 0)
+                        {
+                            if(($a['period'] == 'morning' || $a['period'] == 'allday') && ($todoPeriod == 'morning' || $todoPeriod == 'allday') )
+                            {
+                                $doneMorning = bcmul($todo,0.5,4);
+                            }
+
+                            if(($a['period'] == 'afternoon' || $a['period'] == 'allday')  && ($todoPeriod == 'afternoon' || $todoPeriod == 'allday') )
+                            {
+                                $doneAfternoon = bcmul($todo,0.5,4);
+                            }
+
+                            if($nwdPeriod == 'morning' || $nwdPeriod == 'allday')
+                            {
+                                $doneMorning = 0.0;
+                            }
+
+                            if($nwdPeriod == 'afternoon' || $nwdPeriod == 'allday' )
+                            {
+                                $doneAfternoon = 0.0;
+                            }
+
+                        }
+                    }
+
+                    $tD = $doneMorning;
+                    $tD = bcadd($tD,$doneAfternoon,4);
+                    $tD = bcadd($tD,$timeWorked['time'],4);
+                    if($timeWorked['time']>$todo)
+                    {
+                        if($line['remark'] != '') $line['remark'].="<br>";
+                         $line['remark'] .= "<span style=\"color:red\">".Prado::localize('Time code error')."</span>";
+                    }
+
+
+                    $line['done'] = $tD > 0 ? sprintf("%.02f",$tD) : '';
+
+                    $signed = bcadd($tD,$signed,4);
+                }
+            }
+            else
+            {
+                $line['todo'] = '';
+
+                if($line['done'] != '')
+                    $signed = bcadd($line['done'],$signed,4);
+            }
+
+            // compute the overtime
+            $overtime = bcsub($line['done'],$line['todo'], 4);
+            $line['overtime'] = $overtime > 0 || $overtime < 0 ? sprintf("%.02f",$overtime) : '';
+
+
+            // add remarks for the n.w.d.
+            if($nwdPeriod === 'allday')
+            {
+                if($line['remark'] != '') $line['remark'].="<br>";
+                    $line['remark'] .= Prado::localize('Non working day');
+            }
+            elseif($nwdPeriod === 'morning')
+            {
+                if($line['remark'] != '') $line['remark'].="<br>";
+                $line['remark'] .= Prado::localize('Non working day at the morning');
+            }
+            elseif($nwdPeriod === 'afternoon')
+            {
+                if($line['remark'] != '') $line['remark'].="<br>";
+                $line['remark'] .= Prado::localize('Non working day at the afternoon');
+            }
+
+
+            // add remarks for the absence
+            foreach($aPeriod as $a)
+            {
+                // if the absence is an allday absence and if the employee should works
+                if($a['period'] === 'allday' && $isWorking && $line['todo'] != '')
+                {
+                    // add in the remark the time code
+                    if($line['remark'] != '') $line['remark'].="<br>";
+                    $tc = $this->getTimeCode($date);
+                    $line['remark'] .= $tc['name'];
+
+                    // add the time code in list used to diplay the time code list, the default
+                    // holidays time code is omitted
+                    if($tc['timecodeId'] != $this->getDefaultHolidaysCounter())
+                    {
+                        if($tc['formatDisplay'] == 'day')
+                        {
+                            // check according to the n.w.d.
+                            if($nwdPeriod !== false && ( $nwdPeriod === 'morning' || $nwdPeriod === 'afternoon'))
+                            {
+                               $timecode[$tc['name']]['value'] += 0.5;
+                               $timecode[$tc['name']]['formatDisplay'] = $tc['formatDisplay'] ;
+                            }
+                            elseif($nwdPeriod === false )
+                            {
+                               $timecode[$tc['name']]['value'] += 1;
+                               $timecode[$tc['name']]['formatDisplay'] = $tc['formatDisplay'] ;
+                            }
+
+                        }
+                        else
+                        {
+                            // check according to the n.w.d.
+                            if($nwdPeriod !== false && ( $nwdPeriod === 'morning' || $nwdPeriod === 'afternoon'))
+                            {
+                                $timecode[$tc['name']]['value'] += bcmul($todo,0.5,4);
+                                $timecode[$tc['name']]['formatDisplay'] = $tc['formatDisplay'] ;
+                            }
+                            elseif($nwdPeriod === false )
+                            {
+                                $timecode[$tc['name']]['value'] += $todo;
+                                $timecode[$tc['name']]['formatDisplay'] = $tc['formatDisplay'] ;
+                            }
+                        }
+                    }
+                }
+                elseif($a['period'] === 'morning' && $isWorking && $line['todo'] != '')
+                {
+                    if($line['remark'] != '') $line['remark'].="<br>";
+                    $tc = $this->getTimeCode($date,'morning');
+                    $line['remark'] .= $tc['name'].' / '.Prado::localize('morning');
+
+                    if($tc['timecodeId'] != $this->getDefaultHolidaysCounter())
+                    {
+                        if($tc['formatDisplay'] == 'day')
+                        {
+                            // check according to the n.w.d.
+                            if($nwdPeriod === false )
+                            {
+                                $timecode[$tc['name']]['value'] += 0.5;
+                                $timecode[$tc['name']]['formatDisplay'] = $tc['formatDisplay'] ;
+                            }
+                        }
+                        else
+                        {
+                            // check according to the n.w.d.
+                            if($nwdPeriod === false )
+                            {
+                                $timecode[$tc['name']]['value'] += bcmul($todo,0.5,4);;
+                                $timecode[$tc['name']]['formatDisplay'] = $tc['formatDisplay'] ;
+                            }
+                        }
+                    }
+                }
+                elseif($a['period'] === 'afternoon' && $isWorking && $line['todo'] != '')
+                {
+                    if($line['remark'] != '') $line['remark'].="<br>";
+                    $tc = $this->getTimeCode($date,'afternoon');
+                    $line['remark'] .= $tc['name'].' / '.Prado::localize('afternoon');
+
+                    if($tc['timecodeId'] != $this->getDefaultHolidaysCounter())
+                    {
+                        if($tc['formatDisplay'] == 'day')
+                        {
+                            // check according to the n.w.d.
+                            if($nwdPeriod === false )
+                            {
+                                $timecode[$tc['name']]['value'] += 0.5;
+                                $timecode[$tc['name']]['formatDisplay'] = $tc['formatDisplay'] ;
+                            }
+                        }
+                        else
+                        {
+                            // check according to the n.w.d.
+                            if($nwdPeriod === false )
+                            {
+                                $timecode[$tc['name']]['value'] += bcmul($todo,0.5,4);
+                                $timecode[$tc['name']]['formatDisplay'] = $tc['formatDisplay'] ;
+                            }
+                        }
+                    }
+                }
+            }
+
+            // add the compensation of the abcences in the time code list
+            foreach($timeWorked['timecode'] as $tw)
+            {
+                $timecode[$tw['name']]['value'] += $tw['time'];
+                $timecode[$tw['name']]['formatDisplay'] = $tw['formatDisplay'];
+            }
+
+            $res[] = $line;
+        }
+        
+        $this->signedValue = $signed;
+
+
+        $this->timcode = $timecode;
+
+        return $res;
+    }
+
+    public function sendEmailMonthReport($year, $month)
+    {
+        include("PrintList.php");
+        $app = Prado::getApplication()->getGlobalization();
+
+        $cmd = $this->db->createCommand( "SELECT * FROM hr_site WHERE id=1" );
+        $query = $cmd->query();
+        $data = $query->read();
+
+        $this->pdf = new PrintListPDF();
+        $this->pdf->userName = Prado::getApplication()->getUser()->getName();
+        $this->pdf->siteName = utf8_decode($data['name']);
+        $this->pdf->SetFont('Arial','',10);
+
+        $this->pdf->AddPage();
+
+
+        $data = $this->getMonthReportData($year, $month);
+
+        $this->pdf->SetFont('Arial','',9);
+        $this->pdf->Cell(0,10,utf8_decode(Prado::localize('Sign in/out')),0,0,'L');
+        $this->pdf->Ln(10);
+        //$this->pdf->setDefaultFont();
+
+        $this->pdf->Cell(30,5,utf8_decode(Prado::localize('Employee'))." :",0,0,'L');
+        $this->pdf->Cell(0,5,utf8_decode($this->getFullName()),0,1,'L');
+
+        $this->pdf->Cell(30,5,utf8_decode(Prado::localize('Department'))." :",0,0,'L');
+        $this->pdf->Cell(0,5,utf8_decode($this->getDepartment()),0,1,'L');
+
+        $date = new DateFormat($app->getCulture());
+        $date = $date->format('1-'.$month."-".$year, "P");
+        $date = explode(" ", $date);
+        $date = $date[2]." ".$date[3];
+
+        $this->pdf->Cell(30, 5,utf8_decode(Prado::localize('Month'))." :",0,0,'L');
+        $this->pdf->Cell(0,5,utf8_decode($date),0,1,'L');
+
+        $this->pdf->Ln(10);
+
+
+        $header = array(utf8_decode(Prado::localize("Date")),
+            utf8_decode(Prado::localize("Signing")),
+            utf8_decode(Prado::localize("To do")),
+            utf8_decode(Prado::localize("Done")),
+            utf8_decode(substr(Prado::localize("Overtime"),0,8)),
+            utf8_decode(Prado::localize("Remark")),
+        );
+
+        $this->pdf->SetFillColor(124,124,124);
+        $this->pdf->SetTextColor(255);
+        $this->pdf->SetDrawColor(255);
+        $this->pdf->SetLineWidth(.3);
+        $this->pdf->SetFont('','B');
+        $w=array(20,65,15,15,15,65);
+        for($i=0;$i<count($header);$i++)
+        $this->pdf->Cell($w[$i],7,$header[$i],1,0,'C',1);
+        $this->pdf->Ln();
+        $this->pdf->SetFillColor(215,215,215);
+        $this->pdf->SetTextColor(0);
+        $this->pdf->SetFont('');
+
+        $fill=false;
+
+        $this->pdf->SetFont('courier','',8);
+
+        foreach($data as $d)
+        {
+            $date = new DateFormat($app->getCulture());
+            $date = $date->format($d['date'], "P");
+
+            $date = explode(" ", $date);
+            $date[0] = strtoupper(substr($date[0], 0,2));
+            $date = implode(" ", $date);
+
+            $date= utf8_decode($date);
+            $sign = str_replace("&nbsp;"," ",utf8_decode($d['sign']));
+            $todo = utf8_decode($d['todo']);
+            $done= utf8_decode($d['done']);
+            $overtime = utf8_decode($d['overtime']);
+            $remark = utf8_decode($d['remark']);
+            $remark = str_replace("&rarr;","->",$remark);
+            $remark = str_replace("&larr;","<-",$remark);
+
+            $nBr = $this->findall("<br>", $remark);
+
+            $remark = str_replace("<br>","\n",$remark);
+            $remark = str_replace("<span style=\"color:red\">","",$remark);
+            $remark = str_replace("</span>","",$remark);
+
+            $height = 5;
+            if($nBr !== false)
+            {
+                $height = 7 * count($nBr);
+            }
+
+            $this->pdf->CellExt($w[0],$height,$date,'LR',0,'L',$fill);
+            $this->pdf->CellExt($w[1],$height,$sign,'LR',0,'L',$fill);
+            $this->pdf->CellExt($w[2],$height,$todo,'LR',0,'L',$fill);
+            $this->pdf->CellExt($w[3],$height,$done,'LR',0,'L',$fill);
+            $this->pdf->CellExt($w[4],$height,$overtime,'LR',0,'L',$fill);
+            $this->pdf->CellExt($w[5],$height,$remark,'LR',0,'L',$fill);
+            $this->pdf->Ln();
+            $fill=!$fill;
+        }
+
+        $this->pdf->SetFont('Arial','',9);
+        $this->pdf->SetDrawColor(0);
+        $this->pdf->SetLineWidth(.1);
+
+        $this->pdf->Ln(7);
+
+// ligne 1
+
+        if($this->signedValue>0)
+        {
+            $this->pdf->Cell(30,3,utf8_decode(Prado::localize('Signed'))." :",0,0,'L');
+            $this->pdf->Cell(20,3,sprintf("+ %.02f",$this->signedValue),0,0,'R');
+        }
+        elseif($this->signedValue<0 || $this->signedValue==0)
+        {
+            $this->pdf->Cell(30,3,utf8_decode(Prado::localize('Signed'))." :",0,0,'L');
+            $this->pdf->Cell(20,3,sprintf(" %.02f",$this->signedValue),0,0,'R');
+        }
+
+        $this->pdf->Cell(20,3,"",0,0,'R');
+
+        $y = $this->Request['f3'];
+        $m = $this->Request['f4'];
+        if($m == 1)
+        {
+            $y--;
+            $m = 12;
+        }
+        else
+        {
+            $m--;
+        }
+
+        $wt = $this->getWorkingTime($y, $m);
+
+        if(!$wt)
+        {
+            $totalYearHours100 = 0.0;
+            $totalYearHoursX = $totalYearHoursX2 = 0.0;
+            $vacations = 0.0;
+            for($i=1; $i<=12; $i++)
+            {
+                $p = $this->getPercentage($year,$i);
+                $h = $this->getHoursMonth($year, $i);
+                $totalYearHours100 = bcadd($h, $totalYearHours100,2);
+                $h = bcdiv(bcmul($h,$p,2),100.00,2);
+                $totalYearHoursX = bcadd($h, $totalYearHoursX,2);
+                $totalYearHoursX2 = $totalYearHoursX;
+                $wt = $this->getWorkingTime($year, $i);
+
+                $vByMonth = bcdiv($wt['holidaysByYear'],12,4);
+                $vByMonth = bcdiv(bcmul($vByMonth,$p,4),100.00,4);
+
+                $vacations += $vByMonth;
+
+
+            }
+
+            $holidaysLastMonth = $vacations;
+        }
+        else
+        {
+            $holidaysLastMonth = $this->geHolidaystLastMonth( $year,  $month);
+        }
+
+        if($holidaysLastMonth>0)
+        {
+            $this->pdf->Cell(40,3,utf8_decode(Prado::localize('Holidays last month'))." :",0,0,'L');
+            $this->pdf->Cell(20,3,sprintf("+ %.02f",$holidaysLastMonth),0,1,'R');
+        }
+        elseif($holidaysLastMonth<0 || $holidaysLastMonth==0)
+        {
+            $this->pdf->Cell(40,3,utf8_decode(Prado::localize('Holidays last month'))." :",0,0,'L');
+            $this->pdf->Cell(20,3,sprintf(" %.02f",$holidaysLastMonth),0,1,'R');
+        }
+
+// ligne 2
+
+        $hoursForTheMonthAtX = $this->getHoursMonth($year,  $month);
+        if($hoursForTheMonthAtX>0)
+        {
+            $this->pdf->Cell(30,3,utf8_decode(Prado::localize('Hours due'))." :",0,0,'L');
+            $this->pdf->Cell(20,3,sprintf("+ %.02f",$hoursForTheMonthAtX),0,0,'R');
+        }
+        elseif($hoursForTheMonthAtX<0 || $hoursForTheMonthAtX==0)
+        {
+            $this->pdf->Cell(30,3,utf8_decode(Prado::localize('Hours due'))." :",0,0,'L');
+            $this->pdf->Cell(20,3,sprintf(" %.02f",$hoursForTheMonthAtX),0,0,'R');
+        }
+
+        $this->pdf->Cell(20,3,"",0,0,'R');
+
+        $defaultHolidayTimeCode = $this->getDefaultHolidaysCounter();
+
+        $holidays = $this->getRequest($year,$month,$defaultHolidayTimeCode);
+
+        if($holidays['nbre']>0)
+        {
+            $this->pdf->Cell(40,3,utf8_decode(Prado::localize('Holidays for this month'))." :",0,0,'L');
+            $this->pdf->Cell(20,3,sprintf("- %.02f",$holidays['nbre']),0,1,'R');
+        }
+        elseif($holidays['nbre']==0)
+        {
+            $this->pdf->Cell(40,3,utf8_decode(Prado::localize('Holidays for this month'))." :",0,0,'L');
+            $this->pdf->Cell(20,3,sprintf("%.02f",$holidays['nbre']),0,1,'R');
+        }
+
+
+// ligne 3
+
+        $balanceForTheMonth = bcsub($this->signedValue,$hoursForTheMonthAtX,4);
+
+        if($balanceForTheMonth>0)
+        {
+            $this->pdf->Cell(30,3,utf8_decode(str_replace("<br/>"," ",Prado::localize('Balance for the month')))." :",0,0,'L');
+            $this->pdf->Cell(20,3,sprintf("+ %.02f",$balanceForTheMonth),'T',0,'R');
+        }
+        elseif($balanceForTheMonth<0 || $balanceForTheMonth==0)
+        {
+            $this->pdf->Cell(30,3,utf8_decode(str_replace("<br/>"," ",Prado::localize('Balance for the month')))." :",0,0,'L');
+            $this->pdf->Cell(20,3,sprintf(" %.02f",$balanceForTheMonth),'T',0,'R');
+        }
+
+        $this->pdf->Cell(20,3,"",0,0,'R');
+
+        $holidaysTotal = bcsub($holidaysLastMonth, $holidays['nbre'],4);
+        if($holidaysTotal>0)
+        {
+            $this->pdf->Cell(40,3,utf8_decode(Prado::localize('Total'))." :",0,0,'L');
+            $this->pdf->Cell(20,3,sprintf("+ %.02f",$holidaysTotal),'T',1,'R');
+        }
+        elseif($holidaysTotal<0 || $holidaysTotal==0)
+        {
+            $this->pdf->Cell(40,3,utf8_decode(Prado::localize('Total'))." :",0,0,'L');
+            $this->pdf->Cell(20,3,sprintf("%.02f",$holidaysTotal),'T',1,'R');
+        }
+
+
+// ligne 4
+        $lastOvertime = $this->getOvertimeLastMonth($year,  $month);
+
+        if($lastOvertime>0)
+        {
+            $this->pdf->Cell(30,3,utf8_decode(Prado::localize('Last month'))." :",0,0,'L');
+            $this->pdf->Cell(20,3,sprintf("+%.02f",$lastOvertime),0,0,'R');
+        }
+        elseif($lastOvertime<0 || $lastOvertime==0)
+        {
+            $this->pdf->Cell(30,3,utf8_decode(Prado::localize('Last month'))." :",0,0,'L');
+            $this->pdf->Cell(20,3,sprintf(" %.02f",$lastOvertime),0,1,'R');
+        }
+
+        $this->pdf->Cell(20,3,"",0,0,'R');
+
+        $this->pdf->ln(3);
+
+// ligne 5
+        $balances = bcadd($balanceForTheMonth , $lastOvertime, 4);
+
+        if($balances>0)
+        {
+            $this->pdf->Cell(30,3,utf8_decode(Prado::localize('Balances'))." :",0,0,'L');
+            $this->pdf->Cell(20,3,sprintf("+%.02f",$balances),'T',0,'R');
+        }
+        elseif($balances<0 || $balances==0)
+        {
+            $this->pdf->Cell(30,3,utf8_decode(Prado::localize('Balances'))." :",0,0,'L');
+            $this->pdf->Cell(20,3,sprintf(" %.02f",$balances),'T',0,'R');
+        }
+
+        $this->pdf->Cell(20,3,"",0,0,'R');
+
+        $nonWorkingDay = $this->getAllNonWorkingDay($year, $month);
+        if($nonWorkingDay>0)
+        {
+            $this->pdf->Cell(40,3,utf8_decode(Prado::localize('Non working days'))." :",0,0,'L');
+            $this->pdf->Cell(20,3,sprintf(" %.02f",$nonWorkingDay),0,1,'R');
+        }
+        elseif($nonWorkingDay==0)
+        {
+            $this->pdf->Cell(40,3,utf8_decode(Prado::localize('Non working days'))." :",0,0,'L');
+            $this->pdf->Cell(20,3,sprintf(" %.02f",$nonWorkingDay),0,1,'R');
+        }
+
+        $this->pdf->ln(7);
+
+
+        foreach($this->timcode as $k=>$v)
+        {
+            $disp = $v['formatDisplay'] == 'day' ? Prado::localize('days') : Prado::localize('hours');
+            $this->pdf->Cell(30,3,utf8_decode($k)." :",0,0,'L');
+            $this->pdf->Cell(20,3,sprintf("%.02f $disp",$v['value']),0,1,'R');
+
+        }
+
+        $this->pdf->Output('./tmp/timuxmonthreport'.$month.$year.'.pdf','F');
+
+        $mailer = new TMailer();
+
+        $mailer->addAttachment('./tmp/timuxmonthreport'.$month.$year.'.pdf', 'timuxmonthreport'.$month.$year.'.pdf', 'application/pdf');
+
+        $cmd2=$this->db->createCommand("SELECT u.email1, u.email2, su.email AS email3 FROM hr_user AS u LEFT JOIN hr_superusers AS su ON su.user_id=u.id WHERE u.id=:id");
+        $cmd2->bindParameter(":id",$this->employeeId);
+        $query = $cmd2->query();
+        $data2 = $query->read();
+
+        if($data2['email1'] != '' || $data2['email2'] != '' || $data2['email3'] != '')
+        {
+            if($data2['email2'] != '')
+            {
+                $mailer->addRecipient($data2['email2']);
+            }
+            elseif($data2['email3'] != '')
+            {
+                $mailer->addRecipient($data2['email3']);
+            }
+            elseif($data2['email1'] != '')
+            {
+                $mailer->addRecipient($data2['email1']);
+            }
+
+        }
+
+
+        $mailer->setObject(Prado::localize("Timux month report"));
+
+        $body = Prado::localize("{name}<br/><br>Please find your month report<br/><br/>Timux",array('name'=>$this->getFullName()));
+        $mailer->setBody($body);
+        $mailer->sendHtmlMail();
+        
+    }
+
+    protected function findall($needle, $haystack)
+    {
+        //Setting up
+        $buffer=''; //We will use a 'frameshift' buffer for this search
+        $pos=0; //Pointer
+        $end = strlen($haystack); //The end of the string
+        $getchar=''; //The next character in the string
+        $needlelen=strlen($needle); //The length of the needle to find (speeds up searching)
+        $found = array(); //The array we will store results in
+
+        while($pos<$end)//Scan file
+        {
+            $getchar = substr($haystack,$pos,1); //Grab next character from pointer
+            if($getchar!="\n" || buffer<$needlelen) //If we fetched a line break, or the buffer is still smaller than the needle, ignore and grab next character
+            {
+                $buffer = $buffer . $getchar; //Build frameshift buffer
+                if(strlen($buffer)>$needlelen) //If the buffer is longer than the needle
+                {
+                    $buffer = substr($buffer,-$needlelen);//Truncunate backwards to needle length (backwards so that the frame 'moves')
+                }
+                if($buffer==$needle) //If the buffer matches the needle
+                {
+                    $found[]=$pos-$needlelen+1; //Add the location of the needle to the array. Adding one fixes the offset.
+                }
+            }
+            $pos++; //Increment the pointer
+        }
+        if(array_key_exists(0,$found)) //Check for an empty array
+        {
+            return $found; //Return the array of located positions
+        }
+        else
+        {
+            return false; //Or if no instances were found return false
         }
     }
 

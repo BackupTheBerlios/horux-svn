@@ -287,6 +287,7 @@ class closemonth extends PageList
                 if( (bool)$cb->getChecked() && $cb->Value != "0")
                 {
                     $employee = new employee( $cb->Value );
+                    
                     $employee->closeMonth($this->FilterYear->getSelectedValue(),$this->FilterMonth->getSelectedValue());
                 }
             }

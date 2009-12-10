@@ -6,6 +6,17 @@
     <div id="loading" class="loading"></div>
     <script type="text/javascript">
 
+        function onPrintRedirect()
+        {
+            var f1 = document.getElementById( '<%= $this->FilterDepartment->getClientID() %>' );
+            var f2 = document.getElementById( '<%= $this->FilterEmployee->getClientID() %>' );
+            var f3 = document.getElementById( '<%= $this->FilterYear->getClientID() %>' );
+            var f4 = document.getElementById( '<%= $this->FilterMonth->getClientID() %>' );
+
+            var param = "&f1=" + f1.value + "&f2=" + f2.value + "&f3=" + f3.value + "&f4=" + f4.value;
+            window.open( "<%= $this->Service->constructUrl($this->getApplication()->getService()->getRequestedPagePath()) %>&action=print" + param, target="_blank" ) ;
+        }
+
         Effect.Fade(document.getElementById('loading'), {duration:0});
 
     </script>
@@ -17,6 +28,7 @@
         HelpVisible="true"
         CancelVisible="true"
         PrintVisible="true"
+        JsClickPrint="onPrintRedirect()"
         />
 
 
@@ -31,7 +43,9 @@
                 <div class="submenu-pad">
                     <ul id="submenu">
                         <li><com:THyperLink Text="<%[Month]%>" NavigateUrl="" CssClass="active" /> </li>
-                        <li><com:THyperLink Text="<%[Year]%>" NavigateUrl="<%= $this->Service->constructUrl('components.timuxuser.balances.year') %>" /> </li>
+                        <li>
+                            <com:THyperLink Text="<%[Year]%>" NavigateUrl="<%= $this->Service->constructUrl('components.timuxuser.balances.year') %>" />
+                        </li>
                     </ul>
                     <div class="clr"></div>
                 </div>

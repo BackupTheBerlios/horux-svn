@@ -190,7 +190,7 @@ class booking extends PageList
 
         }
 
-        $cmd=$this->db->createCommand("SELECT CONCAT(u.name, ' ' , u.firstname) AS employee, t.id, t.date, tb.roundBooking AS time, tb.action, tb.actionReason, d.name AS department, tb.internet FROM hr_tracking AS t LEFT JOIN hr_timux_booking AS tb ON tb.tracking_id=t.id LEFT JOIN hr_user AS u ON u.id=t.id_user LEFT JOIN hr_department AS d ON d.id=u.department WHERE $date $status $employee $department 1=1 AND tb.action!='NULL' ORDER BY t.date DESC, t.time DESC  LIMIT 0,1000");
+        $cmd=$this->db->createCommand("SELECT CONCAT(u.name, ' ' , u.firstname) AS employee, t.id, t.date, tb.roundBooking AS time, tb.action, tb.actionReason, d.name AS department, tb.internet FROM hr_tracking AS t LEFT JOIN hr_timux_booking AS tb ON tb.tracking_id=t.id LEFT JOIN hr_user AS u ON u.id=t.id_user LEFT JOIN hr_department AS d ON d.id=u.department WHERE $date $status $employee $department 1=1 AND tb.action!='NULL' ORDER BY t.date DESC, t.time DESC");
 
         $data = $cmd->query();
         $data = $data->readAll();

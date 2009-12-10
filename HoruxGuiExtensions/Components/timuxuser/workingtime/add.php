@@ -242,7 +242,27 @@ class add extends Page
             {
                 if($d['defaultHoliday'] == 1)
                 {
-                    // @todo faire la balance
+                    $nbre = $this->holidaysByYear->SafeText;
+
+                    $date = explode("-",$this->from->SafeText);
+
+                    $nbre = bcdiv( bcmul((12-$date[1]+1), $nbre,2), 12.0, 2);
+                    $nbreReste = $nbre;
+
+                    $nbre = bcdiv( bcmul($nbre, $this->workingPercent->SafeText,2), 100.0, 2);
+
+                    $cmd = $this->db->createCommand("UPDATE hr_timux_activity_counter SET
+                                                        user_id=:user_id,                                                        
+                                                        nbre=(nbre-:nbreReste)+:nbre
+                                                     WHERE timecode_id=:timecode_id
+                                                    ");
+                    $cmd->bindParameter(":user_id",$this->employee->getSelectedValue(),PDO::PARAM_STR);
+                    $cmd->bindParameter(":timecode_id",$d['id'],PDO::PARAM_STR);
+
+                    $cmd->bindParameter(":nbre",$nbre,PDO::PARAM_STR);
+                    $cmd->bindParameter(":nbreReste",$nbreReste,PDO::PARAM_STR);
+                    $res1 = $cmd->execute();
+
                 }
             }
         }

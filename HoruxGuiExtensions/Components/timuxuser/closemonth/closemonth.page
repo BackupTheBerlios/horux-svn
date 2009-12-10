@@ -1,7 +1,7 @@
 <com:TContent ID="Main">
     <%include Application.common.template.headerContent %>
 
-    <com:TToolbarBox
+      <com:TToolbarBox
         ID="tbb"
         Title="<%[Close Month]%>"
         IconAsset="<%~ ../assets/closemonth.png %>"
@@ -49,7 +49,7 @@
 
 
     <br/><br/>
-    <com:TButton OnClick="onCloseMonth" Text="<%[Close the month]%>" />
+    <com:TActiveButton OnClick="onCloseMonth" Text="<%[Close the month]%>" />
     <br/>
 
     <div id="list">
@@ -115,6 +115,7 @@
 
         </com:TDataGrid>
     </div>
+
 
     <%include Application.common.template.footerContent %>
 </com:TContent>

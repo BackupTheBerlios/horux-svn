@@ -107,13 +107,18 @@ class year extends PageList
         {
             $id = 'id='.$this->userId.' AND ';
         }
-        
+
         $department = $this->FilterDepartment->getSelectedValue();
-        $cmd = $this->db->createCommand( "SELECT CONCAT(name, ' ', firstname) AS Text, id AS Value FROM hr_user WHERE $id department=$department");
+
+        if($department>0)
+            $cmd = $this->db->createCommand( "SELECT CONCAT(name, ' ', firstname) AS Text, id AS Value FROM hr_user WHERE $id department=$department AND name!='??'");
+        else
+            $cmd = $this->db->createCommand( "SELECT CONCAT(name, ' ', firstname) AS Text, id AS Value FROM hr_user WHERE $id name!='??'");
 
         $data = $cmd->query();
         $data = $data->readAll();
         return $data;
+
 
     }
 
@@ -166,9 +171,132 @@ class year extends PageList
             $this->Page->CallbackClient->update('list', $this->DataGrid);
     }
 
+    protected function br2nl($string)
+    {
+        return preg_replace('/\<br(\s*)?\/?\>/i', "\n", $string);
+    }
+
+    protected function onPrint()
+    {
+        parent::onPrint();
+        $app = $this->getApplication()->getGlobalization();
+
+        $this->pdf->AddPage('L');
+
+        $data = $this->getData();
+
+        $this->pdf->SetFont('Arial','',9);
+
+        $this->pdf->Ln(5);
+
+        $this->pdf->Cell(80,5,utf8_decode(Prado::localize('Employee'))." :",0,0,'L');
+        $this->pdf->Cell(0,5,utf8_decode($this->employee->getFullName()),0,1,'L');
+
+        $this->pdf->Cell(80,5,utf8_decode(Prado::localize('Department'))." :",0,0,'L');
+        $this->pdf->Cell(0,5,utf8_decode($this->employee->getDepartment()),0,1,'L');
+
+        $this->pdf->Cell(80,5,utf8_decode(Prado::localize('Year'))." :",0,0,'L');
+        $this->pdf->Cell(0,5,$this->Request['f3'],0,1,'L');
+
+        $this->pdf->Cell(80,5,utf8_decode(Prado::localize('Number of holidays'))." :",0,0,'L');
+        $this->pdf->Cell(0,5,$this->daysVacation->Text,0,1,'L');
+
+        $this->pdf->Cell(80,5,utf8_decode(Prado::localize('Number of days of holidays for the last year'))." :",0,0,'L');
+        $this->pdf->Cell(0,5,$this->daysVacationLastYear->Text,0,1,'L');
+
+        $this->pdf->Cell(80,5,utf8_decode(str_replace("<br/>", " ",Prado::localize('Total of holidays (days)')))." :",0,0,'L');
+        $this->pdf->Cell(0,5,$this->totalVacation->Text,0,1,'L');
+
+        $this->pdf->Cell(80,5,utf8_decode(Prado::localize('Hours balance of the last year'))." :",0,0,'L');
+        $this->pdf->Cell(0,5,$this->hoursBalance->Text,0,1,'L');
+
+        $date = new DateFormat($app->getCulture());
+        $date = $date->format('1-'.$this->Request['f4']."-".$this->Request['f3'], "P");
+        $date = explode(" ", $date);
+        $date = $date[2]." ".$date[3];
+
+        $this->pdf->Ln(10);
+
+
+        $header = array(utf8_decode(Prado::localize("Month")),
+            utf8_decode($this->br2nl(Prado::localize("Occupancy rate in %"))),
+            utf8_decode($this->br2nl(Prado::localize("Hours at 100%"))),
+            utf8_decode($this->br2nl(Prado::localize("Hours at X%"))),
+            utf8_decode($this->br2nl(Prado::localize("Hours worked"))),
+            utf8_decode($this->br2nl(Prado::localize("Nbre of holidays (day)"))),
+            utf8_decode($this->br2nl(Prado::localize("Nbre of holidays (hours)"))),
+            utf8_decode($this->br2nl(Prado::localize("Nbre of leave (day)"))),
+            utf8_decode($this->br2nl(Prado::localize("Nbre of leave (hours)"))),
+            utf8_decode($this->br2nl(Prado::localize("Holidays balance"))),
+            utf8_decode($this->br2nl(Prado::localize("Nbre of absence (day)"))),
+            utf8_decode($this->br2nl(Prado::localize("Nbre of absence (hours)"))),
+            utf8_decode($this->br2nl(Prado::localize("Total of hours"))),
+            utf8_decode($this->br2nl(Prado::localize("Balance for the month"))),
+            utf8_decode($this->br2nl(Prado::localize("Hours due for the year"))),
+            utf8_decode($this->br2nl(Prado::localize("Hours due for the year / without holidays"))),
+            utf8_decode($this->br2nl(Prado::localize("Average per month / end of year"))),
+        );
+
+        $this->pdf->SetFillColor(124,124,124);
+        $this->pdf->SetTextColor(255);
+        $this->pdf->SetDrawColor(255);
+        $this->pdf->SetLineWidth(.3);
+        $this->pdf->SetFont('','B');
+        $this->pdf->SetFont('Arial','',6);
+        $w=array(16.5,16.5,16.5,16.5,16.5,16.5,16.5,16.5,16.5,16.5,16.5,16.5,16.5,16.5,16.5,16.5,16.5);
+        for($i=0;$i<count($header);$i++)
+            $this->pdf->CellExt($w[$i],10,$header[$i],1,0,'C',1);
+        $this->pdf->Ln();
+        $this->pdf->SetFillColor(215,215,215);
+        $this->pdf->SetTextColor(0);
+        $this->pdf->SetFont('');
+
+        $fill=false;
+
+        $this->pdf->SetFont('courier','',8);
+
+        foreach($data as $d)
+        {
+
+            $height = 5;
+
+            $this->pdf->CellExt($w[0],$height,utf8_decode($d['month']),'LR',0,'L',$fill);
+            $this->pdf->CellExt($w[1],$height,$d['occupancy'],'LR',0,'L',$fill);
+            $this->pdf->CellExt($w[2],$height,$d['hours100'],'LR',0,'L',$fill);
+            $this->pdf->CellExt($w[3],$height,$d['hoursX'],'LR',0,'L',$fill);
+            $this->pdf->CellExt($w[4],$height,$d['hoursWorked'],'LR',0,'L',$fill);
+            $this->pdf->CellExt($w[5],$height,$d['nbreHolidaysDay'],'LR',0,'L',$fill);
+            $this->pdf->CellExt($w[6],$height,$d['nbreHolidaysHour'],'LR',0,'L',$fill);
+            $this->pdf->CellExt($w[7],$height,$d['nbreLeaveDay'],'LR',0,'L',$fill);
+            $this->pdf->CellExt($w[8],$height,$d['nbreLeaveHour'],'LR',0,'L',$fill);
+            $this->pdf->CellExt($w[9],$height,$d['holidayBalance'],'LR',0,'L',$fill);
+            $this->pdf->CellExt($w[10],$height,$d['nbreAbsenceDay'],'LR',0,'L',$fill);
+            $this->pdf->CellExt($w[11],$height,$d['nbreAbsenceHour'],'LR',0,'L',$fill);
+            $this->pdf->CellExt($w[12],$height,$d['totalHours'],'LR',0,'L',$fill);
+            $this->pdf->CellExt($w[13],$height,$d['monthBalance'],'LR',0,'L',$fill);
+            $this->pdf->CellExt($w[14],$height,$d['hoursDueYear'],'LR',0,'L',$fill);
+            $this->pdf->CellExt($w[15],$height,$d['hoursDueYearSubHolidays'],'LR',0,'L',$fill);
+            $this->pdf->CellExt($w[16],$height,$d['average'],'LR',0,'L',$fill);
+            $this->pdf->Ln();
+            $fill=!$fill;
+        }
+
+        $this->pdf->render();
+
+    }
+
+
     public function getData()
     {
-        $year = $this->FilterYear->getSelectedValue();
+        if(isset($this->Request['f1']))
+        {
+            $year = $this->Request['f3'];
+            $this->employee = new employee($this->Request['f2'] );
+        }
+        else
+        {
+            $year = $this->FilterYear->getSelectedValue();
+        }
 
         $months = array();
         $app = $this->getApplication()->getGlobalization();
@@ -217,7 +345,7 @@ class year extends PageList
             $months[$i]['occupancy'] = $this->employee->getPercentage($year,$i);
 
             $HoursMonth = $this->employee->getHoursMonth($year, $i, false);
-            $HoursMonthX = bcdiv(bcmul($HoursMonthX, $this->employee->getPercentage($year,$i),2),100.00,4);
+            $HoursMonthX = bcdiv(bcmul($HoursMonth, $this->employee->getPercentage($year,$i),2),100.00,4);
             
             $months[$i]['hours100'] = sprintf("%.02f",$HoursMonth);
             $months[$i]['hoursX'] = sprintf("%.02f",$HoursMonthX);
@@ -247,9 +375,15 @@ class year extends PageList
 
             $absence = $this->employee->getAbsenceMonth($year, $i);
             if($this->employee->getTimeHoursDayTodo($year,$i)>0)
-                $absence = sprintf("%.02f",bcadd($absence,bcdiv($monthTimeWorked['absence'],$this->employee->getTimeHoursDayTodo($year,$i),4),4));
+            {
+                $aDay = bcdiv($monthTimeWorked['absence'],$this->employee->getTimeHoursDayTodo($year,$i),4);
+                $absence = bcadd($absence,$aDay,4);
+            }
             else
+            {
                 $absence = 0;
+            }
+
             $months[$i]['nbreAbsenceDay'] = sprintf("%.02f",$absence);
 
             $nbreAbsenceDay = bcadd($nbreAbsenceDay,$absence,4);

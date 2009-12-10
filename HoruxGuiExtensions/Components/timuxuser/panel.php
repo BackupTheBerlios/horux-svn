@@ -33,11 +33,12 @@ class panel extends Page
 
         $this->employee = new employee($this->userId );
 
-        $this->timecodeGrid->DataSource=$this->TimecodeGrid;
-        $this->timecodeGrid->dataBind();
 
         if(!$this->IsPostBack)
         {
+            $this->timecodeGrid->DataSource=$this->TimecodeGrid;
+            $this->timecodeGrid->dataBind();
+
             // seulement pour les testes
             //$this->addTestData();
         }
@@ -45,79 +46,130 @@ class panel extends Page
 
     public function addTestData()
     {
-       
-        for($i=1;$i<=11; $i++)
+        $users = array(33,36,37,38,39);
+
+
+        foreach($users as $user)
         {
-            $nbreOfDay = date("t",mktime(0,0,0,$i,1,2009));
+            $employee = new employee($user);
 
-            for($j=1; $j<=$nbreOfDay;$j++)
+
+            for($i=1;$i<=11; $i++)
             {
-                $nDay = date("N",mktime(0,0,0,$i,$j,2009));
-                if($nDay>=1 && $nDay<=5)
+                $nbreOfDay = date("t",mktime(0,0,0,$i,1,2009));
+
+                for($j=1; $j<=$nbreOfDay;$j++)
                 {
-                    if($this->employee->isWorking(2009, $i, $j) && $this->employee->getNonWorkingDay(2009, $i, $j) == 0)
+                    $nDay = date("N",mktime(0,0,0,$i,$j,2009));
+                    if($nDay>=1 && $nDay<=5)
                     {
-                        $sqlDate = date("Y-n-j",mktime(0,0,0,$i,$j,2009));
-
-                        $index = 0;
-                        $time = array();
-                        $time[$index]['time'] = str_pad(rand(7,8),2,"0", STR_PAD_LEFT).":".str_pad(rand(0,59),2,"0", STR_PAD_LEFT);
-                        $time[$index]['action'] = 255;
-                        $index++;
-
-                        if(rand(1,1000) % 2 == 0)
+                        if($employee->isWorking(2009, $i, $j))
                         {
-                            $time[$index]['time'] = "11:".str_pad(rand(45,59),2,"0", STR_PAD_LEFT);
-                            $time[$index]['action'] = 254;
-                            $index++;
-                            $time[$index]['time'] = "13:".str_pad(rand(0,30),2,"0", STR_PAD_LEFT);
-                            $time[$index]['action'] = 255;
-                            $index++;
-                        }
-                        $time[$index]['time'] = str_pad(rand(16,17),2,"0", STR_PAD_LEFT).":".str_pad(rand(0,59),2,"0", STR_PAD_LEFT);
-                        $time[$index]['action'] = 254;
+                            $sqlDate = date("Y-n-j",mktime(0,0,0,$i,$j,2009));
+                            $isWorkingPeriod = $employee->isWorkingPeriod(2009, $i, $j);
 
-                        foreach($time as $t)
-                        {
-                            $cmd = $this->db->createCommand( "INSERT INTO `hr_tracking` (
-                                                                `id_user` ,
-                                                                `time`,
-                                                                `date`,
-                                                                `is_access`
-                                                                )
-                                                                VALUES (
-                                                                33,
-                                                                :time,
-                                                                :date,
-                                                                '1'
-                                                                );" );
+                            $index = 0;
+                            $time = array();
 
-                            $cmd->bindParameter(":time",$t['time'], PDO::PARAM_STR);
-                            $cmd->bindParameter(":date",$sqlDate, PDO::PARAM_STR);
+                            $nwdPeriod = $employee->getNonWorkingDayPeriod(2009, $i, $j);
+                            $aPeriod = $employee->getAbsencePeriod(2009, $i, $j);
 
-                            $res1 = $cmd->execute();
-                            $lastId = $this->db->LastInsertID;
+                            if($isWorkingPeriod == 'allday' || $isWorkingPeriod == 'morning')
+                            {
+                                if($nwdPeriod != 'allday' && $nwdPeriod != 'morning')
+                                {
+                                    if($aPeriod[0]['period'] != 'allday' && $aPeriod[0]['period'] != 'morning')
+                                    {
+                                        $time[$index]['time'] = str_pad(rand(7,8),2,"0", STR_PAD_LEFT).":".str_pad(rand(0,59),2,"0", STR_PAD_LEFT);
+                                        $time[$index]['action'] = 255;
+                                        $index++;
+                                    }
+                                }
+                            }
 
-                            $cmd = $this->db->createCommand( "INSERT INTO `hr_timux_booking` (
-                                                                `tracking_id` ,
-                                                                `action`,
-                                                                `roundBooking`,
-                                                                `actionReason`,
-                                                                `internet`
-                                                                )
-                                                                VALUES (
-                                                                :tracking_id,
-                                                                :action,
-                                                                :roundBooking,
-                                                                0,
-                                                                1
-                                                                );" );
 
-                            $cmd->bindParameter(":tracking_id",$lastId,PDO::PARAM_STR);
-                            $cmd->bindParameter(":action",$t['action'], PDO::PARAM_STR);
-                            $cmd->bindParameter(":roundBooking",$t['time'], PDO::PARAM_STR);
+                            if($isWorkingPeriod == 'allday' || $isWorkingPeriod == 'morning')
+                            {
+                                if($nwdPeriod != 'allday' && $nwdPeriod != 'morning')
+                                {
+                                    if( $aPeriod[0]['period'] != 'allday' && $aPeriod[0]['period'] != 'morning')
+                                    {
+                                        $time[$index]['time'] = "11:".str_pad(rand(45,59),2,"0", STR_PAD_LEFT);
+                                        $time[$index]['action'] = 254;
+                                        $index++;
+                                    }
+                                }
+                            }
 
-                            $res1 = $cmd->execute();
+                            if($isWorkingPeriod == 'allday' || $isWorkingPeriod == 'afternoon')
+                            {
+                                if($nwdPeriod != 'allday' && $nwdPeriod != 'afternoon')
+                                {
+                                    if( $aPeriod[0]['period'] != 'allday' && $aPeriod[0]['period'] != 'afternoon')
+                                    {
+                                        $time[$index]['time'] = "13:".str_pad(rand(0,30),2,"0", STR_PAD_LEFT);
+                                        $time[$index]['action'] = 255;
+                                        $index++;
+                                    }
+                                }
+                            }
+
+
+                            if($isWorkingPeriod == 'allday' || $isWorkingPeriod == 'afternoon')
+                            {
+                                if($nwdPeriod != 'allday' && $nwdPeriod != 'afternoon')
+                                {
+                                    if($aPeriod[0]['period'] != 'allday' && $aPeriod[0]['period'] != 'afternoon')
+                                    {
+                                        $time[$index]['time'] = str_pad(rand(16,18),2,"0", STR_PAD_LEFT).":".str_pad(rand(0,59),2,"0", STR_PAD_LEFT);
+                                        $time[$index]['action'] = 254;
+                                    }
+                                }
+                            }
+
+                            foreach($time as $t)
+                            {
+                                $cmd = $this->db->createCommand( "INSERT INTO `hr_tracking` (
+                                                                    `id_user` ,
+                                                                    `time`,
+                                                                    `date`,
+                                                                    `is_access`
+                                                                    )
+                                                                    VALUES (
+                                                                    :user,
+                                                                    :time,
+                                                                    :date,
+                                                                    '1'
+                                                                    );" );
+
+                                $cmd->bindParameter(":time",$t['time'], PDO::PARAM_STR);
+                                $cmd->bindParameter(":date",$sqlDate, PDO::PARAM_STR);
+                                $cmd->bindParameter(":user",$user, PDO::PARAM_STR);
+
+                                $res1 = $cmd->execute();
+                                $lastId = $this->db->LastInsertID;
+
+                                $cmd = $this->db->createCommand( "INSERT INTO `hr_timux_booking` (
+                                                                    `tracking_id` ,
+                                                                    `action`,
+                                                                    `roundBooking`,
+                                                                    `actionReason`,
+                                                                    `internet`
+                                                                    )
+                                                                    VALUES (
+                                                                    :tracking_id,
+                                                                    :action,
+                                                                    :roundBooking,
+                                                                    0,
+                                                                    1
+                                                                    );" );
+
+                                $cmd->bindParameter(":tracking_id",$lastId,PDO::PARAM_STR);
+                                $cmd->bindParameter(":action",$t['action'], PDO::PARAM_STR);
+                                $cmd->bindParameter(":roundBooking",$t['time'], PDO::PARAM_STR);
+
+                                $res1 = $cmd->execute();
+                            }
                         }
                     }
                 }
@@ -127,22 +179,23 @@ class panel extends Page
 
     public function getTimecodeGrid()
     {
-        $cmd=$this->db->createCommand("SELECT ac.nbre, CONCAT('[',tt.abbreviation,'] - ', tt.name) AS timecode,tt.id AS timecodeId, tt.formatDisplay,ac.id, tt.useMinMax, tt.minHour, tt.maxHour, tt.type  FROM hr_timux_activity_counter AS ac LEFT JOIN hr_user AS u ON u.id=ac.user_id LEFT JOIN hr_timux_timecode AS tt ON tt.id=ac.timecode_id WHERE  u.id=".$this->userId." AND ac.year=0 AND ac.month=0 ORDER BY u.name,u.firstname,tt.abbreviation");
+        $cmd=$this->db->createCommand("SELECT ac.nbre, CONCAT('[',tt.abbreviation,'] - ', tt.name) AS timecode,tt.id AS timecodeId, tt.formatDisplay,ac.id, tt.useMinMax, tt.minHour, tt.maxHour, tt.type  FROM hr_timux_activity_counter AS ac LEFT JOIN hr_user AS u ON u.id=ac.user_id LEFT JOIN hr_timux_timecode AS tt ON tt.id=ac.timecode_id WHERE  u.id=".$this->userId." AND ac.year=0 AND ac.month=0 AND (tt.type='leave' OR tt.type='overtime') ORDER BY u.name,u.firstname,tt.abbreviation");
 
         $data = $cmd->query();
         $data = $data->readAll();
         $defOv = $this->employee->getDefaultOvertimeCounter();
-       /* $request = $this->employee->getRequest(date('Y'), date('n'));
         
         for($i=0; $i<count($data);$i++)
         {
             if($data[$i]['timecodeId'] == $defOv)
             {
-                $overtime = $this->employee->getMonthOvertime(date('Y'), date('n'));
-                $data[$i]['nbre2'] = $overtime + $data[$i]['nbre'] ;
+                $overtime = $this->employee->getOvertimeMonth(date('Y'), date('n'));
+                $data[$i]['nbre2'] = $overtime ;
             }
             else
             {
+                $request = $this->employee->getRequest(date('Y'), date('n'),$data[$i]['timecodeId']);
+
                 if(isset($request[$data[$i]['timecodeId']]))
                 {
 
@@ -157,7 +210,7 @@ class panel extends Page
                 }
 
             }
-        }*/
+        }
 
         return $data;
         
