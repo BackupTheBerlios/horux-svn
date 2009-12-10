@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<install type="device">
+	<name>Gantner Time Terminal</name>
+        <installName>gantner_TimeTerminal</installName>
+	<version>1.0.0</version>
+	<creationDate>31/08/09</creationDate>
+	<author>Jean-Luc Gyger / Letux</author>
+	<authorEmail>info@letux.ch</authorEmail>
+	<authorUrl>http://www.letux.ch</authorUrl>
+	<copyright>Letux</copyright>
+	<license>GNU/GPL</license>
+	<description>Configure Gantner Time Terminal GAT p.time ST x80/ ST x81/ ST x90</description>
+	<sqlinstall>install.sql</sqlinstall>
+	<sqluninstall>uninstall.sql</sqluninstall>
+
+	<permissions>
+		<permission>hardware.device.gantner_TimeTerminal.add</permission>
+		<permission>hardware.device.gantner_TimeTerminal.mod</permission>
+	</permissions>
+
+
+</install>

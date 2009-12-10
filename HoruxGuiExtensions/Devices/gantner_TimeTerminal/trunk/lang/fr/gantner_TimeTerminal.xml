@@ -1,0 +1,375 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.0">
+<file source-language="en" target-language="fr" datatype="plaintext" original="messages" date="2009-12-10T14:48:01Z" product-name="messages">
+<body>
+<trans-unit id="1">
+   <source>Add Gantner Time Terminal</source>
+   <target>Ajouter un terminal de temps Gantner</target>
+</trans-unit>
+<trans-unit id="2">
+   <source>Parameters</source>
+   <target>Paramètres</target>
+</trans-unit>
+<trans-unit id="3">
+   <source>Enter a &lt;strong&gt;unique&lt;/strong&gt; name for this device</source>
+   <target>Entrez a nom unique pour ce périphérique</target>
+</trans-unit>
+<trans-unit id="4">
+   <source>Name</source>
+   <target>Nom</target>
+</trans-unit>
+<trans-unit id="5">
+   <source>This name is already used</source>
+   <target>Ce nom est déjà utilisé</target>
+</trans-unit>
+<trans-unit id="6">
+   <source>This field is required</source>
+   <target>Ce champs est requit</target>
+</trans-unit>
+<trans-unit id="7">
+   <source>Enter an IP address or the dhcp name for this device.&lt;br/&gt; &lt;em&gt;Ex:192.168.1.50 or TimeDevice&lt;/em&gt;</source>
+   <target>Entrez une adresse IP ou DHCP pour ce périphérique&lt;br/&gt;Ex:192.168.1.50 ou TimeDevice</target>
+</trans-unit>
+<trans-unit id="8">
+   <source>IP Address/DHCP name</source>
+   <target>Adresse IP/Nom DHCP</target>
+</trans-unit>
+<trans-unit id="9">
+   <source>Timer to check the booking data from the device (in minutes)</source>
+   <target>Temps entre deux récupérations des pointages (en minutes) </target>
+</trans-unit>
+<trans-unit id="10">
+   <source>Booking checking</source>
+   <target>Récupération des pointages</target>
+</trans-unit>
+<trans-unit id="11">
+   <source>(minutes)</source>
+   <target>(minutes)</target>
+</trans-unit>
+<trans-unit id="12">
+   <source>You could insert a description for this device.</source>
+   <target>Vous pouvez entrer une description pour ce périphérique</target>
+</trans-unit>
+<trans-unit id="13">
+   <source>Description</source>
+   <target>Description</target>
+</trans-unit>
+<trans-unit id="14">
+   <source>Config</source>
+   <target>Configuration</target>
+</trans-unit>
+<trans-unit id="15">
+   <source>Set the unit brightness (%).</source>
+   <target>Configure la luminosité (%)</target>
+</trans-unit>
+<trans-unit id="16">
+   <source>Brightness</source>
+   <target>Luminosité</target>
+</trans-unit>
+<trans-unit id="17">
+   <source>Timeout value of the display time (ms)</source>
+   <target>Durée d\affichage des écrans (ms)</target>
+</trans-unit>
+<trans-unit id="18">
+   <source>Display timeout</source>
+   <target>Durée d'affichage</target>
+</trans-unit>
+<trans-unit id="19">
+   <source>(ms)</source>
+   <target>(ms)</target>
+</trans-unit>
+<trans-unit id="20">
+   <source>Timeout value of the input time (ms)</source>
+   <target>Durée d\'attente des entrées (ms)</target>
+</trans-unit>
+<trans-unit id="21">
+   <source>Input timeout</source>
+   <target>Durée des entrées</target>
+</trans-unit>
+<trans-unit id="22">
+   <source>Allow to activate/deactivate the automatic restart done once per day</source>
+   <target>Permet d\'activer\désactiver un redémarrage automatique une fois par jour</target>
+</trans-unit>
+<trans-unit id="23">
+   <source>Active automatic restart</source>
+   <target>Active le redémarrage automatique</target>
+</trans-unit>
+<trans-unit id="24">
+   <source>Make an automatic restart once per day</source>
+   <target>Faire un redémarrage automatique une fois par jour</target>
+</trans-unit>
+<trans-unit id="25">
+   <source>Automatic restart time</source>
+   <target>Heure du redémarrage automatique</target>
+</trans-unit>
+<trans-unit id="26">
+   <source>Allow to activate/deactivate the UDP server&lt;br/&gt;used for time synchronization</source>
+   <target>Permet l\'activation du serveur UDP</target>
+</trans-unit>
+<trans-unit id="27">
+   <source>Active UDP Server</source>
+   <target>Activer le serveur UDP</target>
+</trans-unit>
+<trans-unit id="28">
+   <source>Allow to log the communication in a log file</source>
+   <target>Permet de journaliser la communication</target>
+</trans-unit>
+<trans-unit id="29">
+   <source>Debug</source>
+   <target>Journaliser</target>
+</trans-unit>
+<trans-unit id="30">
+   <source>Languages</source>
+   <target>Langues</target>
+</trans-unit>
+<trans-unit id="31">
+   <source>Set the active language</source>
+   <target>Cochez les langues actives</target>
+</trans-unit>
+<trans-unit id="32">
+   <source>Active languages</source>
+   <target>Activer les langues</target>
+</trans-unit>
+<trans-unit id="33">
+   <source>Arabic</source>
+   <target>Arabe</target>
+</trans-unit>
+<trans-unit id="34">
+   <source>German</source>
+   <target>Allemand</target>
+</trans-unit>
+<trans-unit id="35">
+   <source>English</source>
+   <target>Anglais</target>
+</trans-unit>
+<trans-unit id="36">
+   <source>French</source>
+   <target>Fançais</target>
+</trans-unit>
+<trans-unit id="37">
+   <source>Italian</source>
+   <target>Italien</target>
+</trans-unit>
+<trans-unit id="38">
+   <source>Persian (Farsi)</source>
+   <target>Persan (farsi)</target>
+</trans-unit>
+<trans-unit id="39">
+   <source>Polish</source>
+   <target>Polonais</target>
+</trans-unit>
+<trans-unit id="40">
+   <source>Rumanian</source>
+   <target>Roumain</target>
+</trans-unit>
+<trans-unit id="41">
+   <source>Spanish</source>
+   <target>Espagnole</target>
+</trans-unit>
+<trans-unit id="42">
+   <source>Czech</source>
+   <target>Tchèque</target>
+</trans-unit>
+<trans-unit id="43">
+   <source>Fixed keys</source>
+   <target>Boutons fixes</target>
+</trans-unit>
+<trans-unit id="44">
+   <source>Allow to configure the left fixed button</source>
+   <target>Permet de configurer le bouton fixe à gauche</target>
+</trans-unit>
+<trans-unit id="45">
+   <source>Left button</source>
+   <target>Bouton à gauche</target>
+</trans-unit>
+<trans-unit id="46">
+   <source>Not set</source>
+   <target>Non utilisé</target>
+</trans-unit>
+<trans-unit id="47">
+   <source>All employees</source>
+   <target>Tous les employés</target>
+</trans-unit>
+<trans-unit id="48">
+   <source>Attendance view</source>
+   <target>Vue des présences</target>
+</trans-unit>
+<trans-unit id="49">
+   <source>Attendant employees</source>
+   <target>Présences des employés</target>
+</trans-unit>
+<trans-unit id="50">
+   <source>Absent employees</source>
+   <target>Absences des employés</target>
+</trans-unit>
+<trans-unit id="51">
+   <source>Only with badge</source>
+   <target>Seulement avec le badge</target>
+</trans-unit>
+<trans-unit id="52">
+   <source>Employee balances</source>
+   <target>Soldes des employés</target>
+</trans-unit>
+<trans-unit id="53">
+   <source>Badge or key input</source>
+   <target>Avec le badge ou l'identification de l'employé</target>
+</trans-unit>
+<trans-unit id="54">
+   <source>Arrive booking with badge</source>
+   <target>Pointage avec le badge</target>
+</trans-unit>
+<trans-unit id="55">
+   <source>Employee bookings</source>
+   <target>Pointage des employés</target>
+</trans-unit>
+<trans-unit id="56">
+   <source>Arrive booking with badge or key input</source>
+   <target>Pointage d'arrivé avec le badge ou l'identification de l'employé</target>
+</trans-unit>
+<trans-unit id="57">
+   <source>Leave booking with badge</source>
+   <target>Pointage de départ avec le badge</target>
+</trans-unit>
+<trans-unit id="58">
+   <source>Leave booking with badge or key input</source>
+   <target>Pointage de départ avec le badge ou l'identifiant de l'employé</target>
+</trans-unit>
+<trans-unit id="59">
+   <source>Toogle booking with badge</source>
+   <target>Pointage automatique avec le badge</target>
+</trans-unit>
+<trans-unit id="60">
+   <source>Toogle booking with badge or key input</source>
+   <target>Pointage automatique avec le badge ou l'identifiant de l'employé</target>
+</trans-unit>
+<trans-unit id="61">
+   <source>Arrive timecode with badge</source>
+   <target>Pointage d'arrivé avec code de temps et badge</target>
+</trans-unit>
+<trans-unit id="62">
+   <source>Time code reason</source>
+   <target>Pointage avec code de temps</target>
+</trans-unit>
+<trans-unit id="63">
+   <source>Arrive timecode with badge or key input</source>
+   <target>Pointage d'arrivé avec code de temps, badge ou identifiant de l'employé</target>
+</trans-unit>
+<trans-unit id="64">
+   <source>Leave timecode with badge</source>
+   <target>Pointage de départ avec code de temps et badge</target>
+</trans-unit>
+<trans-unit id="65">
+   <source>Leave timecode with badge or key input</source>
+   <target>Pointage de départ avec code de temps, badge ou identifiant de l'employé</target>
+</trans-unit>
+<trans-unit id="66">
+   <source>Switch language</source>
+   <target>Changement de langue</target>
+</trans-unit>
+<trans-unit id="67">
+   <source>Language</source>
+   <target>Langue</target>
+</trans-unit>
+<trans-unit id="68">
+   <source>Allow to configure the left middle fixed button</source>
+   <target>Permet de configurer le bouton fixe au milieu à gauche</target>
+</trans-unit>
+<trans-unit id="69">
+   <source>Left middle button</source>
+   <target>Bouton fixe au milieu à gauche</target>
+</trans-unit>
+<trans-unit id="70">
+   <source>Allow to configure the right middle fixed button</source>
+   <target>Permet de configurer le bouton fixe au milieu à droite</target>
+</trans-unit>
+<trans-unit id="71">
+   <source>Right middle button</source>
+   <target>Bouton fixe au milieu à droite</target>
+</trans-unit>
+<trans-unit id="72">
+   <source>Allow to configure the right fixed button</source>
+   <target>Permet de configurer le bouton fixe à droite</target>
+</trans-unit>
+<trans-unit id="73">
+   <source>Right button</source>
+   <target>Bouton fixe à droite</target>
+</trans-unit>
+<trans-unit id="74">
+   <source>Soft keys</source>
+   <target>Bouton tactile</target>
+</trans-unit>
+<trans-unit id="75">
+   <source>Allow to configure the left top soft button</source>
+   <target>Permet de configurer le bouton tactile en haut à gauche</target>
+</trans-unit>
+<trans-unit id="76">
+   <source>Left top button</source>
+   <target>Bouton tactile en haut à gauche</target>
+</trans-unit>
+<trans-unit id="77">
+   <source>Allow to configure the left middle soft button</source>
+   <target>Permet de configurer le bouton tactile au milieu à gauche</target>
+</trans-unit>
+<trans-unit id="78">
+   <source>Allow to configure the left bottom soft button</source>
+   <target>Permet de configurer le bouton tactile en bas à gauche</target>
+</trans-unit>
+<trans-unit id="79">
+   <source>Left bottom button</source>
+   <target>Bouton tactile en bas à gauche</target>
+</trans-unit>
+<trans-unit id="80">
+   <source>Allow to configure the right top soft button</source>
+   <target>Permet de configurer le bouton tactile en haut à droite</target>
+</trans-unit>
+<trans-unit id="81">
+   <source>Right top button</source>
+   <target>Bouton tactile en haut à droite</target>
+</trans-unit>
+<trans-unit id="82">
+   <source>Allow to configure the right middle soft button</source>
+   <target>Permet de configurer le bouton tactile au milieu à droite</target>
+</trans-unit>
+<trans-unit id="83">
+   <source>Allow to configure the right bottom soft button</source>
+   <target>Permet de configurer le bouton tactile en bas à droite</target>
+</trans-unit>
+<trans-unit id="84">
+   <source>Right bottom button</source>
+   <target>Bouton tactile en bas à droite</target>
+</trans-unit>
+<trans-unit id="85">
+   <source>The device was added successfully</source>
+   <target>Le périphérique a été ajouter avec succès</target>
+</trans-unit>
+<trans-unit id="86">
+   <source>The device was not added</source>
+   <target>Le périphérique n'a pas été ajouter</target>
+</trans-unit>
+<trans-unit id="87">
+   <source>The device was not saved</source>
+   <target>Le périphérique n'a pas été sauvé</target>
+</trans-unit>
+<trans-unit id="88">
+   <source>hours</source>
+   <target>heures</target>
+</trans-unit>
+<trans-unit id="89">
+   <source>days</source>
+   <target>jours</target>
+</trans-unit>
+<trans-unit id="90">
+   <source>Modify a Gantner Time Terminal</source>
+   <target>Modifier un terminal de temps Gantner</target>
+</trans-unit>
+<trans-unit id="91">
+   <source>The device was modified successfully</source>
+   <target>Le périphérique a été modifié avec succès</target>
+</trans-unit>
+<trans-unit id="92">
+   <source>The device was not modified</source>
+   <target>Le périphérique n'a pas été modifié</target>
+</trans-unit>
+</body>
+</file>
+</xliff>

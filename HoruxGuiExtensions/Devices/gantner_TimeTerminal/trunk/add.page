@@ -1,0 +1,576 @@
+<com:TContent ID="Main">
+
+    <%include Application.common.template.headerContent %>
+
+    <com:TToolbarBox
+        ID="tbb"
+        Title="<%[Add Gantner Time Terminal]%>"
+        CssIcon="icon-48-ifcs"
+        ApplyVisible="true"
+        SaveVisible="true"
+        CancelVisible="true"
+        HelpVisible="true"
+        />
+
+    <%include Application.common.template.headerBoxContent %>
+
+    <fieldset class="adminform">
+     <legend><%[Parameters]%></legend>
+          <table class="admintable" cellspacing="1">
+            <tbody>
+              <tr>
+                <td valign="top" class="key">
+                  <span onmouseover="Tip('<%[Enter a <strong>unique</strong> name for this device]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)">* <%[Name]%></span>
+                </td>
+                <td>
+                  <com:TTextBox
+                    CssClass="text_area"
+                    ID="name"
+                    Width="50" />
+                  <com:TCustomValidator
+                    ValidationGroup="Group1"
+                    EnableClientScript="false"
+                    ControlToValidate="name"
+                    OnServerValidate="serverValidateName"
+                    Display="Dynamic"
+                    Text="<%[This name is already used]%>" />
+                  <com:TRequiredFieldValidator
+                    ValidationGroup="Group1"
+                    ControlToValidate="name"
+                    Text="<%[This field is required]%>"
+                    Display="Dynamic"/>
+                </td>
+             </tr>
+
+              <tr>
+                <td valign="top" class="key">
+                  <span onmouseover="Tip('<%[Enter an IP address or the dhcp name for this device.<br/> <em>Ex:192.168.1.50 or TimeDevice</em>]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)">* <%[IP Address/DHCP name]%></span>
+                </td>
+                <td>
+                  <com:TTextBox
+                    CssClass="text_area"
+                    ID="ipOrDhcp"
+                    Width="50" />
+                  <com:TRequiredFieldValidator
+                        ValidationGroup="Group1"
+                        ControlToValidate="ipOrDhcp"
+                        Text="<%[This field is required]%>"
+                        Display="Dynamic"/>
+                </td>
+              </tr>
+
+              <tr>
+                <td valign="top" class="key">
+                  <span onmouseover="Tip('<%[Timer to check the booking data from the device (in minutes)]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)">* <%[Booking checking]%></span>
+                </td>
+                <td>
+                  <com:TTextBox
+                    CssClass="text_area"
+                    ID="checkBooking"
+                    Width="50px"
+                    Text="10" /> <%[(minutes)]%>
+                  <com:TRequiredFieldValidator
+                        ValidationGroup="Group1"
+                        ControlToValidate="checkBooking"
+                        Text="<%[This field is required]%>"
+                        Display="Dynamic"/>
+                </td>
+              </tr>
+              <tr>
+                <td valign="top" class="key"><span onmouseover="Tip('<%[You could insert a description for this device.]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Description]%></span></td>
+                <td>
+                  <com:TTextBox CssClass="text_area" ID="comment" Width="400px"/>
+                </td>
+              </tr>
+
+
+            </tbody>
+          </table>
+      </fieldset>
+      <fieldset class="adminform">
+     <legend><%[Config]%></legend>
+          <table class="admintable" cellspacing="1">
+            <tbody>
+
+              <tr>
+                <td valign="top" class="key"><span onmouseover="Tip('<%[Set the unit brightness (%).]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Brightness]%></span></td>
+                <td>
+                  <com:TDropDownList ID="brightness">
+
+                  </com:TDropDownList> %
+                </td>
+              </tr>
+
+              <tr>
+                <td valign="top" class="key">
+                  <span onmouseover="Tip('<%[Timeout value of the display time (ms)]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Display timeout]%></span>
+                </td>
+                <td>
+                  <com:TTextBox
+                    CssClass="text_area"
+                    ID="displayTimeout"
+                    Width="40px"
+                    Text="5000" /> <%[(ms)]%>
+                </td>
+             </tr>
+
+              <tr>
+                <td valign="top" class="key">
+                  <span onmouseover="Tip('<%[Timeout value of the input time (ms)]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Input timeout]%></span>
+                </td>
+                <td>
+                  <com:TTextBox
+                    CssClass="text_area"
+                    ID="inputTimeout"
+                    Width="40px"
+                    Text="5000" /> <%[(ms)]%>
+                </td>
+             </tr>
+
+              <tr>
+                <td valign="top" class="key"><span onmouseover="Tip('<%[Allow to activate/deactivate the automatic restart done once per day]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Active automatic restart]%></span></td>
+                <td>
+                    <com:TCheckBox Text="" ID="isAutoRestart"/>
+              </tr>
+
+              <tr>
+                <td valign="top" class="key">
+                  <span onmouseover="Tip('<%[Make an automatic restart once per day]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Automatic restart time]%></span>
+                </td>
+                <td>
+                    <com:TTextBox
+                        CssClass="text_area"
+                        ID="autoRestartHour"
+                        Width="30px" />
+                        :
+                        <com:TTextBox
+                        CssClass="text_area"
+                        ID="autoRestartMinute"
+                        Width="30px"
+                        />
+                </td>
+             </tr>
+
+
+
+
+              <tr>
+                <td valign="top" class="key"><span onmouseover="Tip('<%[Allow to activate/deactivate the UDP server<br/>used for time synchronization]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Active UDP Server]%></span></td>
+                <td>
+                    <com:TCheckBox Text="" ID="udpServer" Checked="true" />
+              </tr>
+
+              <tr>
+                <td valign="top" class="key"><span onmouseover="Tip('<%[Allow to log the communication in a log file]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Debug]%></span></td>
+                <td>
+                    <com:TCheckBox Text="" ID="isLog"/>
+                </td>
+              </tr>
+
+            </tbody>
+          </table>
+      </fieldset>
+
+     <fieldset class="adminform">
+     <legend><%[Languages]%></legend>
+          <table class="admintable" cellspacing="1">
+            <tbody>
+              <tr>
+                <td valign="top" class="key"><span onmouseover="Tip('<%[Set the active language]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Active languages]%></span></td>
+                <td>
+                    <com:TCheckBox Text="<%[Arabic]%>" ID="ar" />
+                    <com:TCheckBox Text="<%[German]%>" ID="de" />
+                    <com:TCheckBox Text="<%[English]%>" ID="en" />
+                    <com:TCheckBox Text="<%[French]%>" ID="fr" />
+                    <com:TCheckBox Text="<%[Italian]%>" ID="it" />
+                    <com:TCheckBox Text="<%[Persian (Farsi)]%>" ID="fa" />
+                    <com:TCheckBox Text="<%[Polish]%>" ID="pl" />
+                    <com:TCheckBox Text="<%[Rumanian]%>" ID="ro" />
+                    <com:TCheckBox Text="<%[Spanish]%>" ID="es" />
+                    <com:TCheckBox Text="<%[Czech]%>" ID="cs" />
+              </tr>
+
+            </tbody>
+          </table>
+      </fieldset>
+
+     <fieldset class="adminform">
+     <legend><%[Fixed keys]%></legend>
+          <table class="admintable" cellspacing="1">
+            <tbody>
+              <tr>
+                <td valign="top" class="key"><span onmouseover="Tip('<%[Allow to configure the left fixed button]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Left button]%></span></td>
+                <td>
+                  <com:TTextBox
+                    CssClass="text_area"
+                    ID="leftFixed"
+                    Width="400px"
+                     />
+                  <com:TDropDownList ID="leftFixedDlg">
+                    <com:TListItem Text="<%[Not set]%>" Value=""  />
+
+                    <com:TListItem Text="<%[All employees]%>" Value="<dlg_Attendance_View,0>" Attributes.Group="<%[Attendance view]%>" />
+                    <com:TListItem Text="<%[Attendant employees]%>" Value="<dlg_Attendance_View,1>" Attributes.Group="<%[Attendance view]%>"  />
+                    <com:TListItem Text="<%[Absent employees]%>" Value="<dlg_Attendance_View,2>" Attributes.Group="<%[Attendance view]%>"  />
+
+                    <com:TListItem Text="<%[Only with badge]%>" Value="<dlg_Info,10,0>" Attributes.Group="<%[Employee balances]%>"  />
+                    <com:TListItem Text="<%[Badge or key input]%>" Value="<dlg_Info,10,2>" Attributes.Group="<%[Employee balances]%>"  />
+
+                    <com:TListItem Text="<%[Arrive booking with badge]%>" Value="<dlg_PersBooking,255,1,0,0,1>" Attributes.Group="<%[Employee bookings]%>"  />
+                    <com:TListItem Text="<%[Arrive booking with badge or key input]%>" Value="<dlg_PersBooking,255,1,2,0,1>" Attributes.Group="<%[Employee bookings]%>"  />
+                    <com:TListItem Text="<%[Leave booking with badge]%>" Value="<dlg_PersBooking,254,2,0,0,1>" Attributes.Group="<%[Employee bookings]%>"  />
+                    <com:TListItem Text="<%[Leave booking with badge or key input]%>" Value="<dlg_PersBooking,254,2,2,0,1>" Attributes.Group="<%[Employee bookings]%>"  />
+
+                    <com:TListItem Text="<%[Toogle booking with badge]%>" Value="<dlg_PersBooking_Toggle,Arrive,255,Leave,254,0>" Attributes.Group="<%[Employee bookings]%>"  />
+                    <com:TListItem Text="<%[Toogle booking with badge or key input]%>" Value="<dlg_PersBooking_Toggle,Arrive,255,Leave,254,2>" Attributes.Group="<%[Employee bookings]%>"  />
+
+                    <com:TListItem Text="<%[Arrive timecode with badge]%>" Value="<dlg_Reasons,100,0,IN>" Attributes.Group="<%[Time code reason]%>"  />
+                    <com:TListItem Text="<%[Arrive timecode with badge or key input]%>" Value="<dlg_Reasons,100,2,IN>" Attributes.Group="<%[Time code reason]%>"  />
+                    <com:TListItem Text="<%[Leave timecode with badge]%>" Value="<dlg_Reasons,100,0,OUT>" Attributes.Group="<%[Time code reason]%>"  />
+                    <com:TListItem Text="<%[Leave timecode with badge or key input]%>" Value="<dlg_Reasons,100,2,OUT>" Attributes.Group="<%[Time code reason]%>"  />
+
+                    <com:TListItem Text="<%[Switch language]%>" Value="<Language>" Attributes.Group="<%[Language]%>"  />
+
+
+                  </com:TDropDownList>
+                </td>
+              </tr>
+              <tr>
+                <td valign="top" class="key"><span onmouseover="Tip('<%[Allow to configure the left middle fixed button]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Left middle button]%></span></td>
+                <td>
+                  <com:TTextBox
+                    CssClass="text_area"
+                    ID="leftMiddleFixed"
+                    Width="400px"
+                     />
+                  <com:TDropDownList ID="leftMiddleFixedDlg">
+                    <com:TListItem Text="<%[Not set]%>" Value=""  />
+
+                    <com:TListItem Text="<%[All employees]%>" Value="<dlg_Attendance_View,0>" Attributes.Group="<%[Attendance view]%>" />
+                    <com:TListItem Text="<%[Attendant employees]%>" Value="<dlg_Attendance_View,1>" Attributes.Group="<%[Attendance view]%>"  />
+                    <com:TListItem Text="<%[Absent employees]%>" Value="<dlg_Attendance_View,2>" Attributes.Group="<%[Attendance view]%>"  />
+
+                    <com:TListItem Text="<%[Only with badge]%>" Value="<dlg_Info,10,0>" Attributes.Group="<%[Employee balances]%>"  />
+                    <com:TListItem Text="<%[Badge or key input]%>" Value="<dlg_Info,10,2>" Attributes.Group="<%[Employee balances]%>"  />
+
+                    <com:TListItem Text="<%[Arrive booking with badge]%>" Value="<dlg_PersBooking,255,1,0,0,1>" Attributes.Group="<%[Employee bookings]%>"  />
+                    <com:TListItem Text="<%[Arrive booking with badge or key input]%>" Value="<dlg_PersBooking,255,1,2,0,1>" Attributes.Group="<%[Employee bookings]%>"  />
+                    <com:TListItem Text="<%[Leave booking with badge]%>" Value="<dlg_PersBooking,254,2,0,0,1>" Attributes.Group="<%[Employee bookings]%>"  />
+                    <com:TListItem Text="<%[Leave booking with badge or key input]%>" Value="<dlg_PersBooking,254,2,2,0,1>" Attributes.Group="<%[Employee bookings]%>"  />
+
+                    <com:TListItem Text="<%[Toogle booking with badge]%>" Value="<dlg_PersBooking_Toggle,Arrive,255,Leave,254,0>" Attributes.Group="<%[Employee bookings]%>"  />
+                    <com:TListItem Text="<%[Toogle booking with badge or key input]%>" Value="<dlg_PersBooking_Toggle,Arrive,255,Leave,254,2>" Attributes.Group="<%[Employee bookings]%>"  />
+
+                    <com:TListItem Text="<%[Arrive timecode with badge]%>" Value="<dlg_Reasons,100,0,IN>" Attributes.Group="<%[Time code reason]%>"  />
+                    <com:TListItem Text="<%[Arrive timecode with badge or key input]%>" Value="<dlg_Reasons,100,2,IN>" Attributes.Group="<%[Time code reason]%>"  />
+                    <com:TListItem Text="<%[Leave timecode with badge]%>" Value="<dlg_Reasons,100,0,OUT>" Attributes.Group="<%[Time code reason]%>"  />
+                    <com:TListItem Text="<%[Leave timecode with badge or key input]%>" Value="<dlg_Reasons,100,2,OUT>" Attributes.Group="<%[Time code reason]%>"  />
+
+                    <com:TListItem Text="<%[Switch language]%>" Value="<Language>" Attributes.Group="<%[Language]%>"  />
+
+                  </com:TDropDownList>
+                </td>
+              </tr>
+              <tr>
+                <td valign="top" class="key"><span onmouseover="Tip('<%[Allow to configure the right middle fixed button]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Right middle button]%></span></td>
+                <td>
+                  <com:TTextBox
+                    CssClass="text_area"
+                    ID="rightMiddleFixed"
+                    Width="400px"
+                     />
+                  <com:TDropDownList ID="rightMiddleFixedDlg">
+                    <com:TListItem Text="<%[Not set]%>" Value=""  />
+
+                    <com:TListItem Text="<%[All employees]%>" Value="<dlg_Attendance_View,0>" Attributes.Group="<%[Attendance view]%>" />
+                    <com:TListItem Text="<%[Attendant employees]%>" Value="<dlg_Attendance_View,1>" Attributes.Group="<%[Attendance view]%>"  />
+                    <com:TListItem Text="<%[Absent employees]%>" Value="<dlg_Attendance_View,2>" Attributes.Group="<%[Attendance view]%>"  />
+
+                    <com:TListItem Text="<%[Only with badge]%>" Value="<dlg_Info,10,0>" Attributes.Group="<%[Employee balances]%>"  />
+                    <com:TListItem Text="<%[Badge or key input]%>" Value="<dlg_Info,10,2>" Attributes.Group="<%[Employee balances]%>"  />
+
+                    <com:TListItem Text="<%[Arrive booking with badge]%>" Value="<dlg_PersBooking,255,1,0,0,1>" Attributes.Group="<%[Employee bookings]%>"  />
+                    <com:TListItem Text="<%[Arrive booking with badge or key input]%>" Value="<dlg_PersBooking,255,1,2,0,1>" Attributes.Group="<%[Employee bookings]%>"  />
+                    <com:TListItem Text="<%[Leave booking with badge]%>" Value="<dlg_PersBooking,254,2,0,0,1>" Attributes.Group="<%[Employee bookings]%>"  />
+                    <com:TListItem Text="<%[Leave booking with badge or key input]%>" Value="<dlg_PersBooking,254,2,2,0,1>" Attributes.Group="<%[Employee bookings]%>"  />
+
+                    <com:TListItem Text="<%[Toogle booking with badge]%>" Value="<dlg_PersBooking_Toggle,Arrive,255,Leave,254,0>" Attributes.Group="<%[Employee bookings]%>"  />
+                    <com:TListItem Text="<%[Toogle booking with badge or key input]%>" Value="<dlg_PersBooking_Toggle,Arrive,255,Leave,254,2>" Attributes.Group="<%[Employee bookings]%>"  />
+
+                    <com:TListItem Text="<%[Arrive timecode with badge]%>" Value="<dlg_Reasons,100,0,IN>" Attributes.Group="<%[Time code reason]%>"  />
+                    <com:TListItem Text="<%[Arrive timecode with badge or key input]%>" Value="<dlg_Reasons,100,2,IN>" Attributes.Group="<%[Time code reason]%>"  />
+                    <com:TListItem Text="<%[Leave timecode with badge]%>" Value="<dlg_Reasons,100,0,OUT>" Attributes.Group="<%[Time code reason]%>"  />
+                    <com:TListItem Text="<%[Leave timecode with badge or key input]%>" Value="<dlg_Reasons,100,2,OUT>" Attributes.Group="<%[Time code reason]%>"  />
+
+                    <com:TListItem Text="<%[Switch language]%>" Value="<Language>" Attributes.Group="<%[Language]%>"  />
+
+                  </com:TDropDownList>
+                </td>
+              </tr>
+              <tr>
+                <td valign="top" class="key"><span onmouseover="Tip('<%[Allow to configure the right fixed button]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Right button]%></span></td>
+                <td>
+                  <com:TTextBox
+                    CssClass="text_area"
+                    ID="rightFixed"
+                    Width="400px"
+                     />
+                  <com:TDropDownList ID="rightFixedDlg">
+                    <com:TListItem Text="<%[Not set]%>" Value=""  />
+
+                    <com:TListItem Text="<%[All employees]%>" Value="<dlg_Attendance_View,0>" Attributes.Group="<%[Attendance view]%>" />
+                    <com:TListItem Text="<%[Attendant employees]%>" Value="<dlg_Attendance_View,1>" Attributes.Group="<%[Attendance view]%>"  />
+                    <com:TListItem Text="<%[Absent employees]%>" Value="<dlg_Attendance_View,2>" Attributes.Group="<%[Attendance view]%>"  />
+
+                    <com:TListItem Text="<%[Only with badge]%>" Value="<dlg_Info,10,0>" Attributes.Group="<%[Employee balances]%>"  />
+                    <com:TListItem Text="<%[Badge or key input]%>" Value="<dlg_Info,10,2>" Attributes.Group="<%[Employee balances]%>"  />
+
+                    <com:TListItem Text="<%[Arrive booking with badge]%>" Value="<dlg_PersBooking,255,1,0,0,1>" Attributes.Group="<%[Employee bookings]%>"  />
+                    <com:TListItem Text="<%[Arrive booking with badge or key input]%>" Value="<dlg_PersBooking,255,1,2,0,1>" Attributes.Group="<%[Employee bookings]%>"  />
+                    <com:TListItem Text="<%[Leave booking with badge]%>" Value="<dlg_PersBooking,254,2,0,0,1>" Attributes.Group="<%[Employee bookings]%>"  />
+                    <com:TListItem Text="<%[Leave booking with badge or key input]%>" Value="<dlg_PersBooking,254,2,2,0,1>" Attributes.Group="<%[Employee bookings]%>"  />
+
+                    <com:TListItem Text="<%[Toogle booking with badge]%>" Value="<dlg_PersBooking_Toggle,Arrive,255,Leave,254,0>" Attributes.Group="<%[Employee bookings]%>"  />
+                    <com:TListItem Text="<%[Toogle booking with badge or key input]%>" Value="<dlg_PersBooking_Toggle,Arrive,255,Leave,254,2>" Attributes.Group="<%[Employee bookings]%>"  />
+
+                    <com:TListItem Text="<%[Arrive timecode with badge]%>" Value="<dlg_Reasons,100,0,IN>" Attributes.Group="<%[Time code reason]%>"  />
+                    <com:TListItem Text="<%[Arrive timecode with badge or key input]%>" Value="<dlg_Reasons,100,2,IN>" Attributes.Group="<%[Time code reason]%>"  />
+                    <com:TListItem Text="<%[Leave timecode with badge]%>" Value="<dlg_Reasons,100,0,OUT>" Attributes.Group="<%[Time code reason]%>"  />
+                    <com:TListItem Text="<%[Leave timecode with badge or key input]%>" Value="<dlg_Reasons,100,2,OUT>" Attributes.Group="<%[Time code reason]%>"  />
+
+                    <com:TListItem Text="<%[Switch language]%>" Value="<Language>" Attributes.Group="<%[Language]%>"  />
+
+                  </com:TDropDownList>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+      </fieldset>
+
+     <fieldset class="adminform">
+     <legend><%[Soft keys]%></legend>
+          <table class="admintable" cellspacing="1">
+            <tbody>
+              <tr>
+                <td valign="top" class="key"><span onmouseover="Tip('<%[Allow to configure the left top soft button]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Left top button]%></span></td>
+                <td>
+                  <com:TTextBox
+                    CssClass="text_area"
+                    ID="leftTopSoft"
+                    Width="400px"
+                     />
+                  <com:TDropDownList ID="leftTopSoftDlg">
+                    <com:TListItem Text="<%[Not set]%>" Value=""  />
+
+                    <com:TListItem Text="<%[All employees]%>" Value="<dlg_Attendance_View,0>" Attributes.Group="<%[Attendance view]%>" />
+                    <com:TListItem Text="<%[Attendant employees]%>" Value="<dlg_Attendance_View,1>" Attributes.Group="<%[Attendance view]%>"  />
+                    <com:TListItem Text="<%[Absent employees]%>" Value="<dlg_Attendance_View,2>" Attributes.Group="<%[Attendance view]%>"  />
+
+                    <com:TListItem Text="<%[Only with badge]%>" Value="<dlg_Info,10,0>" Attributes.Group="<%[Employee balances]%>"  />
+                    <com:TListItem Text="<%[Badge or key input]%>" Value="<dlg_Info,10,2>" Attributes.Group="<%[Employee balances]%>"  />
+
+                    <com:TListItem Text="<%[Arrive booking with badge]%>" Value="<dlg_PersBooking,255,1,0,0,1>" Attributes.Group="<%[Employee bookings]%>"  />
+                    <com:TListItem Text="<%[Arrive booking with badge or key input]%>" Value="<dlg_PersBooking,255,1,2,0,1>" Attributes.Group="<%[Employee bookings]%>"  />
+                    <com:TListItem Text="<%[Leave booking with badge]%>" Value="<dlg_PersBooking,254,2,0,0,1>" Attributes.Group="<%[Employee bookings]%>"  />
+                    <com:TListItem Text="<%[Leave booking with badge or key input]%>" Value="<dlg_PersBooking,254,2,2,0,1>" Attributes.Group="<%[Employee bookings]%>"  />
+
+                    <com:TListItem Text="<%[Toogle booking with badge]%>" Value="<dlg_PersBooking_Toggle,Arrive,255,Leave,254,0>" Attributes.Group="<%[Employee bookings]%>"  />
+                    <com:TListItem Text="<%[Toogle booking with badge or key input]%>" Value="<dlg_PersBooking_Toggle,Arrive,255,Leave,254,2>" Attributes.Group="<%[Employee bookings]%>"  />
+
+                    <com:TListItem Text="<%[Arrive timecode with badge]%>" Value="<dlg_Reasons,100,0,IN>" Attributes.Group="<%[Time code reason]%>"  />
+                    <com:TListItem Text="<%[Arrive timecode with badge or key input]%>" Value="<dlg_Reasons,100,2,IN>" Attributes.Group="<%[Time code reason]%>"  />
+                    <com:TListItem Text="<%[Leave timecode with badge]%>" Value="<dlg_Reasons,100,0,OUT>" Attributes.Group="<%[Time code reason]%>"  />
+                    <com:TListItem Text="<%[Leave timecode with badge or key input]%>" Value="<dlg_Reasons,100,2,OUT>" Attributes.Group="<%[Time code reason]%>"  />
+
+                    <com:TListItem Text="<%[Switch language]%>" Value="<Language>" Attributes.Group="<%[Language]%>"  />
+
+                  </com:TDropDownList>
+                </td>
+              </tr>
+              <tr>
+                <td valign="top" class="key"><span onmouseover="Tip('<%[Allow to configure the left middle soft button]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Left middle button]%></span></td>
+                <td>
+                  <com:TTextBox
+                    CssClass="text_area"
+                    ID="leftMiddleSoft"
+                    Width="400px"
+                     />
+                  <com:TDropDownList ID="leftMiddleSoftDlg">
+                    <com:TListItem Text="<%[Not set]%>" Value=""  />
+
+                    <com:TListItem Text="<%[All employees]%>" Value="<dlg_Attendance_View,0>" Attributes.Group="<%[Attendance view]%>" />
+                    <com:TListItem Text="<%[Attendant employees]%>" Value="<dlg_Attendance_View,1>" Attributes.Group="<%[Attendance view]%>"  />
+                    <com:TListItem Text="<%[Absent employees]%>" Value="<dlg_Attendance_View,2>" Attributes.Group="<%[Attendance view]%>"  />
+
+                    <com:TListItem Text="<%[Only with badge]%>" Value="<dlg_Info,10,0>" Attributes.Group="<%[Employee balances]%>"  />
+                    <com:TListItem Text="<%[Badge or key input]%>" Value="<dlg_Info,10,2>" Attributes.Group="<%[Employee balances]%>"  />
+
+                    <com:TListItem Text="<%[Arrive booking with badge]%>" Value="<dlg_PersBooking,255,1,0,0,1>" Attributes.Group="<%[Employee bookings]%>"  />
+                    <com:TListItem Text="<%[Arrive booking with badge or key input]%>" Value="<dlg_PersBooking,255,1,2,0,1>" Attributes.Group="<%[Employee bookings]%>"  />
+                    <com:TListItem Text="<%[Leave booking with badge]%>" Value="<dlg_PersBooking,254,2,0,0,1>" Attributes.Group="<%[Employee bookings]%>"  />
+                    <com:TListItem Text="<%[Leave booking with badge or key input]%>" Value="<dlg_PersBooking,254,2,2,0,1>" Attributes.Group="<%[Employee bookings]%>"  />
+
+                    <com:TListItem Text="<%[Toogle booking with badge]%>" Value="<dlg_PersBooking_Toggle,Arrive,255,Leave,254,0>" Attributes.Group="<%[Employee bookings]%>"  />
+                    <com:TListItem Text="<%[Toogle booking with badge or key input]%>" Value="<dlg_PersBooking_Toggle,Arrive,255,Leave,254,2>" Attributes.Group="<%[Employee bookings]%>"  />
+
+                    <com:TListItem Text="<%[Arrive timecode with badge]%>" Value="<dlg_Reasons,100,0,IN>" Attributes.Group="<%[Time code reason]%>"  />
+                    <com:TListItem Text="<%[Arrive timecode with badge or key input]%>" Value="<dlg_Reasons,100,2,IN>" Attributes.Group="<%[Time code reason]%>"  />
+                    <com:TListItem Text="<%[Leave timecode with badge]%>" Value="<dlg_Reasons,100,0,OUT>" Attributes.Group="<%[Time code reason]%>"  />
+                    <com:TListItem Text="<%[Leave timecode with badge or key input]%>" Value="<dlg_Reasons,100,2,OUT>" Attributes.Group="<%[Time code reason]%>"  />
+
+                    <com:TListItem Text="<%[Switch language]%>" Value="<Language>" Attributes.Group="<%[Language]%>"  />
+
+                  </com:TDropDownList>
+                </td>
+              </tr>
+              <tr>
+                <td valign="top" class="key"><span onmouseover="Tip('<%[Allow to configure the left bottom soft button]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Left bottom button]%></span></td>
+                <td>
+                  <com:TTextBox
+                    CssClass="text_area"
+                    ID="leftBottomSoft"
+                    Width="400px"
+                     />
+                  <com:TDropDownList ID="leftBottomSoftDlg">
+                    <com:TListItem Text="<%[Not set]%>" Value=""  />
+
+                    <com:TListItem Text="<%[All employees]%>" Value="<dlg_Attendance_View,0>" Attributes.Group="<%[Attendance view]%>" />
+                    <com:TListItem Text="<%[Attendant employees]%>" Value="<dlg_Attendance_View,1>" Attributes.Group="<%[Attendance view]%>"  />
+                    <com:TListItem Text="<%[Absent employees]%>" Value="<dlg_Attendance_View,2>" Attributes.Group="<%[Attendance view]%>"  />
+
+                    <com:TListItem Text="<%[Only with badge]%>" Value="<dlg_Info,10,0>" Attributes.Group="<%[Employee balances]%>"  />
+                    <com:TListItem Text="<%[Badge or key input]%>" Value="<dlg_Info,10,2>" Attributes.Group="<%[Employee balances]%>"  />
+
+                    <com:TListItem Text="<%[Arrive booking with badge]%>" Value="<dlg_PersBooking,255,1,0,0,1>" Attributes.Group="<%[Employee bookings]%>"  />
+                    <com:TListItem Text="<%[Arrive booking with badge or key input]%>" Value="<dlg_PersBooking,255,1,2,0,1>" Attributes.Group="<%[Employee bookings]%>"  />
+                    <com:TListItem Text="<%[Leave booking with badge]%>" Value="<dlg_PersBooking,254,2,0,0,1>" Attributes.Group="<%[Employee bookings]%>"  />
+                    <com:TListItem Text="<%[Leave booking with badge or key input]%>" Value="<dlg_PersBooking,254,2,2,0,1>" Attributes.Group="<%[Employee bookings]%>"  />
+
+                    <com:TListItem Text="<%[Toogle booking with badge]%>" Value="<dlg_PersBooking_Toggle,Arrive,255,Leave,254,0>" Attributes.Group="<%[Employee bookings]%>"  />
+                    <com:TListItem Text="<%[Toogle booking with badge or key input]%>" Value="<dlg_PersBooking_Toggle,Arrive,255,Leave,254,2>" Attributes.Group="<%[Employee bookings]%>"  />
+
+                    <com:TListItem Text="<%[Arrive timecode with badge]%>" Value="<dlg_Reasons,100,0,IN>" Attributes.Group="<%[Time code reason]%>"  />
+                    <com:TListItem Text="<%[Arrive timecode with badge or key input]%>" Value="<dlg_Reasons,100,2,IN>" Attributes.Group="<%[Time code reason]%>"  />
+                    <com:TListItem Text="<%[Leave timecode with badge]%>" Value="<dlg_Reasons,100,0,OUT>" Attributes.Group="<%[Time code reason]%>"  />
+                    <com:TListItem Text="<%[Leave timecode with badge or key input]%>" Value="<dlg_Reasons,100,2,OUT>" Attributes.Group="<%[Time code reason]%>"  />
+
+                    <com:TListItem Text="<%[Switch language]%>" Value="<Language>" Attributes.Group="<%[Language]%>"  />
+
+                  </com:TDropDownList>
+                </td>
+              </tr>
+              <tr>
+                <td valign="top" class="key"><span onmouseover="Tip('<%[Allow to configure the right top soft button]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Right top button]%></span></td>
+                <td>
+                  <com:TTextBox
+                    CssClass="text_area"
+                    ID="rightTopSoft"
+                    Width="400px"
+                     />
+                  <com:TDropDownList ID="rightTopSoftDlg">
+                    <com:TListItem Text="<%[Not set]%>" Value=""  />
+
+                    <com:TListItem Text="<%[All employees]%>" Value="<dlg_Attendance_View,0>" Attributes.Group="<%[Attendance view]%>" />
+                    <com:TListItem Text="<%[Attendant employees]%>" Value="<dlg_Attendance_View,1>" Attributes.Group="<%[Attendance view]%>"  />
+                    <com:TListItem Text="<%[Absent employees]%>" Value="<dlg_Attendance_View,2>" Attributes.Group="<%[Attendance view]%>"  />
+
+                    <com:TListItem Text="<%[Only with badge]%>" Value="<dlg_Info,10,0>" Attributes.Group="<%[Employee balances]%>"  />
+                    <com:TListItem Text="<%[Badge or key input]%>" Value="<dlg_Info,10,2>" Attributes.Group="<%[Employee balances]%>"  />
+
+                    <com:TListItem Text="<%[Arrive booking with badge]%>" Value="<dlg_PersBooking,255,1,0,0,1>" Attributes.Group="<%[Employee bookings]%>"  />
+                    <com:TListItem Text="<%[Arrive booking with badge or key input]%>" Value="<dlg_PersBooking,255,1,2,0,1>" Attributes.Group="<%[Employee bookings]%>"  />
+                    <com:TListItem Text="<%[Leave booking with badge]%>" Value="<dlg_PersBooking,254,2,0,0,1>" Attributes.Group="<%[Employee bookings]%>"  />
+                    <com:TListItem Text="<%[Leave booking with badge or key input]%>" Value="<dlg_PersBooking,254,2,2,0,1>" Attributes.Group="<%[Employee bookings]%>"  />
+
+                    <com:TListItem Text="<%[Toogle booking with badge]%>" Value="<dlg_PersBooking_Toggle,Arrive,255,Leave,254,0>" Attributes.Group="<%[Employee bookings]%>"  />
+                    <com:TListItem Text="<%[Toogle booking with badge or key input]%>" Value="<dlg_PersBooking_Toggle,Arrive,255,Leave,254,2>" Attributes.Group="<%[Employee bookings]%>"  />
+
+                    <com:TListItem Text="<%[Arrive timecode with badge]%>" Value="<dlg_Reasons,100,0,IN>" Attributes.Group="<%[Time code reason]%>"  />
+                    <com:TListItem Text="<%[Arrive timecode with badge or key input]%>" Value="<dlg_Reasons,100,2,IN>" Attributes.Group="<%[Time code reason]%>"  />
+                    <com:TListItem Text="<%[Leave timecode with badge]%>" Value="<dlg_Reasons,100,0,OUT>" Attributes.Group="<%[Time code reason]%>"  />
+                    <com:TListItem Text="<%[Leave timecode with badge or key input]%>" Value="<dlg_Reasons,100,2,OUT>" Attributes.Group="<%[Time code reason]%>"  />
+
+                    <com:TListItem Text="<%[Switch language]%>" Value="<Language>" Attributes.Group="<%[Language]%>"  />
+
+                  </com:TDropDownList>
+                </td>
+              </tr>
+              <tr>
+                <td valign="top" class="key"><span onmouseover="Tip('<%[Allow to configure the right middle soft button]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Right middle button]%></span></td>
+                <td>
+                  <com:TTextBox
+                    CssClass="text_area"
+                    ID="rightMiddleSoft"
+                    Width="400px"
+                     />
+                  <com:TDropDownList ID="rightMiddleSoftDlg">
+                    <com:TListItem Text="<%[Not set]%>" Value=""  />
+
+                    <com:TListItem Text="<%[All employees]%>" Value="<dlg_Attendance_View,0>" Attributes.Group="<%[Attendance view]%>" />
+                    <com:TListItem Text="<%[Attendant employees]%>" Value="<dlg_Attendance_View,1>" Attributes.Group="<%[Attendance view]%>"  />
+                    <com:TListItem Text="<%[Absent employees]%>" Value="<dlg_Attendance_View,2>" Attributes.Group="<%[Attendance view]%>"  />
+
+                    <com:TListItem Text="<%[Only with badge]%>" Value="<dlg_Info,10,0>" Attributes.Group="<%[Employee balances]%>"  />
+                    <com:TListItem Text="<%[Badge or key input]%>" Value="<dlg_Info,10,2>" Attributes.Group="<%[Employee balances]%>"  />
+
+                    <com:TListItem Text="<%[Arrive booking with badge]%>" Value="<dlg_PersBooking,255,1,0,0,1>" Attributes.Group="<%[Employee bookings]%>"  />
+                    <com:TListItem Text="<%[Arrive booking with badge or key input]%>" Value="<dlg_PersBooking,255,1,2,0,1>" Attributes.Group="<%[Employee bookings]%>"  />
+                    <com:TListItem Text="<%[Leave booking with badge]%>" Value="<dlg_PersBooking,254,2,0,0,1>" Attributes.Group="<%[Employee bookings]%>"  />
+                    <com:TListItem Text="<%[Leave booking with badge or key input]%>" Value="<dlg_PersBooking,254,2,2,0,1>" Attributes.Group="<%[Employee bookings]%>"  />
+
+                    <com:TListItem Text="<%[Toogle booking with badge]%>" Value="<dlg_PersBooking_Toggle,Arrive,255,Leave,254,0>" Attributes.Group="<%[Employee bookings]%>"  />
+                    <com:TListItem Text="<%[Toogle booking with badge or key input]%>" Value="<dlg_PersBooking_Toggle,Arrive,255,Leave,254,2>" Attributes.Group="<%[Employee bookings]%>"  />
+
+                    <com:TListItem Text="<%[Arrive timecode with badge]%>" Value="<dlg_Reasons,100,0,IN>" Attributes.Group="<%[Time code reason]%>"  />
+                    <com:TListItem Text="<%[Arrive timecode with badge or key input]%>" Value="<dlg_Reasons,100,2,IN>" Attributes.Group="<%[Time code reason]%>"  />
+                    <com:TListItem Text="<%[Leave timecode with badge]%>" Value="<dlg_Reasons,100,0,OUT>" Attributes.Group="<%[Time code reason]%>"  />
+                    <com:TListItem Text="<%[Leave timecode with badge or key input]%>" Value="<dlg_Reasons,100,2,OUT>" Attributes.Group="<%[Time code reason]%>"  />
+
+                    <com:TListItem Text="<%[Switch language]%>" Value="<Language>" Attributes.Group="<%[Language]%>"  />
+
+                  </com:TDropDownList>
+                </td>
+              </tr>
+              <tr>
+                <td valign="top" class="key"><span onmouseover="Tip('<%[Allow to configure the right bottom soft button]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Right bottom button]%></span></td>
+                <td>
+                  <com:TTextBox
+                    CssClass="text_area"
+                    ID="rightBottomSoft"
+                    Width="400px"
+                     />
+                  <com:TDropDownList ID="rightBottomSoftDlg">
+                    <com:TListItem Text="<%[Not set]%>" Value=""  />
+
+                    <com:TListItem Text="<%[All employees]%>" Value="<dlg_Attendance_View,0>" Attributes.Group="<%[Attendance view]%>" />
+                    <com:TListItem Text="<%[Attendant employees]%>" Value="<dlg_Attendance_View,1>" Attributes.Group="<%[Attendance view]%>"  />
+                    <com:TListItem Text="<%[Absent employees]%>" Value="<dlg_Attendance_View,2>" Attributes.Group="<%[Attendance view]%>"  />
+
+                    <com:TListItem Text="<%[Only with badge]%>" Value="<dlg_Info,10,0>" Attributes.Group="<%[Employee balances]%>"  />
+                    <com:TListItem Text="<%[Badge or key input]%>" Value="<dlg_Info,10,2>" Attributes.Group="<%[Employee balances]%>"  />
+
+                    <com:TListItem Text="<%[Arrive booking with badge]%>" Value="<dlg_PersBooking,255,1,0,0,1>" Attributes.Group="<%[Employee bookings]%>"  />
+                    <com:TListItem Text="<%[Arrive booking with badge or key input]%>" Value="<dlg_PersBooking,255,1,2,0,1>" Attributes.Group="<%[Employee bookings]%>"  />
+                    <com:TListItem Text="<%[Leave booking with badge]%>" Value="<dlg_PersBooking,254,2,0,0,1>" Attributes.Group="<%[Employee bookings]%>"  />
+                    <com:TListItem Text="<%[Leave booking with badge or key input]%>" Value="<dlg_PersBooking,254,2,2,0,1>" Attributes.Group="<%[Employee bookings]%>"  />
+
+                    <com:TListItem Text="<%[Toogle booking with badge]%>" Value="<dlg_PersBooking_Toggle,Arrive,255,Leave,254,0>" Attributes.Group="<%[Employee bookings]%>"  />
+                    <com:TListItem Text="<%[Toogle booking with badge or key input]%>" Value="<dlg_PersBooking_Toggle,Arrive,255,Leave,254,2>" Attributes.Group="<%[Employee bookings]%>"  />
+
+                    <com:TListItem Text="<%[Arrive timecode with badge]%>" Value="<dlg_Reasons,100,0,IN>" Attributes.Group="<%[Time code reason]%>"  />
+                    <com:TListItem Text="<%[Arrive timecode with badge or key input]%>" Value="<dlg_Reasons,100,2,IN>" Attributes.Group="<%[Time code reason]%>"  />
+                    <com:TListItem Text="<%[Leave timecode with badge]%>" Value="<dlg_Reasons,100,0,OUT>" Attributes.Group="<%[Time code reason]%>"  />
+                    <com:TListItem Text="<%[Leave timecode with badge or key input]%>" Value="<dlg_Reasons,100,2,OUT>" Attributes.Group="<%[Time code reason]%>"  />
+
+                    <com:TListItem Text="<%[Switch language]%>" Value="<Language>" Attributes.Group="<%[Language]%>"  />
+
+                  </com:TDropDownList>
+                </td>
+              </tr>
+
+            </tbody>
+          </table>
+      </fieldset>
+
+    <%include Application.common.template.footerContent %>
+</com:TContent>

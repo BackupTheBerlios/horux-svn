@@ -1,0 +1,7 @@
+<configuration>
+    <modules>
+      <module id="globalization_gantner_TimeTerminal" class="TGlobalization" >
+        <translation  type="XLIFF" source="horux.messages" catalogue="gantner_TimeTerminal" marker=""  />
+        </module>
+    </modules>
+</configuration>
