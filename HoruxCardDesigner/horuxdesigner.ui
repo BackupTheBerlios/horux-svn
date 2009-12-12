@@ -48,7 +48,7 @@
         </rect>
        </property>
        <attribute name="label">
-        <string>Horux user data</string>
+        <string>Database text</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_4">
         <item row="0" column="0">

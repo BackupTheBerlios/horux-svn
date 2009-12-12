@@ -8,7 +8,9 @@ QT += network \
 TARGET = HoruxCardDesigner
 TEMPLATE = app
 SOURCES += main.cpp \
-    horuxdesigner.cpp
-HEADERS += horuxdesigner.h
+    horuxdesigner.cpp \
+    cardscene.cpp
+HEADERS += horuxdesigner.h \
+    cardscene.h
 FORMS += horuxdesigner.ui
 RESOURCES += ressource.qrc

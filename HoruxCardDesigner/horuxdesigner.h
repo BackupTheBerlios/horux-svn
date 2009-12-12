@@ -3,7 +3,8 @@
 
 #include <QtGui/QMainWindow>
 #include <QGraphicsSvgItem>
-#include <QGraphicsScene>
+
+#include "cardscene.h"
 
 namespace Ui
 {
@@ -21,7 +22,7 @@ public:
 private:
     Ui::HoruxDesigner *ui;
 
-    QGraphicsScene *scene;
+    CardScene *scene;
 
     QGraphicsSvgItem *card;
 };
