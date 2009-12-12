@@ -7,6 +7,9 @@ HoruxDesigner::HoruxDesigner(QWidget *parent)
     ui->setupUi(this);
 
     card = new QGraphicsSvgItem(":/CR-80.svg");
+    card->setFlag(QGraphicsItem::ItemIsMovable, true);
+    card->setFlag(QGraphicsItem::ItemIsSelectable, true);
+
 
     scene = new CardScene(this);
     scene->addItem(card);
