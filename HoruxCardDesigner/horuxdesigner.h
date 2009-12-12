@@ -2,8 +2,8 @@
 #define HORUXDESIGNER_H
 
 #include <QtGui/QMainWindow>
-#include <QSvgWidget>
-
+#include <QGraphicsSvgItem>
+#include <QGraphicsScene>
 
 namespace Ui
 {
@@ -21,7 +21,9 @@ public:
 private:
     Ui::HoruxDesigner *ui;
 
-    QSvgWidget *card;
+    QGraphicsScene *scene;
+
+    QGraphicsSvgItem *card;
 };
 
 #endif // HORUXDESIGNER_H

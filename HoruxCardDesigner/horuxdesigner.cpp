@@ -6,7 +6,12 @@ HoruxDesigner::HoruxDesigner(QWidget *parent)
 {
     ui->setupUi(this);
 
-    card = new QSvgWidget(":/CR-80.svg",ui->cardWidget);
+    card = new QGraphicsSvgItem(":/CR-80.svg");
+
+    scene = new QGraphicsScene(this);
+    scene->addItem(card);
+
+    ui->graphicsView->setScene(scene);
 }
 
 HoruxDesigner::~HoruxDesigner()
