@@ -1,5 +1,7 @@
 <RCC>
     <qresource prefix="/" >
         <file>CR-80.svg</file>
+        <file>images/textpointer.png</file>
+        <file>images/656.jpg</file>
     </qresource>
 </RCC>

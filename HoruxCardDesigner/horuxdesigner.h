@@ -2,9 +2,12 @@
 #define HORUXDESIGNER_H
 
 #include <QtGui/QMainWindow>
-#include <QGraphicsSvgItem>
+
 
 #include "cardscene.h"
+
+class QButtonGroup;
+class CardTextItem;
 
 namespace Ui
 {
@@ -20,11 +23,20 @@ public:
     ~HoruxDesigner();
 
 private:
+     void createToolBox();
+
+private slots:
+     void buttonGroupClicked(int id);
+     void itemInserted(CardTextItem *item);
+     void textInserted(QGraphicsTextItem *item);
+     void itemSelected(QGraphicsItem *item);
+
+private:
     Ui::HoruxDesigner *ui;
 
-    CardScene *scene;
+    QButtonGroup *buttonGroup;
 
-    QGraphicsSvgItem *card;
+    CardScene *scene;
 };
 
 #endif // HORUXDESIGNER_H

@@ -9,8 +9,10 @@ TARGET = HoruxCardDesigner
 TEMPLATE = app
 SOURCES += main.cpp \
     horuxdesigner.cpp \
-    cardscene.cpp
+    cardscene.cpp \
+    carditemtext.cpp
 HEADERS += horuxdesigner.h \
-    cardscene.h
+    cardscene.h \
+    carditemtext.h
 FORMS += horuxdesigner.ui
 RESOURCES += ressource.qrc

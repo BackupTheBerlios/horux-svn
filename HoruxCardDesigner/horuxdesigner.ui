@@ -16,7 +16,7 @@
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout_2">
     <item row="0" column="0">
-     <widget class="QToolBox" name="toolBox">
+     <widget class="QToolBox" name="toolbox">
       <property name="minimumSize">
        <size>
         <width>200</width>
@@ -38,231 +38,19 @@
       <property name="currentIndex">
        <number>0</number>
       </property>
-      <widget class="QWidget" name="page">
-       <property name="geometry">
-        <rect>
-         <x>0</x>
-         <y>0</y>
-         <width>190</width>
-         <height>388</height>
-        </rect>
-       </property>
-       <attribute name="label">
-        <string>Database text</string>
-       </attribute>
-       <layout class="QGridLayout" name="gridLayout_4">
-        <item row="0" column="0">
-         <widget class="QListWidget" name="listWidget">
-          <item>
-           <property name="text">
-            <string>Name</string>
-           </property>
-           <property name="checkState">
-            <enum>Unchecked</enum>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Firstname</string>
-           </property>
-           <property name="checkState">
-            <enum>Unchecked</enum>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Street (private)</string>
-           </property>
-           <property name="checkState">
-            <enum>Unchecked</enum>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Street (professional)</string>
-           </property>
-           <property name="checkState">
-            <enum>Unchecked</enum>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>City (private)</string>
-           </property>
-           <property name="checkState">
-            <enum>Unchecked</enum>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>City (professional)</string>
-           </property>
-           <property name="checkState">
-            <enum>Unchecked</enum>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Country (private)</string>
-           </property>
-           <property name="checkState">
-            <enum>Unchecked</enum>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Country (professional)</string>
-           </property>
-           <property name="checkState">
-            <enum>Unchecked</enum>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Zip (private)</string>
-           </property>
-           <property name="checkState">
-            <enum>Unchecked</enum>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Zip (professional)</string>
-           </property>
-           <property name="checkState">
-            <enum>Unchecked</enum>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Phone (private)</string>
-           </property>
-           <property name="checkState">
-            <enum>Unchecked</enum>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Phone (professional)</string>
-           </property>
-           <property name="checkState">
-            <enum>Unchecked</enum>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Email (private)</string>
-           </property>
-           <property name="checkState">
-            <enum>Unchecked</enum>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Email (professional)</string>
-           </property>
-           <property name="checkState">
-            <enum>Unchecked</enum>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Picture</string>
-           </property>
-           <property name="checkState">
-            <enum>Unchecked</enum>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Validity date</string>
-           </property>
-           <property name="checkState">
-            <enum>Unchecked</enum>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Department</string>
-           </property>
-           <property name="checkState">
-            <enum>Unchecked</enum>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Firme</string>
-           </property>
-           <property name="checkState">
-            <enum>Unchecked</enum>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Key number</string>
-           </property>
-           <property name="checkState">
-            <enum>Unchecked</enum>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Key identificator</string>
-           </property>
-           <property name="checkState">
-            <enum>Unchecked</enum>
-           </property>
-          </item>
-         </widget>
-        </item>
-       </layout>
-      </widget>
       <widget class="QWidget" name="page_2">
        <property name="geometry">
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>94</width>
-         <height>74</height>
+         <width>190</width>
+         <height>442</height>
         </rect>
        </property>
        <attribute name="label">
         <string>Object</string>
        </attribute>
-       <layout class="QGridLayout" name="gridLayout_3">
-        <item row="0" column="0">
-         <widget class="QListWidget" name="listWidget_2">
-          <item>
-           <property name="text">
-            <string>Text</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Picture</string>
-           </property>
-          </item>
-         </widget>
-        </item>
-       </layout>
-      </widget>
-      <widget class="QWidget" name="page_3">
-       <property name="geometry">
-        <rect>
-         <x>0</x>
-         <y>0</y>
-         <width>94</width>
-         <height>74</height>
-        </rect>
-       </property>
-       <attribute name="label">
-        <string>Daw</string>
-       </attribute>
-       <layout class="QGridLayout" name="gridLayout">
-        <item row="0" column="0">
-         <widget class="QListWidget" name="listWidget_3"/>
-        </item>
-       </layout>
+       <layout class="QGridLayout" name="gridLayout_3"/>
       </widget>
      </widget>
     </item>
