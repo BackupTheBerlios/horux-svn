@@ -12,7 +12,15 @@ class CardScene : public QGraphicsScene
 public:
     enum Mode { InsertItem, InsertText, MoveItem };
 
+     QFont font() const
+         { return myFont; }
+     QColor textColor() const
+         { return myTextColor; }
+
+
     CardScene(QObject *parent = 0);
+    void setFont(const QFont &font);
+    void setTextColor(const QColor &color);
 
 public slots:
      void setMode(Mode mode);
@@ -29,9 +37,14 @@ protected:
      void mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent);
 
 private:
+     bool isItemChange(int type);
+
+private:
      Mode myMode;
      CardTextItem *textItem;
      QGraphicsSvgItem *card;
+     QFont myFont;
+     QColor myTextColor;
 };
 
 #endif // CARDSCENE_H

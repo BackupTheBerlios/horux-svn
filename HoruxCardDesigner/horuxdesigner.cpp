@@ -16,8 +16,10 @@ HoruxDesigner::HoruxDesigner(QWidget *parent)
     scene = new CardScene(this);
     connect(scene, SIGNAL(itemInserted(CardTextItem *)),
              this, SLOT(itemInserted(CardTextItem *)));
+
     connect(scene, SIGNAL(textInserted(QGraphicsTextItem *)),
          this, SLOT(textInserted(QGraphicsTextItem *)));
+
     connect(scene, SIGNAL(itemSelected(QGraphicsItem *)),
          this, SLOT(itemSelected(QGraphicsItem *)));
 
@@ -115,14 +117,6 @@ void HoruxDesigner::itemInserted(CardTextItem *item)
 
  void HoruxDesigner::itemSelected(QGraphicsItem *item)
  {
-     /*DiagramTextItem *textItem =
-     qgraphicsitem_cast<DiagramTextItem *>(item);
-
-     QFont font = textItem->font();
-     QColor color = textItem->defaultTextColor();
-     fontCombo->setCurrentFont(font);
-     fontSizeCombo->setEditText(QString().setNum(font.pointSize()));
-     boldAction->setChecked(font.weight() == QFont::Bold);
-     italicAction->setChecked(font.italic());
-     underlineAction->setChecked(font.underline());*/
+     CardTextItem *textItem =
+        qgraphicsitem_cast<CardTextItem *>(item);
  }
