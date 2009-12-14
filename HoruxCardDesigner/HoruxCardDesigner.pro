@@ -10,9 +10,13 @@ TEMPLATE = app
 SOURCES += main.cpp \
     horuxdesigner.cpp \
     cardscene.cpp \
-    carditemtext.cpp
+    carditemtext.cpp \
+    carditem.cpp \
+    confpage.cpp
 HEADERS += horuxdesigner.h \
     cardscene.h \
-    carditemtext.h
+    carditemtext.h \
+    carditem.h \
+    confpage.h
 FORMS += horuxdesigner.ui
 RESOURCES += ressource.qrc

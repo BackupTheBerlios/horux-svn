@@ -2,6 +2,8 @@
 #include "horuxdesigner.h"
 #include "ui_horuxdesigner.h"
 #include "carditemtext.h"
+#include "carditem.h"
+#include "confpage.h"
 
 const int InsertTextButton = 10;
 const int InsertImageButton = 11;
@@ -23,13 +25,45 @@ HoruxDesigner::HoruxDesigner(QWidget *parent)
     connect(scene, SIGNAL(itemSelected(QGraphicsItem *)),
          this, SLOT(itemSelected(QGraphicsItem *)));
 
+    connect(scene, SIGNAL( selectionChanged()),
+         this, SLOT(selectionChanged()));
 
     ui->graphicsView->setScene(scene);
+    ui->graphicsView->setRenderHint(QPainter::Antialiasing);
+
+    param = NULL;
+    selectionChanged();
+
+
 }
 
 HoruxDesigner::~HoruxDesigner()
 {
     delete ui;
+}
+
+void HoruxDesigner::setTableParam(QGraphicsItem *item)
+{
+    switch(item->type())
+    {
+        case QGraphicsItem::UserType+1: //card
+            {
+                CardItem *card = qgraphicsitem_cast<CardItem *>(item);
+                param = card->getWidgetSetting();
+            }
+            break;
+        case QGraphicsItem::UserType+3: //text
+
+            break;
+    }
+
+    if(param)
+        ui->paramItem->setWidget(param);
+}
+
+void HoruxDesigner::resizeEvent ( QResizeEvent * even)
+{
+    scene->setSceneRect(ui->graphicsView->geometry());
 }
 
  void HoruxDesigner::createToolBox()
@@ -119,4 +153,15 @@ void HoruxDesigner::itemInserted(CardTextItem *item)
  {
      CardTextItem *textItem =
         qgraphicsitem_cast<CardTextItem *>(item);
+ }
+
+ void HoruxDesigner::selectionChanged()
+ {
+     if (scene->selectedItems().isEmpty() || scene->selectedItems().count() > 1 )
+     {
+         setTableParam(scene->getCardItem());
+         return;
+     }
+
+     setTableParam(scene->selectedItems().at(0));
  }

@@ -1,18 +1,21 @@
 #include <QtGui>
-
+#include "carditem.h"
 #include "cardscene.h"
 
 CardScene::CardScene(QObject *parent)  : QGraphicsScene(parent)
 {
-    card = new QGraphicsSvgItem(":/CR-80.svg");
-    card->setFlag(QGraphicsItem::ItemIsMovable, true);
-    card->setFlag(QGraphicsItem::ItemIsSelectable, true);
+    card = new CardItem();
 
     myTextColor = Qt::black;
 
     myMode = MoveItem;
 
     addItem(card);
+}
+
+CardItem *CardScene::getCardItem()
+{
+    return card;
 }
 
 void CardScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
@@ -42,6 +45,14 @@ void CardScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
     if (myMode == MoveItem)
     {
+        if( selectedItems().size() > 0)
+        {
+            QGraphicsItem *item = selectedItems().at(0);
+            if(item->type() > QGraphicsItem::UserType + 1)
+            {
+            }
+        }
+
         QGraphicsScene::mouseMoveEvent(mouseEvent);
     }
 }

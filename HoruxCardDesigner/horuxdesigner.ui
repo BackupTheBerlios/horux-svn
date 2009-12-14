@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>790</width>
-    <height>537</height>
+    <width>1200</width>
+    <height>800</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -43,8 +43,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>190</width>
-         <height>442</height>
+         <width>196</width>
+         <height>695</height>
         </rect>
        </property>
        <attribute name="label">
@@ -63,8 +63,14 @@
        <property name="styleSheet">
         <string>background-color: rgb(228, 228, 228);</string>
        </property>
+       <property name="verticalScrollBarPolicy">
+        <enum>Qt::ScrollBarAlwaysOff</enum>
+       </property>
+       <property name="horizontalScrollBarPolicy">
+        <enum>Qt::ScrollBarAlwaysOff</enum>
+       </property>
       </widget>
-      <widget class="QScrollArea" name="scrollArea">
+      <widget class="QScrollArea" name="paramItem">
        <property name="minimumSize">
         <size>
          <width>100</width>
@@ -85,8 +91,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>94</width>
-          <height>473</height>
+          <width>96</width>
+          <height>723</height>
          </rect>
         </property>
        </widget>
@@ -100,8 +106,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>790</width>
-     <height>21</height>
+     <width>1200</width>
+     <height>22</height>
     </rect>
    </property>
   </widget>

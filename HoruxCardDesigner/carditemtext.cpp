@@ -7,6 +7,7 @@
  {
      setFlag(QGraphicsItem::ItemIsMovable);
      setFlag(QGraphicsItem::ItemIsSelectable);
+
  }
 
  QVariant CardTextItem::itemChange(GraphicsItemChange change,

@@ -7,6 +7,7 @@
 #include "cardscene.h"
 
 class QButtonGroup;
+class QTableWidget;
 class CardTextItem;
 
 namespace Ui
@@ -24,12 +25,17 @@ public:
 
 private:
      void createToolBox();
+     void setTableParam(QGraphicsItem *item);
 
 private slots:
      void buttonGroupClicked(int id);
      void itemInserted(CardTextItem *item);
      void textInserted(QGraphicsTextItem *item);
      void itemSelected(QGraphicsItem *item);
+     void selectionChanged();
+
+protected:
+    void resizeEvent ( QResizeEvent * even);
 
 private:
     Ui::HoruxDesigner *ui;
@@ -37,6 +43,8 @@ private:
     QButtonGroup *buttonGroup;
 
     CardScene *scene;
+
+    QWidget *param;
 };
 
 #endif // HORUXDESIGNER_H

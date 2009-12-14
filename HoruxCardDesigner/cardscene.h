@@ -5,6 +5,8 @@
 #include "carditemtext.h"
 #include <QGraphicsSvgItem>
 
+class CardItem;
+
 class CardScene : public QGraphicsScene
 {
     Q_OBJECT
@@ -21,6 +23,7 @@ public:
     CardScene(QObject *parent = 0);
     void setFont(const QFont &font);
     void setTextColor(const QColor &color);
+    CardItem *getCardItem();
 
 public slots:
      void setMode(Mode mode);
@@ -42,7 +45,7 @@ private:
 private:
      Mode myMode;
      CardTextItem *textItem;
-     QGraphicsSvgItem *card;
+     CardItem *card;
      QFont myFont;
      QColor myTextColor;
 };
