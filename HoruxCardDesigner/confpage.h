@@ -7,7 +7,9 @@ class QLineEdit;
 class QComboBox;
 class QSpinBox;
 
- class CardPage : public QWidget
+#include "ui_cardsetting.h"
+
+ class CardPage : public QWidget, public Ui::cardSetting
  {
      Q_OBJECT
  public:
@@ -18,20 +20,18 @@ private slots:
      void setOpenFileName();
 
 public:
-    QLineEdit *bkgColorColorLineEdit;
-    QColor bkgColor;
-    QLineEdit *bkgPicturePictureLineEdit;
-    QComboBox *sizeCombo;
-    QComboBox *orientationCombo;
-    QSpinBox *gridSizeSpinBox;
-    QComboBox *gridDrawCombo;
-    QComboBox *gridAlignCombo;
+     QColor color;
  };
 
- class TextPage : public QWidget
+#include "ui_textsetting.h"
+
+ class TextPage : public QWidget, public Ui::textSetting
  {
+     Q_OBJECT
+
  public:
      TextPage(QWidget *parent = 0);
+
  };
 
 

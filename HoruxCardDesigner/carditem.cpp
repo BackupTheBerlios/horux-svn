@@ -16,21 +16,40 @@ CardItem::CardItem( Size size,  Format format, QGraphicsItem * parent) : QGraphi
     setFlag(QGraphicsItem::ItemIsSelectable, true);
     setFlag(QGraphicsItem::ItemClipsChildrenToShape, true);
 
-    cardSettings = new CardPage();
-    connect(cardSettings->sizeCombo, SIGNAL(currentIndexChanged ( int )), this, SLOT(setSize(int)));
-    connect(cardSettings->orientationCombo, SIGNAL(currentIndexChanged ( int )), this, SLOT(setFormat(int)));
-    connect(cardSettings->bkgColorColorLineEdit, SIGNAL(textChanged(const QString & )), this, SLOT(setBkgColor()));
-    connect(cardSettings->bkgPicturePictureLineEdit, SIGNAL(textChanged(const QString & )), this, SLOT(setBkgPixmap(QString)));
 
-    connect(cardSettings->gridDrawCombo, SIGNAL(currentIndexChanged ( int )), this, SLOT(viewGrid(int)));
-    connect(cardSettings->gridSizeSpinBox, SIGNAL(valueChanged  ( int )), this, SLOT(setGridSize(int)));
-    connect(cardSettings->gridAlignCombo, SIGNAL(currentIndexChanged ( int )), this, SLOT(alignGrid(int)));
-
-
-    cardSettings->sizeCombo->setCurrentIndex(getSize());
-    cardSettings->orientationCombo->setCurrentIndex(getFormat());
 
     update();
+}
+
+QWidget * CardItem::getWidgetSetting()
+{
+    cardSettings = new CardPage();
+    connect(cardSettings->sizeCb, SIGNAL(currentIndexChanged ( int )), this, SLOT(setSize(int)));
+    connect(cardSettings->orientation, SIGNAL(currentIndexChanged ( int )), this, SLOT(setFormat(int)));
+    connect(cardSettings->bkgColor, SIGNAL(textChanged(const QString & )), this, SLOT(setBkgColor()));
+    connect(cardSettings->bkgPicture, SIGNAL(textChanged(const QString & )), this, SLOT(setBkgPixmap(QString)));
+
+    connect(cardSettings->gridDraw, SIGNAL(currentIndexChanged ( int )), this, SLOT(viewGrid(int)));
+    connect(cardSettings->gridSize, SIGNAL(valueChanged  ( int )), this, SLOT(setGridSize(int)));
+    connect(cardSettings->gridAlign, SIGNAL(currentIndexChanged ( int )), this, SLOT(alignGrid(int)));
+
+
+    cardSettings->sizeCb->setCurrentIndex(getSize());
+    cardSettings->orientation->setCurrentIndex(getFormat());
+
+    if (bkgColor.isValid()) {
+         cardSettings->color = bkgColor;
+         cardSettings->bkgColor->setText(bkgColor.name());
+         cardSettings->bkgColor->setStyleSheet("background-color: " + bkgColor.name() + ";");
+     }
+
+    cardSettings->bkgPicture->setText(bkgFile);
+
+    cardSettings->gridAlign->setCurrentIndex((int)isGridAlign);
+    cardSettings->gridDraw->setCurrentIndex((int)isGrid);
+    cardSettings->gridSize->setValue(gridSize);
+
+    return cardSettings;
 }
 
 void CardItem::definePath()
@@ -154,7 +173,7 @@ void CardItem::setFormat(int format)
 
 void CardItem::setBkgColor()
 {
-    bkgColor = cardSettings->bkgColor;
+    bkgColor = cardSettings->color;
     update();
 }
 

@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>cardSetting</class>
+ <widget class="QWidget" name="cardSetting">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>291</width>
+    <height>267</height>
+   </rect>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>16777215</width>
+    <height>267</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout_2">
+   <item row="0" column="0">
+    <widget class="QGroupBox" name="groupBox">
+     <property name="title">
+      <string>Card setting</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+     <property name="flat">
+      <bool>true</bool>
+     </property>
+     <layout class="QGridLayout" name="gridLayout">
+      <item row="0" column="0">
+       <widget class="QLabel" name="label">
+        <property name="text">
+         <string>Size</string>
+        </property>
+        <property name="buddy">
+         <cstring>sizeCb</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QComboBox" name="sizeCb">
+        <item>
+         <property name="text">
+          <string>CR-80 (85.60 x 53.98)</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>CR-90 (92.07 x 60.33)</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>CR-79 (83.90 x 52.10)</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="label_2">
+        <property name="text">
+         <string>Orientation</string>
+        </property>
+        <property name="buddy">
+         <cstring>orientation</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QComboBox" name="orientation">
+        <item>
+         <property name="text">
+          <string>Portrait</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Landscape</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="label_3">
+        <property name="text">
+         <string>Background color</string>
+        </property>
+        <property name="buddy">
+         <cstring>bkgColor</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <layout class="QHBoxLayout" name="horizontalLayout">
+        <item>
+         <widget class="QLineEdit" name="bkgColor"/>
+        </item>
+        <item>
+         <widget class="QToolButton" name="bkgColorButton">
+          <property name="text">
+           <string>...</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="3" column="0">
+       <widget class="QLabel" name="label_4">
+        <property name="text">
+         <string>Background picture</string>
+        </property>
+        <property name="buddy">
+         <cstring>bkgPicture</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <item>
+         <widget class="QLineEdit" name="bkgPicture"/>
+        </item>
+        <item>
+         <widget class="QToolButton" name="bkgPictureButton">
+          <property name="text">
+           <string>...</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="4" column="0">
+       <widget class="QLabel" name="label_5">
+        <property name="text">
+         <string>Grid size</string>
+        </property>
+        <property name="buddy">
+         <cstring>gridSize</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="1">
+       <widget class="QSpinBox" name="gridSize">
+        <property name="minimum">
+         <number>1</number>
+        </property>
+        <property name="maximum">
+         <number>10</number>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="0">
+       <widget class="QLabel" name="label_6">
+        <property name="text">
+         <string>Grid draw</string>
+        </property>
+        <property name="buddy">
+         <cstring>gridDraw</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="1">
+       <widget class="QComboBox" name="gridDraw">
+        <item>
+         <property name="text">
+          <string>No</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Yes</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item row="6" column="0">
+       <widget class="QLabel" name="label_7">
+        <property name="text">
+         <string>Grid align</string>
+        </property>
+        <property name="buddy">
+         <cstring>gridAlign</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="1">
+       <widget class="QComboBox" name="gridAlign">
+        <item>
+         <property name="text">
+          <string>No</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Yes</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <tabstops>
+  <tabstop>sizeCb</tabstop>
+  <tabstop>orientation</tabstop>
+  <tabstop>bkgColor</tabstop>
+  <tabstop>bkgColorButton</tabstop>
+  <tabstop>bkgPicture</tabstop>
+  <tabstop>bkgPictureButton</tabstop>
+  <tabstop>gridSize</tabstop>
+  <tabstop>gridDraw</tabstop>
+  <tabstop>gridAlign</tabstop>
+ </tabstops>
+ <resources/>
+ <connections/>
+</ui>

@@ -33,8 +33,6 @@ HoruxDesigner::HoruxDesigner(QWidget *parent)
 
     param = NULL;
     selectionChanged();
-
-
 }
 
 HoruxDesigner::~HoruxDesigner()
@@ -42,23 +40,46 @@ HoruxDesigner::~HoruxDesigner()
     delete ui;
 }
 
-void HoruxDesigner::setTableParam(QGraphicsItem *item)
+void HoruxDesigner::setParamView(QGraphicsItem *item)
 {
+    bool isChange = false;
+
     switch(item->type())
     {
         case QGraphicsItem::UserType+1: //card
             {
                 CardItem *card = qgraphicsitem_cast<CardItem *>(item);
-                param = card->getWidgetSetting();
+                if(card)
+                {
+                    if(param != card->getWidgetSetting())
+                    {
+                        param = card->getWidgetSetting();
+                        isChange = true;
+                    }
+
+                }
+
             }
             break;
         case QGraphicsItem::UserType+3: //text
-
+            {
+                CardTextItem *textItem = qgraphicsitem_cast<CardTextItem *>(item);
+                if(textItem)
+                {
+                    if(param != textItem->getWidgetSetting())
+                    {
+                        param = textItem->getWidgetSetting();
+                        isChange = true;
+                    }
+                }
+            }
             break;
     }
 
-    if(param)
+    if(param && isChange)
+    {
         ui->paramItem->setWidget(param);
+    }
 }
 
 void HoruxDesigner::resizeEvent ( QResizeEvent * even)
@@ -159,9 +180,9 @@ void HoruxDesigner::itemInserted(CardTextItem *item)
  {
      if (scene->selectedItems().isEmpty() || scene->selectedItems().count() > 1 )
      {
-         setTableParam(scene->getCardItem());
+         setParamView(scene->getCardItem());
          return;
      }
 
-     setTableParam(scene->selectedItems().at(0));
+     setParamView(scene->selectedItems().at(0));
  }

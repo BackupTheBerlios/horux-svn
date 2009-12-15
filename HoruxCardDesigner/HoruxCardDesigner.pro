@@ -18,5 +18,7 @@ HEADERS += horuxdesigner.h \
     carditemtext.h \
     carditem.h \
     confpage.h
-FORMS += horuxdesigner.ui
+FORMS += horuxdesigner.ui \
+    textsetting.ui \
+    cardsetting.ui
 RESOURCES += ressource.qrc

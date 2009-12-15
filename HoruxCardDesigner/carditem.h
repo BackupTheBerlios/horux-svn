@@ -27,7 +27,7 @@ public:
     bool isAlign(){ return isGridAlign;}
     int getGridSize(){ return gridSize;}
 
-    QWidget * getWidgetSetting() {return cardSettings;}
+    QWidget * getWidgetSetting();
 
 public slots:
     void setSize(int size);

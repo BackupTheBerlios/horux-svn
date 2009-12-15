@@ -3,6 +3,7 @@
 
  #include <QGraphicsTextItem>
  #include <QPen>
+ #include "confpage.h"
 
  class QFocusEvent;
  class QGraphicsItem;
@@ -21,6 +22,8 @@
      int type() const
          { return Type; }
 
+     QWidget * getWidgetSetting();
+
  signals:
      void lostFocus(CardTextItem *item);
      void selectedChange(QGraphicsItem *item);
@@ -30,6 +33,9 @@
      void focusOutEvent(QFocusEvent *event);
      void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event);
 
+
+private:
+    TextPage *textSettings;
  };
 
  #endif

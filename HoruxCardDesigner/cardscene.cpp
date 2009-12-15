@@ -11,6 +11,9 @@ CardScene::CardScene(QObject *parent)  : QGraphicsScene(parent)
     myMode = MoveItem;
 
     addItem(card);
+
+    card->setPos(100,100);
+
 }
 
 CardItem *CardScene::getCardItem()
@@ -32,7 +35,10 @@ void CardScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
              connect(textItem, SIGNAL(selectedChange(QGraphicsItem *)),
                      this, SIGNAL(itemSelected(QGraphicsItem *)));
              textItem->setDefaultTextColor(myTextColor);
-             textItem->setPos(mouseEvent->scenePos());
+
+             textItem->setPos( textItem->mapFromScene(mouseEvent->scenePos()) );
+
+
              emit textInserted(textItem);
         default:
          ;
@@ -45,6 +51,7 @@ void CardScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
     if (myMode == MoveItem)
     {
+
         if( selectedItems().size() > 0)
         {
             QGraphicsItem *item = selectedItems().at(0);

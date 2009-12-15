@@ -25,7 +25,7 @@ public:
 
 private:
      void createToolBox();
-     void setTableParam(QGraphicsItem *item);
+     void setParamView(QGraphicsItem *item);
 
 private slots:
      void buttonGroupClicked(int id);

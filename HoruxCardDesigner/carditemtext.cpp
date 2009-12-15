@@ -8,6 +8,14 @@
      setFlag(QGraphicsItem::ItemIsMovable);
      setFlag(QGraphicsItem::ItemIsSelectable);
 
+
+ }
+
+ QWidget *  CardTextItem::getWidgetSetting()
+ {
+    textSettings = new TextPage();
+
+    return textSettings;
  }
 
  QVariant CardTextItem::itemChange(GraphicsItemChange change,
