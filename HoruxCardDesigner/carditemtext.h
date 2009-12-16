@@ -24,9 +24,11 @@
 
      QWidget * getWidgetSetting();
 
+
  signals:
      void lostFocus(CardTextItem *item);
      void selectedChange(QGraphicsItem *item);
+     void textChanged(const QString &);
 
  protected:
      QVariant itemChange(GraphicsItemChange change, const QVariant &value);
@@ -34,8 +36,19 @@
      void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event);
 
 
-private:
-    TextPage *textSettings;
+public slots:
+     void setName(const QString &n);
+     void fontChanged(const QFont &);
+     void colorChanged(const QColor &);
+     void rotationChanged(const QString &);
+
+public:
+    double rotation;
+    QString name;
+    QColor color;
+    int alignment;
+
+
  };
 
  #endif

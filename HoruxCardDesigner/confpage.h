@@ -2,6 +2,7 @@
 #define CONFPAGE_H
 
 #include <QWidget>
+#include <QDebug>
 
 class QLineEdit;
 class QComboBox;
@@ -32,6 +33,17 @@ public:
  public:
      TextPage(QWidget *parent = 0);
 
+private slots:
+     void setColor();
+     void setFont();
+
+signals:
+    void changeFont(const QFont &);
+    void changeColor(const QColor &);
+
+public:
+     QColor color;
+     QFont font;
  };
 
 

@@ -27,12 +27,12 @@ public:
     bool isAlign(){ return isGridAlign;}
     int getGridSize(){ return gridSize;}
 
-    QWidget * getWidgetSetting();
+    void reset();
 
 public slots:
     void setSize(int size);
     void setFormat(int format);
-    void setBkgColor();
+    void setBkgColor(const QString &);
     void setBkgPixmap(QString file);
     void viewGrid(int flag);
     void alignGrid(int flag);
@@ -40,20 +40,19 @@ public slots:
 
 
 private:
-    void definePath();
-
-private:
     Size cardSize;
     Format cardFormat;
     QPainterPath cardPath;
-    CardPage *cardSettings;
-    QColor bkgColor;
-    QString bkgFile;
     QPixmap pix;
     QBrush bkgBrush;
+
+ public:
+    QColor bkgColor;
+    QString bkgFile;
     bool isGrid;
     int gridSize;
     bool isGridAlign;
+
 };
 
 #endif // CARDITEM_H

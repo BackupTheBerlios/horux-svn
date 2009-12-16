@@ -15,15 +15,15 @@ public:
     enum Mode { InsertItem, InsertText, MoveItem };
 
      QFont font() const
-         { return myFont; }
+         { return defaultFont; }
      QColor textColor() const
          { return myTextColor; }
 
 
     CardScene(QObject *parent = 0);
-    void setFont(const QFont &font);
-    void setTextColor(const QColor &color);
     CardItem *getCardItem();
+    void setFont(const QFont &font);
+    void reset();
 
 public slots:
      void setMode(Mode mode);
@@ -46,7 +46,7 @@ private:
      Mode myMode;
      CardTextItem *textItem;
      CardItem *card;
-     QFont myFont;
+     QFont defaultFont;
      QColor myTextColor;
 };
 

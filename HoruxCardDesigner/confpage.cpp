@@ -9,11 +9,13 @@ CardPage::CardPage(QWidget *parent)
 
      connect(bkgColorButton, SIGNAL(clicked()), this, SLOT(setColor()));
      connect(bkgPictureButton, SIGNAL(clicked()), this, SLOT(setOpenFileName()));
+
+     color = QColor(Qt::black);
  }
 
 void CardPage::setColor()
  {
-     color = QColorDialog::getColor(Qt::green, this);
+     color = QColorDialog::getColor(color, this);
      if (color.isValid()) {
          bkgColor->setText(color.name());
          bkgColor->setStyleSheet("background-color: " + color.name() + ";");
@@ -38,4 +40,30 @@ void CardPage::setColor()
      : QWidget(parent)
  {
     setupUi(this);
+
+     connect(fontButton, SIGNAL(clicked()), this, SLOT(setFont()));
+     connect(colorButton, SIGNAL(clicked()), this, SLOT(setColor()));
+     color = QColor(Qt::black);
  }
+
+
+ void TextPage::setColor()
+ {
+     color = QColorDialog::getColor(color, this);
+     if (color.isValid()) {
+         emit changeColor(color);
+     }
+ }
+
+ void TextPage::setFont()
+ {
+    bool ok;
+    QFont newFont = QFontDialog::getFont(
+                 &ok, font, this);
+    if(ok)
+    {
+        font = newFont;
+        emit changeFont(newFont);
+    }
+ }
+

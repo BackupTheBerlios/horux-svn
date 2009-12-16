@@ -21,13 +21,18 @@ CardItem *CardScene::getCardItem()
     return card;
 }
 
+void CardScene::reset()
+{
+    card->reset();
+}
+
 void CardScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
     switch (myMode)
     {
         case InsertText:
              textItem = new CardTextItem(card);
-             textItem->setFont(myFont);
+             textItem->setFont(defaultFont);
              textItem->setTextInteractionFlags(Qt::TextEditorInteraction);
              textItem->setZValue(1000.0);
              connect(textItem, SIGNAL(lostFocus(CardTextItem *)),
@@ -37,7 +42,6 @@ void CardScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
              textItem->setDefaultTextColor(myTextColor);
 
              textItem->setPos( textItem->mapFromScene(mouseEvent->scenePos()) );
-
 
              emit textInserted(textItem);
         default:
@@ -87,28 +91,6 @@ void CardScene::editorLostFocus(CardTextItem *item)
      }
 }
 
-void CardScene::setTextColor(const QColor &color)
-{
- myTextColor = color;
- if (isItemChange(CardTextItem::Type)) {
-     CardTextItem *item =
-         qgraphicsitem_cast<CardTextItem *>(selectedItems().first());
-     item->setDefaultTextColor(myTextColor);
- }
-}
-
-void CardScene::setFont(const QFont &font)
-{
-    myFont = font;
-
-    if (isItemChange(CardTextItem::Type)) {
-     QGraphicsTextItem *item =
-         qgraphicsitem_cast<CardTextItem *>(selectedItems().first());
-     //At this point the selection can change so the first selected item might not be a DiagramTextItem
-     if (item)
-         item->setFont(myFont);
-    }
-}
 
 bool CardScene::isItemChange(int type)
 {
@@ -118,3 +100,8 @@ bool CardScene::isItemChange(int type)
      }
      return false;
 }
+
+ void CardScene::setFont(const QFont &font)
+ {
+     defaultFont = font;
+ }

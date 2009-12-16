@@ -3,5 +3,11 @@
         <file>CR-80.svg</file>
         <file>images/textpointer.png</file>
         <file>images/656.jpg</file>
+        <file>images/bold.png</file>
+        <file>images/bringtofront.png</file>
+        <file>images/delete.png</file>
+        <file>images/italic.png</file>
+        <file>images/sendtoback.png</file>
+        <file>images/underline.png</file>
     </qresource>
 </RCC>

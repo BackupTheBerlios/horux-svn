@@ -15,98 +15,51 @@ CardItem::CardItem( Size size,  Format format, QGraphicsItem * parent) : QGraphi
     setFlag(QGraphicsItem::ItemIsMovable, true);
     setFlag(QGraphicsItem::ItemIsSelectable, true);
     setFlag(QGraphicsItem::ItemClipsChildrenToShape, true);
+}
 
+void CardItem::reset()
+{
+    bkgColor = QColor(Qt::white);
 
+    cardSize = CR80;
+    cardFormat = L;
+    gridSize = 1;
+    isGrid = false;
+    isGridAlign = false;
 
     update();
 }
 
-QWidget * CardItem::getWidgetSetting()
-{
-    cardSettings = new CardPage();
-    connect(cardSettings->sizeCb, SIGNAL(currentIndexChanged ( int )), this, SLOT(setSize(int)));
-    connect(cardSettings->orientation, SIGNAL(currentIndexChanged ( int )), this, SLOT(setFormat(int)));
-    connect(cardSettings->bkgColor, SIGNAL(textChanged(const QString & )), this, SLOT(setBkgColor()));
-    connect(cardSettings->bkgPicture, SIGNAL(textChanged(const QString & )), this, SLOT(setBkgPixmap(QString)));
 
-    connect(cardSettings->gridDraw, SIGNAL(currentIndexChanged ( int )), this, SLOT(viewGrid(int)));
-    connect(cardSettings->gridSize, SIGNAL(valueChanged  ( int )), this, SLOT(setGridSize(int)));
-    connect(cardSettings->gridAlign, SIGNAL(currentIndexChanged ( int )), this, SLOT(alignGrid(int)));
-
-
-    cardSettings->sizeCb->setCurrentIndex(getSize());
-    cardSettings->orientation->setCurrentIndex(getFormat());
-
-    if (bkgColor.isValid()) {
-         cardSettings->color = bkgColor;
-         cardSettings->bkgColor->setText(bkgColor.name());
-         cardSettings->bkgColor->setStyleSheet("background-color: " + bkgColor.name() + ";");
-     }
-
-    cardSettings->bkgPicture->setText(bkgFile);
-
-    cardSettings->gridAlign->setCurrentIndex((int)isGridAlign);
-    cardSettings->gridDraw->setCurrentIndex((int)isGrid);
-    cardSettings->gridSize->setValue(gridSize);
-
-    return cardSettings;
-}
-
-void CardItem::definePath()
-{
-    float ratio;
-
-    switch(cardSize)
-    {
-        case CR80:
-            ratio = 85.6/53.98;
-            break;
-        case CR90:
-            ratio = 92.07/60.33;
-            break;
-        case CR79:
-            ratio = 83.90/52.10;
-            break;
-        default:
-            break;
-    }
-
-    if(cardFormat == P)
-        cardPath.addRoundedRect(0,0,195,195*ratio,10,10);
-    else
-        cardPath.addRoundedRect(0,0,195*ratio,195,10,10);
-
-
-    setPath(cardPath);
-
-
-}
-
-void CardItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
+void CardItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     QPainterPath path;
 
     float ratio;
+    int width = 0;
 
     switch(cardSize)
     {
         case CR80:
             ratio = 85.6/53.98;
+            width = 195;
             break;
         case CR90:
             ratio = 92.07/60.33;
+            width = 210;
             break;
         case CR79:
             ratio = 83.90/52.10;
+            width = 191;
             break;
         default:
             break;
     }
 
     if(cardFormat == P)
-        path.addRoundedRect(0,0,195,195*ratio,10,10);
+        path.addRoundedRect(0,0,width,width*ratio,10,10);
     else
-        path.addRoundedRect(0,0,195*ratio,195,10,10);
+        path.addRoundedRect(0,0,width*ratio,width,10,10);
 
     if(bkgFile != "")
     {
@@ -114,12 +67,12 @@ void CardItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidge
         if(cardFormat == P)
         {
             bkgBrush.setStyle(Qt::TexturePattern);
-            bkgBrush.setTexture(pix.scaled(195,195*ratio, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
+            bkgBrush.setTexture(pix.scaled(width,width*ratio, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
         }
         else
         {
             bkgBrush.setStyle(Qt::TexturePattern);
-            bkgBrush.setTexture(pix.scaled(195*ratio,195, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
+            bkgBrush.setTexture(pix.scaled(width*ratio,width, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
         }
     }
     else
@@ -132,6 +85,7 @@ void CardItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidge
     painter->setBrush(bkgBrush);
 
     painter->drawPath(path);
+    setPath(path);
 
     if(isGrid)
     {
@@ -157,23 +111,24 @@ void CardItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidge
         }
     }
 
+    QGraphicsPathItem::paint(painter, option, widget);
 }
 
 void CardItem::setSize(int size)
 {
     cardSize = (Size)size;
-    definePath();
+    update();
 }
 
 void CardItem::setFormat(int format)
 {
     cardFormat = (Format)format;
-    definePath();
+    update();
 }
 
-void CardItem::setBkgColor()
+void CardItem::setBkgColor(const QString &color)
 {
-    bkgColor = cardSettings->color;
+    bkgColor.setNamedColor(color);;
     update();
 }
 

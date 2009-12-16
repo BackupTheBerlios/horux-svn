@@ -8,15 +8,36 @@
      setFlag(QGraphicsItem::ItemIsMovable);
      setFlag(QGraphicsItem::ItemIsSelectable);
 
-
+     rotation = 0;
+     name = "";
  }
 
- QWidget *  CardTextItem::getWidgetSetting()
- {
-    textSettings = new TextPage();
 
-    return textSettings;
- }
+void  CardTextItem::setName(const QString &n)
+{
+    name = n;
+}
+
+void CardTextItem::fontChanged(const QFont &font)
+{
+    setFont(font);
+    scene()->update();
+}
+
+void CardTextItem::colorChanged(const QColor &color)
+{
+    setDefaultTextColor(color);
+    scene()->update();
+}
+
+void CardTextItem::rotationChanged(const QString &text)
+{
+    rotate(rotation*-1);
+    rotation = text.toDouble();
+    rotate(rotation);
+}
+
+
 
  QVariant CardTextItem::itemChange(GraphicsItemChange change,
                       const QVariant &value)
@@ -39,3 +60,4 @@
          setTextInteractionFlags(Qt::TextEditorInteraction);
      QGraphicsTextItem::mouseDoubleClickEvent(event);
  }
+

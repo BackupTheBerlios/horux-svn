@@ -5,10 +5,11 @@
 
 
 #include "cardscene.h"
+#include "confpage.h"
 
 class QButtonGroup;
-class QTableWidget;
 class CardTextItem;
+class QFontComboBox;
 
 namespace Ui
 {
@@ -33,6 +34,15 @@ private slots:
      void textInserted(QGraphicsTextItem *item);
      void itemSelected(QGraphicsItem *item);
      void selectionChanged();
+     void sceneScaleChanged(const QString &scale);
+     void currentFontChanged(const QFont &font);
+     void fontSizeChanged(const QString &size);
+     void handleFontChange();
+     void deleteItem();
+     void bringToFront();
+     void sendToBack();
+     void newCard();
+     void printPreview();
 
 protected:
     void resizeEvent ( QResizeEvent * even);
@@ -45,6 +55,14 @@ private:
     CardScene *scene;
 
     QWidget *param;
+
+    QComboBox *sceneScaleCombo;
+    QComboBox *textColorCombo;
+    QComboBox *fontSizeCombo;
+    QFontComboBox *fontCombo;
+
+    CardPage *cardPage;
+    TextPage *textPage;
 };
 
 #endif // HORUXDESIGNER_H
