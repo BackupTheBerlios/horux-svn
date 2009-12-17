@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/" >
+        <file>timeterminal.js</file>
+        <file>timeterminal.js.aes</file>
+    </qresource>
+</RCC>
