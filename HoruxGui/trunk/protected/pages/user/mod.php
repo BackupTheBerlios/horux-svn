@@ -134,6 +134,19 @@ class Mod extends Page
 
     }
 
+    public function onPrintCard($sender, $param)
+    {
+
+        require_once( 'XML/RPC.php' );
+        $client = new XML_RPC_Client("RPC2", $_SERVER["REMOTE_ADDR"], 7000);
+
+        $params = array(new XML_RPC_Value($this->id->Value, 'int'));
+
+        $msg = new XML_RPC_Message("horuxsystray.printCard", $params);
+        @$response = $client->send($msg);
+        
+    }
+
     public function onApply($sender, $param)
     {
         if($this->Page->IsValid)

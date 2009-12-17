@@ -66,6 +66,7 @@
         SaveVisible="true"
         CancelVisible="true"
         HelpVisible="true"
+        PrintCardVisible="true"
         />
 
     <div id="submenu-box">

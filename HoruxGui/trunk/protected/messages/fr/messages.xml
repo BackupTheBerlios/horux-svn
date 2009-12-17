@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <xliff version="1.0">
- <file source-language="FR" target-language="fr" datatype="plaintext" original="messages" date="2009-12-09T08:29:13Z" product-name="messages">
+ <file source-language="FR" target-language="fr" datatype="plaintext" original="messages" date="2009-12-17T17:44:07Z" product-name="messages">
   <body>
   
 <trans-unit id="1" lock="1">
@@ -3828,6 +3828,11 @@
 <trans-unit id="717">
 <source>Afternoon</source>
 <target>Apr&#xE8;s-midi</target>
+</trans-unit>
+
+<trans-unit id="718">
+<source>Print Card</source>
+<target>Imprimer la carte</target>
 </trans-unit>
 </body>
 </file>

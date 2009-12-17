@@ -50,7 +50,17 @@ class TToolbarBox extends TTemplateControl
 	{
 		return $this->getViewState('EditVisible',false);
 	}
-    
+
+	//! button PrintCard
+	public function setPrintCardVisible($flag)
+	{
+		$this->setViewState('PrintCardVisible',$flag,false);
+	}
+	public function getPrintCardVisible()
+	{
+		return $this->getViewState('PrintCardVisible',false);
+	}
+
 	//! button Add
 	public function setAddVisible($flag)
 	{

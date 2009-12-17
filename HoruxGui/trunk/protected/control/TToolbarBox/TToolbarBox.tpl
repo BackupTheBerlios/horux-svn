@@ -133,6 +133,16 @@
                         </prop:TrueTemplate>
                     </com:TConditional>
 
+                    <com:TConditional Condition="$this->getViewState('PrintCardVisible','false') == 'true'">
+                        <prop:TrueTemplate>
+                            <td class="button" id="toolbar-printcard">
+                              <com:TActiveLinkButton CssClass="toolbar" ID="printcard" OnClick="Page.onPrintCard">
+                                <span class="icon-32-print" title="<com:TTranslate Catalogue='messages' Text='Print Card' />"></span><com:TTranslate Catalogue="messages" Text="Print Card" />
+                              </com:TActiveLinkButton>
+                            </td>
+                        </prop:TrueTemplate>
+                    </com:TConditional>
+
                     <com:TConditional Condition="$this->getViewState('PrintVisible','false') == 'true'">
                         <prop:TrueTemplate>
                             <td class="button" id="toolbar-print">
