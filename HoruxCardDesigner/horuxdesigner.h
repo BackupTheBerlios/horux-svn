@@ -43,6 +43,8 @@ private slots:
      void sendToBack();
      void newCard();
      void printPreview();
+     void printSetup();
+     void print();
 
 protected:
     void resizeEvent ( QResizeEvent * even);
@@ -63,6 +65,8 @@ private:
 
     CardPage *cardPage;
     TextPage *textPage;
+
+    QPrinter *printer;
 };
 
 #endif // HORUXDESIGNER_H

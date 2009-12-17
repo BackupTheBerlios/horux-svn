@@ -22,6 +22,7 @@ public:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
     Size getSize(){ return cardSize;}
+    QSizeF getSizeMm();
     Format getFormat(){ return cardFormat;}
     bool isViewGrid(){ return isGrid;}
     bool isAlign(){ return isGridAlign;}
@@ -52,6 +53,7 @@ private:
     bool isGrid;
     int gridSize;
     bool isGridAlign;
+    bool isPrinting;
 
 };
 

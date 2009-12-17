@@ -4,6 +4,7 @@
 #include "carditemtext.h"
 #include "carditem.h"
 #include "confpage.h"
+#include "printpreview.h"
 
 const int InsertTextButton = 10;
 const int InsertImageButton = 11;
@@ -12,6 +13,8 @@ HoruxDesigner::HoruxDesigner(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::HoruxDesigner)
 {
     ui->setupUi(this);
+
+    printer = new QPrinter(QPrinter::HighResolution);
 
     cardPage = NULL;
     textPage = NULL;
@@ -90,6 +93,11 @@ HoruxDesigner::HoruxDesigner(QWidget *parent)
      connect(ui->actionPrint_preview, SIGNAL(triggered()),
              this, SLOT(printPreview()));
 
+     connect(ui->actionPrint, SIGNAL(triggered()),
+             this, SLOT(print()));
+
+     connect(ui->actionPrint_setup, SIGNAL(triggered()),
+             this, SLOT(printSetup()));
 }
 
 HoruxDesigner::~HoruxDesigner()
@@ -97,14 +105,70 @@ HoruxDesigner::~HoruxDesigner()
     delete ui;
 }
 
+void HoruxDesigner::printSetup()
+{
+    QPageSetupDialog dlg(printer, this);
+
+    dlg.exec();
+
+
+}
+
 void HoruxDesigner::printPreview()
 {
-    QPrinter printer;
-    if (QPrintDialog(&printer).exec() == QDialog::Accepted)
+    QPointF cardPos = scene->getCardItem()->pos();
+
+    scene->getCardItem()->isPrinting = true;
+    scene->getCardItem()->setPos(0,0);
+    sceneScaleChanged("100%");
+    QRectF cardRect = scene->getCardItem()->boundingRect();
+
+    QPixmap pixmap(cardRect.size().toSize());
+    pixmap.fill( Qt::white );
+    QPainter painter(&pixmap);
+    painter.setRenderHint(QPainter::Antialiasing);
+    ui->graphicsView->render(&painter, QRectF(0,0,pixmap.size().width(),pixmap.size().height()), cardRect.toRect(), Qt::KeepAspectRatio );
+    painter.end();
+
+    PrintPreview dlg(pixmap, this);
+
+    scene->getCardItem()->isPrinting = false;
+    scene->getCardItem()->setPos(cardPos);
+    sceneScaleChanged(sceneScaleCombo->currentText());
+
+
+
+    if (dlg.exec() != QDialog::Rejected )
     {
-         QPainter painter(&printer);
+        print();
+    }
+
+
+}
+
+void HoruxDesigner::print()
+{
+    printer->setPaperSize(scene->getCardItem()->getSizeMm(),QPrinter::Millimeter);
+    printer->setPageMargins(0,0,0,0,QPrinter::Millimeter);
+
+    QPointF cardPos = scene->getCardItem()->pos();
+
+    if (QPrintDialog(printer).exec() == QDialog::Accepted)
+    {
+         scene->getCardItem()->isPrinting = true;
+         scene->getCardItem()->setPos(0,0);
+         sceneScaleChanged("100%");
+
+         QRectF cardRect = scene->getCardItem()->boundingRect();
+
+
+         QPainter painter(printer);
          painter.setRenderHint(QPainter::Antialiasing);
-         scene->render(&painter);
+         ui->graphicsView->render(&painter, printer->pageRect(), cardRect.toRect(), Qt::KeepAspectRatio );
+
+         scene->getCardItem()->isPrinting = false;
+         scene->getCardItem()->setPos(cardPos);
+         sceneScaleChanged(sceneScaleCombo->currentText());
     }
 }
 

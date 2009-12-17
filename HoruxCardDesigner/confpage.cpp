@@ -24,13 +24,12 @@ void CardPage::setColor()
 
  void CardPage::setOpenFileName()
  {
-     QFileDialog::Options options;
      QString selectedFilter;
      QString fileName = QFileDialog::getOpenFileName(this,
                                  tr("Pictures files"),
                                  bkgPicture->text(),
                                  tr("All files (*);;PNG Files (*.png);;JPEG Files (*.jpg);;GIF Files (*.gif)"),
-                                 &selectedFilter);
+                                 &selectedFilter, QFileDialog::DontUseNativeDialog);
      if (!fileName.isEmpty())
         bkgPicture->setText(fileName);
 }

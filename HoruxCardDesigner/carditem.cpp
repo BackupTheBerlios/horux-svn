@@ -15,6 +15,8 @@ CardItem::CardItem( Size size,  Format format, QGraphicsItem * parent) : QGraphi
     setFlag(QGraphicsItem::ItemIsMovable, true);
     setFlag(QGraphicsItem::ItemIsSelectable, true);
     setFlag(QGraphicsItem::ItemClipsChildrenToShape, true);
+
+    isPrinting = false;
 }
 
 void CardItem::reset()
@@ -30,6 +32,21 @@ void CardItem::reset()
     update();
 }
 
+QSizeF CardItem::getSizeMm()
+{
+    switch(cardSize)
+    {
+        case CR80:
+            return QSizeF(85.6,53.98);
+            break;
+        case CR90:
+            return QSizeF(92.07,60.33);
+            break;
+        case CR79:
+            return QSizeF(83.90,52.10);
+            break;
+    }
+}
 
 void CardItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
@@ -66,12 +83,12 @@ void CardItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
 
         if(cardFormat == P)
         {
-            bkgBrush.setStyle(Qt::TexturePattern);
-            bkgBrush.setTexture(pix.scaled(width,width*ratio, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
+            //bkgBrush.setStyle(Qt::TexturePattern);
+            bkgBrush.setTexture(pix.scaled(width,width*ratio, Qt::IgnoreAspectRatio, Qt::FastTransformation));
         }
         else
         {
-            bkgBrush.setStyle(Qt::TexturePattern);
+            //bkgBrush.setStyle(Qt::TexturePattern);
             bkgBrush.setTexture(pix.scaled(width*ratio,width, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
         }
     }
@@ -80,6 +97,15 @@ void CardItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
        bkgBrush.setStyle(Qt::SolidPattern);
        bkgBrush.setColor(bkgColor);
 
+    }
+
+    if(isPrinting)
+    {
+        painter->setPen(Qt::NoPen);
+    }
+    else
+    {
+        painter->setPen(Qt::SolidLine);
     }
 
     painter->setBrush(bkgBrush);
@@ -111,7 +137,8 @@ void CardItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
         }
     }
 
-    QGraphicsPathItem::paint(painter, option, widget);
+    if(!isPrinting)
+        QGraphicsPathItem::paint(painter, option, widget);
 }
 
 void CardItem::setSize(int size)

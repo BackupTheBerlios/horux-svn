@@ -12,13 +12,16 @@ SOURCES += main.cpp \
     cardscene.cpp \
     carditemtext.cpp \
     carditem.cpp \
-    confpage.cpp
+    confpage.cpp \
+    printpreview.cpp
 HEADERS += horuxdesigner.h \
     cardscene.h \
     carditemtext.h \
     carditem.h \
-    confpage.h
+    confpage.h \
+    printpreview.h
 FORMS += horuxdesigner.ui \
     textsetting.ui \
-    cardsetting.ui
+    cardsetting.ui \
+    printpreview.ui
 RESOURCES += ressource.qrc
