@@ -10,7 +10,14 @@
 
      rotation = 0;
      name = "";
+     source = 0;
  }
+
+
+void CardTextItem::sourceChanged(const int &s)
+{
+    source = s;
+}
 
 
 void  CardTextItem::setName(const QString &n)
@@ -60,4 +67,3 @@ void CardTextItem::rotationChanged(const QString &text)
          setTextInteractionFlags(Qt::TextEditorInteraction);
      QGraphicsTextItem::mouseDoubleClickEvent(event);
  }
-

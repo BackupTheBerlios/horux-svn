@@ -57,4 +57,6 @@ private:
 
 };
 
+
+
 #endif // CARDITEM_H

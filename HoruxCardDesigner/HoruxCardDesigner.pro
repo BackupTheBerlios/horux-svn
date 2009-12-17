@@ -13,15 +13,21 @@ SOURCES += main.cpp \
     carditemtext.cpp \
     carditem.cpp \
     confpage.cpp \
-    printpreview.cpp
+    printpreview.cpp \
+    databasedialog.cpp \
+    datasourcedialog.cpp
 HEADERS += horuxdesigner.h \
     cardscene.h \
     carditemtext.h \
     carditem.h \
     confpage.h \
-    printpreview.h
+    printpreview.h \
+    databasedialog.h \
+    datasourcedialog.h
 FORMS += horuxdesigner.ui \
     textsetting.ui \
     cardsetting.ui \
-    printpreview.ui
+    printpreview.ui \
+    databasedialog.ui \
+    datasourcedialog.ui
 RESOURCES += ressource.qrc

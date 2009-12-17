@@ -35,10 +35,13 @@ void CardScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
              textItem->setFont(defaultFont);
              textItem->setTextInteractionFlags(Qt::TextEditorInteraction);
              textItem->setZValue(1000.0);
+
              connect(textItem, SIGNAL(lostFocus(CardTextItem *)),
                      this, SLOT(editorLostFocus(CardTextItem *)));
+
              connect(textItem, SIGNAL(selectedChange(QGraphicsItem *)),
                      this, SIGNAL(itemSelected(QGraphicsItem *)));
+
              textItem->setDefaultTextColor(myTextColor);
 
              textItem->setPos( textItem->mapFromScene(mouseEvent->scenePos()) );

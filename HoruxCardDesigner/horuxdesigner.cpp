@@ -5,6 +5,7 @@
 #include "carditem.h"
 #include "confpage.h"
 #include "printpreview.h"
+#include "databasedialog.h"
 
 const int InsertTextButton = 10;
 const int InsertImageButton = 11;
@@ -98,6 +99,53 @@ HoruxDesigner::HoruxDesigner(QWidget *parent)
 
      connect(ui->actionPrint_setup, SIGNAL(triggered()),
              this, SLOT(printSetup()));
+
+     connect(ui->actionExit, SIGNAL(triggered()),
+             this, SLOT(exit()));
+
+     connect(ui->actionSave, SIGNAL(triggered()),
+             this, SLOT(save()));
+
+     connect(ui->actionSave_as, SIGNAL(triggered()),
+             this, SLOT(saveAs()));
+
+     connect(ui->actionDatabase, SIGNAL(triggered()),
+             this, SLOT(setDatabase()));
+
+
+    QSettings settings("Letux", "HoruxCardDesigner", this);
+
+    QString host = settings.value("dbhost", "localhost").toString();
+    QString username = settings.value("username", "root").toString();
+    QString password = settings.value("password", "").toString();
+    QString db = settings.value("db", "horux").toString();
+    int engine = settings.value("engine", 0).toInt(); //MYSQL
+
+
+    switch(engine)
+    {
+        case 0:
+            database = QSqlDatabase::addDatabase("QMYSQL");
+            break;
+        default:
+            break;
+    }
+
+    if(database.isValid () )
+    {
+        database.setHostName(host);
+        database.setDatabaseName(db);
+        database.setUserName(username);
+        database.setPassword(password);
+        if(!database.open())
+        {
+            QMessageBox::warning(this,tr("Database connexion problem"),tr("It is not possible to open the connexion with the database.<br>In this case, it will no be possible it use data source"));
+        }
+    }
+    else
+    {
+        QMessageBox::warning(this,tr("Database not define"),tr("The database settings is not define.<br>In this case, it will no be possible it use data source"));
+    }
 }
 
 HoruxDesigner::~HoruxDesigner()
@@ -105,13 +153,67 @@ HoruxDesigner::~HoruxDesigner()
     delete ui;
 }
 
+
+void HoruxDesigner::setDatabase()
+{
+    DatabaseDialog dlg(this);
+
+    QSettings settings("Letux", "HoruxCardDesigner", this);
+
+    QString host = settings.value("dbhost", "localhost").toString();
+    QString username = settings.value("username", "root").toString();
+    QString password = settings.value("password", "").toString();
+    QString db = settings.value("db", "horux").toString();
+    int engine = settings.value("engine", 0).toInt(); //MYSQL
+
+    dlg.setHost(host);
+    dlg.setUsername(username);
+    dlg.setPassword(password);
+    dlg.setDb(db);
+    dlg.setEngine(engine);
+
+
+    if(dlg.exec() == QDialog::Accepted)
+    {
+        settings.setValue("dbhost",dlg.getHost());
+        settings.setValue("username",dlg.getUsername());
+        settings.setValue("password",dlg.getPassword());
+        settings.setValue("db",dlg.getDb());
+        settings.setValue("engine",dlg.getEngine());
+    }
+}
+
+void HoruxDesigner::save()
+{
+    //qDebug() << scene->getCardItem();
+    QFile file("text.txt");
+    file.open(QIODevice::WriteOnly);
+    QTextStream data(&file);
+
+    foreach (QGraphicsItem *item, scene->items())
+    {
+        data << item;
+    }
+
+    file.close();
+}
+
+void HoruxDesigner::saveAs()
+{
+}
+
+
+void HoruxDesigner::exit()
+{
+    close ();
+}
+
+
 void HoruxDesigner::printSetup()
 {
     QPageSetupDialog dlg(printer, this);
 
     dlg.exec();
-
-
 }
 
 void HoruxDesigner::printPreview()
@@ -329,6 +431,8 @@ void HoruxDesigner::setParamView(QGraphicsItem *item)
                         connect(textPage, SIGNAL(changeFont(const QFont &)), textItem, SLOT(fontChanged(const QFont &)));
                         connect(textPage, SIGNAL(changeColor ( const QColor & )), textItem, SLOT(colorChanged(const QColor &)));
                         connect(textPage->rotation, SIGNAL(textChanged(QString)), textItem, SLOT(rotationChanged(const QString &)));
+                        connect(textPage->source, SIGNAL(currentIndexChanged ( int )), textItem, SLOT(sourceChanged(int)));
+
 
                         textPage->name->setText(textItem->name);
 
@@ -346,6 +450,10 @@ void HoruxDesigner::setParamView(QGraphicsItem *item)
                         textPage->left->setText(QString::number(textItem->pos().x()));
                         textPage->widthText->setText(QString::number(textItem->document()->size().width()));
                         textPage->heightText->setText(QString::number(textItem->document()->size().height()));
+
+                        textPage->source->setCurrentIndex( textItem->source );
+                        textPage->connectDataSource();
+
                     }
 
                     if(cardPage)
@@ -393,7 +501,7 @@ void HoruxDesigner::resizeEvent ( QResizeEvent * even)
 
 
      //Image
-     QToolButton *imageButton = new QToolButton;
+     /*QToolButton *imageButton = new QToolButton;
      imageButton->setCheckable(true);
      buttonGroup->addButton(imageButton, InsertImageButton);
 
@@ -404,7 +512,7 @@ void HoruxDesigner::resizeEvent ( QResizeEvent * even)
      imageLayout->addWidget(new QLabel(tr("Picture")), 1, 0, Qt::AlignCenter);
      QWidget *imageWidget = new QWidget;
      imageWidget->setLayout(imageLayout);
-     layout->addWidget(imageWidget, 1, 2);
+     layout->addWidget(imageWidget, 1, 2);*/
 
 
 

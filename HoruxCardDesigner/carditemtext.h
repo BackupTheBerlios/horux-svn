@@ -10,6 +10,8 @@
  class QGraphicsScene;
  class QGraphicsSceneMouseEvent;
 
+
+
  class CardTextItem : public QGraphicsTextItem
  {
      Q_OBJECT
@@ -21,9 +23,6 @@
 
      int type() const
          { return Type; }
-
-     QWidget * getWidgetSetting();
-
 
  signals:
      void lostFocus(CardTextItem *item);
@@ -41,12 +40,14 @@ public slots:
      void fontChanged(const QFont &);
      void colorChanged(const QColor &);
      void rotationChanged(const QString &);
+     void sourceChanged(const int &);
 
 public:
     double rotation;
     QString name;
     QColor color;
     int alignment;
+    int source;
 
 
  };

@@ -1,6 +1,7 @@
 #include <QtGui>
 
 #include "confpage.h"
+#include "datasourcedialog.h"
 
 CardPage::CardPage(QWidget *parent)
      : QWidget(parent)
@@ -42,7 +43,10 @@ void CardPage::setColor()
 
      connect(fontButton, SIGNAL(clicked()), this, SLOT(setFont()));
      connect(colorButton, SIGNAL(clicked()), this, SLOT(setColor()));
+
+
      color = QColor(Qt::black);
+     source->setCurrentIndex(0);
  }
 
 
@@ -66,3 +70,21 @@ void CardPage::setColor()
     }
  }
 
+void TextPage::setSource(int s)
+{
+    // database source
+    if(s == 1)
+    {
+        DataSourceDialog dlg;
+
+        if(dlg.exec() == QDialog::Accepted)
+        {
+            name->setText(dlg.getDatasource());
+        }
+    }
+}
+
+void TextPage::connectDataSource()
+{
+     connect(source, SIGNAL(currentIndexChanged ( int )), this, SLOT(setSource(int)));
+}

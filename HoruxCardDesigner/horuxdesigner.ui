@@ -114,6 +114,8 @@
     <addaction name="actionSave"/>
     <addaction name="actionSave_as"/>
     <addaction name="separator"/>
+    <addaction name="actionDatabase"/>
+    <addaction name="separator"/>
     <addaction name="actionPrint_setup"/>
     <addaction name="actionPrint_preview"/>
     <addaction name="actionPrint"/>
@@ -164,6 +166,12 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
+   <addaction name="actionOpen"/>
+   <addaction name="actionSave"/>
+   <addaction name="separator"/>
+   <addaction name="actionPrint_preview"/>
+   <addaction name="actionPrint"/>
+   <addaction name="separator"/>
    <addaction name="actionDelete"/>
    <addaction name="actionBring_to_front"/>
    <addaction name="actionSend_to_back"/>
@@ -173,6 +181,10 @@
    <addaction name="actionBold"/>
   </widget>
   <action name="actionNew">
+   <property name="icon">
+    <iconset resource="ressource.qrc">
+     <normaloff>:/images/filenew.png</normaloff>:/images/filenew.png</iconset>
+   </property>
    <property name="text">
     <string>New</string>
    </property>
@@ -181,6 +193,10 @@
    </property>
   </action>
   <action name="actionOpen">
+   <property name="icon">
+    <iconset resource="ressource.qrc">
+     <normaloff>:/images/fileopen.png</normaloff>:/images/fileopen.png</iconset>
+   </property>
    <property name="text">
     <string>Open...</string>
    </property>
@@ -189,6 +205,10 @@
    </property>
   </action>
   <action name="actionSave">
+   <property name="icon">
+    <iconset resource="ressource.qrc">
+     <normaloff>:/images/filesave.png</normaloff>:/images/filesave.png</iconset>
+   </property>
    <property name="text">
     <string>Save</string>
    </property>
@@ -197,6 +217,10 @@
    </property>
   </action>
   <action name="actionSave_as">
+   <property name="icon">
+    <iconset resource="ressource.qrc">
+     <normaloff>:/images/filesaveas.png</normaloff>:/images/filesaveas.png</iconset>
+   </property>
    <property name="text">
     <string>Save as...</string>
    </property>
@@ -207,11 +231,19 @@
    </property>
   </action>
   <action name="actionPrint_preview">
+   <property name="icon">
+    <iconset resource="ressource.qrc">
+     <normaloff>:/images/viewmag.png</normaloff>:/images/viewmag.png</iconset>
+   </property>
    <property name="text">
     <string>Print preview...</string>
    </property>
   </action>
   <action name="actionPrint">
+   <property name="icon">
+    <iconset resource="ressource.qrc">
+     <normaloff>:/images/agt_print.png</normaloff>:/images/agt_print.png</iconset>
+   </property>
    <property name="text">
     <string>Print...</string>
    </property>
@@ -222,6 +254,10 @@
    </property>
   </action>
   <action name="actionUndo">
+   <property name="icon">
+    <iconset resource="ressource.qrc">
+     <normaloff>:/images/undo.png</normaloff>:/images/undo.png</iconset>
+   </property>
    <property name="text">
     <string>Undo</string>
    </property>
@@ -230,6 +266,10 @@
    </property>
   </action>
   <action name="actionRedo">
+   <property name="icon">
+    <iconset resource="ressource.qrc">
+     <normaloff>:/images/redo.png</normaloff>:/images/redo.png</iconset>
+   </property>
    <property name="text">
     <string>Redo</string>
    </property>
@@ -338,6 +378,11 @@
    </property>
    <property name="toolTip">
     <string>Bold</string>
+   </property>
+  </action>
+  <action name="actionDatabase">
+   <property name="text">
+    <string>Database...</string>
    </property>
   </action>
  </widget>

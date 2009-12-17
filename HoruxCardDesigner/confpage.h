@@ -32,14 +32,17 @@ public:
 
  public:
      TextPage(QWidget *parent = 0);
+    void connectDataSource();
 
 private slots:
      void setColor();
      void setFont();
+     void setSource(int s);
 
 signals:
     void changeFont(const QFont &);
     void changeColor(const QColor &);
+
 
 public:
      QColor color;

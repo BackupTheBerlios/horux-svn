@@ -1,4 +1,5 @@
 #include <QtGui>
+#include <QDataStream>
 
 #include "carditem.h"
 
@@ -89,7 +90,7 @@ void CardItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
         else
         {
             //bkgBrush.setStyle(Qt::TexturePattern);
-            bkgBrush.setTexture(pix.scaled(width*ratio,width, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
+            bkgBrush.setTexture(pix.scaled(width*ratio,width, Qt::IgnoreAspectRatio, Qt::FastTransformation));
         }
     }
     else

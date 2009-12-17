@@ -2,6 +2,7 @@
 #define HORUXDESIGNER_H
 
 #include <QtGui/QMainWindow>
+ #include <QSqlDatabase>
 
 
 #include "cardscene.h"
@@ -45,6 +46,10 @@ private slots:
      void printPreview();
      void printSetup();
      void print();
+     void exit();
+     void save();
+     void saveAs();
+     void setDatabase();
 
 protected:
     void resizeEvent ( QResizeEvent * even);
@@ -67,6 +72,8 @@ private:
     TextPage *textPage;
 
     QPrinter *printer;
+
+    QSqlDatabase database;
 };
 
 #endif // HORUXDESIGNER_H
