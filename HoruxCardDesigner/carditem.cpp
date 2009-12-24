@@ -209,12 +209,12 @@ void CardItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
         if(cardFormat == P)
         {
             //bkgBrush.setStyle(Qt::TexturePattern);
-            bkgBrush.setTexture(pix.scaled(width,width*ratio, Qt::IgnoreAspectRatio, Qt::FastTransformation));
+            bkgBrush.setTexture(pix.scaled(width,width*ratio, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
         }
         else
         {
             //bkgBrush.setStyle(Qt::TexturePattern);
-            bkgBrush.setTexture(pix.scaled(width*ratio,width, Qt::IgnoreAspectRatio, Qt::FastTransformation));
+            bkgBrush.setTexture(pix.scaled(width*ratio,width, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
         }
     }
     else

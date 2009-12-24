@@ -116,6 +116,13 @@ HoruxDesigner::HoruxDesigner(QWidget *parent)
              this, SLOT(open()));
 
 
+     for (int i = 0; i < MaxRecentFiles; ++i) {
+         recentFileActs[i] = new QAction(this);
+         recentFileActs[i]->setVisible(false);
+         connect(recentFileActs[i], SIGNAL(triggered()),
+                 this, SLOT(openRecentFile()));
+     }
+
     QSettings settings("Letux", "HoruxCardDesigner", this);
 
     QString host = settings.value("dbhost", "localhost").toString();
@@ -153,6 +160,14 @@ HoruxDesigner::HoruxDesigner(QWidget *parent)
     currenFile.setFileName("");
 
     setWindowTitle("Horux Card Designer - new card");
+
+    for (int i = 0; i < MaxRecentFiles; ++i)
+    {
+        ui->menuRecent_files->addAction(recentFileActs[i]);
+
+    }
+
+    updateRecentFileActions();
 }
 
 HoruxDesigner::~HoruxDesigner()
@@ -160,6 +175,73 @@ HoruxDesigner::~HoruxDesigner()
     delete ui;
 }
 
+
+ void HoruxDesigner::setCurrentFile(const QString &fileName)
+ {
+      currenFile.setFileName(fileName);
+     if (fileName.isEmpty())
+         setWindowTitle(tr("Horux Card Designer - new card"));
+     else
+         setWindowTitle(tr("Horux Card Designer - %2").arg(strippedName(fileName)));
+
+     QSettings settings("Letux", "HoruxCardDesigner",this);
+     QStringList files = settings.value("recentFileList").toStringList();
+     files.removeAll(fileName);
+     files.prepend(fileName);
+     while (files.size() > MaxRecentFiles)
+         files.removeLast();
+
+     settings.setValue("recentFileList", files);
+
+     foreach (QWidget *widget, QApplication::topLevelWidgets()) {
+         HoruxDesigner *mainWin = qobject_cast<HoruxDesigner *>(widget);
+         if (mainWin)
+             mainWin->updateRecentFileActions();
+     }
+ }
+
+ void HoruxDesigner::updateRecentFileActions()
+ {
+     QSettings settings("Letux", "HoruxCardDesigner",this);
+     QStringList files = settings.value("recentFileList").toStringList();
+
+     int numRecentFiles = qMin(files.size(), (int)MaxRecentFiles);
+
+     for (int i = 0; i < numRecentFiles; ++i) {
+         QString text = tr("&%1 %2").arg(i + 1).arg(strippedName(files[i]));
+         recentFileActs[i]->setText(text);
+         recentFileActs[i]->setData(files[i]);
+         recentFileActs[i]->setVisible(true);
+     }
+     for (int j = numRecentFiles; j < MaxRecentFiles; ++j)
+         recentFileActs[j]->setVisible(false);
+
+     //separatorAct->setVisible(numRecentFiles > 0);
+ }
+
+ QString HoruxDesigner::strippedName(const QString &fullFileName)
+ {
+     return QFileInfo(fullFileName).fileName();
+ }
+
+ void HoruxDesigner::openRecentFile()
+ {
+     QAction *action = qobject_cast<QAction *>(sender());
+     if (action)
+     {
+         newCard();
+         currenFile.setFileName(action->data().toString());
+
+        QString xml;
+        currenFile.open(QIODevice::ReadOnly);
+        xml = currenFile.readAll();
+        scene->loadScene(xml);
+        currenFile.close();
+
+        setWindowTitle("Horux Card Designer - " + currenFile.fileName());
+
+     }
+}
 
 void HoruxDesigner::open()
 {
@@ -170,6 +252,8 @@ void HoruxDesigner::open()
                                  tr("Horux Card Designer (*.xml)"));
      if (!fileName.isEmpty())
      {
+        setCurrentFile(fileName);
+
         newCard();
 
         currenFile.setFileName(fileName);

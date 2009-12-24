@@ -28,6 +28,9 @@ public:
 private:
      void createToolBox();
      void setParamView(QGraphicsItem *item);
+     void setCurrentFile(const QString &fileName);
+     void updateRecentFileActions();
+     QString strippedName(const QString &fullFileName);
 
 private slots:
      void buttonGroupClicked(int id);
@@ -51,6 +54,7 @@ private slots:
      void saveAs();
      void setDatabase();
      void open();
+     void openRecentFile();
 
 protected:
     void resizeEvent ( QResizeEvent * even);
@@ -77,6 +81,9 @@ private:
     QSqlDatabase database;
 
     QFile currenFile;
+
+    enum { MaxRecentFiles = 5 };
+    QAction *recentFileActs[MaxRecentFiles];
 };
 
 #endif // HORUXDESIGNER_H

@@ -109,8 +109,14 @@
     <property name="title">
      <string>File</string>
     </property>
+    <widget class="QMenu" name="menuRecent_files">
+     <property name="title">
+      <string>Recent files</string>
+     </property>
+    </widget>
     <addaction name="actionNew"/>
     <addaction name="actionOpen"/>
+    <addaction name="menuRecent_files"/>
     <addaction name="actionSave"/>
     <addaction name="actionSave_as"/>
     <addaction name="separator"/>
@@ -383,6 +389,11 @@
   <action name="actionDatabase">
    <property name="text">
     <string>Database...</string>
+   </property>
+  </action>
+  <action name="actionDassa">
+   <property name="text">
+    <string>dassa</string>
    </property>
   </action>
  </widget>
