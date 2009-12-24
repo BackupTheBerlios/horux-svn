@@ -26,6 +26,32 @@ void CardScene::reset()
     card->reset();
 }
 
+void CardScene::loadScene(QString xml)
+{
+    QDomDocument doc;
+
+    doc.setContent(xml, false);
+
+    QDomElement root = doc.documentElement();
+
+    if( root.tagName() != "HoruxCardDesigner")
+    {
+        return;
+    }
+
+    QDomNode node = root.firstChild();
+
+    while(!node.isNull())
+    {
+        if(node.toElement().tagName() == "CardItem")
+        {
+            card->loadCard(node.toElement());
+        }
+
+        node = node.nextSibling();
+    }
+}
+
 void CardScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
     switch (myMode)

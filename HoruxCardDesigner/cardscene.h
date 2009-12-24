@@ -19,11 +19,11 @@ public:
      QColor textColor() const
          { return myTextColor; }
 
-
     CardScene(QObject *parent = 0);
     CardItem *getCardItem();
     void setFont(const QFont &font);
     void reset();
+    void loadScene(QString xml);
 
 public slots:
      void setMode(Mode mode);

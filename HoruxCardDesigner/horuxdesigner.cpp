@@ -112,6 +112,9 @@ HoruxDesigner::HoruxDesigner(QWidget *parent)
      connect(ui->actionDatabase, SIGNAL(triggered()),
              this, SLOT(setDatabase()));
 
+     connect(ui->actionOpen, SIGNAL(triggered()),
+             this, SLOT(open()));
+
 
     QSettings settings("Letux", "HoruxCardDesigner", this);
 
@@ -146,6 +149,10 @@ HoruxDesigner::HoruxDesigner(QWidget *parent)
     {
         QMessageBox::warning(this,tr("Database not define"),tr("The database settings is not define.<br>In this case, it will no be possible it use data source"));
     }
+
+    currenFile.setFileName("");
+
+    setWindowTitle("Horux Card Designer - new card");
 }
 
 HoruxDesigner::~HoruxDesigner()
@@ -153,6 +160,29 @@ HoruxDesigner::~HoruxDesigner()
     delete ui;
 }
 
+
+void HoruxDesigner::open()
+{
+     QString selectedFilter;
+     QString fileName = QFileDialog::getOpenFileName(this,
+                                 tr("Open an Horux Card Designer file"),
+                                 "",
+                                 tr("Horux Card Designer (*.xml)"));
+     if (!fileName.isEmpty())
+     {
+        newCard();
+
+        currenFile.setFileName(fileName);
+
+        QString xml;
+        currenFile.open(QIODevice::ReadOnly);
+        xml = currenFile.readAll();
+        scene->loadScene(xml);
+        currenFile.close();
+
+        setWindowTitle("Horux Card Designer - " + currenFile.fileName());
+     }
+}
 
 void HoruxDesigner::setDatabase()
 {
@@ -185,21 +215,55 @@ void HoruxDesigner::setDatabase()
 
 void HoruxDesigner::save()
 {
-    //qDebug() << scene->getCardItem();
-    QFile file("text.txt");
-    file.open(QIODevice::WriteOnly);
-    QTextStream data(&file);
-
-    foreach (QGraphicsItem *item, scene->items())
+    if(currenFile.fileName() == "")
     {
-        data << item;
+        saveAs();
+        return;
     }
 
-    file.close();
+
+    currenFile.open(QIODevice::WriteOnly);
+    QTextStream data(&currenFile);
+
+    QDomDocument xml;
+    QDomElement root = xml.createElement ( "HoruxCardDesigner" );
+    QDomElement card = qgraphicsitem_cast<CardItem*>(scene->getCardItem())->getXmlItem(xml);
+
+    root.appendChild ( card );
+
+
+    foreach (QGraphicsItem *item, scene->getCardItem()->childItems())
+    {
+        switch(item->type())
+        {
+            case QGraphicsItem::UserType + 3:
+                card.appendChild(qgraphicsitem_cast<CardTextItem*>(item)->getXmlItem(xml));
+                break;
+        }
+    }
+
+    xml.appendChild ( root );
+
+    QDomNode xmlNode =  xml.createProcessingInstruction ( "xml", "version=\"1.0\" encoding=\"ISO-8859-1\"" );
+    xml.insertBefore ( xmlNode, xml.firstChild() );
+
+    data << xml.toString() ;
+
+
+    currenFile.close();
+
+    setWindowTitle("Horux Card Designer - " + currenFile.fileName());
 }
 
 void HoruxDesigner::saveAs()
 {
+    QString name = QFileDialog::getSaveFileName(this,tr("Save the card"),"",tr("Horux Card Designer (*.xml)"));
+
+    if(name != "")
+    {
+       currenFile.setFileName( name );
+       save();
+    }
 }
 
 

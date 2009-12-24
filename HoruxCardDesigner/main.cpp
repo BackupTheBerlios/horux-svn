@@ -1,6 +1,7 @@
 #include <QtGui/QApplication>
 #include "horuxdesigner.h"
 
+
 int main(int argc, char *argv[])
 {
     Q_INIT_RESOURCE(ressource);

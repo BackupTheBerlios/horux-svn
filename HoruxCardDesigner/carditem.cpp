@@ -2,6 +2,7 @@
 #include <QDataStream>
 
 #include "carditem.h"
+#include "carditemtext.h"
 
 CardItem::CardItem( Size size,  Format format, QGraphicsItem * parent) : QGraphicsPathItem (parent)
 {
@@ -20,6 +21,125 @@ CardItem::CardItem( Size size,  Format format, QGraphicsItem * parent) : QGraphi
     isPrinting = false;
 }
 
+void CardItem::loadCard(QDomElement card )
+{
+    QDomNode node = card.firstChild();
+
+    qreal posX = 0;
+    qreal posY = 0;
+
+    while(!node.isNull())
+    {
+        if(node.toElement().tagName() == "cardSize")
+        {
+            cardSize = (Size)node.toElement().text().toInt();
+        }
+        if(node.toElement().tagName() == "cardFormat")
+        {
+            cardFormat = (Format)node.toElement().text().toInt();
+        }
+        if(node.toElement().tagName() == "gridSize")
+        {
+            gridSize = node.toElement().text().toInt();
+        }
+        if(node.toElement().tagName() == "isGrid")
+        {
+            gridSize = (bool)node.toElement().text().toInt();
+        }
+        if(node.toElement().tagName() == "isGridAlign")
+        {
+            gridSize = (bool)node.toElement().text().toInt();
+        }
+        if(node.toElement().tagName() == "posX")
+        {
+            posX = node.toElement().text().toInt();
+        }
+        if(node.toElement().tagName() == "posY")
+        {
+            posY = node.toElement().text().toInt();
+        }
+        if(node.toElement().tagName() == "bkgColor")
+        {
+            bkgColor.setNamedColor( node.toElement().text() );
+        }
+        if(node.toElement().tagName() == "bkgFile")
+        {
+            bkgFile = node.toElement().text();
+            pix.load(bkgFile);
+        }
+        if(node.toElement().tagName() == "CardTextItem")
+        {
+             CardTextItem* textItem = new CardTextItem(this);
+             textItem->loadText( node.toElement() );
+
+             connect(textItem, SIGNAL(lostFocus(CardTextItem *)),
+                     scene (), SLOT(editorLostFocus(CardTextItem *)));
+
+             connect(textItem, SIGNAL(selectedChange(QGraphicsItem *)),
+                     scene (), SIGNAL(itemSelected(QGraphicsItem *)));
+
+        }
+        node = node.nextSibling();
+    }
+
+
+    this->setPos(posX, posY);
+}
+
+
+QDomElement CardItem::getXmlItem(QDomDocument xml )
+{
+    QDomElement card = xml.createElement( "CardItem");
+
+    QDomElement newElement = xml.createElement( "cardSize");
+    QDomText text =  xml.createTextNode(QString::number(cardSize));
+    newElement.appendChild(text);
+    card.appendChild(newElement);
+
+    newElement = xml.createElement( "cardFormat");
+    text =  xml.createTextNode(QString::number(cardFormat));
+    newElement.appendChild(text);
+    card.appendChild(newElement);
+
+    newElement = xml.createElement( "gridSize");
+    text =  xml.createTextNode(QString::number(gridSize));
+    newElement.appendChild(text);
+    card.appendChild(newElement);
+
+    newElement = xml.createElement( "isGrid");
+    text =  xml.createTextNode(QString::number(isGrid));
+    newElement.appendChild(text);
+    card.appendChild(newElement);
+
+    newElement = xml.createElement( "isGridAlign");
+    text =  xml.createTextNode(QString::number(isGridAlign));
+    newElement.appendChild(text);
+    card.appendChild(newElement);
+
+    newElement = xml.createElement( "posX");
+    text =  xml.createTextNode(QString::number(pos().x()));
+    newElement.appendChild(text);
+    card.appendChild(newElement);
+
+    newElement = xml.createElement( "posY");
+    text =  xml.createTextNode(QString::number(pos().y()));
+    newElement.appendChild(text);
+    card.appendChild(newElement);
+
+    newElement = xml.createElement( "bkgColor");
+    text =  xml.createTextNode(bkgColor.name());
+    newElement.appendChild(text);
+    card.appendChild(newElement);
+
+    newElement = xml.createElement( "bkgFile");
+    text =  xml.createTextNode(bkgFile);
+    newElement.appendChild(text);
+    card.appendChild(newElement);
+
+    return card;
+}
+
+
 void CardItem::reset()
 {
     bkgColor = QColor(Qt::white);
@@ -29,6 +149,10 @@ void CardItem::reset()
     gridSize = 1;
     isGrid = false;
     isGridAlign = false;
+
+    setPos(100,100);
+
+    bkgFile = "";
 
     update();
 }

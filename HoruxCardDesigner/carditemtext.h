@@ -3,6 +3,7 @@
 
  #include <QGraphicsTextItem>
  #include <QPen>
+#include <QDomElement>
  #include "confpage.h"
 
  class QFocusEvent;
@@ -20,6 +21,10 @@
      enum { Type = UserType + 3 };
 
      CardTextItem(QGraphicsItem *parent = 0, QGraphicsScene *scene = 0);
+
+     QDomElement getXmlItem(QDomDocument xml );
+
+     void loadText(QDomElement text );
 
      int type() const
          { return Type; }

@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QGraphicsPathItem>
+#include <QDomElement>
 #include "confpage.h"
 
 class CardItem : public QObject, public QGraphicsPathItem
@@ -15,6 +16,10 @@ public:
     enum Format { P, L };
 
     CardItem( Size size = CR80, Format format = L, QGraphicsItem * parent = 0);
+
+    QDomElement getXmlItem(QDomDocument xml );
+    void loadCard(QDomElement card );
+
 
      int type() const
          { return Type; }
@@ -56,7 +61,6 @@ private:
     bool isPrinting;
 
 };
-
 
 
 #endif // CARDITEM_H

@@ -3,7 +3,7 @@
 
 #include <QtGui/QMainWindow>
  #include <QSqlDatabase>
-
+ #include <QFile>
 
 #include "cardscene.h"
 #include "confpage.h"
@@ -50,6 +50,7 @@ private slots:
      void save();
      void saveAs();
      void setDatabase();
+     void open();
 
 protected:
     void resizeEvent ( QResizeEvent * even);
@@ -74,6 +75,8 @@ private:
     QPrinter *printer;
 
     QSqlDatabase database;
+
+    QFile currenFile;
 };
 
 #endif // HORUXDESIGNER_H
