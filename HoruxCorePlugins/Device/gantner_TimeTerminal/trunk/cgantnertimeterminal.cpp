@@ -790,9 +790,15 @@ void CGantnerTimeTerminal::reinit()
     QScriptValue result;
     QScriptValueList args;
 
-    // set the reader configuration
-    result = engine.evaluate("readerConfig");
+    result = engine.evaluate("resetReaderConfig");
     config += result.call().toString() + "\n";
+
+
+    // set the reader configuration
+    args.clear();
+    args << "9999";
+    result = engine.evaluate("readerConfig");
+    config += result.call(QScriptValue(), args).toString() + "\n";
 
     QSqlQuery queryLang("SELECT language FROM hr_gantner_TimeTerminal WHERE id_device=" + QString::number(id));
     queryLang.next();
@@ -802,6 +808,8 @@ void CGantnerTimeTerminal::reinit()
     args << queryLang.value(0).toString();
     result = engine.evaluate("loadLanguage");
     config += result.call(QScriptValue(), args).toString() + "\n";
+
+
 
     // set the booking timer configuration
     QSqlQuery query("SELECT hoursBlockMorning1, hoursBlockMorning2, hoursBlockMorning3, hoursBlockMorning4, hoursBlockAfternoon1,hoursBlockAfternoon2,hoursBlockAfternoon3,hoursBlockAfternoon4 FROM hr_timux_config");
@@ -930,6 +938,9 @@ void CGantnerTimeTerminal::reinit()
     config += result.call().toString() + "\n";
 
     ftp->put(config.toLatin1(), "config.dat");
+
+    QMap<QString, QVariant> p;
+    CGantnerTimeTerminal::s_removeAllUsers(this,p);
 
     QMap<QString, QString> params;
     QString xml = CXmlFactory::deviceEvent(QString::number(id), "reloadAllData", params);
