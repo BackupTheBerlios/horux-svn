@@ -57,7 +57,7 @@ QString DataSourceDialog::getDatasource()
     return t.data(0).toString() + "." + f.data(0).toString();
 }
 
-void DataSourceDialog::setDatasource(QString datasource)
+void DataSourceDialog::setDatasource(QString)
 {
 
 }

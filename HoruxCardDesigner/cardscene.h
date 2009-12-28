@@ -3,7 +3,8 @@
 
 #include <QGraphicsScene>
 #include "carditemtext.h"
-#include <QGraphicsSvgItem>
+#include "pixmapitem.h"
+#include <QGraphicsPixmapItem>
 
 class CardItem;
 
@@ -12,7 +13,7 @@ class CardScene : public QGraphicsScene
     Q_OBJECT
 
 public:
-    enum Mode { InsertItem, InsertText, MoveItem };
+    enum Mode { InsertPicture, InsertText, MoveItem };
 
      QFont font() const
          { return defaultFont; }
@@ -30,7 +31,7 @@ public slots:
      void editorLostFocus(CardTextItem *item);
 
 signals:
-     void itemInserted(CardTextItem *item);
+     void itemInserted(QGraphicsItem *item);
      void textInserted(QGraphicsTextItem *item);
      void itemSelected(QGraphicsItem *item);
 
@@ -45,6 +46,7 @@ private:
 private:
      Mode myMode;
      CardTextItem *textItem;
+     PixmapItem * pixmapItem;
      CardItem *card;
      QFont defaultFont;
      QColor myTextColor;

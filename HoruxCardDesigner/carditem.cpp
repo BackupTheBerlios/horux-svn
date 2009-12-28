@@ -3,6 +3,7 @@
 
 #include "carditem.h"
 #include "carditemtext.h"
+#include "pixmapitem.h"
 
 CardItem::CardItem( Size size,  Format format, QGraphicsItem * parent) : QGraphicsPathItem (parent)
 {
@@ -79,6 +80,16 @@ void CardItem::loadCard(QDomElement card )
                      scene (), SIGNAL(itemSelected(QGraphicsItem *)));
 
         }
+
+        if(node.toElement().tagName() == "CardPixmapItem")
+        {
+            PixmapItem *pixmapItem = new PixmapItem(this);
+            pixmapItem->loadPixmap( node.toElement() );
+
+            connect(pixmapItem, SIGNAL(selectedChange(QGraphicsItem *)),
+                   scene (), SIGNAL(itemSelected(QGraphicsItem *)));
+        }
+
         node = node.nextSibling();
     }
 

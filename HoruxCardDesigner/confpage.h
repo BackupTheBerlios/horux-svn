@@ -49,6 +49,18 @@ public:
      QFont font;
  };
 
+#include "ui_pixmapsetting.h"
 
+ class PixmapPage : public QWidget, public Ui::pixmapSetting
+ {
+     Q_OBJECT
+ public:
+     PixmapPage(QWidget *parent = 0);
+     void connectDataSource();
+
+private slots:
+     void setOpenFileName();
+     void setSource(int s);
+ };
 
 #endif // CONFPAGE_H

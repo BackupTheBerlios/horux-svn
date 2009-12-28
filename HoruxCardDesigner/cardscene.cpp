@@ -73,6 +73,14 @@ void CardScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
              textItem->setPos( textItem->mapFromScene(mouseEvent->scenePos()) );
 
              emit textInserted(textItem);
+             break;
+        case InsertPicture:
+             {
+                 pixmapItem = new PixmapItem(card);
+                 pixmapItem->setPos( pixmapItem->mapFromScene(mouseEvent->scenePos()) );
+                 emit itemInserted(pixmapItem);
+             }
+             break;
         default:
          ;
     }

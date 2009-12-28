@@ -45,6 +45,8 @@ public slots:
      void fontChanged(const QFont &);
      void colorChanged(const QColor &);
      void rotationChanged(const QString &);
+     void topChanged(const QString &);
+     void leftChanged(const QString &);
      void sourceChanged(const int &);
 
 public:

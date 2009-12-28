@@ -2,7 +2,6 @@
     <qresource prefix="/" >
         <file>CR-80.svg</file>
         <file>images/textpointer.png</file>
-        <file>images/656.jpg</file>
         <file>images/bold.png</file>
         <file>images/bringtofront.png</file>
         <file>images/delete.png</file>
@@ -17,5 +16,6 @@
         <file>images/redo.png</file>
         <file>images/undo.png</file>
         <file>images/viewmag.png</file>
+        <file>images/gadu.png</file>
     </qresource>
 </RCC>

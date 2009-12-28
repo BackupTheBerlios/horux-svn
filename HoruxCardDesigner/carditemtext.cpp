@@ -200,6 +200,19 @@ void CardTextItem::rotationChanged(const QString &text)
     rotate(rotation);
 }
 
+void CardTextItem::topChanged(const QString &top)
+{
+    QPointF p = pos();
+    p.setY(top.toInt());
+    setPos(p);
+}
+
+void CardTextItem::leftChanged(const QString &left)
+{
+    QPointF p = pos();
+    p.setX(left.toInt());
+    setPos(p);
+}
 
 
  QVariant CardTextItem::itemChange(GraphicsItemChange change,

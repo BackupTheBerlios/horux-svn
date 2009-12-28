@@ -35,6 +35,7 @@ void CardPage::setColor()
         bkgPicture->setText(fileName);
 }
 
+ /*****************************************************************************************************************/
 
  TextPage::TextPage(QWidget *parent)
      : QWidget(parent)
@@ -85,6 +86,46 @@ void TextPage::setSource(int s)
 }
 
 void TextPage::connectDataSource()
+{
+     connect(source, SIGNAL(currentIndexChanged ( int )), this, SLOT(setSource(int)));
+}
+
+/*****************************************************************************************************************/
+
+PixmapPage::PixmapPage(QWidget *parent)
+     : QWidget(parent)
+ {
+     setupUi(this);
+     connect(pixFileButton, SIGNAL(clicked()), this, SLOT(setOpenFileName()));
+ }
+
+ void PixmapPage::setOpenFileName()
+ {
+     QString selectedFilter;
+     QString fileName = QFileDialog::getOpenFileName(this,
+                                 tr("Pictures files"),
+                                 file->text(),
+                                 tr("All files (*);;PNG Files (*.png);;JPEG Files (*.jpg);;GIF Files (*.gif)"),
+                                 &selectedFilter, QFileDialog::DontUseNativeDialog);
+     if (!fileName.isEmpty())
+        file->setText(fileName);
+}
+
+void PixmapPage::setSource(int s)
+{
+    // database source
+    if(s == 1)
+    {
+        DataSourceDialog dlg;
+
+        if(dlg.exec() == QDialog::Accepted)
+        {
+            name->setText(dlg.getDatasource());
+        }
+    }
+}
+
+void PixmapPage::connectDataSource()
 {
      connect(source, SIGNAL(currentIndexChanged ( int )), this, SLOT(setSource(int)));
 }

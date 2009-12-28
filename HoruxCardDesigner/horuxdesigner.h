@@ -34,7 +34,7 @@ private:
 
 private slots:
      void buttonGroupClicked(int id);
-     void itemInserted(CardTextItem *item);
+     void itemInserted(QGraphicsItem *item);
      void textInserted(QGraphicsTextItem *item);
      void itemSelected(QGraphicsItem *item);
      void selectionChanged();
@@ -75,6 +75,7 @@ private:
 
     CardPage *cardPage;
     TextPage *textPage;
+    PixmapPage *pixmapPage;
 
     QPrinter *printer;
 

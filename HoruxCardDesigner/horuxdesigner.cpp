@@ -19,12 +19,13 @@ HoruxDesigner::HoruxDesigner(QWidget *parent)
 
     cardPage = NULL;
     textPage = NULL;
+    pixmapPage = NULL;
 
     createToolBox();
 
     scene = new CardScene(this);
-    connect(scene, SIGNAL(itemInserted(CardTextItem *)),
-             this, SLOT(itemInserted(CardTextItem *)));
+    connect(scene, SIGNAL(itemInserted(QGraphicsItem *)),
+             this, SLOT(itemInserted(QGraphicsItem *)));
 
     connect(scene, SIGNAL(textInserted(QGraphicsTextItem *)),
          this, SLOT(textInserted(QGraphicsTextItem *)));
@@ -323,6 +324,9 @@ void HoruxDesigner::save()
             case QGraphicsItem::UserType + 3:
                 card.appendChild(qgraphicsitem_cast<CardTextItem*>(item)->getXmlItem(xml));
                 break;
+            case QGraphicsItem::UserType + 4:
+                card.appendChild(qgraphicsitem_cast<PixmapItem*>(item)->getXmlItem(xml));
+                break;
         }
     }
 
@@ -454,8 +458,7 @@ void HoruxDesigner::bringToFront()
 
      qreal zValue = selectedItem->zValue();
      foreach (QGraphicsItem *item, overlapItems) {
-         if (item->zValue() >= zValue &&
-             item->type() != QGraphicsItem::UserType+1)
+         if (item->zValue() >= zValue)
          {
              zValue = item->zValue() + 0.1;
          }
@@ -474,8 +477,7 @@ void HoruxDesigner::bringToFront()
      qreal zValue = selectedItem->zValue();
 
      foreach (QGraphicsItem *item, overlapItems) {
-         if (item->zValue() <= zValue &&
-             item->type()  != QGraphicsItem::UserType+1)
+         if (item->zValue() <= zValue)
          {
              zValue = item->zValue() - 0.1;
          }
@@ -556,6 +558,11 @@ void HoruxDesigner::setParamView(QGraphicsItem *item)
 
                     if(textPage)
                         textPage->hide();
+
+                    if(pixmapPage)
+                        pixmapPage->hide();
+
+
                     cardPage->show();
                 }
             }
@@ -580,6 +587,8 @@ void HoruxDesigner::setParamView(QGraphicsItem *item)
                         connect(textPage, SIGNAL(changeColor ( const QColor & )), textItem, SLOT(colorChanged(const QColor &)));
                         connect(textPage->rotation, SIGNAL(textChanged(QString)), textItem, SLOT(rotationChanged(const QString &)));
                         connect(textPage->source, SIGNAL(currentIndexChanged ( int )), textItem, SLOT(sourceChanged(int)));
+                        connect(textPage->top, SIGNAL(textChanged(QString)), textItem, SLOT(topChanged(const QString &)));
+                        connect(textPage->left, SIGNAL(textChanged(QString)), textItem, SLOT(leftChanged(const QString &)));
 
 
                         textPage->name->setText(textItem->name);
@@ -596,8 +605,6 @@ void HoruxDesigner::setParamView(QGraphicsItem *item)
                         textPage->rotation->setText(QString::number(textItem->rotation));
                         textPage->top->setText(QString::number(textItem->pos().y()));
                         textPage->left->setText(QString::number(textItem->pos().x()));
-                        textPage->widthText->setText(QString::number(textItem->document()->size().width()));
-                        textPage->heightText->setText(QString::number(textItem->document()->size().height()));
 
                         textPage->source->setCurrentIndex( textItem->source );
                         textPage->connectDataSource();
@@ -606,6 +613,8 @@ void HoruxDesigner::setParamView(QGraphicsItem *item)
 
                     if(cardPage)
                         cardPage->hide();
+                    if(pixmapPage)
+                        pixmapPage->hide();
 
 
                     textPage->show();
@@ -613,10 +622,49 @@ void HoruxDesigner::setParamView(QGraphicsItem *item)
                 }
             }
             break;
+         case QGraphicsItem::UserType+4: //Pixmap
+             {
+                PixmapItem *pixmapItem = qgraphicsitem_cast<PixmapItem *>(item);
+
+                if(pixmapItem)
+                {
+                    if(pixmapPage)
+                    {
+                        delete pixmapPage;
+                        pixmapPage = NULL;
+                    }
+
+                    if(!pixmapPage)
+                    {
+                        pixmapPage = new PixmapPage(ui->widget);
+
+                        pixmapPage->name->setText(pixmapItem->name);
+                        pixmapPage->file->setText(pixmapItem->file);
+
+                        connect(pixmapPage->name, SIGNAL(textChanged ( const QString & )), pixmapItem, SLOT(setName(const QString &)));
+                        connect(pixmapPage->file, SIGNAL(textChanged(const QString & )), pixmapItem, SLOT(setPixmapFile(QString)));
+                        connect(pixmapPage->source, SIGNAL(currentIndexChanged ( int )), pixmapItem, SLOT(sourceChanged(int)));
+
+                        pixmapPage->source->setCurrentIndex( pixmapItem->source );
+                        pixmapPage->connectDataSource();
+                    }
+
+                    if(textPage)
+                        textPage->hide();
+                    if(cardPage)
+                        cardPage->hide();
+
+
+                    pixmapPage->show();
+
+                }
+
+            }
+            break;
     }
 }
 
-void HoruxDesigner::resizeEvent ( QResizeEvent * even)
+void HoruxDesigner::resizeEvent ( QResizeEvent * )
 {
     scene->setSceneRect(ui->graphicsView->geometry());
 }
@@ -649,18 +697,18 @@ void HoruxDesigner::resizeEvent ( QResizeEvent * even)
 
 
      //Image
-     /*QToolButton *imageButton = new QToolButton;
+     QToolButton *imageButton = new QToolButton;
      imageButton->setCheckable(true);
      buttonGroup->addButton(imageButton, InsertImageButton);
 
-     imageButton->setIcon(QIcon(QPixmap(":/images/656.jpg")));
+     imageButton->setIcon(QIcon(QPixmap(":/images/gadu.png")));
      imageButton->setIconSize(QSize(50, 50));
      QGridLayout *imageLayout = new QGridLayout;
      imageLayout->addWidget(imageButton, 0, 0, Qt::AlignHCenter);
      imageLayout->addWidget(new QLabel(tr("Picture")), 1, 0, Qt::AlignCenter);
      QWidget *imageWidget = new QWidget;
      imageWidget->setLayout(imageLayout);
-     layout->addWidget(imageWidget, 1, 2);*/
+     layout->addWidget(imageWidget, 1, 2);
 
 
 
@@ -685,17 +733,17 @@ void HoruxDesigner::buttonGroupClicked(int id)
      }
      if (id == InsertTextButton) {
          scene->setMode(CardScene::InsertText);
-     } else {
-         //scene->setItemType(DiagramItem::DiagramType(id));
-         scene->setMode(CardScene::InsertItem);
+     }
+
+     if(id == InsertImageButton) {
+         scene->setMode(CardScene::InsertPicture);
      }
  }
 
-void HoruxDesigner::itemInserted(CardTextItem *item)
+void HoruxDesigner::itemInserted(QGraphicsItem *)
  {
-     //pointerTypeGroup->button(int(DiagramScene::MoveItem))->setChecked(true);
-     //scene->setMode(DiagramScene::Mode(pointerTypeGroup->checkedId()));
-     //buttonGroup->button(int(item->diagramType()))->setChecked(false);
+     scene->setMode(CardScene::MoveItem);
+     buttonGroup->button(InsertImageButton)->setChecked(false);
  }
 
  void HoruxDesigner::textInserted(QGraphicsTextItem *)
@@ -704,10 +752,10 @@ void HoruxDesigner::itemInserted(CardTextItem *item)
      scene->setMode(CardScene::MoveItem);
  }
 
- void HoruxDesigner::itemSelected(QGraphicsItem *item)
+ void HoruxDesigner::itemSelected(QGraphicsItem *)
  {
-     CardTextItem *textItem =
-        qgraphicsitem_cast<CardTextItem *>(item);
+    /* CardTextItem *textItem =
+        qgraphicsitem_cast<CardTextItem *>(item);*/
  }
 
  void HoruxDesigner::selectionChanged()
