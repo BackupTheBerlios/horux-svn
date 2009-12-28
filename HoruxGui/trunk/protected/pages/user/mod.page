@@ -1,8 +1,21 @@
 <com:TContent ID="Main">
     <com:TClientScript PradoScripts="effects" />
 
+    <com:TClientScript ScriptUrl="./js/jsxmlrpc/lib/xmlrpc_lib.js" />
+
     <script type="text/javascript">
         <!--
+
+        function printCard()
+        {
+            var id = <%= $this->Request['id'] %>;
+
+            var client = new xmlrpc_client("RPC2", "localhost", 7000);
+            var params = new Array(new  xmlrpcval(id,'int'));
+            var msg = new xmlrpcmsg('horuxsystray.printCard', params);
+            client.send(msg,10,'');
+        }
+
         function onTab(object, name)
         {
             if(name=='general')
