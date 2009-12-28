@@ -779,8 +779,8 @@ void CGantnerTimeTerminal::reinit()
     QString leaveText = settings.value("leaveText","Partir").toString();
     if(!settings.contains("leaveText")) settings.setValue("leaveText", "Partir");
 
-    QString soldeText = settings.value("soldeText","Solde").toString();
-    if(!settings.contains("soldeText")) settings.setValue("soldeText", "Solde");
+    QString fid = settings.value("fid","9999").toString();
+    if(!settings.contains("fid")) settings.setValue("fid", "9999");
 
 
     settings.endGroup();
@@ -796,7 +796,7 @@ void CGantnerTimeTerminal::reinit()
 
     // set the reader configuration
     args.clear();
-    args << "9999";
+    args << fid;
     result = engine.evaluate("readerConfig");
     config += result.call(QScriptValue(), args).toString() + "\n";
 
