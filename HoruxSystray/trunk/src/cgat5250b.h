@@ -24,7 +24,7 @@
 #if defined(Q_OS_WIN)
     #include <QAxObject>
 #elif defined(Q_WS_X11)
-
+    #include <ftdi.h>
 #endif
 
 class CGAT5250B : public CDevice
@@ -46,7 +46,7 @@ private:
     #if defined(Q_OS_WIN)
         QAxObject *gat;
     #elif defined(Q_WS_X11)
-
+        ftdi_context *ftdic;
     #endif
 
     QString key;

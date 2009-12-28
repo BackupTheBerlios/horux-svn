@@ -27,10 +27,21 @@ FORMS += settings.ui
 LIBS += ../qextserialport/build/libqextserialport.a
 LIBS += -lhid
 win32:LIBS += -lsetupapi
-CONFIG += release
+CONFIG += debug
+
+QT += xml network
+
 win32 {
 CONFIG += qaxcontainer
 }
+
+unix:LIBS += -lftdi
+
+
+INCLUDEPATH += ../maia_xmlrpc
+
+LIBS += ../maia_xmlrpc/libmaia_xmlrpc.a
+
 TRANSLATIONS += horux_fr_FR.ts
 win32:RC_FILE = myapp.rc
 unix { 

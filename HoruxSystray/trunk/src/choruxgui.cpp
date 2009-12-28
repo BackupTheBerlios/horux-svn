@@ -19,6 +19,7 @@
 #include "choruxgui.h"
 #include <QProcess>
 #include <qextserialport.h>
+#include <maiaXmlRpcServer.h>
 
 #if defined(Q_OS_WIN)
     #include <windows.h>
@@ -31,45 +32,56 @@
 CHoruxGui::CHoruxGui(QWidget *parent)
  : QWidget(parent)
 {
-  setupUi(this);
-  
-  trayIcon = new QSystemTrayIcon(this);
-  trayIcon->setIcon(QIcon(":/images/logo.png"));
-  
-  trayIcon->show();
-  
-  
-  quitAction = new QAction(tr("&Quit"), this);
-  connect(quitAction, SIGNAL(triggered()), qApp, SLOT(quit()));
-  
-  settingsAction = new QAction(tr("&Settings..."), this);
-  connect(settingsAction, SIGNAL(triggered()), this, SLOT(show()));
-  
-  /*testAction = new QAction(tr("Test"), this);
-  connect(testAction, SIGNAL(triggered()), this, SLOT(test()));
-  */
-  
-  trayIconMenu = new QMenu(this);
-  //trayIconMenu->addAction(testAction);
-  trayIconMenu->addAction(settingsAction);
-  trayIconMenu->addSeparator();
-  trayIconMenu->addAction(quitAction);
-  
-  trayIcon->setContextMenu(trayIconMenu);
-  
-  setWindowTitle(tr("Horux Gui Key Detection - Version 1.0.0"));
-  
-  process = NULL;
-  
-  QSettings settings ( "Horux", "HoruxGuiSys" );
-  customPort->setText(settings.value("port", "").toString());
-  techComboBox->setCurrentIndex(settings.value("tech", 0).toInt());
-  
-  al_usb_reader = NULL;
-  al_serial_reader = NULL;
-  gat5250_serial_reader = NULL;
-  
-  openCom();
+    setupUi(this);
+
+    trayIcon = new QSystemTrayIcon(this);
+    trayIcon->setIcon(QIcon(":/images/logo.png"));
+
+    trayIcon->show();
+
+
+    quitAction = new QAction(tr("&Quit"), this);
+    connect(quitAction, SIGNAL(triggered()), qApp, SLOT(quit()));
+
+    settingsAction = new QAction(tr("&Settings..."), this);
+    connect(settingsAction, SIGNAL(triggered()), this, SLOT(show()));
+
+    /*testAction = new QAction(tr("Test"), this);
+    connect(testAction, SIGNAL(triggered()), this, SLOT(test()));
+    */
+
+    trayIconMenu = new QMenu(this);
+    //trayIconMenu->addAction(testAction);
+    trayIconMenu->addAction(settingsAction);
+    trayIconMenu->addSeparator();
+    trayIconMenu->addAction(quitAction);
+
+    trayIcon->setContextMenu(trayIconMenu);
+
+    setWindowTitle(tr("Horux Gui Key Detection - Version 1.0.0"));
+
+    process = NULL;
+
+    QSettings settings ( "Horux", "HoruxGuiSys" );
+    customPort->setText(settings.value("port", "").toString());
+    techComboBox->setCurrentIndex(settings.value("tech", 0).toInt());
+
+    al_usb_reader = NULL;
+    al_serial_reader = NULL;
+    gat5250_serial_reader = NULL;
+
+    openCom();
+
+    ptr_xmlRpcServer = new MaiaXmlRpcServer ( 7000, this );
+
+    if ( ptr_xmlRpcServer && ptr_xmlRpcServer->isListening() )
+    {
+        ptr_xmlRpcServer->addMethod ( "horuxsystray.printCard", this, "printCard" );
+    }
+    else
+    {
+        qDebug() << "xmlrpc error";
+    }
 }
 
 
@@ -116,7 +128,7 @@ void CHoruxGui::openCom()
           connect(gat5250_serial_reader, SIGNAL(readError()), this, SLOT(readError()));
           connect(gat5250_serial_reader, SIGNAL(keyDetected(QByteArray)), this, SLOT(keyDetected(QByteArray)));
 
-          gat5250_serial_reader->start();
+          //gat5250_serial_reader->start();
 
           break;
       case 1: // Acces Link USB
@@ -323,4 +335,10 @@ void CHoruxGui::keyDetected(QByteArray key)
     s.toUpper();
     sendKey(s);
   }
+}
+
+void CHoruxGui::printCard ( int userId )
+{
+  QCoreApplication::processEvents();
+  trayIcon->showMessage(tr("Print"), tr("A card will be print"), QSystemTrayIcon::Information, 5000);
 }
