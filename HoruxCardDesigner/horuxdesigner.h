@@ -3,6 +3,9 @@
 
 #include <QtGui/QMainWindow>
 #include <QFile>
+#include <QHttp>
+#include <QBuffer>
+#include <QMessageBox>
 #include <QtSoapHttpTransport>
 
 #include "cardscene.h"
@@ -58,6 +61,10 @@ private slots:
      void openRecentFile();
 
      void readSoapResponse();
+     void readSoapResponseUser();
+     void userChanged(int);
+     void httpRequestDone ( bool error );
+
 
 protected:
     void resizeEvent ( QResizeEvent * even);
@@ -89,6 +96,11 @@ private:
 
     enum { MaxRecentFiles = 5 };
     QAction *recentFileActs[MaxRecentFiles];
+
+    QMessageBox *waiting;
+
+     QHttp pictureHttp;
+     QBuffer pictureBuffer;
 };
 
 #endif // HORUXDESIGNER_H

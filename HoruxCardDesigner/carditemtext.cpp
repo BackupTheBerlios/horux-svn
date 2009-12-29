@@ -19,6 +19,7 @@
 
 void CardTextItem::setPrintingMode(bool printing)
 {
+    isPrinting = printing;
 }
 
 

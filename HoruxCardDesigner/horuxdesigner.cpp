@@ -20,6 +20,8 @@ HoruxDesigner::HoruxDesigner(QWidget *parent)
     cardPage = NULL;
     textPage = NULL;
     pixmapPage = NULL;
+    userCombo = NULL;
+    waiting = NULL;
 
     createToolBox();
 
@@ -142,7 +144,10 @@ HoruxDesigner::HoruxDesigner(QWidget *parent)
 
     updateRecentFileActions();
 
-    connect(&transport, SIGNAL(responseReady()), SLOT(readSoapResponse()));
+    connect(&transport, SIGNAL(responseReady()),this, SLOT(readSoapResponse()));
+
+    pictureBuffer.open(QBuffer::ReadWrite);
+    connect(&pictureHttp, SIGNAL(done(bool)), this, SLOT(httpRequestDone(bool)));
 
     QSettings settings("Letux", "HoruxCardDesigner", this);
 
@@ -160,9 +165,10 @@ HoruxDesigner::HoruxDesigner(QWidget *parent)
     else
         transport.setHost(host);
 
+    waiting = new QMessageBox(QMessageBox::Information,tr("Load data"),tr("Waiting, the data are loading from Horux Gui"), QMessageBox::NoButton, this);
+    waiting->show();
+
     transport.submitRequest(message, path+"/index.php?soap=horux");
-
-
 }
 
 HoruxDesigner::~HoruxDesigner()
@@ -200,6 +206,83 @@ void HoruxDesigner::readSoapResponse()
 
     ui->toolBar->addSeparator();
     ui->toolBar->addWidget(userCombo);
+    connect( userCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(userChanged(int)));
+
+    waiting->hide();
+
+    if(userCombo->count()>0)
+        userChanged(0);
+
+
+}
+
+void HoruxDesigner::userChanged(int index)
+{
+    if(userCombo)
+    {
+        int userId = userCombo->itemData(index).toInt();
+        disconnect(&transport, 0, this, 0);
+        connect(&transport, SIGNAL(responseReady()),this, SLOT(readSoapResponseUser()));
+
+        QSettings settings("Letux", "HoruxCardDesigner", this);
+        QString username = settings.value("username", "root").toString();
+        QString password = settings.value("password", "").toString();
+        QString path = settings.value("path", "").toString();
+
+        QtSoapMessage message;
+        message.setMethod("getUserById");
+        message.addMethodArgument("id","",userId);
+
+        waiting->show();
+
+        transport.submitRequest(message, path+"/index.php?soap=horux");
+    }
+}
+
+void HoruxDesigner::readSoapResponseUser()
+{
+
+     const QtSoapMessage &response = transport.getResponse();
+     if (response.isFault()) {
+         waiting->hide();
+         QMessageBox::warning(this,tr("Horux webservice error"),tr("Not able to call the Horux GUI web service."));
+         return;
+     }
+
+
+
+    const QtSoapType &returnValue = response.returnValue();
+    const QtSoapType &pictureValue =  returnValue[3];
+    QString name =  pictureValue[1].toString();
+    if(name != "")
+    {
+        QSettings settings("Letux", "HoruxCardDesigner", this);
+
+        QString host = settings.value("horux", "localhost").toString();
+        QString path = settings.value("path", "").toString();
+        bool ssl = settings.value("ssl", "").toBool();
+
+        pictureBuffer.reset();
+
+        pictureHttp.setHost(host, ssl ? QHttp::ConnectionModeHttps : QHttp::ConnectionModeHttp );
+        pictureHttp.get(path + "/pictures/" + name, &pictureBuffer);
+    }
+    else
+    {
+        pictureBuffer.reset();
+        waiting->hide();
+    }
+
+}
+
+void HoruxDesigner::httpRequestDone ( bool error )
+{
+   waiting->hide();
+
+   if(error)
+   {
+     QMessageBox::information(this, tr("Picture error"),tr("Not able to load the user picture"));
+   }
 }
 
  void HoruxDesigner::setCurrentFile(const QString &fileName)

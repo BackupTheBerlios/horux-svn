@@ -30,6 +30,7 @@ PixmapItem::PixmapItem(QGraphicsItem *parent) : QGraphicsPixmapItem(parent)
 
 void PixmapItem::setPrintingMode(bool printing)
 {
+    isPrinting = printing;
 }
 
 QVariant PixmapItem::itemChange(GraphicsItemChange change,
@@ -245,7 +246,7 @@ void PixmapItem::loadPixmap(QDomElement text )
         QString host = settings.value("horux", "localhost").toString();
         QString path = settings.value("path", "").toString();
         bool ssl = settings.value("ssl", "").toBool();
-
+        pictureBuffer.reset();
         pictureHttp.setHost(host, ssl ? QHttp::ConnectionModeHttps : QHttp::ConnectionModeHttp );
         pictureHttp.get(path + "/pictures/unknown.jpg", &pictureBuffer);
 
