@@ -241,7 +241,9 @@ void CardItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
     }
     else
     {
-        painter->setPen(Qt::SolidLine);
+        QPen pen;  // creates a default pen
+        pen.setWidthF(0.1);
+        painter->setPen(pen);
     }
 
     painter->setBrush(bkgBrush);

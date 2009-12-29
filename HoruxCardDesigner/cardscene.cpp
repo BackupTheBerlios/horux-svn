@@ -78,6 +78,7 @@ void CardScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
              {
                  pixmapItem = new PixmapItem(card);
                  pixmapItem->setPos( pixmapItem->mapFromScene(mouseEvent->scenePos()) );
+
                  emit itemInserted(pixmapItem);
              }
              break;
@@ -92,12 +93,12 @@ void CardScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
     if (myMode == MoveItem)
     {
-
         if( selectedItems().size() > 0)
         {
             QGraphicsItem *item = selectedItems().at(0);
             if(item->type() > QGraphicsItem::UserType + 1)
             {
+                emit itemMoved(item);
             }
         }
 

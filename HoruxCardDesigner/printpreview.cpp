@@ -32,3 +32,4 @@ void PrintPreview::changeEvent(QEvent *e)
         break;
     }
 }
+

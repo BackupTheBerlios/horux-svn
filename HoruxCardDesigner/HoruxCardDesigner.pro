@@ -14,23 +14,24 @@ SOURCES += main.cpp \
     carditem.cpp \
     confpage.cpp \
     printpreview.cpp \
-    databasedialog.cpp \
-    datasourcedialog.cpp \
-    pixmapitem.cpp
+    pixmapitem.cpp \
+    horuxdialog.cpp \
+    horuxfields.cpp
 HEADERS += horuxdesigner.h \
     cardscene.h \
     carditemtext.h \
     carditem.h \
     confpage.h \
     printpreview.h \
-    databasedialog.h \
-    datasourcedialog.h \
-    pixmapitem.h
+    pixmapitem.h \
+    horuxdialog.h \
+    horuxfields.h
 FORMS += horuxdesigner.ui \
     textsetting.ui \
     cardsetting.ui \
     printpreview.ui \
-    databasedialog.ui \
-    datasourcedialog.ui \
-    pixmapsetting.ui
+    pixmapsetting.ui \
+    horuxdialog.ui \
+    horuxfields.ui
 RESOURCES += ressource.qrc
+include(./qtsoap-2.7_1-opensource/src/qtsoap.pri)

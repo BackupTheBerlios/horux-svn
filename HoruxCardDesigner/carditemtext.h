@@ -48,6 +48,7 @@ public slots:
      void topChanged(const QString &);
      void leftChanged(const QString &);
      void sourceChanged(const int &);
+     void alignmentChanged(int);
 
 public:
     double rotation;

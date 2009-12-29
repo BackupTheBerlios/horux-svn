@@ -2,8 +2,8 @@
 #define HORUXDESIGNER_H
 
 #include <QtGui/QMainWindow>
- #include <QSqlDatabase>
- #include <QFile>
+#include <QFile>
+#include <QtSoapHttpTransport>
 
 #include "cardscene.h"
 #include "confpage.h"
@@ -37,6 +37,7 @@ private slots:
      void itemInserted(QGraphicsItem *item);
      void textInserted(QGraphicsTextItem *item);
      void itemSelected(QGraphicsItem *item);
+     void itemMoved(QGraphicsItem *);
      void selectionChanged();
      void sceneScaleChanged(const QString &scale);
      void currentFontChanged(const QFont &font);
@@ -56,6 +57,8 @@ private slots:
      void open();
      void openRecentFile();
 
+     void readSoapResponse();
+
 protected:
     void resizeEvent ( QResizeEvent * even);
 
@@ -72,6 +75,7 @@ private:
     QComboBox *textColorCombo;
     QComboBox *fontSizeCombo;
     QFontComboBox *fontCombo;
+    QComboBox *userCombo;
 
     CardPage *cardPage;
     TextPage *textPage;
@@ -79,9 +83,9 @@ private:
 
     QPrinter *printer;
 
-    QSqlDatabase database;
-
     QFile currenFile;
+
+    QtSoapHttpTransport transport;
 
     enum { MaxRecentFiles = 5 };
     QAction *recentFileActs[MaxRecentFiles];

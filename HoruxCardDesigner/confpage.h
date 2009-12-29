@@ -3,6 +3,8 @@
 
 #include <QWidget>
 #include <QDebug>
+#include <QHttp>
+ #include <QBuffer>
 
 class QLineEdit;
 class QComboBox;
@@ -61,6 +63,14 @@ public:
 private slots:
      void setOpenFileName();
      void setSource(int s);
+     void httpRequestDone ( bool error );
+
+signals:
+    void newPicture(QByteArray pict);
+
+private:
+     QHttp pictureHttp;
+     QBuffer pictureBuffer;
  };
 
 #endif // CONFPAGE_H

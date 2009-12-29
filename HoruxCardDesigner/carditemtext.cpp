@@ -46,7 +46,7 @@ void CardTextItem::loadText(QDomElement text )
         }
         if(node.toElement().tagName() == "alignment")
         {
-            //rotation = (Size)node.toElement().text().toInt();
+            alignment = node.toElement().text().toInt();
         }
         if(node.toElement().tagName() == "text")
         {
@@ -92,6 +92,8 @@ void CardTextItem::loadText(QDomElement text )
     font.setItalic(fontItalic);
     font.setUnderline(fontUnderline);
 
+    alignmentChanged(alignment);
+
     setFont(font);
 }
 
@@ -125,7 +127,7 @@ QDomElement CardTextItem::getXmlItem(QDomDocument xml )
     textItem.appendChild(newElement);
 
     newElement = xml.createElement( "text");
-    text =  xml.createTextNode(toPlainText ());
+    text =  xml.createTextNode( toPlainText());
     newElement.appendChild(text);
     textItem.appendChild(newElement);
 
@@ -227,6 +229,7 @@ void CardTextItem::leftChanged(const QString &left)
  {
      setTextInteractionFlags(Qt::NoTextInteraction);
      emit lostFocus(this);
+     adjustSize();
      QGraphicsTextItem::focusOutEvent(event);
  }
 
@@ -236,3 +239,28 @@ void CardTextItem::leftChanged(const QString &left)
          setTextInteractionFlags(Qt::TextEditorInteraction);
      QGraphicsTextItem::mouseDoubleClickEvent(event);
  }
+
+void CardTextItem::alignmentChanged(int align)
+{
+    alignment = align;
+
+    QTextDocument *doc = document();
+    doc->setTextWidth(boundingRect().width());
+
+    QTextOption option = doc->defaultTextOption ();
+    switch(align)
+    {
+        case 0: //left
+            option.setAlignment(Qt::AlignLeft);
+            break;
+        case 1: //right
+            option.setAlignment(Qt::AlignRight);
+            break;
+        case 2: //center
+            option.setAlignment(Qt::AlignHCenter);
+            break;
+    }
+
+    doc->setDefaultTextOption(option);
+    setDocument(doc);
+}

@@ -5,7 +5,7 @@
 #include "carditem.h"
 #include "confpage.h"
 #include "printpreview.h"
-#include "databasedialog.h"
+#include "horuxdialog.h"
 
 const int InsertTextButton = 10;
 const int InsertImageButton = 11;
@@ -35,6 +35,10 @@ HoruxDesigner::HoruxDesigner(QWidget *parent)
 
     connect(scene, SIGNAL( selectionChanged()),
          this, SLOT(selectionChanged()));
+
+    connect(scene, SIGNAL( itemMoved(QGraphicsItem *)),
+         this, SLOT(itemMoved(QGraphicsItem *)));
+
 
     ui->graphicsView->setScene(scene);
     ui->graphicsView->setRenderHint(QPainter::Antialiasing);
@@ -70,6 +74,7 @@ HoruxDesigner::HoruxDesigner(QWidget *parent)
      ui->toolBar->addWidget(fontSizeCombo);
      ui->toolBar->addSeparator();
      ui->toolBar->addWidget(sceneScaleCombo);
+
 
      connect(ui->actionItalic, SIGNAL(triggered()),
              this, SLOT(handleFontChange()));
@@ -124,39 +129,6 @@ HoruxDesigner::HoruxDesigner(QWidget *parent)
                  this, SLOT(openRecentFile()));
      }
 
-    QSettings settings("Letux", "HoruxCardDesigner", this);
-
-    QString host = settings.value("dbhost", "localhost").toString();
-    QString username = settings.value("username", "root").toString();
-    QString password = settings.value("password", "").toString();
-    QString db = settings.value("db", "horux").toString();
-    int engine = settings.value("engine", 0).toInt(); //MYSQL
-
-
-    switch(engine)
-    {
-        case 0:
-            database = QSqlDatabase::addDatabase("QMYSQL");
-            break;
-        default:
-            break;
-    }
-
-    if(database.isValid () )
-    {
-        database.setHostName(host);
-        database.setDatabaseName(db);
-        database.setUserName(username);
-        database.setPassword(password);
-        if(!database.open())
-        {
-            QMessageBox::warning(this,tr("Database connexion problem"),tr("It is not possible to open the connexion with the database.<br>In this case, it will no be possible it use data source"));
-        }
-    }
-    else
-    {
-        QMessageBox::warning(this,tr("Database not define"),tr("The database settings is not define.<br>In this case, it will no be possible it use data source"));
-    }
 
     currenFile.setFileName("");
 
@@ -169,6 +141,28 @@ HoruxDesigner::HoruxDesigner(QWidget *parent)
     }
 
     updateRecentFileActions();
+
+    connect(&transport, SIGNAL(responseReady()), SLOT(readSoapResponse()));
+
+    QSettings settings("Letux", "HoruxCardDesigner", this);
+
+    QString host = settings.value("horux", "localhost").toString();
+    QString username = settings.value("username", "root").toString();
+    QString password = settings.value("password", "").toString();
+    QString path = settings.value("path", "").toString();
+    bool ssl = settings.value("ssl", "").toBool();
+
+    QtSoapMessage message;
+    message.setMethod("getAllUser");
+
+    if(ssl)
+        transport.setHost(host, true);
+    else
+        transport.setHost(host);
+
+    transport.submitRequest(message, path+"/index.php?soap=horux");
+
+
 }
 
 HoruxDesigner::~HoruxDesigner()
@@ -176,6 +170,37 @@ HoruxDesigner::~HoruxDesigner()
     delete ui;
 }
 
+
+void HoruxDesigner::readSoapResponse()
+{
+     userCombo = new QComboBox();
+
+     const QtSoapMessage &response = transport.getResponse();
+     if (response.isFault()) {
+         QMessageBox::warning(this,tr("Horux webservice error"),tr("Not able to call the Horux GUI web service."));
+         return;
+     }
+
+    const QtSoapType &returnValue = response.returnValue();
+
+    for(int i=0; i<returnValue.count(); i++ )
+    {
+       const QtSoapType &record =  returnValue[i];
+
+       for(int j=0; j<record.count(); j+=24)
+       {
+           const QtSoapType &field_id =  record[j];
+           const QtSoapType &field_name =  record[j+1];
+           const QtSoapType &field_firstname =  record[j+2];
+
+           userCombo->addItem(field_name["value"].toString() + " " + field_firstname["value"].toString(), field_id["value"].toInt());
+       }
+
+    }
+
+    ui->toolBar->addSeparator();
+    ui->toolBar->addWidget(userCombo);
+}
 
  void HoruxDesigner::setCurrentFile(const QString &fileName)
  {
@@ -261,7 +286,9 @@ void HoruxDesigner::open()
 
         QString xml;
         currenFile.open(QIODevice::ReadOnly);
-        xml = currenFile.readAll();
+        QTextStream data(&currenFile);
+        data.setCodec("ISO 8859-1");
+        xml = data.readAll();
         scene->loadScene(xml);
         currenFile.close();
 
@@ -271,30 +298,29 @@ void HoruxDesigner::open()
 
 void HoruxDesigner::setDatabase()
 {
-    DatabaseDialog dlg(this);
+    HoruxDialog dlg(this);
 
     QSettings settings("Letux", "HoruxCardDesigner", this);
 
-    QString host = settings.value("dbhost", "localhost").toString();
+    QString host = settings.value("horux", "localhost").toString();
     QString username = settings.value("username", "root").toString();
     QString password = settings.value("password", "").toString();
-    QString db = settings.value("db", "horux").toString();
-    int engine = settings.value("engine", 0).toInt(); //MYSQL
+    QString path = settings.value("path", "").toString();
+    bool ssl = settings.value("ssl", "").toBool();
 
-    dlg.setHost(host);
+    dlg.setHorux(host);
     dlg.setUsername(username);
     dlg.setPassword(password);
-    dlg.setDb(db);
-    dlg.setEngine(engine);
-
+    dlg.setPath(path);
+    dlg.setSSL(ssl);
 
     if(dlg.exec() == QDialog::Accepted)
     {
-        settings.setValue("dbhost",dlg.getHost());
+       settings.setValue("horux",dlg.getHorux());
         settings.setValue("username",dlg.getUsername());
         settings.setValue("password",dlg.getPassword());
-        settings.setValue("db",dlg.getDb());
-        settings.setValue("engine",dlg.getEngine());
+        settings.setValue("path",dlg.getPath());
+        settings.setValue("ssl",dlg.getSSL());
     }
 }
 
@@ -309,6 +335,7 @@ void HoruxDesigner::save()
 
     currenFile.open(QIODevice::WriteOnly);
     QTextStream data(&currenFile);
+    data.setCodec("ISO 8859-1");
 
     QDomDocument xml;
     QDomElement root = xml.createElement ( "HoruxCardDesigner" );
@@ -332,7 +359,7 @@ void HoruxDesigner::save()
 
     xml.appendChild ( root );
 
-    QDomNode xmlNode =  xml.createProcessingInstruction ( "xml", "version=\"1.0\" encoding=\"ISO-8859-1\"" );
+    QDomNode xmlNode =  xml.createProcessingInstruction ( "xml", "version=\"1.0\" encoding=\"ISO 8859-1\"" );
     xml.insertBefore ( xmlNode, xml.firstChild() );
 
     data << xml.toString() ;
@@ -589,6 +616,7 @@ void HoruxDesigner::setParamView(QGraphicsItem *item)
                         connect(textPage->source, SIGNAL(currentIndexChanged ( int )), textItem, SLOT(sourceChanged(int)));
                         connect(textPage->top, SIGNAL(textChanged(QString)), textItem, SLOT(topChanged(const QString &)));
                         connect(textPage->left, SIGNAL(textChanged(QString)), textItem, SLOT(leftChanged(const QString &)));
+                        connect(textPage->alignment, SIGNAL(currentIndexChanged ( int )), textItem, SLOT(alignmentChanged(int)));
 
 
                         textPage->name->setText(textItem->name);
@@ -605,6 +633,7 @@ void HoruxDesigner::setParamView(QGraphicsItem *item)
                         textPage->rotation->setText(QString::number(textItem->rotation));
                         textPage->top->setText(QString::number(textItem->pos().y()));
                         textPage->left->setText(QString::number(textItem->pos().x()));
+                        textPage->alignment->setCurrentIndex(textItem->alignment);
 
                         textPage->source->setCurrentIndex( textItem->source );
                         textPage->connectDataSource();
@@ -640,10 +669,22 @@ void HoruxDesigner::setParamView(QGraphicsItem *item)
 
                         pixmapPage->name->setText(pixmapItem->name);
                         pixmapPage->file->setText(pixmapItem->file);
+                        pixmapPage->widthEdit->setText(QString::number(pixmapItem->boundingRect().width()));
+                        pixmapPage->heightEdit->setText(QString::number(pixmapItem->boundingRect().height()));
 
                         connect(pixmapPage->name, SIGNAL(textChanged ( const QString & )), pixmapItem, SLOT(setName(const QString &)));
                         connect(pixmapPage->file, SIGNAL(textChanged(const QString & )), pixmapItem, SLOT(setPixmapFile(QString)));
                         connect(pixmapPage->source, SIGNAL(currentIndexChanged ( int )), pixmapItem, SLOT(sourceChanged(int)));
+                        connect(pixmapPage, SIGNAL(newPicture(QByteArray)), pixmapItem, SLOT(setHoruxPixmap(QByteArray )));
+                        connect(pixmapPage->widthEdit, SIGNAL(textChanged ( const QString & )), pixmapItem, SLOT(setWidth(const QString &)));
+                        connect(pixmapPage->heightEdit, SIGNAL(textChanged ( const QString & )), pixmapItem, SLOT(setHeight(const QString &)));
+
+                        connect(pixmapPage->top, SIGNAL(textChanged(QString)), pixmapItem, SLOT(topChanged(const QString &)));
+                        connect(pixmapPage->left, SIGNAL(textChanged(QString)), pixmapItem, SLOT(leftChanged(const QString &)));
+
+                        pixmapPage->top->setText(QString::number(pixmapItem->pos().y()));
+                        pixmapPage->left->setText(QString::number(pixmapItem->pos().x()));
+
 
                         pixmapPage->source->setCurrentIndex( pixmapItem->source );
                         pixmapPage->connectDataSource();
@@ -768,4 +809,27 @@ void HoruxDesigner::itemInserted(QGraphicsItem *)
      }
      setParamView(scene->selectedItems().at(0));
 
+ }
+
+ void HoruxDesigner::itemMoved(QGraphicsItem *item)
+ {
+     if(item)
+     {
+        if(item->type() == QGraphicsItem::UserType + 3)
+        {
+            if(textPage)
+            {
+                textPage->top->setText(QString::number(item->pos().y()));
+                textPage->left->setText(QString::number(item->pos().x()));
+            }
+        }
+        if(item->type() == QGraphicsItem::UserType + 4)
+        {
+            if(pixmapPage)
+            {
+                pixmapPage->top->setText(QString::number(item->pos().y()));
+                pixmapPage->left->setText(QString::number(item->pos().x()));
+            }
+        }
+     }
  }

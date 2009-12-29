@@ -1,7 +1,6 @@
 #include <QtGui>
-
+#include "horuxfields.h"
 #include "confpage.h"
-#include "datasourcedialog.h"
 
 CardPage::CardPage(QWidget *parent)
      : QWidget(parent)
@@ -76,12 +75,17 @@ void TextPage::setSource(int s)
     // database source
     if(s == 1)
     {
-        DataSourceDialog dlg;
+        HoruxFields dlg;
 
         if(dlg.exec() == QDialog::Accepted)
         {
             name->setText(dlg.getDatasource());
+            name->setReadOnly(true);
         }
+    }
+    else
+    {
+         name->setReadOnly(false);
     }
 }
 
@@ -97,6 +101,9 @@ PixmapPage::PixmapPage(QWidget *parent)
  {
      setupUi(this);
      connect(pixFileButton, SIGNAL(clicked()), this, SLOT(setOpenFileName()));
+
+     pictureBuffer.open(QBuffer::ReadWrite);
+     connect(&pictureHttp, SIGNAL(done(bool)), this, SLOT(httpRequestDone(bool)));
  }
 
  void PixmapPage::setOpenFileName()
@@ -116,13 +123,22 @@ void PixmapPage::setSource(int s)
     // database source
     if(s == 1)
     {
-        DataSourceDialog dlg;
+        //pictureBuffer.reset();
 
-        if(dlg.exec() == QDialog::Accepted)
-        {
-            name->setText(dlg.getDatasource());
-        }
+        QSettings settings("Letux", "HoruxCardDesigner", this);
+
+        QString host = settings.value("horux", "localhost").toString();
+        QString path = settings.value("path", "").toString();
+        bool ssl = settings.value("ssl", "").toBool();
+
+        pictureHttp.setHost(host, ssl ? QHttp::ConnectionModeHttps : QHttp::ConnectionModeHttp );
+        pictureHttp.get(path + "/pictures/unknown.jpg", &pictureBuffer);
     }
+}
+
+void PixmapPage::httpRequestDone ( bool error )
+{
+    emit newPicture( pictureBuffer.data() );
 }
 
 void PixmapPage::connectDataSource()

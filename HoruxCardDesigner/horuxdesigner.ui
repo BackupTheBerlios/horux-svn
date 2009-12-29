@@ -388,7 +388,7 @@
   </action>
   <action name="actionDatabase">
    <property name="text">
-    <string>Database...</string>
+    <string>Horux GUI...</string>
    </property>
   </action>
   <action name="actionDassa">
