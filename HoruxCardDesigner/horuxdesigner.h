@@ -60,6 +60,7 @@ private slots:
      void setDatabase();
      void open();
      void openRecentFile();
+     void about();
 
      void readSoapResponse();
      void readSoapResponseUser();

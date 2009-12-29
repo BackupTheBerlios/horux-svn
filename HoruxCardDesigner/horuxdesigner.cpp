@@ -123,6 +123,8 @@ HoruxDesigner::HoruxDesigner(QWidget *parent)
      connect(ui->actionOpen, SIGNAL(triggered()),
              this, SLOT(open()));
 
+    connect(ui->actionAbout, SIGNAL(triggered()),
+             this, SLOT(about()));
 
      for (int i = 0; i < MaxRecentFiles; ++i) {
          recentFileActs[i] = new QAction(this);
@@ -176,6 +178,10 @@ HoruxDesigner::~HoruxDesigner()
     delete ui;
 }
 
+void HoruxDesigner::about()
+{
+    QMessageBox::about(this, tr("About Horux Card Designer"),tr("<h1>Horux Card Designer 0.1 Beta</h1>Copyright 2010 Letux S&agrave;rl.<br/>A Free Software released under the GNU/GPL License"));
+}
 
 void HoruxDesigner::readSoapResponse()
 {
