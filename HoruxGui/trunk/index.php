@@ -30,8 +30,6 @@ if(!is_writable($runtimePath))
 require_once($frameworkPath);
 
 
-
-
 if(!file_exists('./protected/runtime/.installed'))
 {
 	$app_conf = new TApplicationConfiguration();

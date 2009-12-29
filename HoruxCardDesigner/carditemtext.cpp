@@ -305,6 +305,7 @@ void CardTextItem::fontChanged(const QFont &font)
 {
     setFont(font);
     scene()->update();
+    adjustSize();
 }
 
 void CardTextItem::colorChanged(const QColor &color)
@@ -317,7 +318,7 @@ void CardTextItem::rotationChanged(const QString &text)
 {
     rotate(rotation*-1);
     rotation = text.toDouble();
-    rotate(rotation);
+    rotate(rotation);    
 }
 
 void CardTextItem::topChanged(const QString &top)
