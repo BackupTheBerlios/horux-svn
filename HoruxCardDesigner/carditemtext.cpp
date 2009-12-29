@@ -213,6 +213,8 @@ void CardTextItem::loadText(QDomElement text )
     alignmentChanged(alignment);
 
     setFont(font);
+
+    adjustSize();
 }
 
 QDomElement CardTextItem::getXmlItem(QDomDocument xml )
