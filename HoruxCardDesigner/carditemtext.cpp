@@ -17,9 +17,118 @@
      isPrinting = false;
  }
 
-void CardTextItem::setPrintingMode(bool printing)
-{
+void CardTextItem::setPrintingMode(bool printing, QMap<QString, QString>userData)
+{       
     isPrinting = printing;
+
+
+    // From Horux
+    if(source == 1 && isPrinting)
+    {
+        text = toPlainText();
+
+        if(name == "Name")
+        {
+            setPlainText(userData["name"]);
+        }
+
+        if(name == "Firstname")
+        {
+            setPlainText(userData["firstname"]);
+        }
+
+        if(name == "Validity date")
+        {
+            setPlainText(userData["validity_date"]);
+        }
+
+        if(name == "Department")
+        {
+            setPlainText(userData["department_id"]);
+        }
+
+        if(name == "Pin code")
+        {
+            setPlainText(userData["pin_code"]);
+        }
+
+        if(name == "Street (private)")
+        {
+            setPlainText(userData["street_private"]);
+        }
+
+        if(name == "City (private)")
+        {
+            setPlainText(userData["city_private"]);
+        }
+
+        if(name == "Zip (private)")
+        {
+            setPlainText(userData["zip_private"]);
+        }
+
+        if(name == "Country (private)")
+        {
+            setPlainText(userData["country_private"]);
+        }
+
+        if(name == "Phone (private)")
+        {
+            setPlainText(userData["phone_private"]);
+        }
+
+        if(name == "Email (private)")
+        {
+            setPlainText(userData["email_private"]);
+        }
+
+        if(name == "Firme")
+        {
+            setPlainText(userData["firme"]);
+        }
+
+        if(name == "Street (Professional)")
+        {
+            setPlainText(userData["street_professional"]);
+        }
+
+        if(name == "City (Professional)")
+        {
+            setPlainText(userData["city_professional"]);
+        }
+
+        if(name == "Zip  (Professional)")
+        {
+            setPlainText(userData["zip_professional"]);
+        }
+
+        if(name == "Country  (Professional)")
+        {
+            setPlainText(userData["country_professional"]);
+        }
+
+        if(name == "Email (Professional)")
+        {
+            setPlainText(userData["email_professional"]);
+        }
+
+        if(name == "Phone (Professional)")
+        {
+            setPlainText(userData["phone_professional"]);
+        }
+
+        if(name == "Fax (Professional)")
+        {
+            setPlainText(userData["fax_professional"]);
+        }
+    }
+
+    if(source == 1 && !isPrinting)
+    {
+        setPlainText(text);
+    }
+
+    adjustSize();
 }
 
 

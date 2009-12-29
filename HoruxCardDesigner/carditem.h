@@ -5,6 +5,8 @@
 #include <QGraphicsPathItem>
 #include <QDomElement>
 #include "confpage.h"
+#include <QBuffer>
+#include <QMap>
 
 class CardItem : public QObject, public QGraphicsPathItem
 {
@@ -32,7 +34,7 @@ public:
     bool isViewGrid(){ return isGrid;}
     bool isAlign(){ return isGridAlign;}
     int getGridSize(){ return gridSize;}
-    void setPrintingMode(bool printing);
+    void setPrintingMode(bool printing, QBuffer &picture, QMap<QString, QString>userData);
     void reset();
 
 public slots:

@@ -249,27 +249,37 @@ void HoruxDesigner::readSoapResponseUser()
          return;
      }
 
+    const QtSoapType &value = response.returnValue();
 
+    for(int i=0; i<value.count(); i++)
+    {
+        const QtSoapType &field =  value[i];
+        userValue[field[0].toString()] = field[1].toString();
+    }
 
-    const QtSoapType &returnValue = response.returnValue();
-    const QtSoapType &pictureValue =  returnValue[3];
-    QString name =  pictureValue[1].toString();
+    QString name =  userValue["picture"];
+
     if(name != "")
     {
+
         QSettings settings("Letux", "HoruxCardDesigner", this);
 
         QString host = settings.value("horux", "localhost").toString();
         QString path = settings.value("path", "").toString();
         bool ssl = settings.value("ssl", "").toBool();
 
-        pictureBuffer.reset();
+        pictureBuffer.close();
+        pictureBuffer.setData(QByteArray());
+        pictureBuffer.open(QBuffer::ReadWrite);
 
         pictureHttp.setHost(host, ssl ? QHttp::ConnectionModeHttps : QHttp::ConnectionModeHttp );
         pictureHttp.get(path + "/pictures/" + name, &pictureBuffer);
     }
     else
     {
-        pictureBuffer.reset();
+        pictureBuffer.close();
+        pictureBuffer.setData(QByteArray());
+        pictureBuffer.open(QBuffer::ReadWrite);
         waiting->hide();
     }
 
@@ -283,6 +293,7 @@ void HoruxDesigner::httpRequestDone ( bool error )
    {
      QMessageBox::information(this, tr("Picture error"),tr("Not able to load the user picture"));
    }
+
 }
 
  void HoruxDesigner::setCurrentFile(const QString &fileName)
@@ -480,9 +491,11 @@ void HoruxDesigner::printSetup()
 
 void HoruxDesigner::printPreview()
 {
+    scene->clearSelection ();
+
     QPointF cardPos = scene->getCardItem()->pos();
 
-    scene->getCardItem()->setPrintingMode(true);
+    scene->getCardItem()->setPrintingMode(true, pictureBuffer, userValue);
     scene->getCardItem()->setPos(0,0);
     sceneScaleChanged("100%");
     QRectF cardRect = scene->getCardItem()->boundingRect();
@@ -496,7 +509,7 @@ void HoruxDesigner::printPreview()
 
     PrintPreview dlg(pixmap, this);
 
-    scene->getCardItem()->setPrintingMode( false );
+    scene->getCardItem()->setPrintingMode( false, pictureBuffer, userValue );
     scene->getCardItem()->setPos(cardPos);
     sceneScaleChanged(sceneScaleCombo->currentText());
 
@@ -512,6 +525,8 @@ void HoruxDesigner::printPreview()
 
 void HoruxDesigner::print()
 {
+    scene->clearSelection ();
+
     printer->setPaperSize(scene->getCardItem()->getSizeMm(),QPrinter::Millimeter);
     printer->setPageMargins(0,0,0,0,QPrinter::Millimeter);
 
@@ -519,7 +534,7 @@ void HoruxDesigner::print()
 
     if (QPrintDialog(printer).exec() == QDialog::Accepted)
     {
-         scene->getCardItem()->setPrintingMode( true );
+         scene->getCardItem()->setPrintingMode( true, pictureBuffer, userValue );
          scene->getCardItem()->setPos(0,0);
          sceneScaleChanged("100%");
 
@@ -530,7 +545,7 @@ void HoruxDesigner::print()
          painter.setRenderHint(QPainter::Antialiasing);
          ui->graphicsView->render(&painter, printer->pageRect(), cardRect.toRect(), Qt::KeepAspectRatio );
 
-         scene->getCardItem()->setPrintingMode( false );
+         scene->getCardItem()->setPrintingMode( false, pictureBuffer, userValue );
          scene->getCardItem()->setPos(cardPos);
          sceneScaleChanged(sceneScaleCombo->currentText());
     }

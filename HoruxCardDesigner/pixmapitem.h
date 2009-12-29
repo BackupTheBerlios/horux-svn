@@ -24,7 +24,7 @@ public:
      int type() const
          { return Type; }
 
-     void setPrintingMode(bool printing);
+     void setPrintingMode(bool printing, QBuffer &picture);
 
 public slots:
     void setPixmapFile(QString pixmapFile);

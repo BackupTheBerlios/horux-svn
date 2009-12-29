@@ -1,10 +1,10 @@
 #ifndef DIAGRAMTEXTITEM_H
  #define DIAGRAMTEXTITEM_H
 
- #include <QGraphicsTextItem>
- #include <QPen>
+#include <QGraphicsTextItem>
+#include <QPen>
 #include <QDomElement>
- #include "confpage.h"
+#include "confpage.h"
 
  class QFocusEvent;
  class QGraphicsItem;
@@ -29,7 +29,7 @@
      int type() const
          { return Type; }
 
-     void setPrintingMode(bool printing);
+     void setPrintingMode(bool printing, QMap<QString, QString>userData);
 
  signals:
      void lostFocus(CardTextItem *item);
@@ -59,6 +59,7 @@ public:
     int alignment;
     int source;
     bool isPrinting;
+    QString text;
 
  };
 

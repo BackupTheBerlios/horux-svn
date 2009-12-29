@@ -7,6 +7,7 @@
 #include <QBuffer>
 #include <QMessageBox>
 #include <QtSoapHttpTransport>
+#include <QMap>
 
 #include "cardscene.h"
 #include "confpage.h"
@@ -101,6 +102,7 @@ private:
 
      QHttp pictureHttp;
      QBuffer pictureBuffer;
+     QMap<QString, QString> userValue;
 };
 
 #endif // HORUXDESIGNER_H

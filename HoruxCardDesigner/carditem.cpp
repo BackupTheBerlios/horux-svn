@@ -24,7 +24,7 @@ CardItem::CardItem( Size size,  Format format, QGraphicsItem * parent) : QGraphi
     this->setCacheMode(QGraphicsItem::ItemCoordinateCache);
 }
 
-void CardItem::setPrintingMode(bool printing)
+void CardItem::setPrintingMode(bool printing, QBuffer &picture, QMap<QString, QString>userData)
 {
     isPrinting = printing;
     update();
@@ -36,13 +36,13 @@ void CardItem::setPrintingMode(bool printing)
             case QGraphicsItem::UserType+3: //text
                 {
                     CardTextItem *textItem = qgraphicsitem_cast<CardTextItem *>(item);
-                    textItem->setPrintingMode(printing);
+                    textItem->setPrintingMode(printing, userData);
                 }
                 break;
             case QGraphicsItem::UserType+4: //Pixmap
                 {
                     PixmapItem *pixmapItem = qgraphicsitem_cast<PixmapItem *>(item);
-                    pixmapItem->setPrintingMode( printing );
+                    pixmapItem->setPrintingMode( printing, picture );
                 }
                 break;
         }

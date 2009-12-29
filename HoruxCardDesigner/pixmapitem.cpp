@@ -28,9 +28,28 @@ PixmapItem::PixmapItem(QGraphicsItem *parent) : QGraphicsPixmapItem(parent)
     isPrinting = false;
 }
 
-void PixmapItem::setPrintingMode(bool printing)
+void PixmapItem::setPrintingMode(bool printing, QBuffer &picture)
 {
     isPrinting = printing;
+
+    // From Horux
+    if(source == 1 && printing)
+    {
+        qDebug() << picture.size();
+        setHoruxPixmap(picture.data());
+    }
+
+    if(source == 1 && !printing)
+    {
+        QSettings settings("Letux", "HoruxCardDesigner", this);
+
+        QString host = settings.value("horux", "localhost").toString();
+        QString path = settings.value("path", "").toString();
+        bool ssl = settings.value("ssl", "").toBool();
+        pictureBuffer.reset();
+        pictureHttp.setHost(host, ssl ? QHttp::ConnectionModeHttps : QHttp::ConnectionModeHttp );
+        pictureHttp.get(path + "/pictures/unknown.jpg", &pictureBuffer);
+    }
 }
 
 QVariant PixmapItem::itemChange(GraphicsItemChange change,
@@ -148,9 +167,16 @@ QDomElement PixmapItem::getXmlItem(QDomDocument xml )
 
 void PixmapItem::setHoruxPixmap(QByteArray pict)
 {
-    pHorux.loadFromData(pict);
+    if(pict.size() > 0)
+    {
+        pHorux.loadFromData(pict);
+        pHorux = pHorux.scaledToHeight(size.height(),Qt::SmoothTransformation);
 
-    pHorux = pHorux.scaledToWidth(size.width(),Qt::SmoothTransformation);
+    }
+    else
+    {
+        pHorux = pHorux.scaledToHeight(0,Qt::SmoothTransformation);
+    }
 
     setPixmap(pHorux);
     update();
@@ -299,6 +325,8 @@ void PixmapItem::leftChanged(const QString &left)
 
 void PixmapItem::httpRequestDone ( bool  )
 {
-    spinner->deleteLater();
+    if(spinner)
+        spinner->deleteLater();
+    spinner = 0;
     setHoruxPixmap(pictureBuffer.data());
 }
