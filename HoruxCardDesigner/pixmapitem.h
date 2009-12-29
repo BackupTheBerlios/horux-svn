@@ -24,6 +24,8 @@ public:
      int type() const
          { return Type; }
 
+     void setPrintingMode(bool printing);
+
 public slots:
     void setPixmapFile(QString pixmapFile);
     void setName(const QString &n);
@@ -37,6 +39,9 @@ public slots:
 private slots:
     void httpRequestDone ( bool error );
 
+ protected:
+     QVariant itemChange(GraphicsItemChange change, const QVariant &value);
+
 public:
      QString file;
      QString name;
@@ -44,6 +49,7 @@ public:
      QPixmap pHorux;
      QSize size;
      QGraphicsProxyWidget *spinner;
+     bool isPrinting;
 
 private:
      QHttp pictureHttp;

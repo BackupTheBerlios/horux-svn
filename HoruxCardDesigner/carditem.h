@@ -32,7 +32,7 @@ public:
     bool isViewGrid(){ return isGrid;}
     bool isAlign(){ return isGridAlign;}
     int getGridSize(){ return gridSize;}
-
+    void setPrintingMode(bool printing);
     void reset();
 
 public slots:

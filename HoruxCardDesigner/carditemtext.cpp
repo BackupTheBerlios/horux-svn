@@ -1,6 +1,7 @@
 #include <QtGui>
 #include "carditemtext.h"
 #include "cardscene.h"
+#include "carditem.h"
 
  CardTextItem::CardTextItem(QGraphicsItem *parent, QGraphicsScene *scene)
      : QGraphicsTextItem(parent, scene)
@@ -12,7 +13,14 @@
      name = "";
      source = 0;
      alignment = 0;
+
+     isPrinting = false;
  }
+
+void CardTextItem::setPrintingMode(bool printing)
+{
+}
+
 
 void CardTextItem::loadText(QDomElement text )
 {
@@ -220,9 +228,67 @@ void CardTextItem::leftChanged(const QString &left)
  QVariant CardTextItem::itemChange(GraphicsItemChange change,
                       const QVariant &value)
  {
-     if (change == QGraphicsItem::ItemSelectedHasChanged)
+    if (change == ItemPositionChange)
+    {
+        // value is the new position.
+        QPointF newPos = value.toPointF();
+        QRectF rect = parentItem()->boundingRect();
+
+        rect.moveLeft(boundingRect().width()*3/4*-1);
+        rect.setWidth(rect.width() + boundingRect().width()*2/4 );
+
+        rect.moveTop(boundingRect().height()*3/4*-1);
+        rect.setHeight(rect.height() + boundingRect().height()*2/4 );
+
+        CardItem *card = qgraphicsitem_cast<CardItem *>(parentItem());
+
+        if (!rect.contains(newPos))
+        {
+            // Keep the item inside the scene rect.
+            int newX = (int)qMin(rect.right(), qMax(newPos.x(), rect.left()));
+            int newY = (int)qMin(rect.bottom(), qMax(newPos.y(), rect.top()));
+
+            
+
+            if(card->isAlign())
+            {
+                int gridSize = card->getGridSize();
+                newX = (newX/(5*gridSize))*(5*gridSize);
+                newY = (newY/(5*gridSize))*(5*gridSize);
+            }
+
+            newPos.setX(newX);
+            newPos.setY(newY);
+            return newPos;
+        }
+        else
+        {
+            int newX =  newPos.x();
+            int newY = newPos.y();
+
+            if(card->isAlign())
+            {
+                int gridSize = card->getGridSize();
+                newX = newPos.x()/(5*gridSize);
+                newX = newX * (5*gridSize);
+                newY = newPos.y()/(5*gridSize);
+                newY = newY*(5*gridSize);
+
+            }
+
+            newPos.setX(newX);
+            newPos.setY(newY);
+            return newPos;
+
+        }
+    }
+
+    if (change == QGraphicsItem::ItemSelectedHasChanged)
+    {
          emit selectedChange(this);
-     return value;
+    }
+
+    return QGraphicsItem::itemChange(change, value);
  }
 
  void CardTextItem::focusOutEvent(QFocusEvent *event)

@@ -263,7 +263,7 @@ void HoruxDesigner::readSoapResponse()
         xml = currenFile.readAll();
         scene->loadScene(xml);
         currenFile.close();
-
+        selectionChanged();
         setWindowTitle("Horux Card Designer - " + currenFile.fileName());
 
      }
@@ -291,7 +291,7 @@ void HoruxDesigner::open()
         xml = data.readAll();
         scene->loadScene(xml);
         currenFile.close();
-
+        selectionChanged();
         setWindowTitle("Horux Card Designer - " + currenFile.fileName());
      }
 }
@@ -399,7 +399,7 @@ void HoruxDesigner::printPreview()
 {
     QPointF cardPos = scene->getCardItem()->pos();
 
-    scene->getCardItem()->isPrinting = true;
+    scene->getCardItem()->setPrintingMode(true);
     scene->getCardItem()->setPos(0,0);
     sceneScaleChanged("100%");
     QRectF cardRect = scene->getCardItem()->boundingRect();
@@ -413,7 +413,7 @@ void HoruxDesigner::printPreview()
 
     PrintPreview dlg(pixmap, this);
 
-    scene->getCardItem()->isPrinting = false;
+    scene->getCardItem()->setPrintingMode( false );
     scene->getCardItem()->setPos(cardPos);
     sceneScaleChanged(sceneScaleCombo->currentText());
 
@@ -436,7 +436,7 @@ void HoruxDesigner::print()
 
     if (QPrintDialog(printer).exec() == QDialog::Accepted)
     {
-         scene->getCardItem()->isPrinting = true;
+         scene->getCardItem()->setPrintingMode( true );
          scene->getCardItem()->setPos(0,0);
          sceneScaleChanged("100%");
 
@@ -447,7 +447,7 @@ void HoruxDesigner::print()
          painter.setRenderHint(QPainter::Antialiasing);
          ui->graphicsView->render(&painter, printer->pageRect(), cardRect.toRect(), Qt::KeepAspectRatio );
 
-         scene->getCardItem()->isPrinting = false;
+         scene->getCardItem()->setPrintingMode( false );
          scene->getCardItem()->setPos(cardPos);
          sceneScaleChanged(sceneScaleCombo->currentText());
     }
@@ -565,23 +565,21 @@ void HoruxDesigner::setParamView(QGraphicsItem *item)
                         connect(cardPage->gridDraw, SIGNAL(currentIndexChanged ( int )), card, SLOT(viewGrid(int)));
                         connect(cardPage->gridSize, SIGNAL(valueChanged  ( int )), card, SLOT(setGridSize(int)));
                         connect(cardPage->gridAlign, SIGNAL(currentIndexChanged ( int )), card, SLOT(alignGrid(int)));
-
-
-                        cardPage->sizeCb->setCurrentIndex(card->getSize());
-                        cardPage->orientation->setCurrentIndex(card->getFormat());
-
-                        if (card->bkgColor.isValid()) {
-                             cardPage->color = card->bkgColor;
-                             cardPage->bkgColor->setText(card->bkgColor.name());
-                             cardPage->bkgColor->setStyleSheet("background-color: " + card->bkgColor.name() + ";");
-                         }
-
-                        cardPage->bkgPicture->setText(card->bkgFile);
-
-                        cardPage->gridAlign->setCurrentIndex((int)card->isGridAlign);
-                        cardPage->gridDraw->setCurrentIndex((int)card->isGrid);
-                        cardPage->gridSize->setValue(card->gridSize);
                     }
+
+                    cardPage->sizeCb->setCurrentIndex(card->getSize());
+                    cardPage->orientation->setCurrentIndex(card->getFormat());
+
+                    if (card->bkgColor.isValid()) {
+                         cardPage->color = card->bkgColor;
+                         cardPage->bkgColor->setText(card->bkgColor.name());
+                         cardPage->bkgColor->setStyleSheet("background-color: " + card->bkgColor.name() + ";");
+                     }
+
+                    cardPage->bkgPicture->setText(card->bkgFile);
+                    cardPage->gridAlign->setCurrentIndex((int)card->isGridAlign);
+                    cardPage->gridDraw->setCurrentIndex((int)card->isGrid);
+                    cardPage->gridSize->setValue(card->gridSize);
 
                     if(textPage)
                         textPage->hide();

@@ -1,4 +1,5 @@
 #include "pixmapitem.h"
+#include "carditem.h"
 #include <QDebug>
 #include <QGraphicsWidget>
 #include <QLabel>
@@ -21,8 +22,75 @@ PixmapItem::PixmapItem(QGraphicsItem *parent) : QGraphicsPixmapItem(parent)
 
     spinner = NULL;
 
-     pictureBuffer.open(QBuffer::ReadWrite);
-     connect(&pictureHttp, SIGNAL(done(bool)), this, SLOT(httpRequestDone(bool)));
+    pictureBuffer.open(QBuffer::ReadWrite);
+    connect(&pictureHttp, SIGNAL(done(bool)), this, SLOT(httpRequestDone(bool)));
+
+    isPrinting = false;
+}
+
+void PixmapItem::setPrintingMode(bool printing)
+{
+}
+
+QVariant PixmapItem::itemChange(GraphicsItemChange change,
+                  const QVariant &value)
+{
+    if (change == ItemPositionChange)
+    {
+        // value is the new position.
+        QPointF newPos = value.toPointF();
+        QRectF rect = parentItem()->boundingRect();
+
+        rect.moveLeft(boundingRect().width()*3/4*-1);
+        rect.setWidth(rect.width() + boundingRect().width()*2/4 );
+
+        rect.moveTop(boundingRect().height()*3/4*-1);
+        rect.setHeight(rect.height() + boundingRect().height()*2/4 );
+
+        CardItem *card = qgraphicsitem_cast<CardItem *>(parentItem());
+
+        if (!rect.contains(newPos))
+        {
+            // Keep the item inside the scene rect.
+            int newX = (int)qMin(rect.right(), qMax(newPos.x(), rect.left()));
+            int newY = (int)qMin(rect.bottom(), qMax(newPos.y(), rect.top()));
+
+
+
+            if(card->isAlign())
+            {
+                int gridSize = card->getGridSize();
+                newX = (newX/(5*gridSize))*(5*gridSize);
+                newY = (newY/(5*gridSize))*(5*gridSize);
+            }
+
+            newPos.setX(newX);
+            newPos.setY(newY);
+            return newPos;
+        }
+        else
+        {
+            int newX =  newPos.x();
+            int newY = newPos.y();
+
+            if(card->isAlign())
+            {
+                int gridSize = card->getGridSize();
+                newX = newPos.x()/(5*gridSize);
+                newX = newX * (5*gridSize);
+                newY = newPos.y()/(5*gridSize);
+                newY = newY*(5*gridSize);
+
+            }
+
+            newPos.setX(newX);
+            newPos.setY(newY);
+            return newPos;
+
+        }
+    }
+
+    return QGraphicsItem::itemChange(change, value);
 }
 
 QDomElement PixmapItem::getXmlItem(QDomDocument xml )
@@ -40,10 +108,15 @@ QDomElement PixmapItem::getXmlItem(QDomDocument xml )
     textItem.appendChild(newElement);
 
     newElement = xml.createElement( "file");
-    if(file != "")
+    if(file != "" && source == 0)
         text =  xml.createTextNode(file);
     else
-        text =  xml.createTextNode(":/images/gadu.png");
+    {
+        if(source == 0)
+            text =  xml.createTextNode(":/images/gadu.png");
+        else
+            text = xml.createTextNode("");
+    }
     newElement.appendChild(text);
     textItem.appendChild(newElement);
 
@@ -84,6 +157,8 @@ void PixmapItem::setHoruxPixmap(QByteArray pict)
 
 void PixmapItem::setPixmapFile(QString pixmapFile)
 {
+    if(source==1) return;
+
     file = pixmapFile;
     setPixmap(QPixmap(file));
     update();
@@ -221,7 +296,7 @@ void PixmapItem::leftChanged(const QString &left)
     setPos(p);
 }
 
-void PixmapItem::httpRequestDone ( bool error )
+void PixmapItem::httpRequestDone ( bool  )
 {
     spinner->deleteLater();
     setHoruxPixmap(pictureBuffer.data());

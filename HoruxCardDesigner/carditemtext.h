@@ -29,6 +29,8 @@
      int type() const
          { return Type; }
 
+     void setPrintingMode(bool printing);
+
  signals:
      void lostFocus(CardTextItem *item);
      void selectedChange(QGraphicsItem *item);
@@ -56,7 +58,7 @@ public:
     QColor color;
     int alignment;
     int source;
-
+    bool isPrinting;
 
  };
 

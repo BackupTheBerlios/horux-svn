@@ -20,6 +20,34 @@ CardItem::CardItem( Size size,  Format format, QGraphicsItem * parent) : QGraphi
     setFlag(QGraphicsItem::ItemClipsChildrenToShape, true);
 
     isPrinting = false;
+
+    this->setCacheMode(QGraphicsItem::ItemCoordinateCache);
+}
+
+void CardItem::setPrintingMode(bool printing)
+{
+    isPrinting = printing;
+    update();
+
+    foreach(QGraphicsItem *item, this->childItems())
+    {
+        switch(item->type())
+        {
+            case QGraphicsItem::UserType+3: //text
+                {
+                    CardTextItem *textItem = qgraphicsitem_cast<CardTextItem *>(item);
+                    textItem->setPrintingMode(printing);
+                }
+                break;
+            case QGraphicsItem::UserType+4: //Pixmap
+                {
+                    PixmapItem *pixmapItem = qgraphicsitem_cast<PixmapItem *>(item);
+                    pixmapItem->setPrintingMode( printing );
+                }
+                break;
+        }
+    }
+
 }
 
 void CardItem::loadCard(QDomElement card )
@@ -45,11 +73,11 @@ void CardItem::loadCard(QDomElement card )
         }
         if(node.toElement().tagName() == "isGrid")
         {
-            gridSize = (bool)node.toElement().text().toInt();
+            isGrid = (bool)node.toElement().text().toInt();
         }
         if(node.toElement().tagName() == "isGridAlign")
         {
-            gridSize = (bool)node.toElement().text().toInt();
+            isGridAlign = (bool)node.toElement().text().toInt();
         }
         if(node.toElement().tagName() == "posX")
         {
@@ -86,8 +114,8 @@ void CardItem::loadCard(QDomElement card )
             PixmapItem *pixmapItem = new PixmapItem(this);
             pixmapItem->loadPixmap( node.toElement() );
 
-            connect(pixmapItem, SIGNAL(selectedChange(QGraphicsItem *)),
-                   scene (), SIGNAL(itemSelected(QGraphicsItem *)));
+            /*connect(pixmapItem, SIGNAL(selectedChange(QGraphicsItem *)),
+                   scene (), SIGNAL(itemSelected(QGraphicsItem *)));*/
         }
 
         node = node.nextSibling();
@@ -182,6 +210,8 @@ QSizeF CardItem::getSizeMm()
             return QSizeF(83.90,52.10);
             break;
     }
+
+    return QSizeF(85.6,53.98);
 }
 
 void CardItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
@@ -190,6 +220,17 @@ void CardItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
 
     float ratio;
     int width = 0;
+
+    if(isPrinting)
+    {
+        painter->setPen(Qt::NoPen);
+    }
+    else
+    {
+        QPen pen;  // creates a default pen
+        pen.setWidthF(1);
+        painter->setPen(pen);
+    }
 
     switch(cardSize)
     {
@@ -235,26 +276,19 @@ void CardItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
 
     }
 
-    if(isPrinting)
-    {
-        painter->setPen(Qt::NoPen);
-    }
-    else
-    {
-        QPen pen;  // creates a default pen
-        pen.setWidthF(0.1);
-        painter->setPen(pen);
-    }
 
-    painter->setBrush(bkgBrush);
+   painter->setBrush(bkgBrush);
 
     painter->drawPath(path);
     setPath(path);
 
-    if(isGrid)
+    if(isGrid && !isPrinting)
     {
+        if( gridSize == 0 ) gridSize = 1;
+
         if(cardFormat == L)
         {
+
             for(int x=gridSize*5; x<195*ratio; x+=gridSize*5)
             {
                 for(int y=gridSize*5; y<195; y+=gridSize*5)
@@ -274,6 +308,8 @@ void CardItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
             }
         }
     }
+
+
 
     if(!isPrinting)
         QGraphicsPathItem::paint(painter, option, widget);

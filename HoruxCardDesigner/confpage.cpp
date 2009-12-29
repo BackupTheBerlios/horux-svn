@@ -136,7 +136,7 @@ void PixmapPage::setSource(int s)
     }
 }
 
-void PixmapPage::httpRequestDone ( bool error )
+void PixmapPage::httpRequestDone ( bool  )
 {
     emit newPicture( pictureBuffer.data() );
 }
