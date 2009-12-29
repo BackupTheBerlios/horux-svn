@@ -44,7 +44,7 @@ void CardTextItem::setPrintingMode(bool printing, QMap<QString, QString>userData
 
         if(name == "Department")
         {
-            setPlainText(userData["department_id"]);
+            setPlainText(userData["department"]);
         }
 
         if(name == "Pin code")
