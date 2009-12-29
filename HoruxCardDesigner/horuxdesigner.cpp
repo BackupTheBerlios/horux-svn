@@ -527,6 +527,8 @@ void HoruxDesigner::print()
 {
     scene->clearSelection ();
 
+    printer->setOrientation(( QPrinter::Orientation)scene->getCardItem()->getFormat());
+
     printer->setPaperSize(scene->getCardItem()->getSizeMm(),QPrinter::Millimeter);
     printer->setPageMargins(0,0,0,0,QPrinter::Millimeter);
 
