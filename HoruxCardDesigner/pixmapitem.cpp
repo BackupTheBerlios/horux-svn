@@ -292,6 +292,9 @@ void PixmapItem::setWidth(const QString &w)
     p = p.scaledToWidth(w.toInt(), Qt::SmoothTransformation);
     setPixmap(p);
     update();
+
+    size.setHeight(boundingRect().height());
+
 }
 
 void PixmapItem::setHeight(const QString &h)
@@ -305,8 +308,11 @@ void PixmapItem::setHeight(const QString &h)
     size.setHeight(h.toInt());
 
     p = p.scaledToHeight(h.toInt(), Qt::SmoothTransformation);
+
     setPixmap(p);
     update();
+
+    size.setWidth(boundingRect().width());
 }
 
 void PixmapItem::topChanged(const QString &top)

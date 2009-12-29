@@ -131,7 +131,9 @@ void PixmapPage::setSource(int s)
         QString path = settings.value("path", "").toString();
         bool ssl = settings.value("ssl", "").toBool();
 
-        pictureBuffer.reset();
+        pictureBuffer.close();
+        pictureBuffer.setData(QByteArray());
+        pictureBuffer.open(QBuffer::ReadWrite);
 
         pictureHttp.setHost(host, ssl ? QHttp::ConnectionModeHttps : QHttp::ConnectionModeHttp );
         pictureHttp.get(path + "/pictures/unknown.jpg", &pictureBuffer);
