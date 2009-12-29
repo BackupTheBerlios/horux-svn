@@ -1,6 +1,5 @@
 <RCC>
     <qresource prefix="/" >
-        <file>CR-80.svg</file>
         <file>images/textpointer.png</file>
         <file>images/bold.png</file>
         <file>images/bringtofront.png</file>
@@ -18,5 +17,6 @@
         <file>images/viewmag.png</file>
         <file>images/gadu.png</file>
         <file>images/spinner.gif</file>
+        <file>images/splash.jpg</file>
     </qresource>
 </RCC>
