@@ -8,6 +8,7 @@
  {
      setFlag(QGraphicsItem::ItemIsMovable);
      setFlag(QGraphicsItem::ItemIsSelectable);
+     setFlag(QGraphicsItem::ItemSendsGeometryChanges);
 
      rotation = 0;
      name = "";
