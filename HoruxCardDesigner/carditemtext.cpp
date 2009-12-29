@@ -8,7 +8,10 @@
  {
      setFlag(QGraphicsItem::ItemIsMovable);
      setFlag(QGraphicsItem::ItemIsSelectable);
+
+#if QT_VERSION >= 0x040600
      setFlag(QGraphicsItem::ItemSendsGeometryChanges);
+ #endif
 
      rotation = 0;
      name = "";

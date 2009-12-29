@@ -13,7 +13,10 @@ PixmapItem::PixmapItem(QGraphicsItem *parent) : QGraphicsPixmapItem(parent)
     setZValue(1000.0);
     setFlag(QGraphicsItem::ItemIsMovable);
     setFlag(QGraphicsItem::ItemIsSelectable);
+
+#if QT_VERSION >= 0x040600
     setFlag(QGraphicsItem::ItemSendsGeometryChanges);
+#endif
 
     file = "";
     name = "";
