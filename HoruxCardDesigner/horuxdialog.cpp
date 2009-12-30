@@ -1,6 +1,7 @@
 #include "horuxdialog.h"
 #include "ui_horuxdialog.h"
 #include <QMessageBox>
+ #include <QNetworkRequest>
 
 HoruxDialog::HoruxDialog(QWidget *parent) :
         QDialog(parent),
@@ -87,7 +88,8 @@ void HoruxDialog::onTest()
 
     transport.setHost(m_ui->url->text(), getSSL());
 
-    transport.submitRequest(message, m_ui->path->text()+"/index.php?soap=horux");
+
+    transport.submitRequest(message, m_ui->path->text()+"/index.php?soap=horux&password=" + m_ui->username->text() + "&username=" + m_ui->password->text() );
 
 }
 

@@ -39,7 +39,6 @@ void PixmapItem::setPrintingMode(bool printing, QBuffer &picture)
     // From Horux
     if(source == 1 && printing)
     {
-        qDebug() << picture.size();
         setHoruxPixmap(picture.data());
     }
 
