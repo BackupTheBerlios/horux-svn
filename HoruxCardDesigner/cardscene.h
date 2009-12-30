@@ -15,10 +15,10 @@ class CardScene : public QGraphicsScene
 public:
     enum Mode { InsertPicture, InsertText, MoveItem };
 
-     QFont font() const
-         { return defaultFont; }
-     QColor textColor() const
-         { return myTextColor; }
+    QFont font() const
+    { return defaultFont; }
+    QColor textColor() const
+    { return myTextColor; }
 
     CardScene(QObject *parent = 0);
     CardItem *getCardItem();
@@ -27,30 +27,30 @@ public:
     void loadScene(QString xml);
 
 public slots:
-     void setMode(Mode mode);
-     void editorLostFocus(CardTextItem *item);
+    void setMode(Mode mode);
+    void editorLostFocus(CardTextItem *item);
 
 signals:
-     void itemInserted(QGraphicsItem *item);
-     void textInserted(QGraphicsTextItem *item);
-     void itemSelected(QGraphicsItem *item);
-     void itemMoved(QGraphicsItem *item);
+    void itemInserted(QGraphicsItem *item);
+    void textInserted(QGraphicsTextItem *item);
+    void itemSelected(QGraphicsItem *item);
+    void itemMoved(QGraphicsItem *item);
 
 protected:
-     void mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent);
-     void mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent);
-     void mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent);
+    void mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent);
+    void mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent);
+    void mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent);
 
 private:
-     bool isItemChange(int type);
+    bool isItemChange(int type);
 
 private:
-     Mode myMode;
-     CardTextItem *textItem;
-     PixmapItem * pixmapItem;
-     CardItem *card;
-     QFont defaultFont;
-     QColor myTextColor;
+    Mode myMode;
+    CardTextItem *textItem;
+    PixmapItem * pixmapItem;
+    CardItem *card;
+    QFont defaultFont;
+    QColor myTextColor;
 };
 
 #endif // CARDSCENE_H

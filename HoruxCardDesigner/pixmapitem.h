@@ -21,10 +21,10 @@ public:
 
     QDomElement getXmlItem(QDomDocument xml );
 
-     int type() const
-         { return Type; }
+    int type() const
+    { return Type; }
 
-     void setPrintingMode(bool printing, QBuffer &picture);
+    void setPrintingMode(bool printing, QBuffer &picture);
 
 public slots:
     void setPixmapFile(QString pixmapFile);
@@ -38,23 +38,23 @@ public slots:
 
 private slots:
     void httpRequestDone ( bool error );
-     void sslErrors ( const QList<QSslError> & errors );
+    void sslErrors ( const QList<QSslError> & errors );
 
- protected:
-     QVariant itemChange(GraphicsItemChange change, const QVariant &value);
+protected:
+    QVariant itemChange(GraphicsItemChange change, const QVariant &value);
 
 public:
-     QString file;
-     QString name;
-     int source;
-     QPixmap pHorux;
-     QSize size;
-     QGraphicsProxyWidget *spinner;
-     bool isPrinting;
+    QString file;
+    QString name;
+    int source;
+    QPixmap pHorux;
+    QSize size;
+    QGraphicsProxyWidget *spinner;
+    bool isPrinting;
 
 private:
-     QHttp pictureHttp;
-     QBuffer pictureBuffer;
+    QHttp pictureHttp;
+    QBuffer pictureBuffer;
 };
 
 #endif // PIXMAPITEM_H

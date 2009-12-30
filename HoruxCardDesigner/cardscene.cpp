@@ -56,34 +56,34 @@ void CardScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
     switch (myMode)
     {
-        case InsertText:
-             textItem = new CardTextItem(card);
-             textItem->setFont(defaultFont);
-             textItem->setTextInteractionFlags(Qt::TextEditorInteraction);
-             textItem->setZValue(1000.0);
+    case InsertText:
+        textItem = new CardTextItem(card);
+        textItem->setFont(defaultFont);
+        textItem->setTextInteractionFlags(Qt::TextEditorInteraction);
+        textItem->setZValue(1000.0);
 
-             connect(textItem, SIGNAL(lostFocus(CardTextItem *)),
-                     this, SLOT(editorLostFocus(CardTextItem *)));
+        connect(textItem, SIGNAL(lostFocus(CardTextItem *)),
+                this, SLOT(editorLostFocus(CardTextItem *)));
 
-             connect(textItem, SIGNAL(selectedChange(QGraphicsItem *)),
-                     this, SIGNAL(itemSelected(QGraphicsItem *)));
+        connect(textItem, SIGNAL(selectedChange(QGraphicsItem *)),
+                this, SIGNAL(itemSelected(QGraphicsItem *)));
 
-             textItem->setDefaultTextColor(myTextColor);
+        textItem->setDefaultTextColor(myTextColor);
 
-             textItem->setPos( textItem->mapFromScene(mouseEvent->scenePos()) );
+        textItem->setPos( textItem->mapFromScene(mouseEvent->scenePos()) );
 
-             emit textInserted(textItem);
-             break;
-        case InsertPicture:
-             {
-                 pixmapItem = new PixmapItem(card);
-                 pixmapItem->setPos( pixmapItem->mapFromScene(mouseEvent->scenePos()) );
+        emit textInserted(textItem);
+        break;
+    case InsertPicture:
+        {
+            pixmapItem = new PixmapItem(card);
+            pixmapItem->setPos( pixmapItem->mapFromScene(mouseEvent->scenePos()) );
 
-                 emit itemInserted(pixmapItem);
-             }
-             break;
-        default:
-         ;
+            emit itemInserted(pixmapItem);
+        }
+        break;
+    default:
+        ;
     }
 
     QGraphicsScene::mousePressEvent(mouseEvent);
@@ -128,27 +128,27 @@ void CardScene::setMode(Mode mode)
 
 void CardScene::editorLostFocus(CardTextItem *item)
 {
-     QTextCursor cursor = item->textCursor();
-     cursor.clearSelection();
-     item->setTextCursor(cursor);
+    QTextCursor cursor = item->textCursor();
+    cursor.clearSelection();
+    item->setTextCursor(cursor);
 
-     if (item->toPlainText().isEmpty()) {
-         removeItem(item);
-         item->deleteLater();
-     }
+    if (item->toPlainText().isEmpty()) {
+        removeItem(item);
+        item->deleteLater();
+    }
 }
 
 
 bool CardScene::isItemChange(int type)
 {
-     foreach (QGraphicsItem *item, selectedItems()) {
-         if (item->type() == type)
-             return true;
-     }
-     return false;
+    foreach (QGraphicsItem *item, selectedItems()) {
+        if (item->type() == type)
+            return true;
+    }
+    return false;
 }
 
- void CardScene::setFont(const QFont &font)
- {
-     defaultFont = font;
- }
+void CardScene::setFont(const QFont &font)
+{
+    defaultFont = font;
+}

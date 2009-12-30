@@ -61,7 +61,7 @@ void PixmapItem::setPrintingMode(bool printing, QBuffer &picture)
 }
 
 QVariant PixmapItem::itemChange(GraphicsItemChange change,
-                  const QVariant &value)
+                                const QVariant &value)
 {
     if (change == ItemPositionChange)
     {

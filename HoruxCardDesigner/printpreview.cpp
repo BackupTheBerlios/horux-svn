@@ -2,8 +2,8 @@
 #include "ui_printpreview.h"
 
 PrintPreview::PrintPreview(QPixmap pix, QWidget *parent) :
-    QDialog(parent),
-    m_ui(new Ui::PrintPreview)
+        QDialog(parent),
+        m_ui(new Ui::PrintPreview)
 {
     m_ui->setupUi(this);
 

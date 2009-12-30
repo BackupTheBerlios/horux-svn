@@ -2,8 +2,8 @@
 #include "ui_horuxfields.h"
 
 HoruxFields::HoruxFields(QWidget *parent) :
-    QDialog(parent),
-    m_ui(new Ui::HoruxFields)
+        QDialog(parent),
+        m_ui(new Ui::HoruxFields)
 {
     m_ui->setupUi(this);
 }

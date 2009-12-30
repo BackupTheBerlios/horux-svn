@@ -23,8 +23,8 @@ public:
     void loadCard(QDomElement card );
 
 
-     int type() const
-         { return Type; }
+    int type() const
+    { return Type; }
 
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
@@ -54,7 +54,7 @@ private:
     QPixmap pix;
     QBrush bkgBrush;
 
- public:
+public:
     QColor bkgColor;
     QString bkgFile;
     bool isGrid;

@@ -14,7 +14,7 @@ class HoruxDialog : public QDialog {
     Q_OBJECT
     Q_DISABLE_COPY(HoruxDialog)
 public:
-    explicit HoruxDialog(QWidget *parent = 0);
+            explicit HoruxDialog(QWidget *parent = 0);
     virtual ~HoruxDialog();
 
     void setHorux(const QString url);

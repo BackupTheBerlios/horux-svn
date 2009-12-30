@@ -11,6 +11,7 @@ class HoruxFields : public QDialog {
     Q_OBJECT
     Q_DISABLE_COPY(HoruxFields)
 public:
+
     explicit HoruxFields(QWidget *parent = 0);
     virtual ~HoruxFields();
 

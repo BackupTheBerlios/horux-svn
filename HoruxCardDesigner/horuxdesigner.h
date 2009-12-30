@@ -33,49 +33,49 @@ public:
     void loadHoruxSoap(QSplashScreen *sc);
 
 private:
-     void createToolBox();
-     void initScene();
-     void createAction();
-     void createToolBar();
+    void createToolBox();
+    void initScene();
+    void createAction();
+    void createToolBar();
 
 
-     void setParamView(QGraphicsItem *item);
-     void setCurrentFile(const QString &fileName);
-     void updateRecentFileActions();
-     QString strippedName(const QString &fullFileName);
+    void setParamView(QGraphicsItem *item);
+    void setCurrentFile(const QString &fileName);
+    void updateRecentFileActions();
+    QString strippedName(const QString &fullFileName);
 
 private slots:
-     void buttonGroupClicked(int id);
-     void itemInserted(QGraphicsItem *item);
-     void textInserted(QGraphicsTextItem *item);
-     void itemSelected(QGraphicsItem *item);
-     void itemMoved(QGraphicsItem *);
-     void selectionChanged();
-     void sceneScaleChanged(const QString &scale);
-     void currentFontChanged(const QFont &font);
-     void fontSizeChanged(const QString &size);
-     void handleFontChange();
-     void deleteItem();
-     void bringToFront();
-     void sendToBack();
-     void newCard();
-     void printPreview();
-     void printSetup();
-     void print();
-     void exit();
-     void save();
-     void saveAs();
-     void setDatabase();
-     void open();
-     void openRecentFile();
-     void about();
+    void buttonGroupClicked(int id);
+    void itemInserted(QGraphicsItem *item);
+    void textInserted(QGraphicsTextItem *item);
+    void itemSelected(QGraphicsItem *item);
+    void itemMoved(QGraphicsItem *);
+    void selectionChanged();
+    void sceneScaleChanged(const QString &scale);
+    void currentFontChanged(const QFont &font);
+    void fontSizeChanged(const QString &size);
+    void handleFontChange();
+    void deleteItem();
+    void bringToFront();
+    void sendToBack();
+    void newCard();
+    void printPreview();
+    void printSetup();
+    void print();
+    void exit();
+    void save();
+    void saveAs();
+    void setDatabase();
+    void open();
+    void openRecentFile();
+    void about();
 
-     void readSoapResponse();
-     void readSoapResponseUser();
-     void userChanged(int);
-     void httpRequestDone ( bool error );
-     void sslErrors ( QNetworkReply * reply, const QList<QSslError> & errors );
-     void sslErrors ( const QList<QSslError> & errors );
+    void readSoapResponse();
+    void readSoapResponseUser();
+    void userChanged(int);
+    void httpRequestDone ( bool error );
+    void sslErrors ( QNetworkReply * reply, const QList<QSslError> & errors );
+    void sslErrors ( const QList<QSslError> & errors );
 
 
 protected:

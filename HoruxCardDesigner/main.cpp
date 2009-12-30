@@ -3,7 +3,7 @@
 #include <QSplashScreen>
 
 #if defined(Q_WS_WIN)
-    #include <windows.h>
+#include <windows.h>
 #endif
 
 int main(int argc, char *argv[])
@@ -17,11 +17,11 @@ int main(int argc, char *argv[])
     splash.showMessage(QObject::tr("Loading..."),Qt::AlignLeft, Qt::white);
     QApplication::processEvents();
 
-    #if defined(Q_WS_WIN)
-        Sleep(2000);
-    #else
-        sleep(2);
-    #endif
+#if defined(Q_WS_WIN)
+    Sleep(2000);
+#else
+    sleep(2);
+#endif
 
     HoruxDesigner w;
     w.loadHoruxSoap(&splash);

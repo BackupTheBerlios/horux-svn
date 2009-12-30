@@ -116,84 +116,84 @@ void HoruxDesigner::createToolBar()
     QIntValidator *validator = new QIntValidator(2, 64, this);
     fontSizeCombo->setValidator(validator);
     connect(fontSizeCombo, SIGNAL(currentIndexChanged(const QString &)),
-         this, SLOT(fontSizeChanged(const QString &)));
+            this, SLOT(fontSizeChanged(const QString &)));
 
 
     connect(fontCombo, SIGNAL(currentFontChanged(const QFont &)),
-         this, SLOT(currentFontChanged(const QFont &)));
+            this, SLOT(currentFontChanged(const QFont &)));
 
 
-     sceneScaleCombo = new QComboBox;
-     QStringList scales;
-     scales << tr("50%") << tr("75%") << tr("100%") << tr("125%") << tr("150%")<< tr("200%")<< tr("250%");
-     sceneScaleCombo->addItems(scales);
-     sceneScaleCombo->setCurrentIndex(2);
-     connect(sceneScaleCombo, SIGNAL(currentIndexChanged(const QString &)),
-             this, SLOT(sceneScaleChanged(const QString &)));
+    sceneScaleCombo = new QComboBox;
+    QStringList scales;
+    scales << tr("50%") << tr("75%") << tr("100%") << tr("125%") << tr("150%")<< tr("200%")<< tr("250%");
+    sceneScaleCombo->addItems(scales);
+    sceneScaleCombo->setCurrentIndex(2);
+    connect(sceneScaleCombo, SIGNAL(currentIndexChanged(const QString &)),
+            this, SLOT(sceneScaleChanged(const QString &)));
 
-     ui->toolBar->addWidget(fontCombo);
-     ui->toolBar->addWidget(fontSizeCombo);
-     ui->toolBar->addSeparator();
-     ui->toolBar->addWidget(sceneScaleCombo);
+    ui->toolBar->addWidget(fontCombo);
+    ui->toolBar->addWidget(fontSizeCombo);
+    ui->toolBar->addSeparator();
+    ui->toolBar->addWidget(sceneScaleCombo);
 
 }
 
 void HoruxDesigner::createAction()
 {
-     connect(ui->actionItalic, SIGNAL(triggered()),
-             this, SLOT(handleFontChange()));
+    connect(ui->actionItalic, SIGNAL(triggered()),
+            this, SLOT(handleFontChange()));
 
-     connect(ui->actionBold, SIGNAL(triggered()),
-             this, SLOT(handleFontChange()));
+    connect(ui->actionBold, SIGNAL(triggered()),
+            this, SLOT(handleFontChange()));
 
-     connect(ui->actionUnderline, SIGNAL(triggered()),
-             this, SLOT(handleFontChange()));
+    connect(ui->actionUnderline, SIGNAL(triggered()),
+            this, SLOT(handleFontChange()));
 
-     connect(ui->actionDelete, SIGNAL(triggered()),
-         this, SLOT(deleteItem()));
+    connect(ui->actionDelete, SIGNAL(triggered()),
+            this, SLOT(deleteItem()));
 
-     connect(ui->actionBring_to_front, SIGNAL(triggered()),
-             this, SLOT(bringToFront()));
+    connect(ui->actionBring_to_front, SIGNAL(triggered()),
+            this, SLOT(bringToFront()));
 
-     connect(ui->actionSend_to_back, SIGNAL(triggered()),
-             this, SLOT(sendToBack()));
+    connect(ui->actionSend_to_back, SIGNAL(triggered()),
+            this, SLOT(sendToBack()));
 
-     connect(ui->actionNew, SIGNAL(triggered()),
-             this, SLOT(newCard()));
+    connect(ui->actionNew, SIGNAL(triggered()),
+            this, SLOT(newCard()));
 
-     connect(ui->actionPrint_preview, SIGNAL(triggered()),
-             this, SLOT(printPreview()));
+    connect(ui->actionPrint_preview, SIGNAL(triggered()),
+            this, SLOT(printPreview()));
 
-     connect(ui->actionPrint, SIGNAL(triggered()),
-             this, SLOT(print()));
+    connect(ui->actionPrint, SIGNAL(triggered()),
+            this, SLOT(print()));
 
-     connect(ui->actionPrint_setup, SIGNAL(triggered()),
-             this, SLOT(printSetup()));
+    connect(ui->actionPrint_setup, SIGNAL(triggered()),
+            this, SLOT(printSetup()));
 
-     connect(ui->actionExit, SIGNAL(triggered()),
-             this, SLOT(exit()));
+    connect(ui->actionExit, SIGNAL(triggered()),
+            this, SLOT(exit()));
 
-     connect(ui->actionSave, SIGNAL(triggered()),
-             this, SLOT(save()));
+    connect(ui->actionSave, SIGNAL(triggered()),
+            this, SLOT(save()));
 
-     connect(ui->actionSave_as, SIGNAL(triggered()),
-             this, SLOT(saveAs()));
+    connect(ui->actionSave_as, SIGNAL(triggered()),
+            this, SLOT(saveAs()));
 
-     connect(ui->actionDatabase, SIGNAL(triggered()),
-             this, SLOT(setDatabase()));
+    connect(ui->actionDatabase, SIGNAL(triggered()),
+            this, SLOT(setDatabase()));
 
-     connect(ui->actionOpen, SIGNAL(triggered()),
-             this, SLOT(open()));
+    connect(ui->actionOpen, SIGNAL(triggered()),
+            this, SLOT(open()));
 
     connect(ui->actionAbout, SIGNAL(triggered()),
-             this, SLOT(about()));
+            this, SLOT(about()));
 
     // Recent files
     for (int i = 0; i < MaxRecentFiles; ++i) {
-     recentFileActs[i] = new QAction(this);
-     recentFileActs[i]->setVisible(false);
-     connect(recentFileActs[i], SIGNAL(triggered()),
-             this, SLOT(openRecentFile()));
+        recentFileActs[i] = new QAction(this);
+        recentFileActs[i]->setVisible(false);
+        connect(recentFileActs[i], SIGNAL(triggered()),
+                this, SLOT(openRecentFile()));
     }
 
     for (int i = 0; i < MaxRecentFiles; ++i)
@@ -209,19 +209,19 @@ void HoruxDesigner::initScene()
 {
     scene = new CardScene(this);
     connect(scene, SIGNAL(itemInserted(QGraphicsItem *)),
-             this, SLOT(itemInserted(QGraphicsItem *)));
+            this, SLOT(itemInserted(QGraphicsItem *)));
 
     connect(scene, SIGNAL(textInserted(QGraphicsTextItem *)),
-         this, SLOT(textInserted(QGraphicsTextItem *)));
+            this, SLOT(textInserted(QGraphicsTextItem *)));
 
     connect(scene, SIGNAL(itemSelected(QGraphicsItem *)),
-         this, SLOT(itemSelected(QGraphicsItem *)));
+            this, SLOT(itemSelected(QGraphicsItem *)));
 
     connect(scene, SIGNAL( selectionChanged()),
-         this, SLOT(selectionChanged()));
+            this, SLOT(selectionChanged()));
 
     connect(scene, SIGNAL( itemMoved(QGraphicsItem *)),
-         this, SLOT(itemMoved(QGraphicsItem *)));
+            this, SLOT(itemMoved(QGraphicsItem *)));
 
 
     ui->graphicsView->setScene(scene);
@@ -237,28 +237,28 @@ void HoruxDesigner::about()
 
 void HoruxDesigner::readSoapResponse()
 {
-     userCombo = new QComboBox();
+    userCombo = new QComboBox();
 
-     const QtSoapMessage &response = transport.getResponse();
-     if (response.isFault()) {
-         QMessageBox::warning(this,tr("Horux webservice error"),tr("Not able to call the Horux GUI web service."));
-         return;
-     }
+    const QtSoapMessage &response = transport.getResponse();
+    if (response.isFault()) {
+        QMessageBox::warning(this,tr("Horux webservice error"),tr("Not able to call the Horux GUI web service."));
+        return;
+    }
 
     const QtSoapType &returnValue = response.returnValue();
 
     for(int i=0; i<returnValue.count(); i++ )
     {
-       const QtSoapType &record =  returnValue[i];
+        const QtSoapType &record =  returnValue[i];
 
-       for(int j=0; j<record.count(); j+=24)
-       {
-           const QtSoapType &field_id =  record[j];
-           const QtSoapType &field_name =  record[j+1];
-           const QtSoapType &field_firstname =  record[j+2];
+        for(int j=0; j<record.count(); j+=24)
+        {
+            const QtSoapType &field_id =  record[j];
+            const QtSoapType &field_name =  record[j+1];
+            const QtSoapType &field_firstname =  record[j+2];
 
-           userCombo->addItem(field_name["value"].toString() + " " + field_firstname["value"].toString(), field_id["value"].toInt());
-       }
+            userCombo->addItem(field_name["value"].toString() + " " + field_firstname["value"].toString(), field_id["value"].toInt());
+        }
 
     }
 
@@ -305,12 +305,12 @@ void HoruxDesigner::userChanged(int index)
 void HoruxDesigner::readSoapResponseUser()
 {
 
-     const QtSoapMessage &response = transport.getResponse();
-     if (response.isFault()) {
-         statusBar()->clearMessage();
-         QMessageBox::warning(this,tr("Horux webservice error"),tr("Not able to call the Horux GUI web service."));
-         return;
-     }
+    const QtSoapMessage &response = transport.getResponse();
+    if (response.isFault()) {
+        statusBar()->clearMessage();
+        QMessageBox::warning(this,tr("Horux webservice error"),tr("Not able to call the Horux GUI web service."));
+        return;
+    }
 
     const QtSoapType &value = response.returnValue();
 
@@ -356,70 +356,70 @@ void HoruxDesigner::readSoapResponseUser()
 
 void HoruxDesigner::httpRequestDone ( bool error )
 {
-   statusBar()->clearMessage();
-   if(error)
-   {
+    statusBar()->clearMessage();
+    if(error)
+    {
 
-     QMessageBox::information(this, tr("Picture error"),tr("Not able to load the user picture"));
-   }
+        QMessageBox::information(this, tr("Picture error"),tr("Not able to load the user picture"));
+    }
 
 }
 
- void HoruxDesigner::setCurrentFile(const QString &fileName)
- {
-      currenFile.setFileName(fileName);
-     if (fileName.isEmpty())
-         setWindowTitle(tr("Horux Card Designer - new card"));
-     else
-         setWindowTitle(tr("Horux Card Designer - %2").arg(strippedName(fileName)));
+void HoruxDesigner::setCurrentFile(const QString &fileName)
+{
+    currenFile.setFileName(fileName);
+    if (fileName.isEmpty())
+        setWindowTitle(tr("Horux Card Designer - new card"));
+    else
+        setWindowTitle(tr("Horux Card Designer - %2").arg(strippedName(fileName)));
 
-     QSettings settings("Letux", "HoruxCardDesigner",this);
-     QStringList files = settings.value("recentFileList").toStringList();
-     files.removeAll(fileName);
-     files.prepend(fileName);
-     while (files.size() > MaxRecentFiles)
-         files.removeLast();
+    QSettings settings("Letux", "HoruxCardDesigner",this);
+    QStringList files = settings.value("recentFileList").toStringList();
+    files.removeAll(fileName);
+    files.prepend(fileName);
+    while (files.size() > MaxRecentFiles)
+        files.removeLast();
 
-     settings.setValue("recentFileList", files);
+    settings.setValue("recentFileList", files);
 
-     foreach (QWidget *widget, QApplication::topLevelWidgets()) {
-         HoruxDesigner *mainWin = qobject_cast<HoruxDesigner *>(widget);
-         if (mainWin)
-             mainWin->updateRecentFileActions();
-     }
- }
+    foreach (QWidget *widget, QApplication::topLevelWidgets()) {
+        HoruxDesigner *mainWin = qobject_cast<HoruxDesigner *>(widget);
+        if (mainWin)
+            mainWin->updateRecentFileActions();
+    }
+}
 
- void HoruxDesigner::updateRecentFileActions()
- {
-     QSettings settings("Letux", "HoruxCardDesigner",this);
-     QStringList files = settings.value("recentFileList").toStringList();
+void HoruxDesigner::updateRecentFileActions()
+{
+    QSettings settings("Letux", "HoruxCardDesigner",this);
+    QStringList files = settings.value("recentFileList").toStringList();
 
-     int numRecentFiles = qMin(files.size(), (int)MaxRecentFiles);
+    int numRecentFiles = qMin(files.size(), (int)MaxRecentFiles);
 
-     for (int i = 0; i < numRecentFiles; ++i) {
-         QString text = tr("&%1 %2").arg(i + 1).arg(strippedName(files[i]));
-         recentFileActs[i]->setText(text);
-         recentFileActs[i]->setData(files[i]);
-         recentFileActs[i]->setVisible(true);
-     }
-     for (int j = numRecentFiles; j < MaxRecentFiles; ++j)
-         recentFileActs[j]->setVisible(false);
+    for (int i = 0; i < numRecentFiles; ++i) {
+        QString text = tr("&%1 %2").arg(i + 1).arg(strippedName(files[i]));
+        recentFileActs[i]->setText(text);
+        recentFileActs[i]->setData(files[i]);
+        recentFileActs[i]->setVisible(true);
+    }
+    for (int j = numRecentFiles; j < MaxRecentFiles; ++j)
+        recentFileActs[j]->setVisible(false);
 
-     //separatorAct->setVisible(numRecentFiles > 0);
- }
+    //separatorAct->setVisible(numRecentFiles > 0);
+}
 
- QString HoruxDesigner::strippedName(const QString &fullFileName)
- {
-     return QFileInfo(fullFileName).fileName();
- }
+QString HoruxDesigner::strippedName(const QString &fullFileName)
+{
+    return QFileInfo(fullFileName).fileName();
+}
 
- void HoruxDesigner::openRecentFile()
- {
-     QAction *action = qobject_cast<QAction *>(sender());
-     if (action)
-     {
-         newCard();
-         currenFile.setFileName(action->data().toString());
+void HoruxDesigner::openRecentFile()
+{
+    QAction *action = qobject_cast<QAction *>(sender());
+    if (action)
+    {
+        newCard();
+        currenFile.setFileName(action->data().toString());
 
         QString xml;
         currenFile.open(QIODevice::ReadOnly);
@@ -429,18 +429,18 @@ void HoruxDesigner::httpRequestDone ( bool error )
         selectionChanged();
         setWindowTitle("Horux Card Designer - " + currenFile.fileName());
 
-     }
+    }
 }
 
 void HoruxDesigner::open()
 {
-     QString selectedFilter;
-     QString fileName = QFileDialog::getOpenFileName(this,
-                                 tr("Open an Horux Card Designer file"),
-                                 "",
-                                 tr("Horux Card Designer (*.xml)"));
-     if (!fileName.isEmpty())
-     {
+    QString selectedFilter;
+    QString fileName = QFileDialog::getOpenFileName(this,
+                                                    tr("Open an Horux Card Designer file"),
+                                                    "",
+                                                    tr("Horux Card Designer (*.xml)"));
+    if (!fileName.isEmpty())
+    {
         setCurrentFile(fileName);
 
         newCard();
@@ -456,7 +456,7 @@ void HoruxDesigner::open()
         currenFile.close();
         selectionChanged();
         setWindowTitle("Horux Card Designer - " + currenFile.fileName());
-     }
+    }
 }
 
 void HoruxDesigner::setDatabase()
@@ -479,7 +479,7 @@ void HoruxDesigner::setDatabase()
 
     if(dlg.exec() == QDialog::Accepted)
     {
-       settings.setValue("horux",dlg.getHorux());
+        settings.setValue("horux",dlg.getHorux());
         settings.setValue("username",dlg.getUsername());
         settings.setValue("password",dlg.getPassword());
         settings.setValue("path",dlg.getPath());
@@ -522,12 +522,12 @@ void HoruxDesigner::save()
     {
         switch(item->type())
         {
-            case QGraphicsItem::UserType + 3:
-                card.appendChild(qgraphicsitem_cast<CardTextItem*>(item)->getXmlItem(xml));
-                break;
-            case QGraphicsItem::UserType + 4:
-                card.appendChild(qgraphicsitem_cast<PixmapItem*>(item)->getXmlItem(xml));
-                break;
+        case QGraphicsItem::UserType + 3:
+            card.appendChild(qgraphicsitem_cast<CardTextItem*>(item)->getXmlItem(xml));
+            break;
+        case QGraphicsItem::UserType + 4:
+            card.appendChild(qgraphicsitem_cast<PixmapItem*>(item)->getXmlItem(xml));
+            break;
         }
     }
 
@@ -550,8 +550,8 @@ void HoruxDesigner::saveAs()
 
     if(name != "")
     {
-       currenFile.setFileName( name );
-       save();
+        currenFile.setFileName( name );
+        save();
     }
 }
 
@@ -616,270 +616,270 @@ void HoruxDesigner::print()
 
     if (QPrintDialog(printer).exec() == QDialog::Accepted)
     {
-         scene->getCardItem()->setPrintingMode( true, pictureBuffer, userValue );
-         scene->getCardItem()->setPos(0,0);
-         sceneScaleChanged("100%");
+        scene->getCardItem()->setPrintingMode( true, pictureBuffer, userValue );
+        scene->getCardItem()->setPos(0,0);
+        sceneScaleChanged("100%");
 
-         QRectF cardRect = scene->getCardItem()->boundingRect();
+        QRectF cardRect = scene->getCardItem()->boundingRect();
 
 
-         QPainter painter(printer);
-         painter.setRenderHint(QPainter::Antialiasing);
-         ui->graphicsView->render(&painter, printer->pageRect(), cardRect.toRect(), Qt::KeepAspectRatio );
+        QPainter painter(printer);
+        painter.setRenderHint(QPainter::Antialiasing);
+        ui->graphicsView->render(&painter, printer->pageRect(), cardRect.toRect(), Qt::KeepAspectRatio );
 
-         scene->getCardItem()->setPrintingMode( false, pictureBuffer, userValue );
-         scene->getCardItem()->setPos(cardPos);
-         sceneScaleChanged(sceneScaleCombo->currentText());
+        scene->getCardItem()->setPrintingMode( false, pictureBuffer, userValue );
+        scene->getCardItem()->setPos(cardPos);
+        sceneScaleChanged(sceneScaleCombo->currentText());
     }
 }
 
 
 void HoruxDesigner::newCard()
 {
- foreach (QGraphicsItem *item, scene->items()) {
-     if (item->type() !=  QGraphicsItem::UserType+1) {
-         scene->removeItem(item);
-     }
- }
+    foreach (QGraphicsItem *item, scene->items()) {
+        if (item->type() !=  QGraphicsItem::UserType+1) {
+            scene->removeItem(item);
+        }
+    }
 
- scene->reset();
+    scene->reset();
 
 }
 
 void HoruxDesigner::deleteItem()
 {
- foreach (QGraphicsItem *item, scene->selectedItems()) {
-     if (item->type() !=  QGraphicsItem::UserType+1) {
-         scene->removeItem(item);
-     }
- }
+    foreach (QGraphicsItem *item, scene->selectedItems()) {
+        if (item->type() !=  QGraphicsItem::UserType+1) {
+            scene->removeItem(item);
+        }
+    }
 }
 
 void HoruxDesigner::bringToFront()
- {
-     if (scene->selectedItems().isEmpty())
-         return;
+{
+    if (scene->selectedItems().isEmpty())
+        return;
 
-     QGraphicsItem *selectedItem = scene->selectedItems().first();
-     QList<QGraphicsItem *> overlapItems = selectedItem->collidingItems();
+    QGraphicsItem *selectedItem = scene->selectedItems().first();
+    QList<QGraphicsItem *> overlapItems = selectedItem->collidingItems();
 
-     qreal zValue = selectedItem->zValue();
-     foreach (QGraphicsItem *item, overlapItems) {
-         if (item->zValue() >= zValue)
-         {
-             zValue = item->zValue() + 0.1;
-         }
-     }
-     selectedItem->setZValue(zValue);
- }
+    qreal zValue = selectedItem->zValue();
+    foreach (QGraphicsItem *item, overlapItems) {
+        if (item->zValue() >= zValue)
+        {
+            zValue = item->zValue() + 0.1;
+        }
+    }
+    selectedItem->setZValue(zValue);
+}
 
- void HoruxDesigner::sendToBack()
- {
-     if (scene->selectedItems().isEmpty())
-         return;
+void HoruxDesigner::sendToBack()
+{
+    if (scene->selectedItems().isEmpty())
+        return;
 
-     QGraphicsItem *selectedItem = scene->selectedItems().first();
-     QList<QGraphicsItem *> overlapItems = selectedItem->collidingItems();
+    QGraphicsItem *selectedItem = scene->selectedItems().first();
+    QList<QGraphicsItem *> overlapItems = selectedItem->collidingItems();
 
-     qreal zValue = selectedItem->zValue();
+    qreal zValue = selectedItem->zValue();
 
-     foreach (QGraphicsItem *item, overlapItems) {
-         if (item->zValue() <= zValue)
-         {
-             zValue = item->zValue() - 0.1;
-         }
-     }
-     selectedItem->setZValue(zValue);
- }
+    foreach (QGraphicsItem *item, overlapItems) {
+        if (item->zValue() <= zValue)
+        {
+            zValue = item->zValue() - 0.1;
+        }
+    }
+    selectedItem->setZValue(zValue);
+}
 
 
 void HoruxDesigner::currentFontChanged(const QFont &)
 {
- handleFontChange();
+    handleFontChange();
 }
 
 void HoruxDesigner::fontSizeChanged(const QString &)
 {
- handleFontChange();
+    handleFontChange();
 }
 
 
 void HoruxDesigner::handleFontChange()
 {
- QFont font = fontCombo->currentFont();
- font.setPointSize(fontSizeCombo->currentText().toInt());
- font.setWeight(ui->actionBold->isChecked() ? QFont::Bold : QFont::Normal);
- font.setItalic(ui->actionItalic->isChecked());
- font.setUnderline(ui->actionUnderline->isChecked());
+    QFont font = fontCombo->currentFont();
+    font.setPointSize(fontSizeCombo->currentText().toInt());
+    font.setWeight(ui->actionBold->isChecked() ? QFont::Bold : QFont::Normal);
+    font.setItalic(ui->actionItalic->isChecked());
+    font.setUnderline(ui->actionUnderline->isChecked());
 
- scene->setFont(font);
+    scene->setFont(font);
 }
 
 
 void HoruxDesigner::sceneScaleChanged(const QString &scale)
- {
-     double newScale = scale.left(scale.indexOf(tr("%"))).toDouble() / 100.0;
-     QMatrix oldMatrix = ui->graphicsView->matrix();
-     ui->graphicsView->resetMatrix();
-     ui->graphicsView->translate(oldMatrix.dx(), oldMatrix.dy());
-     ui->graphicsView->scale(newScale, newScale);
- }
+{
+    double newScale = scale.left(scale.indexOf(tr("%"))).toDouble() / 100.0;
+    QMatrix oldMatrix = ui->graphicsView->matrix();
+    ui->graphicsView->resetMatrix();
+    ui->graphicsView->translate(oldMatrix.dx(), oldMatrix.dy());
+    ui->graphicsView->scale(newScale, newScale);
+}
 
 void HoruxDesigner::setParamView(QGraphicsItem *item)
 {
     switch(item->type())
     {
-        case QGraphicsItem::UserType+1: //card
+    case QGraphicsItem::UserType+1: //card
+        {
+            CardItem *card = qgraphicsitem_cast<CardItem *>(item);
+            if(card)
             {
-                CardItem *card = qgraphicsitem_cast<CardItem *>(item);
-                if(card)
+                if(!cardPage)
                 {
-                    if(!cardPage)
-                    {
-                        cardPage = new CardPage(ui->widget);
-                        connect(cardPage->sizeCb, SIGNAL(currentIndexChanged ( int )), card, SLOT(setSize(int)));
-                        connect(cardPage->orientation, SIGNAL(currentIndexChanged ( int )), card, SLOT(setFormat(int)));
-                        connect(cardPage->bkgColor, SIGNAL(textChanged(const QString & )), card, SLOT(setBkgColor(const QString &)));
-                        connect(cardPage->bkgPicture, SIGNAL(textChanged(const QString & )), card, SLOT(setBkgPixmap(QString)));
+                    cardPage = new CardPage(ui->widget);
+                    connect(cardPage->sizeCb, SIGNAL(currentIndexChanged ( int )), card, SLOT(setSize(int)));
+                    connect(cardPage->orientation, SIGNAL(currentIndexChanged ( int )), card, SLOT(setFormat(int)));
+                    connect(cardPage->bkgColor, SIGNAL(textChanged(const QString & )), card, SLOT(setBkgColor(const QString &)));
+                    connect(cardPage->bkgPicture, SIGNAL(textChanged(const QString & )), card, SLOT(setBkgPixmap(QString)));
 
-                        connect(cardPage->gridDraw, SIGNAL(currentIndexChanged ( int )), card, SLOT(viewGrid(int)));
-                        connect(cardPage->gridSize, SIGNAL(valueChanged  ( int )), card, SLOT(setGridSize(int)));
-                        connect(cardPage->gridAlign, SIGNAL(currentIndexChanged ( int )), card, SLOT(alignGrid(int)));
-                    }
-
-                    cardPage->sizeCb->setCurrentIndex(card->getSize());
-                    cardPage->orientation->setCurrentIndex(card->getFormat());
-
-                    if (card->bkgColor.isValid()) {
-                         cardPage->color = card->bkgColor;
-                         cardPage->bkgColor->setText(card->bkgColor.name());
-                         cardPage->bkgColor->setStyleSheet("background-color: " + card->bkgColor.name() + ";");
-                     }
-
-                    cardPage->bkgPicture->setText(card->bkgFile);
-                    cardPage->gridAlign->setCurrentIndex((int)card->isGridAlign);
-                    cardPage->gridDraw->setCurrentIndex((int)card->isGrid);
-                    cardPage->gridSize->setValue(card->gridSize);
-
-                    if(textPage)
-                        textPage->hide();
-
-                    if(pixmapPage)
-                        pixmapPage->hide();
-
-
-                    cardPage->show();
+                    connect(cardPage->gridDraw, SIGNAL(currentIndexChanged ( int )), card, SLOT(viewGrid(int)));
+                    connect(cardPage->gridSize, SIGNAL(valueChanged  ( int )), card, SLOT(setGridSize(int)));
+                    connect(cardPage->gridAlign, SIGNAL(currentIndexChanged ( int )), card, SLOT(alignGrid(int)));
                 }
+
+                cardPage->sizeCb->setCurrentIndex(card->getSize());
+                cardPage->orientation->setCurrentIndex(card->getFormat());
+
+                if (card->bkgColor.isValid()) {
+                    cardPage->color = card->bkgColor;
+                    cardPage->bkgColor->setText(card->bkgColor.name());
+                    cardPage->bkgColor->setStyleSheet("background-color: " + card->bkgColor.name() + ";");
+                }
+
+                cardPage->bkgPicture->setText(card->bkgFile);
+                cardPage->gridAlign->setCurrentIndex((int)card->isGridAlign);
+                cardPage->gridDraw->setCurrentIndex((int)card->isGrid);
+                cardPage->gridSize->setValue(card->gridSize);
+
+                if(textPage)
+                    textPage->hide();
+
+                if(pixmapPage)
+                    pixmapPage->hide();
+
+
+                cardPage->show();
             }
-            break;
-        case QGraphicsItem::UserType+3: //text
+        }
+        break;
+    case QGraphicsItem::UserType+3: //text
+        {
+            CardTextItem *textItem = qgraphicsitem_cast<CardTextItem *>(item);
+            if(textItem)
             {
-                CardTextItem *textItem = qgraphicsitem_cast<CardTextItem *>(item);
-                if(textItem)
+                if(textPage)
                 {
-                    if(textPage)
-                    {
-                        delete textPage;
-                        textPage = NULL;
-                    }
-
-                    if(!textPage)
-                    {
-                        textPage = new TextPage(ui->widget);
-
-                        connect(textPage->name, SIGNAL(textChanged ( const QString & )), textItem, SLOT(setName(const QString &)));
-                        connect(textPage, SIGNAL(changeFont(const QFont &)), textItem, SLOT(fontChanged(const QFont &)));
-                        connect(textPage, SIGNAL(changeColor ( const QColor & )), textItem, SLOT(colorChanged(const QColor &)));
-                        connect(textPage->rotation, SIGNAL(textChanged(QString)), textItem, SLOT(rotationChanged(const QString &)));
-                        connect(textPage->source, SIGNAL(currentIndexChanged ( int )), textItem, SLOT(sourceChanged(int)));
-                        connect(textPage->top, SIGNAL(textChanged(QString)), textItem, SLOT(topChanged(const QString &)));
-                        connect(textPage->left, SIGNAL(textChanged(QString)), textItem, SLOT(leftChanged(const QString &)));
-                        connect(textPage->alignment, SIGNAL(currentIndexChanged ( int )), textItem, SLOT(alignmentChanged(int)));
-
-
-                        textPage->name->setText(textItem->name);
-
-                        textPage->font = textItem->font();
-                        textPage->fontText->setText(textItem->font().family());
-
-                        if (textItem->defaultTextColor().isValid()) {
-                             textPage->color = textItem->defaultTextColor();
-                             textPage->colorText->setText(textItem->defaultTextColor().name());
-                             textPage->colorText->setStyleSheet("background-color: " + textItem->defaultTextColor().name() + ";");
-                         }
-
-                        textPage->rotation->setText(QString::number(textItem->rotation));
-                        textPage->top->setText(QString::number(textItem->pos().y()));
-                        textPage->left->setText(QString::number(textItem->pos().x()));
-                        textPage->alignment->setCurrentIndex(textItem->alignment);
-
-                        textPage->source->setCurrentIndex( textItem->source );
-                        textPage->connectDataSource();
-
-                    }
-
-                    if(cardPage)
-                        cardPage->hide();
-                    if(pixmapPage)
-                        pixmapPage->hide();
-
-
-                    textPage->show();
-
+                    delete textPage;
+                    textPage = NULL;
                 }
-            }
-            break;
-         case QGraphicsItem::UserType+4: //Pixmap
-             {
-                PixmapItem *pixmapItem = qgraphicsitem_cast<PixmapItem *>(item);
 
-                if(pixmapItem)
+                if(!textPage)
                 {
-                    if(pixmapPage)
-                    {
-                        delete pixmapPage;
-                        pixmapPage = NULL;
+                    textPage = new TextPage(ui->widget);
+
+                    connect(textPage->name, SIGNAL(textChanged ( const QString & )), textItem, SLOT(setName(const QString &)));
+                    connect(textPage, SIGNAL(changeFont(const QFont &)), textItem, SLOT(fontChanged(const QFont &)));
+                    connect(textPage, SIGNAL(changeColor ( const QColor & )), textItem, SLOT(colorChanged(const QColor &)));
+                    connect(textPage->rotation, SIGNAL(textChanged(QString)), textItem, SLOT(rotationChanged(const QString &)));
+                    connect(textPage->source, SIGNAL(currentIndexChanged ( int )), textItem, SLOT(sourceChanged(int)));
+                    connect(textPage->top, SIGNAL(textChanged(QString)), textItem, SLOT(topChanged(const QString &)));
+                    connect(textPage->left, SIGNAL(textChanged(QString)), textItem, SLOT(leftChanged(const QString &)));
+                    connect(textPage->alignment, SIGNAL(currentIndexChanged ( int )), textItem, SLOT(alignmentChanged(int)));
+
+
+                    textPage->name->setText(textItem->name);
+
+                    textPage->font = textItem->font();
+                    textPage->fontText->setText(textItem->font().family());
+
+                    if (textItem->defaultTextColor().isValid()) {
+                        textPage->color = textItem->defaultTextColor();
+                        textPage->colorText->setText(textItem->defaultTextColor().name());
+                        textPage->colorText->setStyleSheet("background-color: " + textItem->defaultTextColor().name() + ";");
                     }
 
-                    if(!pixmapPage)
-                    {
-                        pixmapPage = new PixmapPage(ui->widget);
+                    textPage->rotation->setText(QString::number(textItem->rotation));
+                    textPage->top->setText(QString::number(textItem->pos().y()));
+                    textPage->left->setText(QString::number(textItem->pos().x()));
+                    textPage->alignment->setCurrentIndex(textItem->alignment);
 
-                        pixmapPage->name->setText(pixmapItem->name);
-                        pixmapPage->file->setText(pixmapItem->file);
-                        pixmapPage->widthEdit->setText(QString::number(pixmapItem->boundingRect().width()));
-                        pixmapPage->heightEdit->setText(QString::number(pixmapItem->boundingRect().height()));
-
-                        connect(pixmapPage->name, SIGNAL(textChanged ( const QString & )), pixmapItem, SLOT(setName(const QString &)));
-                        connect(pixmapPage->file, SIGNAL(textChanged(const QString & )), pixmapItem, SLOT(setPixmapFile(QString)));
-                        connect(pixmapPage->source, SIGNAL(currentIndexChanged ( int )), pixmapItem, SLOT(sourceChanged(int)));
-                        connect(pixmapPage, SIGNAL(newPicture(QByteArray)), pixmapItem, SLOT(setHoruxPixmap(QByteArray )));
-                        connect(pixmapPage->widthEdit, SIGNAL(textChanged ( const QString & )), pixmapItem, SLOT(setWidth(const QString &)));
-                        connect(pixmapPage->heightEdit, SIGNAL(textChanged ( const QString & )), pixmapItem, SLOT(setHeight(const QString &)));
-
-                        connect(pixmapPage->top, SIGNAL(textChanged(QString)), pixmapItem, SLOT(topChanged(const QString &)));
-                        connect(pixmapPage->left, SIGNAL(textChanged(QString)), pixmapItem, SLOT(leftChanged(const QString &)));
-
-                        pixmapPage->top->setText(QString::number(pixmapItem->pos().y()));
-                        pixmapPage->left->setText(QString::number(pixmapItem->pos().x()));
-
-
-                        pixmapPage->source->setCurrentIndex( pixmapItem->source );
-                        pixmapPage->connectDataSource();
-                    }
-
-                    if(textPage)
-                        textPage->hide();
-                    if(cardPage)
-                        cardPage->hide();
-
-
-                    pixmapPage->show();
+                    textPage->source->setCurrentIndex( textItem->source );
+                    textPage->connectDataSource();
 
                 }
 
+                if(cardPage)
+                    cardPage->hide();
+                if(pixmapPage)
+                    pixmapPage->hide();
+
+
+                textPage->show();
+
             }
-            break;
+        }
+        break;
+    case QGraphicsItem::UserType+4: //Pixmap
+        {
+            PixmapItem *pixmapItem = qgraphicsitem_cast<PixmapItem *>(item);
+
+            if(pixmapItem)
+            {
+                if(pixmapPage)
+                {
+                    delete pixmapPage;
+                    pixmapPage = NULL;
+                }
+
+                if(!pixmapPage)
+                {
+                    pixmapPage = new PixmapPage(ui->widget);
+
+                    pixmapPage->name->setText(pixmapItem->name);
+                    pixmapPage->file->setText(pixmapItem->file);
+                    pixmapPage->widthEdit->setText(QString::number(pixmapItem->boundingRect().width()));
+                    pixmapPage->heightEdit->setText(QString::number(pixmapItem->boundingRect().height()));
+
+                    connect(pixmapPage->name, SIGNAL(textChanged ( const QString & )), pixmapItem, SLOT(setName(const QString &)));
+                    connect(pixmapPage->file, SIGNAL(textChanged(const QString & )), pixmapItem, SLOT(setPixmapFile(QString)));
+                    connect(pixmapPage->source, SIGNAL(currentIndexChanged ( int )), pixmapItem, SLOT(sourceChanged(int)));
+                    connect(pixmapPage, SIGNAL(newPicture(QByteArray)), pixmapItem, SLOT(setHoruxPixmap(QByteArray )));
+                    connect(pixmapPage->widthEdit, SIGNAL(textChanged ( const QString & )), pixmapItem, SLOT(setWidth(const QString &)));
+                    connect(pixmapPage->heightEdit, SIGNAL(textChanged ( const QString & )), pixmapItem, SLOT(setHeight(const QString &)));
+
+                    connect(pixmapPage->top, SIGNAL(textChanged(QString)), pixmapItem, SLOT(topChanged(const QString &)));
+                    connect(pixmapPage->left, SIGNAL(textChanged(QString)), pixmapItem, SLOT(leftChanged(const QString &)));
+
+                    pixmapPage->top->setText(QString::number(pixmapItem->pos().y()));
+                    pixmapPage->left->setText(QString::number(pixmapItem->pos().x()));
+
+
+                    pixmapPage->source->setCurrentIndex( pixmapItem->source );
+                    pixmapPage->connectDataSource();
+                }
+
+                if(textPage)
+                    textPage->hide();
+                if(cardPage)
+                    cardPage->hide();
+
+
+                pixmapPage->show();
+
+            }
+
+        }
+        break;
     }
 }
 
@@ -888,111 +888,111 @@ void HoruxDesigner::resizeEvent ( QResizeEvent * )
     scene->setSceneRect(ui->graphicsView->geometry());
 }
 
- void HoruxDesigner::createToolBox()
- {
-     ui->toolbox->removeItem(0);
+void HoruxDesigner::createToolBox()
+{
+    ui->toolbox->removeItem(0);
 
-     buttonGroup = new QButtonGroup;
-     buttonGroup->setExclusive(false);
-     connect(buttonGroup, SIGNAL(buttonClicked(int)),
-             this, SLOT(buttonGroupClicked(int)));
+    buttonGroup = new QButtonGroup;
+    buttonGroup->setExclusive(false);
+    connect(buttonGroup, SIGNAL(buttonClicked(int)),
+            this, SLOT(buttonGroupClicked(int)));
 
-     QGridLayout *layout = new QGridLayout;
+    QGridLayout *layout = new QGridLayout;
 
-     //Text
-     QToolButton *textButton = new QToolButton;
-     textButton->setCheckable(true);
-     buttonGroup->addButton(textButton, InsertTextButton);
+    //Text
+    QToolButton *textButton = new QToolButton;
+    textButton->setCheckable(true);
+    buttonGroup->addButton(textButton, InsertTextButton);
 
-     textButton->setIcon(QIcon(QPixmap(":/images/textpointer.png")
-                         .scaled(30, 30)));
-     textButton->setIconSize(QSize(50, 50));
-     QGridLayout *textLayout = new QGridLayout;
-     textLayout->addWidget(textButton, 0, 0, Qt::AlignHCenter);
-     textLayout->addWidget(new QLabel(tr("Text")), 1, 0, Qt::AlignCenter);
-     QWidget *textWidget = new QWidget;
-     textWidget->setLayout(textLayout);
-     layout->addWidget(textWidget, 1, 1);
-
-
-     //Image
-     QToolButton *imageButton = new QToolButton;
-     imageButton->setCheckable(true);
-     buttonGroup->addButton(imageButton, InsertImageButton);
-
-     imageButton->setIcon(QIcon(QPixmap(":/images/gadu.png")));
-     imageButton->setIconSize(QSize(50, 50));
-     QGridLayout *imageLayout = new QGridLayout;
-     imageLayout->addWidget(imageButton, 0, 0, Qt::AlignHCenter);
-     imageLayout->addWidget(new QLabel(tr("Picture")), 1, 0, Qt::AlignCenter);
-     QWidget *imageWidget = new QWidget;
-     imageWidget->setLayout(imageLayout);
-     layout->addWidget(imageWidget, 1, 2);
+    textButton->setIcon(QIcon(QPixmap(":/images/textpointer.png")
+                              .scaled(30, 30)));
+    textButton->setIconSize(QSize(50, 50));
+    QGridLayout *textLayout = new QGridLayout;
+    textLayout->addWidget(textButton, 0, 0, Qt::AlignHCenter);
+    textLayout->addWidget(new QLabel(tr("Text")), 1, 0, Qt::AlignCenter);
+    QWidget *textWidget = new QWidget;
+    textWidget->setLayout(textLayout);
+    layout->addWidget(textWidget, 1, 1);
 
 
+    //Image
+    QToolButton *imageButton = new QToolButton;
+    imageButton->setCheckable(true);
+    buttonGroup->addButton(imageButton, InsertImageButton);
 
-     layout->setRowStretch(3, 10);
-     layout->setColumnStretch(2, 10);
+    imageButton->setIcon(QIcon(QPixmap(":/images/gadu.png")));
+    imageButton->setIconSize(QSize(50, 50));
+    QGridLayout *imageLayout = new QGridLayout;
+    imageLayout->addWidget(imageButton, 0, 0, Qt::AlignHCenter);
+    imageLayout->addWidget(new QLabel(tr("Picture")), 1, 0, Qt::AlignCenter);
+    QWidget *imageWidget = new QWidget;
+    imageWidget->setLayout(imageLayout);
+    layout->addWidget(imageWidget, 1, 2);
 
-     QWidget *itemWidget = new QWidget;
-     itemWidget->setLayout(layout);
 
 
-     ui->toolbox->setSizePolicy(QSizePolicy(QSizePolicy::Maximum, QSizePolicy::Ignored));
-     ui->toolbox->setMinimumWidth(itemWidget->sizeHint().width());
-     ui->toolbox->insertItem(1, itemWidget, tr("Object"));
- }
+    layout->setRowStretch(3, 10);
+    layout->setColumnStretch(2, 10);
+
+    QWidget *itemWidget = new QWidget;
+    itemWidget->setLayout(layout);
+
+
+    ui->toolbox->setSizePolicy(QSizePolicy(QSizePolicy::Maximum, QSizePolicy::Ignored));
+    ui->toolbox->setMinimumWidth(itemWidget->sizeHint().width());
+    ui->toolbox->insertItem(1, itemWidget, tr("Object"));
+}
 
 void HoruxDesigner::buttonGroupClicked(int id)
- {
-     QList<QAbstractButton *> buttons = buttonGroup->buttons();
-     foreach (QAbstractButton *button, buttons) {
-     if (buttonGroup->button(id) != button)
-         button->setChecked(false);
-     }
-     if (id == InsertTextButton) {
-         scene->setMode(CardScene::InsertText);
-     }
+{
+    QList<QAbstractButton *> buttons = buttonGroup->buttons();
+    foreach (QAbstractButton *button, buttons) {
+        if (buttonGroup->button(id) != button)
+            button->setChecked(false);
+    }
+    if (id == InsertTextButton) {
+        scene->setMode(CardScene::InsertText);
+    }
 
-     if(id == InsertImageButton) {
-         scene->setMode(CardScene::InsertPicture);
-     }
- }
+    if(id == InsertImageButton) {
+        scene->setMode(CardScene::InsertPicture);
+    }
+}
 
 void HoruxDesigner::itemInserted(QGraphicsItem *)
- {
-     scene->setMode(CardScene::MoveItem);
-     buttonGroup->button(InsertImageButton)->setChecked(false);
- }
+{
+    scene->setMode(CardScene::MoveItem);
+    buttonGroup->button(InsertImageButton)->setChecked(false);
+}
 
- void HoruxDesigner::textInserted(QGraphicsTextItem *)
- {
-     buttonGroup->button(InsertTextButton)->setChecked(false);
-     scene->setMode(CardScene::MoveItem);
- }
+void HoruxDesigner::textInserted(QGraphicsTextItem *)
+{
+    buttonGroup->button(InsertTextButton)->setChecked(false);
+    scene->setMode(CardScene::MoveItem);
+}
 
- void HoruxDesigner::itemSelected(QGraphicsItem *)
- {
+void HoruxDesigner::itemSelected(QGraphicsItem *)
+{
     /* CardTextItem *textItem =
         qgraphicsitem_cast<CardTextItem *>(item);*/
- }
+}
 
- void HoruxDesigner::selectionChanged()
- {
+void HoruxDesigner::selectionChanged()
+{
 
-     if (scene->selectedItems().isEmpty() || scene->selectedItems().count() > 1 )
-     {
-         setParamView(scene->getCardItem());
-         return;
-     }
-     setParamView(scene->selectedItems().at(0));
+    if (scene->selectedItems().isEmpty() || scene->selectedItems().count() > 1 )
+    {
+        setParamView(scene->getCardItem());
+        return;
+    }
+    setParamView(scene->selectedItems().at(0));
 
- }
+}
 
- void HoruxDesigner::itemMoved(QGraphicsItem *item)
- {
-     if(item)
-     {
+void HoruxDesigner::itemMoved(QGraphicsItem *item)
+{
+    if(item)
+    {
         if(item->type() == QGraphicsItem::UserType + 3)
         {
             if(textPage)
@@ -1009,5 +1009,5 @@ void HoruxDesigner::itemInserted(QGraphicsItem *)
                 pixmapPage->left->setText(QString::number(item->pos().x()));
             }
         }
-     }
- }
+    }
+}

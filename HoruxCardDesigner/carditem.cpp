@@ -33,18 +33,18 @@ void CardItem::setPrintingMode(bool printing, QBuffer &picture, QMap<QString, QS
     {
         switch(item->type())
         {
-            case QGraphicsItem::UserType+3: //text
-                {
-                    CardTextItem *textItem = qgraphicsitem_cast<CardTextItem *>(item);
-                    textItem->setPrintingMode(printing, userData);
-                }
-                break;
-            case QGraphicsItem::UserType+4: //Pixmap
-                {
-                    PixmapItem *pixmapItem = qgraphicsitem_cast<PixmapItem *>(item);
-                    pixmapItem->setPrintingMode( printing, picture );
-                }
-                break;
+        case QGraphicsItem::UserType+3: //text
+            {
+                CardTextItem *textItem = qgraphicsitem_cast<CardTextItem *>(item);
+                textItem->setPrintingMode(printing, userData);
+            }
+            break;
+        case QGraphicsItem::UserType+4: //Pixmap
+            {
+                PixmapItem *pixmapItem = qgraphicsitem_cast<PixmapItem *>(item);
+                pixmapItem->setPrintingMode( printing, picture );
+            }
+            break;
         }
     }
 
@@ -98,14 +98,14 @@ void CardItem::loadCard(QDomElement card )
         }
         if(node.toElement().tagName() == "CardTextItem")
         {
-             CardTextItem* textItem = new CardTextItem(this);
-             textItem->loadText( node.toElement() );
+            CardTextItem* textItem = new CardTextItem(this);
+            textItem->loadText( node.toElement() );
 
-             connect(textItem, SIGNAL(lostFocus(CardTextItem *)),
-                     scene (), SLOT(editorLostFocus(CardTextItem *)));
+            connect(textItem, SIGNAL(lostFocus(CardTextItem *)),
+                    scene (), SLOT(editorLostFocus(CardTextItem *)));
 
-             connect(textItem, SIGNAL(selectedChange(QGraphicsItem *)),
-                     scene (), SIGNAL(itemSelected(QGraphicsItem *)));
+            connect(textItem, SIGNAL(selectedChange(QGraphicsItem *)),
+                    scene (), SIGNAL(itemSelected(QGraphicsItem *)));
 
         }
 
@@ -200,15 +200,15 @@ QSizeF CardItem::getSizeMm()
 {
     switch(cardSize)
     {
-        case CR80:
-            return QSizeF(85.6,53.98);
-            break;
-        case CR90:
-            return QSizeF(92.07,60.33);
-            break;
-        case CR79:
-            return QSizeF(83.90,52.10);
-            break;
+    case CR80:
+        return QSizeF(85.6,53.98);
+        break;
+    case CR90:
+        return QSizeF(92.07,60.33);
+        break;
+    case CR79:
+        return QSizeF(83.90,52.10);
+        break;
     }
 
     return QSizeF(85.6,53.98);
@@ -234,20 +234,20 @@ void CardItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
 
     switch(cardSize)
     {
-        case CR80:
-            ratio = 85.6/53.98;
-            width = 195;
-            break;
-        case CR90:
-            ratio = 92.07/60.33;
-            width = 210;
-            break;
-        case CR79:
-            ratio = 83.90/52.10;
-            width = 191;
-            break;
-        default:
-            break;
+    case CR80:
+        ratio = 85.6/53.98;
+        width = 195;
+        break;
+    case CR90:
+        ratio = 92.07/60.33;
+        width = 210;
+        break;
+    case CR79:
+        ratio = 83.90/52.10;
+        width = 191;
+        break;
+    default:
+        break;
     }
 
     if(cardFormat == P)
@@ -271,13 +271,13 @@ void CardItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
     }
     else
     {
-       bkgBrush.setStyle(Qt::SolidPattern);
-       bkgBrush.setColor(bkgColor);
+        bkgBrush.setStyle(Qt::SolidPattern);
+        bkgBrush.setColor(bkgColor);
 
     }
 
 
-   painter->setBrush(bkgBrush);
+    painter->setBrush(bkgBrush);
 
     painter->drawPath(path);
     setPath(path);

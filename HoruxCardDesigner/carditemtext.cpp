@@ -3,23 +3,23 @@
 #include "cardscene.h"
 #include "carditem.h"
 
- CardTextItem::CardTextItem(QGraphicsItem *parent, QGraphicsScene *scene)
-     : QGraphicsTextItem(parent, scene)
- {
-     setFlag(QGraphicsItem::ItemIsMovable);
-     setFlag(QGraphicsItem::ItemIsSelectable);
+CardTextItem::CardTextItem(QGraphicsItem *parent, QGraphicsScene *scene)
+    : QGraphicsTextItem(parent, scene)
+{
+    setFlag(QGraphicsItem::ItemIsMovable);
+    setFlag(QGraphicsItem::ItemIsSelectable);
 
 #if QT_VERSION >= 0x040600
-     setFlag(QGraphicsItem::ItemSendsGeometryChanges);
- #endif
+    setFlag(QGraphicsItem::ItemSendsGeometryChanges);
+#endif
 
-     rotation = 0;
-     name = "";
-     source = 0;
-     alignment = 0;
+    rotation = 0;
+    name = "";
+    source = 0;
+    alignment = 0;
 
-     isPrinting = false;
- }
+    isPrinting = false;
+}
 
 void CardTextItem::setPrintingMode(bool printing, QMap<QString, QString>userData)
 {       
@@ -342,9 +342,9 @@ void CardTextItem::leftChanged(const QString &left)
 }
 
 
- QVariant CardTextItem::itemChange(GraphicsItemChange change,
-                      const QVariant &value)
- {
+QVariant CardTextItem::itemChange(GraphicsItemChange change,
+                                  const QVariant &value)
+{
     if (change == ItemPositionChange)
     {
         // value is the new position.
@@ -402,26 +402,26 @@ void CardTextItem::leftChanged(const QString &left)
 
     if (change == QGraphicsItem::ItemSelectedHasChanged)
     {
-         emit selectedChange(this);
+        emit selectedChange(this);
     }
 
     return QGraphicsItem::itemChange(change, value);
- }
+}
 
- void CardTextItem::focusOutEvent(QFocusEvent *event)
- {
-     setTextInteractionFlags(Qt::NoTextInteraction);
-     emit lostFocus(this);
-     adjustSize();
-     QGraphicsTextItem::focusOutEvent(event);
- }
+void CardTextItem::focusOutEvent(QFocusEvent *event)
+{
+    setTextInteractionFlags(Qt::NoTextInteraction);
+    emit lostFocus(this);
+    adjustSize();
+    QGraphicsTextItem::focusOutEvent(event);
+}
 
- void CardTextItem::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
- {
-     if (textInteractionFlags() == Qt::NoTextInteraction)
-         setTextInteractionFlags(Qt::TextEditorInteraction);
-     QGraphicsTextItem::mouseDoubleClickEvent(event);
- }
+void CardTextItem::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
+{
+    if (textInteractionFlags() == Qt::NoTextInteraction)
+        setTextInteractionFlags(Qt::TextEditorInteraction);
+    QGraphicsTextItem::mouseDoubleClickEvent(event);
+}
 
 void CardTextItem::alignmentChanged(int align)
 {
@@ -433,15 +433,15 @@ void CardTextItem::alignmentChanged(int align)
     QTextOption option = doc->defaultTextOption ();
     switch(align)
     {
-        case 0: //left
-            option.setAlignment(Qt::AlignLeft);
-            break;
-        case 1: //right
-            option.setAlignment(Qt::AlignRight);
-            break;
-        case 2: //center
-            option.setAlignment(Qt::AlignHCenter);
-            break;
+    case 0: //left
+        option.setAlignment(Qt::AlignLeft);
+        break;
+    case 1: //right
+        option.setAlignment(Qt::AlignRight);
+        break;
+    case 2: //center
+        option.setAlignment(Qt::AlignHCenter);
+        break;
     }
 
     doc->setDefaultTextOption(option);

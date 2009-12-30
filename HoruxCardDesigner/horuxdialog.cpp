@@ -3,8 +3,8 @@
 #include <QMessageBox>
 
 HoruxDialog::HoruxDialog(QWidget *parent) :
-    QDialog(parent),
-    m_ui(new Ui::HoruxDialog)
+        QDialog(parent),
+        m_ui(new Ui::HoruxDialog)
 {
     m_ui->setupUi(this);
 
@@ -81,7 +81,7 @@ void HoruxDialog::onTest()
     if(getSSL())
     {
         connect(transport.networkAccessManager(),SIGNAL(sslErrors( QNetworkReply *, const QList<QSslError> & )),
-                    this, SLOT(sslErrors(QNetworkReply*,QList<QSslError>)));
+                this, SLOT(sslErrors(QNetworkReply*,QList<QSslError>)));
     }
 
 
@@ -107,15 +107,15 @@ void HoruxDialog::sslErrors ( QNetworkReply * reply, const QList<QSslError> & er
 
 void HoruxDialog::readResponse()
 {
-     const QtSoapMessage &response = transport.getResponse();
-     if (response.isFault()) {
-         QMessageBox::warning(this,tr("Horux webservice error"),tr("Not able to call the Horux GUI web service."));
-         return;
-     }
+    const QtSoapMessage &response = transport.getResponse();
+    if (response.isFault()) {
+        QMessageBox::warning(this,tr("Horux webservice error"),tr("Not able to call the Horux GUI web service."));
+        return;
+    }
 
-     QMessageBox::information(this,tr("Horux webservice"),tr("The configuration is well done"));
+    QMessageBox::information(this,tr("Horux webservice"),tr("The configuration is well done"));
 
- }
+}
 
 void HoruxDialog::setSSL(const bool ssl)
 {
