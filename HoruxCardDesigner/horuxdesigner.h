@@ -8,6 +8,7 @@
 #include <QMessageBox>
 #include <QtSoapHttpTransport>
 #include <QMap>
+#include <QSplashScreen>
 
 #include "cardscene.h"
 #include "confpage.h"
@@ -29,8 +30,15 @@ public:
     HoruxDesigner(QWidget *parent = 0);
     ~HoruxDesigner();
 
+    void loadHoruxSoap(QSplashScreen *sc);
+
 private:
      void createToolBox();
+     void initScene();
+     void createAction();
+     void createToolBar();
+
+
      void setParamView(QGraphicsItem *item);
      void setCurrentFile(const QString &fileName);
      void updateRecentFileActions();
@@ -66,10 +74,13 @@ private slots:
      void readSoapResponseUser();
      void userChanged(int);
      void httpRequestDone ( bool error );
+     void sslErrors ( QNetworkReply * reply, const QList<QSslError> & errors );
+     void sslErrors ( const QList<QSslError> & errors );
 
 
 protected:
     void resizeEvent ( QResizeEvent * even);
+
 
 private:
     Ui::HoruxDesigner *ui;
@@ -77,8 +88,6 @@ private:
     QButtonGroup *buttonGroup;
 
     CardScene *scene;
-
-    QWidget *param;
 
     QComboBox *sceneScaleCombo;
     QComboBox *textColorCombo;
@@ -99,11 +108,11 @@ private:
     enum { MaxRecentFiles = 5 };
     QAction *recentFileActs[MaxRecentFiles];
 
-    QMessageBox *waiting;
+    QLabel *isSecure;
 
-     QHttp pictureHttp;
-     QBuffer pictureBuffer;
-     QMap<QString, QString> userValue;
+    QHttp pictureHttp;
+    QBuffer pictureBuffer;
+    QMap<QString, QString> userValue;
 };
 
 #endif // HORUXDESIGNER_H

@@ -38,6 +38,7 @@ public slots:
 
 private slots:
     void httpRequestDone ( bool error );
+     void sslErrors ( const QList<QSslError> & errors );
 
  protected:
      QVariant itemChange(GraphicsItemChange change, const QVariant &value);

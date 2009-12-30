@@ -3,6 +3,8 @@
 
 #include <QtGui/QDialog>
 #include <QtSoapHttpTransport>
+#include <QSslError>
+#include <QNetworkReply>
 
 namespace Ui {
     class HoruxDialog;
@@ -32,6 +34,7 @@ protected:
 private slots:
     void onTest();
     void readResponse();
+    void sslErrors ( QNetworkReply * reply, const QList<QSslError> & errors );
 
 private:
     Ui::HoruxDialog *m_ui;

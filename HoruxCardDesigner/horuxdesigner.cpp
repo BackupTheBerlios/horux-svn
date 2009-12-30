@@ -1,4 +1,6 @@
 #include <QtGui>
+#include <QSslError>
+#include <QNetworkReply>
 #include "horuxdesigner.h"
 #include "ui_horuxdesigner.h"
 #include "carditemtext.h"
@@ -15,40 +17,97 @@ HoruxDesigner::HoruxDesigner(QWidget *parent)
 {
     ui->setupUi(this);
 
-    printer = new QPrinter(QPrinter::HighResolution);
-
     cardPage = NULL;
     textPage = NULL;
     pixmapPage = NULL;
     userCombo = NULL;
-    waiting = NULL;
+
+    printer = new QPrinter(QPrinter::HighResolution);
+
+    currenFile.setFileName("");
+
+    setWindowTitle("Horux Card Designer - new card");
 
     createToolBox();
+    initScene();
+    createAction();
+    createToolBar();
 
-    scene = new CardScene(this);
-    connect(scene, SIGNAL(itemInserted(QGraphicsItem *)),
-             this, SLOT(itemInserted(QGraphicsItem *)));
+}
 
-    connect(scene, SIGNAL(textInserted(QGraphicsTextItem *)),
-         this, SLOT(textInserted(QGraphicsTextItem *)));
+HoruxDesigner::~HoruxDesigner()
+{
+    delete ui;
+}
 
-    connect(scene, SIGNAL(itemSelected(QGraphicsItem *)),
-         this, SLOT(itemSelected(QGraphicsItem *)));
+void HoruxDesigner::loadHoruxSoap(QSplashScreen *sc)
+{
+    sc->showMessage(tr("The data are loading from Horux Gui..."),Qt::AlignLeft, Qt::white);
+    QApplication::processEvents();
 
-    connect(scene, SIGNAL( selectionChanged()),
-         this, SLOT(selectionChanged()));
+    connect(&transport, SIGNAL(responseReady()),this, SLOT(readSoapResponse()));
 
-    connect(scene, SIGNAL( itemMoved(QGraphicsItem *)),
-         this, SLOT(itemMoved(QGraphicsItem *)));
+    pictureBuffer.open(QBuffer::ReadWrite);
+    connect(&pictureHttp, SIGNAL(done(bool)), this, SLOT(httpRequestDone(bool)));
 
+    QSettings settings("Letux", "HoruxCardDesigner", this);
 
-    ui->graphicsView->setScene(scene);
-    ui->graphicsView->setRenderHint(QPainter::Antialiasing);
+    QString host = settings.value("horux", "localhost").toString();
+    QString username = settings.value("username", "root").toString();
+    QString password = settings.value("password", "").toString();
+    QString path = settings.value("path", "").toString();
+    bool ssl = settings.value("ssl", "").toBool();
 
-    param = NULL;
-    selectionChanged();
+    QtSoapMessage message;
+    message.setMethod("getAllUser");
 
+    isSecure = new QLabel();
+    if(ssl)
+    {
+        isSecure->setToolTip(tr("The communication is safe by SSL"));
+        isSecure->setPixmap(QPixmap(":/images/encrypted.png"));
+        statusBar()->addPermanentWidget(isSecure);
+        transport.setHost(host, true);
+        connect(transport.networkAccessManager(),SIGNAL(sslErrors( QNetworkReply *, const QList<QSslError> & )),
+                this, SLOT(sslErrors(QNetworkReply*,QList<QSslError>)));
+    }
+    else
+    {
+        isSecure->setToolTip(tr("The communication is not safe"));
+        isSecure->setPixmap(QPixmap(":/images/decrypted.png"));
+        statusBar()->addPermanentWidget(isSecure);
+        transport.setHost(host);
+    }
 
+    transport.submitRequest(message, path+"/index.php?soap=horux");
+}
+
+void HoruxDesigner::sslErrors ( QNetworkReply * reply, const QList<QSslError> & errors )
+{
+    foreach(QSslError sslError, errors)
+    {
+        if(sslError.error() == QSslError::SelfSignedCertificate)
+        {
+            reply->ignoreSslErrors();
+        }
+    }
+}
+
+void HoruxDesigner::sslErrors ( const QList<QSslError> & errors )
+{
+    foreach(QSslError sslError, errors)
+    {
+        if(sslError.error() == QSslError::SelfSignedCertificate)
+        {
+            pictureHttp.ignoreSslErrors();
+        }
+        else
+            qDebug() << sslError;
+    }
+}
+
+void HoruxDesigner::createToolBar()
+{
     fontCombo = new QFontComboBox();
     fontSizeCombo = new QComboBox();
     fontSizeCombo->setEditable(true);
@@ -77,7 +136,10 @@ HoruxDesigner::HoruxDesigner(QWidget *parent)
      ui->toolBar->addSeparator();
      ui->toolBar->addWidget(sceneScaleCombo);
 
+}
 
+void HoruxDesigner::createAction()
+{
      connect(ui->actionItalic, SIGNAL(triggered()),
              this, SLOT(handleFontChange()));
 
@@ -126,17 +188,13 @@ HoruxDesigner::HoruxDesigner(QWidget *parent)
     connect(ui->actionAbout, SIGNAL(triggered()),
              this, SLOT(about()));
 
-     for (int i = 0; i < MaxRecentFiles; ++i) {
-         recentFileActs[i] = new QAction(this);
-         recentFileActs[i]->setVisible(false);
-         connect(recentFileActs[i], SIGNAL(triggered()),
-                 this, SLOT(openRecentFile()));
-     }
-
-
-    currenFile.setFileName("");
-
-    setWindowTitle("Horux Card Designer - new card");
+    // Recent files
+    for (int i = 0; i < MaxRecentFiles; ++i) {
+     recentFileActs[i] = new QAction(this);
+     recentFileActs[i]->setVisible(false);
+     connect(recentFileActs[i], SIGNAL(triggered()),
+             this, SLOT(openRecentFile()));
+    }
 
     for (int i = 0; i < MaxRecentFiles; ++i)
     {
@@ -145,37 +203,31 @@ HoruxDesigner::HoruxDesigner(QWidget *parent)
     }
 
     updateRecentFileActions();
-
-    connect(&transport, SIGNAL(responseReady()),this, SLOT(readSoapResponse()));
-
-    pictureBuffer.open(QBuffer::ReadWrite);
-    connect(&pictureHttp, SIGNAL(done(bool)), this, SLOT(httpRequestDone(bool)));
-
-    QSettings settings("Letux", "HoruxCardDesigner", this);
-
-    QString host = settings.value("horux", "localhost").toString();
-    QString username = settings.value("username", "root").toString();
-    QString password = settings.value("password", "").toString();
-    QString path = settings.value("path", "").toString();
-    bool ssl = settings.value("ssl", "").toBool();
-
-    QtSoapMessage message;
-    message.setMethod("getAllUser");
-
-    if(ssl)
-        transport.setHost(host, true);
-    else
-        transport.setHost(host);
-
-    waiting = new QMessageBox(QMessageBox::Information,tr("Load data"),tr("Waiting, the data are loading from Horux Gui"), QMessageBox::NoButton, this);
-    waiting->show();
-
-    transport.submitRequest(message, path+"/index.php?soap=horux");
 }
 
-HoruxDesigner::~HoruxDesigner()
+void HoruxDesigner::initScene()
 {
-    delete ui;
+    scene = new CardScene(this);
+    connect(scene, SIGNAL(itemInserted(QGraphicsItem *)),
+             this, SLOT(itemInserted(QGraphicsItem *)));
+
+    connect(scene, SIGNAL(textInserted(QGraphicsTextItem *)),
+         this, SLOT(textInserted(QGraphicsTextItem *)));
+
+    connect(scene, SIGNAL(itemSelected(QGraphicsItem *)),
+         this, SLOT(itemSelected(QGraphicsItem *)));
+
+    connect(scene, SIGNAL( selectionChanged()),
+         this, SLOT(selectionChanged()));
+
+    connect(scene, SIGNAL( itemMoved(QGraphicsItem *)),
+         this, SLOT(itemMoved(QGraphicsItem *)));
+
+
+    ui->graphicsView->setScene(scene);
+    ui->graphicsView->setRenderHint(QPainter::Antialiasing);
+
+    selectionChanged();
 }
 
 void HoruxDesigner::about()
@@ -214,7 +266,6 @@ void HoruxDesigner::readSoapResponse()
     ui->toolBar->addWidget(userCombo);
     connect( userCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(userChanged(int)));
 
-    waiting->hide();
 
     if(userCombo->count()>0)
         userChanged(0);
@@ -234,12 +285,18 @@ void HoruxDesigner::userChanged(int index)
         QString username = settings.value("username", "root").toString();
         QString password = settings.value("password", "").toString();
         QString path = settings.value("path", "").toString();
+        bool ssl = settings.value("ssl", "").toBool();
+
+        if(ssl)
+            connect(transport.networkAccessManager(),SIGNAL(sslErrors( QNetworkReply *, const QList<QSslError> & )), this, SLOT(sslErrors(QNetworkReply*,QList<QSslError>)));
+
 
         QtSoapMessage message;
         message.setMethod("getUserById");
         message.addMethodArgument("id","",userId);
 
-        waiting->show();
+
+        statusBar()->showMessage("The data are loading from Horux Gui...");
 
         transport.submitRequest(message, path+"/index.php?soap=horux");
     }
@@ -250,7 +307,7 @@ void HoruxDesigner::readSoapResponseUser()
 
      const QtSoapMessage &response = transport.getResponse();
      if (response.isFault()) {
-         waiting->hide();
+         statusBar()->clearMessage();
          QMessageBox::warning(this,tr("Horux webservice error"),tr("Not able to call the Horux GUI web service."));
          return;
      }
@@ -279,24 +336,30 @@ void HoruxDesigner::readSoapResponseUser()
         pictureBuffer.open(QBuffer::ReadWrite);
 
         pictureHttp.setHost(host, ssl ? QHttp::ConnectionModeHttps : QHttp::ConnectionModeHttp );
+
+        if(ssl)
+        {
+            connect(&pictureHttp,SIGNAL(sslErrors( const QList<QSslError> & )), this, SLOT(sslErrors(QList<QSslError>)));
+        }
+
         pictureHttp.get(path + "/pictures/" + name, &pictureBuffer);
     }
     else
     {
+        statusBar()->clearMessage();
         pictureBuffer.close();
         pictureBuffer.setData(QByteArray());
         pictureBuffer.open(QBuffer::ReadWrite);
-        waiting->hide();
     }
 
 }
 
 void HoruxDesigner::httpRequestDone ( bool error )
 {
-   waiting->hide();
-
+   statusBar()->clearMessage();
    if(error)
    {
+
      QMessageBox::information(this, tr("Picture error"),tr("Not able to load the user picture"));
    }
 
@@ -421,6 +484,17 @@ void HoruxDesigner::setDatabase()
         settings.setValue("password",dlg.getPassword());
         settings.setValue("path",dlg.getPath());
         settings.setValue("ssl",dlg.getSSL());
+
+        if(dlg.getSSL())
+        {
+            isSecure->setToolTip(tr("The communication is safe by SSL"));
+            isSecure->setPixmap(QPixmap(":/images/encrypted.png"));
+        }
+        else
+        {
+            isSecure->setToolTip(tr("The communication is not safe"));
+            isSecure->setPixmap(QPixmap(":/images/decrypted.png"));
+        }
     }
 }
 

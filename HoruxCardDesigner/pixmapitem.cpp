@@ -52,6 +52,10 @@ void PixmapItem::setPrintingMode(bool printing, QBuffer &picture)
         bool ssl = settings.value("ssl", "").toBool();
         pictureBuffer.reset();
         pictureHttp.setHost(host, ssl ? QHttp::ConnectionModeHttps : QHttp::ConnectionModeHttp );
+        if(ssl)
+        {
+            connect(&pictureHttp,SIGNAL(sslErrors( const QList<QSslError> & )), this, SLOT(sslErrors(QList<QSslError>)));
+        }
         pictureHttp.get(path + "/pictures/unknown.jpg", &pictureBuffer);
     }
 }
@@ -278,8 +282,26 @@ void PixmapItem::loadPixmap(QDomElement text )
         bool ssl = settings.value("ssl", "").toBool();
         pictureBuffer.reset();
         pictureHttp.setHost(host, ssl ? QHttp::ConnectionModeHttps : QHttp::ConnectionModeHttp );
+        if(ssl)
+        {
+            connect(&pictureHttp,SIGNAL(sslErrors( const QList<QSslError> & )), this, SLOT(sslErrors(QList<QSslError>)));
+        }
+
         pictureHttp.get(path + "/pictures/unknown.jpg", &pictureBuffer);
 
+    }
+}
+
+void PixmapItem::sslErrors ( const QList<QSslError> & errors )
+{
+    foreach(QSslError sslError, errors)
+    {
+        if(sslError.error() == QSslError::SelfSignedCertificate)
+        {
+            pictureHttp.ignoreSslErrors();
+        }
+        else
+            qDebug() << sslError;
     }
 }
 

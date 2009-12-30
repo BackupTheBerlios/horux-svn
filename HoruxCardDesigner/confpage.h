@@ -4,7 +4,8 @@
 #include <QWidget>
 #include <QDebug>
 #include <QHttp>
- #include <QBuffer>
+#include <QBuffer>
+#include <QSslError>
 
 class QLineEdit;
 class QComboBox;
@@ -64,6 +65,7 @@ private slots:
      void setOpenFileName();
      void setSource(int s);
      void httpRequestDone ( bool error );
+     void sslErrors ( const QList<QSslError> & errors );
 
 signals:
     void newPicture(QByteArray pict);

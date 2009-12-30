@@ -11,7 +11,6 @@ HoruxDialog::HoruxDialog(QWidget *parent) :
     connect(m_ui->testButton, SIGNAL(clicked()), this, SLOT(onTest()));
 
     connect(&transport, SIGNAL(responseReady()), SLOT(readResponse()));
-
 }
 
 HoruxDialog::~HoruxDialog()
@@ -79,18 +78,35 @@ void HoruxDialog::onTest()
     // test if we receive the user with id 1
     message.addMethodArgument("id","", "1");
 
-
     if(getSSL())
-        transport.setHost(m_ui->url->text(), true);
-    else
-        transport.setHost(m_ui->url->text());
+    {
+        connect(transport.networkAccessManager(),SIGNAL(sslErrors( QNetworkReply *, const QList<QSslError> & )),
+                    this, SLOT(sslErrors(QNetworkReply*,QList<QSslError>)));
+    }
 
-    transport.submitRequest(message, m_ui->path->text()+"?soap=horux");
+
+    transport.setHost(m_ui->url->text(), getSSL());
+
+    transport.submitRequest(message, m_ui->path->text()+"/index.php?soap=horux");
 
 }
 
+void HoruxDialog::sslErrors ( QNetworkReply * reply, const QList<QSslError> & errors )
+{
+
+    foreach(QSslError sslError, errors)
+    {
+        if(sslError.error() == QSslError::SelfSignedCertificate)
+        {
+            reply->ignoreSslErrors();
+        }
+        else
+            qDebug() << sslError;
+    }
+}
+
 void HoruxDialog::readResponse()
- {
+{
      const QtSoapMessage &response = transport.getResponse();
      if (response.isFault()) {
          QMessageBox::warning(this,tr("Horux webservice error"),tr("Not able to call the Horux GUI web service."));

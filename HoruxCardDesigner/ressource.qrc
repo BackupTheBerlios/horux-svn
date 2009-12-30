@@ -18,5 +18,7 @@
         <file>images/gadu.png</file>
         <file>images/spinner.gif</file>
         <file>images/splash.jpg</file>
+        <file>images/decrypted.png</file>
+        <file>images/encrypted.png</file>
     </qresource>
 </RCC>

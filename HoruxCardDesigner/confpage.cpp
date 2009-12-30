@@ -136,6 +136,12 @@ void PixmapPage::setSource(int s)
         pictureBuffer.open(QBuffer::ReadWrite);
 
         pictureHttp.setHost(host, ssl ? QHttp::ConnectionModeHttps : QHttp::ConnectionModeHttp );
+        if(ssl)
+        {
+            connect(&pictureHttp,SIGNAL(sslErrors( const QList<QSslError> & )), this, SLOT(sslErrors(QList<QSslError>)));
+        }
+
+
         pictureHttp.get(path + "/pictures/unknown.jpg", &pictureBuffer);
     }
 }
@@ -148,4 +154,17 @@ void PixmapPage::httpRequestDone ( bool  )
 void PixmapPage::connectDataSource()
 {
      connect(source, SIGNAL(currentIndexChanged ( int )), this, SLOT(setSource(int)));
+}
+
+void PixmapPage::sslErrors ( const QList<QSslError> & errors )
+{
+    foreach(QSslError sslError, errors)
+    {
+        if(sslError.error() == QSslError::SelfSignedCertificate)
+        {
+            pictureHttp.ignoreSslErrors();
+        }
+        else
+            qDebug() << sslError;
+    }
 }
