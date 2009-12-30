@@ -8,11 +8,11 @@
 
         function printCard()
         { 
-            var id = <%= $this->Request['id'] %>;
+            /*var id = <%= $this->Request['id'] %>;
             var client = new xmlrpc_client("RPC2", "localhost", 7000);
             var params = new Array(new  xmlrpcval(id,'int'));
             var msg = new xmlrpcmsg('horuxsystray.printCard', params);
-            client.send(msg,10,'');
+            client.send(msg,10,'');*/
         }
 
         function onTab(object, name)
@@ -78,7 +78,6 @@
         SaveVisible="true"
         CancelVisible="true"
         HelpVisible="true"
-        PrintCardVisible="true"
         />
 
     <div id="submenu-box">

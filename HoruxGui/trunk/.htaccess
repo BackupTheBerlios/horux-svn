@@ -1,0 +1,3 @@
+RewriteEngine On
+RewriteRule ^index\.php\?soap=horux.wsdl$ index\.php\?soap=horux.wsdl
+RewriteRule ^index\.php\?soap=horux$ index\.php\?soap=horux
