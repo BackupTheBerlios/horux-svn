@@ -89,7 +89,7 @@ void HoruxDialog::onTest()
     transport.setHost(m_ui->url->text(), getSSL());
 
 
-    transport.submitRequest(message, m_ui->path->text()+"/index.php?soap=horux&password=" + m_ui->username->text() + "&username=" + m_ui->password->text() );
+    transport.submitRequest(message, m_ui->path->text()+"/index.php?soap=horux&password=" + m_ui->password->text() + "&username=" + m_ui->username->text() );
 
 }
 
@@ -115,7 +115,12 @@ void HoruxDialog::readResponse()
         return;
     }
 
-    QMessageBox::information(this,tr("Horux webservice"),tr("The configuration is well done"));
+    const QtSoapType &value = response.returnValue();
+
+    if(value.count() > 0)
+        QMessageBox::information(this,tr("Horux webservice"),tr("The configuration is well done"));
+    else
+        QMessageBox::warning(this,tr("Horux webservice error"),tr("Not able to call the Horux GUI web service."));
 
 }
 

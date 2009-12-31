@@ -79,7 +79,7 @@ void HoruxDesigner::loadHoruxSoap(QSplashScreen *sc)
         transport.setHost(host);
     }
 
-    transport.submitRequest(message, path+"/index.php?soap=horux&password=" + username + "&username=" + password);
+    transport.submitRequest(message, path+"/index.php?soap=horux&password=" + password + "&username=" + username);
 }
 
 void HoruxDesigner::sslErrors ( QNetworkReply * reply, const QList<QSslError> & errors )
@@ -297,7 +297,7 @@ void HoruxDesigner::userChanged(int index)
 
         statusBar()->showMessage("The data are loading from Horux Gui...");
 
-        transport.submitRequest(message, path+"/index.php?soap=horux&password=" + username + "&username=" + password);
+        transport.submitRequest(message, path+"/index.php?soap=horux&password=" + password + "&username=" + username);
     }
 }
 
