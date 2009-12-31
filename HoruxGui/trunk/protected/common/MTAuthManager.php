@@ -31,7 +31,37 @@ class MTAuthManager extends TAuthManager {
 		$app = $this->getApplication();
 
         if( $app->getService()->getID() == 'xmlrpc' ) return true;
-        if( $app->getService()->getID() == 'soap' ) return true;
+
+        // if the soap request is done by the server himself, do not check the password
+        if( $app->getService()->getID() == 'soap' && 
+            $_SERVER[SERVER_ADDR] === $_SERVER[REMOTE_ADDR])
+        {
+            return;
+        }
+
+        if( $app->getService()->getID() == 'soap' ) 
+        {
+            
+            if($app->getUser()->getUserID() == null)
+            {                
+                $authManager=$this->Application->getModule('Auth');
+
+                //Check if the user has access
+                if(!$authManager->login(strtolower($this->Request['username']),$this->Request['password']))
+                {
+                    $this->DenyRequest();
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+            else
+            {
+                return true;
+            }
+        }
 
         if('controlPanel.ControlPanel' == $app->getService()->getRequestedPagePath() &&  $app->getUser()->getUserID() != null) return true;
         if('help.About' == $app->getService()->getRequestedPagePath() &&  $app->getUser()->getUserID() != null) return true;

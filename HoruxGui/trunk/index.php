@@ -12,6 +12,25 @@
 * See COPYRIGHT.php for copyright notices and details.
 */
 
+
+// Define if the web site musst be in the SSL mode
+define("SSL", true);
+
+// Define if horux gui is working in Saas mode
+define("SAAS", true);
+
+
+// In SSL mode, be sure to be in SSL
+if(SSL)
+{
+    // redirect to 443 if not
+    if($_SERVER["SERVER_PORT"] == 80)
+    {
+        header("location:https://".$_SERVER[HTTP_HOST].$_SERVER[REQUEST_URI]);
+        exit;
+    }
+}
+
 $frameworkPath='./prado/framework/prado.php';
 
 // The following directory checks may be removed if performance is required
@@ -29,7 +48,6 @@ if(!is_writable($runtimePath))
 
 require_once($frameworkPath);
 
-
 if(!file_exists('./protected/runtime/.installed'))
 {
 	$app_conf = new TApplicationConfiguration();
@@ -41,12 +59,76 @@ if(!file_exists('./protected/runtime/.installed'))
 }
 else
 {
-	$app_conf = new TApplicationConfiguration();
-	$app_conf->loadFromFile('./protected/application_p.xml');
+    $session=new THttpSession;
+    $session->open();
 
-	$application=new TApplication('protected', true);
-	$application->applyConfiguration($app_conf, true);
-	$application->run();
+    $application=new TApplication('protected', true);
+    $app_conf = new TApplicationConfiguration();
+    $config_file = './protected/application_p.xml';
+
+    if(SAAS)
+    {
+        $username = "";
+        if(isset($_REQUEST['username']))
+        {
+            $username = $_REQUEST['username'];
+        }
+        else
+        {
+            if(isset($_REQUEST['ctl0$Main$username']))
+            {
+                $username = $_REQUEST['ctl0$Main$username'];
+            }
+        }
+
+        if($username !== "")
+        {
+            if(($pos = strpos($username, '@')) !== false)
+            {
+                $domain = strstr($username, '@');
+                $user = substr($username,0, $pos);
+                $domain = substr($domain,1, strlen($domain)-1);
+
+
+                if(file_exists('./protected/application_'.$domain.'.xml'))
+                {
+                    $config_file = './protected/application_'.$domain.'.xml';
+                    $session['application.xml']=$config_file;
+
+                    $_REQUEST['ctl0$Main$username'] = $user;
+                    $_POST['ctl0$Main$username'] = $user;
+                    $_REQUEST['username'] = $user;
+                    $_GET['username'] = $user;
+                }
+                else
+                {
+                    $_REQUEST['ctl0$Main$username'] = "";
+                    $_POST['ctl0$Main$username'] = "";
+                    $_REQUEST['username'] = "";
+                    $_GET['username'] = "";
+                }
+            }
+            else
+            {
+                $_REQUEST['ctl0$Main$username'] = "";
+                $_POST['ctl0$Main$username'] = "";
+                $_REQUEST['username'] = "";
+                $_GET['username'] = "";
+            }
+        }
+    }
+
+    if($session['application.xml'])
+    {
+        $config_file = $session['application.xml'];
+    }
+
+    $session->close();
+
+    $app_conf->loadFromFile($config_file);
+    $application->applyConfiguration($app_conf, true);
+    $application->run();
+
 }	
 
 
