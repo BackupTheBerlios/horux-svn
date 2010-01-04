@@ -22,8 +22,8 @@ class Service extends Page
         $param = $this->Application->getParameters();
         if($param['appMode'] == 'demo')
         {
-            $this->stop->setEnabled(false);
-            $this->start->setEnabled(false);
+            $this->tbb->stop->setEnabled(false);
+            $this->tbb->start->setEnabled(false);
         }
     }
 

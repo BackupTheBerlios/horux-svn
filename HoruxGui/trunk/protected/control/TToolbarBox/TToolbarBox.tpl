@@ -136,7 +136,7 @@
                     <com:TConditional Condition="$this->getViewState('PrintCardVisible','false') == 'true'">
                         <prop:TrueTemplate>
                             <td class="button" id="toolbar-printcard">
-                              <com:THyperLink ID="print" NavigateUrl="javascript:printCard()" CssClass="toolbar" >
+                              <com:THyperLink ID="printCard" NavigateUrl="javascript:printCard()" CssClass="toolbar" >
                                 <span class="icon-32-print" title="<com:TTranslate Catalogue='messages' Text='Print Card' />"></span><com:TTranslate Catalogue="messages" Text="Print Card" />
                               </com:THyperLink>
                             </td>
@@ -165,7 +165,7 @@
                     <com:TConditional Condition="$this->getViewState('ApplyVisible','false') == 'true'">
                         <prop:TrueTemplate>
                             <td class="button" id="toolbar-apply">
-                                <com:TLinkButton CssClass="toolbar" OnClick="Page.onApply" ValidationGroup="Group1">
+                                <com:TLinkButton ID="apply" CssClass="toolbar" OnClick="Page.onApply" ValidationGroup="Group1">
                                   <span class="icon-32-apply" title="<com:TTranslate Catalogue='messages' Text='Apply' />"></span><com:TTranslate Catalogue="messages" Text="Apply" />
                                 </com:TLinkButton>
                             </td>
@@ -176,7 +176,7 @@
                     <com:TConditional Condition="$this->getViewState('SaveVisible','false') == 'true'">
                         <prop:TrueTemplate>
                             <td class="button" id="toolbar-save">
-                                <com:TLinkButton CssClass="toolbar" OnClick="Page.onSave" ValidationGroup="Group1">
+                                <com:TLinkButton ID="Save" CssClass="toolbar" OnClick="Page.onSave" ValidationGroup="Group1">
                                   <span class="icon-32-save" title="<com:TTranslate Catalogue='messages' Text='Save' />"></span><com:TTranslate Catalogue="messages" Text="Save" />
                                 </com:TLinkButton>
                             </td>
@@ -187,7 +187,7 @@
                         <prop:TrueTemplate>
 
                             <td class="button" id="toolbar-cancel">
-                                <com:TLinkButton CssClass="toolbar" OnClick="Page.onCancel">
+                                <com:TLinkButton ID="cancel" CssClass="toolbar" OnClick="Page.onCancel">
                                     <span class="icon-32-cancel" title="<com:TTranslate Catalogue='messages' Text='Cancel' />"></span><com:TTranslate Catalogue="messages" Text="Cancel" />
                                 </com:TLinkButton>
                             </td>

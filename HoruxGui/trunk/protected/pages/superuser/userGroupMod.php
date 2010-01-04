@@ -40,8 +40,8 @@ class userGroupMod extends Page
 
             if($param['appMode'] == 'demo' && $superAdmin == 0)
             {
-                $this->Apply->setEnabled(false);
-                $this->Save->setEnabled(false);
+                $this->tbb->apply->setEnabled(false);
+                $this->tbb->Save->setEnabled(false);
             }
         }
     }

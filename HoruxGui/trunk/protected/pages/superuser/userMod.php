@@ -27,8 +27,8 @@ class userMod extends Page
 
         if($param['appMode'] == 'demo' && $superAdmin == 0)
         {
-            $this->apply->setEnabled(false);
-            $this->save->setEnabled(false);
+            $this->tbb->apply->setEnabled(false);
+            $this->tbb->Save->setEnabled(false);
         }
 
 

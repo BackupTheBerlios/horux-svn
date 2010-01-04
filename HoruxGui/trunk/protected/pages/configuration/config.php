@@ -33,7 +33,7 @@ class Config extends Page
 
         if($param['appMode'] == 'demo' && $superAdmin == 0)
         {
-            $this->Save->setEnabled(false);
+            $this->tbb->Save->setEnabled(false);
         }
     }
 

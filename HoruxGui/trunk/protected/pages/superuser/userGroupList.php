@@ -35,8 +35,8 @@ class UserGroupList extends PageList
 
         if($param['appMode'] == 'demo' && $superAdmin == 0)
         {
-            $this->delete->setEnabled(false);
-            $this->newUserGroup->setEnabled(false);
+            $this->tbb->delete->setEnabled(false);
+            $this->tbb->add->setEnabled(false);
         }
 
         if(!$this->IsPostBack)

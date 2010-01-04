@@ -57,7 +57,7 @@ class HardwareList extends PageList
 
             if($param['appMode'] == 'demo' && $superAdmin == 0)
             {
-                $this->delete->setEnabled(false);
+                $this->tbb->delete->setEnabled(false);
             }
         }
 
