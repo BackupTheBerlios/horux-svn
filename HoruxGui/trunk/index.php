@@ -13,7 +13,7 @@
 */
 
 // Define if the web site musst be in the SSL mode
-define("SSL", true);
+define("SSL", false);
 
 // Define if horux gui is working in Saas mode
 define("SAAS", true);

@@ -85,10 +85,16 @@ class userGroupAdd extends Page
 
     public function getData()
     {
+        $param = $this->Application->getParameters();
+        $groupId = $this->Application->getUser()->getGroupID();
 
         $data[] = array('Type'=>'Horux', 'id'=>'superUser', 'Text'=>Prado::localize('Super User'), 'access'=>true, 'shortcut'=>false);
         $data[] = array('Type'=>'', 'id'=>'superUserGroup', 'Text'=>Prado::localize('Super User Group'), 'access'=>true, 'shortcut'=>false);
-        $data[] = array('Type'=>'', 'id'=>'configuration', 'Text'=>Prado::localize('Configuration'), 'access'=>true, 'shortcut'=>false);
+
+        if( ($param['appMode'] == 'saas' && $groupId == 1) || $param['appMode'] != 'saas' )
+        {
+            $data[] = array('Type'=>'', 'id'=>'configuration', 'Text'=>Prado::localize('Configuration'), 'access'=>true, 'shortcut'=>false);
+        }
 
         $data[] = array('Type'=>Prado::localize('System'), 'id'=>'site', 'Text'=>Prado::localize('Site'), 'access'=>true, 'shortcut'=>false);
         $data[] = array('Type'=>'', 'id'=>'department', 'Text'=>Prado::localize('Department'), 'access'=>true, 'shortcut'=>false);
@@ -96,7 +102,12 @@ class userGroupAdd extends Page
         $data[] = array('Type'=>'', 'id'=>'openTime', 'Text'=>Prado::localize('Opent time'), 'access'=>true, 'shortcut'=>false);
         $data[] = array('Type'=>'', 'id'=>'alarms', 'Text'=>Prado::localize('Alarms'), 'access'=>true, 'shortcut'=>false);
         $data[] = array('Type'=>'', 'id'=>'notification', 'Text'=>Prado::localize('Notification'), 'access'=>true, 'shortcut'=>false);
-        $data[] = array('Type'=>'', 'id'=>'service', 'Text'=>Prado::localize('Horux Service'), 'access'=>true, 'shortcut'=>false);
+
+        if( ($param['appMode'] == 'saas' && $groupId == 1) || $param['appMode'] != 'saas' )
+        {
+            $data[] = array('Type'=>'', 'id'=>'service', 'Text'=>Prado::localize('Horux Service'), 'access'=>true, 'shortcut'=>false);
+        }
+        
         $data[] = array('Type'=>'', 'id'=>'status', 'Text'=>Prado::localize('Horux Status'), 'access'=>true, 'shortcut'=>false);
 
         $data[] = array('Type'=>Prado::localize('Access'), 'id'=>'user', 'Text'=>Prado::localize('User'), 'access'=>true, 'shortcut'=>false);
@@ -107,11 +118,17 @@ class userGroupAdd extends Page
         $data[] = array('Type'=>'', 'id'=>'nonWorkingDay', 'Text'=>Prado::localize('Non Working Day'), 'access'=>true, 'shortcut'=>false);
 
 
-        $data[] = array('Type'=>Prado::localize('Extensions'), 'id'=>'install_uninstall', 'Text'=>Prado::localize('Install/Uninstall'), 'access'=>true, 'shortcut'=>false);
-        $data[] = array('Type'=>'', 'id'=>'devices', 'Text'=>Prado::localize('Devices Manager'), 'access'=>true, 'shortcut'=>false);
-        $data[] = array('Type'=>'', 'id'=>'components', 'Text'=>Prado::localize('Component Manager'), 'access'=>true, 'shortcut'=>false);
-        $data[] = array('Type'=>'', 'id'=>'template', 'Text'=>Prado::localize('Template Manager'), 'access'=>true, 'shortcut'=>false);
-        $data[] = array('Type'=>'', 'id'=>'language', 'Text'=>Prado::localize('Language Manager'), 'access'=>true, 'shortcut'=>false);
+        if( ($param['appMode'] == 'saas' && $groupId == 1) || $param['appMode'] != 'saas' )
+        {
+            $data[] = array('Type'=>Prado::localize('Extensions'), 'id'=>'install_uninstall', 'Text'=>Prado::localize('Install/Uninstall'), 'access'=>true, 'shortcut'=>false);
+            $data[] = array('Type'=>'', 'id'=>'devices', 'Text'=>Prado::localize('Devices Manager'), 'access'=>true, 'shortcut'=>false);
+            $data[] = array('Type'=>'', 'id'=>'components', 'Text'=>Prado::localize('Component Manager'), 'access'=>true, 'shortcut'=>false);
+            $data[] = array('Type'=>'', 'id'=>'template', 'Text'=>Prado::localize('Template Manager'), 'access'=>true, 'shortcut'=>false);
+            $data[] = array('Type'=>'', 'id'=>'language', 'Text'=>Prado::localize('Language Manager'), 'access'=>true, 'shortcut'=>false);
+        }
+        else
+            $data[] = array('Type'=>Prado::localize('Extensions'), 'id'=>'language', 'Text'=>Prado::localize('Language Manager'), 'access'=>true, 'shortcut'=>false);
+
 
 
         $data[] = array('Type'=>Prado::localize('Tools'), 'id'=>'guilog', 'Text'=>Prado::localize('Horux Gui Log'), 'access'=>true, 'shortcut'=>false);

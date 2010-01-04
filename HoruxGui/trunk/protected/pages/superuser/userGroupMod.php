@@ -173,7 +173,10 @@ class userGroupMod extends Page
         $data[] = array('Type'=>'', 'id'=>'openTime', 'Text'=>Prado::localize('Opent time'), 'access'=>$this->isAccess('openTime.openTimeList'), 'shortcut'=>$this->isShortcut('openTime.openTimeList'));
         $data[] = array('Type'=>'', 'id'=>'alarms', 'Text'=>Prado::localize('Alarms'), 'access'=>$this->isAccess('system.Alarms'), 'shortcut'=>$this->isShortcut('system.Alarms'));
         $data[] = array('Type'=>'', 'id'=>'notification', 'Text'=>Prado::localize('Notification'), 'access'=>$this->isAccess('system.Notification'), 'shortcut'=>$this->isShortcut('system.Notification'));
-        $data[] = array('Type'=>'', 'id'=>'service', 'Text'=>Prado::localize('Horux Service'), 'access'=>$this->isAccess('system.Service'), 'shortcut'=>$this->isShortcut('system.Service'));
+        if( ($param['appMode'] == 'saas' && $groupId == 1) || $param['appMode'] != 'saas' )
+        {
+            $data[] = array('Type'=>'', 'id'=>'service', 'Text'=>Prado::localize('Horux Service'), 'access'=>$this->isAccess('system.Service'), 'shortcut'=>$this->isShortcut('system.Service'));
+        }
         $data[] = array('Type'=>'', 'id'=>'status', 'Text'=>Prado::localize('Horux Status'), 'access'=>$this->isAccess('system.Status'), 'shortcut'=>$this->isShortcut('system.Status'));
 
         $data[] = array('Type'=>Prado::localize('Access'), 'id'=>'user', 'Text'=>Prado::localize('User'), 'access'=>$this->isAccess('user.UserList'), 'shortcut'=>$this->isShortcut('user.UserList'));

@@ -39,6 +39,15 @@
                 </td>
             </tr>
 
+            <tr>
+                <td>
+                    <%[Last status update]%>:
+                </td>
+                <td>
+                    <com:TLabel id="lastUpdate" />
+                </td>
+            </tr>
+
         </tbody>
     </table>
 

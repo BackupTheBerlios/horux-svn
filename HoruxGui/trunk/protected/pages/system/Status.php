@@ -52,8 +52,21 @@ class Status extends Page
         if($xml != "")
         {
 
+            $param = $this->Application->getParameters();
+
             $this->horuxVersion->Text = $xml->appVersion;
+
+            if($param['appMode'] === 'saas')
+            {
+                $this->lastUpdate->Text = $xml->lastUpdate;
+            }
+            else
+            {
+                $this->lastUpdate->Text = '-';
+            }
+            
             $this->horuxTimeLive->Text = $xml->serverLive;
+
 
             $this->plugins = array();
 
@@ -115,7 +128,7 @@ class Status extends Page
 
         $param = $this->Application->getParameters();
 
-        if($param['appMode'] != 'demo')
+        if($param['appMode'] === 'production')
         {
 
             require_once( 'XML/RPC.php' );
@@ -159,7 +172,19 @@ class Status extends Page
         }
         else
         {
-            return file_get_contents('demo.xml');
+            if($param['appMode'] === 'production')
+            {
+                return file_get_contents('demo.xml');
+            }
+            
+            if($param['appMode'] === 'saas')
+            {
+                $dbName = md5($this->db->getConnectionString());
+                if(file_exists('.'.DIRECTORY_SEPARATOR.'tmp'.DIRECTORY_SEPARATOR.'system_status_'.$dbName.'.xml'))
+                    return file_get_contents('.'.DIRECTORY_SEPARATOR.'tmp'.DIRECTORY_SEPARATOR.'system_status_'.$dbName.'.xml');
+                else
+                    return "";
+            }
         }
     }
 }

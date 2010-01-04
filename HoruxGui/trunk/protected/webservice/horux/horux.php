@@ -106,6 +106,23 @@ class horux
         return $data;
     }
 
+
+    /**
+     * @return bool Return true if the system status was well updated, else false
+     * @param mixed $status status of the system
+     * @soapmethod
+     */
+    public function updateSystemStatus($status)
+    {
+        $app = Prado::getApplication();
+      	$db = $app->getModule('horuxDb')->DbConnection;
+        $dbName = md5($db->getConnectionString());
+
+        $fp = fopen('.'.DIRECTORY_SEPARATOR.'tmp'.DIRECTORY_SEPARATOR.'system_status_'.$dbName.'.xml', 'w');
+        fwrite($fp, $status);
+        fclose($fp);
+    }
+
     /**
      * @return mixed Return the data of the database or for specofic table
      * @param mixed $tables array of the table who musst be dump. ALL for all tables

@@ -122,8 +122,15 @@ class UserGroupList extends PageList
         $accessRight[] = "openTime.openTimeList";
         $this->pdf->VCell($cellHeaderWidth,$cellHeaderHeight,utf8_decode(Prado::localize('Alarms')),1,0,'D', true);
         $accessRight[] = "system.Alarms";
-        $this->pdf->VCell($cellHeaderWidth,$cellHeaderHeight,utf8_decode(Prado::localize('Horux Service')),1,0,'D', true);
-        $accessRight[] = "system.Service";
+
+        if( ($param['appMode'] == 'saas' && $groupId == 1) || $param['appMode'] != 'saas' )
+        {
+            $this->pdf->VCell($cellHeaderWidth,$cellHeaderHeight,utf8_decode(Prado::localize('Horux Service')),1,0,'D', true);
+            $accessRight[] = "system.Service";
+        }
+        else
+            $nCell--;
+
         $this->pdf->VCell($cellHeaderWidth,$cellHeaderHeight,utf8_decode(Prado::localize('Horux Status')),1,0,'D', true);
         $accessRight[] = "system.Status";
         $this->pdf->VCell($cellHeaderWidth,$cellHeaderHeight,utf8_decode(Prado::localize('User')),1,0,'D', true);
