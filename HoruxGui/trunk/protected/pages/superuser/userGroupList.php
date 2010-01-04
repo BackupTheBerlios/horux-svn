@@ -70,6 +70,10 @@ class UserGroupList extends PageList
     {
         parent::onPrint();
 
+        $param = $this->Application->getParameters();
+        $groupId = $this->Application->getUser()->getGroupID();
+
+
         $nCell = 0;
         $accessRight = array();
 
@@ -98,8 +102,18 @@ class UserGroupList extends PageList
         $accessRight[] = "superuser.userList";
         $this->pdf->VCell($cellHeaderWidth,$cellHeaderHeight,utf8_decode(Prado::localize('Super User Group')),1,0,'D', true);
         $accessRight[] = "superuser.userGroupList";
-        $this->pdf->VCell($cellHeaderWidth,$cellHeaderHeight,utf8_decode(Prado::localize('Configuration')),1,0,'D', true);
-        $accessRight[] = "configuration.config";
+
+
+
+        if( ($param['appMode'] == 'saas' && $groupId == 1) || $param['appMode'] != 'saas' )
+        {
+            $this->pdf->VCell($cellHeaderWidth,$cellHeaderHeight,utf8_decode(Prado::localize('Configuration')),1,0,'D', true);
+            $accessRight[] = "configuration.config";
+            
+        }
+        else
+            $nCell--;
+
         $this->pdf->VCell($cellHeaderWidth,$cellHeaderHeight,utf8_decode(Prado::localize('Site')),1,0,'D', true);
         $accessRight[] = "site.Site";
         $this->pdf->VCell($cellHeaderWidth,$cellHeaderHeight,utf8_decode(Prado::localize('Hardware')),1,0,'D', true);
@@ -144,14 +158,21 @@ class UserGroupList extends PageList
 
         $this->pdf->SetFillColor(124,124,124);
 
-        $this->pdf->VCell($cellHeaderWidth,$cellHeaderHeight,utf8_decode(Prado::localize('Install/Uninstall')),1,0,'D', true);
-        $accessRight[] = "installation.extensions";
-        $this->pdf->VCell($cellHeaderWidth,$cellHeaderHeight,utf8_decode(Prado::localize('Devices Manager')),1,0,'D', true);
-        $accessRight[] = "installation.devices";
-        $this->pdf->VCell($cellHeaderWidth,$cellHeaderHeight,utf8_decode(Prado::localize('Component Manager')),1,0,'D', true);
-        $accessRight[] = "installation.components";
-        $this->pdf->VCell($cellHeaderWidth,$cellHeaderHeight,utf8_decode(Prado::localize('Template Manager')),1,0,'D', true);
-        $accessRight[] = "installation.template";
+        if( ($param['appMode'] == 'saas' && $groupId == 1) || $param['appMode'] != 'saas' )
+        {
+            $this->pdf->VCell($cellHeaderWidth,$cellHeaderHeight,utf8_decode(Prado::localize('Install/Uninstall')),1,0,'D', true);
+            $accessRight[] = "installation.extensions";
+            $this->pdf->VCell($cellHeaderWidth,$cellHeaderHeight,utf8_decode(Prado::localize('Devices Manager')),1,0,'D', true);
+            $accessRight[] = "installation.devices";
+            $this->pdf->VCell($cellHeaderWidth,$cellHeaderHeight,utf8_decode(Prado::localize('Component Manager')),1,0,'D', true);
+            $accessRight[] = "installation.components";
+            $this->pdf->VCell($cellHeaderWidth,$cellHeaderHeight,utf8_decode(Prado::localize('Template Manager')),1,0,'D', true);
+            $accessRight[] = "installation.template";
+            
+        }
+        else
+            $nCell -= 4;
+
         $this->pdf->VCell($cellHeaderWidth,$cellHeaderHeight,utf8_decode(Prado::localize('Language Manager')),1,0,'D', true);
         $accessRight[] = "installation.language";
         $this->pdf->VCell($cellHeaderWidth,$cellHeaderHeight,utf8_decode(Prado::localize('Global Checkin')),1,0,'D', true);
@@ -180,10 +201,10 @@ class UserGroupList extends PageList
                 $cmd = $this->db->createCommand( "SELECT * FROM hr_gui_permissions  WHERE page LIKE '".$accessRight[$i]."%' AND value=".$g['id'] );
                 $data = $cmd->query();
                 $data = $data->readAll();
-                if($data)
-                $this->pdf->Image("./fpdf/ok.png", $this->pdf->GetX() + ($i*6) + 1.5 , $this->pdf->GetY()+1.5 , 3, 3);
+                if($data || $accessRight[$i] == "controlPanel.ControlPanel" || $accessRight[$i] == "help.About")
+                    $this->pdf->Image("./fpdf/ok.png", $this->pdf->GetX() + ($i*6) + 1.5 , $this->pdf->GetY()+1.5 , 3, 3);
                 else
-                $this->pdf->Image("./fpdf/ko.png", $this->pdf->GetX() + ($i*6) + 1.5 , $this->pdf->GetY()+1.5 , 3, 3);
+                    $this->pdf->Image("./fpdf/ko.png", $this->pdf->GetX() + ($i*6) + 1.5 , $this->pdf->GetY()+1.5 , 3, 3);
             }
             $this->pdf->Ln(6);
         }
@@ -197,7 +218,7 @@ class UserGroupList extends PageList
 
         foreach($groups as $g)
         {
-            $this->pdf->Cell(50,$cellHeaderWidth,utf8_decode( Prado::Localize("Super users in \"{g}\" group", array("g"=>$g['name'])) ),'B',1);
+            $this->pdf->Cell(80,$cellHeaderWidth,utf8_decode( Prado::Localize('Super users in "{g}" group', array("g"=>$g['name'])) ),'B',1);
 
             $cmd = $this->db->createCommand( "SELECT su.name AS username, u.name, u.firstname FROM hr_superusers AS su LEFT JOIN hr_user AS u ON u.id=su.user_id WHERE su.group_id=".$g['id'] );
             $data = $cmd->query();

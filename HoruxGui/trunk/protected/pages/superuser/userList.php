@@ -94,7 +94,17 @@ class UserList extends PageList
         parent::onPrint();
         $this->pdf->AddPage();
 
-        $cmd = $this->db->createCommand( SQL::SQL_GET_ALL_USER_2 );
+        $param = $this->Application->getParameters();
+        $groupId = $this->Application->getUser()->getGroupID();
+
+        if( ($param['appMode'] == 'saas' && $groupId == 1) || $param['appMode'] != 'saas' )
+        {
+            $cmd = $this->db->createCommand( SQL::SQL_GET_ALL_USER_2 );
+        }
+        else
+        {
+            $cmd = $this->db->createCommand( SQL::SQL_GET_ALL_USER_2_SAAS );
+        }
 
         $data =  $cmd->query();
         $data = $data->readAll();

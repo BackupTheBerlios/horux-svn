@@ -22,6 +22,7 @@ class SQL {
     const SQL_GET_ALL_USER = "SELECT u.id, u.name, g.name AS groupName, u.locked FROM hr_superusers AS u LEFT JOIN hr_superuser_group AS g ON g.id = u.group_id";
     const SQL_GET_ALL_USER_SAAS = "SELECT u.id, u.name, g.name AS groupName, u.locked FROM hr_superusers AS u LEFT JOIN hr_superuser_group AS g ON g.id = u.group_id WHERE u.id>1";
     const SQL_GET_ALL_USER_2 = "SELECT su.id, su.name AS username, g.name AS groupName, u.name, u.firstname, u.email2, u.phone2, department FROM hr_superusers AS su LEFT JOIN hr_superuser_group AS g ON g.id = su.group_id LEFT JOIN hr_user AS u ON u.id=su.user_id";
+    const SQL_GET_ALL_USER_2_SAAS = "SELECT su.id, su.name AS username, g.name AS groupName, u.name, u.firstname, u.email2, u.phone2, department FROM hr_superusers AS su LEFT JOIN hr_superuser_group AS g ON g.id = su.group_id LEFT JOIN hr_user AS u ON u.id=su.user_id WHERE su.id>1";
 
 
     const SQL_GET_ID_USER = "SELECT u.id, u.name, g.name AS groupName, u.locked FROM hr_superusers AS u LEFT JOIN hr_superuser_group AS g ON g.id = u.group_id WHERE u.id=:id";

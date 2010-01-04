@@ -12,7 +12,6 @@
 * See COPYRIGHT.php for copyright notices and details.
 */
 
-
 // Define if the web site musst be in the SSL mode
 define("SSL", true);
 
