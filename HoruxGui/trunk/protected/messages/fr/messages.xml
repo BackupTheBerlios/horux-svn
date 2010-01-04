@@ -2605,7 +2605,7 @@
 
 <trans-unit id="475" lock="1">
 <source>You don't have the right to modify this user'</source>
-<target>Vous n'avez pas les droits pour modifier cette utilisateur</target>
+<target>Vous n'avez pas les droits pour modifier cet utilisateur</target>
 </trans-unit>
 
 
@@ -3538,7 +3538,7 @@
 
 <trans-unit id="660" lock="1">
 <source>Are you sure you want to delete this item?</source>
-<target>&#xCA;tes-vous s&#xFB;re de vouloir supprimer cette enregistrement?</target>
+<target>&#xCA;tes-vous s&#xFB;re de vouloir supprimer cet enregistrement?</target>
 </trans-unit>
 
 <trans-unit id="661" lock="1">
