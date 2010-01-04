@@ -16,12 +16,12 @@ Prado::using('horux.pages.controlPanel.sql');
 
 class ControlPanel extends Page
 {
-	
     protected $alarmMessage = array();
 	
     public function onLoad($param)
     {    
         parent::onLoad($param);
+
 
         if($this->isPanelDisplay('dispUserLoggedIn'))
         {

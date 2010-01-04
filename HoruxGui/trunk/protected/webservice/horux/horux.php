@@ -105,6 +105,104 @@ class horux
 
         return $data;
     }
+
+    /**
+     * @return mixed Return the data of the database or for specofic table
+     * @param mixed $tables array of the table who musst be dump. ALL for all tables
+     * @soapmethod
+     */
+    public function relaodDatabaseData($tables)
+    {
+        return $this->dumpDatabase(false, true, $tables);
+    }
+
+    /**
+     * @return mixed Return the full schema of the database
+     * @soapmethod
+     */
+    public function relaodDatabaseSchema()
+    {
+        return $this->dumpDatabase(true, false, 'ALL');
+    }
+
+
+    /**
+     * @param $structure dump the structure
+     * @param $addData dump the data
+     * @param $getTable array of the table who musst be dump. ALL for all tables
+     * @return mixed Return a dump of the database
+     */
+    private function dumpDatabase($structure, $addData, $getTable)
+    {        
+        $app = Prado::getApplication();
+        $db = $app->getModule('horuxDb')->DbConnection;
+        $db->Active=true;
+
+        $cmd= $db->createCommand("SHOW TABLES");
+        $data = $cmd->query();
+        $data->setFetchMode(PDO::FETCH_NUM);
+        $tables = $data->readAll();
+
+        $dump = "";
+
+        foreach($tables as $table)
+        {
+            $tablename = $table[0];
+
+            if($table !== 'ALL' && is_array($getTable))
+            {
+                if(!in_array( $tablename , $getTable))
+                {
+                    continue;
+                }
+            }
+
+            if ($structure === true)
+            {
+                $dump .= "DROP TABLE IF EXISTS `$tablename`;\n";
+
+                $cmd= $db->createCommand("SHOW CREATE TABLE $tablename");
+                $data = $cmd->query();
+                $data->setFetchMode(PDO::FETCH_NUM);
+                $resCreate = $data->read();
+
+                $schema = $resCreate[1].";";
+                $dump .= "$schema\n\n";
+            }
+
+            if ($addData === true)
+            {
+                $cmd= $db->createCommand("SELECT * FROM $tablename");
+                $data = $cmd->query();
+                $data->setFetchMode(PDO::FETCH_ASSOC);
+                if ($data)
+                {
+                    $rows  = $data->readAll();
+                    if($rows)
+                    {
+                        $sFieldnames = join("`,`", array_keys($rows[0]));
+
+                        $sFieldnames = "(`".$sFieldnames."`)";
+
+                        $sInsert = "INSERT INTO `$tablename` $sFieldnames VALUES\n";
+
+
+                        $theData = array();
+
+                        foreach($rows as $row)
+                        {
+                           $theData[] = "('".implode("','",$row)."')";
+                        }
+
+                        $dump .= $sInsert.implode(",\n", $theData).";\n\n";
+                    }
+                }
+            }
+        }
+
+
+        return $dump;
+    }
 }
 
 ?>

@@ -422,9 +422,11 @@ class HeaderBox extends Portlet
 										  ));
 
         if($this->isAccess('installation.extensions'))
+        {
             $this->extensionMenuCount++;
+            $extensions->addSplit();
+        }
 
-		$extensions->addSplit();
 
 		$extensions->addMenuItem( new MenuItem("'<img src=\"./themes/letux/images/menu/icon-16-hardware.png\" />'", 
 										  Prado::localize('Devices Manager',array(), "messages"), 
