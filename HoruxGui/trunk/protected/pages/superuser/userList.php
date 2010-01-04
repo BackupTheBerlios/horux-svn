@@ -37,9 +37,9 @@ class UserList extends PageList
         if($superAdmin)
         {
             $param = $this->Application->getParameters();
-            $userId = $this->Application->getUser()->getUserID();
+            $groupId = $this->Application->getUser()->getGroupID();
 
-            if( ($param['appMode'] == 'saas' && $userId == 1) || $param['appMode'] != 'saas' )
+            if( ($param['appMode'] == 'saas' && $groupId == 1) || $param['appMode'] != 'saas' )
             {
                 $cmd=$this->db->createCommand(SQL::SQL_GET_ALL_USER);
             }

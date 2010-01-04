@@ -23,7 +23,7 @@ class userMod extends Page
         parent::onLoad($param);
 
         $superAdmin = $this->Application->getUser()->getSuperAdmin();
-        $userId = $this->Application->getUser()->getUserID();
+        $groupId = $this->Application->getUser()->getGroupID();
         $param = $this->Application->getParameters();
 
         if($param['appMode'] == 'demo' && $superAdmin == 0)
@@ -33,7 +33,7 @@ class userMod extends Page
         }
 
 
-        if($this->Request['id'] == 1 && $userId!=1 && $param['appMode'] == 'saas')
+        if($this->Request['id'] == 1 && $groupId!=1 && $param['appMode'] == 'saas')
         {
             $pBack = array('koMsg'=>Prado::localize("You don't have the right to modify this user'"));
             $this->Response->redirect($this->Service->constructUrl('superuser.userList',$pBack));

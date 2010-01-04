@@ -22,10 +22,10 @@ class userGroupMod extends Page
     {
         parent::onLoad($param);
 
-        $userId = $this->Application->getUser()->getUserID();
+        $groupId = $this->Application->getUser()->getGroupID();
         $param = $this->Application->getParameters();
         
-        if($this->Request['id'] == 1 && $userId!=1 && $param['appMode'] == 'saas')
+        if($this->Request['id'] == 1 && $groupId!=1 && $param['appMode'] == 'saas')
         {
             $pBack = array('koMsg'=>Prado::localize("You don't have the right to modify this users group"));
             $this->Response->redirect($this->Service->constructUrl('superuser.userGroupList',$pBack));
@@ -155,10 +155,18 @@ class userGroupMod extends Page
     public function getData()
     {
 
+        $param = $this->Application->getParameters();
+        $groupId = $this->Application->getUser()->getGroupID();
+
+
         $data[] = array('Type'=>'Horux', 'id'=>'superUser', 'Text'=>Prado::localize('Super User'), 'access'=>$this->isAccess('superuser.userList'), 'shortcut'=>$this->isShortcut('superuser.userList'));
         $data[] = array('Type'=>'', 'id'=>'superUserGroup', 'Text'=>Prado::localize('Super User Group'), 'access'=>$this->isAccess('superuser.userGroupList'), 'shortcut'=>$this->isShortcut('superuser.userGroupList'));
-        $data[] = array('Type'=>'', 'id'=>'configuration', 'Text'=>Prado::localize('Configuration'), 'access'=>$this->isAccess('configuration.config'), 'shortcut'=>$this->isShortcut('configuration.config'));
 
+        if( ($param['appMode'] == 'saas' && $groupId == 1) || $param['appMode'] != 'saas' )
+        {
+            $data[] = array('Type'=>'', 'id'=>'configuration', 'Text'=>Prado::localize('Configuration'), 'access'=>$this->isAccess('configuration.config'), 'shortcut'=>$this->isShortcut('configuration.config'));
+        }
+        
         $data[] = array('Type'=>Prado::localize('System'), 'id'=>'site', 'Text'=>Prado::localize('Site'), 'access'=>$this->isAccess('site.Site'), 'shortcut'=>$this->isShortcut('site.Site'));
         $data[] = array('Type'=>'', 'id'=>'department', 'Text'=>Prado::localize('Department'), 'access'=>$this->isAccess('site.department'), 'shortcut'=>$this->isShortcut('site.department'));
         $data[] = array('Type'=>'', 'id'=>'hardware', 'Text'=>Prado::localize('Hardware'), 'access'=>$this->isAccess('hardware.HardwareList'), 'shortcut'=>$this->isShortcut('hardware.HardwareList'));
@@ -176,11 +184,16 @@ class userGroupMod extends Page
         $data[] = array('Type'=>'', 'id'=>'nonWorkingDay', 'Text'=>Prado::localize('Non Working Day'), 'access'=>$this->isAccess('nonWorkingDay.nonWorkingDay'), 'shortcut'=>$this->isShortcut('nonWorkingDay.nonWorkingDay'));
 
 
-        $data[] = array('Type'=>Prado::localize('Extensions'), 'id'=>'install_uninstall', 'Text'=>Prado::localize('Install/Uninstall'), 'access'=>$this->isAccess('installation.extensions'), 'shortcut'=>$this->isShortcut('installation.extensions'));
-        $data[] = array('Type'=>'', 'id'=>'devices', 'Text'=>Prado::localize('Devices Manager'), 'access'=>$this->isAccess('installation.devices'), 'shortcut'=>$this->isShortcut('installation.devices'));
-        $data[] = array('Type'=>'', 'id'=>'components', 'Text'=>Prado::localize('Component Manager'), 'access'=>$this->isAccess('installation.components'), 'shortcut'=>$this->isShortcut('installation.components'));
-        $data[] = array('Type'=>'', 'id'=>'template', 'Text'=>Prado::localize('Template Manager'), 'access'=>$this->isAccess('installation.template'), 'shortcut'=>$this->isShortcut('installation.template'));
-        $data[] = array('Type'=>'', 'id'=>'language', 'Text'=>Prado::localize('Language Manager'), 'access'=>$this->isAccess('installation.language'), 'shortcut'=>$this->isShortcut('installation.language'));
+        if( ($param['appMode'] == 'saas' && $groupId == 1) || $param['appMode'] != 'saas' )
+        {
+            $data[] = array('Type'=>Prado::localize('Extensions'), 'id'=>'install_uninstall', 'Text'=>Prado::localize('Install/Uninstall'), 'access'=>$this->isAccess('installation.extensions'), 'shortcut'=>$this->isShortcut('installation.extensions'));
+            $data[] = array('Type'=>'', 'id'=>'devices', 'Text'=>Prado::localize('Devices Manager'), 'access'=>$this->isAccess('installation.devices'), 'shortcut'=>$this->isShortcut('installation.devices'));
+            $data[] = array('Type'=>'', 'id'=>'components', 'Text'=>Prado::localize('Component Manager'), 'access'=>$this->isAccess('installation.components'), 'shortcut'=>$this->isShortcut('installation.components'));
+            $data[] = array('Type'=>'', 'id'=>'template', 'Text'=>Prado::localize('Template Manager'), 'access'=>$this->isAccess('installation.template'), 'shortcut'=>$this->isShortcut('installation.template'));
+            $data[] = array('Type'=>'', 'id'=>'language', 'Text'=>Prado::localize('Language Manager'), 'access'=>$this->isAccess('installation.language'), 'shortcut'=>$this->isShortcut('installation.language'));
+        }
+        else
+            $data[] = array('Type'=>Prado::localize('Extensions'), 'id'=>'language', 'Text'=>Prado::localize('Language Manager'), 'access'=>$this->isAccess('installation.language'), 'shortcut'=>$this->isShortcut('installation.language'));
 
 
         $data[] = array('Type'=>Prado::localize('Tools'), 'id'=>'guilog', 'Text'=>Prado::localize('Horux Gui Log'), 'access'=>$this->isAccess('tool.GuiLog'), 'shortcut'=>$this->isShortcut('tool.GuiLog'));
