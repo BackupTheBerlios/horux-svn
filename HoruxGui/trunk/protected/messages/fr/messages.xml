@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <xliff version="1.0">
- <file source-language="FR" target-language="fr" datatype="plaintext" original="messages" date="2009-12-17T17:44:07Z" product-name="messages">
+ <file source-language="FR" target-language="fr" datatype="plaintext" original="messages" date="2010-01-04T12:13:55Z" product-name="messages">
   <body>
   
 <trans-unit id="1" lock="1">
@@ -3833,6 +3833,11 @@
 <trans-unit id="718">
 <source>Print Card</source>
 <target>Imprimer la carte</target>
+</trans-unit>
+
+<trans-unit id="719">
+<source>You don't have the right to modify this users group</source>
+<target>Vous n'avez pas les droits pour modifier ce groupe d'utilisateurs</target>
 </trans-unit>
 </body>
 </file>

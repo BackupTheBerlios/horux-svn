@@ -23,6 +23,7 @@ class userMod extends Page
         parent::onLoad($param);
 
         $superAdmin = $this->Application->getUser()->getSuperAdmin();
+        $userId = $this->Application->getUser()->getUserID();
         $param = $this->Application->getParameters();
 
         if($param['appMode'] == 'demo' && $superAdmin == 0)
@@ -31,6 +32,12 @@ class userMod extends Page
             $this->tbb->Save->setEnabled(false);
         }
 
+
+        if($this->Request['id'] == 1 && $userId!=1 && $param['appMode'] == 'saas')
+        {
+            $pBack = array('koMsg'=>Prado::localize("You don't have the right to modify this user'"));
+            $this->Response->redirect($this->Service->constructUrl('superuser.userList',$pBack));
+        }
 
         if(!$this->isPostBack)
         {
@@ -89,7 +96,18 @@ class userMod extends Page
 
     protected function getDataGroup()
     {
-        $cmd=$this->db->createCommand(SQL::SQL_GET_ALL_GROUP);
+        $param = $this->Application->getParameters();
+        $userId = $this->Application->getUser()->getUserID();
+
+        if( ($param['appMode'] == 'saas' && $userId == 1) || $param['appMode'] != 'saas' )
+        {
+            $cmd=$this->db->createCommand(SQL::SQL_GET_ALL_GROUP);
+        }
+        else
+        {
+            $cmd=$this->db->createCommand(SQL::SQL_GET_ALL_GROUP_SAAS);
+        }
+        
         $data=$cmd->query();
 
         return $data;

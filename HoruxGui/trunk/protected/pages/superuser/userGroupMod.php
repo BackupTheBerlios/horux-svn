@@ -22,6 +22,15 @@ class userGroupMod extends Page
     {
         parent::onLoad($param);
 
+        $userId = $this->Application->getUser()->getUserID();
+        $param = $this->Application->getParameters();
+        
+        if($this->Request['id'] == 1 && $userId!=1 && $param['appMode'] == 'saas')
+        {
+            $pBack = array('koMsg'=>Prado::localize("You don't have the right to modify this users group"));
+            $this->Response->redirect($this->Service->constructUrl('superuser.userGroupList',$pBack));
+        }
+
         if(!$this->isPostBack)
         {
             $userId=$this->Application->getUser()->getUserId();

@@ -18,7 +18,18 @@ class UserGroupList extends PageList
 {
     protected function getData()
     {
-        $cmd=$this->db->createCommand(SQL::SQL_GET_ALL_GROUP);
+        $param = $this->Application->getParameters();
+        $userId = $this->Application->getUser()->getUserID();
+
+        if( ($param['appMode'] == 'saas' && $userId == 1) || $param['appMode'] != 'saas' )
+        {
+            $cmd=$this->db->createCommand(SQL::SQL_GET_ALL_GROUP);
+        }
+        else
+        {
+            $cmd=$this->db->createCommand(SQL::SQL_GET_ALL_GROUP_SAAS);
+        }
+
         $dataReader=$cmd->query();
 
         $connection->Active=false;
