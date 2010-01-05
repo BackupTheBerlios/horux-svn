@@ -69,6 +69,9 @@ class CDbHandling : public QObject
         */
         QDomElement getInfo ( QDomDocument xml_info );
 
+        bool loadSchema(QString queries);
+        bool loadData(QString queries);
+
     protected:
         /*!
           Constructor

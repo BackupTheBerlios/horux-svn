@@ -90,7 +90,6 @@ bool CDbHandling::init()
 
         if ( dbInterface->open ( host, db, username, password ) )
         {
-
             started = true;
 
             return true;
@@ -217,4 +216,46 @@ QDomElement CDbHandling::getInfo ( QDomDocument xml_info )
     plugins.appendChild ( plugin );
 
     return plugins;
+}
+
+bool CDbHandling::loadSchema(QString queries)
+{
+    qDebug ( "Load the db schema" );
+
+    if ( loadPlugin() )
+    {
+        QSettings settings ( QCoreApplication::instance()->applicationDirPath() +"/horux.ini", QSettings::IniFormat );
+
+        settings.beginGroup ( "SQL" );
+
+        if ( !settings.contains ( "host" ) ) settings.setValue ( "host", "localhost" );
+        if ( !settings.contains ( "db" ) ) settings.setValue ( "db", "horux" );
+        if ( !settings.contains ( "username" ) ) settings.setValue ( "username", "root" );
+        if ( !settings.contains ( "password" ) ) settings.setValue ( "password", "" );
+
+        QString host = settings.value ( "host", "localhost" ).toString();
+        QString db = settings.value ( "db", "horux" ).toString();
+        QString username = settings.value ( "username", "root" ).toString();
+        QString password = settings.value ( "password", "" ).toString();
+
+        settings.endGroup();
+
+        if ( dbInterface->loadSchema ( host, db, username, password, queries ) )
+        {
+            started = true;
+            return true;
+        }
+
+    }
+    return false;
+
+}
+
+bool CDbHandling::loadData(QString queries)
+{
+    qDebug ( "Load the db data" );
+    if(started)
+        return dbInterface->loadData ( queries );
+
+    return false;
 }

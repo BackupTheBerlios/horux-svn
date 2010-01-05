@@ -72,3 +72,5 @@ unix {
 }
 
 include(../qtservice-2.6-opensource/src/qtservice.pri)
+include(../qtsoap-2.7_1-opensource/src/qtsoap.pri)
+

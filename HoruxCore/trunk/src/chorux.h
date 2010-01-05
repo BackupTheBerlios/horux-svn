@@ -20,6 +20,7 @@
 #ifndef CHORUX_H
 #define CHORUX_H
 #include <QtXml>
+#include <QtSoapHttpTransport>
 #include <QObject>
 
 class MaiaXmlRpcServer;
@@ -96,7 +97,23 @@ class CHorux : public QObject
         void startDevice ( QString username, QString password, QString id );
 
 
+    private slots:
+        /*!
+          Read the soap response from Horux Gui
+        */
+        void readSoapResponse();
+
+        /*!
+          Read the SSL error when doing a SOAP transaction
+        */
+        void soapSSLErrors ( QNetworkReply * reply, const QList<QSslError> & errors );
+
+    private:
+        void initSAASMode();
+
     protected:
+        enum SAAS_REQUEST { NONE, UPDATE_INFO, RELOAD_SCHEMA, RELAOD_DATA, SYNC_DATA };
+
         //! call th slot internaly or not
         bool isInternal;
 
@@ -108,6 +125,21 @@ class CHorux : public QObject
 
         //! xmlrpc server
         MaiaXmlRpcServer *ptr_xmlRpcServer;
+
+        //! soap client
+        QtSoapHttpTransport soapClient;
+        QTimer *timerSoapInfo;
+
+        //! saas param
+        bool saas;
+        QString saas_host;
+        bool saas_ssl;
+        QString saas_username;
+        QString saas_password;
+        QString saas_path;
+        int saas_info_send_timer;
+
+        SAAS_REQUEST saasRequest;
 
         //! Notification
         CNotification *notification;

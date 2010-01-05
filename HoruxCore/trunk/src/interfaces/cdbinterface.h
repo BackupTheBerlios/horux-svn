@@ -44,11 +44,35 @@ class CDbInterface
           @param db Name of the database
           @param username Name of the user having access to the database
           @param password Password of the user having access to the database
+          @return return true if the db is well opened
         */
         virtual bool open ( const QString host,
                             const QString db,
                             const QString username,
                             const QString password ) = 0;
+
+        /*!
+          Load the database schema
+
+          @param host Host of the database (default "localhost")
+          @param db Name of the database
+          @param username Name of the user having access to the database
+          @param password Password of the user having access to the database
+          @param queries Queries of the db schema
+          @return return true if the db is well loaded
+        */
+        virtual bool loadSchema ( const QString host,
+                            const QString db,
+                            const QString username,
+                            const QString password,
+                            const QString queries) = 0;
+
+        /*!
+          Load the database data
+          @param queries Queries of the data to be load
+          @return return true if the db is well opened
+        */
+        virtual bool loadData ( const QString queries ) = 0;
 
         /*!
           Close the database

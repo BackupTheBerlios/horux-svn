@@ -45,6 +45,14 @@ class DbMysqlPlugin : public QObject, CDbInterface
                       const QString username,
                       const QString password);
 
+    bool loadSchema ( const QString host,
+                        const QString db,
+                        const QString username,
+                        const QString password,
+                        const QString queries);
+
+    bool loadData ( const QString queries );
+
     void close();
 
     QMap<int, QString> getDeviceList();

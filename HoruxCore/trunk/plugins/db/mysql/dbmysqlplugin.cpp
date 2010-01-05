@@ -45,6 +45,88 @@ bool DbMysqlPlugin::open(const QString host,
     return false;
 }
 
+bool DbMysqlPlugin::loadSchema ( const QString host,
+                    const QString db,
+                    const QString username,
+                    const QString password,
+                    const QString queries)
+{
+
+    dbase = QSqlDatabase::addDatabase("QMYSQL");
+    dbase.setHostName(host);
+    dbase.setUserName(username);
+    dbase.setPassword(password);
+
+    bool result = dbase.open();
+
+    if(!result)
+    {
+        qDebug() << "Cannot open the db connection";
+        return false;
+    }
+
+    //create the database
+    QSqlQuery createDb;
+
+    if(createDb.exec("CREATE DATABASE " + db))
+    {
+        qDebug() << "Database created";
+
+        dbase.close();
+        dbase.setDatabaseName(db);
+        dbase.open();
+        //create the table from queries
+
+        QStringList queryList = queries.split("\n\n");
+
+        foreach(QString q, queryList)
+        {
+            if(!q.isEmpty())
+            {
+                QSqlQuery createTable;
+                if(!createTable.exec(q))
+                {
+                    QSqlQuery drop;
+                    drop.exec("DROP DATABASE " + db);
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    return false;
+}
+
+bool DbMysqlPlugin::loadData ( const QString queries )
+{
+    if(dbase.isOpen())
+    {
+        QStringList queryList = queries.split("\n\n");
+
+        foreach(QString q, queryList)
+        {
+            if(!q.isEmpty())
+            {
+                QSqlQuery createTable;
+                if(!createTable.exec(q))
+                {
+                    qDebug() << q;
+                    qWarning() << createTable.lastError().databaseText();
+                    QSqlQuery drop;
+                    drop.exec("DROP DATABASE " + dbase.databaseName());
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    return false;
+}
+
 void DbMysqlPlugin::close()
 {
   if(dbase.isOpen())
