@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <xliff version="1.0">
- <file source-language="FR" target-language="fr" datatype="plaintext" original="messages" date="2010-01-04T16:00:13Z" product-name="messages">
+ <file source-language="FR" target-language="fr" datatype="plaintext" original="messages" date="2010-01-05T13:55:34Z" product-name="messages">
   <body>
   
 <trans-unit id="1" lock="1">
@@ -3848,6 +3848,26 @@
 <trans-unit id="721">
 <source>Last status update</source>
 <target>Derni&#xE8;re mise &#xE0; jour du status</target>
+</trans-unit>
+
+<trans-unit id="722">
+<source>Reload database</source>
+<target>Rechargement de la base de donn&#xE9;es</target>
+</trans-unit>
+
+<trans-unit id="723">
+<source>Database reloaded</source>
+<target>La base de donn&#xE9;es a &#xE9;t&#xE9; recharg&#xE9;e</target>
+</trans-unit>
+
+<trans-unit id="724">
+<source>Horux notification: Reload database...</source>
+<target>Notification Horux :Rechargement de la base de donn&#xE9;es</target>
+</trans-unit>
+
+<trans-unit id="725">
+<source>Horux notification: Database reloaded</source>
+<target>Notification Horux : Base de donn&#xE9;es recharg&#xE9;e</target>
 </trans-unit>
 </body>
 </file>

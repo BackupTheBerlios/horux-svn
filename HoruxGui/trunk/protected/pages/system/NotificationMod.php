@@ -134,6 +134,8 @@ class NotificationMod extends Page
         $this->setCheckBox($this->n_1015, "ALARM", 1015);
         $this->setCheckBox($this->n_1016, "ALARM", 1016);
         $this->setCheckBox($this->n_1200, "ALARM", 1200);
+        $this->setCheckBox($this->n_1300, "ALARM", 1300);
+        $this->setCheckBox($this->n_1301, "ALARM", 1301);
 
     }
 
@@ -269,6 +271,8 @@ class NotificationMod extends Page
         if($this->n_1015->getChecked()) $this->insertNotificationCode($lastId, "ALARM", $this->n_1015->Value );
         if($this->n_1016->getChecked()) $this->insertNotificationCode($lastId, "ALARM", $this->n_1016->Value );
         if($this->n_1200->getChecked()) $this->insertNotificationCode($lastId, "ALARM", $this->n_1200->Value );
+        if($this->n_1300->getChecked()) $this->insertNotificationCode($lastId, "ALARM", $this->n_1300->Value );
+        if($this->n_1301->getChecked()) $this->insertNotificationCode($lastId, "ALARM", $this->n_1301->Value );
 
         $this->log("Modify the notification: ".$this->name->SafeText);
 

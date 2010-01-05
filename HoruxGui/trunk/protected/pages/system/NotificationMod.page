@@ -124,6 +124,8 @@
                         <com:TCheckBox InputAttributes.value="1015" Text="<%[Device antenna off]%>" ID="n_1015" /><br/>
                         <com:TCheckBox InputAttributes.value="1016" Text="<%[Device connection error]%>" ID="n_1016" /><br/>
                         <com:TCheckBox InputAttributes.value="1200" Text="<%[Horux XMLRPC server not started]%>" ID="n_1200" /><br/>
+                        <com:TCheckBox InputAttributes.value="1300" Text="<%[Reload database]%>" ID="n_1300" /><br/>
+                        <com:TCheckBox InputAttributes.value="1301" Text="<%[Database reloaded]%>" ID="n_1301" /><br/>
                     </td>
                 </tr>
 

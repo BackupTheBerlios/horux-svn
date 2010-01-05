@@ -27,7 +27,6 @@ class Notification
         foreach($param as $p)
         {
              $key = "";
-             //$param[$v[0]] = $v[1];
              foreach($p as $k=>$v)
              {
                 if($k == "key")
@@ -99,11 +98,16 @@ class Notification
 
                 if($type == "ALARM")
                 {
-                    $sql = "SELECT * FROM hr_device WHERE id=$object";
-                    $cmd= $db->createCommand($sql);
-                    $device = $cmd->query();
-                    $device = $device->read();
-                    $device = $device['name'];
+                    if($object>0)
+                    {
+                        $sql = "SELECT * FROM hr_device WHERE id=$object";
+                        $cmd= $db->createCommand($sql);
+                        $device = $cmd->query();
+                        $device = $device->read();
+                        $device = $device['name'];
+                    }
+                    else
+                        $device = "";
 
                     $site = "";
                     $sql = "SELECT * FROM hr_site WHERE id=1";
@@ -180,6 +184,12 @@ class Notification
                             break;
                         case 1200:
                             $mailer->setObject(Prado::localize("Horux notification: Cannot start Horux XMLRPC server"));
+                            break;
+                        case 1300:
+                            $mailer->setObject(Prado::localize("Horux notification: Reload database..."));
+                            break;
+                        case 1301:
+                            $mailer->setObject(Prado::localize("Horux notification: Database reloaded"));
                             break;
                     }
                 }
