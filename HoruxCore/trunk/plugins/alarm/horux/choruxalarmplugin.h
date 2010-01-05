@@ -54,6 +54,7 @@
 
 //! System
 #define ALARM_XML_RPC_SERVER                "1200" //! old 1050
+#define ALARM_SOAP_ERROR                    "1201"
 
 
 

@@ -112,7 +112,7 @@ class CHorux : public QObject
         void initSAASMode();
 
     protected:
-        enum SAAS_REQUEST { NONE, UPDATE_INFO, RELOAD_SCHEMA, RELAOD_DATA, SYNC_DATA };
+        enum SAAS_REQUEST { NONE, UPDATE_INFO, RELOAD_SCHEMA, RELAOD_DATA, SYNC_DATA, NOTIFICATION };
 
         //! call th slot internaly or not
         bool isInternal;

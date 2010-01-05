@@ -401,11 +401,29 @@ QString CHorux::getInfo( )
 
 void CHorux::sendNotification(QMap<QString, QVariant> params)
 {
-    // check if we have at least one notification according to the type
-    if(CFactory::getDbHandling()->plugin()->countNotification(params) == 0) return;
+    QtSoapMessage message;
+    message.setMethod("sendMail");
 
-    ptr_this->notification->notify(params);
+    QtSoapStruct *param = new QtSoapStruct(QtSoapQName("param"));
+    QMapIterator<QString, QVariant> i(params);
+    while (i.hasNext())
+    {
+        i.next();
+        QString key = i.key();
+        QString value = i.value().toString();
 
+        QtSoapStruct *item = new QtSoapStruct(QtSoapQName("item"));
+        item->insert(new QtSoapSimpleType(QtSoapQName("key"), key));
+        item->insert(new QtSoapSimpleType(QtSoapQName("value"), value));
+
+        param->insert(item);
+
+    }
+    message.addMethodArgument(param);
+
+    ptr_this->saasRequest = NOTIFICATION;
+
+    ptr_this->soapClient.submitRequest(message, ptr_this->saas_path+"/index.php?soap=notification&password=" + ptr_this->saas_password + "&username=" + ptr_this->saas_username);
 }
 
 void CHorux::readSoapResponse()
@@ -460,6 +478,10 @@ void CHorux::readSoapResponse()
        case SYNC_DATA:
         saasRequest = NONE;
         break;
+       case NOTIFICATION:
+        saasRequest = NONE;
+        break;
+
     }
 
 
