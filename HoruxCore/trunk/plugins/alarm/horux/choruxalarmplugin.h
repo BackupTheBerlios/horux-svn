@@ -54,7 +54,10 @@
 
 //! System
 #define ALARM_XML_RPC_SERVER                "1200" //! old 1050
-#define ALARM_SOAP_ERROR                    "1201"
+
+//! DB
+#define ALARM_RELAOD_DB                    "1300"
+#define ALARM_RELAOD_DB_OK                 "1301"
 
 
 

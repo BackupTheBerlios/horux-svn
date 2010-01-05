@@ -111,7 +111,6 @@ class CHorux : public QObject
         void initSAASMode();
 
     protected:
-        enum SAAS_REQUEST { NONE, UPDATE_INFO, RELOAD_SCHEMA, RELAOD_DATA, SYNC_DATA, NOTIFICATION };
 
         //! call th slot internaly or not
         bool isInternal;
@@ -137,8 +136,6 @@ class CHorux : public QObject
         QString saas_password;
         QString saas_path;
         int saas_info_send_timer;
-
-        SAAS_REQUEST saasRequest;
 
 
         //! pointer of the instance

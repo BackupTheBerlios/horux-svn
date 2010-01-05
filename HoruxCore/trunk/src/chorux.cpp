@@ -34,7 +34,6 @@ CHorux::CHorux ( QObject *parent )
     ptr_xmlRpcServer = NULL;
     ptr_this = this;
     timerSoapInfo = NULL;
-    saasRequest = NONE;
 
     initSAASMode();
 }
@@ -94,12 +93,31 @@ bool CHorux::startEngine()
     bool xmlrpc = settings.value ( "xmlrpc", "true" ).toBool();
     bool saas = settings.value ( "saas", "false" ).toBool();
 
-    if(saas)
-    {
-        timerSoapInfo->start(1000 * 60 * saas_info_send_timer); //send the system info every 5 minutes
-    }
 
     serverStarted = QDateTime::currentDateTime();
+
+    //! 1, initialize the db engine
+    if ( !CFactory::getDbHandling()->init() )
+    {
+        delete CFactory::getDbHandling();
+
+        if(saas)
+        {
+            QMap<QString, QVariant> params;
+            params["type"] = "ALARM";
+            params["code"] = "1300";
+            params["object"] = "0";
+
+            CHorux::sendNotification(params);
+
+            QtSoapMessage message;
+            message.setMethod("reloadDatabaseSchema");
+
+            soapClient.submitRequest(message, saas_path+"/index.php?soap=horux&password=" + saas_password + "&username=" + saas_username);
+        }
+
+        return false;
+    }
 
     // the alarm handling monitor the device event
     connect ( CFactory::getDeviceHandling(),
@@ -163,23 +181,6 @@ bool CHorux::startEngine()
               CFactory::getAlarmHandling(),
               SIGNAL ( alarmMonitor(QString) ) );
 
-    //! 1, initialize the db engine
-    if ( !CFactory::getDbHandling()->init() )
-    {
-        delete CFactory::getDbHandling();
-
-        if(saas)
-        {
-            QtSoapMessage message;
-            message.setMethod("reloadDatabaseSchema");
-            saasRequest = RELOAD_SCHEMA;
-
-            soapClient.submitRequest(message, saas_path+"/index.php?soap=horux&password=" + saas_password + "&username=" + saas_username);
-        }
-
-        return false;
-    }
-
     //! 2, initialize the log engine
     if ( !CFactory::getLog()->init() )
     {
@@ -208,6 +209,10 @@ bool CHorux::startEngine()
         return false;
     }
 
+    if(saas)
+    {
+        timerSoapInfo->start(1000 * 60 * saas_info_send_timer); //send the system info every 5 minutes
+    }
 
     if ( !ptr_xmlRpcServer && xmlrpc)
     {
@@ -374,21 +379,11 @@ QString CHorux::getInfo( )
     QDomNode xmlNode =  xml_info.createProcessingInstruction ( "xml", "version=\"1.0\" encoding=\"ISO-8859-1\"" );
     xml_info.insertBefore ( xmlNode, xml_info.firstChild() );
 
-    QSettings settings ( QCoreApplication::instance()->applicationDirPath() +"/horux.ini", QSettings::IniFormat );
-
-    settings.beginGroup ( "Webservice" );
-
-    if ( !settings.contains ( "saas" ) ) settings.setValue ( "saas", false );
-
-    bool saas = settings.value ( "saas", "false" ).toBool();
-
     if(saas)
     {
         QtSoapMessage message;
         message.setMethod("updateSystemStatus");
         message.addMethodArgument("status","",xml_info.toString());
-
-        saasRequest = UPDATE_INFO;
 
         soapClient.submitRequest(message, saas_path+"/index.php?soap=horux&password=" + saas_password + "&username=" + saas_username);
 
@@ -419,8 +414,6 @@ void CHorux::sendNotification(QMap<QString, QVariant> params)
     }
     message.addMethodArgument(param);
 
-    ptr_this->saasRequest = NOTIFICATION;
-
     ptr_this->soapClient.submitRequest(message, ptr_this->saas_path+"/index.php?soap=notification&password=" + ptr_this->saas_password + "&username=" + ptr_this->saas_username);
 }
 
@@ -428,62 +421,60 @@ void CHorux::readSoapResponse()
 {
     const QtSoapMessage &response = soapClient.getResponse();
     if (response.isFault()) {
-        qDebug() << "Not able to call the Horux GUI web service.";
+        qDebug() << "Not able to call the Horux GUI web service. (" << response.method().name().name() << ")";
         return;
     }
 
-    qDebug() << "SOAP OK";
+    qDebug() << "SOAP OK (" << response.method().name().name() << ")";
 
-    switch(saasRequest)
+    if( response.method().name().name() == "reloadDatabaseSchemaResponse")
     {
-       case NONE:
-        break;
-       case UPDATE_INFO:
-        saasRequest = NONE;
-        break;
-       case RELOAD_SCHEMA:
+        qDebug() << "reload schema";
+        const QtSoapType &returnValue = response.returnValue();
+        QString queries = returnValue.toString();
+
+        if ( CFactory::getDbHandling()->loadSchema(queries) )
         {
-            qDebug() << "reload schema";
-            const QtSoapType &returnValue = response.returnValue();
-            QString queries = returnValue.toString();
-
-            if ( CFactory::getDbHandling()->loadSchema(queries) )
-            {
-                QtSoapMessage message;
-                message.setMethod("reloadDatabaseData");
-                message.addMethodArgument("tables","","ALL");
-                saasRequest = RELAOD_DATA;
-
-                soapClient.submitRequest(message, saas_path+"/index.php?soap=horux&password=" + saas_password + "&username=" + saas_username);
-
-            }
+            QtSoapMessage message;
+            message.setMethod("reloadDatabaseData");
+            message.addMethodArgument("tables","","ALL");
+            soapClient.submitRequest(message, saas_path+"/index.php?soap=horux&password=" + saas_password + "&username=" + saas_username);
         }
-        break;
-       case RELAOD_DATA:
-        {
-            qDebug() << "reload data";
-            const QtSoapType &returnValue = response.returnValue();
-            QString queries = returnValue.toString();
 
-            if ( CFactory::getDbHandling()->loadData(queries) )
-            {
-                saasRequest = NONE;
-                delete CFactory::getDbHandling();
-                startEngine();
-            }
-        }
-        break;
-       case SYNC_DATA:
-        saasRequest = NONE;
-        break;
-       case NOTIFICATION:
-        saasRequest = NONE;
-        break;
-
+        return;
     }
 
+    if( response.method().name().name() == "reloadDatabaseDataResponse")
+    {
+        const QtSoapType &returnValue = response.returnValue();
+        QString queries = returnValue.toString();
 
+        if ( CFactory::getDbHandling()->loadData(queries) )
+        {
 
+            QMap<QString, QVariant> params;
+            params["type"] = "ALARM";
+            params["code"] = "1301";
+            params["object"] = "0";
+
+            CHorux::sendNotification(params);
+
+            delete CFactory::getDbHandling();
+            startEngine();
+        }
+
+        return;
+    }
+
+    if( response.method().name().name() == "sendMailResponse")
+    {
+        return;
+    }
+
+    if( response.method().name().name() == "updateSystemStatusResponse")
+    {
+        return;
+    }
 }
 
 void CHorux::soapSSLErrors ( QNetworkReply * reply, const QList<QSslError> & errors )
