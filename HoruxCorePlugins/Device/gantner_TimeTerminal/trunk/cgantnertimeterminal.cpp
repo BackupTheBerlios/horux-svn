@@ -348,7 +348,6 @@ void CGantnerTimeTerminal::commandFinished(  int id, bool error)
                     ftp->close();
                     break;
                 case READ_REPLACE:
-                    emit deviceConnection(this->id,true);
                     //check if the device was replace by a new one
                     idReadReplace = ftp->get("reload.txt");
                     break;
@@ -381,7 +380,7 @@ void CGantnerTimeTerminal::commandFinished(  int id, bool error)
     if(id == idReadReplace)
     {
         if(!error)
-        {
+        {            
             qDebug("YES reload.txt");
             // no error, this mean that the device was replace and must be ialized
             idRemoveReplace = ftp->remove("reload.txt");
@@ -390,7 +389,6 @@ void CGantnerTimeTerminal::commandFinished(  int id, bool error)
         {
             // cannot read the file replace.txt, this mean that the device was not replaced
             qDebug("NO reload.txt");
-
             // read the file config
             qDebug("READ THE CONFIG FILE");
             action = READ_CONFIG_FILE;
@@ -697,6 +695,8 @@ void CGantnerTimeTerminal::checkConfigFile(QString xml)
         qDebug("CONFIG OK");
         action = WAITING;
         ftp->close();
+
+        emit deviceConnection(this->id,true);
 
         //send down.dat every three secondes if available
         timerSendFile = startTimer(3000);
