@@ -24,7 +24,6 @@
 #include <QObject>
 
 class MaiaXmlRpcServer;
-class CNotification;
 
 /**
     Main class of the Horux applications
@@ -141,8 +140,6 @@ class CHorux : public QObject
 
         SAAS_REQUEST saasRequest;
 
-        //! Notification
-        CNotification *notification;
 
         //! pointer of the instance
         static CHorux *ptr_this;

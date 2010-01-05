@@ -23,7 +23,6 @@
 #include "maiaXmlRpcServer.h"
 #include "cxmlfactory.h"
 #include "include.h"
-#include "cnotification.h"
 #include <QFile>
 
 CHorux *CHorux::ptr_this = NULL;
@@ -35,7 +34,6 @@ CHorux::CHorux ( QObject *parent )
     ptr_xmlRpcServer = NULL;
     ptr_this = this;
     timerSoapInfo = NULL;
-    notification = new CNotification(this);
     saasRequest = NONE;
 
     initSAASMode();
