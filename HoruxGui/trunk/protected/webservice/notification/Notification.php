@@ -13,43 +13,59 @@
 * See COPYRIGHT.php for copyright notices and details.
 */
 
-class Notification extends TXmlRpcServer
+class Notification
 {
+    /**
+     * @param array $param parameters of the notification
+     * @return string return the result
+     * @soapmethod
+     */
     public function sendMail($param)
     {
-        $code = $param->structmem("code");
-        if($code)
-            $code = $code->scalarval();
-        $type = $param->structmem("type");
-        if($type)
-            $type = $type->scalarval();
+        $ret = "";
+        $p_tmp = array();
+        foreach($param as $p)
+        {
+             $key = "";
+             //$param[$v[0]] = $v[1];
+             foreach($p as $k=>$v)
+             {
+                if($k == "key")
+                    $key = $v;
+                if($k== "value")
+                {
+                   $p_tmp[$key] = $v;
+                   $ret .= $key.":".$v.",";
+                }
+             }
+        }
+
+        $param = $p_tmp;
+
+        $type = $param["type"];
+        $code = $param["code"];
 
         $userId = false;
         $serialNumber = false;
         $entryId = false;
         $object = false;
 
+
         switch($type)
         {
             case "ALARM":
-                $object = $param->structmem("object");
-                if($object)
-                    $object = $object->scalarval();
+                $object = $param["object"];
                 break;
             case "ACCESS":
-                $userId = $param->structmem("userId");
-                if($userId)
-                    $userId = $userId->scalarval();
-                $serialNumber = $param->structmem("serialNumber");
-                if($serialNumber)
-                    $serialNumber = $serialNumber->scalarval();
-                $entryId = $param->structmem("entryId");
-                if($entryId)
-                    $entryId = $entryId->scalarval();
+                $userId = $param["userId"];
+                $serialNumber = $param["serialNumber"];
+                $entryId = $param["entryId"];
                 break;
+            default:
+                return "Type mismatch";
         }
 
-		$app = $this->getApplication();
+		$app = Prado::getApplication();
       	$db = $app->getModule('horuxDb')->DbConnection;
         $db->Active=true;
         
@@ -84,7 +100,6 @@ class Notification extends TXmlRpcServer
                 if($type == "ALARM")
                 {
                     $sql = "SELECT * FROM hr_device WHERE id=$object";
-
                     $cmd= $db->createCommand($sql);
                     $device = $cmd->query();
                     $device = $device->read();
@@ -102,8 +117,9 @@ class Notification extends TXmlRpcServer
                     $data = $cmd->query();
                     $data = $data->read();
                     $lang = $data['param'];
-                    $this->getApplication()->getGlobalization()->setCulture($lang);
+                    Prado::getApplication()->getGlobalization()->setCulture($lang);
                     $body = "";
+
 
                     $body = file_get_contents("./protected/webservice/notification/alarm/$lang/$code.txt");
 
@@ -167,6 +183,7 @@ class Notification extends TXmlRpcServer
                             break;
                     }
                 }
+
                 if($type == "ACCESS")
                 {
                     $user = "";
@@ -264,9 +281,11 @@ class Notification extends TXmlRpcServer
                 $mailer->sendTextMail(true);
             }
         }
+
+        return "ok";
     }
 
-    public function dispatch($params)
+    /*public function dispatch($params)
     {
         if($params->getNumParams() == 1)
         {
@@ -307,19 +326,13 @@ class Notification extends TXmlRpcServer
                 $this->sendMail($param);
             }
             
-            return new XML_RPC_Response(new XML_RPC_Value("ok", "string"));
+            return "ok";
         }
         else
         {
-           return new XML_RPC_Response(0, 1, "Bad parameter");
+           return "Bad parameter";
         }
-    }
-
-    protected function registerFunction()
-    {
-        return array('notification' => array(
-            'function' => array($this, 'dispatch') ) );
-    }
+    }*/
 }
 
 ?>

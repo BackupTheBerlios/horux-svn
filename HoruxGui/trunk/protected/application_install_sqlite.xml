@@ -53,11 +53,10 @@
         <pages MasterClass="themes.letux.MainLayout" >
         </pages>		
     </service>
-    <service id="xmlrpc" class="System.Web.Services.TXmlRpcService">
-      <xmlrpc id="notification" provider="Application.webservice.notification.Notification" />
-    </service>
     <service id="soap" class="System.Web.Services.TSoapService">
+        <soap id="notification" provider="Application.webservice.notification.Notification" />
         <soap id="soapComponent" provider="Application.webservice.component.component" />
+        <soap id="horux" provider="Application.webservice.horux.horux" />
     </service>
 
   </services>

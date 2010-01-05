@@ -128,7 +128,7 @@ class horux
      * @param mixed $tables array of the table who musst be dump. ALL for all tables
      * @soapmethod
      */
-    public function relaodDatabaseData($tables)
+    public function reloadDatabaseData($tables)
     {
         return $this->dumpDatabase(false, true, $tables);
     }
@@ -137,7 +137,7 @@ class horux
      * @return mixed Return the full schema of the database
      * @soapmethod
      */
-    public function relaodDatabaseSchema()
+    public function reloadDatabaseSchema()
     {
         return $this->dumpDatabase(true, false, 'ALL');
     }
@@ -176,7 +176,7 @@ class horux
 
             if ($structure === true)
             {
-                $dump .= "DROP TABLE IF EXISTS `$tablename`;\n";
+                $dump .= "DROP TABLE IF EXISTS `$tablename`;\n\n";
 
                 $cmd= $db->createCommand("SHOW CREATE TABLE $tablename");
                 $data = $cmd->query();
@@ -208,7 +208,10 @@ class horux
 
                         foreach($rows as $row)
                         {
-                           $theData[] = "('".implode("','",$row)."')";
+
+                           $r = addslashes(implode("<%%>,<%%>", $row ));
+                           $r = str_replace("<%%>", "'", $r);
+                           $theData[] = "('".$r."')";
                         }
 
                         $dump .= $sInsert.implode(",\n", $theData).";\n\n";
