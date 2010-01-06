@@ -2,7 +2,7 @@
 -- Structure de la table `hr_gantner_standalone_action`
 --
 
-CREATE TABLE IF NOT EXISTS `hr_gantner_standalone_action` (
+CREATE TABLE `hr_gantner_standalone_action` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `type` set('user','key','key_user','reason','balancesText','balances','reinit') NOT NULL,
   `func` set('add','sub') NOT NULL,
@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS `hr_gantner_standalone_action` (
 -- Structure de la table `hr_gantner_TimeTerminal`
 --
 
-CREATE TABLE IF NOT EXISTS `hr_gantner_TimeTerminal` (
+CREATE TABLE `hr_gantner_TimeTerminal` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_device` int(11) NOT NULL,
   `ipOrDhcp` varchar(40) NOT NULL,
@@ -42,7 +42,7 @@ CREATE TABLE IF NOT EXISTS `hr_gantner_TimeTerminal` (
 -- Structure de la table `hr_gantner_TimeTerminal_key`
 --
 
-CREATE TABLE IF NOT EXISTS `hr_gantner_TimeTerminal_key` (
+CREATE TABLE `hr_gantner_TimeTerminal_key` (
   `device_id` int(11) NOT NULL,
   `type` set('fixed','soft') NOT NULL,
   `key` smallint(6) NOT NULL,

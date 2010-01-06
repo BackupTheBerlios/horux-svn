@@ -37,8 +37,8 @@ class mod extends Page
           
           if($param['appMode'] == 'demo' && $superAdmin == 0)
           {
-                  $this->Save->setEnabled(false);
-                  $this->Apply->setEnabled(false);
+                  $this->tbb->Save->setEnabled(false);
+                  $this->tbb->apply->setEnabled(false);
           }  
 
           $this->id->Value = $this->Request['id'];
@@ -86,11 +86,14 @@ class mod extends Page
 
           $languages = explode(",", $data['language']);
 
-          foreach($languages as $l)
+          if(count($languages)>0)
           {
-              if($l != '')
+              foreach($languages as $l)
               {
-                $this->$l->setChecked(true);
+                  if($l != '')
+                  {
+                    $this->$l->setChecked(true);
+                  }
               }
           }
         }
@@ -247,6 +250,8 @@ class mod extends Page
 
 
 	  $cmd->bindParameter(":id",$this->id->Value,PDO::PARAM_STR);
+
+      $language = array();
 
       if($this->ar->getChecked())
         $language[] = 'ar';
