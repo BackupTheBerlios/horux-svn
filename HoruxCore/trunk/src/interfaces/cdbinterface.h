@@ -120,16 +120,6 @@ class CDbInterface
         */
         virtual bool isXMLRPCAccess ( QString username, QString password ) = 0;
 
-        /*!
-          Count the number of notification configured according to the params
-
-          @param params Notification parameters
-
-          @return Return the number of notification according to the params
-        */
-        virtual int countNotification( QMap<QString, QVariant> params) = 0;
-
-
 };
 
 Q_DECLARE_INTERFACE ( CDbInterface,

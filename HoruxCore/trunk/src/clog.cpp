@@ -177,10 +177,35 @@ void CLog::fatal ( QString msg )
     }
 }
 
+QMap<QString,QStringList> CLog::getUsedTables()
+{
+    QMap<QString,QStringList> returnList;
 
-/*!
-    \fn CLog::getInfo(QDomDocument xml_info )
- */
+    QMapIterator<QString, CLogInterface*> i ( logInterfaces );
+    while ( i.hasNext() )
+    {
+        i.next();
+
+        int index = i.value()->getMetaObject()->metaObject()->indexOfClassInfo ( "DbTableUsed" );
+        QString value = "";
+        if ( index != -1 )
+        {
+            value = i.value()->getMetaObject()->metaObject()->classInfo ( index ).value();
+            returnList["DbTableUsed"] << value.split(",");
+        }
+
+        index = i.value()->getMetaObject()->metaObject()->indexOfClassInfo ( "DbTrackingTable" );
+        value = "";
+        if ( index != -1 )
+        {
+            value = i.value()->getMetaObject()->metaObject()->classInfo ( index ).value();
+            returnList["DbTrackingTable"] << value.split(",");
+        }
+    }
+
+    return returnList;
+}
+
 QDomElement CLog::getInfo ( QDomDocument xml_info )
 {
     QDomElement plugins = xml_info.createElement ( "plugins" );

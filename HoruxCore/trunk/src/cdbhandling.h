@@ -69,6 +69,12 @@ class CDbHandling : public QObject
         */
         QDomElement getInfo ( QDomDocument xml_info );
 
+        /*!
+          Return the list of the table used by each plugin in the database
+        */
+        QMap<QString,QStringList> getUsedTables();
+
+
         bool loadSchema(QString queries);
         bool loadData(QString queries);
 
@@ -79,7 +85,7 @@ class CDbHandling : public QObject
         CDbHandling ( QObject *parent = 0 );
 
         /*!
-          Load all log plugins
+          Load all db plugins
           @return Return true if all plugins are well loaded else false
         */
         bool loadPlugin();

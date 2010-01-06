@@ -206,20 +206,3 @@ bool DbMysqlPlugin::isXMLRPCAccess(QString username, QString password)
 
   return (bool)query.value(0).toInt();
 }
-
-int DbMysqlPlugin::countNotification( QMap<QString, QVariant> params)
-{
-    // check if the parameter "type" is existing
-    if(!params.contains("type")) return 0;
-
-    // check if the parameter "code" is existing
-    if(!params.contains("code")) return 0;
-
-
-    QSqlQuery query("SELECT COUNT(*) FROM hr_notification_code AS nc LEFT JOIN hr_notification AS n ON n.id=nc.id_notification WHERE nc.type='" + params["type"].toString() + "' AND nc.code='" + params["code"].toString()  + "' AND n.id!='NULL'");
-
-    query.next();
-
-    return query.value(0).toInt();
-
-}

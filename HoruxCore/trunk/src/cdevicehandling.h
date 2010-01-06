@@ -73,6 +73,11 @@ class CDeviceHandling : public QObject
         */
         QDomElement getDeviceInfo ( QDomDocument xml_info );
 
+        /*!
+          Return the list of the table used by each plugin in the database
+        */
+        QMap<QString,QStringList> getUsedTables();
+
 
        /*!
           Stop a device.
@@ -92,7 +97,7 @@ class CDeviceHandling : public QObject
 
 
         /*!
-          Load all log plugins
+          Load all device plugins
           @return Return all plugins well loaded
         */
         QMap<QString, CDeviceInterface *> loadPlugin();

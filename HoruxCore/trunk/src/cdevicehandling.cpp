@@ -337,9 +337,37 @@ void CDeviceHandling::startDevice ( QString id )
     }
 }
 
-/*!
-    \fn CDeviceHandling::getInfo(QDomDocument xml_info )
- */
+QMap<QString,QStringList> CDeviceHandling::getUsedTables()
+{
+    QMap<QString,QStringList> returnList;
+
+    QMap<QString, CDeviceInterface *> loadedPlugins = loadPlugin();
+
+    QMapIterator<QString, CDeviceInterface *> i ( loadedPlugins );
+    while ( i.hasNext() )
+    {
+        i.next();
+
+        int index = i.value()->getMetaObject()->metaObject()->indexOfClassInfo ( "DbTableUsed" );
+        QString value = "";
+        if ( index != -1 )
+        {
+            value = i.value()->getMetaObject()->metaObject()->classInfo ( index ).value();
+            returnList["DbTableUsed"] << value.split(",");
+        }
+
+        index = i.value()->getMetaObject()->metaObject()->indexOfClassInfo ( "DbTrackingTable" );
+        value = "";
+        if ( index != -1 )
+        {
+            value = i.value()->getMetaObject()->metaObject()->classInfo ( index ).value();
+            returnList["DbTrackingTable"] << value.split(",");
+        }
+    }
+
+    return returnList;
+}
+
 QDomElement CDeviceHandling::getInfo ( QDomDocument xml_info )
 {
     QDomElement plugins = xml_info.createElement ( "plugins" );

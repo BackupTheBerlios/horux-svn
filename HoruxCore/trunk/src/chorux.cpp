@@ -24,6 +24,7 @@
 #include "cxmlfactory.h"
 #include "include.h"
 #include <QFile>
+#include <QtSql>
 
 CHorux *CHorux::ptr_this = NULL;
 
@@ -34,6 +35,7 @@ CHorux::CHorux ( QObject *parent )
     ptr_xmlRpcServer = NULL;
     ptr_this = this;
     timerSoapInfo = NULL;
+    timerSoapTracking = NULL;
 
     initSAASMode();
 }
@@ -77,6 +79,9 @@ void CHorux::initSAASMode()
 
         timerSoapInfo = new QTimer(this);
         connect(timerSoapInfo, SIGNAL(timeout()), this, SLOT(getInfo()));
+
+        timerSoapTracking = new QTimer(this);
+        connect(timerSoapTracking, SIGNAL(timeout()), this, SLOT(sendTracking()));
     }
 }
 
@@ -108,10 +113,48 @@ bool CHorux::startEngine()
             params["code"] = "1300";
             params["object"] = "0";
 
+            // send a notifification that the database will be relaod
             CHorux::sendNotification(params);
 
+            // get the tables used by each plugin to relaod only the necessary tables
+            QMap<QString,QStringList> tables;
+            QStringList tablesList;
+
+            tables = CFactory::getLog()->getUsedTables();
+            if(tables.contains("DbTableUsed"))
+                tablesList << tables["DbTableUsed"];
+
+            tables = CFactory::getAccessHandling()->getUsedTables();
+            if(tables.contains("DbTableUsed"))
+                tablesList << tables["DbTableUsed"];
+
+            tables = CFactory::getAlarmHandling()->getUsedTables();
+            if(tables.contains("DbTableUsed"))
+                tablesList << tables["DbTableUsed"];
+
+            tables = CFactory::getDeviceHandling()->getUsedTables();
+            if(tables.contains("DbTableUsed"))
+                tablesList << tables["DbTableUsed"];
+
+            tables = CFactory::getDbHandling()->getUsedTables();
+            if(tables.contains("DbTableUsed"))
+                tablesList << tables["DbTableUsed"];
+
+            // remove duplication table in the liste
+            tablesList.removeDuplicates();
+
+            // call the web service to obtain the database schema according to the table liste
             QtSoapMessage message;
             message.setMethod("reloadDatabaseSchema");
+
+            QtSoapArray *array = new QtSoapArray(QtSoapQName("tables"));
+            int i=0;
+            foreach(QString t, tablesList)
+            {
+                array->insert(i, new QtSoapSimpleType(QtSoapQName("table"), t));
+                i++;
+            }
+            message.addMethodArgument(array);
 
             soapClient.submitRequest(message, saas_path+"/index.php?soap=horux&password=" + saas_password + "&username=" + saas_username);
         }
@@ -212,6 +255,8 @@ bool CHorux::startEngine()
     if(saas)
     {
         timerSoapInfo->start(1000 * 60 * saas_info_send_timer); //send the system info every 5 minutes
+        //timerSoapTracking->start(1000 * 60 * saas_info_send_timer); //send the last tracking every 5 minutes
+        timerSoapTracking->start(2000 ); //send the last tracking every 5 minutes
     }
 
     if ( !ptr_xmlRpcServer && xmlrpc)
@@ -235,6 +280,7 @@ bool CHorux::startEngine()
 
     }
 
+    // if we are in the saas mode, send update Horux gui with the system status
     if(saas)
     {
         getInfo();
@@ -335,8 +381,6 @@ QString CHorux::isEngine()
 
 QString CHorux::getInfo( )
 {
-
-
     QDomDocument xml_info;
     QDomElement root = xml_info.createElement ( "infoSystem" );
 
@@ -419,14 +463,14 @@ void CHorux::sendNotification(QMap<QString, QVariant> params)
 
 void CHorux::readSoapResponse()
 {
+    // check if the response from the web service is ok
     const QtSoapMessage &response = soapClient.getResponse();
     if (response.isFault()) {
         qDebug() << "Not able to call the Horux GUI web service. (" << response.method().name().name() << ")";
         return;
     }
 
-    qDebug() << "SOAP OK (" << response.method().name().name() << ")";
-
+    // response when loading the database schema
     if( response.method().name().name() == "reloadDatabaseSchemaResponse")
     {
         qDebug() << "reload schema";
@@ -437,21 +481,76 @@ void CHorux::readSoapResponse()
         {
             QtSoapMessage message;
             message.setMethod("reloadDatabaseData");
-            message.addMethodArgument("tables","","ALL");
+
+            QMap<QString,QStringList> tables;
+            QStringList tablesList;
+            QStringList tablesRmList;
+
+            tables = CFactory::getLog()->getUsedTables();
+            if(tables.contains("DbTableUsed"))
+                tablesList << tables["DbTableUsed"];
+            if(tables.contains("DbTrackingTable"))
+                tablesRmList << tables["DbTrackingTable"];
+
+            tables = CFactory::getAccessHandling()->getUsedTables();
+
+            if(tables.contains("DbTableUsed"))
+                tablesList << tables["DbTableUsed"];
+            if(tables.contains("DbTrackingTable"))
+                tablesRmList << tables["DbTrackingTable"];
+
+            tables = CFactory::getAlarmHandling()->getUsedTables();
+            if(tables.contains("DbTableUsed"))
+                tablesList << tables["DbTableUsed"];
+            if(tables.contains("DbTrackingTable"))
+                tablesRmList << tables["DbTrackingTable"];
+
+            tables = CFactory::getDeviceHandling()->getUsedTables();
+            if(tables.contains("DbTableUsed"))
+                tablesList << tables["DbTableUsed"];
+            if(tables.contains("DbTrackingTable"))
+                tablesRmList << tables["DbTrackingTable"];
+
+            tables = CFactory::getDbHandling()->getUsedTables();
+            if(tables.contains("DbTableUsed"))
+                tablesList << tables["DbTableUsed"];
+            if(tables.contains("DbTrackingTable"))
+                tablesRmList << tables["DbTrackingTable"];
+
+            tablesList.removeDuplicates();
+            tablesRmList.removeDuplicates();
+
+            for(int i=0; i<tablesRmList.count(); i++)
+            {
+                if(tablesList.contains(tablesRmList.at(i)))
+                {
+                    tablesList.removeOne(tablesRmList.at(i));
+                }
+            }
+
+            QtSoapArray *array = new QtSoapArray(QtSoapQName("tables"));
+            int i=0;
+            foreach(QString t, tablesList)
+            {
+                array->insert(i, new QtSoapSimpleType(QtSoapQName("table"), t));
+                i++;
+            }
+            message.addMethodArgument(array);
+
             soapClient.submitRequest(message, saas_path+"/index.php?soap=horux&password=" + saas_password + "&username=" + saas_username);
         }
 
         return;
     }
 
+    // response when loading the database data
     if( response.method().name().name() == "reloadDatabaseDataResponse")
     {
         const QtSoapType &returnValue = response.returnValue();
         QString queries = returnValue.toString();
 
         if ( CFactory::getDbHandling()->loadData(queries) )
-        {
-
+        {           
             QMap<QString, QVariant> params;
             params["type"] = "ALARM";
             params["code"] = "1301";
@@ -466,13 +565,51 @@ void CHorux::readSoapResponse()
         return;
     }
 
+    // response when notify an alarm or else
     if( response.method().name().name() == "sendMailResponse")
     {
         return;
     }
 
+    // response when updating the info system
     if( response.method().name().name() == "updateSystemStatusResponse")
     {
+        return;
+    }
+
+    // response when updating the tracking data
+    if( response.method().name().name() == "syncTrackingTableResponse")
+    {
+        QMap<QString,QStringList> tables;
+        QStringList trackingTablesList;
+
+        tables = CFactory::getLog()->getUsedTables();
+        if(tables.contains("DbTrackingTable"))
+            trackingTablesList << tables["DbTrackingTable"];
+
+        tables = CFactory::getAccessHandling()->getUsedTables();
+        if(tables.contains("DbTrackingTable"))
+            trackingTablesList << tables["DbTrackingTable"];
+
+        tables = CFactory::getAlarmHandling()->getUsedTables();
+        if(tables.contains("DbTrackingTable"))
+            trackingTablesList << tables["DbTrackingTable"];
+
+        tables = CFactory::getDeviceHandling()->getUsedTables();
+        if(tables.contains("DbTrackingTable"))
+            trackingTablesList << tables["DbTrackingTable"];
+
+        tables = CFactory::getDbHandling()->getUsedTables();
+        if(tables.contains("DbTrackingTable"))
+            trackingTablesList << tables["DbTrackingTable"];
+
+        trackingTablesList.removeDuplicates();
+
+        foreach(QString table, trackingTablesList)
+        {
+            QSqlQuery truncate("TRUNCATE TABLE `" + table + "`");
+        }
+
         return;
     }
 }
@@ -486,4 +623,82 @@ void CHorux::soapSSLErrors ( QNetworkReply * reply, const QList<QSslError> & err
             reply->ignoreSslErrors();
         }
     }
+}
+
+void CHorux::sendTracking()
+{
+    QMap<QString,QStringList> tables;
+    QStringList trackingTablesList;
+
+    tables = CFactory::getLog()->getUsedTables();
+    if(tables.contains("DbTrackingTable"))
+        trackingTablesList << tables["DbTrackingTable"];
+
+    tables = CFactory::getAccessHandling()->getUsedTables();
+    if(tables.contains("DbTrackingTable"))
+        trackingTablesList << tables["DbTrackingTable"];
+
+    tables = CFactory::getAlarmHandling()->getUsedTables();
+    if(tables.contains("DbTrackingTable"))
+        trackingTablesList << tables["DbTrackingTable"];
+
+    tables = CFactory::getDeviceHandling()->getUsedTables();
+    if(tables.contains("DbTrackingTable"))
+        trackingTablesList << tables["DbTrackingTable"];
+
+    tables = CFactory::getDbHandling()->getUsedTables();
+    if(tables.contains("DbTrackingTable"))
+        trackingTablesList << tables["DbTrackingTable"];
+
+    trackingTablesList.removeDuplicates();
+
+    QDomDocument xml_dump;
+    QDomElement root = xml_dump.createElement ( "trackingDump" );
+
+    QDomElement tablesElement = xml_dump.createElement ( "tables" );
+    root.appendChild ( tablesElement );
+
+    foreach(QString table, trackingTablesList)
+    {
+        QDomElement tableElement = xml_dump.createElement ( table );
+        tablesElement.appendChild ( tableElement );
+
+        QSqlQuery query("SELECT * FROM " + table);
+
+        QStringList fields;
+
+        for(int i=0; i< query.record().count(); i++)
+            fields << query.record().fieldName(i);
+
+        QDomElement recordsElement = xml_dump.createElement ( "records" );
+        tableElement.appendChild ( recordsElement );
+
+        while(query.next())
+        {
+            QDomElement recordElement = xml_dump.createElement ( "record" );
+            recordsElement.appendChild ( recordElement );
+
+            foreach(QString field, fields)
+            {
+                QDomElement fieldElement = xml_dump.createElement ( field );
+
+                QDomText text =  xml_dump.createTextNode ( query.value(query.record().indexOf(field)).toString()  );
+                fieldElement.appendChild ( text );
+
+                recordElement.appendChild ( fieldElement );
+            }
+        }
+    }
+
+    xml_dump.appendChild ( root );
+
+    QDomNode xmlNode =  xml_dump.createProcessingInstruction ( "xml", "version=\"1.0\" encoding=\"utf-8\"" );
+    xml_dump.insertBefore ( xmlNode, xml_dump.firstChild() );
+
+    QtSoapMessage message;
+    message.setMethod("syncTrackingTable");
+
+    message.addMethodArgument("xml", "", xml_dump.toString());
+
+    soapClient.submitRequest(message, saas_path+"/index.php?soap=horux&password=" + saas_password + "&username=" + saas_username);
 }

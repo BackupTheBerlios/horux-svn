@@ -64,6 +64,12 @@ class CAccessHandling : public QObject
         */
         QDomElement getInfo ( QDomDocument xml_info );
 
+        /*!
+          Return the list of the table used by each plugin in the database
+        */
+        QMap<QString,QStringList> getUsedTables();
+
+
     protected:
         /*!
           Constructor

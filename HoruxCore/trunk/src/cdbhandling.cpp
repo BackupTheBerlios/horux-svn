@@ -56,11 +56,13 @@ CDbHandling::~CDbHandling()
 
     QStringList dbNameList = QSqlDatabase::connectionNames();
     for ( int i=0; i<dbNameList.count(); i++ )
+    {
         QSqlDatabase::removeDatabase ( dbNameList[i] );
+    }
 
     pThis = NULL;
 
-    qDebug ( "DB handling stopped..." );
+    qDebug ( "DB handling stopped" );
 }
 
 /*!
@@ -109,6 +111,9 @@ bool CDbHandling::isStarted()
 
 bool CDbHandling::loadPlugin()
 {
+    if(dbInterface)
+        return true;
+
     QSettings settings ( QCoreApplication::instance()->applicationDirPath() +"/horux.ini", QSettings::IniFormat );
     settings.beginGroup ( "SQL" );
     QString plugin = settings.value ( "plugins", "mysql" ).toString();
@@ -152,9 +157,32 @@ CDbInterface * CDbHandling::plugin()
 }
 
 
-/*!
-    \fn CDbHandling::getInfo(QDomDocument xml_info )
- */
+
+QMap<QString,QStringList> CDbHandling::getUsedTables()
+{
+    QMap<QString,QStringList> returnList;
+
+    loadPlugin();
+
+    int index = dbInterface->getMetaObject()->metaObject()->indexOfClassInfo ( "DbTableUsed" );
+    QString value = "";
+    if ( index != -1 )
+    {
+        value = dbInterface->getMetaObject()->metaObject()->classInfo ( index ).value();
+        returnList["DbTableUsed"] << value.split(",");
+    }
+
+    index = dbInterface->getMetaObject()->metaObject()->indexOfClassInfo ( "DbTrackingTable" );
+    value = "";
+    if ( index != -1 )
+    {
+        value = dbInterface->getMetaObject()->metaObject()->classInfo ( index ).value();
+        returnList["DbTrackingTable"] << value.split(",");
+    }
+
+    return returnList;
+}
+
 QDomElement CDbHandling::getInfo ( QDomDocument xml_info )
 {
     QDomElement plugins = xml_info.createElement ( "plugins" );

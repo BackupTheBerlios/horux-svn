@@ -52,6 +52,8 @@ class AccessHoruxPlugin : public QObject, CAccessInterface
     Q_CLASSINFO ( "PluginName", "access_horux" );
     Q_CLASSINFO ( "PluginType", "access" );
     Q_CLASSINFO ( "PluginDescription", "Handle the access for Horux Core" );
+    Q_CLASSINFO ( "DbTableUsed", "hr_openTime_attribution,hr_openTime,hr_non_working_day,hr_openTime_time,hr_keys,hr_keys_attribution,hr_user_group_attribution,hr_user_group,hr_user,hr_user_group_access,hr_access_level,hr_non_working_day,hr_access_time,hr_tracking");
+    Q_CLASSINFO ( "DbTrackingTable", "hr_tracking");
 
 public:
     AccessHoruxPlugin(QObject *parent=0);

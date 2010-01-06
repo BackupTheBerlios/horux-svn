@@ -107,6 +107,11 @@ class CHorux : public QObject
         */
         void soapSSLErrors ( QNetworkReply * reply, const QList<QSslError> & errors );
 
+        /*!
+          Send the last tracking in the saas mode
+        */
+        void sendTracking();
+
     private:
         void initSAASMode();
 
@@ -127,6 +132,7 @@ class CHorux : public QObject
         //! soap client
         QtSoapHttpTransport soapClient;
         QTimer *timerSoapInfo;
+        QTimer *timerSoapTracking;
 
         //! saas param
         bool saas;

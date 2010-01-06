@@ -148,9 +148,46 @@ bool CAlarmHandling::loadPlugin()
 
 }
 
-/*!
-    \fn CAlarmHandling::getInfo(QDomDocument xml_info )
- */
+QMap<QString,QStringList> CAlarmHandling::getUsedTables()
+{
+    QMap<QString,QStringList> returnList;
+
+    QDir pluginDirectory ( QCoreApplication::instance()->applicationDirPath() + "/plugins/alarm/" );
+
+    QStringList list = pluginDirectory.entryList();
+
+    for ( int i = 0; i < list.size(); ++i )
+    {
+
+        QString fileName = list.at ( i );
+
+        QPluginLoader pluginLoader ( pluginDirectory.absoluteFilePath ( fileName ), this );
+        QObject *plugin = pluginLoader.instance();
+
+        if ( plugin )
+        {
+            int index = plugin->metaObject()->indexOfClassInfo ( "DbTableUsed" );
+            QString value = "";
+            if ( index != -1 )
+            {
+                value = plugin->metaObject()->classInfo ( index ).value();
+                returnList["DbTableUsed"] << value.split(",");
+            }
+
+            index = plugin->metaObject()->indexOfClassInfo ( "DbTrackingTable" );
+            value = "";
+            if ( index != -1 )
+            {
+                value = plugin->metaObject()->classInfo ( index ).value();
+                returnList["DbTrackingTable"] << value.split(",");
+            }
+        }
+    }
+
+    return returnList;
+}
+
+
 QDomElement CAlarmHandling::getInfo ( QDomDocument xml_info )
 {
     QDomElement plugins = xml_info.createElement ( "plugins" );

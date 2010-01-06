@@ -75,6 +75,9 @@ class CHoruxAlarmPlugin : public QObject, CAlarmInterface
     Q_CLASSINFO ( "PluginName", "alarm_horux" );
     Q_CLASSINFO ( "PluginType", "alarm" );
     Q_CLASSINFO ( "PluginDescription", "Handle the alarm for Horux Core" );
+    Q_CLASSINFO ( "DbTableUsed", "hr_alarms");
+    Q_CLASSINFO ( "DbTrackingTable", "hr_alarms");
+
 public:
     QObject *getMetaObject() { return this;}
 

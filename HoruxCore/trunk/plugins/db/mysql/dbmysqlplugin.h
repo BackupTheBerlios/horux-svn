@@ -38,6 +38,7 @@ class DbMysqlPlugin : public QObject, CDbInterface
     Q_CLASSINFO ( "PluginName", "horux_mysql_db" );
     Q_CLASSINFO ( "PluginType", "db" );
     Q_CLASSINFO ( "PluginDescription", "Handle a MySql database for Horux Core" );
+    Q_CLASSINFO ( "DbTableUsed", "hr_device,hr_config,hr_superusers");
 
  public:
     bool open(const QString host,
@@ -66,8 +67,6 @@ class DbMysqlPlugin : public QObject, CDbInterface
     QVariant getConfigParam(QString paramName);
 
     bool isXMLRPCAccess(QString username, QString password);
-
-    int countNotification( QMap<QString, QVariant> params);
 
 protected:
   QSqlDatabase dbase;
