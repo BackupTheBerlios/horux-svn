@@ -112,6 +112,11 @@ class CHorux : public QObject
         */
         void sendTracking();
 
+        /*!
+          get the db modificaiton from Horux gui in the saas mode
+        */
+        void syncData();
+
     private:
         void initSAASMode();
 
@@ -133,6 +138,7 @@ class CHorux : public QObject
         QtSoapHttpTransport soapClient;
         QTimer *timerSoapInfo;
         QTimer *timerSoapTracking;
+        QTimer *timerSoapSyncData;
 
         //! saas param
         bool saas;

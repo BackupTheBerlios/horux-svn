@@ -36,6 +36,7 @@ CHorux::CHorux ( QObject *parent )
     ptr_this = this;
     timerSoapInfo = NULL;
     timerSoapTracking = NULL;
+    timerSoapSyncData = NULL;
 
     initSAASMode();
 }
@@ -82,6 +83,9 @@ void CHorux::initSAASMode()
 
         timerSoapTracking = new QTimer(this);
         connect(timerSoapTracking, SIGNAL(timeout()), this, SLOT(sendTracking()));
+
+        timerSoapSyncData = new QTimer(this);
+        connect(timerSoapSyncData, SIGNAL(timeout()), this, SLOT(syncData()));
     }
 }
 
@@ -255,8 +259,8 @@ bool CHorux::startEngine()
     if(saas)
     {
         timerSoapInfo->start(1000 * 60 * saas_info_send_timer); //send the system info every 5 minutes
-        //timerSoapTracking->start(1000 * 60 * saas_info_send_timer); //send the last tracking every 5 minutes
-        timerSoapTracking->start(2000 ); //send the last tracking every 5 minutes
+        timerSoapTracking->start(1000 * 60 * saas_info_send_timer); //send the last tracking every 5 minutes
+        timerSoapSyncData->start(2000 ); //send the last tracking every 5 minutes
     }
 
     if ( !ptr_xmlRpcServer && xmlrpc)
@@ -612,6 +616,45 @@ void CHorux::readSoapResponse()
 
         return;
     }
+
+    if( response.method().name().name() == "syncDatabaseDataResponse")
+    {
+        QString xml = response.returnValue().value().toString();
+
+        QDomDocument doc("trigger");
+        if(doc.setContent(xml))
+        {
+            QDomElement docElem = doc.documentElement();
+
+            QDomNode n = docElem.firstChild();
+            while(!n.isNull())
+            {
+                 QDomElement trigger = n.toElement();
+                 if(trigger.tagName() == "Trigger")
+                 {
+                     QDomNode n2 = trigger.firstChild();
+                     while(!n2.isNull())
+                     {
+                        QDomElement table = n2.toElement();
+
+                        if(table.tagName() == "table")
+                        {
+                            QString name = table.attribute("name","");
+                            QString key = table.attribute("key","");
+                            QString action = table.attribute("action","");
+
+                            QDomElement value = table.firstChild().toElement();
+
+                            QString newValues = value.text();
+                        }
+
+                        n2 = n2.nextSibling();
+                      }
+                 }
+                 n = n.nextSibling();
+             }
+        }
+    }
 }
 
 void CHorux::soapSSLErrors ( QNetworkReply * reply, const QList<QSslError> & errors )
@@ -699,6 +742,14 @@ void CHorux::sendTracking()
     message.setMethod("syncTrackingTable");
 
     message.addMethodArgument("xml", "", xml_dump.toString());
+
+    soapClient.submitRequest(message, saas_path+"/index.php?soap=horux&password=" + saas_password + "&username=" + saas_username);
+}
+
+void CHorux::syncData()
+{
+    QtSoapMessage message;
+    message.setMethod("syncDatabaseData");
 
     soapClient.submitRequest(message, saas_path+"/index.php?soap=horux&password=" + saas_password + "&username=" + saas_username);
 }
