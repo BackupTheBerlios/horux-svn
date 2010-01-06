@@ -470,39 +470,39 @@ CREATE TABLE IF NOT EXISTS `hr_tracking` (
 #
 
 CREATE TABLE IF NOT EXISTS `hr_user` (
-  `id` bigint(20) unsigned NOT NULL auto_increment,
-  `name` varchar(30) default NULL,
-  `firstname` varchar(30) default NULL,
-  `street` varchar(40) default NULL,
-  `city` varchar(30) default NULL,
-  `country` varchar(30) default NULL,
-  `zip` varchar(10) default NULL,
-  `phone1` varchar(16) default NULL,
-  `phone2` varchar(16) default NULL,
-  `email1` varchar(50) default NULL,
-  `email2` varchar(50) NOT NULL default '',
-  `picture` varchar(255) default NULL,
-  `language` varchar(30) default NULL,
-  `sex` enum('F','M') NOT NULL default 'F',
-  `validity_date` date NOT NULL default '0000-00-00',
-  `isBlocked` smallint(1) NOT NULL default '0',
-  `locked` int(11) NOT NULL default '0',
-  `department` varchar(30) NOT NULL,
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(30) NOT NULL,
+  `firstname` varchar(30) NOT NULL,
+  `street` varchar(40) NOT NULL,
+  `city` varchar(30) NOT NULL,
+  `country` varchar(30) NOT NULL,
+  `zip` varchar(10) NOT NULL,
+  `phone1` varchar(16) NOT NULL,
+  `phone2` varchar(16) NOT NULL,
+  `email1` varchar(50) NOT NULL,
+  `email2` varchar(50) NOT NULL,
+  `picture` varchar(255) NOT NULL,
+  `language` varchar(30) NOT NULL,
+  `sex` enum('F','M') NOT NULL DEFAULT 'F',
+  `validity_date` date NOT NULL DEFAULT '0000-00-00',
+  `isBlocked` smallint(1) NOT NULL DEFAULT '0',
+  `locked` int(11) NOT NULL DEFAULT '0',
+  `department` int(11) NOT NULL,
   `firme` varchar(30) NOT NULL,
   `street_pr` varchar(30) NOT NULL,
   `npa_pr` varchar(10) NOT NULL,
   `city_pr` varchar(30) NOT NULL,
   `country_pr` varchar(30) NOT NULL,
-  `pin_code` varchar(12) default NULL,
-  `password` varchar(64) default NULL,
-  `fax` varchar(16) default NULL,
-  PRIMARY KEY  (`id`),
+  `pin_code` varchar(12) NOT NULL,
+  `password` varchar(64) NOT NULL,
+  `fax` varchar(16) NOT NULL,
+  PRIMARY KEY (`id`),
   KEY `name` (`name`),
   KEY `firstname` (`firstname`)
-) TYPE=MyISAM CHARACTER SET `utf8`;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
-INSERT INTO `hr_user` (`id`, `name`, `firstname`, `street`, `city`, `country`, `zip`, `phone1`, `phone2`, `email1`, `email2`, `picture`, `language`, `sex`, `validity_date`, `isBlocked`, `locked`, `department`, `firme`, `street_pr`, `npa_pr`, `city_pr`, `country_pr`) VALUES
-(1, '??', '??', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', NULL, NULL, 'F', '0000-00-00', 0, 0, '', '', '', '', '', '');
+INSERT INTO `hr_user` (`id`, `name`, `firstname`, `street`, `city`, `country`, `zip`, `phone1`, `phone2`, `email1`, `email2`, `picture`, `language`, `sex`, `validity_date`, `isBlocked`, `locked`, `department`, `firme`, `street_pr`, `npa_pr`, `city_pr`, `country_pr`, `pin_code`, `password`, `fax`) VALUES
+(1, '??', '??', '', '', '', '', '', '', '', '', '', '', 'F', '0000-00-00', 0, 0, 0, '', '', '', '', '', '', '', '');
 
 # --------------------------------------------------------
 
@@ -603,3 +603,524 @@ CREATE TABLE `hr_notification_su` (
   `id_notification` int(11) NOT NULL,
   `id_superuser` int(11) NOT NULL
 )  TYPE=MyISAM CHARACTER SET `utf8`;
+
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `hr_trigger_change`
+--
+
+CREATE TABLE `hr_trigger_change` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `action` set('UPDATE','INSERT','DELETE') NOT NULL,
+  `table` varchar(100) NOT NULL,
+  `key` varchar(30) NOT NULL,
+  `newValue` text NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+--
+-- TRIGGER
+--
+-- --------------------------------------------------------
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `hr_access_level`
+--
+
+Delimiter $$
+
+DROP TRIGGER IF EXISTS hr_access_level_trigger_u$$
+
+CREATE TRIGGER hr_access_level_trigger_u AFTER UPDATE ON hr_access_level
+FOR EACH ROW
+BEGIN
+IF (NEW.locked = 0) THEN
+  INSERT INTO hr_trigger_change (`table`,`action`,`key`,`newValue`)
+    VALUES ('hr_access_level','UPDATE',CONCAT('id=',NEW.id),CONCAT('\'',NEW.id,'\',\'',NEW.name,'\',\'',NEW.full_access ,'\',\'',NEW.non_working_day,'\',\'',NEW.week_end,'\',\'',NEW.validity_date ,'\',\'',NEW.validity_date_to,'\',\'',NEW.monday_default,'\',\'',NEW.comment,'\',\'',NEW.locked,'\''));
+END IF;
+END$$
+
+DROP TRIGGER IF EXISTS hr_access_level_trigger_i$$
+
+CREATE TRIGGER hr_access_level_trigger_i AFTER INSERT ON hr_access_level
+FOR EACH ROW
+BEGIN
+  INSERT INTO hr_trigger_change (`table`,`action`,`key`,`newValue`)
+    VALUES ('hr_access_level','INSERT','',CONCAT('\'',NEW.name,'\',\'',NEW.full_access ,'\',\'',NEW.non_working_day,'\',\'',NEW.week_end,'\',\'',NEW.validity_date ,'\',\'',NEW.validity_date_to,'\',\'',NEW.monday_default,'\',\'',NEW.comment,'\',\'',NEW.locked,'\''));
+END$$
+
+DROP TRIGGER IF EXISTS hr_access_level_trigger_d$$
+
+CREATE TRIGGER hr_access_level_trigger_d AFTER DELETE ON hr_access_level
+FOR EACH ROW
+BEGIN
+  INSERT INTO hr_trigger_change (`table`,`action`,`key`,`newValue`)
+    VALUES ('hr_access_level','DELETE',CONCAT('id=',OLD.id),'');
+END$$
+
+Delimiter ;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `hr_access_time`
+--
+
+Delimiter $$
+
+DROP TRIGGER IF EXISTS hr_access_time_trigger_u$$
+
+CREATE TRIGGER hr_access_time_trigger_u AFTER UPDATE ON hr_access_time
+FOR EACH ROW
+BEGIN
+  INSERT INTO hr_trigger_change (`table`,`action`,`key`,`newValue`)
+    VALUES ('hr_access_time','UPDATE',CONCAT('id=',NEW.id),CONCAT('\'',NEW.id,'\',\'',NEW.id_access_level,'\',\'',NEW.day ,'\',\'',NEW.from,'\',\'',NEW.until,'\''));
+END$$
+
+DROP TRIGGER IF EXISTS hr_access_time_trigger_i$$
+
+CREATE TRIGGER hr_access_time_trigger_i AFTER INSERT ON hr_access_time
+FOR EACH ROW
+BEGIN
+  INSERT INTO hr_trigger_change (`table`,`action`,`key`,`newValue`)
+    VALUES ('hr_access_time','INSERT','',CONCAT('\'',NEW.id_access_level,'\',\'',NEW.day ,'\',\'',NEW.from,'\',\'',NEW.until,'\''));
+END$$
+
+DROP TRIGGER IF EXISTS hr_access_time_trigger_d$$
+
+CREATE TRIGGER hr_access_time_trigger_d AFTER DELETE ON hr_access_time
+FOR EACH ROW
+BEGIN
+  INSERT INTO hr_trigger_change (`table`,`action`,`key`,`newValue`)
+    VALUES ('hr_access_time','DELETE',CONCAT('id=',OLD.id),'');
+END$$
+
+Delimiter ;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `hr_device`
+--
+
+Delimiter $$
+
+DROP TRIGGER IF EXISTS hr_device_trigger_u$$
+
+CREATE TRIGGER hr_device_trigger_u AFTER UPDATE ON hr_device
+FOR EACH ROW
+BEGIN
+IF (NEW.locked = 0) THEN
+  INSERT INTO hr_trigger_change (`table`,`action`,`key`,`newValue`)
+    VALUES ('hr_device','UPDATE',CONCAT('id=',NEW.id),CONCAT('\'',NEW.id,'\',\'',NEW.name,'\',\'',NEW.accessPoint,'\',\'',NEW.type,'\',\'',NEW.parent_id,'\',\'',NEW.isLog,'\',\'',NEW.locked,'\',\'',NEW.description,'\',\'',NEW.accessPlugin,'\''));
+END IF;
+END$$
+
+DROP TRIGGER IF EXISTS hr_device_trigger_i$$
+
+CREATE TRIGGER hr_device_trigger_i AFTER INSERT ON hr_device
+FOR EACH ROW
+BEGIN
+  INSERT INTO hr_trigger_change (`table`,`action`,`key`,`newValue`)
+    VALUES ('hr_device','INSERT','',CONCAT('\'',NEW.name,'\',\'',NEW.accessPoint,'\',\'',NEW.type,'\',\'',NEW.parent_id,'\',\'',NEW.isLog,'\',\'',NEW.locked,'\',\'',NEW.description,'\',\'',NEW.accessPlugin,'\''));
+END$$
+
+DROP TRIGGER IF EXISTS hr_device_trigger_d$$
+
+CREATE TRIGGER hr_device_trigger_d AFTER DELETE ON hr_device
+FOR EACH ROW
+BEGIN
+  INSERT INTO hr_trigger_change (`table`,`action`,`key`,`newValue`)
+    VALUES ('hr_device','DELETE',CONCAT('id=',OLD.id),'');
+END$$
+
+Delimiter ;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `hr_keys`
+--
+
+Delimiter $$
+
+DROP TRIGGER IF EXISTS hr_keys_trigger_u$$
+
+CREATE TRIGGER hr_keys_trigger_u AFTER UPDATE ON hr_keys
+FOR EACH ROW
+BEGIN
+IF (NEW.locked = 0) THEN
+  INSERT INTO hr_trigger_change (`table`,`action`,`key`,`newValue`)
+    VALUES ('hr_keys','UPDATE',CONCAT('id=',NEW.id),CONCAT('\'',NEW.id,'\',\'',NEW.identificator,'\',\'',NEW.serialNumber,'\',\'',NEW.isUsed,'\',\'',NEW.isBlocked,'\',\'',NEW.locked,'\''));
+END IF;
+END$$
+
+DROP TRIGGER IF EXISTS hr_keys_trigger_i$$
+
+CREATE TRIGGER hr_keys_trigger_i AFTER INSERT ON hr_keys
+FOR EACH ROW
+BEGIN
+  INSERT INTO hr_trigger_change (`table`,`action`,`key`,`newValue`)
+    VALUES ('hr_keys','INSERT','',CONCAT('\'',NEW.identificator,'\',\'',NEW.serialNumber,'\',\'',NEW.isUsed,'\',\'',NEW.isBlocked,'\',\'',NEW.locked,'\''));
+END$$
+
+DROP TRIGGER IF EXISTS hr_keys_trigger_d$$
+
+CREATE TRIGGER hr_keys_trigger_d AFTER DELETE ON hr_keys
+FOR EACH ROW
+BEGIN
+  INSERT INTO hr_trigger_change (`table`,`action`,`key`,`newValue`)
+    VALUES ('hr_keys','DELETE',CONCAT('id=',OLD.id),'');
+END$$
+
+Delimiter ;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `hr_keys_attribution`
+--
+
+Delimiter $$
+
+DROP TRIGGER IF EXISTS hr_keys_attribution_trigger_u$$
+
+CREATE TRIGGER hr_keys_attribution_trigger_u AFTER UPDATE ON hr_keys_attribution
+FOR EACH ROW
+BEGIN
+  INSERT INTO hr_trigger_change (`table`,`action`,`key`,`newValue`)
+    VALUES ('hr_keys_attribution','UPDATE',CONCAT('id=',NEW.id),CONCAT('\'',NEW.id,'\',\'',NEW.id_key,'\',\'',NEW.id_user,'\''));
+END$$
+
+DROP TRIGGER IF EXISTS hr_keys_attribution_trigger_i$$
+
+CREATE TRIGGER hr_keys_attribution_trigger_i AFTER INSERT ON hr_keys_attribution
+FOR EACH ROW
+BEGIN
+  INSERT INTO hr_trigger_change (`table`,`action`,`key`,`newValue`)
+    VALUES ('hr_keys_attribution','INSERT','',CONCAT('\'',NEW.id_key,'\',\'',NEW.id_user,'\''));
+END$$
+
+DROP TRIGGER IF EXISTS hr_keys_attribution_trigger_d$$
+
+CREATE TRIGGER hr_keys_attribution_trigger_d AFTER DELETE ON hr_keys_attribution
+FOR EACH ROW
+BEGIN
+  INSERT INTO hr_trigger_change (`table`,`action`,`key`,`newValue`)
+    VALUES ('hr_keys_attribution','DELETE',CONCAT('id=',OLD.id),'');
+END$$
+
+Delimiter ;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `hr_non_working_day`
+--
+
+Delimiter $$
+
+DROP TRIGGER IF EXISTS hr_non_working_day_trigger_u$$
+
+CREATE TRIGGER hr_non_working_day_trigger_u AFTER UPDATE ON hr_non_working_day
+FOR EACH ROW
+BEGIN
+IF (NEW.locked = 0) THEN
+  INSERT INTO hr_trigger_change (`table`,`action`,`key`,`newValue`)
+    VALUES ('hr_non_working_day','UPDATE',CONCAT('id=',NEW.id),CONCAT('\'',NEW.id,'\',\'',NEW.name,'\',\'',NEW.from,'\',\'',NEW.until,'\',\'',NEW.comment,'\',\'',NEW.locked,'\',\'',NEW.color,'\',\'',NEW.period,'\''));
+END IF;
+END$$
+
+DROP TRIGGER IF EXISTS hr_non_working_day_trigger_i$$
+
+CREATE TRIGGER hr_non_working_day_trigger_i AFTER INSERT ON hr_non_working_day
+FOR EACH ROW
+BEGIN
+  INSERT INTO hr_trigger_change (`table`,`action`,`key`,`newValue`)
+    VALUES ('hr_non_working_day','INSERT','',CONCAT('\'',NEW.name,'\',\'',NEW.from,'\',\'',NEW.until,'\',\'',NEW.comment,'\',\'',NEW.locked,'\',\'',NEW.color,'\',\'',NEW.period,'\''));
+END$$
+
+DROP TRIGGER IF EXISTS hr_non_working_day_trigger_d$$
+
+CREATE TRIGGER hr_non_working_day_trigger_d AFTER DELETE ON hr_non_working_day
+FOR EACH ROW
+BEGIN
+  INSERT INTO hr_trigger_change (`table`,`action`,`key`,`newValue`)
+    VALUES ('hr_non_working_day','DELETE',CONCAT('id=',OLD.id),'');
+END$$
+
+Delimiter ;
+
+-- --------------------------------------------------------
+--
+-- TRIGGER
+--
+-- --------------------------------------------------------
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `hr_openTime`
+--
+
+Delimiter $$
+
+DROP TRIGGER IF EXISTS hr_openTime_trigger_u$$
+
+CREATE TRIGGER hr_openTime_trigger_u AFTER UPDATE ON hr_openTime
+FOR EACH ROW
+BEGIN
+IF (NEW.locked = 0) THEN
+  INSERT INTO hr_trigger_change (`table`,`action`,`key`,`newValue`)
+    VALUES ('hr_openTime','UPDATE',CONCAT('id=',NEW.id),CONCAT('\'',NEW.id,'\',\'',NEW.name,'\',\'',NEW.non_working_day,'\',\'',NEW.week_end,'\',\'',NEW.validity_date ,'\',\'',NEW.validity_date_to,'\',\'',NEW.monday_default,'\',\'',NEW.comment,'\',\'',NEW.locked,'\''));
+END IF;
+END$$
+
+DROP TRIGGER IF EXISTS hr_openTime_trigger_i$$
+
+CREATE TRIGGER hr_openTime_trigger_i AFTER INSERT ON hr_openTime
+FOR EACH ROW
+BEGIN
+  INSERT INTO hr_trigger_change (`table`,`action`,`key`,`newValue`)
+    VALUES ('hr_openTime','INSERT','',CONCAT('\'',NEW.name,'\',\'',NEW.non_working_day,'\',\'',NEW.week_end,'\',\'',NEW.validity_date ,'\',\'',NEW.validity_date_to,'\',\'',NEW.monday_default,'\',\'',NEW.comment,'\',\'',NEW.locked,'\''));
+END$$
+
+DROP TRIGGER IF EXISTS hr_openTime_trigger_d$$
+
+CREATE TRIGGER hr_openTime_trigger_d AFTER DELETE ON hr_openTime
+FOR EACH ROW
+BEGIN
+  INSERT INTO hr_trigger_change (`table`,`action`,`key`,`newValue`)
+    VALUES ('hr_openTime','DELETE',CONCAT('id=',OLD.id),'');
+END$$
+
+Delimiter ;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `hr_openTime_attribution`
+--
+
+Delimiter $$
+
+DROP TRIGGER IF EXISTS hr_openTime_attribution_trigger_u$$
+
+CREATE TRIGGER hr_openTime_attribution_trigger_u AFTER UPDATE ON hr_openTime_attribution
+FOR EACH ROW
+BEGIN
+  INSERT INTO hr_trigger_change (`table`,`action`,`key`,`newValue`)
+    VALUES ('hr_openTime_attribution','UPDATE',CONCAT('id=',NEW.id),CONCAT('\'',NEW.id,'\',\'',NEW.id_device,'\',\'',NEW.id_openTime,'\''));
+END$$
+
+DROP TRIGGER IF EXISTS hr_openTime_attribution_trigger_i$$
+
+CREATE TRIGGER hr_openTime_attribution_trigger_i AFTER INSERT ON hr_openTime_attribution
+FOR EACH ROW
+BEGIN
+  INSERT INTO hr_trigger_change (`table`,`action`,`key`,`newValue`)
+    VALUES ('hr_openTime_attribution','INSERT','',CONCAT('\'',NEW.id_device,'\',\'',NEW.id_openTime,'\''));
+END$$
+
+DROP TRIGGER IF EXISTS hr_openTime_attribution_trigger_d$$
+
+CREATE TRIGGER hr_openTime_attribution_trigger_d AFTER DELETE ON hr_openTime_attribution
+FOR EACH ROW
+BEGIN
+  INSERT INTO hr_trigger_change (`table`,`action`,`key`,`newValue`)
+    VALUES ('hr_openTime_attribution','DELETE',CONCAT('id=',OLD.id),'');
+END$$
+
+Delimiter ;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `hr_openTime_time`
+--
+
+Delimiter $$
+
+DROP TRIGGER IF EXISTS hr_openTime_time_trigger_u$$
+
+CREATE TRIGGER hr_openTime_time_trigger_u AFTER UPDATE ON hr_openTime_time
+FOR EACH ROW
+BEGIN
+  INSERT INTO hr_trigger_change (`table`,`action`,`key`,`newValue`)
+    VALUES ('hr_openTime_time','UPDATE',CONCAT('id=',NEW.id),CONCAT('\'',NEW.id,'\',\'',NEW.id_openTime,'\',\'',NEW.day ,'\',\'',NEW.from,'\',\'',NEW.until,'\''));
+END$$
+
+DROP TRIGGER IF EXISTS hr_openTime_time_trigger_i$$
+
+CREATE TRIGGER hr_openTime_time_trigger_i AFTER INSERT ON hr_openTime_time
+FOR EACH ROW
+BEGIN
+  INSERT INTO hr_trigger_change (`table`,`action`,`key`,`newValue`)
+    VALUES ('hr_openTime_time','INSERT','',CONCAT('\'',NEW.id_openTime,'\',\'',NEW.day ,'\',\'',NEW.from,'\',\'',NEW.until,'\''));
+END$$
+
+DROP TRIGGER IF EXISTS hr_openTime_time_trigger_d$$
+
+CREATE TRIGGER hr_openTime_time_trigger_d AFTER DELETE ON hr_openTime_time
+FOR EACH ROW
+BEGIN
+  INSERT INTO hr_trigger_change (`table`,`action`,`key`,`newValue`)
+    VALUES ('hr_openTime_time','DELETE',CONCAT('id=',OLD.id),'');
+END$$
+
+Delimiter ;
+
+--
+-- Structure de la table `hr_user`
+--
+
+Delimiter $$
+
+DROP TRIGGER IF EXISTS hr_user_trigger_u$$
+
+CREATE TRIGGER hr_user_trigger_u AFTER UPDATE ON hr_user
+FOR EACH ROW
+BEGIN
+IF (NEW.locked = 0) THEN
+  INSERT INTO hr_trigger_change (`table`,`action`,`key`,`newValue`)
+    VALUES ('hr_user','UPDATE',CONCAT('id=',NEW.id),CONCAT('\'',NEW.id,'\',\'',NEW.name,'\',\'',NEW.firstname ,'\',\'',NEW.street,'\',\'',NEW.city,'\',\'',NEW.country ,'\',\'',NEW.zip,'\',\'',NEW.phone1,'\',\'',NEW.phone2,'\',\'',NEW.email1,'\',\'',NEW.email2,'\',\'',NEW.picture,'\',\'',NEW.language,'\',\'',NEW.sex,'\',\'',NEW.validity_date,'\',\'',NEW.isBlocked,'\',\'',NEW.locked,'\',\'',NEW.department,'\',\'',NEW.firme,'\',\'',NEW.street_pr,'\',\'',NEW.npa_pr,'\',\'',NEW.city_pr,'\',\'',NEW.country_pr,'\',\'',NEW.pin_code,'\',\'',NEW.password,'\',\'',NEW.fax,'\''));
+END IF;
+END$$
+
+DROP TRIGGER IF EXISTS hr_user_trigger_i$$
+
+CREATE TRIGGER hr_user_trigger_i AFTER INSERT ON hr_user
+FOR EACH ROW
+BEGIN
+  INSERT INTO hr_trigger_change (`table`,`action`,`key`,`newValue`)
+    VALUES ('hr_user','INSERT','',CONCAT('\'',NEW.name,'\',\'',NEW.firstname ,'\',\'',NEW.street,'\',\'',NEW.city,'\',\'',NEW.country ,'\',\'',NEW.zip,'\',\'',NEW.phone1,'\',\'',NEW.phone2,'\',\'',NEW.email1,'\',\'',NEW.email2,'\',\'',NEW.picture,'\',\'',NEW.language,'\',\'',NEW.sex,'\',\'',NEW.validity_date,'\',\'',NEW.isBlocked,'\',\'',NEW.locked,'\',\'',NEW.department,'\',\'',NEW.firme,'\',\'',NEW.street_pr,'\',\'',NEW.npa_pr,'\',\'',NEW.city_pr,'\',\'',NEW.country_pr,'\',\'',NEW.pin_code,'\',\'',NEW.password,'\',\'',NEW.fax,'\''));
+END$$
+
+DROP TRIGGER IF EXISTS hr_user_trigger_d$$
+
+CREATE TRIGGER hr_user_trigger_d AFTER DELETE ON hr_user
+FOR EACH ROW
+BEGIN
+  INSERT INTO hr_trigger_change (`table`,`action`,`key`,`newValue`)
+    VALUES ('hr_user','DELETE',CONCAT('id=',OLD.id),'');
+END$$
+
+Delimiter ;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `hr_user_group`
+--
+
+Delimiter $$
+
+DROP TRIGGER IF EXISTS hr_user_group_trigger_u$$
+
+CREATE TRIGGER hr_user_group_trigger_u AFTER UPDATE ON hr_user_group
+FOR EACH ROW
+BEGIN
+IF (NEW.locked = 0) THEN
+  INSERT INTO hr_trigger_change (`table`,`action`,`key`,`newValue`)
+    VALUES ('hr_user_group','UPDATE',CONCAT('id=',NEW.id),CONCAT('\'',NEW.id,'\',\'',NEW.name,'\',\'',NEW.comment ,'\',\'',NEW.locked,'\',\'',NEW.accessPlugin,'\''));
+END IF;
+END$$
+
+DROP TRIGGER IF EXISTS hr_user_group_trigger_i$$
+
+CREATE TRIGGER hr_user_group_trigger_i AFTER INSERT ON hr_user_group
+FOR EACH ROW
+BEGIN
+  INSERT INTO hr_trigger_change (`table`,`action`,`key`,`newValue`)
+    VALUES ('hr_user_group','INSERT','',CONCAT('\'',NEW.name,'\',\'',NEW.comment,'\',\'',NEW.locked,'\',\'',NEW.accessPlugin,'\''));
+END$$
+
+DROP TRIGGER IF EXISTS hr_user_group_trigger_d$$
+
+CREATE TRIGGER hr_user_group_trigger_d AFTER DELETE ON hr_user_group
+FOR EACH ROW
+BEGIN
+  INSERT INTO hr_trigger_change (`table`,`action`,`key`,`newValue`)
+    VALUES ('hr_user_group','DELETE',CONCAT('id=',OLD.id),'');
+END$$
+
+Delimiter ;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `hr_user_group_access`
+--
+
+Delimiter $$
+
+DROP TRIGGER IF EXISTS hr_user_group_access_trigger_u$$
+
+CREATE TRIGGER hr_user_group_access_trigger_u AFTER UPDATE ON hr_user_group_access
+FOR EACH ROW
+BEGIN
+  INSERT INTO hr_trigger_change (`table`,`action`,`key`,`newValue`)
+    VALUES ('hr_user_group_access','UPDATE',CONCAT('id=',NEW.id),CONCAT('\'',NEW.id,'\',\'',NEW.id_group ,'\',\'',NEW.id_device ,'\',\'',NEW.id_access_level,'\''));
+END$$
+
+DROP TRIGGER IF EXISTS hr_user_group_access_trigger_i$$
+
+CREATE TRIGGER hr_user_group_access_trigger_i AFTER INSERT ON hr_user_group_access
+FOR EACH ROW
+BEGIN
+  INSERT INTO hr_trigger_change (`table`,`action`,`key`,`newValue`)
+    VALUES ('hr_user_group_access','INSERT','',CONCAT('\'',NEW.id_group ,'\',\'',NEW.id_device,'\',\'',NEW.id_access_level,'\''));
+END$$
+
+DROP TRIGGER IF EXISTS hr_user_group_access_trigger_d$$
+
+CREATE TRIGGER hr_user_group_access_trigger_d AFTER DELETE ON hr_user_group_access
+FOR EACH ROW
+BEGIN
+  INSERT INTO hr_trigger_change (`table`,`action`,`key`,`newValue`)
+    VALUES ('hr_user_group_access','DELETE',CONCAT('id=',OLD.id),'');
+END$$
+
+Delimiter ;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `hr_user_group_attribution`
+--
+
+Delimiter $$
+
+DROP TRIGGER IF EXISTS hr_user_group_attribution_trigger_u$$
+
+CREATE TRIGGER hr_user_group_attribution_trigger_u AFTER UPDATE ON hr_user_group_attribution
+FOR EACH ROW
+BEGIN
+  INSERT INTO hr_trigger_change (`table`,`action`,`key`,`newValue`)
+    VALUES ('hr_user_group_attribution','UPDATE',CONCAT('id=',NEW.id),CONCAT('\'',NEW.id,'\',\'',NEW.id_user ,'\',\'',NEW.id_group,'\''));
+END$$
+
+DROP TRIGGER IF EXISTS hr_user_group_attribution_trigger_i$$
+
+CREATE TRIGGER hr_user_group_attribution_trigger_i AFTER INSERT ON hr_user_group_attribution
+FOR EACH ROW
+BEGIN
+  INSERT INTO hr_trigger_change (`table`,`action`,`key`,`newValue`)
+    VALUES ('hr_user_group_attribution','INSERT','',CONCAT('\'',NEW.id_user ,'\',\'',NEW.id_group,'\''));
+END$$
+
+DROP TRIGGER IF EXISTS hr_user_group_attribution_trigger_d$$
+
+CREATE TRIGGER hr_user_group_attribution_trigger_d AFTER DELETE ON hr_user_group_attribution
+FOR EACH ROW
+BEGIN
+  INSERT INTO hr_trigger_change (`table`,`action`,`key`,`newValue`)
+    VALUES ('hr_user_group_attribution','DELETE',CONCAT('id=',OLD.id),'');
+END$$
+
+Delimiter ;

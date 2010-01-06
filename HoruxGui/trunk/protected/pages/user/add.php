@@ -18,7 +18,7 @@ Prado::using('horux.pages.user.sql');
 class Add extends Page
 {
 	protected $fileSize;	
-	protected $fileName;	
+	protected $fileName = '';
 	protected $fileType;
 	protected $fileError;
 	protected $hasFile;
