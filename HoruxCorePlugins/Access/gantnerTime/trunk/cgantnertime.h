@@ -39,6 +39,8 @@ class CGantnerTime : public QObject, CAccessInterface
     Q_CLASSINFO ( "PluginName", "gantnertime" );
     Q_CLASSINFO ( "PluginType", "access" );
     Q_CLASSINFO ( "PluginDescription", "Handle the Gantner time unit GAT p.time ST X80 / ST X81 / ST X90" );
+    Q_CLASSINFO ( "DbTableUsed", "hr_keys,hr_tracking,hr_timux_config,hr_timux_booking,hr_user,hr_user_group,hr_user_group_attribution,hr_user_group_access,hr_device,hr_gantner_standalone_action,hr_keys_attribution,hr_gantner_TimeTerminal,hr_timux_timecode,hr_timux_activity_counter");
+    Q_CLASSINFO ( "DbTrackingTable", "hr_timux_booking,hr_tracking");
 
 public:
     CGantnerTime(QObject *parent=NULL);

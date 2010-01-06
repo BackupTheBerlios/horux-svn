@@ -42,7 +42,7 @@ bool CGantnerTime::isAccess(QMap<QString, QVariant> params, bool)
     QSqlQuery querykey = "SELECT id FROM hr_keys WHERE serialNumber='" + key + "'";
     querykey.next();
 
-    QSqlQuery query("INSERT INTO `hr_tracking` ( `id` , `id_user` , `id_key` , `time` , `date` , `id_entry` , `is_access` , `id_comment`, `key` ) VALUES ('', '" +
+    QSqlQuery query("INSERT INTO `hr_tracking` ( `id` , `id_user` , `id_key` , `time` , `date` , `id_entry` , `is_access` , `id_comment`, `key`, `extData` ) VALUES ('', '" +
                 userId +
                 "','" +
                 querykey.value(0).toString() +
@@ -54,6 +54,8 @@ bool CGantnerTime::isAccess(QMap<QString, QVariant> params, bool)
                 "0" +
                 "', '" +
                 key +
+                "', '" +
+                "hr_timux_booking"
                 "')"
                 );
 
@@ -151,7 +153,7 @@ void CGantnerTime::reloadAllData()
                 insertQuery.exec();
 
                 QSqlQuery keyQuery;
-                keyQuery.prepare("SELECT k.id, serialNumber FROM hr_keys_attribution AS ka LEFT JOIN hr_keys AS k ON k.id=ka.id_key WHERE id_user=:id AND k.isBlocked=0");
+                keyQuery.prepare("SELECT k.id, serialNumber FROM hr_keys_attribution AS ka LEFT JOIN keys AS k ON k.id=ka.id_key WHERE id_user=:id AND k.isBlocked=0");
                 keyQuery.bindValue(":id", userQuery.value(0) );
                 keyQuery.exec();
 

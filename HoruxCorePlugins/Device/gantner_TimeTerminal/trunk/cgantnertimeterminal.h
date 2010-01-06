@@ -50,6 +50,7 @@ class CGantnerTimeTerminal : public QObject, CDeviceInterface
   Q_CLASSINFO ( "PluginName", "gantner_TimeTerminal" );
   Q_CLASSINFO ( "PluginType", "device" );
   Q_CLASSINFO ( "PluginDescription", "Handle a Gantner Time Terminal GAT p.time ST x80/ ST x81/ ST x90" );
+  Q_CLASSINFO ( "DbTableUsed", "hr_gantner_TimeTerminal,hr_timux_config,hr_gantner_TimeTerminal_key");
 
   enum ACTIONS { WAITING, READ_REPLACE, READ_CONFIG_FILE, READ_BOOKING, SEND_DOWN, SEND_CONFIG,REINIT } ;
   enum BOOKING_FIEDS
