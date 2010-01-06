@@ -386,6 +386,43 @@ class horux
 
         return $nAddRecord;
     }
+
+    /**
+     * @return string Return the database dump
+     * @soapmethod
+     */
+    public function syncDatabaseData()
+    {
+        $app = Prado::getApplication();
+        $db = $app->getModule('horuxDb')->DbConnection;
+        $db->Active=true;
+
+        $cmd= $db->createCommand("SELECT * FROM hr_trigger_change ORDER BY id");
+        $data = $cmd->query();
+        $data = $data->readAll();
+
+        $doc=new TXmlDocument('1.0','utf-8');
+        $doc->TagName='SyncData';
+
+        foreach($data as $row)
+        {
+            $trigger = new TXmlElement('Trigger');
+            $trigger->setAttribute('id',$row['id']);
+            $doc->Elements[] = $trigger;
+
+            $table = new TXmlElement('table');
+            $table->setAttribute('name',$row['table']);
+            $table->setAttribute('action',$row['action']);
+            $table->setAttribute('key',$row['key']);
+            $trigger->Elements[] = $table;
+
+            $newValue = new TXmlElement('newValue');
+            $newValue->Value=$row['newValue'];
+            $table->Elements[] = $newValue;
+        }
+
+        return $doc->saveToString();
+    }
 }
 
 ?>
