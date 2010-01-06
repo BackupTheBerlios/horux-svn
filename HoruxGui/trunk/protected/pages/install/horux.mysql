@@ -456,6 +456,7 @@ CREATE TABLE IF NOT EXISTS `hr_tracking` (
   `is_access` smallint(1) NOT NULL default '1',
   `id_comment` int(11) NOT NULL default '0',
   `key` varchar(128) NOT NULL,
+  `extData` varchar(50) NOT NULL,
   PRIMARY KEY  (`id`),
   KEY `time` (`time`,`date`),
   KEY `user` (`id_user`)

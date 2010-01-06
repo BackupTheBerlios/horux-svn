@@ -124,8 +124,17 @@ class horux
     }
 
     /**
-     * @return mixed Return the data of the database or for specofic table
-     * @param mixed $tables array of the table who musst be dump. ALL for all tables
+     * @return string Return the database dump
+     * @soapmethod
+     */
+    public function backupDatabase($tables)
+    {
+        return $this->dumpDatabase(true, true, 'ALL');
+    }
+
+    /**
+     * @param array $tables array of the table who musst be dump. ALL for all tables
+     * @return string Return the data of the database or for specofic table
      * @soapmethod
      */
     public function reloadDatabaseData($tables)
@@ -134,12 +143,14 @@ class horux
     }
 
     /**
-     * @return mixed Return the full schema of the database
+     * @param array $tables array of the table who musst be dump. ALL for all tables
+     * @return string Return the full schema of the database
      * @soapmethod
      */
-    public function reloadDatabaseSchema()
+    public function reloadDatabaseSchema($tables)
     {
-        return $this->dumpDatabase(true, false, 'ALL');
+        
+        return $this->dumpDatabase(true, false, $tables);
     }
 
 
@@ -222,6 +233,158 @@ class horux
 
 
         return $dump;
+    }
+
+    /**
+     * @param string $xml xml data of the tracking
+     * @return string Return the database dump
+     * @soapmethod
+     */
+    public function syncTrackingTable($xml)
+    {
+        $doc=new TXmlDocument('1.0','utf-8');
+        $doc->loadFromString($xml);
+
+        // mains tracking table
+        $tableArray["hr_tracking"] = array();
+        $tableArray["hr_alarms"] = array();
+
+        $nreOfRecord = 0;
+
+        if("trackingDump" == $doc->getTagName())
+        {
+            if($doc->getHasElement())
+            {
+                if($doc->getElements()->itemAt(0)->getHasElement())
+                {
+                    $tables = $doc->getElements()->itemAt(0)->getElements();
+
+                    $tablesName = "";
+                    foreach($tables as $table)
+                    {
+                       if($table->getHasElement())
+                       {
+                           $tableName = $table->getTagName();
+
+                           $records = $table->getElements()->itemAt(0)->getElements();
+
+                           foreach($records as $record)
+                           {
+                               if($record->getHasElement())
+                               {
+                                   $fields = $record->getElements();
+
+                                   $recordArray = array();
+
+                                   foreach($fields as $field)
+                                   {                                       
+                                        $fieldName = $field->getTagName();
+                                        $fieldValue = $field->getValue();
+
+                                        $recordArray[$fieldName] = $fieldValue;
+                                   }
+
+                                   $tableArray[$tableName][] = $recordArray;
+                               }
+                           }
+                       }
+                    }
+
+                    $nreOfRecord += $this->syncAlarm($tableArray["hr_alarms"]);
+                    $nreOfRecord += $this->syncTracking($tableArray);
+
+                    return $nreOfRecord;
+                }
+                else
+                    return "0";
+            }
+            else
+                return "0";
+
+        }
+        else
+            return "0";
+    }
+
+    protected function syncAlarm($alarms)
+    {
+        $app = Prado::getApplication();
+        $db = $app->getModule('horuxDb')->DbConnection;
+        $db->Active=true;
+
+        $nAddRecord = 0;
+
+        foreach($alarms as $alarm)
+        {
+            unset($alarm['id']);
+
+            $sFieldnames = join("`,`", array_keys($alarm));
+            $sFieldnames = "(`".$sFieldnames."`)";
+
+            $sFieldvalues= join("','", array_values($alarm));
+            $sFieldvalues = "('".$sFieldvalues."')";
+
+            $cmd= $db->createCommand("INSERT INTO hr_alarms ".$sFieldnames." VALUES ".$sFieldvalues);
+
+            if($cmd->execute())
+                $nAddRecord++;
+        }
+
+        return $nAddRecord;
+    }
+
+    protected function syncTracking($tracking)
+    {
+        $app = Prado::getApplication();
+        $db = $app->getModule('horuxDb')->DbConnection;
+        $db->Active=true;
+
+        $nAddRecord = 0;
+
+        foreach($tracking["hr_tracking"] as $track)
+        {
+            $id = $track['id'];
+
+            unset($track['id']);
+
+            $sFieldnames = join("`,`", array_keys($track));
+            $sFieldnames = "(`".$sFieldnames."`)";
+
+            $sFieldvalues= join("','", array_values($track));
+            $sFieldvalues = "('".$sFieldvalues."')";
+
+            $cmd= $db->createCommand("INSERT INTO hr_tracking ".$sFieldnames." VALUES ".$sFieldvalues);
+
+            if($cmd->execute())
+                $nAddRecord++;
+
+            $lastID = $db->getLastInsertID();
+
+            if($track['extData'] != '')
+            {
+                foreach($tracking[$track['extData']] as $extTracking)
+                {
+                    if($extTracking['tracking_id'] == $id)
+                    {
+                        $extTracking['tracking_id'] = $lastID;
+
+                        $sFieldnames = join("`,`", array_keys($extTracking));
+                        $sFieldnames = "(`".$sFieldnames."`)";
+
+                        $sFieldvalues= join("','", array_values($extTracking));
+                        $sFieldvalues = "('".$sFieldvalues."')";
+
+                        $cmd= $db->createCommand("INSERT INTO ".$track['extData']." ".$sFieldnames." VALUES ".$sFieldvalues);
+
+                        if($cmd->execute())
+                            $nAddRecord++;
+                    }
+
+                }
+            }
+        }
+
+        return $nAddRecord;
     }
 }
 
