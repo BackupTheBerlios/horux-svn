@@ -497,6 +497,8 @@ void CGantnerTimeTerminal::commandFinished(  int id, bool error)
     {
         if(!error)
         {
+            // @todo save the bookings file before to delete it.
+
             if(readFile.length() > 0)
             {
                 dispatchMessage(readFile.toLatin1());
