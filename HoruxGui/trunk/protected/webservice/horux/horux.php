@@ -290,10 +290,10 @@ class horux
                        }
                     }
 
-                    $nreOfRecord += $this->syncAlarm($tableArray["hr_alarms"]);
-                    $nreOfRecord += $this->syncTracking($tableArray);
+                    $ids .= $this->syncAlarm($tableArray["hr_alarms"]);
+                    $ids .= $this->syncTracking($tableArray);
 
-                    return $nreOfRecord;
+                    return $ids;
                 }
                 else
                     return "0";
@@ -312,10 +312,12 @@ class horux
         $db = $app->getModule('horuxDb')->DbConnection;
         $db->Active=true;
 
-        $nAddRecord = 0;
+        $ids = array();
 
         foreach($alarms as $alarm)
         {
+            $id = "hr_alarms:".$alarm['id'];
+            
             unset($alarm['id']);
 
             $sFieldnames = join("`,`", array_keys($alarm));
@@ -327,10 +329,12 @@ class horux
             $cmd= $db->createCommand("INSERT INTO hr_alarms ".$sFieldnames." VALUES ".$sFieldvalues);
 
             if($cmd->execute())
-                $nAddRecord++;
-        }
+            {
+                $ids[] = $id;
+            }
+         }
 
-        return $nAddRecord;
+        return implode(",", $ids);
     }
 
     protected function syncTracking($tracking)
@@ -339,7 +343,7 @@ class horux
         $db = $app->getModule('horuxDb')->DbConnection;
         $db->Active=true;
 
-        $nAddRecord = 0;
+        $ids = array();
 
         foreach($tracking["hr_tracking"] as $track)
         {
@@ -356,35 +360,62 @@ class horux
             $cmd= $db->createCommand("INSERT INTO hr_tracking ".$sFieldnames." VALUES ".$sFieldvalues);
 
             if($cmd->execute())
-                $nAddRecord++;
-
-            $lastID = $db->getLastInsertID();
-
-            if($track['extData'] != '')
             {
-                foreach($tracking[$track['extData']] as $extTracking)
+                $ids[] = "hr_tracking:".$id;
+
+                $lastID = $db->getLastInsertID();
+
+                if($track['extData'] != '')
                 {
-                    if($extTracking['tracking_id'] == $id)
+                    foreach($tracking[$track['extData']] as $extTracking)
                     {
-                        $extTracking['tracking_id'] = $lastID;
+                        if($extTracking['tracking_id'] == $id)
+                        {
+                            $extTracking['tracking_id'] = $lastID;
 
-                        $sFieldnames = join("`,`", array_keys($extTracking));
-                        $sFieldnames = "(`".$sFieldnames."`)";
+                            $sFieldnames = join("`,`", array_keys($extTracking));
+                            $sFieldnames = "(`".$sFieldnames."`)";
 
-                        $sFieldvalues= join("','", array_values($extTracking));
-                        $sFieldvalues = "('".$sFieldvalues."')";
+                            $sFieldvalues= join("','", array_values($extTracking));
+                            $sFieldvalues = "('".$sFieldvalues."')";
 
-                        $cmd= $db->createCommand("INSERT INTO ".$track['extData']." ".$sFieldnames." VALUES ".$sFieldvalues);
+                            $cmd= $db->createCommand("INSERT INTO ".$track['extData']." ".$sFieldnames." VALUES ".$sFieldvalues);
 
-                        if($cmd->execute())
-                            $nAddRecord++;
+                            if($cmd->execute())
+                            {
+                                $ids[] = $track['extData'].":".$id;
+                            }
+                        }
+
                     }
-
                 }
             }
         }
 
-        return $nAddRecord;
+        return implode(",", $ids);
+    }
+
+
+
+    /**
+     * @param string $ids id's of the trigger which are done
+     * @return string Return true
+     * @soapmethod
+     */
+    public function syncDatabaseDataDone($ids)
+    {
+        $app = Prado::getApplication();
+        $db = $app->getModule('horuxDb')->DbConnection;
+        $db->Active=true;
+
+        if($ids !== "")
+        {
+            $cmd= $db->createCommand("DELETE FROM hr_trigger_change WHERE id IN ($ids)");
+
+            $cmd->execute() ;
+        }
+
+        return true;
     }
 
     /**
