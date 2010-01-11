@@ -259,8 +259,9 @@ bool CHorux::startEngine()
     if(saas)
     {
         timerSoapInfo->start(1000 * 60 * saas_info_send_timer); //send the system info every 5 minutes
-        timerSoapTracking->start(1000 * 60 * saas_info_send_timer); //send the last tracking every 5 minutes
-        timerSoapSyncData->start(2000 ); //send the last tracking every 5 minutes
+        //timerSoapTracking->start(1000 * 60 * saas_info_send_timer); //send the last tracking every 5 minutes
+        timerSoapTracking->start(2000); //send the last tracking every 5 minutes
+        timerSoapSyncData->start(1000 * 60 * saas_info_send_timer ); //send the last tracking every 5 minutes
     }
 
     if ( !ptr_xmlRpcServer && xmlrpc)
@@ -584,34 +585,21 @@ void CHorux::readSoapResponse()
     // response when updating the tracking data
     if( response.method().name().name() == "syncTrackingTableResponse")
     {
-        QMap<QString,QStringList> tables;
-        QStringList trackingTablesList;
+        qDebug() << response.returnValue().toString();
 
-        tables = CFactory::getLog()->getUsedTables();
-        if(tables.contains("DbTrackingTable"))
-            trackingTablesList << tables["DbTrackingTable"];
+        QStringList ids = response.returnValue().toString().split(",");
 
-        tables = CFactory::getAccessHandling()->getUsedTables();
-        if(tables.contains("DbTrackingTable"))
-            trackingTablesList << tables["DbTrackingTable"];
-
-        tables = CFactory::getAlarmHandling()->getUsedTables();
-        if(tables.contains("DbTrackingTable"))
-            trackingTablesList << tables["DbTrackingTable"];
-
-        tables = CFactory::getDeviceHandling()->getUsedTables();
-        if(tables.contains("DbTrackingTable"))
-            trackingTablesList << tables["DbTrackingTable"];
-
-        tables = CFactory::getDbHandling()->getUsedTables();
-        if(tables.contains("DbTrackingTable"))
-            trackingTablesList << tables["DbTrackingTable"];
-
-        trackingTablesList.removeDuplicates();
-
-        foreach(QString table, trackingTablesList)
+        foreach(QString id, ids)
         {
-            QSqlQuery truncate("TRUNCATE TABLE `" + table + "`");
+            QStringList i = id.split(":");
+
+            if(i.count() == 2)
+            {
+                if(i.at(0) == "hr_alarms" || i.at(0) == "hr_tracking")
+                    QSqlQuery queryDelete("DELETE FROM " + i.at(0) + " WHERE id=" + i.at(1));
+                else
+                    QSqlQuery queryDelete("DELETE FROM " + i.at(0) + " WHERE tracking_id=" + i.at(1));
+            }
         }
 
         return;
@@ -620,6 +608,8 @@ void CHorux::readSoapResponse()
     if( response.method().name().name() == "syncDatabaseDataResponse")
     {
         QString xml = response.returnValue().value().toString();
+
+        QStringList ids;
 
         QDomDocument doc("trigger");
         if(doc.setContent(xml))
@@ -646,6 +636,55 @@ void CHorux::readSoapResponse()
                             QDomElement value = table.firstChild().toElement();
 
                             QString newValues = value.text();
+
+                            if(action == "DELETE")
+                            {
+                                qDebug() << "DELETE FROM " + name + " WHERE " + key;
+                                QSqlQuery queryDelete;
+                                if(queryDelete.exec("DELETE FROM " + name + " WHERE " + key))
+                                    ids << trigger.attribute("id","");
+                            }
+
+                            if(action == "INSERT")
+                            {
+                                QSqlQuery queryField( "SHOW COLUMNS FROM " + name);
+                                QStringList fields;
+                                while( queryField.next() )
+                                {
+                                    // ignore the key for the insert
+                                    if(queryField.value(0).toString()!= key)
+                                        fields << queryField.value(0).toString();
+
+                                }
+
+                                fields.join(",");
+
+                                qDebug() << "INSERT INTO " + name + " ( " + fields.join(",") + " ) VALUES (" + newValues + " )";
+
+                                QSqlQuery queryInsert;
+                                if(queryInsert.exec("INSERT INTO " + name + " ( " + fields.join(",") + " ) VALUES (" + newValues + " )"))
+                                    ids << trigger.attribute("id","");
+                            }
+
+                            if(action == "UPDATE")
+                            {
+                                QStringList values = newValues.split(",");
+
+                                QSqlQuery queryField( "SHOW COLUMNS FROM " + name);
+                                QStringList fields;
+                                int i=0;
+                                while( queryField.next() )
+                                {
+                                    fields << queryField.value(0).toString()+"=" + values.at(i);
+                                    i++;
+                                }
+
+                                qDebug() << "UPDATE " + name + " " + fields.join(",") + " WHERE " + key;
+
+                                QSqlQuery queryUpdate;
+                                if(queryUpdate.exec("UPDATE " + name + " SET " + fields.join(",") + " WHERE " + key))
+                                    ids << trigger.attribute("id","");
+                            }
                         }
 
                         n2 = n2.nextSibling();
@@ -654,6 +693,22 @@ void CHorux::readSoapResponse()
                  n = n.nextSibling();
              }
         }
+
+        if( ids.count() > 0 )
+        {
+
+            QtSoapMessage message;
+            message.setMethod("syncDatabaseDataDone");
+
+            message.addMethodArgument("ids", "", ids.join(","));
+
+            soapClient.submitRequest(message, saas_path+"/index.php?soap=horux&password=" + saas_password + "&username=" + saas_username);
+        }
+    }
+
+    if( response.method().name().name() == "syncDatabaseDataDoneResponse")
+    {
+        qDebug() << response.returnValue().toString();
     }
 }
 
