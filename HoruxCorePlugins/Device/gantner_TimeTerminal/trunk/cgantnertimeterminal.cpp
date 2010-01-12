@@ -156,7 +156,7 @@ void CGantnerTimeTerminal::setParameter(QString paramName, QVariant value)
     name = value.toString();
   if(paramName == "id")
     id = value.toInt();
-  if(paramName == "_isLog")
+  if(paramName == "isLog")
     _isLog = value.toBool();
   if(paramName == "accessPlugin")
     accessPlugin = value.toString();
@@ -497,10 +497,25 @@ void CGantnerTimeTerminal::commandFinished(  int id, bool error)
     {
         if(!error)
         {
-            // @todo save the bookings file before to delete it.
 
             if(readFile.length() > 0)
             {
+                qDebug() << "isLog:" << _isLog;
+                if(_isLog)
+                {
+                   QString date = QDateTime::currentDateTime().toString(Qt::ISODate);
+
+                   QFile booking(logPath + name + "_booking_" + date + ".txt");
+                   if(booking.open(QIODevice::WriteOnly))
+                   {
+                       QTextStream bookingTS(&booking);
+                       qDebug() << readFile;
+                       bookingTS << readFile;
+                       booking.close();
+                   }
+
+                }
+
                 dispatchMessage(readFile.toLatin1());
             }
 
