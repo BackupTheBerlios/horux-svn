@@ -454,6 +454,129 @@ class horux
 
         return $doc->saveToString();
     }
+
+    /**
+     * @param array $tables array of the table who musst be dump.
+     * @return string Return the database dump
+     * @soapmethod
+     */
+    public function createTrigger($tables)
+    {
+        $app = Prado::getApplication();
+        $db = $app->getModule('horuxDb')->DbConnection;
+        $db->Active=true;
+
+        $cmd= $db->createCommand("SHOW TABLES");
+        $data = $cmd->query();
+        $data->setFetchMode(PDO::FETCH_NUM);
+        $data = $data->readAll();
+
+        $trigger = "";
+
+        foreach($data as $d)
+        {
+
+            if(!in_array( $d[0] , $tables))
+            {
+                continue;
+            }
+
+
+            $cmd= $db->createCommand("SHOW COLUMNS FROM ".$d[0]);
+            $data2 = $cmd->query();
+            $data2 = $data2->readAll();
+
+
+            $cmd= $db->createCommand("DROP TRIGGER IF EXISTS ".$d[0]."_trigger_u");
+            $cmd->execute();
+
+            $trigger = "";
+            $trigger .= "CREATE TRIGGER ".$d[0]."_trigger_u AFTER UPDATE ON ".$d[0]."\n";
+            $trigger .= "FOR EACH ROW\n";
+            $trigger .= "BEGIN\n";
+
+            $trigger .= "IF (";
+
+
+
+            $fields = array();
+
+            foreach($data2 as $d2)
+            {
+                $fields[] = "NEW.".$d2['Field']." != OLD.".$d2['Field'];
+            }
+
+            $trigger .= implode(" OR ", $fields);
+            $trigger .= " ) THEN\n";
+
+            $trigger .= " INSERT INTO hr_trigger_change (`table`,`action`,`key`,`newValue`)\n";
+
+            $trigger .= " VALUES ('".$d[0]."','UPDATE',CONCAT('".$data2[0]['Field']."=',NEW.".$data2[0]['Field']."),CONCAT(";
+
+            $fields = array();
+
+            foreach($data2 as $d2)
+            {
+                $fields[] = "'\'',NEW.".$d2['Field'].",'\''";
+            }
+
+            $trigger .= implode(",", $fields);
+
+            $trigger .= "));\n";
+
+            $trigger .= "END IF;\n";
+            $trigger .= "END$$\n\n";
+
+            $cmd= $db->createCommand($trigger);
+            //$cmd->execute();
+
+            $cmd= $db->createCommand("DROP TRIGGER IF EXISTS ".$d[0]."_trigger_i");
+            $cmd->execute();
+
+            $trigger = "";
+            $trigger .="CREATE TRIGGER ".$d[0]."_trigger_i AFTER INSERT ON ".$d[0]."\n";
+            $trigger .= "FOR EACH ROW\n";
+            $trigger .= "BEGIN\n";
+            $trigger .= " INSERT INTO hr_trigger_change (`table`,`action`,`key`,`newValue`)\n";
+
+            $trigger .= " VALUES ('".$d[0]."','INSERT','".$data2[0]['Field']."',CONCAT(";
+
+            $fields = array();
+
+            foreach($data2 as $d2)
+            {
+                $fields[] = "'\'',NEW.".$d2['Field'].",'\''";
+            }
+
+            $trigger .= implode(",", $fields);
+
+
+            $trigger .= "));\n";
+
+            $trigger .= "END$$\n\n";
+
+            $cmd= $db->createCommand($trigger);
+            //$cmd->execute();
+
+            $cmd= $db->createCommand("DROP TRIGGER IF EXISTS ".$d[0]."_trigger_d");
+            $cmd->execute();
+
+            $trigger = "";
+            $trigger .= "CREATE TRIGGER ".$d[0]."_trigger_d AFTER DELETE ON ".$d[0]."\n";
+            $trigger .= "FOR EACH ROW\n";
+            $trigger .= "BEGIN\n";
+            $trigger .= "INSERT INTO hr_trigger_change (`table`,`action`,`key`,`newValue`)\n";
+            $trigger .= " VALUES ('".$d[0]."','DELETE',CONCAT('".$data2[0]['Field']."=',OLD.".$data2[0]['Field']."),'');\n";
+            $trigger .= "END$$\n\n";
+
+            $cmd= $db->createCommand($trigger);
+            //$cmd->execute();
+
+
+        }
+
+        return true;
+    }
 }
 
 ?>
