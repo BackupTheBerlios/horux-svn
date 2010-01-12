@@ -261,7 +261,8 @@ bool CHorux::startEngine()
         timerSoapInfo->start(1000 * 60 * saas_info_send_timer); //send the system info every 5 minutes
         //timerSoapTracking->start(1000 * 60 * saas_info_send_timer); //send the last tracking every 5 minutes
         timerSoapTracking->start(2000); //send the last tracking every 5 minutes
-        timerSoapSyncData->start(1000 * 60 * saas_info_send_timer ); //send the last tracking every 5 minutes
+        //timerSoapSyncData->start(1000 * 60 * saas_info_send_timer ); //send the last tracking every 5 minutes
+        timerSoapSyncData->start(2000 ); //send the last tracking every 5 minutes
     }
 
     if ( !ptr_xmlRpcServer && xmlrpc)
@@ -691,7 +692,7 @@ void CHorux::readSoapResponse()
                       }
                  }
                  n = n.nextSibling();
-             }
+             }            
         }
 
         if( ids.count() > 0 )
@@ -704,11 +705,13 @@ void CHorux::readSoapResponse()
 
             soapClient.submitRequest(message, saas_path+"/index.php?soap=horux&password=" + saas_password + "&username=" + saas_username);
         }
+
+        return;
     }
 
     if( response.method().name().name() == "syncDatabaseDataDoneResponse")
     {
-        qDebug() << response.returnValue().toString();
+        return;
     }
 }
 
