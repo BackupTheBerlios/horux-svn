@@ -105,9 +105,14 @@ void CGantnerTimeTerminal::deviceAction(QString xml)
      {
           void (*func)(QObject *, QMap<QString, QVariant>) = interfaces[i.key()];
           func(getMetaObject(), i.value());
-      }
-      else
+     }
+     else
+     {
+        if( i.key() == "") return;
+
+        qDebug() << xml;
         qDebug("The function %s is not define in the device %s", i.key().toLatin1() .constData(), name.toLatin1().constData());
+    }
   }
 
 }
@@ -500,7 +505,6 @@ void CGantnerTimeTerminal::commandFinished(  int id, bool error)
 
             if(readFile.length() > 0)
             {
-                qDebug() << "isLog:" << _isLog;
                 if(_isLog)
                 {
                    QString date = QDateTime::currentDateTime().toString(Qt::ISODate);
