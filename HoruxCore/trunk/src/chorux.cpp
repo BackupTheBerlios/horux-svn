@@ -479,14 +479,17 @@ void CHorux::readSoapResponse()
     // response when loading the database schema
     if( response.method().name().name() == "reloadDatabaseSchemaResponse")
     {
-        qDebug() << "reload schema";
+        qDebug() << "Schema reloading...";
         const QtSoapType &returnValue = response.returnValue();
         QString queries = returnValue.toString();
 
-        if ( CFactory::getDbHandling()->loadSchema(queries) )
+        if ( 1/*CFactory::getDbHandling()->loadSchema(queries) */)
         {
             QtSoapMessage message;
             message.setMethod("reloadDatabaseData");
+
+            QtSoapMessage message2;
+            message2.setMethod("createTrigger");
 
             QMap<QString,QStringList> tables;
             QStringList tablesList;
@@ -543,15 +546,33 @@ void CHorux::readSoapResponse()
             }
             message.addMethodArgument(array);
 
+            QtSoapArray *array2 = new QtSoapArray(QtSoapQName("tables"));
+            i=0;
+            foreach(QString t, tablesList)
+            {
+                array2->insert(i, new QtSoapSimpleType(QtSoapQName("table"), t));
+                i++;
+            }
+            message2.addMethodArgument(array2);
+
             soapClient.submitRequest(message, saas_path+"/index.php?soap=horux&password=" + saas_password + "&username=" + saas_username);
+
+            soapClient.submitRequest(message2, saas_path+"/index.php?soap=horux&password=" + saas_password + "&username=" + saas_username);
         }
 
         return;
     }
 
     // response when loading the database data
+    if( response.method().name().name() == "createTriggerResponse")
+    {
+        qDebug() << "Trigger created : " << response.returnValue().toString();
+    }
+
+    // response when loading the database data
     if( response.method().name().name() == "reloadDatabaseDataResponse")
     {
+
         const QtSoapType &returnValue = response.returnValue();
         QString queries = returnValue.toString();
 
