@@ -39,6 +39,7 @@ CAccessHandling *CAccessHandling::getInstance()
 CAccessHandling::CAccessHandling ( QObject *parent )
         : QObject ( parent )
 {
+    started = false;
 }
 
 

@@ -40,6 +40,7 @@ CDeviceHandling *CDeviceHandling::getInstance()
 CDeviceHandling::CDeviceHandling ( QObject *parent )
         : QObject ( parent )
 {
+    started = false;
 }
 
 

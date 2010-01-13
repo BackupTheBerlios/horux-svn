@@ -39,7 +39,7 @@ CAlarmHandling *CAlarmHandling::getInstance()
 CAlarmHandling::CAlarmHandling ( QObject *parent )
         : QObject ( parent )
 {
-
+    started = false;
 }
 
 

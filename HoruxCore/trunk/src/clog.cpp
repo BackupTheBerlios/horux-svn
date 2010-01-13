@@ -40,7 +40,7 @@ CLog *CLog::getInstance()
 CLog::CLog ( QObject *parent )
         : QObject ( parent )
 {
-
+    started = false;
 }
 
 

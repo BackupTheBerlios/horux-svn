@@ -40,6 +40,7 @@ CDbHandling::CDbHandling ( QObject *parent )
         : QObject ( parent )
 {
     dbInterface = NULL;
+    started = false;
 }
 
 
