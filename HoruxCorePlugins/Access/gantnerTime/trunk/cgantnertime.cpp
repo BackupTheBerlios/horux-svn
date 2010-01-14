@@ -325,7 +325,8 @@ void CGantnerTime::checkDb()
                 QString keyId = query.value(4).toString();
                 QString param = query.value(6).toString();
                 QString param2 = query.value(7).toString();
-                QString reasonId = query.value(8).toString();
+                QString param3 = query.value(8).toString();
+                QString reasonId = query.value(9).toString();
 
                 if(type == "user")
                 {
@@ -355,9 +356,27 @@ void CGantnerTime::checkDb()
 
                 if(type == "key_user")
                 {
+                    QMap<QString, QString> p2;
+                    QString f2 = func == "add" ? "addUser" : "removeUser" ;
+                    p2["userId"] = userId;
+                    p2["userNo"] = userId;
+                    p2["displayName"] = param;
+                    p2["lang"] = param2;
+                    p2["fiuUse"] = "0";
+                    p2["attendanceStatus"] = "2";
+
+                    QString xmlFunc2 = CXmlFactory::deviceAction( deviceId ,f2, p2);
+                    emit accessAction(xmlFunc2);
+
                     QMap<QString, QString> p;
-                    QString xmlFunc = CXmlFactory::deviceAction( deviceId ,"", p);
+                    QString f = func == "add" ? "addKey" : "removeKey" ;
+                    p["userId"] = userId;
+                    p["key"] = param3;
+                    p["keyType"] = "01";
+
+                    QString xmlFunc = CXmlFactory::deviceAction( deviceId ,f, p);
                     emit accessAction(xmlFunc);
+
                 }
 
                 if(type == "reason")

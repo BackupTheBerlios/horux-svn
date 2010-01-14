@@ -183,7 +183,7 @@ void CGantnerTimeTerminal::setParameter(QString paramName, QVariant value)
   if(paramName == "udpServer")
     udpServer = value.toBool();
    if(paramName == "checkBooking")
-    checkBooking = 10000;//value.toInt() * 60000;
+    checkBooking = value.toInt() * 60000;
 }
 
 QString CGantnerTimeTerminal::getScript()
