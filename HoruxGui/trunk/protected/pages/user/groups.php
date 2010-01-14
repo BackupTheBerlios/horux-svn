@@ -77,7 +77,7 @@ class Groups extends Page
     	$cmd->bindParameter(":id_group",$id_group);	
     	$cmd->execute();
 
-        $this->addStandalone('add', $id_group);
+        $this->addStandalone('add', $id_group.','.$id_user);
 
 
         $cmd=$this->db->createCommand(SQL::SQL_GET_PERSON);
@@ -140,7 +140,7 @@ class Groups extends Page
 	                $cmd->bindParameter(":id_group",$cb->Value);
 	                $cmd->bindParameter(":id_user",$this->id->Value);
 
-                    $this->addStandalone('sub', $cb->Value);
+                    $this->addStandalone('sub', $cb->Value.','.$this->id->Value);
 
                     if($cmd->execute())
                     {

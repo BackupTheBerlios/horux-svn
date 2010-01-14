@@ -503,7 +503,8 @@ class horux
 
             foreach($data2 as $d2)
             {
-                $fields[] = "NEW.".$d2['Field']." != OLD.".$d2['Field'];
+                if($d2['Field'] != 'locked')
+                    $fields[] = "NEW.".$d2['Field']." != OLD.".$d2['Field'];
             }
 
             $trigger .= implode(" OR ", $fields);
@@ -520,15 +521,15 @@ class horux
                 $fields[] = "'\'',NEW.".$d2['Field'].",'\''";
             }
 
-            $trigger .= implode(",", $fields);
+            $trigger .= implode(",',',", $fields);
 
             $trigger .= "));\n";
 
             $trigger .= "END IF;\n";
-            $trigger .= "END$$\n\n";
+            $trigger .= "END\n\n";
 
             $cmd= $db->createCommand($trigger);
-            //$cmd->execute();
+            $cmd->execute();
 
             $cmd= $db->createCommand("DROP TRIGGER IF EXISTS ".$d[0]."_trigger_i");
             $cmd->execute();
@@ -548,15 +549,15 @@ class horux
                 $fields[] = "'\'',NEW.".$d2['Field'].",'\''";
             }
 
-            $trigger .= implode(",", $fields);
+            $trigger .= implode(",',',", $fields);
 
 
             $trigger .= "));\n";
 
-            $trigger .= "END$$\n\n";
+            $trigger .= "END\n\n";
 
             $cmd= $db->createCommand($trigger);
-            //$cmd->execute();
+            $cmd->execute();
 
             $cmd= $db->createCommand("DROP TRIGGER IF EXISTS ".$d[0]."_trigger_d");
             $cmd->execute();
@@ -567,10 +568,10 @@ class horux
             $trigger .= "BEGIN\n";
             $trigger .= "INSERT INTO hr_trigger_change (`table`,`action`,`key`,`newValue`)\n";
             $trigger .= " VALUES ('".$d[0]."','DELETE',CONCAT('".$data2[0]['Field']."=',OLD.".$data2[0]['Field']."),'');\n";
-            $trigger .= "END$$\n\n";
+            $trigger .= "END\n\n";
 
             $cmd= $db->createCommand($trigger);
-            //$cmd->execute();
+            $cmd->execute();
 
 
         }
