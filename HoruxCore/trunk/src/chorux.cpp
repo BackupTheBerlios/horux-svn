@@ -49,6 +49,8 @@ CHorux::~CHorux()
 
 void CHorux::initSAASMode()
 {
+    isFullReloaded = false;
+
     QSettings settings ( QCoreApplication::instance()->applicationDirPath() +"/horux.ini", QSettings::IniFormat );
 
     settings.beginGroup ( "Webservice" );
@@ -483,7 +485,7 @@ void CHorux::readSoapResponse()
         const QtSoapType &returnValue = response.returnValue();
         QString queries = returnValue.toString();
 
-        if ( 1/*CFactory::getDbHandling()->loadSchema(queries) */)
+        if ( CFactory::getDbHandling()->loadSchema(queries) )
         {
             QtSoapMessage message;
             message.setMethod("reloadDatabaseData");
@@ -567,17 +569,8 @@ void CHorux::readSoapResponse()
     if( response.method().name().name() == "createTriggerResponse")
     {
         qDebug() << "Trigger created : " << response.returnValue().toString();
-    }
-
-    // response when loading the database data
-    if( response.method().name().name() == "reloadDatabaseDataResponse")
-    {
-
-        const QtSoapType &returnValue = response.returnValue();
-        QString queries = returnValue.toString();
-
-        if ( CFactory::getDbHandling()->loadData(queries) )
-        {           
+        if(isFullReloaded)
+        {
             QMap<QString, QVariant> params;
             params["type"] = "ALARM";
             params["code"] = "1301";
@@ -588,6 +581,35 @@ void CHorux::readSoapResponse()
             delete CFactory::getDbHandling();
             startEngine();
         }
+        else
+            isFullReloaded = true;
+
+    }
+
+    // response when loading the database data
+    if( response.method().name().name() == "reloadDatabaseDataResponse")
+    {
+
+        const QtSoapType &returnValue = response.returnValue();
+        QString queries = returnValue.toString();
+
+        if ( CFactory::getDbHandling()->loadData(queries))
+        {
+            if(isFullReloaded)
+            {
+                QMap<QString, QVariant> params;
+                params["type"] = "ALARM";
+                params["code"] = "1301";
+                params["object"] = "0";
+
+                CHorux::sendNotification(params);
+
+                delete CFactory::getDbHandling();
+                startEngine();
+            }
+            else
+                isFullReloaded = true;
+        }           
 
         return;
     }
@@ -673,19 +695,19 @@ void CHorux::readSoapResponse()
                                 QStringList fields;
                                 while( queryField.next() )
                                 {
-                                    // ignore the key for the insert
-                                    if(queryField.value(0).toString()!= key)
-                                        fields << queryField.value(0).toString();
+                                    fields << queryField.value(0).toString();
 
                                 }
 
                                 fields.join(",");
 
-                                qDebug() << "INSERT INTO " + name + " ( " + fields.join(",") + " ) VALUES (" + newValues + " )";
+                                qDebug() << "INSERT INTO " + name + " ( `" + fields.join("`,`") + "` ) VALUES (" + newValues + " )";
 
                                 QSqlQuery queryInsert;
-                                if(queryInsert.exec("INSERT INTO " + name + " ( " + fields.join(",") + " ) VALUES (" + newValues + " )"))
+                                if(queryInsert.exec("INSERT INTO " + name + " ( `" + fields.join("`,`") + "` ) VALUES (" + newValues + " )"))
                                     ids << trigger.attribute("id","");
+                                else
+                                    qDebug() <<   queryInsert.lastError().text();                              
                             }
 
                             if(action == "UPDATE")
@@ -697,15 +719,16 @@ void CHorux::readSoapResponse()
                                 int i=0;
                                 while( queryField.next() )
                                 {
-                                    fields << queryField.value(0).toString()+"=" + values.at(i);
+                                    fields << "`" + queryField.value(0).toString()+"`=" + values.at(i);
                                     i++;
                                 }
 
-                                qDebug() << "UPDATE " + name + " " + fields.join(",") + " WHERE " + key;
+                                qDebug() << "UPDATE " + name + " SET " + fields.join(",") + " WHERE " + key;
 
                                 QSqlQuery queryUpdate;
                                 if(queryUpdate.exec("UPDATE " + name + " SET " + fields.join(",") + " WHERE " + key))
                                     ids << trigger.attribute("id","");
+
                             }
                         }
 

@@ -186,6 +186,9 @@ Q_EXPORT_PLUGIN2(dbmysqlplugin, DbMysqlPlugin);
 
 QVariant DbMysqlPlugin::getConfigParam(QString paramName)
 {
+   if(!dbase.isOpen())
+       return 0;
+
   QSqlQuery query("SELECT " + paramName + " FROM hr_config");
 
   if(query.next())

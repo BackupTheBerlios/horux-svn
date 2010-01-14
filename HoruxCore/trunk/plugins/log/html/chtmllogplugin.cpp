@@ -24,7 +24,7 @@ void CHtmlLogPlugin::debug(QString msg)
 {
   QString date = QDateTime::currentDateTime().toString(Qt::ISODate);
 
-	checkPermision(path + "debug.html");
+  checkPermision(path + "debug.html");
 
   QFile file(path + "debug.html");
 
@@ -42,7 +42,7 @@ void CHtmlLogPlugin::warning(QString msg)
 {
   QString date = QDateTime::currentDateTime().toString(Qt::ISODate);
 
-	checkPermision(path + "warning.html");
+  checkPermision(path + "warning.html");
 
   QFile file(path + "warning.html");
   if (!file.open(QIODevice::Append | QIODevice::Text))
