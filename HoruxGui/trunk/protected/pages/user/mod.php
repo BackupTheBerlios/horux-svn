@@ -22,9 +22,31 @@ class Mod extends Page
     protected $fileError;
     protected $hasFile;
 
+    protected $picturepath = "";
+
     public function onLoad($param)
     {
         parent::onLoad($param);
+
+        $sql = "SELECT picturepath FROM hr_config WHERE id=1";
+        $cmd=$this->db->createCommand($sql);
+        $data = $cmd->query();
+        $data = $data->read();
+
+        if($data['picturepath'] != "")
+        {
+            if(!is_writeable('.'.DIRECTORY_SEPARATOR.'pictures'.DIRECTORY_SEPARATOR.$data['picturepath']))
+                $this->displayMessage(Prado::localize('The directory ./pictures{p} must be writeable to save your picture', array('p'=>DIRECTORY_SEPARATOR.$data['picturepath'])), false);
+            else
+                $this->picturepath = '.'.DIRECTORY_SEPARATOR.'pictures'.DIRECTORY_SEPARATOR.$data['picturepath'].DIRECTORY_SEPARATOR;
+        }
+        else
+        {
+            if(!is_writeable('.'.DIRECTORY_SEPARATOR.'pictures'))
+                $this->displayMessage(Prado::localize('The directory ./pictures{p} must be writeable to save your picture', array('p'=>"")), false);
+            else
+                $this->picturepath = '.'.DIRECTORY_SEPARATOR.'pictures'.DIRECTORY_SEPARATOR;
+        }
 
         $cmd = $this->db->createCommand( "SELECT * FROM hr_config WHERE id=1" );
         $query = $cmd->query();
@@ -102,9 +124,9 @@ class Mod extends Page
             $this->language->setSelectedValue($data['language']);
             $this->pictureName->Value = $data['picture'];
             if($data['picture'] != "")
-            $this->picture->setImageUrl('./pictures/'.$data['picture']);
+                $this->picture->setImageUrl($this->picturepath.$data['picture']);
             else
-            $this->picture->setImageUrl('./pictures/unknown.jpg');
+                $this->picture->setImageUrl('./pictures/unknown.jpg');
 
             $this->pin_code->Text = $data['pin_code'];
             $this->currentPswd->Value = $data['password'];
@@ -227,8 +249,8 @@ class Mod extends Page
         if($this->delPicture->getChecked())
         {
             $this->fileName = "";
-            if(is_file('./pictures/'.$this->pictureName->Value) )
-            unlink('./pictures/'.$this->pictureName->Value);
+            if(is_file($this->picturepath.$this->pictureName->Value) )
+                unlink($this->picturepath.$this->pictureName->Value);
             $cmd->bindParameter(":picture",$this->fileName,PDO::PARAM_STR);
 
         }
@@ -236,9 +258,9 @@ class Mod extends Page
         {
             if($this->hasFile)
             {
-                if(is_file('./pictures/'.$this->pictureName->Value) &&
+                if(is_file($this->picturepath.$this->pictureName->Value) &&
                     $this->pictureName->Value != $this->fileName)
-                unlink('./pictures/'.$this->pictureName->Value);
+                unlink($this->picturepath.$this->pictureName->Value);
                 $cmd->bindParameter(":picture",$this->fileName,PDO::PARAM_STR);
             }
             else
@@ -295,18 +317,18 @@ class Mod extends Page
             {
                 $fileName = $sender->FileName;
 
-                if(file_exists('./pictures/'.$sender->FileName))
+                if(file_exists($this->picturepath.$sender->FileName))
                 {
                     $fileName = rand().$sender->FileName;
                 }
 
-                $sender->saveAs('./pictures/'.$fileName);
+                $sender->saveAs($this->picturepath.$fileName);
                 $this->fileName = $fileName;
                 $this->fileType = $sender->FileType;
                 $this->fileSize = $sender->FileSize;
                 $this->fileError = "";
 
-                $this->checkImage('./pictures/'.$fileName);
+                $this->checkImage($this->picturepath.$fileName);
             }
             else
             {

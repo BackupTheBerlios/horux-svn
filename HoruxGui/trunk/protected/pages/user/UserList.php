@@ -16,6 +16,8 @@ Prado::using('horux.pages.user.sql');
 
 class UserList extends PageList
 {
+    protected $picturepath = "";
+
     protected function getData()
     {
     
@@ -272,6 +274,26 @@ class UserList extends PageList
         public function onLoad($param)
         {
             parent::onLoad($param);
+
+            $sql = "SELECT picturepath FROM hr_config WHERE id=1";
+            $cmd=$this->db->createCommand($sql);
+            $data = $cmd->query();
+            $data = $data->read();
+
+            if($data['picturepath'] != "")
+            {
+                if(!is_writeable('.'.DIRECTORY_SEPARATOR.'pictures'.DIRECTORY_SEPARATOR.$data['picturepath']))
+                    $this->displayMessage(Prado::localize('The directory ./pictures{p} must be writeable to save/delete your picture', array('p'=>DIRECTORY_SEPARATOR.$data['picturepath'])), false);
+                else
+                    $this->picturepath = '.'.DIRECTORY_SEPARATOR.'pictures'.DIRECTORY_SEPARATOR.$data['picturepath'].DIRECTORY_SEPARATOR;
+            }
+            else
+            {
+                if(!is_writeable('.'.DIRECTORY_SEPARATOR.'pictures'))
+                    $this->displayMessage(Prado::localize('The directory ./pictures{p} must be writeable to save/delete your picture', array('p'=>"")), false);
+                else
+                    $this->picturepath = '.'.DIRECTORY_SEPARATOR.'pictures'.DIRECTORY_SEPARATOR;
+            }
 
             //$this->setHoruxSysTray(true);
 
@@ -535,9 +557,9 @@ class UserList extends PageList
 
                         if($data['picture'] != "")
                         {
-                            if(file_exists('./protected/pictures/'.$data['picture']))
+                            if(file_exists($this->picturepath.$data['picture']))
                             {
-                                unlink('./protected/pictures/'.$data['picture']);
+                                unlink($this->picturepath.$data['picture']);
                             }
                         }
 

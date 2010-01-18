@@ -140,6 +140,26 @@
 
 
     <fieldset class="adminform">
+        <legend><%[Picture path]%></legend>
+        <table class="admintable" cellspacing="1">
+            <tbody>
+
+                <tr>
+                    <td valign="top" class="key">
+                        <span onmouseover="Tip('<%[Enter the path where the picture will be saved]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Path]%></span>
+                    </td>
+                    <td>
+                        <com:TTextBox
+                            CssClass="text_area"
+                            ID="picturepath"
+                            Width="50" />
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </fieldset>
+
+    <fieldset class="adminform">
         <legend><%[Mail Settings]%></legend>
         <table class="admintable" cellspacing="1">
             <tbody>

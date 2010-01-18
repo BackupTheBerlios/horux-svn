@@ -137,6 +137,7 @@ CREATE TABLE IF NOT EXISTS `hr_config` (
   `mail_smtp_host` varchar(50) NOT NULL default 'localhost',
   `mail_smtp_port` int(11) NOT NULL default '21',
   `publicurl` varchar(255) NOT NULL,
+  `picturepath` varchar(255) NOT NULL,
   PRIMARY KEY  (`id`)
 ) TYPE=MyISAM CHARACTER SET `utf8` ;
 
@@ -145,8 +146,8 @@ CREATE TABLE IF NOT EXISTS `hr_config` (
 --
 
 
-INSERT INTO `hr_config` (`id`, `xmlrpc_server`, `xmlrpc_port`, `log_path`, `debug_mode`, `server_path`, `key`, `mail_mailer`, `mail_mail_from`, `mail_from_name`, `mail_sendmail_path`, `mail_smtp_auth`, `mail_smtp_safe`, `mail_smtp_username`, `mail_smtp_password`, `mail_smtp_host`, `mail_smtp_port`, `publicurl`) VALUES
-(1, 'localhost', 1083, '', 0, '.', '', 'mail', '', '', '/usr/sbin/sendmail', 0, 'none', '', '', '', 0, '');
+INSERT INTO `hr_config` (`id`, `xmlrpc_server`, `xmlrpc_port`, `log_path`, `debug_mode`, `server_path`, `key`, `mail_mailer`, `mail_mail_from`, `mail_from_name`, `mail_sendmail_path`, `mail_smtp_auth`, `mail_smtp_safe`, `mail_smtp_username`, `mail_smtp_password`, `mail_smtp_host`, `mail_smtp_port`, `publicurl`, `picturepath`) VALUES
+(1, 'localhost', 1083, '', 0, '.', '', 'mail', '', '', '/usr/sbin/sendmail', 0, 'none', '', '', '', 0, '','');
 
 # --------------------------------------------------------
 

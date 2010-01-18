@@ -51,11 +51,14 @@ class Config extends Page
             $this->debug_mode->setChecked($data['debug_mode']);
             $this->key->Text = $data['key'];
             $this->publicurl->Text = $data['publicurl'];
+            $this->picturepath->Text = $data['picturepath'];
 
             $this->mailer->SetSelectedValue($data['mail_mailer']);
             $this->mail_from->Text = $data['mail_mail_from'];
             $this->name_from->Text = $data['mail_from_name'];
             $this->sendmail_path->Text = $data['mail_sendmail_path'];
+
+
 
             if($data['mail_smtp_auth'])
             {
@@ -130,6 +133,7 @@ class Config extends Page
                     $cmd->bindParameter(":key",$this->key->SafeText,PDO::PARAM_STR);
 
                     $cmd->bindParameter(":publicurl",$this->publicurl->SafeText,PDO::PARAM_STR);
+                    $cmd->bindParameter(":picturepath",$this->picturepath->SafeText,PDO::PARAM_STR);
 
 
                     $cmd->bindParameter(":mail_mailer",$this->mailer->getSelectedValue(),PDO::PARAM_STR);

@@ -25,9 +25,32 @@ class Add extends Page
     protected $url;
     protected $siteName;
 
+    protected $picturepath = "";
+
     public function onLoad($param)
     {
         parent::onLoad($param);
+
+        $sql = "SELECT picturepath FROM hr_config WHERE id=1";
+        $cmd=$this->db->createCommand($sql);
+        $data = $cmd->query();
+        $data = $data->read();
+
+        if($data['picturepath'] != "")
+        {
+            if(!is_writeable('.'.DIRECTORY_SEPARATOR.'pictures'.DIRECTORY_SEPARATOR.$data['picturepath']))
+                $this->displayMessage(Prado::localize('The directory ./pictures{p} must be writeable to save your picture', array('p'=>DIRECTORY_SEPARATOR.$data['picturepath'])), false);
+            else
+                $this->picturepath = '.'.DIRECTORY_SEPARATOR.'pictures'.DIRECTORY_SEPARATOR.$data['picturepath'].DIRECTORY_SEPARATOR;
+        }
+        else
+        {
+            if(!is_writeable('.'.DIRECTORY_SEPARATOR.'pictures'))
+                $this->displayMessage(Prado::localize('The directory ./pictures{p} must be writeable to save your picture', array('p'=>"")), false);
+            else
+                $this->picturepath = '.'.DIRECTORY_SEPARATOR.'pictures'.DIRECTORY_SEPARATOR;
+        }
+
 
         $cmd = $this->db->createCommand( "SELECT * FROM hr_config WHERE id=1" );
         $query = $cmd->query();
@@ -226,18 +249,18 @@ class Add extends Page
 		{
 			$fileName = $sender->FileName;	
 		
-			if(file_exists('./pictures/'.$sender->FileName))
+			if(file_exists($this->picturepath.$sender->FileName))
 			{
 				$fileName = rand().$sender->FileName;
 			}	
 		
-			$sender->saveAs('./pictures/'.$fileName);
+			$sender->saveAs($this->picturepath.$fileName);
 			$this->fileName = $fileName;
 			$this->fileType = $sender->FileType;
 			$this->fileSize = $sender->FileSize;
 			$this->fileError = "";
 			
-			$this->checkImage('./pictures/'.$fileName);
+			$this->checkImage($this->picturepath.$fileName);
 		}
 		else
 		{

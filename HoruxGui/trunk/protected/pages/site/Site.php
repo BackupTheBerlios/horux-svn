@@ -22,25 +22,43 @@ class Site extends Page
 	protected $fileError;
 	protected $hasFile;
 
+    protected $picturepath = "";
+
     public function onLoad($param)
     {
         parent::onLoad($param);
-        
-	if(!is_writeable('.'.DIRECTORY_SEPARATOR.'pictures'))
-		$this->displayMessage(Prado::localize('The directory ./pictures must be writeable to save your logo'), false); 
 
+        $sql = "SELECT picturepath FROM hr_config WHERE id=1";
+        $cmd=$this->db->createCommand($sql);
+        $data = $cmd->query();
+        $data = $data->read();
 
-       if(!$this->isPostBack)
+        if($data['picturepath'] != "")
+        {
+            if(!is_writeable('.'.DIRECTORY_SEPARATOR.'pictures'.DIRECTORY_SEPARATOR.$data['picturepath']))
+                $this->displayMessage(Prado::localize('The directory ./pictures{p} must be writeable to save your logo', array('p'=>DIRECTORY_SEPARATOR.$data['picturepath'])), false);
+            else
+                $this->picturepath = '.'.DIRECTORY_SEPARATOR.'pictures'.DIRECTORY_SEPARATOR.$data['picturepath'].DIRECTORY_SEPARATOR;
+        }
+        else
+        {
+            if(!is_writeable('.'.DIRECTORY_SEPARATOR.'pictures'))
+                $this->displayMessage(Prado::localize('The directory ./pictures{p} must be writeable to save your logo', array('p'=>"")), false);
+            else
+                $this->picturepath = '.'.DIRECTORY_SEPARATOR.'pictures'.DIRECTORY_SEPARATOR;
+        }
+
+        if(!$this->isPostBack)
         {
           $this->setData();
-          
-			$param = $this->Application->getParameters();
-			$superAdmin = $this->Application->getUser()->getSuperAdmin();
-	
-			if($param['appMode'] == 'demo' && $superAdmin == 0)
-			{
-				$this->tbb->Save->setEnabled(false);
-			}           
+
+            $param = $this->Application->getParameters();
+            $superAdmin = $this->Application->getUser()->getSuperAdmin();
+
+            if($param['appMode'] == 'demo' && $superAdmin == 0)
+            {
+                $this->tbb->Save->setEnabled(false);
+            }
         }
     }
 
@@ -64,7 +82,7 @@ class Site extends Page
 			$this->tva->Text = $data['tva'];
 			$this->devise->Text = $data['devise'];
 			if($data['logo'] != "")
-	      		$this->picture->setImageUrl('./pictures/'.$data['logo']);
+	      		$this->picture->setImageUrl($this->picturepath.$data['logo']);
 
         } 
     }
@@ -138,18 +156,18 @@ class Site extends Page
 		{
 			$fileName = $sender->FileName;	
 		
-			if(file_exists('.'.DIRECTORY_SEPARATOR.'pictures'.DIRECTORY_SEPARATOR.$sender->FileName))
+			if(file_exists($this->picturepath.$sender->FileName))
 			{
 				$fileName = rand().$sender->FileName;
 			}	
 		
-			$sender->saveAs('.'.DIRECTORY_SEPARATOR.'pictures'.DIRECTORY_SEPARATOR.$fileName);
+			$sender->saveAs($this->picturepath.$fileName);
 			$this->fileName = $fileName;
 			$this->fileType = $sender->FileType;
 			$this->fileSize = $sender->FileSize;
 			$this->fileError = "";
 			
-			$this->checkImage('.'.DIRECTORY_SEPARATOR.'pictures'.DIRECTORY_SEPARATOR.$fileName);
+			$this->checkImage($this->picturepath.$fileName);
 		}
 		else
 		{

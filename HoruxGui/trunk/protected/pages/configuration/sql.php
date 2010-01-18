@@ -34,6 +34,7 @@ class SQL {
 
                         `publicurl`=:publicurl,
 
+                        `picturepath`=:picturepath,
 
                         `key`=:key
                         WHERE id=1"
