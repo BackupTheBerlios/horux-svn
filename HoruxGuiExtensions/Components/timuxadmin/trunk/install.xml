@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+  <install type="component">
+  <installName>timuxadmin</installName>
+  <name>Timux Admin</name>
+  <version>1.0.0</version>
+  <creationDate>09/11/09</creationDate>
+  <author>Jean-Luc Gyger / Letux</author>
+  <authorEmail>info@letux.ch</authorEmail>
+  <authorUrl>http://www.letux.ch</authorUrl>
+  <copyright>Letux</copyright>
+  <license>GNU/GPL</license>
+  <description>Administrator component for Timux</description>
+
+  <sqlinstall>install.sql</sqlinstall>
+  <sqluninstall>uninstall.sql</sqluninstall>
+
+  <mainmenu>
+    <menu iconmenu="icon-16-panel.png" url="components.timuxadmin.panel" name="Timux Admin">
+        <submenus>
+            <submenu iconmenu="icon-16-config.png" url="components.timuxadmin.config.config" name="Configuration" ></submenu>
+            <submenu iconmenu="icon-16-workflow.png" url="components.timuxadmin.workflow.workflow" name="Workflow" ></submenu>
+            <submenu iconmenu="icon-16-timcode.png" url="components.timuxadmin.timecode.timecode" name="Time Code" ></submenu>
+            <submenu iconmenu="icon-16-panel.png" url="components.timuxadmin.timeclasses.timeclasses" name="Time classes" ></submenu>
+        </submenus>       
+    </menu>
+  </mainmenu>
+
+  <permissions>
+    <permission id="1" parent="0">components.timuxadmin.panel</permission>
+    <permission id="3" parent="0">components.timuxadmin.config.config</permission>
+    <permission id="4" parent="0">components.timuxadmin.workflow.workflow</permission>
+    <permission id="5" parent="4">components.timuxadmin.workflow.add</permission>
+    <permission id="6" parent="4">components.timuxadmin.workflow.mod</permission>
+    <permission id="10" parent="0">components.timuxadmin.timecode.timecode</permission>
+    <permission id="11" parent="10">components.timuxadmin.timecode.add</permission>
+    <permission id="12" parent="10">components.timuxadmin.timecode.mod</permission>
+    <permission id="13" parent="0">components.timuxadmin.timeclasses.timeclasses</permission>
+    <permission id="14" parent="13">components.timuxadmin.timeclasses.add</permission>
+    <permission id="15" parent="13">components.timuxadmin.timeclasses.mod</permission>
+   
+  </permissions>
+
+</install>

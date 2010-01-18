@@ -1,0 +1,103 @@
+<com:TContent ID="Main">
+    <%include Application.common.template.headerContent %>
+    <com:TToolbarBox
+        ID="tbb"
+        Title="<%[Add a time class]%>"
+        IconAsset="<%~ ../assets/timeclasses.png %>"
+        ApplyVisible="true"
+        SaveVisible="true"
+        CancelVisible="true"
+        HelpVisible="true"
+        />
+
+    <%include Application.common.template.headerBoxContent %>
+
+    <fieldset class="adminform">
+        <legend><%[Time code]%></legend>
+        <table class="admintable" cellspacing="1">
+            <tbody>
+                <tr>
+                    <td valign="top" class="key"><span onmouseover="Tip('<%[Enter a name for this time class]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)">* <%[Name]%></span></td>
+                    <td>
+                        <com:TTextBox
+                            CssClass="text_area"
+                            ID="name"
+                            />
+                        <com:TRequiredFieldValidator
+                            ValidationGroup="Group1"
+                            ControlToValidate="name"
+                            Text="<%[This field is required]%>"
+                            Display="Dynamic"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td valign="top" class="key"><span onmouseover="Tip('<%[Enter a multiplier for this time class]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)">* <%[Multiplier]%></span></td>
+                    <td>
+                        <com:TTextBox
+                            CssClass="text_area"
+                            ID="multiplier"
+                            />
+                        <com:TRequiredFieldValidator
+                            ValidationGroup="Group1"
+                            ControlToValidate="multiplier"
+                            Text="<%[This field is required]%>"
+                            Display="Dynamic"/>
+                        <com:TDataTypeValidator
+                            ValidationGroup="Group1"
+                            ControlToValidate="multiplier"
+                            DataType="Float"
+                            Text="You must enter a floating number." />
+
+                    </td>
+                </tr>
+
+                <tr>
+                    <td valign="top" class="key"><span onmouseover="Tip('<%[Enter the hour when start this time class]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)">* <%[From]%></span></td>
+                    <td>
+                        <com:TTextBox
+                            CssClass="text_area"
+                            ID="fromHour"
+                            Text="00:00"
+                            />
+                        <com:TRequiredFieldValidator
+                            ValidationGroup="Group1"
+                            ControlToValidate="fromHour"
+                            Text="<%[This field is required]%>"
+                            Display="Dynamic"/>
+                        <com:TRegularExpressionValidator
+                            ValidationGroup="Group1"
+                            ControlToValidate="fromHour"
+                            RegularExpression="\d{1,2}:\d{1,2}:?\d{1,2}"
+                            Text="The time format is not correct (ex: 12:00)"
+                            Display="Dynamic" />
+                    </td>
+                </tr>
+
+                <tr>
+                    <td valign="top" class="key"><span onmouseover="Tip('<%[Enter the hour when finished this time class]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)">* <%[To]%></span></td>
+                    <td>
+                        <com:TTextBox
+                            CssClass="text_area"
+                            ID="toHour"
+                            Text="00:00"
+                            />
+                        <com:TRequiredFieldValidator
+                            ValidationGroup="Group1"
+                            ControlToValidate="toHour"
+                            Text="<%[This field is required]%>"
+                            Display="Dynamic"/>
+                        <com:TRegularExpressionValidator
+                            ValidationGroup="Group1"
+                            ControlToValidate="toHour"
+                            RegularExpression="\d{1,2}:\d{1,2}:?\d{1,2}"
+                            Text="The time format is not correct (ex: 12:00)"
+                            Display="Dynamic" />
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+    </fieldset>
+
+    <%include Application.common.template.footerContent %>
+</com:TContent>

@@ -1,0 +1,152 @@
+<com:TContent ID="Main">
+    <%include Application.common.template.headerContent %>
+
+    <com:TToolbarBox
+        ID="tbb"
+        Title="<%[Time code]%>"
+        IconAsset="<%~ ../assets/timecode.png %>"
+        EditVisible="true"
+        AddVisible="true"
+        AddUrl="components.timuxadmin.timecode.add"
+        DelVisible="true"
+        HelpVisible="true"
+        CancelVisible="true"
+        />
+
+
+    <%include Application.common.template.headerBoxContent %>
+
+    <com:TDataGrid
+        ID="DataGrid"
+        DataKeyField="id"
+        AutoGenerateColumns="false"
+        CssClass="adminlist"
+        ItemStyle.CssClass = "row0"
+        AlternatingItemStyle.CssClass="row1"
+        AllowPaging="true"
+        PageSize="15"
+        PagerStyle.Mode="Numeric"
+        PagerStyle.HorizontalAlign="Center"
+        OnPageIndexChanged="changePage"
+        OnPagerCreated="pagerCreated"
+        OnEditCommand="onEdit"
+        OnItemCreated="itemCreated"
+        >
+
+        <com:TBoundColumn
+            HeaderText="ID"
+            DataField="id"
+            HeaderStyle.Width = "20px"
+            />
+
+        <com:TTemplateColumn
+            HeaderText=""
+            HeaderStyle.Width = "20px"
+            >
+            <prop:HeaderTemplate>
+                <com:TActiveCheckBox
+                    ID="headerCB"
+                    AutoPostBack="true"
+                    OnCallback="Page.checkboxAllCallback"
+                    InputAttributes.value="0"
+                    />
+            </prop:HeaderTemplate>
+            <prop:ItemTemplate>
+                <com:TConditional Condition="!$this->Page->isRecordBlock('hr_timux_timecode', $this->NamingContainer->DataItem['id'])">
+                    <prop:TrueTemplate>
+                        <com:TActiveCheckBox
+                            ID="item"
+                            InputAttributes.value="<%#$this->NamingContainer->DataItem['id']%>"
+                            />
+                    </prop:TrueTemplate>
+                    <prop:FalseTemplate>
+                        <span onmouseover="Tip('<%[This record is modified by <b>]%><%= $this->Page->getUserName($this->NamingContainer->DataItem['locked']) %></b> ', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)">
+                            <com:TImage ID="noAccess" ImageUrl="./themes/letux/images/menu/icon-16-access.png" />
+                        </span>
+                    </prop:FalseTemplate>
+                </com:TConditional>
+            </prop:ItemTemplate>
+        </com:TTemplateColumn>
+
+        <com:TTemplateColumn
+            HeaderStyle.Width = "60px"
+            >
+            <prop:HeaderTemplate>
+                <com:TLabel
+                    Text="<%[Abbreviation]%>"
+                    
+                    />
+            </prop:HeaderTemplate>
+
+
+            <prop:ItemTemplate>
+                <com:TConditional Condition="!$this->Page->isRecordBlock('hr_timux_timecode', $this->NamingContainer->DataItem['id'])">
+                    <prop:TrueTemplate>
+                        <com:THyperLink
+                            NavigateUrl="<%= $this->Service->constructUrl('components.timuxadmin.timecode.mod',array('id'=>$this->NamingContainer->DataItem['id'])) %>"
+                            Text="<%#$this->NamingContainer->DataItem['abbreviation']%>"
+                            />
+                    </prop:TrueTemplate>
+                    <prop:FalseTemplate>
+                        <com:TLabel
+                            Text="<%#$this->NamingContainer->DataItem['abbreviation']%>"
+                            />
+                    </prop:FalseTemplate>
+                </com:TConditional>
+            </prop:ItemTemplate>
+        </com:TTemplateColumn>
+
+        <com:TBoundColumn
+            HeaderText="Name"
+            DataField="name"
+            />
+
+
+        <com:TTemplateColumn HeaderText="<%[Time worked]%>" ID="ttimeworked" HeaderStyle.Width = "90px">
+                <prop:ItemTemplate>
+                    <com:TLabel
+                        ID="timeworked"
+                        />
+                </prop:ItemTemplate>
+        </com:TTemplateColumn>
+
+        <com:TTemplateColumn HeaderText="<%[Type]%>" ID="ttype" HeaderStyle.Width = "90px">
+                <prop:ItemTemplate>
+                    <com:TLabel
+                        ID="type"
+                        />
+                </prop:ItemTemplate>
+        </com:TTemplateColumn>
+
+        <com:TTemplateColumn HeaderText="<%[Sign]%>" ID="ssign" HeaderStyle.Width = "90px">
+                <prop:ItemTemplate>
+                    <com:TLabel
+                        ID="sign"
+                        />
+                </prop:ItemTemplate>
+        </com:TTemplateColumn>
+
+        <com:TTemplateColumn
+            HeaderText="<%[Default]%>"
+            HeaderStyle.Width = "20px"
+            >
+            <prop:ItemTemplate>
+                <com:TConditional Condition="$this->NamingContainer->DataItem['defaultHoliday'] == 1">
+                    <prop:TrueTemplate>
+                        <com:TImage ID="default1" ImageUrl="<%~ ../assets/defaultHolidays.png %>" />
+                    </prop:TrueTemplate>
+                </com:TConditional>
+
+                <com:TConditional Condition="$this->NamingContainer->DataItem['defaultOvertime'] == 1">
+                    <prop:TrueTemplate>
+                        <com:TImage ID="default2" ImageUrl="<%~ ../assets/defaultOvertime.png %>" />
+                    </prop:TrueTemplate>
+                </com:TConditional>
+
+            </prop:ItemTemplate>
+
+        </com:TTemplateColumn>
+
+    </com:TDataGrid>
+    <%include Application.common.template.footerContent %>
+</com:TContent>
