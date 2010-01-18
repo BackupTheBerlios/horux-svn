@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <xliff version="1.0">
- <file source-language="FR" target-language="fr" datatype="plaintext" original="messages" date="2010-01-18T08:27:02Z" product-name="messages">
+ <file source-language="FR" target-language="fr" datatype="plaintext" original="messages" date="2010-01-18T13:38:31Z" product-name="messages">
   <body>
   
 <trans-unit id="1" lock="1">
@@ -3876,6 +3876,11 @@
 <trans-unit id="723">
 <source>The directory ./pictures{p} must be writeable to save your picture</source>
 <target>Le r&#xE9;pertoire ./pictures{p} doit &#xEA;tre en &#xE9;criture pour pouvoir sauver vos images</target>
+</trans-unit>
+
+<trans-unit id="724">
+<source>Cannot use this service in Saas mode</source>
+<target>Ne peut pas utilis&#xE9; ce service en mode Saas</target>
 </trans-unit>
 </body>
 </file>

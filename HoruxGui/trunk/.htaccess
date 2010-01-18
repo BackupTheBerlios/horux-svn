@@ -3,3 +3,5 @@ RewriteRule ^index\.php\?soap=horux\.wsdl(.*)$ index\.php\?soap=horux\.wsdl$1
 RewriteRule ^index\.php\?soap=horux(.*)$ index\.php\?soap=horux$1
 RewriteRule ^index\.php\?soap=notification\.wsdl(.*)$ index\.php\?soap=notification\.wsdl$1
 RewriteRule ^index\.php\?soap=notification(.*)$ index\.php\?soap=notification$1
+
+php_flag session.use_only_cookies On

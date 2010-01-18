@@ -24,6 +24,10 @@ class THoruxService extends TModule
 
     public function onStop()
     {
+        $param = $this->Application->getParameters();
+
+        if($param['appMode'] == 'saas') return;
+
         require_once( 'XML/RPC.php' );
 
         $db = $this->Application->getModule('horuxDb')->DbConnection;
@@ -60,6 +64,10 @@ class THoruxService extends TModule
 
     public function onStart()
     {
+        $param = $this->Application->getParameters();
+        if($param['appMode'] == 'saas') return;
+
+
         require_once( 'XML/RPC.php' );
 
         $db = $this->Application->getModule('horuxDb')->DbConnection;
@@ -84,6 +92,10 @@ class THoruxService extends TModule
 
     public function onStopDevice($deviceId)
     {
+        $param = $this->Application->getParameters();
+        if($param['appMode'] == 'saas') return;
+
+
         require_once( 'XML/RPC.php' );
 
         $db = $this->Application->getModule('horuxDb')->DbConnection;
@@ -122,6 +134,10 @@ class THoruxService extends TModule
 
     public function onStartDevice($deviceId)
     {
+        $param = $this->Application->getParameters();
+        if($param['appMode'] == 'saas') return;
+
+
         require_once( 'XML/RPC.php' );
 
         $db = $this->Application->getModule('horuxDb')->DbConnection;

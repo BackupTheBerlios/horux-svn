@@ -20,7 +20,7 @@ class Service extends Page
         $this->appCheck();
 
         $param = $this->Application->getParameters();
-        if($param['appMode'] == 'demo')
+        if($param['appMode'] == 'demo' || $param['appMode'] == 'saas')
         {
             $this->tbb->stop->setEnabled(false);
             $this->tbb->start->setEnabled(false);
@@ -29,6 +29,13 @@ class Service extends Page
 
     public function appCheck()
     {
+        $param = $this->Application->getParameters();
+        if($param['appMode'] == 'saas')
+        {
+            $this->serverStatus->Text = Prado::localize("Cannot use this service in Saas mode");
+            return;
+        }
+
         $this->isRunning();
     }
 
