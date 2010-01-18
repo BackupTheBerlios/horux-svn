@@ -350,8 +350,12 @@ class gantner_TimeTerminal_standalone extends TDeviceStandalone
     }
 
 
-    protected function addSubGroup($function, $idgroup)
+    protected function addSubGroup($function, $ids)
     {
+        $ids = explode(",", $ids);
+        $idgroup = $ids[0];
+        $idperson = $ids[1];
+
         $cmd=$this->db->createCommand("SELECT uga.id_device FROM hr_user_group_access AS uga
                                        LEFT JOIN hr_device AS d ON d.id = uga.id_device
                                        WHERE id_group=:id AND d.type='gantner_TimeTerminal'");
@@ -366,62 +370,52 @@ class gantner_TimeTerminal_standalone extends TDeviceStandalone
         {
             $idreader = $d['id_device'];
 
-            $cmd=$this->db->createCommand("SELECT * FROM hr_user_group_attribution WHERE id_group=:id");
-            $cmd->bindParameter(":id",$idgroup);
-            $data2 = $cmd->query();
-            $data2 = $data2->readAll();
+            $cmd=$this->db->createCommand("SELECT * FROM hr_user WHERE id=:id");
+            $cmd->bindParameter(":id",$idperson);
+            $data_u = $cmd->query();
+            $data_u = $data_u->read();
 
-            foreach($data2 as $d2)
+            $cmd=$this->db->createCommand("SELECT t.id, t.serialNumber, t.isBlocked FROM hr_keys_attribution AS ta LEFT JOIN hr_keys AS t ON t.id=ta.id_key WHERE id_user=:id");
+            $cmd->bindParameter(":id",$idperson);
+            $data3 = $cmd->query();
+            $data3 = $data3->readAll();
+
+            if(count($data3) > 0)
             {
-                $idperson = $d2['id_user'];
-
-                $cmd=$this->db->createCommand("SELECT * FROM hr_user WHERE id=:id");
-                $cmd->bindParameter(":id",$idperson);
-                $data_u = $cmd->query();
-                $data_u = $data_u->read();
-
-                $cmd=$this->db->createCommand("SELECT t.id, t.serialNumber, t.isBlocked FROM hr_keys_attribution AS ta LEFT JOIN hr_keys AS t ON t.id=ta.id_key WHERE id_user=:id");
-                $cmd->bindParameter(":id",$idperson);
-                $data3 = $cmd->query();
-                $data3 = $data3->readAll();
-
-                if(count($data3) > 0)
+                foreach($data3 as $d3)
                 {
-                    foreach($data3 as $d3)
-                    {
-                        $rfidId = $d3['id'];
-                        $rfidSn = $d3['serialNumber'];
-                        $fullName = $data_u['name'].' '.$data_u['firstname'];
-                        $cmd=$this->db->createCommand("INSERT INTO hr_gantner_standalone_action (`type`, `func`, `userId`,`keyId`, `deviceId`, `param`, `param2`) VALUES (:type,:func,:userId,:keyId,:deviceId,:param,:param2)");
-                        $cmd->bindParameter(":func",$function);
-                        $cmd->bindParameter(":type",$type);
-                        $cmd->bindParameter(":userId",$idperson);
-                        $cmd->bindParameter(":keyId",$rfidId);
-                        $cmd->bindParameter(":deviceId",$idreader);
-                        $cmd->bindParameter(":param",$fullName);
-                        $cmd->bindParameter(":param2",$rfidSn);
-                        $cmd->execute();
-                    }
-                }
-                else
-                {
-                    $rfidId = "0";
-                    $rfidSn = "0";
-                    $type = "user";
+                    $rfidId = $d3['id'];
+                    $rfidSn = $d3['serialNumber'];
                     $fullName = $data_u['name'].' '.$data_u['firstname'];
-                    $cmd=$this->db->createCommand("INSERT INTO hr_gantner_standalone_action (`type`, `func`, `userId`,`keyId`, `deviceId`, `param`, `param2`) VALUES (:type,:func,:userId,:keyId,:deviceId,:param,:param2)");
+                    $cmd=$this->db->createCommand("INSERT INTO hr_gantner_standalone_action (`type`, `func`, `userId`,`keyId`, `deviceId`, `param`, `param2`, `param3`) VALUES (:type,:func,:userId,:keyId,:deviceId,:param,:param2,:param3)");
                     $cmd->bindParameter(":func",$function);
                     $cmd->bindParameter(":type",$type);
                     $cmd->bindParameter(":userId",$idperson);
                     $cmd->bindParameter(":keyId",$rfidId);
                     $cmd->bindParameter(":deviceId",$idreader);
                     $cmd->bindParameter(":param",$fullName);
-                    $cmd->bindParameter(":param2",$rfidSn);
+                    $cmd->bindParameter(":param2",$data_u['language']);
+                    $cmd->bindParameter(":param3",$rfidSn);
                     $cmd->execute();
-                
                 }
             }
+            else
+            {
+                $rfidId = "0";
+                $rfidSn = "0";
+                $type = "user";
+                $fullName = $data_u['name'].' '.$data_u['firstname'];
+                $cmd=$this->db->createCommand("INSERT INTO hr_gantner_standalone_action (`type`, `func`, `userId`,`keyId`, `deviceId`, `param`, `param2`) VALUES (:type,:func,:userId,:keyId,:deviceId,:param,:param2)");
+                $cmd->bindParameter(":func",$function);
+                $cmd->bindParameter(":type",$type);
+                $cmd->bindParameter(":userId",$idperson);
+                $cmd->bindParameter(":keyId",$rfidId);
+                $cmd->bindParameter(":deviceId",$idreader);
+                $cmd->bindParameter(":param",$fullName);
+                $cmd->bindParameter(":param2",$rfidSn);
+                $cmd->execute();
 
+            }
         }
     }
 }
