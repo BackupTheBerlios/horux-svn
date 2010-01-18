@@ -39,7 +39,7 @@ class closemonth extends PageList
             $data = $cmd->query();
             $data = $data->readAll();
 
-            $year = date("Y");
+            $year = date("Y")-1;
             if(count($data)>0)
             {
                 $year = explode("-",$data[0]['startDate']);
@@ -58,6 +58,14 @@ class closemonth extends PageList
 
             $FilterYear= $this->getApplication()->getGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterYear', date('Y'));
             $FilterMonth = $this->getApplication()->getGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterMonth', date('n')-1);
+
+            if($FilterMonth == 0)
+            {
+                $FilterMonth = 12;
+                $FilterYear -= 1;
+
+            }
+
             $FilterDepartment = $this->getApplication()->getGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterDepartment', false);
 
             $this->FilterDepartment->DataSource=$this->DepartmentList;
@@ -68,7 +76,9 @@ class closemonth extends PageList
                 $this->FilterYear->setSelectedValue($FilterYear);
 
             if($FilterMonth)
+            {
                 $this->FilterMonth->setSelectedValue($FilterMonth);
+            }
 
             if($FilterDepartment)
                 $this->FilterDepartment->setSelectedValue($FilterDepartment);

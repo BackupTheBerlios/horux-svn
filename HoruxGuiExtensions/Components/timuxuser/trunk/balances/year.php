@@ -325,8 +325,10 @@ class year extends PageList
         }
 
 
-
-        $this->daysVacation->Text = sprintf("%.02f %s / %.02f ".Prado::localize('weeks'),$vacations,Prado::localize('days'), bcdiv($vacations, $this->employee->getDaysByWeek(),4));
+        if($this->employee->getDaysByWeek() > 0)
+            $this->daysVacation->Text = sprintf("%.02f %s / %.02f ".Prado::localize('weeks'),$vacations,Prado::localize('days'), bcdiv($vacations, $this->employee->getDaysByWeek(),4));
+        else
+            $this->daysVacation->Text = "0.00";
         $this->totalVacation->Text = sprintf("%.02f",$vacations+$this->daysVacationLastYear->Text);
 
         $hoursWorked = 0.0;

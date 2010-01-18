@@ -419,7 +419,10 @@ class employee
         {
             $config = $this->getConfig();
 
-            $this->hoursByDay = bcdiv($config['hoursByWeek'], $config['daysByWeek'], 4);
+            if($config['daysByWeek'] > 0)
+                $this->hoursByDay = bcdiv($config['hoursByWeek'], $config['daysByWeek'], 4);
+            else
+                $this->hoursByDay = 0;
         }
 
         return $this->hoursByDay;
@@ -1304,11 +1307,17 @@ class employee
 
         $timeCode = $this->getDefaultOvertimeCounter();
 
-        $cmd = $this->db->createCommand( "SELECT * FROM hr_timux_activity_counter WHERE year=$year AND month=$month AND timecode_id=$timeCode AND user_id=".$this->employeeId );
-        $query = $cmd->query();
-        $data = $query->read();
+        if($timeCode != "")
+        {
 
-        return $data['nbre'];
+            $cmd = $this->db->createCommand( "SELECT * FROM hr_timux_activity_counter WHERE year=$year AND month=$month AND timecode_id=$timeCode AND user_id=".$this->employeeId );
+            $query = $cmd->query();
+            $data = $query->read();
+
+            return $data['nbre'];
+        }
+        else
+            return 0;
     }
 
 
@@ -1339,7 +1348,9 @@ class employee
         $wt = $this->getWorkingTime($year, $month);
 
         $timecode = $this->getDefaultHolidaysCounter();
-       
+
+        if($timecode == "") return array();
+
         $cmd=$this->db->createCommand("SELECT * FROM hr_timux_request AS r LEFT JOIN hr_timux_request_leave AS rl ON rl.request_id=r.id LEFT JOIN hr_timux_timecode AS t ON t.id=r.timecodeId WHERE (t.type='leave' OR t.type='overtime' )  AND rl.datefrom>='".$dateFrom."' AND rl.dateto<='".$dateTo."' AND ( r.state='validate' OR  r.state='closed') AND r.userId=".$this->employeeId." AND t.id!=".$timecode);
 
         $data = $cmd->query();
@@ -1534,6 +1545,8 @@ class employee
 
     public function getRequest($year,$month, $timecode)
     {
+        if($timercode == NULL) return 0;
+
         $dateFrom = $year."-".$month."-1";
         $dateTo = $year."-".$month."-".date("t",mktime(0,0,0,$month,1,$year));
 
@@ -1773,6 +1786,8 @@ class employee
     {
         $timeCode = $this->getDefaultHolidaysCounter();
 
+        if($timeCode == "") return 0;
+
         if($year>=date('Y') && $month>=date('n') )
         {
             $cmd = $this->db->createCommand( "SELECT * FROM hr_timux_activity_counter WHERE year=0 AND month=0 AND timecode_id=$timeCode AND user_id=".$this->employeeId );
@@ -1793,6 +1808,8 @@ class employee
     public function getOvertimeMonth($year, $month)
     {
         $timeCode = $this->getDefaultOvertimeCounter();
+
+        if($timeCode == "") return 0;
 
         if($year>=date('Y') && $month>=date('n') )
         {
