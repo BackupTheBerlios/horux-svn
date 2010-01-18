@@ -43,6 +43,8 @@ class MTUserManager extends TModule implements IUserManager {
 		$password = sha1($password);		
 		$app = $this->getApplication();
 		$db = $app->getModule($this->_DBHandler)->DbConnection;
+        $db->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY,true);
+        
         $db->Active = true;
 
 	        // We get our data from DB.

@@ -32,8 +32,9 @@ class MTAuthManager extends TAuthManager {
 
         if( $app->getService()->getID() == 'xmlrpc' ) return true;
 
+
         // if the soap request is done by the server himself, do not check the password
-        if( $app->getService()->getID() == 'soap' && 
+        if( $app->getService()->getID() == 'soap' &&
             $_SERVER[SERVER_ADDR] === $_SERVER[REMOTE_ADDR])
         {
             return;
@@ -41,26 +42,41 @@ class MTAuthManager extends TAuthManager {
 
         if( $app->getService()->getID() == 'soap' ) 
         {
-            
-            if($app->getUser()->getUserID() == null)
-            {                
-                $authManager=$app->getModule('Auth');
-                $isWebservice = $app->getUser()->getWebservice();
 
+            if($app->getUser()->getUserID() == null)
+            {
+                $authManager=$app->getModule('Auth');
+                
                 //Check if the user has access
-                if(!$authManager->login(strtolower($this->Request['username']),$this->Request['password']) && $isWebservice )
+                if(!$authManager->login(strtolower($this->Request['username']),$this->Request['password'])  )
                 {
                     $this->DenyRequest();
                     return false;
                 }
                 else
                 {
-                    return true;
+                    $isWebservice = $app->getUser()->getWebservice();
+
+                    if($isWebservice == 0)
+                    {
+                        $this->DenyRequest();
+                        return false;
+                    }
+                    else
+                        return true;
                 }
             }
             else
             {
-                return true;
+                $isWebservice = $app->getUser()->getWebservice();
+
+                if($isWebservice == 0)
+                {
+                    $this->DenyRequest();
+                    return false;
+                }
+                else
+                    return true;
             }
         }
 
