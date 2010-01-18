@@ -430,6 +430,7 @@ CREATE TABLE IF NOT EXISTS `hr_superuser_group` (
   `dispUserLoggedIn` int(1) NOT NULL,
   `dispLastAlarm` int(1) NOT NULL,
   `dispLastTracking` int(1) NOT NULL,
+  `webservice` smallint(1) NOT NULL,
   PRIMARY KEY  (`id`)
 ) TYPE=MyISAM CHARACTER SET `utf8`;
 

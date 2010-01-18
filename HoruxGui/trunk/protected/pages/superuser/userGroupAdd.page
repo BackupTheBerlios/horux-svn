@@ -58,6 +58,20 @@
 
             <tr>
                 <td valign="top" class="key">
+                    <span onmouseover="Tip('<%[If you check this option, you will give to all user contain in this group to have access to Horux Gui Web service]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Webservice]%></span>
+                </td>
+                <td>
+                    <com:TCheckBox
+                        ID="webservice"
+                        Text=""
+                        InputAttributes.value="1"
+                        />
+                </td>
+
+            </tr>
+
+            <tr>
+                <td valign="top" class="key">
                     <span onmouseover="Tip('<%[Check the box for the information to appear in the control panel]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Control Panel Info]%></span>
                 </td>
                 <td>

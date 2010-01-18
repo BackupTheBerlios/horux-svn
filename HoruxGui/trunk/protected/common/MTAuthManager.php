@@ -44,10 +44,11 @@ class MTAuthManager extends TAuthManager {
             
             if($app->getUser()->getUserID() == null)
             {                
-                $authManager=$this->Application->getModule('Auth');
+                $authManager=$app->getModule('Auth');
+                $isWebservice = $app->getUser()->getWebservice();
 
                 //Check if the user has access
-                if(!$authManager->login(strtolower($this->Request['username']),$this->Request['password']))
+                if(!$authManager->login(strtolower($this->Request['username']),$this->Request['password']) && $isWebservice )
                 {
                     $this->DenyRequest();
                     return false;

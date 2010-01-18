@@ -39,7 +39,8 @@ class MTUser extends TComponent implements IUser {
 				$this->_Group,
 				$this->_IsGuest,
 				$this->_UserID,
-				$this->_GroupID
+				$this->_GroupID,
+                $this->_Webservice
 			)
 		);
 	}
@@ -56,7 +57,8 @@ class MTUser extends TComponent implements IUser {
 			$this->_Group = $array[2];
 			$this->_IsGuest = $array[3];
 			$this->_UserID = $array[4];
-			$this->_GroupID = $array[5];			
+			$this->_GroupID = $array[5];
+            $this->_Webservice = $array[6];
 		}
 		return $this;
 	}
@@ -176,7 +178,25 @@ class MTUser extends TComponent implements IUser {
 	public function setIsGuest($value) {
 		$this->_IsGuest = TPropertyValue::ensureBoolean($value);
 	}
- 
+
+	/**
+	 * @var String Default value for webservice
+	 */
+	private $_Webservice = 0;
+
+	/**
+	 * @return Bool Webservice
+	 */
+	public function getWebservice() {
+		return $this->_Webservice;
+	}
+	/**
+	 * @param Bool Webservice
+	 */
+	public function setWebservice($value) {
+		$this->_Webservice = TPropertyValue::ensureBoolean($value);
+	}
+
 }
  
 ?>

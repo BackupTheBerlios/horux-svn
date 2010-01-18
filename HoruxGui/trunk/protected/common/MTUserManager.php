@@ -88,7 +88,8 @@ class MTUserManager extends TModule implements IUserManager {
 					'`u`.`id`,' .
 					'`u`.`group_id`,' .
 					'`g`.`name`, ' .
-					'`g`.`superAdmin` ' .
+					'`g`.`superAdmin`, ' .
+					'`g`.`webservice` ' .
 					
 				'FROM `'.$this->_UserTable.'` as `u`  ' .
 								
@@ -113,6 +114,7 @@ class MTUserManager extends TModule implements IUserManager {
 				$user->superAdmin = $row['superAdmin'];
 				$user->UserID = $row['id'];
 				$user->GroupID = $row['group_id'];
+				$user->Webservice = $row['webservice'];
 				return $user;
 			}
 			else

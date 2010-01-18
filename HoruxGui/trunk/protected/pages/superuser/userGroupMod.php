@@ -122,6 +122,8 @@ class userGroupMod extends Page
             $this->dispUserLoggedIn->setChecked($data['dispUserLoggedIn']);
             $this->dispLastAlarm->setChecked($data['dispLastAlarm']);
             $this->dispLastTracking->setChecked($data['dispLastTracking']);
+
+            $this->webservice->setChecked($data['webservice']);
         }
 
     }
@@ -267,10 +269,14 @@ class userGroupMod extends Page
         $f1 = $this->dispUserLoggedIn->getChecked();
         $f2 = $this->dispLastAlarm->getChecked();
         $f3 = $this->dispLastTracking->getChecked();
+        $f4 = $this->webservice->getChecked();
+
 
         $cmd->bindParameter(":dispUserLoggedIn",$f1,PDO::PARAM_STR);
         $cmd->bindParameter(":dispLastAlarm",$f2,PDO::PARAM_STR);
         $cmd->bindParameter(":dispLastTracking",$f3,PDO::PARAM_STR);
+
+        $cmd->bindParameter(":webservice",$f4,PDO::PARAM_STR);
 
         $cmd->execute();
 
