@@ -1,7 +1,0 @@
-<configuration>
-    <modules>
-        <module id="globalization_logviewer" class="TGlobalization" >
-			<translation  type="XLIFF" source="horux.messages" catalogue="timuxadmin"  marker="" cache="false" />
-        </module>
-    </modules>
-</configuration>

@@ -1,8 +1,0 @@
-<?xml version="1.0"?>
-<configuration>
-    <modules>
-        <module id="globalization_timuxadmin" class="TGlobalization">
-            <translation type="XLIFF" source="horux.messages" catalogue="timuxadmin" />
-        </module>
-    </modules>
-</configuration>
