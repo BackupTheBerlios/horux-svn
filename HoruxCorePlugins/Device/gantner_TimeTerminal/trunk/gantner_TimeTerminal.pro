@@ -1,7 +1,7 @@
 TEMPLATE = lib
 CONFIG += dll \
     plugin \
-    debug
+    release
 QT -= gui
 QT += xml \
     network \
