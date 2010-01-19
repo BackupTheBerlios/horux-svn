@@ -150,6 +150,14 @@ bool CHorux::startEngine()
             #if QT_VERSION >= 0x040500
                 tablesList.removeDuplicates();
             #else
+                QStringList tmpList;
+                foreach(QString tName, tablesList)
+                {
+                    if(!tmpList.contains(tName))
+                        tmpList << tName;
+                }
+                tablesList.clear();
+                tablesList = tmpList;
             #endif
             // call the web service to obtain the database schema according to the table liste
             QtSoapMessage message;
@@ -534,6 +542,25 @@ void CHorux::readSoapResponse()
                 tablesList.removeDuplicates();
                 tablesRmList.removeDuplicates();
             #else
+
+                QStringList tmpList;
+                foreach(QString tName, tablesList)
+                {
+                    if(!tmpList.contains(tName))
+                        tmpList << tName;
+                }
+                tablesList.clear();
+                tablesList = tmpList;
+
+                QStringList tmpList2;
+                foreach(QString tName, tablesRmList)
+                {
+                    if(!tmpList2.contains(tName))
+                        tmpList2 << tName;
+                }
+                tablesRmList.clear();
+                tablesRmList = tmpList2;
+
             #endif
 
             for(int i=0; i<tablesRmList.count(); i++)
@@ -805,6 +832,14 @@ void CHorux::sendTracking()
     #if QT_VERSION >= 0x040500
         trackingTablesList.removeDuplicates();
     #else
+        QStringList tmpList;
+        foreach(QString tName, trackingTablesList)
+        {
+            if(!tmpList.contains(tName))
+                tmpList << tName;
+        }
+        trackingTablesList.clear();
+        trackingTablesList = tmpList;
     #endif
 
     QDomDocument xml_dump;
