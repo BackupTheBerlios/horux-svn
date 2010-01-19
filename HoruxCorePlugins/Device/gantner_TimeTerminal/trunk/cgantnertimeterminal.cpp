@@ -817,7 +817,7 @@ void CGantnerTimeTerminal::reinit()
 
     // set the reader configuration
     args.clear();
-    args.append( fid );
+    args.append( QScriptValue(fid) );
     result = engine.evaluate("readerConfig");
     config += result.call(QScriptValue(), args).toString() + "\n";
 
