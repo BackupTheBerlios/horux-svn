@@ -595,6 +595,8 @@ void CHorux::readSoapResponse()
 
         if ( CFactory::getDbHandling()->loadData(queries))
         {
+            qDebug() << "Data was well relaoded";
+
             if(isFullReloaded)
             {
                 QMap<QString, QVariant> params;

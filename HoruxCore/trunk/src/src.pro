@@ -12,7 +12,8 @@ TEMPLATE = app
 CONFIG += warn_on \
     thread \
     qt \
-    debug
+    release
+CONFIG -= debug
 TARGET = ../bin/horuxd
 RESOURCES -= application.qrc
 HEADERS += cfactory.h \
