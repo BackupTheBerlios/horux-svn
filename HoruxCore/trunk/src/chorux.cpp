@@ -663,7 +663,6 @@ void CHorux::readSoapResponse()
     // response when updating the tracking data
     if( response.method().name().name() == "syncTrackingTableResponse")
     {
-        qDebug() << response.returnValue().toString();
 
         QStringList ids = response.returnValue().toString().split(",");
 
