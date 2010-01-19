@@ -720,7 +720,13 @@ void CHorux::readSoapResponse()
                                 qDebug() << "DELETE FROM " + name + " WHERE " + key;
                                 QSqlQuery queryDelete;
                                 if(queryDelete.exec("DELETE FROM " + name + " WHERE " + key))
+                                {
                                     ids << trigger.attribute("id","");
+                                }
+                                else
+                                {
+                                     qDebug() <<   queryDelete.lastError().text();
+                                }
                             }
 
                             if(action == "INSERT")
@@ -730,7 +736,6 @@ void CHorux::readSoapResponse()
                                 while( queryField.next() )
                                 {
                                     fields << queryField.value(0).toString();
-
                                 }
 
                                 fields.join(",");
@@ -741,19 +746,33 @@ void CHorux::readSoapResponse()
                                 if(queryInsert.exec("INSERT INTO " + name + " ( `" + fields.join("`,`") + "` ) VALUES (" + newValues + " )"))
                                     ids << trigger.attribute("id","");
                                 else
-                                    qDebug() <<   queryInsert.lastError().text();                              
+                                {
+                                    if(queryInsert.lastError().number() == 1062)
+                                    {
+                                        qDebug() << "Not inserted, duplicate entry";
+                                        ids << trigger.attribute("id","");
+                                    }
+                                    else
+                                    {
+                                        qDebug() <<   queryInsert.lastError().text();
+                                        qDebug() <<   queryInsert.lastError().number();
+                                    }
+                                }
                             }
 
                             if(action == "UPDATE")
                             {
                                 QStringList values = newValues.split(",");
-
                                 QSqlQuery queryField( "SHOW COLUMNS FROM " + name);
+
                                 QStringList fields;
                                 int i=0;
                                 while( queryField.next() )
                                 {
-                                    fields << "`" + queryField.value(0).toString()+"`=" + values.at(i);
+                                    if(values.count() > i)
+                                        fields << "`" + queryField.value(0).toString()+"`=" + values.at(i);
+                                    else
+                                        fields << "`" + queryField.value(0).toString()+"`=''";
                                     i++;
                                 }
 
@@ -761,11 +780,16 @@ void CHorux::readSoapResponse()
 
                                 QSqlQuery queryUpdate;
                                 if(queryUpdate.exec("UPDATE " + name + " SET " + fields.join(",") + " WHERE " + key))
+                                {
                                     ids << trigger.attribute("id","");
+                                }
+                                else
+                                {
+                                     qDebug() <<   queryUpdate.lastError().text();
+                                }
 
                             }
                         }
-
                         n2 = n2.nextSibling();
                       }
                  }
