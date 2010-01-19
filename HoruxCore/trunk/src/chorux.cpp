@@ -147,8 +147,10 @@ bool CHorux::startEngine()
                 tablesList << tables["DbTableUsed"];
 
             // remove duplication table in the liste
-            tablesList.removeDuplicates();
-
+            #if QT_VERSION >= 0x040500
+                tablesList.removeDuplicates();
+            #else
+            #endif
             // call the web service to obtain the database schema according to the table liste
             QtSoapMessage message;
             message.setMethod("reloadDatabaseSchema");
@@ -528,8 +530,11 @@ void CHorux::readSoapResponse()
             if(tables.contains("DbTrackingTable"))
                 tablesRmList << tables["DbTrackingTable"];
 
-            tablesList.removeDuplicates();
-            tablesRmList.removeDuplicates();
+            #if QT_VERSION >= 0x040500
+                tablesList.removeDuplicates();
+                tablesRmList.removeDuplicates();
+            #else
+            #endif
 
             for(int i=0; i<tablesRmList.count(); i++)
             {
@@ -797,7 +802,10 @@ void CHorux::sendTracking()
     if(tables.contains("DbTrackingTable"))
         trackingTablesList << tables["DbTrackingTable"];
 
-    trackingTablesList.removeDuplicates();
+    #if QT_VERSION >= 0x040500
+        trackingTablesList.removeDuplicates();
+    #else
+    #endif
 
     QDomDocument xml_dump;
     QDomElement root = xml_dump.createElement ( "trackingDump" );
