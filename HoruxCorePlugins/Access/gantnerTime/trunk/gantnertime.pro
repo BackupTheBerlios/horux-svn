@@ -7,7 +7,8 @@ plugin \
 QT -= gui
 
 QT += sql \
-xml
+xml \
+network
 
 INCLUDEPATH += ../../../../HoruxCore/trunk/src/interfaces ../../../../HoruxCore/trunk/src
 
@@ -27,3 +28,4 @@ unix {
     INSTALLS += library
 }
 
+include(../../../../HoruxCore/trunk/qtsoap-2.7_1-opensource/src/qtsoap.pri)

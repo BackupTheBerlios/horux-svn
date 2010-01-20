@@ -21,12 +21,17 @@
 #include <QCoreApplication>
 #include <QtCore>
 #include <QtXml>
+#include <QSslError>
+#include <QNetworkReply>
+
 
 CGantnerTime::CGantnerTime(QObject *parent) : QObject(parent)
 {
     timerCheckDb = new QTimer(this);
     connect(timerCheckDb, SIGNAL(timeout()), this, SLOT(checkDb()));
     timerCheckDb->start(1000);
+
+    initSAASMode();
 }
 
 bool CGantnerTime::isAccess(QMap<QString, QVariant> params, bool)
@@ -69,25 +74,27 @@ bool CGantnerTime::isAccess(QMap<QString, QVariant> params, bool)
     QTime noRoundBooking(timeSplit.at(0).toInt(),timeSplit.at(1).toInt(),timeSplit.at(2).toInt()) ;
 
     QSqlQuery queryTimuxConfig("SELECT bookingRounding  FROM hr_timux_config");
-    queryTimuxConfig.next();
-    int round = queryTimuxConfig.value(0).toInt();
+    if(queryTimuxConfig.next())
+    {
+        int round = queryTimuxConfig.value(0).toInt();
 
-    if(round == 0)
-    {
-        roundBooking = noRoundBooking;
-    }
-    else
-    {
-        if(round == 1)
+        if(round == 0)
         {
-           roundBooking.setHMS(noRoundBooking.hour(),noRoundBooking.minute()+1,0);
+            roundBooking = noRoundBooking;
         }
         else
         {
-            int m = noRoundBooking.minute();
-            while(m % round != 0)
-                m++;
-            roundBooking.setHMS(noRoundBooking.hour(),m,0);
+            if(round == 1)
+            {
+               roundBooking.setHMS(noRoundBooking.hour(),noRoundBooking.minute()+1,0);
+            }
+            else
+            {
+                int m = noRoundBooking.minute();
+                while(m % round != 0)
+                    m++;
+                roundBooking.setHMS(noRoundBooking.hour(),m,0);
+            }
         }
     }
 
@@ -153,7 +160,7 @@ void CGantnerTime::reloadAllData()
                 insertQuery.exec();
 
                 QSqlQuery keyQuery;
-                keyQuery.prepare("SELECT k.id, serialNumber FROM hr_keys_attribution AS ka LEFT JOIN keys AS k ON k.id=ka.id_key WHERE id_user=:id AND k.isBlocked=0");
+                keyQuery.prepare("SELECT k.id, serialNumber FROM hr_keys_attribution AS ka LEFT JOIN hr_keys AS k ON k.id=ka.id_key WHERE id_user=:id AND k.isBlocked=0");
                 keyQuery.bindValue(":id", userQuery.value(0) );
                 keyQuery.exec();
 
@@ -307,6 +314,10 @@ void CGantnerTime::deviceInputMonitor ( int , int , bool )
 
 void CGantnerTime::checkDb()
 {
+    timerCheckDb->stop();
+
+    QStringList ids;
+
     QMapIterator<int, bool> i(devices);
     while (i.hasNext())
     {
@@ -318,6 +329,7 @@ void CGantnerTime::checkDb()
 
             while(query.next())
             {
+                QString id = query.value(0).toString();
                 QString type = query.value(1).toString();
                 QString func = query.value(2).toString();
                 QString deviceId = QString::number(i.key());
@@ -422,12 +434,107 @@ void CGantnerTime::checkDb()
                     emit accessAction(xmlFunc);
                 }
 
+                ids << id;
             }
 
-            QSqlQuery queryDel("DELETE FROM hr_gantner_standalone_action WHERE deviceId=" + QString::number(i.key()) );
+            if(saas && ids.count()>0)
+            {
+                QtSoapMessage message;
+                message.setMethod("callServiceComponent");
+    
+                QtSoapArray *array = new QtSoapArray(QtSoapQName("params"));
+
+                array->insert(0, new QtSoapSimpleType(QtSoapQName("component"),"timuxadmin"));
+                array->insert(1, new QtSoapSimpleType(QtSoapQName("class"),"timuxAdminDevice"));
+                array->insert(2, new QtSoapSimpleType(QtSoapQName("function"),"syncStandalone"));
+                array->insert(3, new QtSoapSimpleType(QtSoapQName("params"),ids.join(",")));
+
+                qDebug() << "soap remove hr_gantner_standalone_action, ids " + ids.join(",");
+
+                message.addMethodArgument(array);
+
+                soapClient.submitRequest(message, saas_path+"/index.php?soap=soapComponent&password=" + saas_password + "&username=" + saas_username);                                               
+            }
+            else
+            {
+                QSqlQuery queryDel("DELETE FROM hr_gantner_standalone_action WHERE deviceId=" + QString::number(i.key()) );
+                timerCheckDb->start(1000);
+            }
 
         }
     }
+
+}
+
+void CGantnerTime::initSAASMode()
+{
+    QSettings settings ( QCoreApplication::instance()->applicationDirPath() +"/horux.ini", QSettings::IniFormat );
+
+    settings.beginGroup ( "Webservice" );
+
+    if ( !settings.contains ( "saas" ) ) settings.setValue ( "saas", false );
+    if ( !settings.contains ( "saas_username" ) ) settings.setValue ( "saas_username", "" );
+    if ( !settings.contains ( "saas_password" ) ) settings.setValue ( "saas_password", "" );
+    if ( !settings.contains ( "saas_path" ) ) settings.setValue ( "saas_path", "" );
+    if ( !settings.contains ( "saas_host" ) ) settings.setValue ( "saas_host", "" );
+    if ( !settings.contains ( "saas_ssl" ) ) settings.setValue ( "saas_ssl", true );
+
+
+    saas = settings.value ( "saas", "false" ).toBool();
+    saas_host = settings.value ( "saas_host", "" ).toString();
+    saas_ssl = settings.value ( "saas_ssl", true ).toBool();
+    saas_username = settings.value ( "saas_username", "" ).toString();
+    saas_password = settings.value ( "saas_password", "" ).toString();
+    saas_path = settings.value ( "saas_path", "" ).toString();
+
+    if(saas)
+    {
+        soapClient.setHost(saas_host,saas_ssl);
+
+        connect(&soapClient, SIGNAL(responseReady()),this, SLOT(readSoapResponse()));
+        connect(soapClient.networkAccessManager(),SIGNAL(sslErrors( QNetworkReply *, const QList<QSslError> & )),
+                this, SLOT(soapSSLErrors(QNetworkReply*,QList<QSslError>)));
+    }
+}
+
+void CGantnerTime::soapSSLErrors ( QNetworkReply * reply, const QList<QSslError> & errors )
+{
+    foreach(QSslError sslError, errors)
+    {
+        if(sslError.error() == QSslError::SelfSignedCertificate)
+        {
+            reply->ignoreSslErrors();
+        }
+    }
+}
+
+void CGantnerTime::readSoapResponse()
+{
+    // check if the response from the web service is ok
+    const QtSoapMessage &response = soapClient.getResponse();
+
+    if (response.isFault()) {
+        qDebug() << "Not able to call the Horux GUI web service. (" << response.method().name().name() << ")";
+        timerCheckDb->start(1000);
+        return;
+    }
+
+    if(response.returnValue().toString().toInt() < 0)
+    {
+        timerCheckDb->start(1000);
+        return;
+    }
+
+    qDebug() << "remove hr_gantner_standalone_action, ids " + response.returnValue().toString();
+    QStringList ids = response.returnValue().toString().split(",");
+
+    foreach(QString id, ids)
+    {
+        qDebug() << "remove hr_gantner_standalone_action, id " + id;
+        QSqlQuery queryDel("DELETE FROM hr_gantner_standalone_action WHERE id=" + id );
+    }
+
+    timerCheckDb->start(1000);
 
 }
 

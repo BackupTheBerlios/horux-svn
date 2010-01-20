@@ -22,6 +22,7 @@
 
 #include <QObject>
 #include <QtSql>
+#include <QtSoapHttpTransport>
 
 #include "caccessinterface.h"
 #include "cxmlfactory.h"
@@ -55,9 +56,20 @@ public slots:
 
 protected:
     void reloadAllData();
+    void initSAASMode();
 
 protected slots:
     void checkDb();
+
+    /*!
+      Read the soap response from Horux Gui
+    */
+    void readSoapResponse();
+
+    /*!
+      Read the SSL error when doing a SOAP transaction
+    */
+    void soapSSLErrors ( QNetworkReply * reply, const QList<QSslError> & errors );
 
 signals:
   void accessAction(QString xml);
@@ -66,6 +78,15 @@ signals:
 private:
   QTimer *timerCheckDb;
   QMap<int, bool> devices;
+  QtSoapHttpTransport soapClient;
+
+    //! saas param
+    bool saas;
+    QString saas_host;
+    bool saas_ssl;
+    QString saas_username;
+    QString saas_password;
+    QString saas_path;
 
 };
 

@@ -834,48 +834,51 @@ void CGantnerTimeTerminal::reinit()
 
     // set the booking timer configuration
     QSqlQuery query("SELECT hoursBlockMorning1, hoursBlockMorning2, hoursBlockMorning3, hoursBlockMorning4, hoursBlockAfternoon1,hoursBlockAfternoon2,hoursBlockAfternoon3,hoursBlockAfternoon4 FROM hr_timux_config");
-    query.next();
+    if(query.next())
+    {
+        args.clear();
+        args << QScriptValue(&engine,1);
+        args << QScriptValue(&engine,query.value(0).toString().replace(":","."));
+        args << QScriptValue(&engine,query.value(1).toString().replace(":","."));
+        args << QScriptValue(&engine,arriveText);
+        args << QScriptValue(&engine,leaveText);
 
-    args.clear();
-    args << QScriptValue(&engine,1);
-    args << QScriptValue(&engine,query.value(0).toString().replace(":","."));
-    args << QScriptValue(&engine,query.value(1).toString().replace(":","."));
-    args << QScriptValue(&engine,arriveText);
-    args << QScriptValue(&engine,leaveText);
+        result = engine.evaluate("getBookingTimer");
+        config += result.call(QScriptValue(), args).toString() + "\n";
 
-    result = engine.evaluate("getBookingTimer");
-    config += result.call(QScriptValue(), args).toString() + "\n";
+        args.clear();
+        args << QScriptValue(&engine,2);
+        args << QScriptValue(&engine,query.value(2).toString().replace(":","."));
+        args << QScriptValue(&engine,query.value(3).toString().replace(":","."));
+        args << QScriptValue(&engine,arriveText);
+        args << QScriptValue(&engine,leaveText);
 
-    args.clear();
-    args << QScriptValue(&engine,2);
-    args << QScriptValue(&engine,query.value(2).toString().replace(":","."));
-    args << QScriptValue(&engine,query.value(3).toString().replace(":","."));
-    args << QScriptValue(&engine,arriveText);
-    args << QScriptValue(&engine,leaveText);
-
-    result = engine.evaluate("getBookingTimer");
-    config += result.call(QScriptValue(), args).toString() + "\n";
+        result = engine.evaluate("getBookingTimer");
+        config += result.call(QScriptValue(), args).toString() + "\n";
 
 
-    args.clear();
-    args << QScriptValue(&engine,3);
-    args << QScriptValue(&engine,query.value(4).toString().replace(":","."));
-    args << QScriptValue(&engine,query.value(5).toString().replace(":","."));
-    args << QScriptValue(&engine,arriveText);
-    args << QScriptValue(&engine,leaveText);
+        args.clear();
+        args << QScriptValue(&engine,3);
+        args << QScriptValue(&engine,query.value(4).toString().replace(":","."));
+        args << QScriptValue(&engine,query.value(5).toString().replace(":","."));
+        args << QScriptValue(&engine,arriveText);
+        args << QScriptValue(&engine,leaveText);
 
-    result = engine.evaluate("getBookingTimer");
-    config += result.call(QScriptValue(), args).toString() + "\n";
+        result = engine.evaluate("getBookingTimer");
+        config += result.call(QScriptValue(), args).toString() + "\n";
 
-    args.clear();
-    args << QScriptValue(&engine,4);
-    args << QScriptValue(&engine,query.value(6).toString().replace(":","."));
-    args << QScriptValue(&engine,query.value(7).toString().replace(":","."));
-    args << QScriptValue(&engine,arriveText);
-    args << QScriptValue(&engine,leaveText);
+        args.clear();
+        args << QScriptValue(&engine,4);
+        args << QScriptValue(&engine,query.value(6).toString().replace(":","."));
+        args << QScriptValue(&engine,query.value(7).toString().replace(":","."));
+        args << QScriptValue(&engine,arriveText);
+        args << QScriptValue(&engine,leaveText);
 
-    result = engine.evaluate("getBookingTimer");
-    config += result.call(QScriptValue(), args).toString() + "\n";
+        result = engine.evaluate("getBookingTimer");
+        config += result.call(QScriptValue(), args).toString() + "\n";
+    }
+    else
+        qDebug() << "No config in hr_timux_config";
 
     //remove all fixed keys
     result = engine.evaluate("removeAllFixedKey");
@@ -892,7 +895,7 @@ void CGantnerTimeTerminal::reinit()
         {
             args.clear();
             args << QScriptValue(&engine,queryButton.value(2).toString());
-            args << QScriptValue(&engine,queryButton.value(3).toString());
+            args << QScriptValue(&engine,QString(queryButton.value(3).toString().toUtf8() ));
             args << QScriptValue(&engine,queryButton.value(4).toString());
 
             result = engine.evaluate("setFixedKey");
@@ -903,7 +906,7 @@ void CGantnerTimeTerminal::reinit()
         {
             args.clear();
             args << QScriptValue(&engine,queryButton.value(2).toString());
-            args << QScriptValue(&engine,queryButton.value(3).toString());
+            args << QScriptValue(&engine,QString(queryButton.value(3).toString().toUtf8()));
             args << QScriptValue(&engine,queryButton.value(4).toString());
 
             QString img = "";
@@ -1213,7 +1216,7 @@ void CGantnerTimeTerminal::s_addUser(QObject *p, QMap<QString, QVariant>params)
     QScriptValueList args;
     args << QScriptValue(&(pThis->engine),params["userId"].toString());
     args << QScriptValue(&(pThis->engine),params["userNo"].toString());
-    args << QScriptValue(&(pThis->engine),params["displayName"].toString());
+    args << QScriptValue(&(pThis->engine),QString(params["displayName"].toString().toUtf8()));
     args << QScriptValue(&(pThis->engine),params["lang"].toString());
     args << QScriptValue(&(pThis->engine),params["fiuUse"].toString());
     args << QScriptValue(&(pThis->engine),params["attendanceStatus"].toString());
@@ -1272,7 +1275,7 @@ void CGantnerTimeTerminal::s_addUserBalances(QObject *p, QMap<QString, QVariant>
     QScriptValue result = pThis->engine.evaluate("addUserBalances");
     QScriptValueList args;
     args << QScriptValue(&(pThis->engine),params["userId"].toString());
-    args << QScriptValue(&(pThis->engine),params["balances"].toString());
+    args << QScriptValue(&(pThis->engine),QString(params["balances"].toString().toUtf8()));
 
     pThis->sendFileList.append(result.call(QScriptValue(), args).toString());
 }
@@ -1297,7 +1300,7 @@ void CGantnerTimeTerminal::s_addAbsentReason(QObject *p, QMap<QString, QVariant>
     QScriptValue result = pThis->engine.evaluate("addAbsentReason");
     QScriptValueList args;
     args << QScriptValue(&(pThis->engine),params["reasonId"].toString());
-    args << QScriptValue(&(pThis->engine),params["text"].toString());
+    args << QScriptValue(&(pThis->engine),QString(params["text"].toString().toUtf8()));
     args << QScriptValue(&(pThis->engine),params["status"].toString());
     args << QScriptValue(&(pThis->engine),params["group"].toString());
 
@@ -1333,7 +1336,7 @@ void CGantnerTimeTerminal::s_setBalanceText(QObject *p, QMap<QString, QVariant>p
     result= pThis->engine.evaluate("setBalanceText");
     QScriptValueList args;
     args << QScriptValue(&(pThis->engine),params["fieldNo"].toString());
-    args << QScriptValue(&(pThis->engine),params["text"].toString());
+    args << QScriptValue(&(pThis->engine),QString(params["text"].toString().toUtf8()));
 
     pThis->sendConfigList.append(result.call(QScriptValue(), args).toString());
 }
