@@ -110,7 +110,6 @@ void CGantnerTimeTerminal::deviceAction(QString xml)
      {
         if( i.key() == "") return;
 
-        qDebug() << xml;
         qDebug("The function %s is not define in the device %s", i.key().toLatin1() .constData(), name.toLatin1().constData());
     }
   }
@@ -261,8 +260,6 @@ bool CGantnerTimeTerminal::open()
       return true;
   }
 
-    qDebug() << "OPEN";
-
   // get the encrypted Gantner protocol
   QString script = getScript();
 
@@ -332,10 +329,8 @@ void CGantnerTimeTerminal::commandFinished(  int id, bool error)
 
             // after a connection to the host, do a login
             idLogin = ftp->login(username, password);
-            qDebug("FTP CONNECTED");
+            //qDebug("FTP CONNECTED");
         }
-        else
-            qDebug("CONNECT HOST ERROR");
 
         idConnectHost = 0;
         return;
@@ -346,7 +341,6 @@ void CGantnerTimeTerminal::commandFinished(  int id, bool error)
     {
         if(!error)
         {
-            qDebug("LOGIN OK");
             switch(action)
             {
                 case WAITING:
@@ -374,7 +368,6 @@ void CGantnerTimeTerminal::commandFinished(  int id, bool error)
         }
         else
         {
-            qDebug("LOGIN ERROR");
             ftp->close();
         }
 
@@ -386,16 +379,16 @@ void CGantnerTimeTerminal::commandFinished(  int id, bool error)
     {
         if(!error)
         {            
-            qDebug("YES reload.txt");
+            //qDebug("YES reload.txt");
             // no error, this mean that the device was replace and must be ialized
             idRemoveReplace = ftp->remove("reload.txt");
         }
         else
         {
             // cannot read the file replace.txt, this mean that the device was not replaced
-            qDebug("NO reload.txt");
+            //qDebug("NO reload.txt");
             // read the file config
-            qDebug("READ THE CONFIG FILE");
+            //qDebug("READ THE CONFIG FILE");
             action = READ_CONFIG_FILE;
             readFile = "";
             idReadConfig = ftp->get("GatTimeCe.Config");
@@ -409,17 +402,17 @@ void CGantnerTimeTerminal::commandFinished(  int id, bool error)
     {
         if(!error)
         {
-            qDebug("Remove reload.txt OK");
+            //qDebug("Remove reload.txt OK");
             reinit();
             //start the timer allowing to check the bookings
-            qDebug("START THE BOOKING TIMER 2");
+            //qDebug("START THE BOOKING TIMER 2");
             timerCheckBooking = startTimer(checkBooking);
             timerSendFile = startTimer(3000);
             timerConfigFile = startTimer(3000);
         }
         else
         {
-            qDebug("Remove reload.txt KO");
+            //qDebug("Remove reload.txt KO");
             QString xml = CXmlFactory::deviceEvent(QString::number(id), "1017", "Cannot remove the file reload.txt, please check the connection");
             emit deviceEvent(xml);
         }
@@ -478,12 +471,12 @@ void CGantnerTimeTerminal::commandFinished(  int id, bool error)
     {
         if(!error)
         {
-            qDebug("REBOOT UNIT");
+            //qDebug("REBOOT UNIT");
             QScriptValue result = engine.evaluate("reboot");
             ftp->put(result.call().toString().toLatin1(), "Down.dat");
             action = WAITING;
             ftp->close();
-            qDebug("START THE BOOKING TIMER 3");
+            //qDebug("START THE BOOKING TIMER 3");
             timerCheckBooking = startTimer(checkBooking);
         }
         else
@@ -513,7 +506,7 @@ void CGantnerTimeTerminal::commandFinished(  int id, bool error)
                    if(booking.open(QIODevice::WriteOnly))
                    {
                        QTextStream bookingTS(&booking);
-                       qDebug() << readFile;
+                       //qDebug() << readFile;
                        bookingTS << readFile;
                        booking.close();
                    }
@@ -546,11 +539,11 @@ void CGantnerTimeTerminal::commandFinished(  int id, bool error)
     {
         if(!error)
         {
-            qDebug("REMOVE BOOKING OK");
+            //qDebug("REMOVE BOOKING OK");
         }
         else
         {
-            qDebug("REMOVE BOOKING KO");
+            //qDebug("REMOVE BOOKING KO");
             QString xml = CXmlFactory::deviceEvent(QString::number(this->id), "1017", "Cannot remove the bookings file");
             emit deviceEvent(xml);
         }
@@ -564,12 +557,12 @@ void CGantnerTimeTerminal::commandFinished(  int id, bool error)
     {
         if(!error)
         {
-            qDebug("REMOVE Down.info OK");
+            //qDebug("REMOVE Down.info OK");
             idSendDown = ftp->put(sendFile.toLatin1(), "Down.dat");
         }
         else
         {
-            qDebug("NO Down.info");
+            //qDebug("NO Down.info");
             idSendDown = ftp->put(sendFile.toLatin1(), "Down.dat");
         }
     }
@@ -578,12 +571,12 @@ void CGantnerTimeTerminal::commandFinished(  int id, bool error)
     {
         if(!error)
         {
-            qDebug("SEND Down.dat OK");
+            //qDebug("SEND Down.dat OK");
             QTimer::singleShot(1000, this, SLOT(readDownInfo()));
         }
         else
         {
-            qDebug("SEND Down.dat KO");
+            //qDebug("SEND Down.dat KO");
             QString xml = CXmlFactory::deviceEvent(QString::number(this->id), "1017", "Cannot send the Down.dat file");
             emit deviceEvent(xml);
         }
@@ -595,11 +588,11 @@ void CGantnerTimeTerminal::commandFinished(  int id, bool error)
     {
         if(!error)
         {
-            qDebug("READ Down.info OK");
+            //qDebug("READ Down.info OK");
             if(!readFile.contains("Error"))
             {
-                qDebug("Down.info do not contains error");
-                qDebug() << "numberOfSendCommand:" << numberOfSendCommand;
+                //qDebug("Down.info do not contains error");
+                //qDebug() << "numberOfSendCommand:" << numberOfSendCommand;
                 readFile = "";
                 for(int i=0; i<numberOfSendCommand; i++)
                     sendFileList.removeFirst();
@@ -608,7 +601,7 @@ void CGantnerTimeTerminal::commandFinished(  int id, bool error)
             }
             else
             {
-                qDebug("Down.info contains error");
+                //qDebug("Down.info contains error");
                 readFile = "";
                 action = WAITING;
                 ftp->close();
@@ -616,7 +609,7 @@ void CGantnerTimeTerminal::commandFinished(  int id, bool error)
         }
         else
         {
-            qDebug("READ Down.info ERROR");
+            //qDebug("READ Down.info ERROR");
             // try again
             QTimer::singleShot(1000, this, SLOT(readDownInfo()));
         }
@@ -696,7 +689,7 @@ void CGantnerTimeTerminal::checkConfigFile(QString xml)
 
            if( isDiff )
            {
-               qDebug("CONFIG DIFF");
+               //qDebug("CONFIG DIFF");
                idSendConfig = ftp->put(config.toString().toLatin1(), "GatTimeCe.Config");
                return;
            }
@@ -713,7 +706,7 @@ void CGantnerTimeTerminal::checkConfigFile(QString xml)
 
    if(isOk)
     {
-        qDebug("CONFIG OK");
+        //qDebug("CONFIG OK");
         action = WAITING;
         ftp->close();
 
@@ -725,12 +718,12 @@ void CGantnerTimeTerminal::checkConfigFile(QString xml)
 
 
         //start the timer allowing to check the bookings
-        qDebug("START THE BOOKING TIMER 1");
+        //qDebug("START THE BOOKING TIMER 1");
         timerCheckBooking = startTimer(checkBooking);
     }
     else
     {
-        qDebug("CONFIG ERROR");
+        //qDebug("CONFIG ERROR");
     }
 }
 
@@ -786,7 +779,7 @@ void CGantnerTimeTerminal::dispatchMessage(QByteArray bookings)
 
 void CGantnerTimeTerminal::reinit()
 {
-    qDebug("REINIT");
+    //qDebug("REINIT");
 
     QSettings settings(QCoreApplication::instance()->applicationDirPath() +"/horux.ini", QSettings::IniFormat);
     settings.beginGroup("GantnerTimeTerminal");
@@ -977,7 +970,7 @@ void CGantnerTimeTerminal::reinit()
 
 void CGantnerTimeTerminal::close()
 {
-    qDebug() << "CLOSE";
+    //qDebug() << "CLOSE";
 
   if(ecbDecryption)
   {
@@ -1061,7 +1054,7 @@ void CGantnerTimeTerminal::timerEvent ( QTimerEvent * event )
                 numberOfSendCommand++;
 
             }
-            qDebug() << sendFile;
+            //qDebug() << sendFile;
             action = SEND_DOWN;
             readFile = "";
             connectionToFtp();
@@ -1083,7 +1076,7 @@ void CGantnerTimeTerminal::timerEvent ( QTimerEvent * event )
                 numberOfConfigCommand++;
 
             }
-            qDebug() << configFile;
+            //qDebug() << configFile;
             action = SEND_CONFIG;
             connectionToFtp();
         }
@@ -1093,7 +1086,7 @@ void CGantnerTimeTerminal::timerEvent ( QTimerEvent * event )
 
     if(timerConnectionAbort ==  event->timerId() )
     {
-        qDebug("FTP CONNECTION ERROR");
+        //qDebug("FTP CONNECTION ERROR");
         killTimer( timerConnectionAbort ) ;
         timerConnectionAbort = 0;
         close();

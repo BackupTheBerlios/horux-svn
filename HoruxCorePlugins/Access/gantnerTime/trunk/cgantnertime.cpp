@@ -449,8 +449,6 @@ void CGantnerTime::checkDb()
                 array->insert(2, new QtSoapSimpleType(QtSoapQName("function"),"syncStandalone"));
                 array->insert(3, new QtSoapSimpleType(QtSoapQName("params"),ids.join(",")));
 
-                qDebug() << "soap remove hr_gantner_standalone_action, ids " + ids.join(",");
-
                 message.addMethodArgument(array);
 
                 soapClient.submitRequest(message, saas_path+"/index.php?soap=soapComponent&password=" + saas_password + "&username=" + saas_username);                                               
@@ -525,12 +523,10 @@ void CGantnerTime::readSoapResponse()
         return;
     }
 
-    qDebug() << "remove hr_gantner_standalone_action, ids " + response.returnValue().toString();
     QStringList ids = response.returnValue().toString().split(",");
 
     foreach(QString id, ids)
     {
-        qDebug() << "remove hr_gantner_standalone_action, id " + id;
         QSqlQuery queryDel("DELETE FROM hr_gantner_standalone_action WHERE id=" + id );
     }
 
