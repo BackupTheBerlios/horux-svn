@@ -27,6 +27,8 @@
 #include "caccessinterface.h"
 #include "cxmlfactory.h"
 
+#define TIME_DB_CHECKING 10000
+
 /**
 	@author Jean-Luc Gyger <jean-luc.gyger@letux.ch>
 */

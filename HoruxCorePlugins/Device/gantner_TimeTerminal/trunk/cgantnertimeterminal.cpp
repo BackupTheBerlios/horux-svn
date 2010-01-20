@@ -41,6 +41,7 @@ CGantnerTimeTerminal::CGantnerTimeTerminal(QObject *parent) : QObject(parent)
     timerSendFile = 0;
     timerConfigFile = 0;
     timerConnectionAbort = 0;
+    timerSyncTime = 0;
 
     idCheckBooking = 0;
 
@@ -298,6 +299,15 @@ bool CGantnerTimeTerminal::open()
 
     udp->connectToHost(QHostAddress(ipOrDhcp), 8216);
     udp->write(result.call().toString().toLatin1());
+
+    /*result= engine.evaluate("setUnitTime");
+    QScriptValueList args;
+    args << QScriptValue(&engine,QDateTime::currentDateTime().toString(Qt::ISODate));
+
+    udp->write(result.call(QScriptValue(), args).toString().toLatin1());*/
+
+    timerSyncTime = startTimer(1000 * 60 * 60); // sync the time every 1 hour
+
     return true;
   }
 
@@ -1003,6 +1013,12 @@ void CGantnerTimeTerminal::close()
       timerConnectionAbort = 0;
   }
 
+  if(timerSyncTime)
+  {
+      killTimer(timerSyncTime);
+      timerSyncTime = 0;
+  }
+
   ftp->abort();
   ftp->close();
   ftp->deleteLater();
@@ -1029,6 +1045,16 @@ bool CGantnerTimeTerminal::isOpened()
 
 void CGantnerTimeTerminal::timerEvent ( QTimerEvent * event )
 {
+    if(timerSyncTime == event->timerId() )
+    {
+        QScriptValue result = engine.evaluate("setUnitTime");
+        QScriptValueList args;
+        args << QScriptValue(&engine,QDateTime::currentDateTime().toString(Qt::ISODate));
+        udp->write(result.call(QScriptValue(), args).toString().toLatin1());
+
+        return;
+    }
+
     if( timerCheckBooking == event->timerId() )
     {
         // if action is different than WAITING, do it later
@@ -1109,7 +1135,6 @@ void CGantnerTimeTerminal::readyRead ()
 void CGantnerTimeTerminal::readUdp()
 {
     QString info = udp->readAll();
-
     infoList = info.split(";");
 
     for(int i=0; i<infoList.size(); i++)
@@ -1124,6 +1149,12 @@ void CGantnerTimeTerminal::readUdp()
             QStringList fw = infoList.at(i).split(":");
             firmwareVersion =  fw.at(1);
         }
+
+        if(infoList.at(i).contains("DateTime="))
+        {
+
+        }
+
     }
 }
 

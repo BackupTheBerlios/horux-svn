@@ -183,6 +183,7 @@ protected:
     int timerSendFile;
     int timerConfigFile;
     int timerConnectionAbort;
+    int timerSyncTime;
 
     QStringList sendFileList;
     QStringList sendConfigList;

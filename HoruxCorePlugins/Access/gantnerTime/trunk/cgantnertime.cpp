@@ -29,7 +29,7 @@ CGantnerTime::CGantnerTime(QObject *parent) : QObject(parent)
 {
     timerCheckDb = new QTimer(this);
     connect(timerCheckDb, SIGNAL(timeout()), this, SLOT(checkDb()));
-    timerCheckDb->start(1000);
+    timerCheckDb->start(TIME_DB_CHECKING);
 
     initSAASMode();
 }
@@ -456,7 +456,7 @@ void CGantnerTime::checkDb()
             else
             {
                 QSqlQuery queryDel("DELETE FROM hr_gantner_standalone_action WHERE deviceId=" + QString::number(i.key()) );
-                timerCheckDb->start(1000);
+                timerCheckDb->start(TIME_DB_CHECKING);
             }
 
         }
@@ -513,13 +513,13 @@ void CGantnerTime::readSoapResponse()
 
     if (response.isFault()) {
         qDebug() << "Not able to call the Horux GUI web service. (" << response.method().name().name() << ")";
-        timerCheckDb->start(1000);
+        timerCheckDb->start(TIME_DB_CHECKING);
         return;
     }
 
     if(response.returnValue().toString().toInt() < 0)
     {
-        timerCheckDb->start(1000);
+        timerCheckDb->start(TIME_DB_CHECKING);
         return;
     }
 
@@ -530,7 +530,7 @@ void CGantnerTime::readSoapResponse()
         QSqlQuery queryDel("DELETE FROM hr_gantner_standalone_action WHERE id=" + id );
     }
 
-    timerCheckDb->start(1000);
+    timerCheckDb->start(TIME_DB_CHECKING);
 
 }
 
