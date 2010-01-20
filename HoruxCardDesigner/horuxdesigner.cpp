@@ -42,12 +42,16 @@ HoruxDesigner::~HoruxDesigner()
 
 void HoruxDesigner::loadHoruxSoap(QSplashScreen *sc)
 {
-    sc->showMessage(tr("The data are loading from Horux Gui..."),Qt::AlignLeft, Qt::white);
-    QApplication::processEvents();
+    if(sc != NULL)
+    {
+        sc->showMessage(tr("The data are loading from Horux Gui..."),Qt::AlignLeft, Qt::white);
+        QApplication::processEvents();
+    }
 
     connect(&transport, SIGNAL(responseReady()),this, SLOT(readSoapResponse()));
 
     pictureBuffer.open(QBuffer::ReadWrite);
+
     connect(&pictureHttp, SIGNAL(done(bool)), this, SLOT(httpRequestDone(bool)));
 
     QSettings settings("Letux", "HoruxCardDesigner", this);
@@ -61,12 +65,14 @@ void HoruxDesigner::loadHoruxSoap(QSplashScreen *sc)
     QtSoapMessage message;
     message.setMethod("getAllUser");
 
-    isSecure = new QLabel();
+    if(sc != NULL)
+        isSecure = new QLabel();
     if(ssl)
     {
         isSecure->setToolTip(tr("The communication is safe by SSL"));
         isSecure->setPixmap(QPixmap(":/images/encrypted.png"));
-        statusBar()->addPermanentWidget(isSecure);
+        if(sc != NULL)
+            statusBar()->addPermanentWidget(isSecure);
         transport.setHost(host, true);
         connect(transport.networkAccessManager(),SIGNAL(sslErrors( QNetworkReply *, const QList<QSslError> & )),
                 this, SLOT(sslErrors(QNetworkReply*,QList<QSslError>)));
@@ -75,7 +81,8 @@ void HoruxDesigner::loadHoruxSoap(QSplashScreen *sc)
     {
         isSecure->setToolTip(tr("The communication is not safe"));
         isSecure->setPixmap(QPixmap(":/images/decrypted.png"));
-        statusBar()->addPermanentWidget(isSecure);
+        if(sc != NULL)
+            statusBar()->addPermanentWidget(isSecure);
         transport.setHost(host);
     }
 
@@ -237,12 +244,23 @@ void HoruxDesigner::about()
 
 void HoruxDesigner::readSoapResponse()
 {
-    userCombo = new QComboBox();
-
     const QtSoapMessage &response = transport.getResponse();
     if (response.isFault()) {
         QMessageBox::warning(this,tr("Horux webservice error"),tr("Not able to call the Horux GUI web service."));
         return;
+    }
+
+    bool isNew = false;
+
+    if(userCombo == NULL)
+    {
+        isNew = true;
+        userCombo = new QComboBox();
+    }
+    else
+    {
+        userCombo->deleteLater();
+        userCombo = new QComboBox();
     }
 
     const QtSoapType &returnValue = response.returnValue();
@@ -262,10 +280,10 @@ void HoruxDesigner::readSoapResponse()
 
     }
 
-    ui->toolBar->addSeparator();
+    if(isNew)
+        ui->toolBar->addSeparator();
     ui->toolBar->addWidget(userCombo);
     connect( userCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(userChanged(int)));
-
 
     if(userCombo->count()>0)
         userChanged(0);
@@ -494,6 +512,8 @@ void HoruxDesigner::setDatabase()
             isSecure->setToolTip(tr("The communication is not safe"));
             isSecure->setPixmap(QPixmap(":/images/decrypted.png"));
         }
+
+        loadHoruxSoap(NULL);
     }
 }
 

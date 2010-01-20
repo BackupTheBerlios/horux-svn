@@ -88,14 +88,12 @@ void HoruxDialog::onTest()
 
     transport.setHost(m_ui->url->text(), getSSL());
 
-
-    transport.submitRequest(message, m_ui->path->text()+"/index.php?soap=horux&password=" + m_ui->password->text() + "&username=" + m_ui->username->text() );
+    transport.submitRequest(message, m_ui->path->text()+"index.php?soap=horux&password=" + m_ui->password->text() + "&username=" + m_ui->username->text() );
 
 }
 
 void HoruxDialog::sslErrors ( QNetworkReply * reply, const QList<QSslError> & errors )
 {
-
     foreach(QSslError sslError, errors)
     {
         if(sslError.error() == QSslError::SelfSignedCertificate)
