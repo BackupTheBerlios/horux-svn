@@ -272,7 +272,8 @@ bool CHorux::startEngine()
     {
         timerSoapInfo->start(1000 * 60 * saas_info_send_timer); //send the system info every 5 minutes
         timerSoapTracking->start(1000 * 60 * saas_info_send_timer); //send the last tracking every 5 minutes
-        timerSoapSyncData->start(1000 * 60 * saas_info_send_timer ); //send the last tracking every 5 minutes
+        //timerSoapSyncData->start(1000 * 60 * saas_info_send_timer ); //send the last tracking every 5 minutes
+        timerSoapSyncData->start(10000 ); //send the last tracking every 5 minutes
     }
 
     if ( !ptr_xmlRpcServer && xmlrpc)
@@ -479,8 +480,10 @@ void CHorux::sendNotification(QMap<QString, QVariant> params)
 
 void CHorux::readSoapResponse()
 {
+
     // check if the response from the web service is ok
     const QtSoapMessage &response = soapClient.getResponse();
+
     if (response.isFault()) {
         qDebug() << "Not able to call the Horux GUI web service. (" << response.method().name().name() << ")";
         return;
