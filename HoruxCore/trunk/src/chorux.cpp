@@ -272,8 +272,7 @@ bool CHorux::startEngine()
     {
         timerSoapInfo->start(1000 * 60 * saas_info_send_timer); //send the system info every 5 minutes
         timerSoapTracking->start(1000 * 60 * saas_info_send_timer); //send the last tracking every 5 minutes
-        //timerSoapSyncData->start(1000 * 60 * saas_info_send_timer ); //send the last tracking every 5 minutes
-        timerSoapSyncData->start(10000 ); //send the last tracking every 5 minutes
+        timerSoapSyncData->start(1000 * 60 * saas_info_send_timer ); //send the last tracking every 5 minutes
     }
 
     if ( !ptr_xmlRpcServer && xmlrpc)
@@ -717,7 +716,7 @@ void CHorux::readSoapResponse()
 
                             if(action == "DELETE")
                             {
-                                qDebug() << "DELETE FROM " + name + " WHERE " + key;
+                                //qDebug() << "DELETE FROM " + name + " WHERE " + key;
                                 QSqlQuery queryDelete;
                                 if(queryDelete.exec("DELETE FROM " + name + " WHERE " + key))
                                 {
@@ -740,7 +739,7 @@ void CHorux::readSoapResponse()
 
                                 fields.join(",");
 
-                                qDebug() << "INSERT INTO " + name + " ( `" + fields.join("`,`") + "` ) VALUES (" + newValues + " )";
+                                //qDebug() << "INSERT INTO " + name + " ( `" + fields.join("`,`") + "` ) VALUES (" + newValues + " )";
 
                                 QSqlQuery queryInsert;
                                 if(queryInsert.exec("INSERT INTO " + name + " ( `" + fields.join("`,`") + "` ) VALUES (" + newValues + " )"))
@@ -776,7 +775,7 @@ void CHorux::readSoapResponse()
                                     i++;
                                 }
 
-                                qDebug() << "UPDATE " + name + " SET " + fields.join(",") + " WHERE " + key;
+                                //qDebug() << "UPDATE " + name + " SET " + fields.join(",") + " WHERE " + key;
 
                                 QSqlQuery queryUpdate;
                                 if(queryUpdate.exec("UPDATE " + name + " SET " + fields.join(",") + " WHERE " + key))
