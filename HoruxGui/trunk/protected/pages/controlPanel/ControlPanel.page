@@ -308,8 +308,8 @@
                                             <div style="float:left;">
                                                 <div class="icon">
                                                     <a href="<%= $this->Service->constructUrl($this->Data['page']) %>">
-                                                        <img src="./themes/letux/images/header/icon-48-link.png" alt="<%#$this->Data['name']%>"  />
-                                                        <span><%#$this->Data['Name']%></span>
+                                                        <img src="<%# $this->Data['icon'] %>" alt="<%#$this->Data['name']%>"  />
+                                                        <span><%# $this->Data['Name'] %></span>
                                                     </a>
                                                 </div>
                                             </div>

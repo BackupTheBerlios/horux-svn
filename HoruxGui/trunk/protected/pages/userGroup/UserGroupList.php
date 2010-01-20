@@ -108,7 +108,7 @@ class UserGroupList extends PageList
 
             foreach($dataAccess as $access)
             {
-                $this->pdf->Cell(30,$cellHeaderWidth,$access['name'],1,0,'L', true);
+                $this->pdf->Cell(30,$cellHeaderWidth,utf8_decode($access['name']),1,0,'L', true);
 
                 for($i=0; $i<count($nEntry); $i++)
                 {
@@ -116,9 +116,9 @@ class UserGroupList extends PageList
                     $data = $cmd->query();
                     $data = $data->readAll();
                     if($data)
-                    $this->pdf->Image("./fpdf/ok.png", $this->pdf->GetX() + ($i*6) + 1.5 , $this->pdf->GetY()+1.5 , 3, 3);
+                        $this->pdf->Image("./fpdf/ok.png", $this->pdf->GetX() + ($i*6) + 1.5 , $this->pdf->GetY()+1.5 , 3, 3);
                     else
-                    $this->pdf->Image("./fpdf/ko.png", $this->pdf->GetX() + ($i*6) + 1.5 , $this->pdf->GetY()+1.5 , 3, 3);
+                        $this->pdf->Image("./fpdf/ko.png", $this->pdf->GetX() + ($i*6) + 1.5 , $this->pdf->GetY()+1.5 , 3, 3);
                 }
 
                 $this->pdf->Ln(6);

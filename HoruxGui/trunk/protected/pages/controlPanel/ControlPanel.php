@@ -87,15 +87,17 @@ class ControlPanel extends Page
                 $data2 = $cmd->query();
                 $data2 = $data2->read();
 
+                $url = "./themes/letux/images/header/icon-48-link.png";
+
                 if(!$isComponentHasOne)
                 {
                     if($this->isAccess($data2['page']))
-                        $data[] = array( 'page'=>$data2['page'], 'Name'=>Prado::localize($name->getValue()));
+                        $data[] = array( 'page'=>$data2['page'], 'Name'=>Prado::localize($name->getValue(),array(),$data2['name']) ,'icon'=>$url);
                     $isComponentHasOne = true;
                 }
                 else
                     if($this->isAccess($data2['page']))
-                        $data[] = array( 'page'=>$data2['page'], 'Name'=>Prado::localize($name->getValue()));
+                        $data[] = array( 'page'=>$data2['page'], 'Name'=>Prado::localize($name->getValue(),array(),$data2['name']),'icon'=>$url);
 
 
                 $cmd = $this->db->createCommand("SELECT * FROM hr_install AS i LEFT JOIN hr_component as c ON c.id_install=i.id WHERE i.type='component' AND c.parentmenu=".$data2['id']." AND c.parentmenu>0 AND i.id=".$d1['id']);
@@ -105,7 +107,23 @@ class ControlPanel extends Page
                 foreach($data2 as $d2)
                 {
                     if($this->isAccess($d2['page']))
-                        $data[] = array( 'page'=>$d2['page'], 'Name'=>Prado::localize($name->getValue()).'<br/>['.Prado::localize($d2['menuname']).']');
+                    {
+                        $pagePath = str_replace(".", "/", $d2['page']);
+
+                        if(file_exists('./protected/pages/'.$pagePath.'.page'))
+                        {
+                            $content = file_get_contents('./protected/pages/'.$pagePath.'.page');
+
+                            if(preg_match("/IconAsset=\"<%~(.*)%>\"/", $content, $matches))
+                            {
+                                $icon = substr($matches[1],11, strlen($matches[1])-11);
+                                $icon = trim($icon);
+                                $url=Prado::getApplication()->getAssetManager()->publishFilePath(Prado::getApplication()->getBasePath().'/pages/components/'.$d2['name'].'/assets/'.$icon);
+                            }
+                        }
+
+                        $data[] = array( 'page'=>$d2['page'], 'Name'=>Prado::localize($d2['menuname'],array(),$d2['name']),'icon'=>$url);
+                    }
                 }
 
             }

@@ -201,7 +201,7 @@ class UserGroupList extends PageList
             $this->pdf->SetFillColor(255,76,76);
             else
             $this->pdf->SetFillColor(124,124,124);
-            $this->pdf->Cell(30,$cellHeaderWidth,$g['name'],1,0,'L', true);
+            $this->pdf->Cell(30,$cellHeaderWidth,utf8_decode($g['name']),1,0,'L', true);
 
             for($i=0; $i<$nCell;$i++)
             {
@@ -236,11 +236,11 @@ class UserGroupList extends PageList
             {
                 $u = $user['username'];
                 if(strlen($user['name']) > 0 || strlen($user['firstname']) > 0)
-                $u .= "(".$user['name']." ".$user['firstname'].")";
-                $userList[] = $u;
+                $u .= " (".$user['name']." ".$user['firstname'].")";
+                $userList[] = utf8_decode($u);
             }
             $userList = join(', ', $userList);
-            $this->pdf->Cell(0,8,$userList,0,1);
+            $this->pdf->MultiCell(0,6,$userList,0,1);
 
         }
 

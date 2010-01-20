@@ -54,6 +54,8 @@ Legend:
 17.09.2009         ^ Set le user language list only with the language installed in Horux Gui
 17.09.2009         ^ Add the professional fax number as user information
 29.10.2009         + Add the THoruxService allowing to start/stop Horux Core and to start/stop a specific device
+20.01.2010         + Add the Saas mode
+20.01.2010         + Add the first horux web service
 
 -------------------- Horux 1.0.4 Release Released [04-06-2009] ------------------------
 30.01.2009      + Add the pin code in the user wizard

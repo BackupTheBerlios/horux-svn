@@ -125,7 +125,7 @@ CREATE TABLE IF NOT EXISTS `hr_config` (
   `debug_mode` smallint(1) NOT NULL,
   `server_path` varchar(50) NOT NULL,
   `user_method` varchar(30) NOT NULL,
-  `key` varchar(10) NOT NULL,
+  `key` varchar(20) NOT NULL,
   `mail_mailer` set('mail','sendmail','smtp') NOT NULL default 'sendmail',
   `mail_mail_from` varchar(50) NOT NULL,
   `mail_from_name` varchar(50) NOT NULL,

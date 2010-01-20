@@ -13,7 +13,7 @@
 * See COPYRIGHT.php for copyright notices and details.
 */
 
-class Component
+class component
 {
     /**
      * @param mixed $params the function name and parameters
@@ -22,28 +22,35 @@ class Component
      */
     public function callServiceComponent($params)
     {
+
         if(is_array($params))
         {            
-            if(array_key_exists('component', $params))
+            if(array_key_exists(0, $params)) //component
             {
-                if(array_key_exists('component', $params))
+                if(array_key_exists(1, $params)) // class
                 {
-                    if(array_key_exists('function', $params))
+                    if(array_key_exists(2, $params)) //function
                     {
-                        Prado::using('horux.pages.components.'.$params['component'].'.webservice.'.$params['class']);
-
-                        $comp = new $params['class'];
-                        if(method_exists($comp, $params['function']))
+                        try
                         {
-                            if(array_key_exists('params', $params))
-                                return $comp->$params['function']($params['params']);
+
+                            Prado::using('horux.pages.components.'.$params[0].'.webservice.'.$params[1]);
+                            $comp = new $params[1];
+                            if(method_exists($comp, $params[2]))
+                            {
+                                if(array_key_exists(3, $params))
+                                    return $comp->$params[2]($params[3]);
+                                else
+                                    return $comp->$params[2]();
+
+                            }
                             else
-                                return $comp->$params['function']();
-
+                                return -4; //Function not exists
                         }
-                        else
-                            return -4; //Function not exists
-
+                        catch(Exception $e)
+                        {
+                            return -5; //class not exists
+                        }
                     }
                     else
                     {
@@ -60,7 +67,6 @@ class Component
         }
         else
             return false;
-
     }
 
 
