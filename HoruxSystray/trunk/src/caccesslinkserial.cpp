@@ -56,7 +56,7 @@ CAccessLinkSerial::~CAccessLinkSerial()
 
 void CAccessLinkSerial::run()
 {
-  while(port->isOpen())
+  while(port && port->isOpen())
   {
     if(port->bytesAvailable () > 0)
     {
