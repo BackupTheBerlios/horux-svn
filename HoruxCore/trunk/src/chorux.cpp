@@ -273,6 +273,11 @@ bool CHorux::startEngine()
         timerSoapInfo->start(1000 * 60 * saas_info_send_timer); //send the system info every 5 minutes
         timerSoapTracking->start(1000 * 60 * saas_info_send_timer); //send the last tracking every 5 minutes
         timerSoapSyncData->start(1000 * 60 * saas_info_send_timer ); //send the last tracking every 5 minutes
+
+        getInfo();
+        sendTracking();
+        syncData();
+
     }
 
     if ( !ptr_xmlRpcServer && xmlrpc)
@@ -676,6 +681,8 @@ void CHorux::readSoapResponse()
                     QSqlQuery queryDelete("DELETE FROM " + i.at(0) + " WHERE id=" + i.at(1));
                 else
                     QSqlQuery queryDelete("DELETE FROM " + i.at(0) + " WHERE tracking_id=" + i.at(1));
+
+                QSqlQuery queryOptimize("OPTIMIZE TABLE " + i.at(0));
             }
         }
 
@@ -721,6 +728,8 @@ void CHorux::readSoapResponse()
                                 if(queryDelete.exec("DELETE FROM " + name + " WHERE " + key))
                                 {
                                     ids << trigger.attribute("id","");
+
+                                    QSqlQuery queryOptimize("OPTIMIZE TABLE " + name);
                                 }
                                 else
                                 {
@@ -781,6 +790,7 @@ void CHorux::readSoapResponse()
                                 if(queryUpdate.exec("UPDATE " + name + " SET " + fields.join(",") + " WHERE " + key))
                                 {
                                     ids << trigger.attribute("id","");
+                                    QSqlQuery queryOptimize("OPTIMIZE TABLE " + name);
                                 }
                                 else
                                 {
