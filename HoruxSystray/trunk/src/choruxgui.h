@@ -60,8 +60,6 @@ protected slots:
         void readError();
         void keyDetected(QByteArray key);
 
-        void printCard ( int userId );
-
 
 protected:
 	QSystemTrayIcon *trayIcon;
