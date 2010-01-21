@@ -411,8 +411,12 @@ class horux
         if($ids !== "")
         {
             $cmd= $db->createCommand("DELETE FROM hr_trigger_change WHERE id IN ($ids)");
-
             $cmd->execute() ;
+
+            $cmd= $db->createCommand("OPTIMIZE TABLE hr_trigger_change");
+            $cmd->execute() ;
+
+
         }
 
         return true;
