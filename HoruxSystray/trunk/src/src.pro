@@ -38,10 +38,6 @@ CONFIG += qaxcontainer
 unix:LIBS += -lftdi
 
 
-INCLUDEPATH += ../maia_xmlrpc
-
-LIBS += ../maia_xmlrpc/libmaia_xmlrpc.a
-
 TRANSLATIONS += horux_fr_FR.ts
 win32:RC_FILE = myapp.rc
 unix { 

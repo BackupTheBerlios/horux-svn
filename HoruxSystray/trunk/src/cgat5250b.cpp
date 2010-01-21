@@ -5,6 +5,7 @@
 CGAT5250B::CGAT5250B(QObject *parent)
  : CDevice(parent)
 {
+ gat = NULL;
  #if defined(Q_OS_WIN)
     gat = new QAxObject(this);
     gat->setControl("0A530613-6024-11D5-A3AC-0050BF2CF639");
@@ -44,6 +45,18 @@ CGAT5250B::~CGAT5250B()
 #endif
 }
 
+void CGAT5250B::setFID(QString _fid)
+{
+    fid = _fid;
+    #if defined(Q_OS_WIN)
+        if(gat)
+            gat->setProperty("FID",fid.toInt());
+    #elif defined(Q_WS_X11)
+
+    #endif
+
+}
+
 void CGAT5250B::handleMsg()
 {
     if(key != "")
@@ -73,7 +86,7 @@ void CGAT5250B::run()
     gat->dynamicCall("LEDRed(int)",1000);
     while(!stop)
     {
-        QString t = gat->dynamicCall("GetUniqueNumber()").toString();
+        QString t = gat->dynamicCall("GetCardNumber()").toString();
         if(key != t)
         {
             key = t;

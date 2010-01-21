@@ -1,4 +1,4 @@
-SUBDIRS += maia_xmlrpc qextserialport src
+SUBDIRS += qextserialport src
  
 TEMPLATE = subdirs 
 CONFIG += warn_on \

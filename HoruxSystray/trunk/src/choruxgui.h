@@ -30,7 +30,7 @@
 #include "cgat5250b.h"
 
 class QextSerialPort;
-class MaiaXmlRpcServer;
+class QTcpServer;
 
 /**
 	@author Jean-Luc Gyger <jean-luc.gyger@letux.ch>
@@ -54,12 +54,14 @@ protected slots:
 	void sendKey(QString key);
 	void on_apply_clicked();
 	void on_save_clicked();
+        void currentIndexChanged ( int index );
 
         void deviceError();
         void readError();
         void keyDetected(QByteArray key);
 
         void printCard ( int userId );
+
 
 protected:
 	QSystemTrayIcon *trayIcon;
@@ -77,8 +79,6 @@ protected:
 
         QHash<QString, int> antipassback;
 
-        //! xmlrpc server
-        MaiaXmlRpcServer *ptr_xmlRpcServer;
 };
 
 #endif

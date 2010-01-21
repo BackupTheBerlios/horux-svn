@@ -37,6 +37,7 @@ public:
 
      void run();
      void close(bool isError=false);
+     void setFID(QString _fid);
 
 protected:
     virtual void handleMsg();
@@ -51,6 +52,7 @@ private:
 
     QString key;
     bool stop;
+    QString fid;
 };
 
 #endif // CGAT5250B_H
