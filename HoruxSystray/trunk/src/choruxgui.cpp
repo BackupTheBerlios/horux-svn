@@ -19,7 +19,6 @@
 #include "choruxgui.h"
 #include <QProcess>
 #include <qextserialport.h>
-#include <maiaXmlRpcServer.h>
 
 #if defined(Q_OS_WIN)
     #include <windows.h>
@@ -33,6 +32,9 @@ CHoruxGui::CHoruxGui(QWidget *parent)
  : QWidget(parent)
 {
     setupUi(this);
+
+    connect(techComboBox, SIGNAL(currentIndexChanged ( int )), this, SLOT(currentIndexChanged ( int )));
+
 
     trayIcon = new QSystemTrayIcon(this);
     trayIcon->setIcon(QIcon(":/images/logo.png"));
@@ -72,16 +74,6 @@ CHoruxGui::CHoruxGui(QWidget *parent)
 
     openCom();
 
-    ptr_xmlRpcServer = new MaiaXmlRpcServer ( 7000, this );
-
-    if ( ptr_xmlRpcServer && ptr_xmlRpcServer->isListening() )
-    {
-        ptr_xmlRpcServer->addMethod ( "horuxsystray.printCard", this, "printCard" );
-    }
-    else
-    {
-        qDebug() << "xmlrpc error";
-    }
 }
 
 
@@ -118,11 +110,13 @@ void CHoruxGui::openCom()
 
   QString portStr = settings.value("port", "").toString();
   int techno = settings.value("tech", 0).toInt();
+  QString fid = settings.value("fid", "9999").toString();
 
   switch( techno )
   {
       case 0: //GAT Writer 5250 B
           gat5250_serial_reader = new CGAT5250B(this);
+          gat5250_serial_reader->setFID(fid);
 
           connect(gat5250_serial_reader, SIGNAL(deviceError()), this, SLOT(deviceError()));
           connect(gat5250_serial_reader, SIGNAL(readError()), this, SLOT(readError()));
@@ -157,6 +151,7 @@ void CHoruxGui::on_apply_clicked()
   QSettings settings ( "Horux", "HoruxGuiSys" );
   settings.setValue ( "port", customPort->text() );
   settings.setValue ( "tech", techComboBox->currentIndex() );
+  settings.setValue ( "fid", fid->text() );
 
   if(gat5250_serial_reader)
   {
@@ -186,6 +181,7 @@ void CHoruxGui::on_save_clicked()
   QSettings settings ( "Horux", "HoruxGuiSys" );
   settings.setValue ( "port", customPort->text() );
   settings.setValue ( "tech", techComboBox->currentText() );
+  settings.setValue ( "fid", fid->text() );
 
   if(gat5250_serial_reader)
   {
@@ -298,6 +294,26 @@ void CHoruxGui::sendKey(QString key)
 	#endif
 }
 
+void CHoruxGui::currentIndexChanged ( int index )
+{
+    if(index == 0)
+    {
+        fid->setEnabled(true);
+    }
+    else
+    {
+        fid->setEnabled(false);
+    }
+
+    if(index == 2)
+    {
+        customPort->setEnabled(true);
+    }
+    else
+    {
+        customPort->setEnabled(false);
+    }
+}
 
 void CHoruxGui::deviceError()
 {
@@ -335,10 +351,4 @@ void CHoruxGui::keyDetected(QByteArray key)
     s.toUpper();
     sendKey(s);
   }
-}
-
-void CHoruxGui::printCard ( int userId )
-{
-  QCoreApplication::processEvents();
-  trayIcon->showMessage(tr("Print"), tr("A card will be print"), QSystemTrayIcon::Information, 5000);
 }
