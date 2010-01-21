@@ -5,7 +5,7 @@
 CGAT5250B::CGAT5250B(QObject *parent)
  : CDevice(parent)
 {
- gat = NULL;
+
  #if defined(Q_OS_WIN)
     gat = new QAxObject(this);
     gat->setControl("0A530613-6024-11D5-A3AC-0050BF2CF639");
