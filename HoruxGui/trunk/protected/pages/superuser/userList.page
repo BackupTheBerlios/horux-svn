@@ -1,6 +1,5 @@
 <com:TContent ID="Main">
     <%include Application.common.template.headerContent %>
-    <%include Application.common.template.headerContent %>
     <script language="Javascript">
         function onPrintRedirect()
         {

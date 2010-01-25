@@ -1,6 +1,11 @@
 <com:TContent ID="Main">
     <%include Application.common.template.headerContent %>
-
+    <script language="Javascript">
+        function onPrintRedirect()
+        {
+            window.open( "<%= $this->Service->constructUrl($this->getApplication()->getService()->getRequestedPagePath()) %>&action=print", target="_blank" ) ;
+        }
+    </script>
     <com:TToolbarBox
         ID="tbb"
         Title="<%[Department List]%>"
@@ -9,7 +14,8 @@
         AddVisible="true"
         AddUrl="site.add"
         DelVisible="true"
-        PrintUrl="<%= $this->Service->constructUrl($this->getApplication()->getService()->getRequestedPagePath()) %>&action=print"
+        PrintVisible="false"
+        JsClickPrint="onPrintRedirect()"
         HelpVisible="true"
         />
 

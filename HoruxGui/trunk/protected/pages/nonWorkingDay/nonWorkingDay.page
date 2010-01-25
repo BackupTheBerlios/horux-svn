@@ -1,6 +1,11 @@
 <com:TContent ID="Main">
     <%include Application.common.template.headerContent %>
-
+    <script language="Javascript">
+        function onPrintRedirect()
+        {
+            window.open( "<%= $this->Service->constructUrl($this->getApplication()->getService()->getRequestedPagePath()) %>&action=print", target="_blank" ) ;
+        }
+    </script>
     <com:TToolbarBox
         ID="tbb"
         Title="<%[Non Working Day]%>"
@@ -8,7 +13,7 @@
         AddVisible="true"
         AddUrl="nonWorkingDay.add"
         PrintVisible="true"
-        PrintUrl="<%= $this->Service->constructUrl($this->getApplication()->getService()->getRequestedPagePath()) %>&action=print"
+        JsClickPrint="onPrintRedirect()"
         HelpVisible="true"
         />
 
