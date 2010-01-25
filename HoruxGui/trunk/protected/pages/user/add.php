@@ -38,17 +38,17 @@ class Add extends Page
 
         if($data['picturepath'] != "")
         {
-            if(!is_writeable('.'.DIRECTORY_SEPARATOR.'pictures'.DIRECTORY_SEPARATOR.$data['picturepath']))
+            if(!is_writeable('pictures'.DIRECTORY_SEPARATOR.$data['picturepath']))
                 $this->displayMessage(Prado::localize('The directory ./pictures{p} must be writeable to save your picture', array('p'=>DIRECTORY_SEPARATOR.$data['picturepath'])), false);
             else
-                $this->picturepath = '.'.DIRECTORY_SEPARATOR.'pictures'.DIRECTORY_SEPARATOR.$data['picturepath'].DIRECTORY_SEPARATOR;
+                $this->picturepath = 'pictures'.DIRECTORY_SEPARATOR.$data['picturepath'].DIRECTORY_SEPARATOR;
         }
         else
         {
             if(!is_writeable('.'.DIRECTORY_SEPARATOR.'pictures'))
                 $this->displayMessage(Prado::localize('The directory ./pictures{p} must be writeable to save your picture', array('p'=>"")), false);
             else
-                $this->picturepath = '.'.DIRECTORY_SEPARATOR.'pictures'.DIRECTORY_SEPARATOR;
+                $this->picturepath = 'pictures'.DIRECTORY_SEPARATOR;
         }
 
 

@@ -35,17 +35,17 @@ class Site extends Page
 
         if($data['picturepath'] != "")
         {
-            if(!is_writeable('.'.DIRECTORY_SEPARATOR.'pictures'.DIRECTORY_SEPARATOR.$data['picturepath']))
+            if(!is_writeable('pictures'.DIRECTORY_SEPARATOR.$data['picturepath']))
                 $this->displayMessage(Prado::localize('The directory ./pictures{p} must be writeable to save your logo', array('p'=>DIRECTORY_SEPARATOR.$data['picturepath'])), false);
             else
-                $this->picturepath = '.'.DIRECTORY_SEPARATOR.'pictures'.DIRECTORY_SEPARATOR.$data['picturepath'].DIRECTORY_SEPARATOR;
+                $this->picturepath = 'pictures'.DIRECTORY_SEPARATOR.$data['picturepath'].DIRECTORY_SEPARATOR;
         }
         else
         {
             if(!is_writeable('.'.DIRECTORY_SEPARATOR.'pictures'))
                 $this->displayMessage(Prado::localize('The directory ./pictures{p} must be writeable to save your logo', array('p'=>"")), false);
             else
-                $this->picturepath = '.'.DIRECTORY_SEPARATOR.'pictures'.DIRECTORY_SEPARATOR;
+                $this->picturepath = 'pictures'.DIRECTORY_SEPARATOR;
         }
 
         if(!$this->isPostBack)
@@ -147,7 +147,7 @@ class Site extends Page
     {
       $this->hasFile = $sender->HasFile; 
       	
-	if(!is_writeable('.'.DIRECTORY_SEPARATOR.'pictures')) return;
+	if(!is_writeable($this->picturepath)) return;
 
       if($sender->HasFile)
       {
@@ -161,13 +161,15 @@ class Site extends Page
 				$fileName = rand().$sender->FileName;
 			}	
 		
-			$sender->saveAs($this->picturepath.$fileName);
-			$this->fileName = $fileName;
-			$this->fileType = $sender->FileType;
-			$this->fileSize = $sender->FileSize;
-			$this->fileError = "";
-			
-			$this->checkImage($this->picturepath.$fileName);
+			if($sender->saveAs($this->picturepath.$fileName))
+            {
+                $this->fileName = $fileName;
+                $this->fileType = $sender->FileType;
+                $this->fileSize = $sender->FileSize;
+                $this->fileError = "";
+
+                $this->checkImage($this->picturepath.$fileName);
+            }
 		}
 		else
 		{

@@ -15,9 +15,14 @@
 
         if(kc == 13)
         {
-            document.getElementById('enterkey').value = 1;
-            document.forms['ctl0_adminForm'].submit();
-            return false;
+            if(document.getElementById('ctl0_Main_username').value != '' && document.getElementById('ctl0_Main_password').value != '')
+            {
+                document.getElementById('enterkey').value = 1;
+                document.forms['ctl0_adminForm'].submit();
+                return false;
+            }
+            else
+                return true;
         }
 
         return true;
