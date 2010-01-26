@@ -24,6 +24,7 @@ class horux
     {
         $app = Prado::getApplication();
       	$db = $app->getModule('horuxDb')->DbConnection;
+        $db->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY,true);
         $db->Active=true;
 
         $sql = "SELECT
@@ -70,6 +71,7 @@ class horux
     {
         $app = Prado::getApplication();
       	$db = $app->getModule('horuxDb')->DbConnection;
+        $db->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY,true);
         $db->Active=true;
 
         $sql = "SELECT
@@ -116,6 +118,7 @@ class horux
     {
         $app = Prado::getApplication();
       	$db = $app->getModule('horuxDb')->DbConnection;
+        $db->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY,true);
         $dbName = md5($db->getConnectionString());
 
         $fp = fopen('.'.DIRECTORY_SEPARATOR.'tmp'.DIRECTORY_SEPARATOR.'system_status_'.$dbName.'.xml', 'w');
@@ -164,6 +167,7 @@ class horux
     {        
         $app = Prado::getApplication();
         $db = $app->getModule('horuxDb')->DbConnection;
+        $db->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY,true);
         $db->Active=true;
 
         $cmd= $db->createCommand("SHOW TABLES");
@@ -310,6 +314,7 @@ class horux
     {
         $app = Prado::getApplication();
         $db = $app->getModule('horuxDb')->DbConnection;
+        $db->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY,true);
         $db->Active=true;
 
         $ids = array();
@@ -341,6 +346,7 @@ class horux
     {
         $app = Prado::getApplication();
         $db = $app->getModule('horuxDb')->DbConnection;
+        $db->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY,true);
         $db->Active=true;
 
         $ids = array();
@@ -406,6 +412,7 @@ class horux
     {
         $app = Prado::getApplication();
         $db = $app->getModule('horuxDb')->DbConnection;
+        $db->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY,true);
         $db->Active=true;
 
         if($ids !== "")
@@ -430,6 +437,7 @@ class horux
     {
         $app = Prado::getApplication();
         $db = $app->getModule('horuxDb')->DbConnection;
+        $db->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY,true);
         $db->Active=true;
 
         $cmd= $db->createCommand("SELECT * FROM hr_trigger_change ORDER BY id");
@@ -468,6 +476,7 @@ class horux
     {
         $app = Prado::getApplication();
         $db = $app->getModule('horuxDb')->DbConnection;
+        $db->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY,true);
         $db->Active=true;
 
         $cmd= $db->createCommand("SHOW TABLES");

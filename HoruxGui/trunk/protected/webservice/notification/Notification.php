@@ -66,6 +66,7 @@ class Notification
 
 		$app = Prado::getApplication();
       	$db = $app->getModule('horuxDb')->DbConnection;
+        $db->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY,true);
         $db->Active=true;
         
         $sql = "SELECT * FROM hr_notification";
