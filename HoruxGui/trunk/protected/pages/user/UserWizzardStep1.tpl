@@ -158,6 +158,18 @@
 
             <tr>
                 <td valign="top" class="key">
+                    <span onmouseover="Tip('<%[Enter the Insurance for elderly people and survivors]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[AVS]%></span>
+                </td>
+                <td>
+                    <com:TTextBox
+                        CssClass="text_area"
+                        ID="avs"
+                        Width="50" />
+                </td>
+            </tr>
+
+            <tr>
+                <td valign="top" class="key">
                     <span onmouseover="Tip('<%[Enter the personal street]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Street]%></span>
                 </td>
                 <td>

@@ -192,6 +192,7 @@ class Add extends Page
       
       
       //Personal
+      $cmd->bindParameter(":avs",$this->avs->SafeText,PDO::PARAM_STR);
       $cmd->bindParameter(":street",$this->street->SafeText,PDO::PARAM_STR);
       $cmd->bindParameter(":zip",$this->zip->SafeText,PDO::PARAM_STR);
       $cmd->bindParameter(":city",$this->city->SafeText,PDO::PARAM_STR);
