@@ -11,6 +11,13 @@ int main(int argc, char *argv[])
     Q_INIT_RESOURCE(ressource);
     QApplication a(argc, argv);
 
+    QTranslator myappTranslator;
+    QString lang = QLocale::system().name();
+    if(lang.contains("fr"))
+       lang = "fr_FR";
+    myappTranslator.load(a.applicationDirPath() +  "/horuxcarddesigner_" + lang +".qm");
+    a.installTranslator(&myappTranslator);
+
     QPixmap pixmap(":/images/splash.jpg");
     QSplashScreen splash(pixmap);
     splash.show();

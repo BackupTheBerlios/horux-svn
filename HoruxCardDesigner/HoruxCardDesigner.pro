@@ -34,4 +34,7 @@ FORMS += horuxdesigner.ui \
     horuxdialog.ui \
     horuxfields.ui
 RESOURCES += ressource.qrc
+win32:RC_FILE = myapp.rc
+TRANSLATIONS = horuxcarddesigner_fr.ts
+CODECFORTR = ISO-8859-5
 include(./qtsoap-2.7_1-opensource/src/qtsoap.pri)
