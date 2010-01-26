@@ -91,6 +91,7 @@ class Status extends Page
 
             $this->devices = array();
 
+
             foreach ($xml->devices as $devices)
             {
 
@@ -104,6 +105,8 @@ class Status extends Page
                     $p['firmwareVersion'] = $device->firmwareVersion;
                     $p['port'] = $this->port;
                     $p['host'] = $this->host;
+                    $p['mode'] = $param['appMode'];
+                    $p['saasdbname'] =  md5($this->db->getConnectionString());
                     $this->devices[] = $p;
                 }
             }

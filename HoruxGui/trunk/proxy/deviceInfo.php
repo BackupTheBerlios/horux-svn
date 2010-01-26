@@ -1,8 +1,24 @@
 <?php
 
-	$app_type = "production";
 
-    $id = $port = "";
+    $id = $port = $app_type = $saasdbname = "";
+
+    if(isset($_GET['saasdbname']))
+        $saasdbname = $_GET['saasdbname'];
+	else
+	{
+		echo "";
+		return;
+	}
+
+    if(isset($_GET['mode']))
+        $app_type = $_GET['mode'];
+	else
+	{
+		echo "";
+		return;
+	}
+
 
     if(isset($_GET['id']))
         $id = $_GET['id'];
@@ -32,7 +48,7 @@
 	$result = "";
 	$content_error = "";
 
-	if($app_type != 'demo')
+	if($app_type == 'production')
 	{
 		
 		require_once( 'XML/RPC.php' );
@@ -59,7 +75,19 @@
     
 	}
 	else
-		$result = file_get_contents("../demo.xml");
+    {
+        if($app_type == 'demo')
+            $result = file_get_contents("../demo.xml");
+            
+        if($app_type == 'saas')
+        {
+            if(file_exists('..'.DIRECTORY_SEPARATOR.'tmp'.DIRECTORY_SEPARATOR.'system_status_'.$saasdbname.'.xml'))
+                $result = file_get_contents('..'.DIRECTORY_SEPARATOR.'tmp'.DIRECTORY_SEPARATOR.'system_status_'.$saasdbname.'.xml');
+            else
+                return "";
+        }
+
+    }
     
     if($content_error != "")
     {

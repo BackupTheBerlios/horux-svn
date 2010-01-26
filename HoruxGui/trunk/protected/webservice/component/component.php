@@ -33,7 +33,6 @@ class component
                     {
                         try
                         {
-
                             Prado::using('horux.pages.components.'.$params[0].'.webservice.'.$params[1]);
                             $comp = new $params[1];
                             if(method_exists($comp, $params[2]))
@@ -49,6 +48,7 @@ class component
                         }
                         catch(Exception $e)
                         {
+
                             return -5; //class not exists
                         }
                     }
