@@ -27,6 +27,6 @@
 #include "cdevicehandling.h"
 #include "calarmhandling.h"
 
-#define APPD_VERSION "1.0.5 $Revision$ - $Date$"
+#define APPD_VERSION "1.0.5"
 
 #endif
