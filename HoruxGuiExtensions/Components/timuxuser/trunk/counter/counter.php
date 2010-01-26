@@ -39,7 +39,8 @@ class counter extends PageList
             if(isset($this->Request['id']))
             {
                 $cmd=$this->db->createCommand("SELECT CONCAT(name, ' ' , firstname) AS employee FROM hr_user  WHERE id=:id");
-                $cmd->bindParameter(":id",$this->Request['id'],PDO::PARAM_STR);
+                $id = $this->Request['id'];
+                $cmd->bindParameter(":id",$id,PDO::PARAM_STR);
 
                 $data = $cmd->query();
                 $data = $data->read();

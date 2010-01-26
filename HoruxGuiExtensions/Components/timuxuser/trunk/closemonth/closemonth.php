@@ -40,12 +40,14 @@ class closemonth extends PageList
             $data = $data->readAll();
 
             $year = date("Y")-1;
+
             if(count($data)>0)
             {
                 $year = explode("-",$data[0]['startDate']);
                 $year = $year[0];
             }
-            $currentYear = date("Y");
+
+            $currentYear = $year;
 
             $yearList = array();
             for($i=$year; $i<= $currentYear;$i++ )
@@ -57,7 +59,8 @@ class closemonth extends PageList
             $this->FilterYear->dataBind();
 
             $FilterYear= $this->getApplication()->getGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterYear', date('Y'));
-            $FilterMonth = $this->getApplication()->getGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterMonth', date('n')-1);
+
+            $FilterMonth = $this->getApplication()->getGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterMonth', date('n'));
 
             if($FilterMonth == 0)
             {

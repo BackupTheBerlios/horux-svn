@@ -47,19 +47,19 @@
                         <com:TRadioButton
                             ID="allday"
                             GroupName="RadioGroup"
-                            Text="All the day"
+                            Text="<%[All the day]%>"
                             />
                         <br/>
                         <com:TRadioButton
                             ID="morning"
                             GroupName="RadioGroup"
-                            Text="Morning"
+                            Text="<%[Morning]%>"
                             />
                         <br/>
                         <com:TRadioButton
                             ID="afternoon"
                             GroupName="RadioGroup"
-                            Text="Afternoon"
+                            Text="<%[Afternoon]%>"
                             />
                     </td>
                 </tr>

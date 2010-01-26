@@ -13,6 +13,24 @@
 
     <%[Filter]%>:
 
+    <%[Department]%>
+    <com:TActiveDropDownList
+        ID="FilterDepartment"
+        OnSelectedIndexChanged="selectionChangedDepartment"
+        CssClass="inputbox"
+        DataTextField="Text"
+        DataValueField="Value" >
+    </com:TActiveDropDownList>
+    
+    <%[Employee]%>
+    <com:TActiveDropDownList
+        ID="FilterEmployee"
+        OnSelectedIndexChanged="selectionChangedEmployee"
+        CssClass="inputbox"
+        DataTextField="Text"
+        DataValueField="Value">
+    </com:TActiveDropDownList>
+
     <%[Year]%>
     <com:TActiveDropDownList
         ID="FilterYear"
@@ -78,7 +96,7 @@
                 <prop:HeaderTemplate><%[Add signing]%></prop:HeaderTemplate>
                 <prop:ItemTemplate>
                     <com:THyperLink
-                        NavigateUrl="index.php?page=components.timuxuser.mybooking.add&back=components.timuxuser.error.error"
+                        NavigateUrl="index.php?page=components.timuxuser.booking.add&back=components.timuxuser.error.error&date=<%#$this->NamingContainer->Data['date']%>&userId=<%= $this->Page->employee->getUserId()%>"
                         ImageUrl="<%~ ../assets/edit_add.png %>"
                         Style="border:0px"
                         Text="<%[Add signing]%>"

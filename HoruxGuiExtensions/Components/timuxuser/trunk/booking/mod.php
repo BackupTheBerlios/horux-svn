@@ -40,12 +40,12 @@ class mod extends Page
         {
             $data = $query->read();
 
-            if(!$data['internet'])
+            /*if(!$data['internet'])
             {
                 $pBack = array('koMsg'=>Prado::localize('Cannot modified this physical sign'));
 
                 $this->Response->redirect($this->Service->constructUrl('components.timuxuser.booking.booking',$pBack));
-            }
+            }*/
 
             if($data['closed'] == '1')
             {
@@ -108,11 +108,19 @@ class mod extends Page
             if($this->saveData())
             {
                 $pBack = array('okMsg'=>Prado::localize('The sign was modified successfully'), 'id'=>$this->id->Value);
+
+                if(isset($this->Request['back']))
+                    $pBack['back'] = $this->Request['back'];
+
                 $this->Response->redirect($this->Service->constructUrl('components.timuxuser.booking.mod', $pBack));
             }
             else
             {
                 $pBack = array('koMsg'=>Prado::localize('The sign was not modified'), 'id'=>$this->id->Value);
+
+                if(isset($this->Request['back']))
+                    $pBack['back'] = $this->Request['back'];
+
                 $this->Response->redirect($this->Service->constructUrl('components.timuxuser.booking.mod', $pBack));
             }
         }
@@ -183,7 +191,10 @@ class mod extends Page
             else
                 $pBack = array('koMsg'=>Prado::localize('The sign was not modified'));
 
-            $this->Response->redirect($this->Service->constructUrl('components.timuxuser.booking.booking',$pBack));
+            if(isset($this->Request['back']))
+                $this->Response->redirect($this->Service->constructUrl($this->Request['back'],$pBack));
+            else
+                $this->Response->redirect($this->Service->constructUrl('components.timuxuser.booking.booking',$pBack));
         }
     }
 
@@ -248,6 +259,9 @@ class mod extends Page
 
     public function onCancel($sender, $param)
     {
-        $this->Response->redirect($this->Service->constructUrl('components.timuxuser.booking.booking'));
+        if(isset($this->Request['back']))
+            $this->Response->redirect($this->Service->constructUrl($this->Request['back']));
+        else
+            $this->Response->redirect($this->Service->constructUrl('components.timuxuser.booking.booking'));
     }
 }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff version="1.0">
-<file source-language="en" target-language="fr" datatype="plaintext" original="messages" date="2009-12-03T16:23:25Z" product-name="messages">
+<file source-language="en" target-language="fr" datatype="plaintext" original="messages" date="2010-01-26T16:45:00Z" product-name="messages">
 <body>
 <trans-unit id="1">
    <source>Balances - Month</source>
@@ -64,7 +64,7 @@
 </trans-unit>
 <trans-unit id="16">
    <source>Add manually</source>
-   <target>Ajouter manuellement</target>
+   <target>Ajouter/modifier manuellement</target>
 </trans-unit>
 <trans-unit id="17">
    <source>Date</source>
@@ -72,19 +72,19 @@
 </trans-unit>
 <trans-unit id="18">
    <source>Signing</source>
-   <target>Pointage</target>
+   <target>Timbrage</target>
 </trans-unit>
 <trans-unit id="19">
    <source>To do</source>
-   <target>A faire</target>
+   <target>A effectuer</target>
 </trans-unit>
 <trans-unit id="20">
    <source>Done</source>
-   <target>Fait</target>
+   <target>Effectuées</target>
 </trans-unit>
 <trans-unit id="21">
    <source>Overtime</source>
-   <target>Heures supplémentaires</target>
+   <target>Différence</target>
 </trans-unit>
 <trans-unit id="22">
    <source>Remark</source>
@@ -92,35 +92,35 @@
 </trans-unit>
 <trans-unit id="23">
    <source>Signed</source>
-   <target>Pointé</target>
+   <target>Heures effectués</target>
 </trans-unit>
 <trans-unit id="24">
    <source>Hours due</source>
-   <target>Heures à travailler</target>
+   <target>Heures à effectuer</target>
 </trans-unit>
 <trans-unit id="25">
    <source>Balance for the month</source>
-   <target>Solde pour&lt;br/&gt;le mois</target>
+   <target>Différence</target>
 </trans-unit>
 <trans-unit id="26">
    <source>Last month</source>
-   <target>Mois précédent</target>
+   <target>Solde mois précédent</target>
 </trans-unit>
 <trans-unit id="27">
    <source>Balances</source>
-   <target>Soldes</target>
+   <target>Solde</target>
 </trans-unit>
 <trans-unit id="28">
    <source>Holidays last month</source>
-   <target>Vacances du mois précédent</target>
+   <target>Total année en cours</target>
 </trans-unit>
 <trans-unit id="29">
    <source>Holidays for this month</source>
-   <target>Vacances pour ce mois</target>
+   <target>Prises ce mois</target>
 </trans-unit>
 <trans-unit id="30">
    <source>Total</source>
-   <target>Total</target>
+   <target>Solde année en cours</target>
 </trans-unit>
 <trans-unit id="31">
    <source>Non working days</source>
@@ -239,7 +239,7 @@
 </trans-unit>
 <trans-unit id="59">
    <source>Sign in/out</source>
-   <target>Pointage d'entrée/sortie</target>
+   <target>Timbrage d'entrée/sortie</target>
 </trans-unit>
 <trans-unit id="60">
    <source>Select the employee</source>
@@ -981,6 +981,86 @@
 <trans-unit id="241">
 <source>{name}&lt;br/&gt;&lt;br&gt;Please find your month report&lt;br/&gt;&lt;br/&gt;Timux</source>
 <target>{name}&lt;br/&gt;&lt;br&gt;Veuillez trouver votre rapport du mois&lt;br/&gt;&lt;br/&gt;Timux</target>
+</trans-unit>
+
+<trans-unit id="242">
+<source>Signing error</source>
+<target>Erreur de pointage</target>
+</trans-unit>
+
+<trans-unit id="243">
+<source>Time code error</source>
+<target>Erreur du code de temps</target>
+</trans-unit>
+
+<trans-unit id="244">
+<source>All the day</source>
+<target>Toute la journée</target>
+</trans-unit>
+
+<trans-unit id="245">
+<source>Morning</source>
+<target>Matin</target>
+</trans-unit>
+
+<trans-unit id="246">
+<source>Afternoon</source>
+<target>Après-midi</target>
+</trans-unit>
+
+<trans-unit id="247">
+<source>Blances last year</source>
+<target>Soldes de l'année dernière</target>
+</trans-unit>
+
+<trans-unit id="248">
+<source>Enter the holidays balance for the last year.</source>
+<target>Entrez le nombre de vacances pour l\'année dernière</target>
+</trans-unit>
+
+<trans-unit id="249">
+<source>Holidays for the last year</source>
+<target>Vacances de l'année dernière</target>
+</trans-unit>
+
+<trans-unit id="250">
+<source>Enter the overtime balance for the last year.</source>
+<target>Entrez les heures supplémentaires de l\'année dernière</target>
+</trans-unit>
+
+<trans-unit id="251">
+<source>Overtime for the last year</source>
+<target>Heures supplémentaires de l'année dernière</target>
+</trans-unit>
+
+<trans-unit id="252">
+<source>A time between two bookings is too small</source>
+<target>Durée trop courte entre deux pointages</target>
+</trans-unit>
+
+<trans-unit id="253">
+<source>Holidays (days)</source>
+<target>Vacances (jours)</target>
+</trans-unit>
+
+<trans-unit id="254">
+<source>Holidays balance last year</source>
+<target>Solde année précédente</target>
+</trans-unit>
+
+<trans-unit id="255">
+<source>Holidays for the year</source>
+<target>Droit année en cours</target>
+</trans-unit>
+
+<trans-unit id="256">
+<source>Non working days similar to a Sunday</source>
+<target>Jours fériés assimilés à un dimanche</target>
+</trans-unit>
+
+<trans-unit id="257">
+<source>Non working days a the end of the year</source>
+<target>Jours fériés restant jusqu'à la fin de l'année</target>
 </trans-unit>
 </body>
 </file>

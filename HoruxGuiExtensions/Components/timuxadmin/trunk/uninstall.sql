@@ -11,4 +11,4 @@ DROP TABLE IF EXISTS `hr_timux_timeunit`;
 DROP TABLE IF EXISTS `hr_timux_workflow`;
 DROP TABLE IF EXISTS `hr_timux_workingtime`;
 
-
+DELETE FROM `hr_user_action` WHERE `catalog`='timuxadmin';

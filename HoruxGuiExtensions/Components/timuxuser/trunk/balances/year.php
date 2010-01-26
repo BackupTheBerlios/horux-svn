@@ -111,9 +111,9 @@ class year extends PageList
         $department = $this->FilterDepartment->getSelectedValue();
 
         if($department>0)
-            $cmd = $this->db->createCommand( "SELECT CONCAT(name, ' ', firstname) AS Text, id AS Value FROM hr_user WHERE $id department=$department AND name!='??'");
+            $cmd = $this->db->createCommand( "SELECT CONCAT(name, ' ', firstname) AS Text, id AS Value FROM hr_user WHERE $id department=$department AND name!='??' ORDER BY name, firstname");
         else
-            $cmd = $this->db->createCommand( "SELECT CONCAT(name, ' ', firstname) AS Text, id AS Value FROM hr_user WHERE $id name!='??'");
+            $cmd = $this->db->createCommand( "SELECT CONCAT(name, ' ', firstname) AS Text, id AS Value FROM hr_user WHERE $id name!='??' ORDER BY name, firstname");
 
         $data = $cmd->query();
         $data = $data->readAll();
@@ -307,7 +307,8 @@ class year extends PageList
 
         $totalYearHours100 = 0.0;
         $totalYearHoursX = $totalYearHoursX2 = 0.0;
-        $vacations = 0.0;
+        $vacations = $this->employee->geHolidaystForTheYear($year, 1); - $this->daysVacationLastYear->Text;
+
         for($i=1; $i<=12; $i++)
         {
             $p = $this->employee->getPercentage($year,$i);
@@ -316,19 +317,19 @@ class year extends PageList
             $h = bcdiv(bcmul($h,$p,2),100.00,2);
             $totalYearHoursX = bcadd($h, $totalYearHoursX,2);
             $totalYearHoursX2 = $totalYearHoursX;
-            $wt = $this->employee->getWorkingTime($year, $i);
-            
-            $vByMonth = bcdiv($wt['holidaysByYear'],12,4);
-            $vByMonth = bcdiv(bcmul($vByMonth,$p,4),100.00,4);
-
-            $vacations += $vByMonth;
         }
 
 
         if($this->employee->getDaysByWeek() > 0)
-            $this->daysVacation->Text = sprintf("%.02f %s / %.02f ".Prado::localize('weeks'),$vacations,Prado::localize('days'), bcdiv($vacations, $this->employee->getDaysByWeek(),4));
+        {
+            $dw = $this->employee->getDaysByWeek();
+            $hw = bcdiv($vacations, $dw,4);
+
+            $this->daysVacation->Text = sprintf("%.02f %s / %.02f ".Prado::localize('weeks'),$vacations,Prado::localize('days'),$hw);
+        }
         else
             $this->daysVacation->Text = "0.00";
+
         $this->totalVacation->Text = sprintf("%.02f",$vacations+$this->daysVacationLastYear->Text);
 
         $hoursWorked = 0.0;
@@ -363,7 +364,9 @@ class year extends PageList
 
             $nbreHolidaysDay = bcadd($nbreHolidaysDay,$months[$i]['nbreHolidaysDay'],2);
 
-            $months[$i]['nbreHolidaysHour'] = sprintf("%.02f",bcmul($holidays['nbre'], $this->employee->getTimeHoursDayTodo($year,$i),4));
+
+            $nbreHolidaysHour = bcmul($holidays['nbre'], $this->employee->getTimeHoursDayTodo($year,$i),4);
+            $months[$i]['nbreHolidaysHour'] = sprintf("%.02f",$nbreHolidaysHour);
             $nbreHolidaysHour = bcadd($nbreHolidaysHour,$months[$i]['nbreHolidaysHour'],2);
 
             if($i==1)
@@ -397,9 +400,10 @@ class year extends PageList
             $months[$i]['monthBalance'] = bcsub($months[$i]['totalHours'],$months[$i]['hoursX'],2);
 
             $totalYearHoursX = bcsub($totalYearHoursX, $months[$i]['totalHours'],2);
-            $months[$i]['hoursDueYear'] = $totalYearHoursX;
+            $months[$i]['hoursDueYear'] = bcsub($totalYearHoursX,$this->hoursBalance->Text,2);
 
-            $months[$i]['hoursDueYearSubHolidays'] = bcsub($months[$i]['hoursDueYear'], bcmul($months[$i]['holidayBalance'],$this->employee->getHoursByDay(),2),2);
+            $hoursDueYearSubHolidays = bcmul($months[$i]['holidayBalance'], $this->employee->getTimeHoursDayTodo($year,$i),4);
+            $months[$i]['hoursDueYearSubHolidays'] = bcsub($months[$i]['hoursDueYear'],$hoursDueYearSubHolidays,2);
 
             if(12-$i > 0)
                 $months[$i]['average'] = bcdiv($months[$i]['hoursDueYearSubHolidays'],(12-$i),2);

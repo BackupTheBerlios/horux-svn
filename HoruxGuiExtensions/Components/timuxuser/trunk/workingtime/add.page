@@ -493,5 +493,51 @@
         </table>
     </fieldset>
 
+    <fieldset class="adminform">
+        <legend><%[Blances last year]%></legend>
+        <table class="admintable" cellspacing="1">
+            <tbody>
+                <tr>
+                    <td valign="top" class="key">
+                        <span onmouseover="Tip('<%[Enter the holidays balance for the last year.]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Holidays for the last year]%></span>
+                    </td>
+                    <td>
+                        <com:TTextBox
+                            CssClass="text_area"
+                            ID="holidaysLastYear"
+                            Width="30px"
+                            />
+                        <com:TDataTypeValidator
+                            ValidationGroup="Group1"
+                            EnableClientScript="true"
+                            ControlToValidate="holidaysLastYear"
+                            DataType="Float"
+                            Text="<%[You must enter a floating number.]%>"
+                            Display="Dynamic"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td valign="top" class="key">
+                        <span onmouseover="Tip('<%[Enter the overtime balance for the last year.]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Overtime for the last year]%></span>
+                    </td>
+                    <td>
+                        <com:TTextBox
+                            CssClass="text_area"
+                            ID="overtimeLastYear"
+                            Width="30px"
+                            />
+                        <com:TDataTypeValidator
+                            ValidationGroup="Group1"
+                            EnableClientScript="true"
+                            ControlToValidate="overtimeLastYear"
+                            DataType="Float"
+                            Text="<%[You must enter a floating number.]%>"
+                            Display="Dynamic"/>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </fieldset>
+
     <%include Application.common.template.footerContent %>
 </com:TContent>

@@ -51,12 +51,12 @@ class mod extends Page
         {
             $data = $query->read();
 
-            if(!$data['internet'])
+            /*if(!$data['internet'])
             {
                 $pBack = array('koMsg'=>Prado::localize('Cannot modified this physical sign'));
 
                 $this->Response->redirect($this->Service->constructUrl('components.timuxuser.booking.booking',$pBack));
-            }
+            }*/
 
             if($data['closed'] == '1')
             {

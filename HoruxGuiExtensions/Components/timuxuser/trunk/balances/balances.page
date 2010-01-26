@@ -180,19 +180,19 @@
             <com:TBoundColumn
                 HeaderText="<%[To do]%>"
                 DataField="todo"
-                HeaderStyle.Width="50px"
+                HeaderStyle.Width="70px"
                 />
 
             <com:TBoundColumn
                 HeaderText="<%[Done]%>"
                 DataField="done"
-                HeaderStyle.Width="50px"
+                HeaderStyle.Width="60px"
                 />
 
             <com:TBoundColumn
                 HeaderText="<%[Overtime]%>"
                 DataField="overtime"
-                HeaderStyle.Width="50px"
+                HeaderStyle.Width="70px"
                 />
 
             <com:TBoundColumn
@@ -211,14 +211,6 @@
         <tbody>
             <tr>
                 <td valign="top" class="key">
-                    <com:TLabel Text="<%[Signed]%>" />
-                </td>
-                <td style="text-align:right">
-                    <com:TActiveLabel ID="signed" />
-                </td>
-            </tr>
-            <tr>
-                <td valign="top" class="key">
                     <com:TLabel Text="<%[Hours due]%>" />
                 </td>
                 <td style="text-align:right">
@@ -227,9 +219,17 @@
             </tr>
             <tr>
                 <td valign="top" class="key">
+                    <com:TLabel Text="<%[Signed]%>" />
+                </td>
+                <td style="text-align:right">
+                    <com:TActiveLabel ID="signed" />
+                </td>
+            </tr>
+            <tr>
+                <td valign="top" class="key">
                     <com:TLabel Text="<%[Balance for the month]%>" />
                 </td>
-                <td style="text-align:right;border-top:solid 1px black">
+                <td style="text-align:right;">
                     <com:TActiveLabel ID="balanceForTheMonth" />
                 </td>
             </tr>
@@ -245,7 +245,7 @@
                 <td valign="top" class="key">
                     <com:TLabel Text="<%[Balances]%>" />
                 </td>
-                <td style="text-align:right;border-top:solid 1px black">
+                <td style="text-align:right;">
                     <com:TActiveLabel ID="balances" />
                 </td>
             </tr>
@@ -256,6 +256,29 @@
 <div style="float:left;margin-right:50px">
     <table class="admintable" cellspacing="1">
         <tbody>
+            <tr>
+                <td valign="top" class="key">
+                    <com:TLabel Text="<%[Holidays (days)]%>" />
+                </td>
+                <td style="text-align:right">
+                </td>
+            </tr>
+            <tr>
+                <td valign="top" class="key">
+                    <com:TLabel Text="<%[Holidays balance last year]%>" />
+                </td>
+                <td style="text-align:right">
+                    <com:TActiveLabel ID="balanceHolidaysLastYear" />
+                </td>
+            </tr>
+            <tr>
+                <td valign="top" class="key">
+                    <com:TLabel Text="<%[Holidays for the year]%>" />
+                </td>
+                <td style="text-align:right">
+                    <com:TActiveLabel ID="holidayForTheYear" />
+                </td>
+            </tr>
             <tr>
                 <td valign="top" class="key">
                     <com:TLabel Text="<%[Holidays last month]%>" />
@@ -276,7 +299,7 @@
                 <td valign="top" class="key">
                     <com:TLabel Text="<%[Total]%>" />
                 </td>
-                <td style="text-align:right;border-top:solid 1px black">
+                <td style="text-align:right;">
                     <com:TActiveLabel ID="holidaysTotal" />
                 </td>
             </tr>
@@ -290,10 +313,18 @@
             </tr>
             <tr>
                 <td valign="top" class="key">
-                    <com:TLabel Text="<%[Non working days]%>" />
+                    <com:TLabel Text="<%[Non working days similar to a Sunday]%>" />
                 </td>
                 <td style="text-align:right;">
                     <com:TActiveLabel ID="nonworkingday" />
+                </td>
+            </tr>
+            <tr>
+                <td valign="top" class="key">
+                    <com:TLabel Text="<%[Non working days a the end of the year]%>" />
+                </td>
+                <td style="text-align:right;">
+                    <com:TActiveLabel ID="nonworkingdayendofyear" />
                 </td>
             </tr>
         </tbody>

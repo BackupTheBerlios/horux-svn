@@ -97,7 +97,7 @@ class mod extends Page
     protected function getPersonList()
     {
         $cmd = NULL;
-        $cmd = $this->db->createCommand( "SELECT id AS Value, CONCAT(name, ' ', firstname) AS Text FROM hr_user WHERE name<>'??'" );
+        $cmd = $this->db->createCommand( "SELECT id AS Value, CONCAT(name, ' ', firstname) AS Text FROM hr_user WHERE name<>'??' ORDER BY name, firstname" );
         $data =  $cmd->query();
         $data = $data->readAll();
         $d[0]['Value'] = 'null';
@@ -208,6 +208,9 @@ class mod extends Page
 
 
 
+        $cmd = $this->db->createCommand( "SELECT * FROM hr_timux_timecode WHERE defaultHoliday=1");
+        $data = $cmd->query();
+        $data = $data->read();
 
         return $res1;
     }

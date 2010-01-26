@@ -37,7 +37,7 @@ class config extends Page
 
     public function setData()
     {
-        $cmd = $this->db->createCommand( "SELECT * FROM hr_timux_config" );
+        $cmd = $this->db->createCommand( "SELECT * FROM hr_timux_config WHERE id=1" );
         $query = $cmd->query();
         if($query)
         {
@@ -97,6 +97,7 @@ class config extends Page
                                             hoursBlockAfternoon2=:hoursBlockAfternoon2,
                                             hoursBlockAfternoon3=:hoursBlockAfternoon3,
                                             hoursBlockAfternoon4=:hoursBlockAfternoon4
+                                            WHERE id=1
                                             " );
 
         $cmd->bindParameter(":daysByWeek",$this->daysByWeek->SafeText,PDO::PARAM_STR);

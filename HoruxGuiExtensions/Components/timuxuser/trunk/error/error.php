@@ -58,7 +58,28 @@ class error extends PageList
 
             $FilterYear= $this->getApplication()->getGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterYear', date('Y'));
             $FilterMonth = $this->getApplication()->getGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterMonth', date('n'));
+            $FilterEmployee = $this->getApplication()->getGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterEmployee', false);
+            $FilterDepartment = $this->getApplication()->getGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterDepartment', false);
 
+            if($FilterEmployee)
+                $this->employee = new employee($FilterEmployee );
+
+            $this->FilterDepartment->DataSource=$this->DepartmentList;
+            $this->FilterDepartment->dataBind();
+
+            if($FilterDepartment !== false)
+                $this->FilterDepartment->setSelectedValue($FilterDepartment);
+            else
+                $this->FilterDepartment->setSelectedIndex(0);
+
+            $this->FilterEmployee->DataSource=$this->EmployeeList;
+            $this->FilterEmployee->dataBind();
+
+
+            if($FilterEmployee)
+                $this->FilterEmployee->setSelectedValue($FilterEmployee);
+            else
+                $this->FilterEmployee->setSelectedValue($this->userId);
                 
             if($FilterYear)
                 $this->FilterYear->setSelectedValue($FilterYear);
@@ -80,6 +101,53 @@ class error extends PageList
         }
     }
 
+    public function getEmployeeList()
+    {
+        $employee = new employee($this->userId);
+
+        $role = $employee->getRole();
+        if($role == 'employee')
+        {
+            $id = 'id='.$this->userId.' AND ';
+        }
+
+        $department = $this->FilterDepartment->getSelectedValue();
+
+        if($department>0)
+            $cmd = $this->db->createCommand( "SELECT CONCAT(name, ' ', firstname) AS Text, id AS Value FROM hr_user WHERE $id department=$department AND name!='??' ORDER BY name, firstname");
+        else
+            $cmd = $this->db->createCommand( "SELECT CONCAT(name, ' ', firstname) AS Text, id AS Value FROM hr_user WHERE $id name!='??' ORDER BY name, firstname");
+
+        $data = $cmd->query();
+        $data = $data->readAll();
+        return $data;
+
+    }
+
+    public function getDepartmentList()
+    {
+        $employee = new employee($this->userId);
+
+        $role = $employee->getRole();
+        $department = $employee->getDepartmentId();
+        $cmd = NULL;
+        if($role == 'manager' || $role == 'employee')
+            $cmd = $this->db->createCommand( "SELECT name AS Text, id AS Value FROM hr_department WHERE id=$department");
+        else
+            $cmd = $this->db->createCommand( "SELECT name AS Text, id AS Value FROM hr_department ORDER BY name");
+        $data = $cmd->query();
+        $data = $data->readAll();
+
+        if($role == 'rh')
+        {
+            $dataAll[] = array("Value"=>0, "Text"=>Prado::localize("--- All ---"));
+
+            $data = array_merge($dataAll, $data);
+        }
+
+        return $data;
+
+    }
 
     public function getData()
     {
@@ -111,6 +179,36 @@ class error extends PageList
     {
         $this->onRefresh($sender, $param);
     }
+
+    public function selectionChangedEmployee($sender, $param)
+    {
+        $this->getApplication()->setGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterEmployee', $this->FilterEmployee->getSelectedValue());
+        $this->employee = new employee($this->FilterEmployee->getSelectedValue() );
+
+        $this->DataGrid->DataSource=$this->Data;
+        $this->DataGrid->dataBind();
+        $this->Page->CallbackClient->update('list', $this->DataGrid);
+
+    }
+
+    public function selectionChangedDepartment($sender, $param)
+    {
+        $this->getApplication()->setGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterDepartment', $this->FilterDepartment->getSelectedValue());
+
+
+        $this->FilterEmployee->DataSource=$this->EmployeeList;
+        $this->FilterEmployee->dataBind();
+
+        if(count($this->EmployeeList)>0)
+            $this->FilterEmployee->setSelectedIndex(0);
+
+        $this->employee = new employee($this->FilterEmployee->getSelectedValue() );
+
+        $this->DataGrid->DataSource=$this->Data;
+        $this->DataGrid->dataBind();
+        $this->Page->CallbackClient->update('list', $this->DataGrid);
+    }
+
 
     public function onRefresh($sender, $param)
     {

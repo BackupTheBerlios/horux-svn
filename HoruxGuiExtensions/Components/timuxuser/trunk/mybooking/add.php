@@ -41,6 +41,12 @@ class add extends Page
             $this->timecode->dataBind();
 
             $this->timecode->setEnabled(false);
+
+
+            if(isset($this->Request['date']))
+            {
+                $this->date->Text = $this->Request['date'];
+            }
         }
     }
 

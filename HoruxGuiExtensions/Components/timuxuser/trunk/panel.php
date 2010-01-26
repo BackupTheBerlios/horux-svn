@@ -22,7 +22,6 @@ class panel extends Page
     public function onLoad($param)
     {
         parent::onLoad($param);
-
         $app = $this->getApplication();
         $usedId = $app->getUser()->getUserID() == null ? 0 : $app->getUser()->getUserID();
 

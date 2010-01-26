@@ -119,9 +119,9 @@ class balances extends PageList
         $department = $this->FilterDepartment->getSelectedValue();
 
         if($department>0)
-            $cmd = $this->db->createCommand( "SELECT CONCAT(name, ' ', firstname) AS Text, id AS Value FROM hr_user WHERE $id department=$department AND name!='??'");
+            $cmd = $this->db->createCommand( "SELECT CONCAT(name, ' ', firstname) AS Text, id AS Value FROM hr_user WHERE $id department=$department AND name!='??' ORDER BY name, firstname");
         else
-            $cmd = $this->db->createCommand( "SELECT CONCAT(name, ' ', firstname) AS Text, id AS Value FROM hr_user WHERE $id name!='??'");
+            $cmd = $this->db->createCommand( "SELECT CONCAT(name, ' ', firstname) AS Text, id AS Value FROM hr_user WHERE $id name!='??' ORDER BY name, firstname");
 
         $data = $cmd->query();
         $data = $data->readAll();
@@ -187,6 +187,8 @@ class balances extends PageList
         parent::onPrint();
         $app = $this->getApplication()->getGlobalization();
 
+        $year = $this->Request['f3'];
+
         $this->pdf->AddPage();
 
         $data = $this->getData();
@@ -217,7 +219,7 @@ class balances extends PageList
             utf8_decode(Prado::localize("Signing")),
             utf8_decode(Prado::localize("To do")),
             utf8_decode(Prado::localize("Done")),
-            utf8_decode(substr(Prado::localize("Overtime"),0,8)),
+            utf8_decode(Prado::localize("Overtime")),
             utf8_decode(Prado::localize("Remark")),
         );
 
@@ -228,7 +230,7 @@ class balances extends PageList
         $this->pdf->SetFont('','B');
         $w=array(20,65,15,15,15,65);
         for($i=0;$i<count($header);$i++)
-        $this->pdf->Cell($w[$i],7,$header[$i],1,0,'C',1);
+        $this->pdf->CellExt($w[$i],7,$header[$i],1,0,'C',1);
         $this->pdf->Ln();
         $this->pdf->SetFillColor(215,215,215);
         $this->pdf->SetTextColor(0);
@@ -236,7 +238,7 @@ class balances extends PageList
 
         $fill=false;
 
-        $this->pdf->SetFont('courier','',8);
+        $this->pdf->SetFont('courier','',7);
 
         foreach($data as $d)
         {
@@ -248,7 +250,10 @@ class balances extends PageList
             $date = implode(" ", $date);
 
             $date= utf8_decode($date);
-            $sign = str_replace("&nbsp;"," ",utf8_decode($d['sign']));
+
+            $nBr2 = $this->findall("<br/>", $d['sign']);
+
+            $sign = str_replace("&nbsp;"," ",str_replace("<br/>","\n",$d['sign']));
             $todo = utf8_decode($d['todo']);
             $done= utf8_decode($d['done']);
             $overtime = utf8_decode($d['overtime']);
@@ -262,10 +267,12 @@ class balances extends PageList
             $remark = str_replace("<span style=\"color:red\">","",$remark);
             $remark = str_replace("</span>","",$remark);
 
+            if($nBr2!==false && $nBr2>$nBr) $nBr = $nBr2;
+
             $height = 5;
             if($nBr !== false)
             {
-                $height = 7 * count($nBr);
+                $height = 5.5 * count($nBr);
             }
 
             $this->pdf->CellExt($w[0],$height,$date,'LR',0,'L',$fill);
@@ -285,6 +292,24 @@ class balances extends PageList
         $this->pdf->Ln(7);
 
 // ligne 1
+        $hoursForTheMonthAtX = $this->employee->getHoursMonth($this->Request['f3'], $this->Request['f4']);
+        if($hoursForTheMonthAtX>0)
+        {
+            $this->pdf->Cell(30,3,utf8_decode(Prado::localize('Hours due'))." :",0,0,'L');
+            $this->pdf->Cell(20,3,sprintf("+ %.02f",$hoursForTheMonthAtX),0,0,'R');
+        }
+        elseif($hoursForTheMonthAtX<0 || $hoursForTheMonthAtX==0)
+        {
+            $this->pdf->Cell(30,3,utf8_decode(Prado::localize('Hours due'))." :",0,0,'L');
+            $this->pdf->Cell(20,3,sprintf(" %.02f",$hoursForTheMonthAtX),0,0,'R');
+        }
+
+        $this->pdf->Cell(10,3,"",0,0,'R');
+
+        $this->pdf->Cell(55,3,utf8_decode(Prado::localize('Holidays (days)'))."",0,0,'L');
+        $this->pdf->Cell(20,3,"",0,1,'R');
+
+//Ligne 2
 
         if($this->signedValue>0)
         {
@@ -297,7 +322,47 @@ class balances extends PageList
             $this->pdf->Cell(20,3,sprintf(" %.02f",$this->signedValue),0,0,'R');
         }
 
-        $this->pdf->Cell(20,3,"",0,0,'R');
+        $this->pdf->Cell(10,3,"",0,0,'R');
+
+        $this->pdf->Cell(55,3,utf8_decode(Prado::localize('Holidays balance last year'))." :",0,0,'L');
+        $this->pdf->Cell(20,3,sprintf("%.02f",$this->employee->geHolidaystMonth($year-1,12)),0,1,'R');
+
+
+//Ligne 3
+
+        $balanceForTheMonth = bcsub($this->signedValue,$hoursForTheMonthAtX,4);
+
+        if($balanceForTheMonth>0)
+        {
+            $this->pdf->Cell(30,3,utf8_decode(str_replace("<br/>"," ",Prado::localize('Balance for the month')))." :",0,0,'L');
+            $this->pdf->Cell(20,3,sprintf("+ %.02f",$balanceForTheMonth),0,0,'R');
+        }
+        elseif($balanceForTheMonth<0 || $balanceForTheMonth==0)
+        {
+            $this->pdf->Cell(30,3,utf8_decode(str_replace("<br/>"," ",Prado::localize('Balance for the month')))." :",0,0,'L');
+            $this->pdf->Cell(20,3,sprintf(" %.02f",$balanceForTheMonth),0,0,'R');
+        }
+
+        $this->pdf->Cell(10,3,"",0,0,'R');
+
+        $this->pdf->Cell(55,3,utf8_decode(Prado::localize('Holidays for the year'))." :",0,0,'L');
+        $this->pdf->Cell(20,3,sprintf("%.02f",$this->employee->geHolidaystForTheYear($this->Request['f3'], $this->Request['f4'])),0,1,'R');
+
+//Ligne 4
+        $lastOvertime = $this->employee->getOvertimeLastMonth($this->Request['f3'], $this->Request['f4']);
+
+        if($lastOvertime>0)
+        {
+            $this->pdf->Cell(30,3,utf8_decode(Prado::localize('Last month'))." :",0,0,'L');
+            $this->pdf->Cell(20,3,sprintf("+%.02f",$lastOvertime),0,0,'R');
+        }
+        elseif($lastOvertime<0 || $lastOvertime==0)
+        {
+            $this->pdf->Cell(30,3,utf8_decode(Prado::localize('Last month'))." :",0,0,'L');
+            $this->pdf->Cell(20,3,sprintf(" %.02f",$lastOvertime),0,1,'R');
+        }
+
+        $this->pdf->Cell(10,3,"",0,0,'R');
 
         $y = $this->Request['f3'];
         $m = $this->Request['f4'];
@@ -315,60 +380,40 @@ class balances extends PageList
 
         if(!$wt)
         {
-            $totalYearHours100 = 0.0;
-            $totalYearHoursX = $totalYearHoursX2 = 0.0;
-            $vacations = 0.0;
-            for($i=1; $i<=12; $i++)
-            {
-                $p = $this->employee->getPercentage($year,$i);
-                $h = $this->employee->getHoursMonth($year, $i);
-                $totalYearHours100 = bcadd($h, $totalYearHours100,2);
-                $h = bcdiv(bcmul($h,$p,2),100.00,2);
-                $totalYearHoursX = bcadd($h, $totalYearHoursX,2);
-                $totalYearHoursX2 = $totalYearHoursX;
-                $wt = $this->employee->getWorkingTime($year, $i);
-
-                $vByMonth = bcdiv($wt['holidaysByYear'],12,4);
-                $vByMonth = bcdiv(bcmul($vByMonth,$p,4),100.00,4);
-
-                $vacations += $vByMonth;
-
-
-            }
-
-            $holidaysLastMonth = $vacations;
+            $holidaysLastMonth = $this->employee->geHolidaystMonth($this->Request['f3'], $this->Request['f4']);
         }
         else
         {
-            $holidaysLastMonth = $this->employee->geHolidaystLastMonth( $this->Request['f3'],  $this->Request['f4']);
+            $holidaysLastMonth = $this->employee->geHolidaystLastMonth($this->Request['f3'], $this->Request['f4']);
         }
 
         if($holidaysLastMonth>0)
         {
-            $this->pdf->Cell(40,3,utf8_decode(Prado::localize('Holidays last month'))." :",0,0,'L');
-            $this->pdf->Cell(20,3,sprintf("+ %.02f",$holidaysLastMonth),0,1,'R');
+            $this->pdf->Cell(55,3,utf8_decode(Prado::localize('Holidays last month'))." :",0,0,'L');
+            $this->pdf->Cell(20,3,sprintf(" %.02f",$holidaysLastMonth),0,1,'R');
         }
         elseif($holidaysLastMonth<0 || $holidaysLastMonth==0)
         {
-            $this->pdf->Cell(40,3,utf8_decode(Prado::localize('Holidays last month'))." :",0,0,'L');
+            $this->pdf->Cell(55,3,utf8_decode(Prado::localize('Holidays last month'))." :",0,0,'L');
             $this->pdf->Cell(20,3,sprintf(" %.02f",$holidaysLastMonth),0,1,'R');
         }
 
-// ligne 2
+// ligne 5
 
-        $hoursForTheMonthAtX = $this->employee->getHoursMonth($this->Request['f3'], $this->Request['f4']);
-        if($hoursForTheMonthAtX>0)
+        $balances = bcadd($balanceForTheMonth , $lastOvertime, 4);
+
+        if($balances>0)
         {
-            $this->pdf->Cell(30,3,utf8_decode(Prado::localize('Hours due'))." :",0,0,'L');
-            $this->pdf->Cell(20,3,sprintf("+ %.02f",$hoursForTheMonthAtX),0,0,'R');
+            $this->pdf->Cell(30,3,utf8_decode(Prado::localize('Balances'))." :",0,0,'L');
+            $this->pdf->Cell(20,3,sprintf("+%.02f",$balances),0,0,'R');
         }
-        elseif($hoursForTheMonthAtX<0 || $hoursForTheMonthAtX==0)
+        elseif($balances<0 || $balances==0)
         {
-            $this->pdf->Cell(30,3,utf8_decode(Prado::localize('Hours due'))." :",0,0,'L');
-            $this->pdf->Cell(20,3,sprintf(" %.02f",$hoursForTheMonthAtX),0,0,'R');
+            $this->pdf->Cell(30,3,utf8_decode(Prado::localize('Balances'))." :",0,0,'L');
+            $this->pdf->Cell(20,3,sprintf(" %.02f",$balances),0,0,'R');
         }
 
-        $this->pdf->Cell(20,3,"",0,0,'R');
+        $this->pdf->Cell(10,3,"",0,0,'R');
 
         $defaultHolidayTimeCode = $this->employee->getDefaultHolidaysCounter();
 
@@ -376,91 +421,74 @@ class balances extends PageList
 
         if($holidays['nbre']>0)
         {
-            $this->pdf->Cell(40,3,utf8_decode(Prado::localize('Holidays for this month'))." :",0,0,'L');
+            $this->pdf->Cell(55,3,utf8_decode(Prado::localize('Holidays for this month'))." :",0,0,'L');
             $this->pdf->Cell(20,3,sprintf("- %.02f",$holidays['nbre']),0,1,'R');
         }
         elseif($holidays['nbre']==0)
         {
-            $this->pdf->Cell(40,3,utf8_decode(Prado::localize('Holidays for this month'))." :",0,0,'L');
+            $this->pdf->Cell(55,3,utf8_decode(Prado::localize('Holidays for this month'))." :",0,0,'L');
             $this->pdf->Cell(20,3,sprintf("%.02f",$holidays['nbre']),0,1,'R');
         }
 
 
-// ligne 3
+// ligne 6
 
-        $balanceForTheMonth = bcsub($this->signedValue,$hoursForTheMonthAtX,4);
-
-        if($balanceForTheMonth>0)
-        {
-            $this->pdf->Cell(30,3,utf8_decode(str_replace("<br/>"," ",Prado::localize('Balance for the month')))." :",0,0,'L');
-            $this->pdf->Cell(20,3,sprintf("+ %.02f",$balanceForTheMonth),'T',0,'R');
-        }
-        elseif($balanceForTheMonth<0 || $balanceForTheMonth==0)
-        {
-            $this->pdf->Cell(30,3,utf8_decode(str_replace("<br/>"," ",Prado::localize('Balance for the month')))." :",0,0,'L');
-            $this->pdf->Cell(20,3,sprintf(" %.02f",$balanceForTheMonth),'T',0,'R');
-        }
-
+        $this->pdf->Cell(30,3,"",0,0,'L');
         $this->pdf->Cell(20,3,"",0,0,'R');
+        $this->pdf->Cell(10,3,"",0,0,'R');
+
 
         $holidaysTotal = bcsub($holidaysLastMonth, $holidays['nbre'],4);
         if($holidaysTotal>0)
         {
-            $this->pdf->Cell(40,3,utf8_decode(Prado::localize('Total'))." :",0,0,'L');
-            $this->pdf->Cell(20,3,sprintf("+ %.02f",$holidaysTotal),'T',1,'R');
+            $this->pdf->Cell(55,3,utf8_decode(Prado::localize('Total'))." :",0,0,'L');
+            $this->pdf->Cell(20,3,sprintf("%.02f",$holidaysTotal),0,1,'R');
         }
         elseif($holidaysTotal<0 || $holidaysTotal==0)
         {
-            $this->pdf->Cell(40,3,utf8_decode(Prado::localize('Total'))." :",0,0,'L');
-            $this->pdf->Cell(20,3,sprintf("%.02f",$holidaysTotal),'T',1,'R');
+            $this->pdf->Cell(55,3,utf8_decode(Prado::localize('Total'))." :",0,0,'L');
+            $this->pdf->Cell(20,3,sprintf("%.02f",$holidaysTotal),0,1,'R');
         }
 
 
-// ligne 4
-        $lastOvertime = $this->employee->getOvertimeLastMonth($this->Request['f3'], $this->Request['f4']);
-
-        if($lastOvertime>0)
-        {
-            $this->pdf->Cell(30,3,utf8_decode(Prado::localize('Last month'))." :",0,0,'L');
-            $this->pdf->Cell(20,3,sprintf("+%.02f",$lastOvertime),0,0,'R');
-        }
-        elseif($lastOvertime<0 || $lastOvertime==0)
-        {
-            $this->pdf->Cell(30,3,utf8_decode(Prado::localize('Last month'))." :",0,0,'L');
-            $this->pdf->Cell(20,3,sprintf(" %.02f",$lastOvertime),0,1,'R');
-        }
-
-        $this->pdf->Cell(20,3,"",0,0,'R');
+// ligne 7
 
         $this->pdf->ln(3);
 
-// ligne 5
-        $balances = bcadd($balanceForTheMonth , $lastOvertime, 4);
-
-        if($balances>0)
-        {
-            $this->pdf->Cell(30,3,utf8_decode(Prado::localize('Balances'))." :",0,0,'L');
-            $this->pdf->Cell(20,3,sprintf("+%.02f",$balances),'T',0,'R');
-        }
-        elseif($balances<0 || $balances==0)
-        {
-            $this->pdf->Cell(30,3,utf8_decode(Prado::localize('Balances'))." :",0,0,'L');
-            $this->pdf->Cell(20,3,sprintf(" %.02f",$balances),'T',0,'R');
-        }
-
+// ligne 8
+        $this->pdf->Cell(30,3,"",0,0,'L');
         $this->pdf->Cell(20,3,"",0,0,'R');
+        $this->pdf->Cell(10,3,"",0,0,'R');
 
-        $nonWorkingDay = $this->employee->getAllNonWorkingDay($year, $month);
+        $nonWorkingDay = $this->employee->getAllNonWorkingDay($this->Request['f3'], $this->Request['f4']);
         if($nonWorkingDay>0)
         {
-            $this->pdf->Cell(40,3,utf8_decode(Prado::localize('Non working days'))." :",0,0,'L');
+            $this->pdf->Cell(55,3,utf8_decode(Prado::localize('Non working days similar to a Sunday'))." :",0,0,'L');
             $this->pdf->Cell(20,3,sprintf(" %.02f",$nonWorkingDay),0,1,'R');
         }
         elseif($nonWorkingDay==0)
         {
-            $this->pdf->Cell(40,3,utf8_decode(Prado::localize('Non working days'))." :",0,0,'L');
+            $this->pdf->Cell(55,3,utf8_decode(Prado::localize('Non working days similar to a Sunday'))." :",0,0,'L');
             $this->pdf->Cell(20,3,sprintf(" %.02f",$nonWorkingDay),0,1,'R');
         }
+
+// ligne 9
+        $this->pdf->Cell(30,3,"",0,0,'L');
+        $this->pdf->Cell(20,3,"",0,0,'R');
+        $this->pdf->Cell(10,3,"",0,0,'R');
+
+        $nonworkingdayendofyear = $this->employee->getNonWorkingDayEndOfYear($this->Request['f3'], $this->Request['f4']);
+        if($nonworkingdayendofyear>0)
+        {
+            $this->pdf->Cell(55,3,utf8_decode(Prado::localize('Non working days a the end of the year'))." :",0,0,'L');
+            $this->pdf->Cell(20,3,sprintf(" %.02f",$nonworkingdayendofyear),0,1,'R');
+        }
+        elseif($nonworkingdayendofyear==0)
+        {
+            $this->pdf->Cell(55,3,utf8_decode(Prado::localize('Non working days a the end of the year'))." :",0,0,'L');
+            $this->pdf->Cell(20,3,sprintf(" %.02f",$nonworkingdayendofyear),0,1,'R');
+        }
+
 
         $this->pdf->ln(7);
 
@@ -556,13 +584,17 @@ class balances extends PageList
             $line['sign'] = '';
 
             $line['remark'] = '';
-
+            $index_br = 1;
             //display the booking
             foreach($booking as $b)
             {
                 if($b['internet'] == 1) $line['sign'].= "*";
                 $inout = $b['inout'] == 'out' ? Prado::localize("out") : Prado::localize("in");
                 $line['sign'] .= substr($b['time'],0,5)."/".$inout."&nbsp;&nbsp;&nbsp;";
+
+                if($index_br % 4 == 0) $line['sign'] .= "<br/>";
+                
+                $index_br++;
 
                 if(isset($b['timeworked']))
                 {
@@ -580,6 +612,9 @@ class balances extends PageList
                     }
                 }
             }
+
+            if(substr($line['sign'],-5,5) == '<br/>')
+                $line['sign'] = substr($line['sign'],0,strlen($line['sign'])-5);
 
             // check the missing booking
             if(count($booking) % 2 > 0)
@@ -600,6 +635,15 @@ class balances extends PageList
             {
                 if($line['remark'] != '') $line['remark'].="<br>";
                  $line['remark'] .= "<span style=\"color:red\">".$config['minimumBreaks']." ".Prado::localize('min. for the break are required')."</span>";
+            }
+
+            // check the time between two booking
+
+            if(!$this->employee->isTimeBetweenTwoBookingsOk($year, $month, $i) && count($booking) % 2 == 0)
+            {
+                if($line['remark'] != '') $line['remark'].="<br>";
+                 $line['remark'] .= "<span style=\"color:red\">".Prado::localize('A time between two bookings is too small')."</span>";
+
             }
 
             // get the time signed by the employee
@@ -908,6 +952,12 @@ class balances extends PageList
             $this->balances->Text = sprintf("%.02f",$balances);
 
 
+        //Nbre of holiday that the employee has for the year
+        $this->holidayForTheYear->Text = sprintf("%.02f",$this->employee->geHolidaystForTheYear($year, $month));
+
+        //Balance of holiday fot the last year
+        $this->balanceHolidaysLastYear->Text = sprintf("%.02f",$this->employee->geHolidaystMonth($year-1,12));
+
         // compute the holdiday for the last month
         $y = $year;
         $m = $month;
@@ -920,33 +970,12 @@ class balances extends PageList
         {
             $m--;
         }
-
+        
         $wt = $this->employee->getWorkingTime($y, $m);
         
         if(!$wt)
         {
-            $totalYearHours100 = 0.0;
-            $totalYearHoursX = $totalYearHoursX2 = 0.0;
-            $vacations = 0.0;
-            for($i=1; $i<=12; $i++)
-            {
-                $p = $this->employee->getPercentage($year,$i);
-                $h = $this->employee->getHoursMonth($year, $i);
-                $totalYearHours100 = bcadd($h, $totalYearHours100,2);
-                $h = bcdiv(bcmul($h,$p,2),100.00,2);
-                $totalYearHoursX = bcadd($h, $totalYearHoursX,2);
-                $totalYearHoursX2 = $totalYearHoursX;
-                $wt = $this->employee->getWorkingTime($year, $i);
-
-                $vByMonth = bcdiv($wt['holidaysByYear'],12,4);
-                $vByMonth = bcdiv(bcmul($vByMonth,$p,4),100.00,4);
-
-                $vacations += $vByMonth;
-
-
-            }
-
-            $holidaysLastMonth = $vacations;
+            $holidaysLastMonth = $this->employee->geHolidaystMonth($year, $month);
         }
         else
         {
@@ -982,6 +1011,9 @@ class balances extends PageList
         elseif($nonWorkingDay==0)
             $this->nonworkingday->Text = sprintf("%.02f",$nonWorkingDay);
 
+
+        // number of n.w.d. until the end of the year
+        $this->nonworkingdayendofyear->Text = sprintf("%.02f",$this->employee->getNonWorkingDayEndOfYear($year, $month));
         // display the time code list
         $tc = array();
         $this->timcode = $timecode;

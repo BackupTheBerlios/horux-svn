@@ -28,13 +28,15 @@ class add extends Page
         {
             $data = $query->read();
             $this->daysByWeek = $data['daysByWeek'];
-            $this->holidaysByYear->Text = $data['holidayByYear'];
         }
 
         if(!$this->isPostBack)
         {
             if($data)
             {
+                $this->holidaysByYear->Text = $data['holidayByYear'];
+
+
                 $this->hoursByWeek->Text = $data['hoursByWeek'];
                     
                 $this->totalHourByWeek->text = $data['hoursByWeek'];
@@ -67,7 +69,7 @@ class add extends Page
     protected function getPersonList()
     {
         $cmd = NULL;
-        $cmd = $this->db->createCommand( "SELECT id AS Value, CONCAT(name, ' ', firstname) AS Text FROM hr_user WHERE name<>'??'" );
+        $cmd = $this->db->createCommand( "SELECT id AS Value, CONCAT(name, ' ', firstname) AS Text FROM hr_user WHERE name<>'??' ORDER BY name, firstname" );
         $data =  $cmd->query();
         $data = $data->readAll();
         $d[0]['Value'] = 'null';
@@ -212,7 +214,7 @@ class add extends Page
             $data2 = $cmd->query();
             $data2 = $data2->readAll();
 
-            // if not exist, creat the counter for the employee
+            // if not exist, create the counter for the employee
             if(count($data2)==0)
             {
                 $cmd = $this->db->createCommand("INSERT hr_timux_activity_counter SET
@@ -232,8 +234,16 @@ class add extends Page
 
                     $nbre = bcdiv( bcmul((12-$date[1]+1), $nbre,2), 12.0, 2);
                     
-                    $nbre = bcdiv( bcmul($nbre, $this->workingPercent->SafeText,2), 100.0, 2);
+                    // add the last holiday balance
+                    $nbre = bcadd($nbre, $this->holidaysLastYear->SafeText,2 );
+
                 }
+
+                if($d['defaultOvertime'] == 1)
+                {
+                    $nbre = $this->overtimeLastYear->SafeText;
+                }
+
 
                 $cmd->bindParameter(":nbre",$nbre,PDO::PARAM_STR);
                 $res1 = $cmd->execute();
@@ -265,6 +275,59 @@ class add extends Page
 
                 }
             }
+        }
+
+        if($this->holidaysLastYear->SafeText > 0 || $this->holidaysLastYear->SafeText < 0)
+        {
+            $cmd = $this->db->createCommand( "SELECT * FROM hr_timux_timecode WHERE defaultHoliday=1");
+            $data = $cmd->query();
+            $data = $data->read();
+
+            $cmd = $this->db->createCommand("INSERT hr_timux_activity_counter SET
+                                                user_id=:user_id,
+                                                timecode_id=:timecode_id,
+                                                nbre=:nbre,
+                                                year=:year,
+                                                month=:month
+                                            ");
+            $cmd->bindParameter(":user_id",$this->employee->getSelectedValue(),PDO::PARAM_STR);
+            $cmd->bindParameter(":timecode_id",$data['id'],PDO::PARAM_STR);
+            $cmd->bindParameter(":nbre",$this->holidaysLastYear->SafeText,PDO::PARAM_STR);
+
+            $year = date("Y")-1;
+            $month = 12;
+
+            $cmd->bindParameter(":year",$year,PDO::PARAM_STR);
+            $cmd->bindParameter(":month",$month,PDO::PARAM_STR);
+
+            $res1 = $cmd->execute();
+        }
+
+        if($this->overtimeLastYear->SafeText > 0 || $this->overtimeLastYear->SafeText < 0)
+        {
+            $cmd = $this->db->createCommand( "SELECT * FROM hr_timux_timecode WHERE defaultOvertime=1");
+            $data = $cmd->query();
+            $data = $data->read();
+
+            $cmd = $this->db->createCommand("INSERT hr_timux_activity_counter SET
+                                                user_id=:user_id,
+                                                timecode_id=:timecode_id,
+                                                nbre=:nbre,
+                                                year=:year,
+                                                month=:month
+                                            ");
+            $cmd->bindParameter(":user_id",$this->employee->getSelectedValue(),PDO::PARAM_STR);
+            $cmd->bindParameter(":timecode_id",$data['id'],PDO::PARAM_STR);
+            $cmd->bindParameter(":nbre",$this->overtimeLastYear->SafeText,PDO::PARAM_STR);
+
+            $year = date("Y")-1;
+            $month = 12;
+
+            $cmd->bindParameter(":year",$year,PDO::PARAM_STR);
+            $cmd->bindParameter(":month",$month,PDO::PARAM_STR);
+
+            $res1 = $cmd->execute();
+
         }
 
         return $lastId;

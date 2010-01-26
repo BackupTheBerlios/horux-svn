@@ -14,6 +14,7 @@
 
 class add extends Page
 {
+
     public function onLoad($param)
     {
         parent::onLoad($param);
@@ -34,6 +35,17 @@ class add extends Page
             $this->timecode->dataBind();
 
             $this->timecode->setEnabled(false);
+
+            if(isset($this->Request['date']))
+            {
+                $this->date->Text = $this->Request['date'];
+            }
+
+            if(isset($this->Request['userId']))
+            {
+                $this->employee->setSelectedValue($this->Request['userId']);
+            }
+
         }
     }
 
@@ -45,11 +57,19 @@ class add extends Page
             {
                 $id = $lastId;
                 $pBack = array('okMsg'=>Prado::localize('The sign was added successfully'), 'id'=>$id);
+
+                if(isset($this->Request['back']))
+                    $pBack['back'] = $this->Request['back'];
+
                 $this->Response->redirect($this->Service->constructUrl('components.timuxuser.booking.mod', $pBack));
             }
             else
             {
                 $pBack = array('koMsg'=>Prado::localize('The sign was not added'));
+
+                if(isset($this->Request['back']))
+                    $pBack = $this->Request['back'];
+
                 $this->Response->redirect($this->Service->constructUrl('components.timuxuser.booking.mod', $pBack));
             }
         }
@@ -115,7 +135,11 @@ class add extends Page
             else
                 $pBack = array('koMsg'=>Prado::localize('The sign was not added'));
                 
-            $this->Response->redirect($this->Service->constructUrl('components.timuxuser.booking.booking',$pBack));
+
+            if(isset($this->Request['back']))
+                $this->Response->redirect($this->Service->constructUrl($this->Request['back'],$pBack));
+            else
+                $this->Response->redirect($this->Service->constructUrl('components.timuxuser.booking.booking',$pBack));
         }
     }
 
@@ -201,7 +225,7 @@ class add extends Page
         $date = explode("-",$this->date->SafeText);
 
         $cmd = $this->db->createCommand( "SELECT * FROM hr_timux_closed_month WHERE user_id=:id AND year=:year AND month=:month");
-        $cmd->bindParameter(":id",$this->userId, PDO::PARAM_INT);
+        $cmd->bindParameter(":id",$this->employee->getSelectedValue(), PDO::PARAM_INT);
         $cmd->bindParameter(":year",$date[2], PDO::PARAM_INT);
         $cmd->bindParameter(":month",$date[1], PDO::PARAM_INT);
         $query = $cmd->query();
@@ -214,6 +238,9 @@ class add extends Page
 
     public function onCancel($sender, $param)
     {
-        $this->Response->redirect($this->Service->constructUrl('components.timuxuser.booking.booking'));
+        if(isset($this->Request['back']))
+            $this->Response->redirect($this->Service->constructUrl($this->Request['back']));
+        else
+            $this->Response->redirect($this->Service->constructUrl('components.timuxuser.booking.booking'));
     }
 }

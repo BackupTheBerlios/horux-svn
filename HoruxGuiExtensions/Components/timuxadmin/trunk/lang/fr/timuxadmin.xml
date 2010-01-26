@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff version="1.0">
-<file source-language="en" target-language="fr" datatype="plaintext" original="messages" date="2009-12-02T07:55:10Z" product-name="messages">
+<file source-language="en" target-language="fr" datatype="plaintext" original="messages" date="2010-01-20T07:23:18Z" product-name="messages">
 <body>
 <trans-unit id="1">
    <source>Configuration</source>
@@ -486,6 +486,51 @@
 <trans-unit id="119">
 <source>Day</source>
 <target>Jour</target>
+</trans-unit>
+
+<trans-unit id="120">
+<source>Enter the text display on the time unit</source>
+<target>Entrez le nom affiché sur l\'unité de timbrage</target>
+</trans-unit>
+
+<trans-unit id="121">
+<source>Time unit display</source>
+<target>Nom affiché sur le périphérique</target>
+</trans-unit>
+
+<trans-unit id="122">
+<source>Enter the username for this super user</source>
+<target>Entrez le nom pour ce super utilisateur</target>
+</trans-unit>
+
+<trans-unit id="123">
+<source>Username</source>
+<target>Nom d'utilisateur</target>
+</trans-unit>
+
+<trans-unit id="124">
+<source>Enter the password for this super user</source>
+<target>Entrez le mot de passe pour ce super utilisateur</target>
+</trans-unit>
+
+<trans-unit id="125">
+<source>Password</source>
+<target>Mot de passe</target>
+</trans-unit>
+
+<trans-unit id="126">
+<source>Select super user group</source>
+<target>Sélectionnez le groupe du super utilisateur </target>
+</trans-unit>
+
+<trans-unit id="127">
+<source>Group</source>
+<target>Groupe</target>
+</trans-unit>
+
+<trans-unit id="128">
+<source>Super user</source>
+<target>Super utilisateur</target>
 </trans-unit>
 </body>
 </file>
