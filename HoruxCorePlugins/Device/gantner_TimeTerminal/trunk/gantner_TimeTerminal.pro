@@ -2,6 +2,7 @@ TEMPLATE = lib
 CONFIG += dll \
     plugin \
     release
+CONFIG -=debug
 QT -= gui
 QT += xml \
     network \
@@ -22,6 +23,3 @@ unix {
     library.files = $$DESTDIR/libhorux_media.so
     INSTALLS += library
 }
-RESOURCES += ressources.qrc
-OTHER_FILES += timeterminal.js
-OTHER_FILES += timeterminal.js.aes
