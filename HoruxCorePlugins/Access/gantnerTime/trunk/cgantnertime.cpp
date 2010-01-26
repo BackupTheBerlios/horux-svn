@@ -223,7 +223,7 @@ void CGantnerTime::reloadAllData()
         }
 
         //Reload balances text
-        QSqlQuery balancesTextQuery("SELECT * FROM hr_timux_timecode WHERE type='overtime' OR type='leave' ORDER BY type");
+        QSqlQuery balancesTextQuery("SELECT * FROM hr_timux_timecode WHERE (type='overtime' OR type='leave')  ORDER BY type");
         int fieldNo = 0;
         while( balancesTextQuery.next())
         {
@@ -235,7 +235,7 @@ void CGantnerTime::reloadAllData()
             insertQuery.bindValue(":keyId", 0 );
             insertQuery.bindValue(":deviceId", deviceQuery.value(0) );
             insertQuery.bindValue(":param",fieldNo  );
-            insertQuery.bindValue(":param2",balancesTextQuery.value(1).toString()  );
+            insertQuery.bindValue(":param2",balancesTextQuery.value(13).toString()  );
             insertQuery.exec();
 
             fieldNo++;
@@ -291,12 +291,12 @@ void CGantnerTime::reloadAllData()
                 balances = "";
                 userId = balancesQuery.value(1).toString();
             }
+            
             QString s;
             if(balancesQuery.value(16).toString() == "day")
                 balances += s.sprintf("%.02f",balancesQuery.value(3).toDouble()) + " " + daysText + ";";
             else
-                balances +=  s.sprintf("%.02f",balancesQuery.value(3).toDouble()*-1) + " " + hoursText + ";";
-
+                balances +=  s.sprintf("%.02f",balancesQuery.value(3).toDouble()) + " " + hoursText + ";";
         }
     }
 
@@ -462,6 +462,8 @@ void CGantnerTime::checkDb()
         }
     }
 
+    if(!saas)
+        QSqlQuery queryOptimize("OPTIMIZE TABLE hr_gantner_standalone_action");
 }
 
 void CGantnerTime::initSAASMode()
@@ -492,7 +494,35 @@ void CGantnerTime::initSAASMode()
         connect(&soapClient, SIGNAL(responseReady()),this, SLOT(readSoapResponse()));
         connect(soapClient.networkAccessManager(),SIGNAL(sslErrors( QNetworkReply *, const QList<QSslError> & )),
                 this, SLOT(soapSSLErrors(QNetworkReply*,QList<QSslError>)));
+
+        soapClientBalances.setHost(saas_host,saas_ssl);
+
+        connect(&soapClientBalances, SIGNAL(responseReady()),this, SLOT(readSoapBalancesResponse()));
+        connect(soapClientBalances.networkAccessManager(),SIGNAL(sslErrors( QNetworkReply *, const QList<QSslError> & )),
+                this, SLOT(soapSSLErrors(QNetworkReply*,QList<QSslError>)));
+
+        timerCheckBalances = new QTimer(this);
+        connect(timerCheckBalances, SIGNAL(timeout()), this, SLOT(checkBalances()));
+        timerCheckBalances->start(1000 * 60 * 60 * 12); // check every 12 hours
+        checkBalances();
     }
+}
+
+
+void CGantnerTime::checkBalances()
+{
+    QtSoapMessage message;
+    message.setMethod("callServiceComponent");
+
+    QtSoapArray *array = new QtSoapArray(QtSoapQName("params"));
+
+    array->insert(0, new QtSoapSimpleType(QtSoapQName("component"),"timuxadmin"));
+    array->insert(1, new QtSoapSimpleType(QtSoapQName("class"),"timuxAdminDevice"));
+    array->insert(2, new QtSoapSimpleType(QtSoapQName("function"),"syncBalances"));
+
+    message.addMethodArgument(array);
+
+    soapClientBalances.submitRequest(message, saas_path+"/index.php?soap=soapComponent&password=" + saas_password + "&username=" + saas_username);
 }
 
 void CGantnerTime::soapSSLErrors ( QNetworkReply * reply, const QList<QSslError> & errors )
@@ -505,6 +535,67 @@ void CGantnerTime::soapSSLErrors ( QNetworkReply * reply, const QList<QSslError>
         }
     }
 }
+
+void CGantnerTime::readSoapBalancesResponse()
+{
+    // check if the response from the web service is ok
+    const QtSoapMessage &response = soapClientBalances.getResponse();
+
+    if (response.isFault()) {
+        qDebug() << "Not able to call the Horux GUI web service. (" << response.method().name().name() << ")";
+        return;
+    }
+
+    if(response.returnValue().toString().toInt() < 0)
+    {
+        return;
+    }
+
+    QSettings settings(QCoreApplication::instance()->applicationDirPath() +"/horux.ini", QSettings::IniFormat);
+    settings.beginGroup("GantnerTimeTerminal");
+
+    QString hoursText = settings.value("hoursText","heures").toString();
+    if(!settings.contains("hoursText")) settings.setValue("hoursText", "heures");
+
+    QString daysText = settings.value("daysText","jours").toString();
+    if(!settings.contains("daysText")) settings.setValue("daysText", "jours");
+
+    QStringList balances = response.returnValue().toString().split(";");
+
+    foreach( QString balance, balances)
+    {        
+        QStringList param = balance.split("/");
+
+        if(param.count() != 3) continue;
+
+        QString userId = param[0];
+        QString overtime = param[1];
+        QString holidays = param[2];
+        QString balances = "";
+
+        balances += holidays + " " + daysText + ";";
+        balances +=  overtime + " " + hoursText + ";";
+
+        // Reload all absent reason
+        QSqlQuery deviceQuery("SELECT id_device FROM hr_gantner_TimeTerminal");
+
+        while( deviceQuery.next())
+        {
+
+            QSqlQuery insertQuery;
+            insertQuery.prepare("INSERT INTO hr_gantner_standalone_action (`type`, `func`, `userId`,`keyId`, `deviceId`, `param`, `param2`) VALUES (:type,:func,:userId,:keyId,:deviceId, :param, :param2)");
+            insertQuery.bindValue(":func", "add");
+            insertQuery.bindValue(":type", "balances");
+            insertQuery.bindValue(":userId", userId );
+            insertQuery.bindValue(":keyId", 0 );
+            insertQuery.bindValue(":deviceId", deviceQuery.value(0) );
+            insertQuery.bindValue(":param", balances  );
+            insertQuery.bindValue(":param2", ""  );
+            insertQuery.exec();
+        }
+    }
+}
+
 
 void CGantnerTime::readSoapResponse()
 {
@@ -529,6 +620,8 @@ void CGantnerTime::readSoapResponse()
     {
         QSqlQuery queryDel("DELETE FROM hr_gantner_standalone_action WHERE id=" + id );
     }
+
+    QSqlQuery queryOptimize("OPTIMIZE TABLE hr_gantner_standalone_action");
 
     timerCheckDb->start(TIME_DB_CHECKING);
 

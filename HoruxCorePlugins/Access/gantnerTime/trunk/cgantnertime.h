@@ -62,11 +62,13 @@ protected:
 
 protected slots:
     void checkDb();
+    void checkBalances();
 
     /*!
       Read the soap response from Horux Gui
     */
     void readSoapResponse();
+    void readSoapBalancesResponse();
 
     /*!
       Read the SSL error when doing a SOAP transaction
@@ -79,8 +81,10 @@ signals:
 
 private:
   QTimer *timerCheckDb;
+  QTimer *timerCheckBalances;
   QMap<int, bool> devices;
   QtSoapHttpTransport soapClient;
+  QtSoapHttpTransport soapClientBalances;
 
     //! saas param
     bool saas;
