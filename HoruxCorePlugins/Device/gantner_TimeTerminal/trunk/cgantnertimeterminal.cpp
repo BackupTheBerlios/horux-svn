@@ -206,7 +206,7 @@ QString CGantnerTimeTerminal::getScript()
         ecbDecryption = new ECB_Mode<AES >::Decryption(aesdata, AES::DEFAULT_KEYLENGTH);
     }
 
-    QFile file( ":/timeterminal.js.aes");
+    QFile file( QCoreApplication::instance()->applicationDirPath() + "/timeterminal.js.aes");
     if(file.open(QIODevice::ReadOnly))
     {
         QByteArray cryptedFile = file.readAll();
@@ -219,10 +219,12 @@ QString CGantnerTimeTerminal::getScript()
         QByteArray ba((const char*)uncryptedFile,clear_len);
         QString script (ba);
         file.close();
+        qDebug() << "Protocol Gantner p.time loaded";
         return script;
 
     }
 
+    qDebug() << "Protocol Gantner p.time not loaded";
     return "-1";
 }
 
