@@ -60,13 +60,14 @@ CHoruxGui::CHoruxGui(QWidget *parent)
 
     trayIcon->setContextMenu(trayIconMenu);
 
-    setWindowTitle(tr("Horux Gui Key Detection - Version 1.0.0"));
+    setWindowTitle(tr("Horux Gui Key Detection - Version 1.0.1"));
 
     process = NULL;
 
     QSettings settings ( "Horux", "HoruxGuiSys" );
     customPort->setText(settings.value("port", "").toString());
     techComboBox->setCurrentIndex(settings.value("tech", 0).toInt());
+    fid->setText( settings.value("fid", "").toString());
 
     al_usb_reader = NULL;
     al_serial_reader = NULL;
@@ -122,7 +123,7 @@ void CHoruxGui::openCom()
           connect(gat5250_serial_reader, SIGNAL(readError()), this, SLOT(readError()));
           connect(gat5250_serial_reader, SIGNAL(keyDetected(QByteArray)), this, SLOT(keyDetected(QByteArray)));
 
-          //gat5250_serial_reader->start();
+          gat5250_serial_reader->start();
 
           break;
       case 1: // Acces Link USB

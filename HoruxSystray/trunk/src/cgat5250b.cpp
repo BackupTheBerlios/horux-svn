@@ -28,6 +28,8 @@ CGAT5250B::CGAT5250B(QObject *parent)
 
 CGAT5250B::~CGAT5250B()
 {
+    stop = true;
+
     while(isRunning())
     {
         QCoreApplication::processEvents ();
