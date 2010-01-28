@@ -35,8 +35,6 @@ class year extends PageList
 
         if(!$this->IsPostBack)
         {
-            $this->employee = new employee($this->userId );
-
             $cmd=$this->db->createCommand("SELECT t.date FROM hr_tracking AS t ORDER BY t.date LIMIT 0,1");
             $data = $cmd->query();
             $data = $data->readAll();
@@ -58,14 +56,24 @@ class year extends PageList
             $this->FilterYear->DataSource=$yearList;
             $this->FilterYear->dataBind();
 
-            $FilterYear= $this->getApplication()->getGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterYear', date('Y'));
-            $FilterEmployee = $this->getApplication()->getGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterEmployee', false);
-            $FilterDepartment = $this->getApplication()->getGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterDepartment', false);
+            if(Prado::getApplication()->getSession()->contains($this->getApplication()->getService()->getRequestedPagePath().'FilterYear'))
+            {
+                $FilterYear= $this->Session[$this->getApplication()->getService()->getRequestedPagePath().'FilterYear'];
+            }
+            else
+            {
+                $FilterYear= date('Y');
+            }
+
+            $FilterEmployee = $this->Session[$this->getApplication()->getService()->getRequestedPagePath().'FilterEmployee'];
+            $FilterDepartment = $this->Session[$this->getApplication()->getService()->getRequestedPagePath().'FilterDepartment'];
+
+
 
             $this->FilterDepartment->DataSource=$this->DepartmentList;
             $this->FilterDepartment->dataBind();
 
-            if($FilterDepartment !== false)
+            if($FilterDepartment)
                 $this->FilterDepartment->setSelectedValue($FilterDepartment);
             else
                 $this->FilterDepartment->setSelectedIndex(0);
@@ -75,9 +83,16 @@ class year extends PageList
 
 
             if($FilterEmployee)
+            {
+                $this->employee = new employee($FilterEmployee );
                 $this->FilterEmployee->setSelectedValue($FilterEmployee);
+            }
             else
+            {
+                $this->employee = new employee($this->userId );
                 $this->FilterEmployee->setSelectedValue($this->userId);
+            }
+
 
 
             if($FilterYear)
@@ -151,6 +166,8 @@ class year extends PageList
     {
             $this->employee = new employee($this->FilterEmployee->getSelectedValue() );
 
+            $this->Session[$this->getApplication()->getService()->getRequestedPagePath().'FilterEmployee'] = $this->FilterEmployee->getSelectedValue();
+
             $this->DataGrid->DataSource=$this->Data;
             $this->DataGrid->dataBind();
             $this->Page->CallbackClient->update('list', $this->DataGrid);
@@ -158,6 +175,8 @@ class year extends PageList
 
     public function selectionChangedDepartment($sender, $param)
     {
+            $this->Session[$this->getApplication()->getService()->getRequestedPagePath().'FilterDepartment'] = $this->FilterDepartment->getSelectedValue();
+
             $this->FilterEmployee->DataSource=$this->EmployeeList;
             $this->FilterEmployee->dataBind();
 
@@ -165,6 +184,7 @@ class year extends PageList
                 $this->FilterEmployee->setSelectedIndex(0);
 
             $this->employee = new employee($this->FilterEmployee->getSelectedValue() );
+            $this->Session[$this->getApplication()->getService()->getRequestedPagePath().'FilterEmployee'] = $this->FilterEmployee->getSelectedValue();
 
             $this->DataGrid->DataSource=$this->Data;
             $this->DataGrid->dataBind();
@@ -447,7 +467,7 @@ class year extends PageList
     {
         $this->employee = new employee($this->FilterEmployee->getSelectedValue() );
 
-        $this->getApplication()->setGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterYear', $this->FilterYear->getSelectedValue());
+        $this->Session[$this->getApplication()->getService()->getRequestedPagePath().'FilterYear'] = $this->FilterYear->getSelectedValue();
 
         $this->DataGrid->DataSource=$this->Data;
         $this->DataGrid->dataBind();

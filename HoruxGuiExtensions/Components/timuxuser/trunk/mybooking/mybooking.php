@@ -61,9 +61,18 @@ class mybooking extends PageList
             $this->FilterYear->DataSource=$yearList;
             $this->FilterYear->dataBind();
 
-            $FilterStatus = $this->getApplication()->getGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterStatus', false);
-            $FilterYear= $this->getApplication()->getGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterYear', date('Y'));
-            $FilterMonth = $this->getApplication()->getGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterMonth', date('n'));
+            if(Prado::getApplication()->getSession()->contains($this->getApplication()->getService()->getRequestedPagePath().'FilterYear'))
+            {
+                $FilterYear= $this->Session[$this->getApplication()->getService()->getRequestedPagePath().'FilterYear'];
+                $FilterMonth = $this->Session[$this->getApplication()->getService()->getRequestedPagePath().'FilterMonth'];
+            }
+            else
+            {
+                $FilterYear= date('Y');
+                $FilterMonth = date('n');
+            }
+
+            $FilterStatus = $this->Session[$this->getApplication()->getService()->getRequestedPagePath().'FilterStatus'];
 
             if($FilterStatus)
                 $this->FilterStatus->setSelectedValue($FilterStatus);
@@ -125,9 +134,9 @@ class mybooking extends PageList
     
     public function onRefresh($sender, $param)
     {
-        $this->getApplication()->setGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterStatus', $this->FilterStatus->getSelectedValue());
-        $this->getApplication()->setGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterYear', $this->FilterYear->getSelectedValue());
-        $this->getApplication()->setGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterMonth', $this->FilterMonth->getSelectedValue());
+        $this->Session[$this->getApplication()->getService()->getRequestedPagePath().'FilterStatus'] = $this->FilterStatus->getSelectedValue();
+        $this->Session[$this->getApplication()->getService()->getRequestedPagePath().'FilterYear'] = $this->FilterYear->getSelectedValue();
+        $this->Session[$this->getApplication()->getService()->getRequestedPagePath().'FilterMonth'] = $this->FilterMonth->getSelectedValue();
 
         $this->DataGrid->DataSource=$this->Data;
         $this->DataGrid->dataBind();

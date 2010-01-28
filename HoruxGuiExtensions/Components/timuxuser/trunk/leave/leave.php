@@ -58,11 +58,20 @@ class leave extends PageList
             $this->FilterYear->dataBind();
 
 
-            $FilterEmployee = $this->getApplication()->getGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterEmployee', false);
-            $FilterState = $this->getApplication()->getGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterState', false);
-            $FilterYear= $this->getApplication()->getGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterYear', date('Y'));
-            $FilterMonth = $this->getApplication()->getGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterMonth', date('n'));
-            $FilterTimecode = $this->getApplication()->getGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterTimecode', false);
+            if(Prado::getApplication()->getSession()->contains($this->getApplication()->getService()->getRequestedPagePath().'FilterYear'))
+            {
+                $FilterYear= $this->Session[$this->getApplication()->getService()->getRequestedPagePath().'FilterYear'];
+                $FilterMonth = $this->Session[$this->getApplication()->getService()->getRequestedPagePath().'FilterMonth'];
+            }
+            else
+            {
+                $FilterYear= date('Y');
+                $FilterMonth = date('n');
+            }
+
+            $FilterEmployee = $this->Session[$this->getApplication()->getService()->getRequestedPagePath().'FilterEmployee'];
+            $FilterState = $this->Session[$this->getApplication()->getService()->getRequestedPagePath().'FilterState'];
+            $FilterTimecode = $this->Session[$this->getApplication()->getService()->getRequestedPagePath().'FilterTimecode'];
 
 
             if($FilterEmployee)
@@ -228,11 +237,11 @@ class leave extends PageList
 
     public function onRefresh($sender, $param)
     {
-        $this->getApplication()->setGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterEmployee', $this->FilterEmployee->SafeText);
-        $this->getApplication()->setGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterState', $this->FilterState->getSelectedValue());
-        $this->getApplication()->setGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterYear', $this->FilterYear->getSelectedValue());
-        $this->getApplication()->setGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterMonth', $this->FilterMonth->getSelectedValue());
-        $this->getApplication()->setGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterTimecode', $this->FilterTimecode->getSelectedValue());
+        $this->Session[$this->getApplication()->getService()->getRequestedPagePath().'FilterEmployee'] = $this->FilterEmployee->SafeText;
+        $this->Session[$this->getApplication()->getService()->getRequestedPagePath().'FilterState'] = $this->FilterState->getSelectedValue();
+        $this->Session[$this->getApplication()->getService()->getRequestedPagePath().'FilterYear'] = $this->FilterYear->getSelectedValue();
+        $this->Session[$this->getApplication()->getService()->getRequestedPagePath().'FilterMonth'] = $this->FilterMonth->getSelectedValue();
+        $this->Session[$this->getApplication()->getService()->getRequestedPagePath().'FilterTimecode'] = $this->FilterTimecode->getSelectedValue();
 
         $this->DataGrid->DataSource=$this->Data;
         $this->DataGrid->dataBind();

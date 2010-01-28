@@ -56,10 +56,19 @@ class error extends PageList
             $this->FilterYear->DataSource=$yearList;
             $this->FilterYear->dataBind();
 
-            $FilterYear= $this->getApplication()->getGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterYear', date('Y'));
-            $FilterMonth = $this->getApplication()->getGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterMonth', date('n'));
-            $FilterEmployee = $this->getApplication()->getGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterEmployee', false);
-            $FilterDepartment = $this->getApplication()->getGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterDepartment', false);
+            if(Prado::getApplication()->getSession()->contains($this->getApplication()->getService()->getRequestedPagePath().'FilterYear'))
+            {
+                $FilterYear= $this->Session[$this->getApplication()->getService()->getRequestedPagePath().'FilterYear'];
+                $FilterMonth = $this->Session[$this->getApplication()->getService()->getRequestedPagePath().'FilterMonth'];
+            }
+            else
+            {
+                $FilterYear= date('Y');
+                $FilterMonth = date('n');
+            }
+
+            $FilterEmployee = $this->Session[$this->getApplication()->getService()->getRequestedPagePath().'FilterEmployee'];
+            $FilterDepartment = $this->Session[$this->getApplication()->getService()->getRequestedPagePath().'FilterDepartment'];
 
             if($FilterEmployee)
                 $this->employee = new employee($FilterEmployee );
@@ -182,7 +191,7 @@ class error extends PageList
 
     public function selectionChangedEmployee($sender, $param)
     {
-        $this->getApplication()->setGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterEmployee', $this->FilterEmployee->getSelectedValue());
+        $this->Session[$this->getApplication()->getService()->getRequestedPagePath().'FilterEmployee'] = $this->FilterEmployee->getSelectedValue();
         $this->employee = new employee($this->FilterEmployee->getSelectedValue() );
 
         $this->DataGrid->DataSource=$this->Data;
@@ -193,7 +202,7 @@ class error extends PageList
 
     public function selectionChangedDepartment($sender, $param)
     {
-        $this->getApplication()->setGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterDepartment', $this->FilterDepartment->getSelectedValue());
+        $this->Session[$this->getApplication()->getService()->getRequestedPagePath().'FilterDepartment'] = $this->FilterDepartment->getSelectedValue();
 
 
         $this->FilterEmployee->DataSource=$this->EmployeeList;
@@ -212,8 +221,8 @@ class error extends PageList
 
     public function onRefresh($sender, $param)
     {
-        $this->getApplication()->setGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterYear', $this->FilterYear->getSelectedValue());
-        $this->getApplication()->setGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterMonth', $this->FilterMonth->getSelectedValue());
+        $this->Session[$this->getApplication()->getService()->getRequestedPagePath().'FilterYear'] = $this->FilterYear->getSelectedValue();
+        $this->Session[$this->getApplication()->getService()->getRequestedPagePath().'FilterMonth'] = $this->FilterMonth->getSelectedValue();
 
         $this->DataGrid->DataSource=$this->Data;
         $this->DataGrid->dataBind();

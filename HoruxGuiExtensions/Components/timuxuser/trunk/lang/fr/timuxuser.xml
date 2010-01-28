@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff version="1.0">
-<file source-language="en" target-language="fr" datatype="plaintext" original="messages" date="2010-01-26T16:45:00Z" product-name="messages">
+<file source-language="en" target-language="fr" datatype="plaintext" original="messages" date="2010-01-28T16:54:04Z" product-name="messages">
 <body>
 <trans-unit id="1">
    <source>Balances - Month</source>
@@ -1061,6 +1061,11 @@
 <trans-unit id="257">
 <source>Non working days a the end of the year</source>
 <target>Jours fériés restant jusqu'à la fin de l'année</target>
+</trans-unit>
+
+<trans-unit id="258">
+<source>The time format is not correct (ex: 12:00 or 12:00:00)</source>
+<target>Format incorrecte pour l'heure (ex:12:00 ou 12:00:00)</target>
 </trans-unit>
 </body>
 </file>

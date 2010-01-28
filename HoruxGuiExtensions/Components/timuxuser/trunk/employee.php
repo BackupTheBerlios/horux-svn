@@ -817,11 +817,9 @@ class employee
 
         if($timeworkedOutA || $timeworkedInA)
         {
-           $diffC = $signLastA - $signFirstA;
-
            if($signLastA && $signFirstA)
            {
-                $diffC = $signLastM - $signFirstM;
+                $diffC = $signLastA - $signFirstA;
            }
            else
            {

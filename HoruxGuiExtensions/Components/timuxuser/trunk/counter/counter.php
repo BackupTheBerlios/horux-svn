@@ -47,10 +47,10 @@ class counter extends PageList
                 $FilterEmployee = $data['employee'];
             }
             else
-                $FilterEmployee = $this->getApplication()->getGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterEmployee', false);
+                $FilterEmployee = $this->Session[$this->getApplication()->getService()->getRequestedPagePath().'FilterEmployee'];
 
-            $FilterTimecode = $this->getApplication()->getGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterTimecode', false);
-            $FilterDepartment = $this->getApplication()->getGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterDepartment', false);
+            $FilterTimecode = $this->Session[$this->getApplication()->getService()->getRequestedPagePath().'FilterTimecode'];
+            $FilterDepartment = $this->Session[$this->getApplication()->getService()->getRequestedPagePath().'FilterDepartment'];
 
 
             $this->FilterTimecode->DataSource=$this->TimeCode;
@@ -168,7 +168,7 @@ class counter extends PageList
 
     public function selectionChangedEmployee($sender, $param)
     {
-        $this->getApplication()->setGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterEmployee', $this->FilterEmployee->SafeText);
+        $this->Session[$this->getApplication()->getService()->getRequestedPagePath().'FilterEmployee'] = $this->FilterEmployee->SafeText;
 
         $this->DataGrid->DataSource=$this->Data;
         $this->DataGrid->dataBind();
@@ -178,7 +178,7 @@ class counter extends PageList
 
     public function selectionChangedDepartment($sender, $param)
     {
-        $this->getApplication()->setGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterDepartment', $this->FilterDepartment->getSelectedValue());
+        $this->Session[$this->getApplication()->getService()->getRequestedPagePath().'FilterDepartment'] = $this->FilterDepartment->getSelectedValue();
 
         $this->DataGrid->DataSource=$this->Data;
         $this->DataGrid->dataBind();
@@ -187,7 +187,7 @@ class counter extends PageList
 
     public function selectionChangedTimeCode($sender, $param)
     {
-        $this->getApplication()->setGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterTimecode', $this->FilterTimecode->getSelectedValue());
+        $this->Session[$this->getApplication()->getService()->getRequestedPagePath().'FilterTimecode'] = $this->FilterTimecode->getSelectedValue();
 
         $this->DataGrid->DataSource=$this->Data;
         $this->DataGrid->dataBind();

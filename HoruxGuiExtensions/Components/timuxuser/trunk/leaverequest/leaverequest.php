@@ -37,7 +37,14 @@ class leaverequest extends PageList
 
         if(!$this->IsPostBack)
         {
-            $FilterState = $this->getApplication()->getGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterState', 'all');
+            if(Prado::getApplication()->getSession()->contains($this->getApplication()->getService()->getRequestedPagePath().'FilterState'))
+            {
+                $FilterState = $this->Session[$this->getApplication()->getService()->getRequestedPagePath().'FilterState'];
+            }
+            else
+            {
+                $FilterState = 'all';
+            }
 
             $this->FilterState->setSelectedValue($FilterState);
 
@@ -65,7 +72,7 @@ class leaverequest extends PageList
 
     public function selectionChangedState($sender, $param)
     {
-        $this->getApplication()->setGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterState', $this->FilterState->getSelectedValue());
+        $this->Session[$this->getApplication()->getService()->getRequestedPagePath().'FilterState'] = $this->FilterState->getSelectedValue();
 
         $this->DataGrid->DataSource=$this->Data;
         $this->DataGrid->dataBind();

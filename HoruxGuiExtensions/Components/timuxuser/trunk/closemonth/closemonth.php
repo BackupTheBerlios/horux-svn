@@ -58,9 +58,18 @@ class closemonth extends PageList
             $this->FilterYear->DataSource=$yearList;
             $this->FilterYear->dataBind();
 
-            $FilterYear= $this->getApplication()->getGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterYear', date('Y'));
+            if(Prado::getApplication()->getSession()->contains($this->getApplication()->getService()->getRequestedPagePath().'FilterYear'))
+            {
+                $FilterYear= $this->Session[$this->getApplication()->getService()->getRequestedPagePath().'FilterYear'];
+                $FilterMonth = $this->Session[$this->getApplication()->getService()->getRequestedPagePath().'FilterMonth'];
+            }
+            else
+            {
+                $FilterYear= date('Y');
+                $FilterMonth = date('n');
+            }
 
-            $FilterMonth = $this->getApplication()->getGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterMonth', date('n'));
+            $FilterDepartment = $this->Session[$this->getApplication()->getService()->getRequestedPagePath().'FilterDepartment'];
 
             if($FilterMonth == 0)
             {
@@ -68,8 +77,6 @@ class closemonth extends PageList
                 $FilterYear -= 1;
 
             }
-
-            $FilterDepartment = $this->getApplication()->getGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterDepartment', false);
 
             $this->FilterDepartment->DataSource=$this->DepartmentList;
             $this->FilterDepartment->dataBind();
@@ -259,9 +266,9 @@ class closemonth extends PageList
 
     public function onRefresh($sender, $param)
     {
-        $this->getApplication()->setGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterYear', $this->FilterYear->getSelectedValue());
-        $this->getApplication()->setGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterMonth', $this->FilterMonth->getSelectedValue());
-        $this->getApplication()->setGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterDepartment', $this->FilterDepartment->getSelectedValue());
+        $this->Session[$this->getApplication()->getService()->getRequestedPagePath().'FilterYear'] = $this->FilterYear->getSelectedValue();
+        $this->Session[$this->getApplication()->getService()->getRequestedPagePath().'FilterMonth'] = $this->FilterMonth->getSelectedValue();
+        $this->Session[$this->getApplication()->getService()->getRequestedPagePath().'FilterDepartment'] = $this->FilterDepartment->getSelectedValue();
 
 
         $this->DataGrid->DataSource=$this->Data;

@@ -96,7 +96,7 @@
                         <com:TRegularExpressionValidator
                             ValidationGroup="Group1"
                             ControlToValidate="time"
-                            RegularExpression="\d{1,2}:\d{1,2}:?\d{1,2}"
+                            RegularExpression="([0-1]{1}[0-9]{1}|2[0-3]{1}):[0-5]{1}[0-9]{1}(:[0-5]{1}[0-9]{1}){0,1}"
                             Text="The time format is not correct (ex: 12:00)" />
                     </td>
                 </tr>

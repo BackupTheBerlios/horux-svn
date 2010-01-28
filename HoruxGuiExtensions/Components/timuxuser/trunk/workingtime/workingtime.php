@@ -20,12 +20,12 @@ class workingtime extends PageList
 
         if(!$this->IsPostBack)
         {
-            $FilterEmployee = $this->getApplication()->getGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterEmployee', false);
+            $FilterEmployee = $this->Session[$this->getApplication()->getService()->getRequestedPagePath().'FilterEmployee'];
 
             if($FilterEmployee)
                 $this->FilterEmployee->Text = $FilterEmployee;
 
-            $FilterDepartment = $this->getApplication()->getGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterDepartment', false);
+            $FilterDepartment = $this->Session[$this->getApplication()->getService()->getRequestedPagePath().'FilterDepartment'];
 
 
             $this->FilterDepartment->DataSource=$this->DepartmentList;
@@ -179,7 +179,7 @@ class workingtime extends PageList
 
     public function selectionChangedDepartment($sender, $param)
     {
-        $this->getApplication()->setGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterDepartment', $this->FilterDepartment->getSelectedValue());
+        $this->Session[$this->getApplication()->getService()->getRequestedPagePath().'FilterDepartment'] = $this->FilterDepartment->getSelectedValue();
 
         $this->DataGrid->DataSource=$this->Data;
         $this->DataGrid->dataBind();
@@ -188,7 +188,7 @@ class workingtime extends PageList
 
     public function selectionChangedEmployee($sender,$param)
     {
-        $this->getApplication()->setGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterEmployee', $this->FilterEmployee->SafeText);
+        $this->Session[$this->getApplication()->getService()->getRequestedPagePath().'FilterEmployee'] = $this->FilterEmployee->SafeText;
 
         $this->DataGrid->DataSource=$this->Data;
         $this->DataGrid->dataBind();

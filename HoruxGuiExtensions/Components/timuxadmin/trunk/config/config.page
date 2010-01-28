@@ -160,7 +160,7 @@
                         <com:TRegularExpressionValidator
                             ValidationGroup="Group1"
                             ControlToValidate="hoursBlockMorning1"
-                            RegularExpression="\d{1,2}:\d{1,2}:?\d{1,2}"
+                            RegularExpression="([0-1]{1}[0-9]{1}|2[0-3]{1}):[0-5]{1}[0-9]{1}(:[0-5]{1}[0-9]{1}){0,1}"
                             Text="The time format is not correct (ex: 12:00)"
                             Display="Dynamic" />
                         &nbsp;<%[to]%>&nbsp;
@@ -173,7 +173,7 @@
                         <com:TRegularExpressionValidator
                             ValidationGroup="Group1"
                             ControlToValidate="hoursBlockMorning2"
-                            RegularExpression="\d{1,2}:\d{1,2}:?\d{1,2}"
+                            RegularExpression="([0-1]{1}[0-9]{1}|2[0-3]{1}):[0-5]{1}[0-9]{1}(:[0-5]{1}[0-9]{1}){0,1}"
                             Text="The time format is not correct (ex: 12:00)"
                             Display="Dynamic" />
                         &nbsp;/&nbsp;
@@ -186,7 +186,7 @@
                         <com:TRegularExpressionValidator
                             ValidationGroup="Group1"
                             ControlToValidate="hoursBlockMorning3"
-                            RegularExpression="\d{1,2}:\d{1,2}:?\d{1,2}"
+                            RegularExpression="([0-1]{1}[0-9]{1}|2[0-3]{1}):[0-5]{1}[0-9]{1}(:[0-5]{1}[0-9]{1}){0,1}"
                             Text="The time format is not correct (ex: 12:00)"
                             Display="Dynamic" />
                         &nbsp;<%[to]%>&nbsp;
@@ -199,7 +199,7 @@
                         <com:TRegularExpressionValidator
                             ValidationGroup="Group1"
                             ControlToValidate="hoursBlockMorning4"
-                            RegularExpression="\d{1,2}:\d{1,2}:?\d{1,2}"
+                            RegularExpression="([0-1]{1}[0-9]{1}|2[0-3]{1}):[0-5]{1}[0-9]{1}(:[0-5]{1}[0-9]{1}){0,1}"
                             Text="The time format is not correct (ex: 12:00)"
                             Display="Dynamic" />
                     </td>
@@ -218,7 +218,7 @@
                         <com:TRegularExpressionValidator
                             ValidationGroup="Group1"
                             ControlToValidate="hoursBlockAfternoon1"
-                            RegularExpression="\d{1,2}:\d{1,2}:?\d{1,2}"
+                            RegularExpression="([0-1]{1}[0-9]{1}|2[0-3]{1}):[0-5]{1}[0-9]{1}(:[0-5]{1}[0-9]{1}){0,1}"
                             Text="The time format is not correct (ex: 12:00)"
                             Display="Dynamic" />
                         &nbsp;<%[to]%>&nbsp;
@@ -231,7 +231,7 @@
                         <com:TRegularExpressionValidator
                             ValidationGroup="Group1"
                             ControlToValidate="hoursBlockAfternoon2"
-                            RegularExpression="\d{1,2}:\d{1,2}:?\d{1,2}"
+                            RegularExpression="([0-1]{1}[0-9]{1}|2[0-3]{1}):[0-5]{1}[0-9]{1}(:[0-5]{1}[0-9]{1}){0,1}"
                             Text="The time format is not correct (ex: 12:00)"
                             Display="Dynamic" />
                         &nbsp;/&nbsp;
@@ -244,7 +244,7 @@
                         <com:TRegularExpressionValidator
                             ValidationGroup="Group1"
                             ControlToValidate="hoursBlockAfternoon3"
-                            RegularExpression="\d{1,2}:\d{1,2}:?\d{1,2}"
+                            RegularExpression="([0-1]{1}[0-9]{1}|2[0-3]{1}):[0-5]{1}[0-9]{1}(:[0-5]{1}[0-9]{1}){0,1}"
                             Text="The time format is not correct (ex: 12:00)"
                             Display="Dynamic" />
                         &nbsp;<%[to]%>&nbsp;
@@ -257,7 +257,7 @@
                         <com:TRegularExpressionValidator
                             ValidationGroup="Group1"
                             ControlToValidate="hoursBlockAfternoon4"
-                            RegularExpression="\d{1,2}:\d{1,2}:?\d{1,2}"
+                            RegularExpression="([0-1]{1}[0-9]{1}|2[0-3]{1}):[0-5]{1}[0-9]{1}(:[0-5]{1}[0-9]{1}){0,1}"
                             Text="The time format is not correct (ex: 12:00)"
                             Display="Dynamic" />
                     </td>
