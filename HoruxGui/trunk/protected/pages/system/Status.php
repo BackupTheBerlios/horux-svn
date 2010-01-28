@@ -30,10 +30,6 @@ class Status extends Page
             $result = $this->getSystemStatus();
             $this->parseResponse($result);
         }
-
-        $app = $this->getApplication();
-        $db = $app->getModule('horuxDb')->DbConnection;
-        $db->Active=true;
     }
 
 
@@ -54,18 +50,18 @@ class Status extends Page
 
             $param = $this->Application->getParameters();
 
-            $this->horuxVersion->Text = $xml->appVersion;
+            $this->horuxVersion->Text = (String)$xml->appVersion;
 
             if($param['appMode'] === 'saas')
             {
-                $this->lastUpdate->Text = $xml->lastUpdate;
+                $this->lastUpdate->Text = (String)$xml->lastUpdate;
             }
             else
             {
                 $this->lastUpdate->Text = '-';
             }
             
-            $this->horuxTimeLive->Text = $xml->serverLive;
+            $this->horuxTimeLive->Text = (String)$xml->serverLive;
 
 
             $this->plugins = array();
@@ -76,11 +72,11 @@ class Status extends Page
                 foreach ($plugins as $plugin)
                 {
                     $p = array();
-                    $p['name'] = $plugin->name;
-                    $p['description'] = $plugin->description;
-                    $p['version'] = $plugin->version;
-                    $p['author'] = $plugin->author;
-                    $p['copyright'] = $plugin->copyright;
+                    $p['name'] = (String)$plugin->name;
+                    $p['description'] = (String)$plugin->description;
+                    $p['version'] = (String)$plugin->version;
+                    $p['author'] = (String)$plugin->author;
+                    $p['copyright'] = (String)$plugin->copyright;
                     $p['type'] = (string)$plugins['type'];
                     $this->plugins[] = $p;
                 }
@@ -99,13 +95,13 @@ class Status extends Page
                 {
                     $p = array();
                     $p['id'] = (string)$device['id'];
-                    $p['name'] = $device->name;
-                    $p['serialNumber'] = $device->serialNumber;
-                    $p['isConnected'] = $device->isConnected;
-                    $p['firmwareVersion'] = $device->firmwareVersion;
-                    $p['port'] = $this->port;
-                    $p['host'] = $this->host;
-                    $p['mode'] = $param['appMode'];
+                    $p['name'] = (String)$device->name;
+                    $p['serialNumber'] = (String)$device->serialNumber;
+                    $p['isConnected'] = (String)$device->isConnected;
+                    $p['firmwareVersion'] = (String)$device->firmwareVersion;
+                    $p['port'] = (String)$this->port;
+                    $p['host'] = (String)$this->host;
+                    $p['mode'] = (String)$param['appMode'];
                     $p['saasdbname'] =  md5($this->db->getConnectionString());
                     $this->devices[] = $p;
                 }
