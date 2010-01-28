@@ -39,7 +39,7 @@ class Page extends TPage
       	$lang = $this->Request['lang'];
       	if($lang != "default")
       	{
-	    	$this->application->setGlobalState('lang',$lang);
+	    	$this->Session['lang'] = $lang;
       	}
 		else
 		{
@@ -48,26 +48,26 @@ class Page extends TPage
 		  $data = $cmd->query();
 		  $data = $data->read();
 		  $lang = $data['param'];
-		  $this->application->setGlobalState('lang',$lang);
+		  $this->Session['lang'] = $lang;
 			
 		}
       }
 	  else
 	  {
-	  	if(!($lang = $this->application->getGlobalState('lang',false)))
+	  	if(!($lang = $this->Session['lang']))
 	  	{
 		  $sql = "SELECT * FROM hr_install WHERE `default`=1 AND type='language'";
 		  $cmd=$this->db->createCommand($sql);
 		  $data = $cmd->query();
 		  $data = $data->read();
 		  $lang = $data['param'];
-		  $this->application->setGlobalState('lang',$lang);
+		  $this->Session['lang'] = $lang;
 	  		
 	  	}
 	  	
 	  }
 
-      $this->getApplication()->getGlobalization()->setCulture($this->application->getGlobalState('lang'));
+      $this->getApplication()->getGlobalization()->setCulture($this->Session['lang']);
       
        $this->checkUsersSession();      
     }

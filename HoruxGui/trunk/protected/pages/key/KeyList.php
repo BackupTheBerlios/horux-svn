@@ -78,10 +78,10 @@ class KeyList extends PageList
 
         if(!$this->IsPostBack)
         {
-            $FilterIdentificator = $this->getApplication()->getGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterIdentificator', false);
-            $FilterUsed = $this->getApplication()->getGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterUsed', false);
-            $FilterStatus = $this->getApplication()->getGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterStatus', false);
-            $FilterSerialNumber = $this->getApplication()->getGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterSerialNumber', false);
+            $FilterIdentificator = $this->Session[$this->getApplication()->getService()->getRequestedPagePath().'FilterIdentificator'];
+            $FilterUsed = $this->Session[$this->getApplication()->getService()->getRequestedPagePath().'FilterUsed'];
+            $FilterStatus = $this->Session[$this->getApplication()->getService()->getRequestedPagePath().'FilterStatus'];
+            $FilterSerialNumber = $this->Session[$this->getApplication()->getService()->getRequestedPagePath().'FilterSerialNumber'];
 
             if($FilterIdentificator)
             $this->FilterIdentificator->Text = $FilterIdentificator;
@@ -97,8 +97,8 @@ class KeyList extends PageList
 
         }
 
-        $this->getApplication()->setGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterIdentificator', $this->FilterIdentificator->SafeText);
-        $this->getApplication()->setGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterSerialNumber', $this->FilterSerialNumber->SafeText);
+        $this->Session[$this->getApplication()->getService()->getRequestedPagePath().'FilterIdentificator'] = $this->FilterIdentificator->SafeText;
+        $this->Session[$this->getApplication()->getService()->getRequestedPagePath().'FilterSerialNumber'] = $this->FilterSerialNumber->SafeText;
 
         if(isset($this->Request['okMsg']))
         {
@@ -280,10 +280,10 @@ class KeyList extends PageList
 
     public function selectionChanged($sender,$param)
     {
-        $this->getApplication()->setGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterIdentificator', $this->FilterIdentificator->SafeText);
-        $this->getApplication()->getGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterSerialNumber', $this->FilterSerialNumber->SafeText);
-        $this->getApplication()->setGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterUsed', $this->FilterUsed->getSelectedValue());
-        $this->getApplication()->setGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterStatus', $this->FilterStatus->getSelectedValue());
+        $this->Session[$this->getApplication()->getService()->getRequestedPagePath().'FilterIdentificator'] = $this->FilterIdentificator->SafeText;
+        $this->Session[$this->getApplication()->getService()->getRequestedPagePath().'FilterSerialNumber'] = $this->FilterSerialNumber->SafeText;
+        $this->Session[$this->getApplication()->getService()->getRequestedPagePath().'FilterUsed'] = $this->FilterUsed->getSelectedValue();
+        $this->Session[$this->getApplication()->getService()->getRequestedPagePath().'FilterStatus'] = $this->FilterStatus->getSelectedValue();
 
 
         $this->DataGrid->DataSource=$this->Data;

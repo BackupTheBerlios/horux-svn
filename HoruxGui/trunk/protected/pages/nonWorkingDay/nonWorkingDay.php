@@ -20,13 +20,13 @@ class nonWorkingDay extends Page
 
         if(!$this->isPostBack)
         {
-            $year = $this->application->getGlobalState('nonWorkingDayYear');
+            $year = $this->Session['nonWorkingDayYear'];
             if($year)
-            $this->year->setSelectedValue($year);
+                $this->year->setSelectedValue($year);
 
         }
         else
-        $this->application->setGlobalState('nonWorkingDayYear', $this->year->getSelectedValue());
+            $this->Session['nonWorkingDayYear'] = $this->year->getSelectedValue();
 
     }
 
@@ -36,7 +36,7 @@ class nonWorkingDay extends Page
 
         $this->pdf->AddPage();
 
-        $year = $this->application->getGlobalState('nonWorkingDayYear')."-01-01";
+        $year = $this->Session['nonWorkingDayYear']."-01-01";
         $cmd = $this->db->createCommand( "SELECT * FROM hr_non_working_day WHERE `from`>='".$year."' ORDER BY `from`"  );
 
         $data =  $cmd->query();
@@ -98,7 +98,7 @@ class nonWorkingDay extends Page
 
     public function selectionChanged($sender, $param)
     {
-        $this->application->setGlobalState('nonWorkingDayYear', $sender->getSelectedValue());
+        $this->Session['nonWorkingDayYear'] = $sender->getSelectedValue();
         $this->hiddenMessage();
     }
 

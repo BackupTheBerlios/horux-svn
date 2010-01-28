@@ -39,7 +39,7 @@ class userGroupMod extends Page
             $this->id->Value = $this->Request['id'];
             $this->setData();
 
-            $this->application->setGlobalState('dataPage',array());
+            $this->Session['dataPage'] = array();
 
             $this->DataGrid->DataSource=$this->Data;
             $this->DataGrid->dataBind();
@@ -209,7 +209,7 @@ class userGroupMod extends Page
 
         $data = $this->addComponent($data);
 
-        $this->application->setGlobalState('dataPage',$data);
+        $this->Session['dataPage'] = $data;
 
         return $data;
 
@@ -299,7 +299,7 @@ class userGroupMod extends Page
 
     protected function updatePermissions($lastId)
     {
-        $data = $this->application->getGlobalState('dataPage');
+        $data = $this->Session['dataPage'];
 
         foreach($data as $v)
         {
@@ -504,7 +504,7 @@ class userGroupMod extends Page
 
     public function onChangeAccess($sender, $param)
     {
-        $data = $this->application->getGlobalState('dataPage');
+        $data = $this->Session['dataPage'];
 
         unset($data[$sender->Text]);
 
@@ -526,7 +526,7 @@ class userGroupMod extends Page
         }
 
 
-        $this->application->setGlobalState('dataPage', $data);
+        $this->Session['dataPage'] = $data;
 
         $this->DataGrid->DataSource=$data;
         $this->DataGrid->dataBind();
@@ -536,7 +536,7 @@ class userGroupMod extends Page
 
    public function onChangeShortcut($sender, $param)
     {
-        $data = $this->application->getGlobalState('dataPage');
+        $data = $this->Session['dataPage'];
 
         unset($data[$sender->Text]);
 
@@ -552,7 +552,7 @@ class userGroupMod extends Page
         }
 
 
-        $this->application->setGlobalState('dataPage', $data);
+        $this->Session['dataPage'] = $data;
 
         $this->DataGrid->DataSource=$data;
         $this->DataGrid->dataBind();

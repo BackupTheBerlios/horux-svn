@@ -24,7 +24,7 @@ class userGroupAdd extends Page
 
         if(!$this->isPostBack)
         {
-            $this->application->setGlobalState('dataPage',array());
+            $this->Session['dataPage'] = array();
 
             $this->DataGrid->DataSource=$this->Data;
             $this->DataGrid->dataBind();
@@ -139,7 +139,7 @@ class userGroupAdd extends Page
 
         $data = $this->addComponent($data);
 
-        $this->application->setGlobalState('dataPage',$data);
+        $this->Session['dataPage'] = $data;
 
         return $data;
 
@@ -213,7 +213,7 @@ class userGroupAdd extends Page
 
     protected function insertNewPermissions($lastId)
     {
-        $data = $this->application->getGlobalState('dataPage');
+        $data = $this->Session['dataPage'];
 
         foreach($data as $v)
         {
@@ -418,7 +418,7 @@ class userGroupAdd extends Page
 
     public function onChangeAccess($sender, $param)
     {
-        $data = $this->application->getGlobalState('dataPage');
+        $data = $this->Session['dataPage'];
 
         unset($data[$sender->Text]);
 
@@ -440,7 +440,7 @@ class userGroupAdd extends Page
         }
 
 
-        $this->application->setGlobalState('dataPage', $data);
+        $this->Session['dataPage'] = $data;
 
         $this->DataGrid->DataSource=$data;
         $this->DataGrid->dataBind();
@@ -448,7 +448,7 @@ class userGroupAdd extends Page
 
     public function onChangeShortcut($sender, $param)
     {
-        $data = $this->application->getGlobalState('dataPage');
+        $data = $this->Session['dataPage'];
 
         unset($data[$sender->Text]);
 
@@ -464,7 +464,7 @@ class userGroupAdd extends Page
         }
 
 
-        $this->application->setGlobalState('dataPage', $data);
+        $this->Session['dataPage'] = $data;
 
         $this->DataGrid->DataSource=$data;
         $this->DataGrid->dataBind();

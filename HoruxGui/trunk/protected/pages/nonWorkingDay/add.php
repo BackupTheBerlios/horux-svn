@@ -23,8 +23,17 @@ class add extends Page
         if(!$this->isPostBack)
         {
             $date = getDate();
-            $this->until->setTimeStamp(mktime(0,0,0,1,1,$this->application->getGlobalState('nonWorkingDayYear',$date['year'])));
-            $this->from->setTimeStamp(mktime(0,0,0,1,1,$this->application->getGlobalState('nonWorkingDayYear',$date['year'])));
+
+            if(Prado::getApplication()->getSession()->contains('nonWorkingDayYear'))
+            {
+                $this->until->setTimeStamp(mktime(0,0,0,1,1,$this->Session['nonWorkingDayYear']));
+                $this->from->setTimeStamp(mktime(0,0,0,1,1,$this->Session['nonWorkingDayYear']));
+            }
+            else
+            {
+                $this->until->setTimeStamp(mktime(0,0,0,1,1,$date['year']));
+                $this->from->setTimeStamp(mktime(0,0,0,1,1,$date['year']));
+            }
         }
     }
 

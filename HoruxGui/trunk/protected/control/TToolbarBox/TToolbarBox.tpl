@@ -199,7 +199,7 @@
                     <com:TConditional Condition="$this->getViewState('HelpVisible','false') == 'true'">
                         <prop:TrueTemplate>
                             <td class="button" id="toolbar-help">
-                                <a href="./proxy/index.php?page=<%= $this->getApplication()->getService()->getRequestedPagePath() %>&lang=<%= $this->getApplication()->getGlobalState('lang') %>" title="<%[Help]%>" onClick="Modalbox.show(this.href, {title: this.title, width: 600, height: 600}); return false;" class="toolbar" >
+                                <a href="./proxy/index.php?page=<%= $this->getApplication()->getService()->getRequestedPagePath() %>&lang=<%= $this->Session['lang'] %>" title="<%[Help]%>" onClick="Modalbox.show(this.href, {title: this.title, width: 600, height: 600}); return false;" class="toolbar" >
                                     <span class="icon-32-help" title="<com:TTranslate Catalogue='messages' Text='Help' />"></span><com:TTranslate Catalogue="messages" Text="Help" />
                                 </a>
                             </td>

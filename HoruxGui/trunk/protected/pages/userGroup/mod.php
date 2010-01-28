@@ -37,7 +37,7 @@ class mod extends Page
 
             $this->id->Value = $this->Request['id'];
             $this->setData();
-            $this->application->setGlobalState('listBoxAccessTime',$this->listBox);
+            $this->Session['listBoxAccessTime'] = $this->listBox;
         }
     }
 
@@ -151,7 +151,7 @@ class mod extends Page
             if($cb->getChecked() == true)
             {
                 $id_device = $cb->value;
-                $al_array = $this->application->getGlobalState('listBoxAccessTime');
+                $al_array = $this->Session['listBoxAccessTime'];
 
                 $al_obj = $this->findControl($al_array[$cb->getUniqueID()]);
                 $id_accessLevel = $al_obj->getSelectedValue();

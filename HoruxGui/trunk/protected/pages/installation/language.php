@@ -118,8 +118,8 @@ class language extends PageList
 
                     $lang = $data['param'];
 
-                    $this->application->setGlobalState('lang',$lang);
-                    $this->getApplication()->getGlobalization()->setCulture($this->application->getGlobalState('lang'));
+                    $this->Session['lang'] = $lang;
+                    $this->getApplication()->getGlobalization()->setCulture($this->Session['lang']);
 
                 }
             }

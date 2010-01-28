@@ -60,22 +60,33 @@ class tracking extends PageList
             $this->FilterAccessPoint->dataBind();
             $this->FilterAccessPoint->setSelectedValue('all') ;
 
-            $FilterName = $this->getApplication()->getGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterName', 'all');
-            $FilterAccessPoint = $this->getApplication()->getGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterAccessPoint', 'all');
-            $FilterStatus = $this->getApplication()->getGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterStatus', false);
-            $FilterFrom = $this->getApplication()->getGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterFrom', false);
-            $FilterUntil = $this->getApplication()->getGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterUntil', false);
+            if(Prado::getApplication()->getSession()->contains($this->getApplication()->getService()->getRequestedPagePath().'FilterName'))
+            {
+                $FilterName = $this->Session[$this->getApplication()->getService()->getRequestedPagePath().'FilterName'];
+                $FilterAccessPoint = $this->Session[$this->getApplication()->getService()->getRequestedPagePath().'FilterAccessPoint'];
+                $FilterStatus = $this->Session[$this->getApplication()->getService()->getRequestedPagePath().'FilterStatus'];
+            }
+            else
+            {
+                $FilterName = 'all';
+                $FilterAccessPoint = 'all';
+                $FilterStatus = 'all';
+            }
+            
+            $FilterFrom = $this->Session[$this->getApplication()->getService()->getRequestedPagePath().'FilterFrom'];
+            $FilterUntil = $this->Session[$this->getApplication()->getService()->getRequestedPagePath().'FilterUntil'];
+
 
             if($FilterName)
-            $this->FilterName->setSelectedValue($FilterName);
+                $this->FilterName->setSelectedValue($FilterName);
             if($FilterAccessPoint)
-            $this->FilterAccessPoint->setSelectedValue($FilterAccessPoint);
+                $this->FilterAccessPoint->setSelectedValue($FilterAccessPoint);
             if($FilterStatus)
-            $this->FilterStatus->setSelectedValue($FilterStatus);
+                $this->FilterStatus->setSelectedValue($FilterStatus);
             if($FilterFrom)
-            $this->from->Text = $FilterFrom;
+                $this->from->Text = $FilterFrom;
             if($FilterUntil)
-            $this->until->Text = $FilterUntil;
+                $this->until->Text = $FilterUntil;
 
 
             $this->DataGrid->DataSource=$this->Data;
@@ -353,11 +364,11 @@ class tracking extends PageList
 
         public function onRefresh($sender, $param)
         {
-            $this->getApplication()->setGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterName', $this->FilterName->getSelectedValue());
-            $this->getApplication()->setGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterAccessPoint', $this->FilterAccessPoint->getSelectedValue());
-            $this->getApplication()->setGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterStatus', $this->FilterStatus->getSelectedValue());
-            $this->getApplication()->setGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterFrom', $this->from->Text);
-            $this->getApplication()->setGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterUntil', $this->until->Text);
+            $this->Session[$this->getApplication()->getService()->getRequestedPagePath().'FilterName'] = $this->FilterName->getSelectedValue();
+            $this->Session[$this->getApplication()->getService()->getRequestedPagePath().'FilterAccessPoint'] =  $this->FilterAccessPoint->getSelectedValue();
+            $this->Session[$this->getApplication()->getService()->getRequestedPagePath().'FilterStatus'] = $this->FilterStatus->getSelectedValue();
+            $this->Session[$this->getApplication()->getService()->getRequestedPagePath().'FilterFrom'] = $this->from->Text;
+            $this->Session[$this->getApplication()->getService()->getRequestedPagePath().'FilterUntil'] = $this->until->Text;
 
             $this->DataGrid->DataSource=$this->Data;
             $this->DataGrid->dataBind();

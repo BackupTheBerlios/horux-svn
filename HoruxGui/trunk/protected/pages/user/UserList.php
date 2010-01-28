@@ -314,29 +314,29 @@ class UserList extends PageList
                 $this->FilterAccessPoint->setSelectedValue(0);
 
 
-                $FilterName = $this->getApplication()->getGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterName', false);
-                $FilterFirstName = $this->getApplication()->getGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterFirstName', false);
-                $FilterStatus = $this->getApplication()->getGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterStatus', false);
-                $FilterGroup = $this->getApplication()->getGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterGroup', false);
-                $FilterAccessPoint = $this->getApplication()->getGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterAccessPoint', false);
+                $FilterName = $this->Session[$this->getApplication()->getService()->getRequestedPagePath().'FilterName'];
+                $FilterFirstName = $this->Session[$this->getApplication()->getService()->getRequestedPagePath().'FilterFirstName'];
+                $FilterStatus = $this->Session[$this->getApplication()->getService()->getRequestedPagePath().'FilterStatus'];
+                $FilterGroup = $this->Session[$this->getApplication()->getService()->getRequestedPagePath().'FilterGroup'];
+                $FilterAccessPoint = $this->Session[$this->getApplication()->getService()->getRequestedPagePath().'FilterAccessPoint'];
 
                 if($FilterName)
-                $this->FilterName->Text = $FilterName;
+                    $this->FilterName->Text = $FilterName;
                 if($FilterFirstName)
-                $this->FilterFirstName->Text = $FilterFirstName;
+                    $this->FilterFirstName->Text = $FilterFirstName;
                 if($FilterStatus)
-                $this->FilterStatus->setSelectedValue($FilterStatus);
+                    $this->FilterStatus->setSelectedValue($FilterStatus);
                 if($FilterGroup)
-                $this->FilterGroup->setSelectedValue($FilterGroup);
+                    $this->FilterGroup->setSelectedValue($FilterGroup);
                 if($FilterAccessPoint)
-                $this->FilterAccessPoint->setSelectedValue($FilterAccessPoint);
+                    $this->FilterAccessPoint->setSelectedValue($FilterAccessPoint);
 
                 $this->DataGrid->DataSource=$this->Data;
                 $this->DataGrid->dataBind();
             }
 
-            $this->getApplication()->setGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterName', $this->FilterName->SafeText);
-            $this->getApplication()->setGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterFirstName', $this->FilterFirstName->SafeText);
+            $this->Session[$this->getApplication()->getService()->getRequestedPagePath().'FilterName'] =  $this->FilterName->SafeText;
+            $this->Session[$this->getApplication()->getService()->getRequestedPagePath().'FilterFirstName'] = $this->FilterFirstName->SafeText;
 
 
             if(isset($this->Request['okMsg']))
@@ -492,11 +492,11 @@ class UserList extends PageList
 
         public function selectionChangedStatus($sender,$param)
         {
-            $this->getApplication()->setGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterName', $this->FilterName->SafeText);
-            $this->getApplication()->setGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterFirstName', $this->FilterFirstName->SafeText);
-            $this->getApplication()->setGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterStatus', $this->FilterStatus->getSelectedValue());
-            $this->getApplication()->setGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterGroup', $this->FilterGroup->getSelectedValue());
-            $this->getApplication()->setGlobalState($this->getApplication()->getService()->getRequestedPagePath().'FilterAccessPoint', $this->FilterAccessPoint->getSelectedValue());
+            $this->Session[$this->getApplication()->getService()->getRequestedPagePath().'FilterName'] = $this->FilterName->SafeText;
+            $this->Session[$this->getApplication()->getService()->getRequestedPagePath().'FilterFirstName'] = $this->FilterFirstName->SafeText;
+            $this->Session[$this->getApplication()->getService()->getRequestedPagePath().'FilterStatus'] = $this->FilterStatus->getSelectedValue();
+            $this->Session[$this->getApplication()->getService()->getRequestedPagePath().'FilterGroup'] = $this->FilterGroup->getSelectedValue();
+            $this->Session[$this->getApplication()->getService()->getRequestedPagePath().'FilterAccessPoint'] = $this->FilterAccessPoint->getSelectedValue();
 
             $this->DataGrid->DataSource=$this->Data;
             $this->DataGrid->dataBind();

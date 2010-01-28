@@ -376,8 +376,8 @@ class extensions extends Page
                     $cmd->bindParameter(":id",$cb->Value);
                     $cmd->execute();
 
-                    $this->application->setGlobalState('lang','en');
-                    $this->getApplication()->getGlobalization()->setCulture($this->application->getGlobalState('lang'));
+                    $this->Session['lang'] ='en';
+                    $this->getApplication()->getGlobalization()->setCulture($this->Session['lang']);
 
                 }
 

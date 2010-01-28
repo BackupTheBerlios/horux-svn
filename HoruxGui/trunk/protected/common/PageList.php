@@ -38,7 +38,7 @@ class PageList extends TPage
       	$lang = $this->Request['lang'];
       	if($lang != "default")
       	{
-	    	$this->application->setGlobalState('lang',$lang);
+	    	$this->Session['lang'] = $lang;
       	}
 		else
 		{
@@ -47,27 +47,27 @@ class PageList extends TPage
 		  $data = $cmd->query();
 		  $data = $data->read();
 		  $lang = $data['param'];
-		  $this->application->setGlobalState('lang',$lang);
+		  $this->Session['lang'] = $lang;
 			
 		}
       }
 	  else
 	  {
-	  	if(!($lang = $this->application->getGlobalState('lang',false)))
+	  	if(!($lang = $this->Session['lang']))
 	  	{
 		  $sql = "SELECT * FROM hr_install WHERE `default`=1 AND type='language'";
 		  $cmd=$this->db->createCommand($sql);
 		  $data = $cmd->query();
 		  $data = $data->read();
 		  $lang = $data['param'];
-		  $this->application->setGlobalState('lang',$lang);
+		  $this->Session['lang'] = $lang;
 	  		
 	  	}
 	  	
 	  }
 
       
-      $this->getApplication()->getGlobalization()->setCulture($this->application->getGlobalState('lang'));      
+      $this->getApplication()->getGlobalization()->setCulture($this->Session['lang']);
       
 	  $this->checkUsersSession();
       
@@ -83,7 +83,7 @@ class PageList extends TPage
 
         if(!$this->IsPostBack)
         {
-          $currentPage = $this->getApplication()->getGlobalState($this->getApplication()->getService()->getRequestedPagePath().'currentPage', false);
+          $currentPage = $this->Session[$this->getApplication()->getService()->getRequestedPagePath().'currentPage'];
           
           if($currentPage)
           {
@@ -177,7 +177,7 @@ class PageList extends TPage
 
     public function changePage($sender,$param)
     {
-        $this->getApplication()->setGlobalState($this->getApplication()->getService()->getRequestedPagePath().'currentPage', $param->NewPageIndex);
+        $this->Session[$this->getApplication()->getService()->getRequestedPagePath().'currentPage'] = $param->NewPageIndex;
         $this->DataGrid->CurrentPageIndex=$param->NewPageIndex;
         $this->DataGrid->DataSource=$this->Data;
         $this->DataGrid->dataBind();
