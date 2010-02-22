@@ -159,6 +159,15 @@ class TToolbarBox extends TTemplateControl
 	{
 		return $this->getViewState('SaveVisible',false);
 	}
+	//! button saveplus
+	public function setSavePlusVisible($flag)
+	{
+		$this->setViewState('SavePlusVisible',$flag,false);
+	}
+	public function getSavePlusVisible()
+	{
+		return $this->getViewState('SavePlusVisible',false);
+	}
 	//! button attribute
 	public function setAttributeVisible($flag)
 	{

@@ -183,6 +183,16 @@
                         </prop:TrueTemplate>
                     </com:TConditional>
 
+                   <com:TConditional Condition="$this->getViewState('SavePlusVisible','false') == 'true'">
+                        <prop:TrueTemplate>
+                            <td class="button" id="toolbar-save_plus">
+                                <com:TLinkButton ID="SavePlus" CssClass="toolbar" OnClick="Page.onSavePlus" ValidationGroup="Group1">
+                                  <span class="icon-32-save_plus" title="<com:TTranslate Catalogue='messages' Text='Add more' />"></span><com:TTranslate Catalogue="messages" Text="Add more" />
+                                </com:TLinkButton>
+                            </td>
+                        </prop:TrueTemplate>
+                    </com:TConditional>
+
                     <com:TConditional Condition="$this->getViewState('CancelVisible','false') == 'true'">
                         <prop:TrueTemplate>
 

@@ -1,0 +1,7 @@
+La base de données a été rechargée :
+
+Site : %site%
+Date : %date%
+Heure : %time%
+
+Ne pas répondre à ce message.

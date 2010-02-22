@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <xliff version="1.0">
- <file source-language="FR" target-language="fr" datatype="plaintext" original="messages" date="2010-01-26T15:11:27Z" product-name="messages">
+ <file source-language="FR" target-language="fr" datatype="plaintext" original="messages" date="2010-02-22T10:44:09Z" product-name="messages">
   <body>
   
 <trans-unit id="1" lock="1">
@@ -3891,6 +3891,11 @@
 <trans-unit id="726">
 <source>Enter the Insurance for elderly people and survivors</source>
 <target>Entrez son num&#xE9;ro d\'assurance de vieillesse et de survivants</target>
+</trans-unit>
+
+<trans-unit id="727">
+<source>Add more</source>
+<target>Ajout suppl&#xE9;mentaire</target>
 </trans-unit>
 </body>
 </file>
