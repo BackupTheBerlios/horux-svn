@@ -216,7 +216,7 @@ class balances extends PageList
 
         $this->pdf->AddPage();
 
-        $data = $this->getData();
+        $data = $this->getData(true);
 
         $this->pdf->SetFont('Arial','',9);
         $this->pdf->Cell(0,10,utf8_decode(Prado::localize('Sign in/out')),0,0,'L');
@@ -370,11 +370,45 @@ class balances extends PageList
 
         $this->pdf->Cell(10,3,"",0,0,'R');
 
+        //Nbre of holiday that the employee has for the year
+        $nvy = $this->employee->geHolidaystForTheYear($this->Request['f3'], $this->Request['f4']);
+
+        for($i=1; $i<$this->Request['f4'];$i++)
+        {
+            $nv = $this->employee->getRequest($this->Request['f3'], $i, $this->employee->getDefaultHolidaysCounter());
+            $nvy -= $nv['nbre'];
+        }
+
         $this->pdf->Cell(55,3,utf8_decode(Prado::localize('Holidays for the year'))." :",0,0,'L');
-        $this->pdf->Cell(20,3,sprintf("%.02f",$this->employee->geHolidaystForTheYear($this->Request['f3'], $this->Request['f4'])),0,1,'R');
+        $this->pdf->Cell(20,3,sprintf(" %.02f",$nvy),0,1,'R');
 
 //Ligne 4
         $lastOvertime = $this->employee->getOvertimeLastMonth($this->Request['f3'], $this->Request['f4']);
+
+        if($lastOvertime == 0)
+        {
+            if($this->Request['f4']-2 > 0)
+            {
+                $lastOvertime = $this->employee->getOvertimeLastMonth($this->Request['f3'], $this->Request['f4']-1);
+            }
+            else
+            {
+                $lastOvertime = $this->employee->getOvertimeLastMonth($this->Request['f3'], 1);
+            }
+
+            if($this->Request['f4'] > 1)
+            {
+                $ovs = $this->employee->getComputeBookings($this->Request['f3'],$this->Request['f4']-1,date('t', mktime(0,0,0,$this->Request['f4']-1,1,$this->Request['f3'])));
+                $d = 0;
+                $td = 0;
+                foreach($ovs as $ov)
+                {
+                    $d = bcadd($d, $ov['done'],2);
+                    $td = bcadd($td, $ov['todo'],2);
+                }
+                $lastOvertime += bcsub($d,$td,2);
+            }
+        }
 
         if($lastOvertime>0)
         {
@@ -384,33 +418,21 @@ class balances extends PageList
         elseif($lastOvertime<0 || $lastOvertime==0)
         {
             $this->pdf->Cell(30,3,utf8_decode(Prado::localize('Last month'))." :",0,0,'L');
-            $this->pdf->Cell(20,3,sprintf(" %.02f",$lastOvertime),0,1,'R');
+            $this->pdf->Cell(20,3,sprintf(" %.02f",$lastOvertime),0,0,'R');
         }
 
         $this->pdf->Cell(10,3,"",0,0,'R');
 
-        $y = $this->Request['f3'];
-        $m = $this->Request['f4'];
-        if($m == 1)
+        //Nbre of holiday that the employee has for the year
+        $nvy = $this->employee->geHolidaystForTheYear($this->Request['f3'],$this->Request['f4']);
+
+        for($i=1; $i<$this->Request['f4'];$i++)
         {
-            $y--;
-            $m = 12;
-        }
-        else
-        {
-            $m--;
+            $nv = $this->employee->getRequest($this->Request['f3'], $i, $this->employee->getDefaultHolidaysCounter());
+            $nvy -= $nv['nbre'];
         }
 
-        $wt = $this->employee->getWorkingTime($y, $m);
-
-        if(!$wt)
-        {
-            $holidaysLastMonth = $this->employee->geHolidaystMonth($this->Request['f3'], $this->Request['f4']);
-        }
-        else
-        {
-            $holidaysLastMonth = $this->employee->geHolidaystLastMonth($this->Request['f3'], $this->Request['f4']);
-        }
+        $holidaysLastMonth = $nvy + $this->employee->geHolidaystMonth($this->Request['f3']-1,12);
 
         if($holidaysLastMonth>0)
         {
@@ -568,7 +590,7 @@ class balances extends PageList
         }
     }
 
-    public function getData()
+    public function getData($isPrint=false)
     {
         if(isset($this->Request['f1']))
         {
@@ -613,10 +635,21 @@ class balances extends PageList
             //display the booking
             foreach($booking as $b)
             {
-                $line['sign'].= '<a href="index.php?page=components.timuxuser.booking.mod&back=components.timuxuser.balances.balances&id='.$b['id'].'" >';
+                if(!$isPrint)
+                {
+                    $line['sign'].= '<a href="index.php?page=components.timuxuser.booking.mod&back=components.timuxuser.balances.balances&id='.$b['id'].'" >';
+                }
+
                 if($b['internet'] == 1) $line['sign'].= "*";
                 $inout = $b['inout'] == 'out' ? Prado::localize("out") : Prado::localize("in");
-                $line['sign'] .= substr($b['time'],0,5)."/".$inout."</a>&nbsp;&nbsp;&nbsp;";
+                if(!$isPrint)
+                {
+                    $line['sign'] .= substr($b['time'],0,5)."/".$inout."</a>&nbsp;&nbsp;&nbsp;";
+                }
+                else
+                {
+                    $line['sign'] .= substr($b['time'],0,5)."/".$inout."&nbsp;&nbsp;&nbsp;";
+                }
 
                 if($index_br % 4 == 0) $line['sign'] .= "<br/>";
                 
@@ -962,6 +995,31 @@ class balances extends PageList
         // get the overtime from the last month
         $lastOvertime = $this->employee->getOvertimeLastMonth($year, $month);
 
+        if($lastOvertime == 0)
+        {
+            if($month-2 > 0)
+            {
+                $lastOvertime = $this->employee->getOvertimeLastMonth($year, $month-1);
+            }
+            else
+            {
+                $lastOvertime = $this->employee->getOvertimeLastMonth($year, 1);
+            }
+                
+            if($month > 1)
+            {
+                $ovs = $this->employee->getComputeBookings($year,$month-1,date('t', mktime(0,0,0,$month-1,1,$year)));
+                $d = 0;
+                $td = 0;
+                foreach($ovs as $ov)
+                {
+                    $d = bcadd($d, $ov['done'],2);
+                    $td = bcadd($td, $ov['todo'],2);
+                }
+                $lastOvertime += bcsub($d,$td,2);
+            }
+        }
+        
         // display the last overtime
         if($lastOvertime>0)
             $this->lastMonth->Text = sprintf("+%.02f",$lastOvertime);
@@ -978,35 +1036,24 @@ class balances extends PageList
             $this->balances->Text = sprintf("%.02f",$balances);
 
 
-        //Nbre of holiday that the employee has for the year
-        $this->holidayForTheYear->Text = sprintf("%.02f",$this->employee->geHolidaystForTheYear($year, $month));
-
         //Balance of holiday fot the last year
         $this->balanceHolidaysLastYear->Text = sprintf("%.02f",$this->employee->geHolidaystMonth($year-1,12));
 
+
+        //Nbre of holiday that the employee has for the year
+        $nvy = $this->employee->geHolidaystForTheYear($year, $month);
+
+        for($i=1; $i<$month;$i++)
+        {
+            $nv = $this->employee->getRequest($year, $i, $this->employee->getDefaultHolidaysCounter());
+            $nvy -= $nv['nbre'];
+        }
+
+
+        $this->holidayForTheYear->Text = sprintf("%.02f",$nvy);
+
         // compute the holdiday for the last month
-        $y = $year;
-        $m = $month;
-        if($m == 1)
-        {
-            $y--;
-            $m = 12;
-        }
-        else
-        {
-            $m--;
-        }
-        
-        $wt = $this->employee->getWorkingTime($y, $m);
-        
-        if(!$wt)
-        {
-            $holidaysLastMonth = $this->employee->geHolidaystMonth($year, $month);
-        }
-        else
-        {
-            $holidaysLastMonth = $this->employee->geHolidaystLastMonth($year, $month);
-        }
+        $holidaysLastMonth = $this->holidayForTheYear->Text + $this->balanceHolidaysLastYear->Text;
 
         // display the value
         if($holidaysLastMonth>0)

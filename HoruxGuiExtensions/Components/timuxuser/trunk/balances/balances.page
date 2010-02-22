@@ -199,7 +199,17 @@
                 HeaderText="<%[Remark]%>"
                 DataField="remark"
                 />
-
+            <com:TTemplateColumn HeaderStyle.Width = "100px" Visible="true" ID="tplColExt">
+                <prop:HeaderTemplate><%[Add signing]%></prop:HeaderTemplate>
+                <prop:ItemTemplate>
+                    <com:THyperLink
+                        NavigateUrl="index.php?page=components.timuxuser.booking.add&back=components.timuxuser.balances.balances&date=<%#$this->Page->dateFromSql($this->NamingContainer->Data['date'])%>&userId=<%= $this->Page->employee->getUserId()%>"
+                        ImageUrl="<%~ ../assets/edit_add.png %>"
+                        Style="border:0px"
+                        Text="<%[Add signing]%>"
+                        />
+                </prop:ItemTemplate>
+            </com:TTemplateColumn>
 
 
         </com:TDataGrid>

@@ -34,7 +34,7 @@ class workingtime extends PageList
             if($FilterDepartment)
                 $this->FilterDepartment->setSelectedValue($FilterDepartment);
             else
-                $this->FilterDepartment->setSelectedValue(0);
+                $this->FilterDepartment->setSelectedIndex(0);
 
 
             $this->DataGrid->DataSource=$this->Data;

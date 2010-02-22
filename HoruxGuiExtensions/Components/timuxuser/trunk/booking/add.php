@@ -49,6 +49,31 @@ class add extends Page
         }
     }
 
+    public function onSavePlus($sender, $param)
+    {
+        if($this->Page->IsValid)
+        {
+            if($this->saveData())
+            {
+                $pBack = array('okMsg'=>Prado::localize('The sign was added successfully'));
+            }
+            else
+                $pBack = array('koMsg'=>Prado::localize('The sign was not added'));
+                
+
+            if(isset($this->Request['back']))
+            {
+                $pBack['date'] = $this->Request['date'];
+                $pBack['back'] = $this->Request['back'];
+                $pBack['userId'] = $this->Request['userId'];
+                $this->Response->redirect($this->Service->constructUrl('components.timuxuser.booking.add',$pBack));
+            }
+            else
+                $this->Response->redirect($this->Service->constructUrl('components.timuxuser.booking.add',$pBack));
+        }
+
+    }
+
     public function onApply($sender, $param)
     {
         if($this->Page->IsValid)

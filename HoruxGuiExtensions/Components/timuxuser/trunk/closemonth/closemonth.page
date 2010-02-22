@@ -1,6 +1,10 @@
 <com:TContent ID="Main">
     <%include Application.common.template.headerContent %>
-
+    <com:TClientScript PradoScripts="effects" />
+    <div id="loading" class="loading"></div>
+    <script type="text/javascript">
+        Effect.Fade(document.getElementById('loading'), {duration:0});
+    </script>
       <com:TToolbarBox
         ID="tbb"
         Title="<%[Close Month]%>"
@@ -19,7 +23,14 @@
         OnSelectedIndexChanged="selectionChangedYear"
         CssClass="inputbox"
         DataTextField="Text"
-        DataValueField="Value"/>
+        DataValueField="Value">
+
+        <prop:ClientSide
+            OnLoading="Effect.Appear(document.getElementById('loading'), {duration:0, from:0.3, to:0.3})"
+            OnComplete="Effect.Fade(document.getElementById('loading'), {duration:0})"
+         />
+    </com:TActiveDropDownList>
+
     <%[Month]%>
     <com:TActiveDropDownList
         ID="FilterMonth"
@@ -37,6 +48,10 @@
         <com:TListItem Value="10" Text="<%[October]%>"/>
         <com:TListItem Value="11" Text="<%[November]%>"/>
         <com:TListItem Value="12" Text="<%[December]%>"/>
+    <prop:ClientSide
+            OnLoading="Effect.Appear(document.getElementById('loading'), {duration:0, from:0.3, to:0.3})"
+            OnComplete="Effect.Fade(document.getElementById('loading'), {duration:0})"
+         />
     </com:TActiveDropDownList>
 
     <%[Department]%>
@@ -45,7 +60,12 @@
         OnSelectedIndexChanged="selectionChangedDepartment"
         CssClass="inputbox"
         DataTextField="Text"
-        DataValueField="Value" />
+        DataValueField="Value" >
+    <prop:ClientSide
+            OnLoading="Effect.Appear(document.getElementById('loading'), {duration:0, from:0.3, to:0.3})"
+            OnComplete="Effect.Fade(document.getElementById('loading'), {duration:0})"
+         />
+    </com:TActiveDropDownList>
 
 
     <br/><br/>

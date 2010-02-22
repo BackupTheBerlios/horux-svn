@@ -1135,6 +1135,91 @@ class employee
         $dateFrom = $year."-".$month."-1";
         $dateTo = $year."-".$month."-".date("t",mktime(0,0,0,$month,1,$year));
 
+        $nbreOfHours['nbre'] = 0.0;
+        $nbreOfHours['disp'] = $format;
+
+        while(strtotime($dateFrom) <= strtotime($dateTo))
+        {
+            $cmd=$this->db->createCommand("SELECT * FROM hr_timux_request AS r LEFT JOIN hr_timux_request_leave AS rl ON rl.request_id=r.id LEFT JOIN hr_timux_timecode AS t ON t.id=r.timecodeId WHERE rl.datefrom<='".$dateFrom."' AND rl.dateto>='".$dateFrom."' AND ( r.state='validate' OR  r.state='closed') AND r.userId=".$this->employeeId." AND t.type='absence'");
+            $data = $cmd->query();
+            $data = $data->read();
+
+            $date = explode("-",$dateFrom);
+
+            if($data)
+            {
+                $period = $data['period'];
+                $format = $data['formatDisplay'];
+
+                if($this->isWorking($date[0], $date[1], $date[2]))
+                {
+                    $nwd = $this->getNonWorkingDay($date[0], $date[1], $date[2]);
+                    $nwdPeriod = $this->getNonWorkingDayPeriod($date[0], $date[1], $date[2]);
+                    $nPeriod = $this->isWorkingPeriod($date[0], $date[1], $date[2]);
+
+                    if($nwdPeriod == 'morning' && $period == 'afternoon')
+                    {
+                        if($nPeriod != $nwdPeriod)
+                            $nbreOfHours['nbre'] += 0.5;
+                    }
+
+                    if($nwdPeriod == 'afternoon' && $period == 'morning')
+                    {
+                        if($nPeriod != $nwdPeriod)
+                            $nbreOfHours['nbre'] += 0.5;
+                    }
+
+                    if($nwdPeriod == 'afternoon' && $period == 'allday')
+                    {
+                        if($nPeriod != $nwdPeriod)
+                            $nbreOfHours['nbre'] += 0.5;
+                    }
+
+                    if($nwdPeriod == 'morning' && $period == 'allday')
+                    {
+                        if($nPeriod != $nwdPeriod)
+                            $nbreOfHours['nbre'] += 0.5;
+                    }
+
+                    if($nwd==0 && $period == 'morning')
+                    {
+                        if($nPeriod =='allday')
+                            $nbreOfHours['nbre'] += 0.5;
+                    }
+
+                    if($nwd==0 && $period == 'afternoon')
+                    {
+                        if($nPeriod =='allday')
+                            $nbreOfHours['nbre'] += 0.5;
+                    }
+
+                    if($nwd==0 && $period == 'allday')
+                    {
+                        if($nPeriod == $period)
+                            $nbreOfHours['nbre'] += 1;
+                        else
+                            $nbreOfHours['nbre'] += 0.5;
+                    }
+                }
+            }
+
+            $dateFrom = date("Y-m-d",strtotime(date("Y-m-d", strtotime($dateFrom)) . " +1 day"));
+        }
+
+
+        if($nbreOfHours['disp'] == 'hour')
+        {
+            $nbreOfHours['nbre'] = bcdiv($nbreOfHours['nbre'], $this->getTimeHoursDayTodo($year, $month), 4);
+        }
+
+        return $nbreOfHours;
+
+
+
+
+       /* $dateFrom = $year."-".$month."-1";
+        $dateTo = $year."-".$month."-".date("t",mktime(0,0,0,$month,1,$year));
+
         $wt = $this->getWorkingTime($year, $month);
 
         $cmd=$this->db->createCommand("SELECT * FROM hr_timux_request AS r LEFT JOIN hr_timux_request_leave AS rl ON rl.request_id=r.id LEFT JOIN hr_timux_timecode AS t ON t.id=r.timecodeId WHERE rl.datefrom>='".$dateFrom."' AND rl.dateto<='".$dateTo."' AND ( r.state='validate' OR  r.state='closed') AND r.userId=".$this->employeeId." AND  t.type='absence'");
@@ -1331,26 +1416,8 @@ class employee
             }
 
         }
-        return $nbreOfHours['nbre'];
+        return $nbreOfHours['nbre'];*/
 
-
-       /* $dateFrom = $year."-".$month."-1";
-        $dateTo= $year."-".$month."-".date("t",mktime(0,0,0,$month,1,$year));
-
-        $cmd = $this->db->createCommand( "SELECT l.period, l.datefrom, l.dateto FROM hr_timux_request AS r LEFT JOIN hr_timux_request_leave AS l ON l.request_id=r.id LEFT JOIN hr_timux_timecode  AS t ON t.id=r.timecodeId  WHERE t.type='absence' AND r.userId=".$this->employeeId." AND l.datefrom>='$dateFrom' AND l.dateto<='$dateTo' AND ( r.state='validate' OR r.state='closed' )" );
-        $query = $cmd->query();
-        $data = $query->readAll();
-
-        $res = 0;
-        foreach($data as $d)
-        {
-            if($d['period'] == 'allday')
-                $res += 1;
-            else
-                $res += 0.5;
-        }
-
-        return $res;*/
     }
 
     /*
@@ -1437,241 +1504,34 @@ class employee
         $dateFrom = $year."-".$month."-1";
         $dateTo = $year."-".$month."-".date("t",mktime(0,0,0,$month,1,$year));
 
-        $wt = $this->getWorkingTime($year, $month);
-
         $timecode = $this->getDefaultHolidaysCounter();
 
         if($timecode == "") return array();
 
-        $cmd=$this->db->createCommand("SELECT * FROM hr_timux_request AS r LEFT JOIN hr_timux_request_leave AS rl ON rl.request_id=r.id LEFT JOIN hr_timux_timecode AS t ON t.id=r.timecodeId WHERE (t.type='leave' OR t.type='overtime' )  AND rl.datefrom>='".$dateFrom."' AND rl.dateto<='".$dateTo."' AND ( r.state='validate' OR  r.state='closed') AND r.userId=".$this->employeeId." AND t.id!=".$timecode);
-
-        $data = $cmd->query();
-        $data = $data->readAll();
 
         $nbreOfHours['nbre'] = 0.0;
         $nbreOfHours['disp'] = $format;
 
-        foreach($data AS $d)
+        while(strtotime($dateFrom) <= strtotime($dateTo))
         {
-            $dateStart = $d['datefrom'];
-            $dateTo = $d['dateto'];
-            $period = $d['period'];
-            $format = $d['formatDisplay'];
+            $cmd=$this->db->createCommand("SELECT * FROM hr_timux_request AS r LEFT JOIN hr_timux_request_leave AS rl ON rl.request_id=r.id LEFT JOIN hr_timux_timecode AS t ON t.id=r.timecodeId WHERE (t.type='leave' OR t.type='overtime' )  AND rl.datefrom>='".$dateFrom."' AND rl.dateto<='".$dateTo."' AND ( r.state='validate' OR  r.state='closed') AND r.userId=".$this->employeeId." AND t.id!=".$timecode);
 
-            if($dateTo == '0000-00-00' ) $dateTo = $dateStart;
+            $data = $cmd->query();
+            $data = $data->read();
 
-
-            if($dateTo == $dateStart)
+            if($data)
             {
-                $date = explode("-",$dateTo);
+                $date = explode("-",$dateFrom);
 
-                if($this->isWorking($date[0], $date[1], $date[2]))
-                {
-                   $nwdPeriod = $this->getNonWorkingDay($date[0], $date[1], $date[2]);
-
-                   $nPeriod = $this->isWorkingPeriod($date[0], $date[1], $date[2]);
-
-                   $m = 0.0;
-                   $a = 0.0;
-
-                   if($nPeriod == 'allday' && $period == 'allday' )
-                   {
-                       $m = 0.5;
-                       $a = 0.5;
-                   }
-
-                   if($nPeriod == 'allday' && $period == 'morning' )
-                   {
-                       $m = 0.5;
-                   }
-
-                   if($nPeriod == 'allday' && $period == 'afternoon' )
-                   {
-                       $a = 0.5;
-                   }
-
-                   if($nPeriod == 'morning' && ($period == 'allday' || $period == 'morning'))
-                   {
-                       $m = 0.5;
-                   }
-
-                   if($nPeriod == 'afternoon' && ($period == 'allday' || $period == 'afternoon'))
-                   {
-                       $a = 0.5;
-                   }
-
-                   if( ($nwdPeriod == 'morning' || $nwdPeriod == 'allday' ) && $m>0)
-                   {
-                       $m = 0.0;
-                   }
-
-                   if( ($nwdPeriod == 'afternoon' || $nwdPeriod == 'allday' ) && $a>0)
-                   {
-                       $a = 0.0;
-                   }
-
-                   $nbreOfHours['nbre'] = bcadd($m,$a, 4);
-                }
-
-            }
-            else
-            {
-
-                while($dateStart != $dateTo)
-                {
-                    $date = explode("-",$dateStart);
-                    if($this->isWorking($date[0], $date[1], $date[2]))
-                    {
-                       $nwdPeriod = $this->getNonWorkingDay($date[0], $date[1], $date[2]);
-
-                       $nPeriod = $this->isWorkingPeriod($date[0], $date[1], $date[2]);
-
-                       $m = 0.0;
-                       $a = 0.0;
-
-                       if($nPeriod == 'allday' && $period == 'allday' )
-                       {
-                           $m = 0.5;
-                           $a = 0.5;
-                       }
-
-                       if($nPeriod == 'allday' && $period == 'morning' )
-                       {
-                           $m = 0.5;
-                       }
-
-                       if($nPeriod == 'allday' && $period == 'afternoon' )
-                       {
-                           $a = 0.5;
-                       }
-
-                       if($nPeriod == 'morning' && ($period == 'allday' || $period == 'morning'))
-                       {
-                           $m = 0.5;
-                       }
-
-                       if($nPeriod == 'afternoon' && ($period == 'allday' || $period == 'afternoon'))
-                       {
-                           $a = 0.5;
-                       }
-
-                       if( ($nwdPeriod == 'morning' || $nwdPeriod == 'allday' ) && $m>0)
-                       {
-                           $m = 0.0;
-                       }
-
-                       if( ($nwdPeriod == 'afternoon' || $nwdPeriod == 'allday' ) && $a>0)
-                       {
-                           $a = 0.0;
-                       }
-
-                       $nbreOfHours['nbre'] += bcadd($m,$a, 4);
-                    }
-
-                    $dateStart = date("Y-m-d",strtotime(date("Y-m-d", strtotime($dateStart)) . " +1 day"));
-
-                }
-
-                $date = explode("-",$dateTo);
-
-                if($this->isWorking($date[0], $date[1], $date[2]))
-                {
-                   $nwdPeriod = $this->getNonWorkingDay($date[0], $date[1], $date[2]);
-
-                   $nPeriod = $this->isWorkingPeriod($date[0], $date[1], $date[2]);
-
-                   $m = 0.0;
-                   $a = 0.0;
-
-                   if($nPeriod == 'allday' && $period == 'allday' )
-                   {
-                       $m = 0.5;
-                       $a = 0.5;
-                   }
-
-                   if($nPeriod == 'allday' && $period == 'morning' )
-                   {
-                       $m = 0.5;
-                   }
-
-                   if($nPeriod == 'allday' && $period == 'afternoon' )
-                   {
-                       $a = 0.5;
-                   }
-
-                   if($nPeriod == 'morning' && ($period == 'allday' || $period == 'morning'))
-                   {
-                       $m = 0.5;
-                   }
-
-                   if($nPeriod == 'afternoon' && ($period == 'allday' || $period == 'afternoon'))
-                   {
-                       $a = 0.5;
-                   }
-
-                   if( ($nwdPeriod == 'morning' || $nwdPeriod == 'allday' ) && $m>0)
-                   {
-                       $m = 0.0;
-                   }
-
-                   if( ($nwdPeriod == 'afternoon' || $nwdPeriod == 'allday' ) && $a>0)
-                   {
-                       $a = 0.0;
-                   }
-
-                   $nbreOfHours['nbre'] += bcadd($m,$a, 4);
-
-                }
-
-            }
-
-        }
-
-        if($nbreOfHours['disp'] == 'hour')
-        {
-            $nbreOfHours['nbre'] = bcdiv($nbreOfHours['nbre'], $this->getTimeHoursDayTodo($year, $month), 4);
-        }
-
-        return $nbreOfHours;
-    }
-
-    public function getRequest($year,$month, $timecode)
-    {
-        if($timecode == NULL) return 0;
-
-        $dateFrom = $year."-".$month."-1";
-        $dateTo = $year."-".$month."-".date("t",mktime(0,0,0,$month,1,$year));
-
-        $wt = $this->getWorkingTime($year, $month);
-
-        $cmd=$this->db->createCommand("SELECT * FROM hr_timux_request AS r LEFT JOIN hr_timux_request_leave AS rl ON rl.request_id=r.id LEFT JOIN hr_timux_timecode AS t ON t.id=r.timecodeId WHERE rl.datefrom>='".$dateFrom."' AND rl.dateto<='".$dateTo."' AND ( r.state='validate' OR  r.state='closed') AND r.userId=".$this->employeeId." AND t.id=".$timecode);
-
-        $data = $cmd->query();
-        $data = $data->readAll();
-
-        $nbreOfHours['nbre'] = 0.0;
-        $nbreOfHours['disp'] = $format;
-
-        foreach($data AS $d)
-        {
-            $dateStart = $d['datefrom'];
-            $dateTo = $d['dateto'];
-            $period = $d['period'];
-            $format = $d['formatDisplay'];
-
-            if($dateTo == '0000-00-00' ) $dateTo = $dateStart;
-
-
-            if($dateTo == $dateStart)
-            {
-                $date = explode("-",$dateTo);
+                $period = $data['period'];
+                $format = $data['formatDisplay'];
 
                 if($this->isWorking($date[0], $date[1], $date[2]))
                 {
                     $nwd = $this->getNonWorkingDay($date[0], $date[1], $date[2]);
                     $nwdPeriod = $this->getNonWorkingDayPeriod($date[0], $date[1], $date[2]);
                     $nPeriod = $this->isWorkingPeriod($date[0], $date[1], $date[2]);
-                    
+
                     if($nwdPeriod == 'morning' && $period == 'afternoon')
                     {
                         if($nPeriod != $nwdPeriod)
@@ -1716,128 +1576,99 @@ class employee
                             $nbreOfHours['nbre'] += 0.5;
                     }
                 }
-
             }
-            else
+
+            $dateFrom = date("Y-m-d",strtotime(date("Y-m-d", strtotime($dateFrom)) . " +1 day"));
+        }
+
+
+        if($nbreOfHours['disp'] == 'hour')
+        {
+            $nbreOfHours['nbre'] = bcdiv($nbreOfHours['nbre'], $this->getTimeHoursDayTodo($year, $month), 4);
+        }
+
+        return $nbreOfHours;
+    }
+
+    public function getRequest($year,$month, $timecode)
+    {
+        if($timecode == NULL) return 0;
+
+        $dateFrom = $year."-".$month."-1";
+        $dateTo = $year."-".$month."-".date("t",mktime(0,0,0,$month,1,$year));
+
+        $nbreOfHours['nbre'] = 0.0;
+        $nbreOfHours['disp'] = $format;
+
+        while(strtotime($dateFrom) <= strtotime($dateTo))
+        {
+            $cmd=$this->db->createCommand("SELECT * FROM hr_timux_request AS r LEFT JOIN hr_timux_request_leave AS rl ON rl.request_id=r.id LEFT JOIN hr_timux_timecode AS t ON t.id=r.timecodeId WHERE rl.datefrom<='".$dateFrom."' AND rl.dateto>='".$dateFrom."' AND ( r.state='validate' OR  r.state='closed') AND r.userId=".$this->employeeId." AND t.id=".$timecode);
+
+            $data = $cmd->query();
+            $data = $data->read();
+
+            if($data)
             {
+                $date = explode("-",$dateFrom);
 
-                while($dateStart != $dateTo)
-                {
-                    $date = explode("-",$dateStart);
-
-                    if($this->isWorking($date[0], $date[1], $date[2]))
-                    {
-                        $nwd = $this->getNonWorkingDay($date[0], $date[1], $date[2]);
-                        $nwdPeriod = $this->getNonWorkingDayPeriod($date[0], $date[1], $date[2]);
-                        $nPeriod = $this->isWorkingPeriod($date[0], $date[1], $date[2]);
-
-                       if($nwdPeriod == 'morning' && $period == 'afternoon')
-                       {
-                            if($nPeriod != $nwdPeriod)
-                                $nbreOfHours['nbre'] += 0.5;
-                       }
-
-                        if($nwdPeriod == 'afternoon' && $period == 'morning')
-                        {
-                            if($nPeriod != $nwdPeriod)
-                                $nbreOfHours['nbre'] += 0.5;
-                        }
-
-                        if($nwdPeriod == 'afternoon' && $period == 'allday')
-                        {
-                            if($nPeriod != $nwdPeriod)
-                                $nbreOfHours['nbre'] += 0.5;
-                        }
-
-                        if($nwdPeriod == 'morning' && $period == 'allday')
-                        {
-                            if($nPeriod != $nwdPeriod)
-                                $nbreOfHours['nbre'] += 0.5;
-                        }
-
-                        if($nwd==0 && $period == 'morning')
-                        {
-                             if($nPeriod =='allday')
-                               $nbreOfHours['nbre'] += 0.5;
-                        }
-
-                        if($nwd==0 && $period == 'afternoon')
-                        {
-                            if($nPeriod =='allday')
-                                $nbreOfHours['nbre'] += 0.5;
-                        }
-
-                        if($nwd==0 && $period == 'allday')
-                        {
-                            if($nPeriod == $period)
-                                $nbreOfHours['nbre'] += 1;
-                            else
-                                $nbreOfHours['nbre'] += 0.5;
-
-                        }
-
-                    }
-
-                    $dateStart = date("Y-m-d",strtotime(date("Y-m-d", strtotime($dateStart)) . " +1 day"));
-
-                }
-
-                $date = explode("-",$dateTo);
+                $period = $data['period'];
+                $format = $data['formatDisplay'];
 
                 if($this->isWorking($date[0], $date[1], $date[2]))
                 {
-                   $nwd = $this->getNonWorkingDay($date[0], $date[1], $date[2]);
-                   $nwdPeriod = $this->getNonWorkingDayPeriod($date[0], $date[1], $date[2]);
-                   $nPeriod = $this->isWorkingPeriod($date[0], $date[1], $date[2]);
+                    $nwd = $this->getNonWorkingDay($date[0], $date[1], $date[2]);
+                    $nwdPeriod = $this->getNonWorkingDayPeriod($date[0], $date[1], $date[2]);
+                    $nPeriod = $this->isWorkingPeriod($date[0], $date[1], $date[2]);
 
-                   if($nwdPeriod == 'morning' && $period == 'afternoon')
-                   {
+                    if($nwdPeriod == 'morning' && $period == 'afternoon')
+                    {
                         if($nPeriod != $nwdPeriod)
                             $nbreOfHours['nbre'] += 0.5;
-                   }
+                    }
 
-                   if($nwdPeriod == 'afternoon' && $period == 'morning')
-                   {
+                    if($nwdPeriod == 'afternoon' && $period == 'morning')
+                    {
                         if($nPeriod != $nwdPeriod)
                             $nbreOfHours['nbre'] += 0.5;
-                   }
+                    }
 
-                   if($nwdPeriod == 'afternoon' && $period == 'allday')
-                   {
+                    if($nwdPeriod == 'afternoon' && $period == 'allday')
+                    {
                         if($nPeriod != $nwdPeriod)
                             $nbreOfHours['nbre'] += 0.5;
-                   }
+                    }
 
-                   if($nwdPeriod == 'morning' && $period == 'allday')
-                   {
+                    if($nwdPeriod == 'morning' && $period == 'allday')
+                    {
                         if($nPeriod != $nwdPeriod)
                             $nbreOfHours['nbre'] += 0.5;
-                   }
+                    }
 
-                   if($nwd==0 && $period == 'morning')
-                   {
+                    if($nwd==0 && $period == 'morning')
+                    {
                         if($nPeriod =='allday')
                             $nbreOfHours['nbre'] += 0.5;
-                   }
+                    }
 
-                   if($nwd==0 && $period == 'afternoon')
-                   {
+                    if($nwd==0 && $period == 'afternoon')
+                    {
                         if($nPeriod =='allday')
-                           $nbreOfHours['nbre'] += 0.5;
-                   }
+                            $nbreOfHours['nbre'] += 0.5;
+                    }
 
-                   if($nwd==0 && $period == 'allday')
-                   {
+                    if($nwd==0 && $period == 'allday')
+                    {
                         if($nPeriod == $period)
                             $nbreOfHours['nbre'] += 1;
                         else
                             $nbreOfHours['nbre'] += 0.5;
-                   }
+                    }
                 }
-
             }
 
+            $dateFrom = date("Y-m-d",strtotime(date("Y-m-d", strtotime($dateFrom)) . " +1 day"));
         }
+
 
         if($nbreOfHours['disp'] == 'hour')
         {
@@ -3271,743 +3102,7 @@ class employee
 
         $cmd=$this->db->createCommand("UPDATE hr_timux_booking SET closed='1' WHERE tracking_id IN (SELECT id FROM hr_tracking AS t WHERE t.date>='$dateFrom' AND t.date<='$dateTo' AND id_user=".$this->employeeId." )");
         $cmd->execute();
-    }
-
-
-    /*public function getLeaveRequest($state)
-    {
-        if($state != 'all')
-            $state = ' tr.state=\''.$state.'\' AND ';
-        else
-            $state = '';
-
-
-        $cmd = $this->db->createCommand( "SELECT tr.*, CONCAT(u.name, ' ', u.firstname ) AS modUser, tt.name AS timcodeName, rl.* FROM hr_timux_request AS tr LEFT JOIN hr_user AS u ON u.id=tr.modifyUserId LEFT JOIN hr_timux_timecode AS tt ON tt.id=tr.timecodeId LEFT JOIN hr_timux_request_leave AS rl ON rl.request_id=tr.id  WHERE $state tr.userId=:id AND tr.state<>'closed' AND tr.state<>'canceled' AND rl.datefrom > CURDATE() ORDER BY tr.createDate DESC" );
-        $cmd->bindParameter(":id",$this->employeeId,PDO::PARAM_STR);
-        $query = $cmd->query();
-        if($query)
-        {
-            $data = $query->readAll();
-            return $data;
-        }
-
-        return array();        
-    }
-
-    public function isNeedWorking($year, $month, $nday, $period='allday', $day=1)
-    {
-        $wt = $this->getWorkingTime($year, $month);
-        $nw_m = $this->isNonWorkingDay($year."-".$month."-".$day, "morning");
-        $nw_a = $this->isNonWorkingDay($year."-".$month."-".$day, "afternoon");
-        $var = 'nw_'.$period;
-
-
-        switch($nday)
-        {
-            case 1:
-                if($period=='allday')
-                {
-                    if(!$nw_m && !$nw_a>0)
-                    {
-                        return bcadd($wt['mondayTime_m'], $wt['mondayTime_a'],2);
-                    }
-                    else
-                    {
-                        if(!$nw_m)
-                            return $wt['mondayTime_m'];
-                        elseif(!$nw_a)
-                            return $wt['mondayTime_a'];
-                    }
-                }
-                else
-                    if(!$$var) return $wt['mondayTime_'.$period];
-                break;
-            case 2:
-                if($period=='allday')
-                {
-                    if(!$nw_m && !$nw_a>0)
-                    {
-                        return bcadd($wt['tuesdayTime_m'], $wt['tuesdayTime_a'],2);
-                    }
-                    else
-                    {
-                        if(!$nw_m)
-                            return $wt['tuesdayTime_m'];
-                        elseif(!$nw_a)
-                            return $wt['tuesdayTime_a'];
-                    }
-                }
-                else
-                    if(!$$var) return $wt['tuesdayTime_'.$period];
-                break;
-            case 3:
-                if($period=='allday')
-                {
-                    if(!$nw_m && !$nw_a>0)
-                    {
-                        return bcadd($wt['wednesdayTime_m'], $wt['wednesdayTime_a'],2);
-                    }
-                    else
-                    {
-                        if(!$nw_m)
-                            return $wt['wednesdayTime_m'];
-                        elseif(!$nw_a)
-                            return $wt['wednesdayTime_a'];
-                    }
-                }
-                else
-                    if(!$$var) return $wt['wednesdayTime_'.$period];
-                break;
-            case 4:
-                if($period=='allday')
-                {
-                    if(!$nw_m && !$nw_a>0)
-                    {
-                        return bcadd($wt['thursdayTime_m'], $wt['thursdayTime_a'],2);
-                    }
-                    else
-                    {
-                        if(!$nw_m)
-                            return $wt['thursdayTime_m'];
-                        elseif(!$nw_a)
-                            return $wt['thursdayTime_a'];
-                    }
-                }
-                else
-                    if(!$$var) return $wt['thursdayTime_'.$period];
-                break;
-            case 5:
-                if($period=='allday')
-                {
-                    if(!$nw_m && !$nw_a>0)
-                    {
-                        return bcadd($wt['fridayTime_m'], $wt['fridayTime_a'],2);
-                    }
-                    else
-                    {
-                        if(!$nw_m)
-                            return $wt['fridayTime_m'];
-                        elseif(!$nw_a)
-                            return $wt['fridayTime_a'];
-                    }
-                }
-                else
-                    if(!$$var) return $wt['fridayTime_'.$period];
-                break;
-            case 6:
-                if($period=='allday')
-                {
-                    if(!$nw_m && !$nw_a>0)
-                    {
-                        return bcadd($wt['saturdayTime_m'], $wt['saturdayTime_a'],2);
-                    }
-                    else
-                    {
-                        if(!$nw_m)
-                            return $wt['saturdayTime_m'];
-                        elseif(!$nw_a)
-                            return $wt['saturdayTime_a'];
-                    }
-                }
-                else
-                    if(!$$var) return $wt['saturdayTime_'.$period];
-                break;
-            case 7:
-                if($period=='allday')
-                {
-                    if(!$nw_m && !$nw_a>0)
-                    {
-                        return bcadd($wt['sundayTime_m'], $wt['sundayTime_a'],2);
-                    }
-                    else
-                    {
-                        if(!$nw_m)
-                            return $wt['sundayTime_m'];
-                        elseif(!$nw_a)
-                            return $wt['sundayTime_a'];
-                    }
-                }
-                else
-                    if(!$$var) return $wt['sundayTime_'.$period];
-                break;
-        }
-        
-        return false;
-        
-    }
-
-
-    public function isNonWorkingDay($date, $period='allday')
-    {
-        if($period=='morning' || $period=='afternoon')
-        {
-            $period =  " AND ( period='$period' OR period='allday') ";
-        }
-        else
-            $period =  " AND period='$period'";
-
-        $cmd = $this->db->createCommand( "SELECT COUNT(*) AS nbre FROM hr_non_working_day AS n WHERE n.from<='$date' AND n.until>='$date' $period " );
-        $query = $cmd->query();
-        $data = $query->read();
-
-        return $data['nbre'];
-    }
-
-    public function isVacation($date, $period='allday')
-    {
-        if($period=='morning' || $period=='afternoon')
-        {
-            $period =  " AND ( period='$period' OR period='allday') ";
-        }
-        else
-            $period =  " AND period='$period'";
-
-
-        $cmd = $this->db->createCommand( "SELECT COUNT(*) AS nbre FROM hr_timux_request AS r LEFT JOIN hr_timux_request_leave AS l ON l.request_id=r.id  WHERE r.userId=".$this->employeeId." AND l.datefrom<='$date' AND l.dateto>='$date' AND ( r.state='validate' OR r.state='closed' ) $period" );
-        $query = $cmd->query();
-        $data = $query->read();
-
-        return $data['nbre'];
-    }
-
-    public function getTimeCode($date, $period='allday')
-    {
-        if($period=='morning' || $period=='afternoon')
-        {
-            $period =  " AND ( period='$period' OR period='allday') ";
-        }
-        else
-            $period =  " AND period='$period'";
-
-
-        $cmd = $this->db->createCommand( "SELECT * FROM hr_timux_request AS r LEFT JOIN hr_timux_request_leave AS l ON l.request_id=r.id LEFT JOIN hr_timux_timecode AS t ON t.id=r.timecodeId WHERE r.userId=".$this->employeeId." AND l.datefrom<='$date' AND l.dateto>='$date' AND ( r.state='validate' OR r.state='closed' ) $period" );
-        $query = $cmd->query();
-        $data = $query->read();
-
-        return $data;
-    }
-
-    public function getConfigTimeBooking()
-    {
-        $cmd = $this->db->createCommand( "SELECT * FROM hr_timux_config" );
-        $query = $cmd->query();
-        $data = $query->read();
-
-        $res[1] = $data['hoursBlockMorning1'];
-        $res[2] = $data['hoursBlockMorning2'];
-        $res[3] = $data['hoursBlockMorning3'];
-        $res[4] = $data['hoursBlockMorning4'];
-        $res[5] = $data['hoursBlockAfternoon1'];
-        $res[6] = $data['hoursBlockAfternoon2'];
-        $res[7] = $data['hoursBlockAfternoon3'];
-        $res[8] = $data['hoursBlockAfternoon4'];
-
-        return $res;
-    }
-
-
-
-    public function getHoursByDay()
-    {
-        $config = $this->getConfig();
-
-        return bcdiv($config['hoursByWeek'] , $config['daysByWeek'], 2);
-    }
-
-    public function closeMonth($year, $month)
-    {
-        
-        $hoursByDay = $this->getHoursByDay();
-
-        // check if the month is already closed
-        $cmd=$this->db->createCommand("SELECT * FROM hr_timux_closed_month WHERE user_id=".$this->employeeId);
-        $data = $cmd->query();
-        $data = $data->readAll();
-
-        $error = $this->getError($year, $month);
-
-        if(count($data)==0 && count($error) == 0)
-        {
-            $request = $this->getRequest($year, $month);
-
-            foreach($request as $k=>$v)
-            {
-                $cmd=$this->db->createCommand("SELECT * FROM hr_timux_timecode WHERE id=".$k);
-                $data = $cmd->query();
-                $data = $data->read();
-
-                if($data['type'] == 'leave')
-                    $this->updateCounter($k,$v['nbre'],$year, $month,"-");
-                if($data['type'] == 'absence')
-                    $this->updateCounter($k,$v['nbre'],$year, $month,"+");
-            }
-
-            //update the counter according to overtime
-            $timeCodeId = $this->getDefaultOvertimeCounter();
-            $nbreOfHours = $this->getMonthOvertime($year, $month);
-            $this->updateCounter($timeCodeId,$nbreOfHours,$year, $month,"+");
-
-            // add the vacation day to the counter
-            if($month == 12)
-            {
-                $wt = $this->getWorkingTime($year, $month);
-                $nbre = $wt['holidaysByYear'];
-                $nbre = bcdiv( bcmul($nbre, $wt['workingPercent'],2), 100.0, 2);
-                $timeCodeId = $this->getDefaultHolidaysCounter();
-                $cmd=$this->db->createCommand("UPDATE hr_timux_activity_counter SET nbre=nbre+$nbre WHERE year=0 AND month=0 AND user_id=".$this->employeeId." AND timecode_id=".$timeCodeId);
-                $cmd->execute();
-
-            }
-
-
-            // set the month as closed
-            $cmd = $this->db->createCommand( "INSERT INTO hr_timux_closed_month SET user_id=".$this->employeeId." , year=$year, month=$month" );
-            $query = $cmd->execute();
-
-            // set the validate request to closed
-            $this->closeRequest($year,$month);
-
-        }
-    }
-
-    public function closeRequest($year,$month)
-    {
-        $dateFrom = $year."-".$month."-1";
-        $dateTo = $year."-".$month."-".date("t",mktime(0,0,0,$month,1,$year));
-
-        $cmd=$this->db->createCommand("SELECT r.id FROM hr_timux_request AS r LEFT JOIN hr_timux_request_leave AS rl ON rl.request_id=r.id LEFT JOIN hr_timux_timecode AS t ON t.id=r.timecodeId WHERE rl.datefrom>='".$dateFrom."' AND rl.dateto<='".$dateTo."' AND r.state='validate' AND r.userId=".$this->employeeId);
-
-        $data = $cmd->query();
-        $data = $data->readAll();
-
-        $app = Prado::getApplication();
-        $usedId = $app->getUser()->getUserID() == null ? 0 : $app->getUser()->getUserID();
-
-        $cmd=$this->db->createCommand("SELECT user_id FROM hr_superusers WHERE id=$usedId");
-        $data2 = $cmd->query();
-        $dataUser = $data2->read();
-        $userId = $dataUser['user_id'];
-
-        foreach($data as $d)
-        {
-            $cmd=$this->db->createCommand("UPDATE hr_timux_request SET state='closed', modifyDate=CURDATE(),modifyUserId=".$userId." WHERE id=".$d['id']);
-            $cmd->execute();
-        }
-    }
-
-
-
-    public function getRequest($year,$month)
-    {
-
-        $hoursByDay = $this->getHoursByDay();
-
-        $dateFrom = $year."-".$month."-1";
-        $dateTo = $year."-".$month."-".date("t",mktime(0,0,0,$month,1,$year));
-
-        $wt = $this->getWorkingTime($year, $month);
-
-        //update the counter according to the leave request
-        $cmd=$this->db->createCommand("SELECT * FROM hr_timux_request AS r LEFT JOIN hr_timux_request_leave AS rl ON rl.request_id=r.id LEFT JOIN hr_timux_timecode AS t ON t.id=r.timecodeId WHERE rl.datefrom>='".$dateFrom."' AND rl.dateto<='".$dateTo."' AND ( r.state='validate' OR  r.state='closed') AND r.userId=".$this->employeeId);
-
-        $data = $cmd->query();
-        $data = $data->readAll();
-
-        $nbreOfHours = array();
-
-        foreach($data AS $d)
-        {
-            $dateStart = $d['datefrom'];
-            $dateTo = $d['dateto'];
-            $period = $d['period'];
-            $timecodeId = $d['timecodeId'];
-            $format = $d['formatDisplay'];
-
-            if(!isset($nbreOfHours[$timecodeId]))
-            {
-                $nbreOfHours[$timecodeId]['nbre'] = 0.0;
-                $nbreOfHours[$timecodeId]['disp'] = $format;
-
-            }
-
-            if($dateTo == '0000-00-00' ) $dateTo = $dateStart;
-
-
-            if($dateTo == $dateStart)
-            {
-                $date = explode("-",$dateTo);
-                $hoursM = $this->isNeedWorking($date[0], $date[1],  date("N",mktime(0,0,0,$date[1],$date[2],$date[0])),'m', $date[2]);
-                $hoursA = $this->isNeedWorking($date[0], $date[1],  date("N",mktime(0,0,0,$date[1],$date[2],$date[0])),'a', $date[2]);
-
-                if($period == 'morning') $hoursA = 0.0;
-                if($period == 'afternoon') $hoursM = 0.0;
-
-                if($hoursM || $hoursA )
-                {
-                   if($this->isNonWorkingDay($dateTo,'morning')) $hoursM = 0;
-                   if($this->isNonWorkingDay($dateTo,'afternoon')) $hoursA = 0;
-                   $nbreOfHours[$timecodeId]['nbre'] += ($hoursM + $hoursA);
-                }
-
-            }
-            else
-            {
-
-                while($dateStart != $dateTo)
-                {
-                    $date = explode("-",$dateStart);
-
-                    $hoursM = $this->isNeedWorking($date[0], $date[1],  date("N",mktime(0,0,0,$date[1],$date[2],$date[0])),'m',$date[2]);
-                    $hoursA = $this->isNeedWorking($date[0], $date[1],  date("N",mktime(0,0,0,$date[1],$date[2],$date[0])),'a',$date[2]);
-
-                    if($period == 'morning') $hoursA = 0.0;
-                    if($period == 'afternoon') $hoursM = 0.0;
-
-                    if($hoursM || $hoursA )
-                    {
-
-                       if($this->isNonWorkingDay($dateStart,'morning')) $hoursM = 0;
-                       if($this->isNonWorkingDay($dateStart,'afternoon')) $hoursA = 0;
-
-                       $nbreOfHours[$timecodeId]['nbre'] += ($hoursM + $hoursA);
-                    }
-
-                    $dateStart = date("Y-m-d",strtotime(date("Y-m-d", strtotime($dateStart)) . " +1 day"));
-
-                }
-
-                $date = explode("-",$dateTo);
-                $hoursM = $this->isNeedWorking($date[0], $date[1],  date("N",mktime(0,0,0,$date[1],$date[2],$date[0])),'m', $date[2]);
-                $hoursA = $this->isNeedWorking($date[0], $date[1],  date("N",mktime(0,0,0,$date[1],$date[2],$date[0])),'a', $date[2]);
-
-                if($period == 'morning') $hoursA = 0.0;
-                if($period == 'afternoon') $hoursM = 0.0;
-
-                if($hoursM || $hoursA )
-                {
-                   if($this->isNonWorkingDay($dateTo,'morning')) $hoursM = 0;
-                   if($this->isNonWorkingDay($dateTo,'afternoon')) $hoursA = 0;
-                   $nbreOfHours[$timecodeId]['nbre'] += ($hoursM + $hoursA);
-                }
-
-            }
-
-        }
-
-        foreach($nbreOfHours as $k=>$v)
-        {
-            if($nbreOfHours[$k]['disp'] == 'day')
-            {
-               $nbreOfHours[$k]['nbre'] = bcdiv($nbreOfHours[$k]['nbre'], $hoursByDay, 4);
-            }
-        }
-        
-        return $nbreOfHours;
-    }
-
-    public function updateCounter($timeCodeId,$nbreOfHours, $year, $month, $func)
-    {
-        $cmd=$this->db->createCommand("SELECT * FROM hr_timux_activity_counter  WHERE  user_id=".$this->employeeId." AND timecode_id=".$timeCodeId." AND month=0 AND year=0");
-
-        $data = $cmd->query();
-        $data = $data->read();
-
-        $cmd=$this->db->createCommand("INSERT hr_timux_activity_counter SET nbre=".$data['nbre'].$func."$nbreOfHours, year=$year, month=$month, user_id=".$this->employeeId.", timecode_id=".$timeCodeId);
-        $cmd->execute();
-
-        $cmd=$this->db->createCommand("UPDATE hr_timux_activity_counter SET nbre=nbre".$func."$nbreOfHours WHERE year=0 AND month=0 AND user_id=".$this->employeeId." AND timecode_id=".$timeCodeId);
-        $cmd->execute();
-
-    }
-
-    public function getDefaultOvertimeCounter()
-    {
-        $cmd = $this->db->createCommand( "SELECT id FROM hr_timux_timecode WHERE defaultOvertime=1" );
-        $query = $cmd->query();
-        $data = $query->read();
-        return $data['id'];
-    
-    }
-
-    public function getDefaultHolidaysCounter()
-    {
-        $cmd = $this->db->createCommand( "SELECT id FROM hr_timux_timecode WHERE defaultHoliday=1" );
-        $query = $cmd->query();
-        $data = $query->read();
-        return $data['id'];
-
-    }
-
-    public function getMonthOvertime($year, $month)
-    {
-        $res = 0.0;
-        $nbreOfDay = date("t",mktime(0,0,0,$month,1,$year));
-
-        if($year == date('Y') && $month==date('n'))
-            $nbreOfDay = date('j')-1;
-
-        for($i=1; $i<=$nbreOfDay;$i++)
-        {
-            $time = $this->getDayOvertime($year, $month, $i);
-
-            $res = bcadd($time['overtime'], $res, 4);
-        }
-        return $res;
-    }
-
-    public function getTimeWorkedMonth($year, $month)
-    {
-        $res = 0.0;
-        $nbreOfDay = date("t",mktime(0,0,0,$month,1,$year));
-
-        if($year == date('Y') && $month==date('n'))
-            $nbreOfDay = date('j')-1;
-
-        for($i=1; $i<=$nbreOfDay;$i++)
-        {
-            $time = $this->getDayOvertime($year, $month, $i);
-
-            $res = bcadd($time['inHours'], $res, 4);
-        }
-        return $res;
-    }
-
-    public function geHolidaystLastMonth($year, $month)
-    {
-        if($month == 1)
-        {
-            $month = 12;
-            $year -=1;
-        }
-        else
-            $month -= 1;
-
-        $timeCode = $this->getDefaultHolidaysCounter();
-
-        $cmd = $this->db->createCommand( "SELECT * FROM hr_timux_activity_counter WHERE year=$year AND month=$month AND timecode_id=$timeCode AND user_id=".$this->employeeId );
-        $query = $cmd->query();
-        $data = $query->read();
-
-        return $data['nbre'];
-    }
-
-    public function geHolidaystMonth($year, $month)
-    {
-        $timeCode = $this->getDefaultHolidaysCounter();
-
-        $cmd = $this->db->createCommand( "SELECT * FROM hr_timux_activity_counter WHERE year=$year AND month=$month AND timecode_id=$timeCode AND user_id=".$this->employeeId );
-        $query = $cmd->query();
-        $data = $query->read();
-
-        if($data)
-        {
-            return $data['nbre'];
-        }
-        else
-        {
-            $cmd = $this->db->createCommand( "SELECT * FROM hr_timux_activity_counter WHERE year=0 AND month=0 AND timecode_id=$timeCode AND user_id=".$this->employeeId );
-            $query = $cmd->query();
-            $data = $query->read();
-            return $data['nbre'];
-        }
-    }
-
-    public function getOvertimeLastMonth($year, $month)
-    {
-        if($month == 1)
-        {
-            $month = 12;
-            $year -=1;
-        }
-        else
-            $month -= 1;
-
-        $timeCode = $this->getDefaultOvertimeCounter();
-
-        $cmd = $this->db->createCommand( "SELECT * FROM hr_timux_activity_counter WHERE year=$year AND month=$month AND timecode_id=$timeCode AND user_id=".$this->employeeId );
-        $query = $cmd->query();
-        $data = $query->read();
-
-        return $data['nbre'];
-    }
-
-    public function getOvertimeMonth($year, $month)
-    {
-        $timeCode = $this->getDefaultOvertimeCounter();
-
-        $cmd = $this->db->createCommand( "SELECT * FROM hr_timux_activity_counter WHERE year=$year AND month=$month AND timecode_id=$timeCode AND user_id=".$this->employeeId );
-        $query = $cmd->query();
-        $data = $query->read();
-
-        return $data['nbre'];
-    }
-
-    public function getDayOvertime($year, $month, $day)
-    {
-        $hoursWorking = $this->isNeedWorking($year, $month,  date("N",mktime(0,0,0,$month,$day,$year)),'allday', $day);
-        $hoursWorkingM = $this->isNeedWorking($year, $month,  date("N",mktime(0,0,0,$month,$day,$year)), 'm', $day);
-        $hoursWorkingA = $this->isNeedWorking($year, $month,  date("N",mktime(0,0,0,$month,$day,$year)), 'a', $day);
-
-        $date = $year."-".$month."-".$day;
-
-        if($this->isVacation($date, "morning"))
-        {
-            $hoursWorking = bcsub($hoursWorking,$hoursWorkingM,2);
-        }
-
-        if($this->isVacation($date, "afternoon"))
-        {
-            $hoursWorking = bcsub($hoursWorking,$hoursWorkingA,2);
-        }
-
-        if($this->isNonWorkingDay($date, "morning"))
-        {
-            $hoursWorking = bcsub($hoursWorking,$hoursWorkingM,2);
-        }
-
-        if($this->isNonWorkingDay($date, "afternoon"))
-        {
-            $hoursWorking = bcsub($hoursWorking,$hoursWorkingA,2);
-        }
-
-        if($hoursWorking>0)
-        {
-            $cmd = $this->db->createCommand( "SELECT b.roundBooking FROM hr_timux_booking AS b LEFT JOIN hr_tracking AS t ON t.id=b.tracking_id WHERE id_user=".$this->employeeId." AND t.date='".$date."' ORDER BY b.roundBooking" );
-            $query = $cmd->query();
-            $data = $query->readAll();
-
-            $diff = 0;
-
-            for($i=0; $i<count($data);$i+=2)
-            {
-                $in = strtotime ($data[$i]['roundBooking']);
-                $out = strtotime( $data[$i+1]['roundBooking'] );
-
-                $diff += $out - $in;
-
-
-            }
-
-            $diffT = $diff;
-
-            if( $days=intval((floor($diff/86400))) )
-                $diff = $diff % 86400;
-                
-            if( $hours=intval((floor($diff/3600))) )
-                $diff = $diff % 3600;
-
-            if( $minutes=intval((floor($diff/60))) )
-                $diff = $diff % 60;
-
-            $diff    =    intval( $diff );
-
-            $overtime = bcdiv($diffT - bcmul($hoursWorking , 3600, 4),3600,4);
-            $inHours = bcdiv($diffT,3600,4);
-
-            return array('inHours'=>$inHours ,'days'=>$days, 'hours'=>$hours, 'minutes'=>$minutes, 'seconds'=>$diff, 'overtime'=>$overtime);
-
-        }
-        else
-        {
-            $cmd = $this->db->createCommand( "SELECT b.roundBooking FROM hr_timux_booking AS b LEFT JOIN hr_tracking AS t ON t.id=b.tracking_id WHERE id_user=".$this->employeeId." AND t.date='".$date."' ORDER BY b.roundBooking" );
-            $query = $cmd->query();
-            $data = $query->readAll();
-
-            $diff = 0;
-
-            for($i=0; $i<count($data);$i+=2)
-            {
-                $in = strtotime ($data[$i]['roundBooking']);
-                $out = strtotime( $data[$i+1]['roundBooking'] );
-
-                $diff += $out - $in;
-
-
-            }
-
-            $diffT = $diff;
-
-            if( $days=intval((floor($diff/86400))) )
-                $diff = $diff % 86400;
-
-            if( $hours=intval((floor($diff/3600))) )
-                $diff = $diff % 3600;
-
-            if( $minutes=intval((floor($diff/60))) )
-                $diff = $diff % 60;
-
-            $diff    =    intval( $diff );
-
-            $overtime = bcdiv($diffT,3600,4);
-            $inHours = bcdiv($diffT,3600,4);
-
-            return array('inHours'=>$inHours ,'days'=>$days, 'hours'=>$hours, 'minutes'=>$minutes, 'seconds'=>$diff, 'overtime'=>$overtime);
-        }
-    }*/
-
-
-
-    /*
-     * Return the number of hours that musst be done in a month
-     */
-    /*public function getHoursMonth($year, $month)
-    {
-        $config = $this->getConfig();
-        $hoursByDay = $this->getHoursByDay();
-
-        $nbreOfDay =  date("t",mktime(0,0,0,$month,1,$year));
-
-        $res = 0.0;
-        for($i=1;$i<=$nbreOfDay; $i++)
-        {
-            $day =  date("w",mktime(0,0,0,$month,$i,$year));
-            $sqlDate = "$year-$month-$i";
-
-            if($day >= 1 && $day <= 5)
-            {
-                if(!$this->isNonWorkingDay($sqlDate, 'morning') && !$this->isNonWorkingDay($sqlDate, 'afternoon'))
-                {
-                    $res = bcadd($hoursByDay,$res,2);
-                }
-                else
-                {
-                    if(!$this->isNonWorkingDay($sqlDate, 'morning'))
-                    {
-                        $res = bcadd(bcdiv($hoursByDay,2,2),$res,2);
-                    }
-                    
-                    if(!$this->isNonWorkingDay($sqlDate, 'afternoon'))
-                    {
-                        $res = bcadd(bcdiv($hoursByDay,2,2),$res,2);
-                    }
-                }
-            }
-        }
-
-        return $res;
-    }
-
-
-    function getTodoByDay($year, $month)
-    {
-        $nbreOfDay = date("t",mktime(0,0,0,$month,1,$year));
-        $percentage = $this->getPercentage($year,$month);
-        $hoursForTheMonth = $this->getHoursMonth($year, $month);
-        $hoursForTheMonthAtX = bcdiv(bcmul($hoursForTheMonth,$percentage,2),100.00,4);
-
-        $daysForTheMonth = 0;
-
-        for($i=1; $i<=$nbreOfDay;$i++)
-        {
-           if($this->isNeedWorking($year, $month, date("N",mktime(0,0,0,$month,$i,$year)),'allday', $i) > 0.0)
-           {
-                $daysForTheMonth++;
-           }
-        }
-
-        return bcdiv($hoursForTheMonthAtX,$daysForTheMonth,4);
-
-    }*/
+    }    
 }
 
 ?>

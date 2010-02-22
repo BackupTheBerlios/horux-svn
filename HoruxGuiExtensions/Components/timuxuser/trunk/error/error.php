@@ -76,7 +76,7 @@ class error extends PageList
             $this->FilterDepartment->DataSource=$this->DepartmentList;
             $this->FilterDepartment->dataBind();
 
-            if($FilterDepartment !== false)
+            if($FilterDepartment)
                 $this->FilterDepartment->setSelectedValue($FilterDepartment);
             else
                 $this->FilterDepartment->setSelectedIndex(0);

@@ -35,25 +35,24 @@ class closemonth extends PageList
 
         if(!$this->IsPostBack)
         {
-            $cmd=$this->db->createCommand("SELECT w.startDate FROM hr_timux_workingtime AS w ORDER BY w.startDate LIMIT 0,1");
+            $cmd=$this->db->createCommand("SELECT t.date FROM hr_tracking AS t ORDER BY t.date LIMIT 0,1");
             $data = $cmd->query();
             $data = $data->readAll();
 
-            $year = date("Y")-1;
-
+            $year = date("Y");
             if(count($data)>0)
             {
-                $year = explode("-",$data[0]['startDate']);
+                $year = explode("-",$data[0]['date']);
                 $year = $year[0];
             }
-
-            $currentYear = $year;
+            $currentYear = date("Y");
 
             $yearList = array();
             for($i=$year; $i<= $currentYear;$i++ )
             {
                 $yearList[] = array('Value'=>$i, 'Text'=>$i);
             }
+
 
             $this->FilterYear->DataSource=$yearList;
             $this->FilterYear->dataBind();
@@ -84,6 +83,9 @@ class closemonth extends PageList
                 
             if($FilterYear)
                 $this->FilterYear->setSelectedValue($FilterYear);
+            else
+                $this->FilterYear->setSelectedIndex(0);
+
 
             if($FilterMonth)
             {
@@ -93,7 +95,7 @@ class closemonth extends PageList
             if($FilterDepartment)
                 $this->FilterDepartment->setSelectedValue($FilterDepartment);
             else
-                $this->FilterDepartment->setSelectedValue(0);
+                $this->FilterDepartment->setSelectedIndex(0);
 
             $this->DataGrid->DataSource=$this->Data;
             $this->DataGrid->dataBind();
@@ -193,7 +195,22 @@ class closemonth extends PageList
                         $wt = $employee->getWorkingTime($y, $m);
                         if($wt)
                         {
-                            $count = -3;
+                            if($this->FilterYear->getItems()->count() >= 1)
+                            {
+                                $item = $this->FilterYear->getItems()->itemAt(0);
+
+                                if($item->getValue() == $year )
+                                {
+                                    $isError = $employee->getError($this->FilterYear->getSelectedValue(),$this->FilterMonth->getSelectedValue());
+                                    $count = count($isError);
+                                }
+                                else
+                                {
+                                    $count = -3;
+                                }
+                            }
+                            else
+                                $count = -2;
                         }
                         else
                         {

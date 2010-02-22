@@ -402,7 +402,7 @@ class year extends PageList
             if($this->employee->getTimeHoursDayTodo($year,$i)>0)
             {
                 $aDay = bcdiv($monthTimeWorked['absence'],$this->employee->getTimeHoursDayTodo($year,$i),4);
-                $absence = bcadd($absence,$aDay,4);
+                $absence = bcadd($absence['nbre'],$aDay,4);
             }
             else
             {

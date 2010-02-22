@@ -257,6 +257,31 @@ class mod extends Page
     }
 
 
+    public function onDelete($sender,$param)
+    {
+        $cmd=$this->db->createCommand("SELECT * FROM hr_timux_booking WHERE tracking_id =:id");
+        $cmd->bindParameter(":id",$this->id->Value);
+        $query = $cmd->query();
+        $data = $query->read();
+
+        if($data['closed'] == '0')
+        {
+            $cmd=$this->db->createCommand("DELETE FROM hr_tracking WHERE id =:id");
+            $cmd->bindParameter(":id",$this->id->Value);
+            $cmd->execute();
+
+
+            $cmd=$this->db->createCommand("DELETE FROM hr_timux_booking WHERE tracking_id =:id");
+            $cmd->bindParameter(":id",$this->id->Value);
+            $cmd->execute();
+        }
+
+        if(isset($this->Request['back']))
+            $this->Response->redirect($this->Service->constructUrl($this->Request['back']));
+        else
+            $this->Response->redirect($this->Service->constructUrl('components.timuxuser.booking.booking'));
+    }
+
     public function onCancel($sender, $param)
     {
         if(isset($this->Request['back']))

@@ -8,6 +8,7 @@
         SaveVisible="true"
         CancelVisible="true"
         HelpVisible="true"
+        SavePlusVisible="true"
         />
 
     <%include Application.common.template.headerBoxContent %>

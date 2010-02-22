@@ -2,7 +2,7 @@
     <%include Application.common.template.headerContent %>
     <com:TToolbarBox
         ID="tbb"
-        Title="<%[Modify a leave]%>"
+        Title="<%[Add a leave]%>"
         IconAsset="<%~ ../assets/leave.png %>"
         SaveVisible="true"
         CancelVisible="true"

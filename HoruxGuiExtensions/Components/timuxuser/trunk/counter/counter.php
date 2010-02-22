@@ -61,17 +61,29 @@ class counter extends PageList
 
 
             if($FilterEmployee)
+            {
                 $this->FilterEmployee->Text = $FilterEmployee;
+            }
 
-            if($FilterTimecode)
-                 $this->FilterTimecode->setSelectedValue($FilterTimecode);
-            else
-                $this->FilterTimecode->setSelectedValue(0);
+
 
             if($FilterDepartment)
+            {
                 $this->FilterDepartment->setSelectedValue($FilterDepartment);
+            }
             else
-                $this->FilterTimecode->setSelectedValue(0);
+            {
+                $this->FilterDepartment->setSelectedIndex(0);
+            }
+
+            if($FilterTimecode)
+            {
+                 $this->FilterTimecode->setSelectedValue($FilterTimecode);
+            }
+            else
+            {
+                $this->FilterTimecode->setSelectedIndex(0);
+            }
 
             $this->DataGrid->DataSource=$this->Data;
             $this->DataGrid->dataBind();
