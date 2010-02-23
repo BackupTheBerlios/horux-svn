@@ -77,7 +77,12 @@ class mod extends Page
         $cmd->execute();
 
         $pBack = array('okMsg'=>Prado::localize('The non working day was deleted successfully'), 'id'=>$this->id->Value);
-        $this->Response->redirect($this->Service->constructUrl('nonWorkingDay.nonWorkingDay', $pBack));
+
+
+        if($this->Request['back'])
+            $this->Response->redirect($this->Service->constructUrl($this->Request['back'], $pBack));
+        else
+            $this->Response->redirect($this->Service->constructUrl('nonWorkingDay.nonWorkingDay', $pBack));
     }
 
     public function onApply($sender, $param)
@@ -87,11 +92,19 @@ class mod extends Page
             if($this->saveData())
             {
                 $pBack = array('okMsg'=>Prado::localize('The non working day was modified successfully'), 'id'=>$this->id->Value);
+
+                if($this->Request['back'])
+                    $pBack['back'] = $this->Request['back'];
+
                 $this->Response->redirect($this->Service->constructUrl('nonWorkingDay.mod', $pBack));
             }
             else
             {
                 $pBack = array('koMsg'=>Prado::localize('The non workong day was not modified'), 'id'=>$this->id->Value);
+
+                if($this->Request['back'])
+                    $pBack['back'] = $this->Request['back'];
+
                 $this->Response->redirect($this->Service->constructUrl('nonWorkingDay.mod', $pBack));
             }
         }
@@ -106,16 +119,28 @@ class mod extends Page
                 $pBack = array('okMsg'=>Prado::localize('The non working day was modified successfully'));
             }
             else
-            $pBack = array('koMsg'=>Prado::localize('The non working day was not modified'));
+            {
+                $pBack = array('koMsg'=>Prado::localize('The non working day was not modified'));
+            }
+            
             $this->blockRecord('hr_non_working_day', $this->id->Value, 0);
-            $this->Response->redirect($this->Service->constructUrl('nonWorkingDay.nonWorkingDay',$pBack));
+
+
+            if($this->Request['back'])
+                $this->Response->redirect($this->Service->constructUrl($this->Request['back'],$pBack));
+            else
+                $this->Response->redirect($this->Service->constructUrl('nonWorkingDay.nonWorkingDay',$pBack));
         }
     }
 
     public function onCancel($sender, $param)
     {
         $this->blockRecord('hr_non_working_day', $this->id->Value, 0);
-        $this->Response->redirect($this->Service->constructUrl('nonWorkingDay.nonWorkingDay'));
+
+        if($this->Request['back'])
+            $this->Response->redirect($this->Service->constructUrl($this->Request['back']));
+        else
+            $this->Response->redirect($this->Service->constructUrl('nonWorkingDay.nonWorkingDay'));
     }
 
     protected function saveData()
