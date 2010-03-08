@@ -171,7 +171,7 @@ class Status extends Page
         }
         else
         {
-            if($param['appMode'] === 'production')
+            if($param['appMode'] === 'demo')
             {
                 return file_get_contents('demo.xml');
             }

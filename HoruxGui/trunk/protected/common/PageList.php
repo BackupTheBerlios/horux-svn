@@ -263,7 +263,7 @@ class PageList extends TPage
             $query = $cmd->query();
             $data = $query->read();
             
-            include("PrintList.php");
+            include_once("PrintList.php");
             
             $this->pdf = new PrintListPDF();
             $this->pdf->userName = $this->application->getUser()->getName();

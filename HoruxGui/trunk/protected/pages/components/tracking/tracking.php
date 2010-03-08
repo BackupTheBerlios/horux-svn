@@ -329,6 +329,7 @@ class tracking extends PageList
             $accessMessage[9] = Prado::localize("No access for this access point");
             $accessMessage[10] = Prado::localize("Not handled by Horux");
             $accessMessage[11] = Prado::localize("The person is blocked");
+            $accessMessage[12] = Prado::localize("PIN-Code incorrect");
 
             if($item->ItemType==='Item' || $item->ItemType==='AlternatingItem' )
             {

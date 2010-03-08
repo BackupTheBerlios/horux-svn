@@ -44,6 +44,14 @@ class Notification extends PageList
         {
             $this->displayMessage($this->Request['koMsg'], false);
         }
+
+        $param = $this->Application->getParameters();
+        $superAdmin = $this->Application->getUser()->getSuperAdmin();
+
+        if($param['appMode'] == 'demo' && $superAdmin == 0)
+        {
+            $this->tbb->delete->setEnabled(false);
+        }
     }
 
     public function checkboxAllCallback($sender, $param)

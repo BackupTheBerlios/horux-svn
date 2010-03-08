@@ -35,6 +35,15 @@ class NotificationMod extends Page
             $this->setData();
 
         }
+
+          $param = $this->Application->getParameters();
+          $superAdmin = $this->Application->getUser()->getSuperAdmin();
+
+          if($param['appMode'] == 'demo' && $superAdmin == 0)
+          {
+                  $this->tbb->Save->setEnabled(false);
+                  $this->tbb->apply->setEnabled(false);
+          }  
     }
 
     protected function getSUList()
