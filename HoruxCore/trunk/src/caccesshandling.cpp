@@ -145,14 +145,19 @@ bool CAccessHandling::loadPlugin()
                           SLOT ( deviceInputMonitor(int,int,bool) ) );
 
                 accessInterfaces[pName] =  qobject_cast<CAccessInterface *> ( plugin );
-
-                qobject_cast<CAccessInterface *> ( plugin )->setAccessInterfaces ( accessInterfaces );
             }
             else
             {
                 qWarning ( "Unknown plugin access name : %s", pName.toLatin1().constData() );
             }
         }
+    }
+
+    QMapIterator<QString, CAccessInterface*> i ( accessInterfaces );
+    while ( i.hasNext() )
+    {
+        i.next();
+        i.value()->setAccessInterfaces ( accessInterfaces );
     }
 
     return true;
