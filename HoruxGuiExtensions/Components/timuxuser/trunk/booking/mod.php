@@ -51,7 +51,10 @@ class mod extends Page
             {
                 $pBack = array('koMsg'=>Prado::localize('Cannot modified a closed signing'));
 
-                $this->Response->redirect($this->Service->constructUrl('components.timuxuser.booking.booking',$pBack));
+                if(isset($this->Request['back']))
+                    $this->Response->redirect($this->Service->constructUrl($this->Request['back'],$pBack));
+                else
+                    $this->Response->redirect($this->Service->constructUrl('components.timuxuser.booking.booking',$pBack));
             }
 
 

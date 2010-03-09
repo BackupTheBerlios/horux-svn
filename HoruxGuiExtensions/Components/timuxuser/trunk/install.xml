@@ -27,6 +27,7 @@
             <submenu iconmenu="icon-16-bug.png" url="components.timuxuser.error.error" name="Errors" ></submenu>
             <submenu iconmenu="icon-16-closemonth.png" url="components.timuxuser.closemonth.closemonth" name="Close Month" ></submenu>
             <submenu iconmenu="icon-16-balances.png" url="components.timuxuser.balances.balances" name="Balances" ></submenu>
+            <submenu iconmenu="icon-16-calendar.png" url="components.timuxuser.calendar.calendar" name="Calendar" ></submenu>
         </submenus>       
     </menu>
   </mainmenu>
@@ -56,6 +57,7 @@
     <permission id="22" parent="0">components.timuxuser.closemonth.closemonth</permission>
     <permission id="23" parent="0">components.timuxuser.balances.balances</permission>
     <permission id="24" parent="23">components.timuxuser.balances.year</permission>
+    <permission id="25" parent="0">components.timuxuser.calendar.calendar</permission>
   </permissions>
 
 </install>

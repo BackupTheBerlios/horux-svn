@@ -192,6 +192,7 @@ class closemonth extends PageList
 
                     if(count($data2)==0)
                     {
+
                         $wt = $employee->getWorkingTime($y, $m);
                         if($wt)
                         {
@@ -199,7 +200,9 @@ class closemonth extends PageList
                             {
                                 $item = $this->FilterYear->getItems()->itemAt(0);
 
-                                if($item->getValue() == $year )
+                                $startDate = explode("-",$wt);
+
+                                if($y != $year )
                                 {
                                     $isError = $employee->getError($this->FilterYear->getSelectedValue(),$this->FilterMonth->getSelectedValue());
                                     $count = count($isError);
@@ -214,8 +217,7 @@ class closemonth extends PageList
                         }
                         else
                         {
-                            $isError = $employee->getError($this->FilterYear->getSelectedValue(),$this->FilterMonth->getSelectedValue());
-                            $count = count($isError);
+                            $count = -2;
                         }
                     }
                     else
@@ -326,11 +328,12 @@ class closemonth extends PageList
                     $employee = new employee( $cb->Value );
                     
                     $employee->closeMonth($this->FilterYear->getSelectedValue(),$this->FilterMonth->getSelectedValue());
+
+                    unset($employee);
                 }
             }
 
-            $pBack = array('okMsg'=>Prado::localize('The month was closed'));
-            $this->Response->redirect($this->Service->constructUrl('components.timuxuser.closemonth.closemonth',$pBack));
+            $this->onRefresh($sender, $param);
 
         }
         else

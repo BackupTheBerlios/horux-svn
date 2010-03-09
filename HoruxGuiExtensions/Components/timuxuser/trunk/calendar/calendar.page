@@ -1,0 +1,135 @@
+<com:TContent ID="Main">
+    
+    <link rel="stylesheet" type="text/css" href="<%~ ../assets/fullcalendar/fullcalendar.css %>" />
+
+    <com:TClientScript ScriptUrl="<%~ ../assets/fullcalendar/jquery/jquery.js %>" />
+    <com:TClientScript ScriptUrl="<%~ ../assets/fullcalendar/jquery/ui.core.js %>" />
+    <com:TClientScript ScriptUrl="<%~ ../assets/fullcalendar/jquery/ui.draggable.js %>" />
+    <com:TClientScript ScriptUrl="<%~ ../assets/fullcalendar/jquery/ui.resizable.js %>" />
+    <com:TClientScript ScriptUrl="<%~ ../assets/fullcalendar/fullcalendar.min.js %>" />
+    <com:TClientScript ScriptUrl="<%~ ../assets/jquery-qtip/jquery.qtip-1.0.0-rc3.min.js %>" />
+
+    <link rel="stylesheet" type="text/css" href="index.php?page=components.timuxuser.calendar.calendar&ajax=getStyleSheet" />
+
+
+    <script type='text/javascript'>
+     var $j = jQuery.noConflict();
+
+        $j(document).ready(function() {
+
+
+		$j('#calendar').fullCalendar({
+
+			header: {
+				left: 'prev,next today',
+				center: 'title',
+				right: 'month,agendaWeek,agendaDay'
+			},
+
+            allDayText:'<%[All the day]%>',
+            
+            timeFormat: {
+                    agenda : 'H:mm{ - H:mm}',
+                    '': 'H:mm{ - H:mm}'
+                },
+
+            axisFormat : 'H:mm{ - H:mm}',
+
+            defaultEventMinutes : <%= $this->defaultEventMinutes %>,
+
+
+            monthNames: ['<%[January]%>', '<%[February]%>', '<%[March]%>', '<%[April]%>', '<%[May]%>', '<%[June]%>', '<%[July]%>',
+                            '<%[August]%>', '<%[September]%>', '<%[October]%>', '<%[November]%>', '<%[December]%>'],
+
+            buttonText : {
+                prev:     '&nbsp;&#9668;&nbsp;',  // left triangle
+                next:     '&nbsp;&#9658;&nbsp;',  // right triangle
+                prevYear: '&nbsp;&lt;&lt;&nbsp;', // <<
+                nextYear: '&nbsp;&gt;&gt;&nbsp;', // >>
+                today:    '<%[today]%>',
+                month:    '<%[month]%>',
+                week:     '<%[week]%>',
+                day:      '<%[day]%>'
+            },
+
+            monthNamesShort : ['<%[Jan]%>', '<%[Feb]%>', '<%[Mar]%>', '<%[Apr]%>', '<%[May]%>', '<%[Jun]%>',
+                                '<%[Jul]%>', '<%[Aug]%>', '<%[Sep]%>', '<%[Oct]%>', '<%[Nov]%>', '<%[Dec]%>'],
+
+
+            dayNames : ['<%[Sunday]%>', '<%[Monday]%>', '<%[Tuesday]%>', '<%[Wednesday]%>', '<%[Thursday]%>', '<%[Friday]%>', '<%[Saturday]%>'],
+
+            dayNamesShort : ['<%[Sun]%>', '<%[Mon]%>', '<%[Tue]%>', '<%[Wed]%>', '<%[Thu]%>', '<%[Fri]%>', '<%[Sat]%>'],
+
+
+			editable: false,
+
+			events: "index.php?page=components.timuxuser.calendar.calendar&ajax=getDate",
+
+			eventDrop: function(event, delta) {
+				alert(event.title + ' was moved ' + delta + ' days\n' +
+					'(should probably update your database)');
+			},
+
+			loading: function(bool) {
+				if (bool) $j('#loading').show();
+				else $j('#loading').hide();
+			},
+
+            eventRender: function(event, element) {
+                    if(event.description)
+                    {
+                        element.qtip({
+                            content: event.description,
+                            style: {
+                              border: {
+                                 width: 3,
+                                 radius: 8,
+                                 color: '#7FB37F'
+                              },
+                              width: 200
+                            }
+
+                        });
+                    }
+                }
+
+
+		});
+
+	});
+
+    </script>
+
+
+    <style type='text/css'>
+
+    #calendar {
+        width: 80%;
+        margin: 0 auto;
+        }
+
+	#loading {
+		position: absolute;
+		top: 5px;
+		right: 5px;
+		}
+
+    </style>
+
+
+    <%include Application.common.template.headerContent %>
+    <com:TToolbarBox
+        ID="tbb"
+        Title="<%[Calendar]%>"
+        IconAsset="<%~ ../assets/cal.png %>"
+        CancelVisible="true"
+        HelpVisible="true"
+        />
+
+    <%include Application.common.template.headerBoxContent %>
+    
+    <div id='loading' style='display:none'>loading...</div>
+    <div id='calendar'></div>
+
+    <%include Application.common.template.footerContent %>
+</com:TContent>

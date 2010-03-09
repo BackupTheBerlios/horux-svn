@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff version="1.0">
-<file source-language="en" target-language="fr" datatype="plaintext" original="messages" date="2010-01-28T16:54:04Z" product-name="messages">
+<file source-language="en" target-language="fr" datatype="plaintext" original="messages" date="2010-02-23T13:21:01Z" product-name="messages">
 <body>
 <trans-unit id="1">
    <source>Balances - Month</source>
@@ -235,7 +235,7 @@
 </trans-unit>
 <trans-unit id="58">
    <source>Add a sign in/out</source>
-   <target>Ajouter un pointage d'entrée/sortie</target>
+   <target>Ajouter un timbrage d'entrée/sortie</target>
 </trans-unit>
 <trans-unit id="59">
    <source>Sign in/out</source>
@@ -255,7 +255,7 @@
 </trans-unit>
 <trans-unit id="63">
    <source>Select if the sign is a in, out or time code</source>
-   <target>Sélectionnez si le pointage est une arrivé, une sortie ou un code de temps</target>
+   <target>Sélectionnez si le timbrage est une arrivé, une sortie ou un code de temps</target>
 </trans-unit>
 <trans-unit id="64">
    <source>Sign</source>
@@ -287,7 +287,7 @@
 </trans-unit>
 <trans-unit id="71">
    <source>Set the date of the sign</source>
-   <target>Donnez un date pour ce pointage</target>
+   <target>Donnez un date pour ce timbrage</target>
 </trans-unit>
 <trans-unit id="72">
    <source>You must enter a valid date (d-M-yyyy).</source>
@@ -299,7 +299,7 @@
 </trans-unit>
 <trans-unit id="74">
    <source>Enter the time of the sign</source>
-   <target>Entrez une heure pour ce pointage</target>
+   <target>Entrez une heure pour ce timbrage</target>
 </trans-unit>
 <trans-unit id="75">
    <source>Time</source>
@@ -307,11 +307,11 @@
 </trans-unit>
 <trans-unit id="76">
    <source>The sign was added successfully</source>
-   <target>Le pointage a été ajouter avec succès</target>
+   <target>Le timbrage a été ajouter avec succès</target>
 </trans-unit>
 <trans-unit id="77">
    <source>The sign was not added</source>
-   <target>Le pointage n'a pas été ajouté</target>
+   <target>Le timbrage n'a pas été ajouté</target>
 </trans-unit>
 <trans-unit id="78">
    <source>---- Choose a timecode ----</source>
@@ -359,7 +359,7 @@
 </trans-unit>
 <trans-unit id="89">
    <source>{n} booking was deleted</source>
-   <target>{n} pointage ont été supprimés</target>
+   <target>{n} timbrage ont été supprimés</target>
 </trans-unit>
 <trans-unit id="90">
    <source>--- All ---</source>
@@ -367,19 +367,19 @@
 </trans-unit>
 <trans-unit id="91">
    <source>Modify a sign in/out</source>
-   <target>Modifier un pointage d'arrivé/sortie</target>
+   <target>Modifier un timbrage d'arrivé/sortie</target>
 </trans-unit>
 <trans-unit id="92">
    <source>Cannot modified this physical sign</source>
-   <target>Ne peut pas modifier un pointage physique</target>
+   <target>Ne peut pas modifier un timbrage physique</target>
 </trans-unit>
 <trans-unit id="93">
    <source>The sign was modified successfully</source>
-   <target>Ce pointage a été modifié avec succès</target>
+   <target>Ce timbrage a été modifié avec succès</target>
 </trans-unit>
 <trans-unit id="94">
    <source>The sign was not modified</source>
-   <target>Ce pointage n'a pas été modifié</target>
+   <target>Ce timbrage n'a pas été modifié</target>
 </trans-unit>
 <trans-unit id="95">
    <source>Close Month</source>
@@ -459,7 +459,7 @@
 </trans-unit>
 <trans-unit id="114">
    <source>Add signing</source>
-   <target>Ajouter un pointage</target>
+   <target>Ajouter un timbrage</target>
 </trans-unit>
 <trans-unit id="115">
    <source>Timux User</source>
@@ -471,7 +471,7 @@
 </trans-unit>
 <trans-unit id="117">
    <source>My sign in/out</source>
-   <target>Mes pointages d'arrivé/sortie</target>
+   <target>Mes timbrages d'arrivé/sortie</target>
 </trans-unit>
 <trans-unit id="118">
    <source>Leave Request</source>
@@ -719,7 +719,7 @@
 </trans-unit>
 <trans-unit id="179">
    <source>My sign in/ sign out</source>
-   <target>Mes pointage entrée/sortie</target>
+   <target>Mes timbrage entrée/sortie</target>
 </trans-unit>
 <trans-unit id="180">
    <source>Close month</source>
@@ -955,12 +955,12 @@
 
 <trans-unit id="236">
 <source>Cannot modified a closed signing</source>
-<target>Ne peut pas modifier un pointage clôturé</target>
+<target>Ne peut pas modifier un timbrage clôturé</target>
 </trans-unit>
 
 <trans-unit id="237">
 <source>Cannot add a signing in a closed month</source>
-<target>Ne peut pas ajouter un pointage dans un mois clôturé</target>
+<target>Ne peut pas ajouter un timbrage dans un mois clôturé</target>
 </trans-unit>
 
 <trans-unit id="238">
@@ -985,7 +985,7 @@
 
 <trans-unit id="242">
 <source>Signing error</source>
-<target>Erreur de pointage</target>
+<target>Erreur de timbrage</target>
 </trans-unit>
 
 <trans-unit id="243">
@@ -1035,7 +1035,7 @@
 
 <trans-unit id="252">
 <source>A time between two bookings is too small</source>
-<target>Durée trop courte entre deux pointages</target>
+<target>Durée trop courte entre deux timbrages</target>
 </trans-unit>
 
 <trans-unit id="253">
@@ -1066,6 +1066,136 @@
 <trans-unit id="258">
 <source>The time format is not correct (ex: 12:00 or 12:00:00)</source>
 <target>Format incorrecte pour l'heure (ex:12:00 ou 12:00:00)</target>
+</trans-unit>
+
+<trans-unit id="259">
+<source>Add a leave</source>
+<target>Ajouter un congé</target>
+</trans-unit>
+
+<trans-unit id="260">
+<source>Set the frenquency. Only used when the two dates are different</source>
+<target>Cocher la fréquence. Ne sera utilisé que si les deux dates sont différentes.</target>
+</trans-unit>
+
+<trans-unit id="261">
+<source>Frequency</source>
+<target>Fréquence</target>
+</trans-unit>
+
+<trans-unit id="262">
+<source>today</source>
+<target>aujourd\'hui</target>
+</trans-unit>
+
+<trans-unit id="263">
+<source>month</source>
+<target>mois</target>
+</trans-unit>
+
+<trans-unit id="264">
+<source>week</source>
+<target>semaine</target>
+</trans-unit>
+
+<trans-unit id="265">
+<source>day</source>
+<target>jour</target>
+</trans-unit>
+
+<trans-unit id="266">
+<source>Jan</source>
+<target>Jan</target>
+</trans-unit>
+
+<trans-unit id="267">
+<source>Feb</source>
+<target>Fév</target>
+</trans-unit>
+
+<trans-unit id="268">
+<source>Mar</source>
+<target>Mar</target>
+</trans-unit>
+
+<trans-unit id="269">
+<source>Apr</source>
+<target>Avr</target>
+</trans-unit>
+
+<trans-unit id="270">
+<source>Jun</source>
+<target>Jui</target>
+</trans-unit>
+
+<trans-unit id="271">
+<source>Jul</source>
+<target>Jui</target>
+</trans-unit>
+
+<trans-unit id="272">
+<source>Aug</source>
+<target>Aoû</target>
+</trans-unit>
+
+<trans-unit id="273">
+<source>Sep</source>
+<target>Sep</target>
+</trans-unit>
+
+<trans-unit id="274">
+<source>Oct</source>
+<target>Oct</target>
+</trans-unit>
+
+<trans-unit id="275">
+<source>Nov</source>
+<target>Nov</target>
+</trans-unit>
+
+<trans-unit id="276">
+<source>Dec</source>
+<target>Déc</target>
+</trans-unit>
+
+<trans-unit id="277">
+<source>Sun</source>
+<target>Dim</target>
+</trans-unit>
+
+<trans-unit id="278">
+<source>Mon</source>
+<target>Lun</target>
+</trans-unit>
+
+<trans-unit id="279">
+<source>Tue</source>
+<target>Mar</target>
+</trans-unit>
+
+<trans-unit id="280">
+<source>Wed</source>
+<target>Mer</target>
+</trans-unit>
+
+<trans-unit id="281">
+<source>Thu</source>
+<target>Jeu</target>
+</trans-unit>
+
+<trans-unit id="282">
+<source>Fri</source>
+<target>Ven</target>
+</trans-unit>
+
+<trans-unit id="283">
+<source>Sat</source>
+<target>Sam</target>
+</trans-unit>
+
+<trans-unit id="284">
+<source>Calendar</source>
+<target>Calendrier</target>
 </trans-unit>
 </body>
 </file>

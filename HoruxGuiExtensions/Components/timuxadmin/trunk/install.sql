@@ -150,6 +150,7 @@ CREATE TABLE IF NOT EXISTS `hr_timux_timecode` (
   `signtype` set('none','in','out','both') NOT NULL,
   `timeworked` smallint(1) unsigned NOT NULL DEFAULT '0',
   `deviceDisplay` varchar(255) NOT NULL,
+  `color` varchar(7) NOT NULL DEFAULT '#36c',
   PRIMARY KEY (`id`),
   KEY `abbreviation` (`abbreviation`),
   KEY `type` (`type`)

@@ -43,7 +43,7 @@ class mod extends Page
             $this->timeworked->setChecked($data['timeworked']);
             $this->minHour->Text = $data['minHour'];
             $this->maxHour->Text = $data['maxHour'];
-
+            $this->color->Text = $data['color'];
 
             if($data['formatDisplay'] == 'hour')
             {
@@ -114,7 +114,8 @@ class mod extends Page
                                             `formatDisplay` =:formatDisplay,
                                             `signtype`=:signtype,
                                             `timeworked`=:timeworked,
-                                            `deviceDisplay`=:deviceDisplay
+                                            `deviceDisplay`=:deviceDisplay,
+                                            `color`=:color
                                             WHERE id=:id
                                             ;" );
 
@@ -123,6 +124,7 @@ class mod extends Page
         $cmd->bindParameter(":name",$this->name->SafeText, PDO::PARAM_STR);
         $cmd->bindParameter(":deviceDisplay",$this->deviceDisplay->SafeText, PDO::PARAM_STR);
         $cmd->bindParameter(":abbreviation",$this->abbreviation->SafeText, PDO::PARAM_STR);
+        $cmd->bindParameter(":color",$this->color->SafeText, PDO::PARAM_STR);
 
         $useMinMax = false;
         if($this->useMinMax->getChecked())

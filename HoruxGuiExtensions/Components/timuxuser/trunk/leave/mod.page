@@ -8,6 +8,7 @@
         CancelVisible="true"
         HelpVisible="true"
         ApplyVisible="true"
+        DelVisible="true"
         />
 
     <%include Application.common.template.headerBoxContent %>

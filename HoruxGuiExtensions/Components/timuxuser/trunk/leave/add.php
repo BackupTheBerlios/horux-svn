@@ -103,51 +103,150 @@ class add extends Page
 
     protected function saveData()
     {
+        $dateFrom = $this->dateToSql($this->from->SafeText);
+        $dateto = $this->dateToSql($this->to->SafeText) == '' ? $dateFrom : $this->dateToSql($this->to->SafeText);
 
-        $cmd = $this->db->createCommand( "INSERT `hr_timux_request` SET
-                                          userId=:userId,
-                                          createDate=CURDATE(),
-                                          modifyDate=CURDATE(),
-                                          modifyUserId=:modifyUserId,
-                                          state='validate',
-                                          remark=:remark,
-                                          timecodeId=:timecodeId
-                                          ;" );
 
-        $cmd->bindParameter(":userId",$this->user->getSelectedValue(),PDO::PARAM_STR);
-        $cmd->bindParameter(":modifyUserId",$this->userId,PDO::PARAM_STR);
-        $cmd->bindParameter(":remark",$this->remark->Text,PDO::PARAM_STR);
-        $cmd->bindParameter(":timecodeId",$this->timecode->getSelectedValue(),PDO::PARAM_STR);
-        $res1 = $cmd->execute();
-        $lastId = $this->db->LastInsertID;
+        if( ($this->monday->getChecked() &&
+            $this->tuesday->getChecked() &&
+            $this->wednesday->getChecked() &&
+            $this->thursday->getChecked() &&
+            $this->friday->getChecked() &&
+            $this->saturday->getChecked() &&
+            $this->sunday->getChecked()) ||
+            ($dateFrom == $dateto)
+        )
+        {
 
-        $cmd = $this->db->createCommand( "INSERT `hr_timux_request_leave` SET
-                                          request_id=:request_id,
-                                          datefrom=:datefrom,
-                                          dateto=:dateto,
-                                          period=:period
-                                          ;" );
+            $cmd = $this->db->createCommand( "INSERT `hr_timux_request` SET
+                                              userId=:userId,
+                                              createDate=CURDATE(),
+                                              modifyDate=CURDATE(),
+                                              modifyUserId=:modifyUserId,
+                                              state='validate',
+                                              remark=:remark,
+                                              timecodeId=:timecodeId
+                                              ;" );
 
-        $cmd->bindParameter(":request_id",$lastId,PDO::PARAM_STR);
-        $cmd->bindParameter(":datefrom",$this->dateToSql($this->from->SafeText),PDO::PARAM_STR);
+            $cmd->bindParameter(":userId",$this->user->getSelectedValue(),PDO::PARAM_STR);
+            $cmd->bindParameter(":modifyUserId",$this->userId,PDO::PARAM_STR);
+            $cmd->bindParameter(":remark",$this->remark->Text,PDO::PARAM_STR);
+            $cmd->bindParameter(":timecodeId",$this->timecode->getSelectedValue(),PDO::PARAM_STR);
+            $res1 = $cmd->execute();
+            $lastId = $this->db->LastInsertID;
 
-        $dateto = $this->dateToSql($this->to->SafeText) == '' ? $this->dateToSql($this->from->SafeText) : $this->dateToSql($this->to->SafeText);
+            $cmd = $this->db->createCommand( "INSERT `hr_timux_request_leave` SET
+                                              request_id=:request_id,
+                                              datefrom=:datefrom,
+                                              dateto=:dateto,
+                                              period=:period
+                                              ;" );
 
-        $cmd->bindParameter(":dateto",$dateto,PDO::PARAM_STR);
+            $cmd->bindParameter(":request_id",$lastId,PDO::PARAM_STR);
+            $cmd->bindParameter(":datefrom",$dateFrom,PDO::PARAM_STR);
 
-        $period = "";
 
-        if($this->allday->getChecked())
-            $period = 'allday';
-        if($this->morning->getChecked())
-            $period = 'morning';
-        if($this->afternoon->getChecked())
-            $period = 'afternoon';
+            $cmd->bindParameter(":dateto",$dateto,PDO::PARAM_STR);
 
-        $cmd->bindParameter(":period",$period,PDO::PARAM_STR);
-        $res2 = $cmd->execute();
+            $period = "";
 
-        return $lastId;
+            if($this->allday->getChecked())
+                $period = 'allday';
+            if($this->morning->getChecked())
+                $period = 'morning';
+            if($this->afternoon->getChecked())
+                $period = 'afternoon';
+
+            $cmd->bindParameter(":period",$period,PDO::PARAM_STR);
+            $res2 = $cmd->execute();
+
+            return $lastId;
+        }
+        else
+        {
+            while($dateFrom != $dateto)
+            {
+                $dayN = date('N', strtotime($dateFrom));
+
+                $mustBeInserted = false;
+                switch($dayN)
+                {
+                    case 1: //monday
+                        $mustBeInserted = $this->monday->getChecked();
+                        break;
+                    case 2: //tuesday
+                        $mustBeInserted = $this->tuesday->getChecked();
+                        break;
+                    case 3: //wednesday
+                        $mustBeInserted = $this->wednesday->getChecked();
+                        break;
+                    case 4: //thursday
+                        $mustBeInserted = $this->thursday->getChecked();
+                        break;
+                    case 5: //friday
+                        $mustBeInserted = $this->friday->getChecked();
+                        break;
+                    case 6: //saturday
+                        $mustBeInserted = $this->saturday->getChecked();
+                        break;
+                    case 7: //sunday
+                        $mustBeInserted = $this->sunday->getChecked();
+                        break;
+                }
+
+                if($mustBeInserted)
+                {
+                    $cmd = $this->db->createCommand( "INSERT `hr_timux_request` SET
+                                                      userId=:userId,
+                                                      createDate=CURDATE(),
+                                                      modifyDate=CURDATE(),
+                                                      modifyUserId=:modifyUserId,
+                                                      state='validate',
+                                                      remark=:remark,
+                                                      timecodeId=:timecodeId
+                                                      ;" );
+
+                    $cmd->bindParameter(":userId",$this->user->getSelectedValue(),PDO::PARAM_STR);
+                    $cmd->bindParameter(":modifyUserId",$this->userId,PDO::PARAM_STR);
+                    $cmd->bindParameter(":remark",$this->remark->Text,PDO::PARAM_STR);
+                    $cmd->bindParameter(":timecodeId",$this->timecode->getSelectedValue(),PDO::PARAM_STR);
+                    $res1 = $cmd->execute();
+                    $lastId = $this->db->LastInsertID;
+
+                    $cmd = $this->db->createCommand( "INSERT `hr_timux_request_leave` SET
+                                                      request_id=:request_id,
+                                                      datefrom=:datefrom,
+                                                      dateto=:dateto,
+                                                      period=:period
+                                                      ;" );
+
+                    $cmd->bindParameter(":request_id",$lastId,PDO::PARAM_STR);
+                    $cmd->bindParameter(":datefrom",$dateFrom,PDO::PARAM_STR);
+
+
+                    $cmd->bindParameter(":dateto",$dateFrom,PDO::PARAM_STR);
+
+                    $period = "";
+
+                    if($this->allday->getChecked())
+                        $period = 'allday';
+                    if($this->morning->getChecked())
+                        $period = 'morning';
+                    if($this->afternoon->getChecked())
+                        $period = 'afternoon';
+
+                    $cmd->bindParameter(":period",$period,PDO::PARAM_STR);
+                    $res2 = $cmd->execute();
+
+                    if(!$res2)
+                        return false;
+                }
+
+                $dateFrom = date("Y-m-d",strtotime(date("Y-m-d", strtotime($dateFrom)) . " +1 day"));
+            }
+
+            return $lastId;
+        }
     }
 
 

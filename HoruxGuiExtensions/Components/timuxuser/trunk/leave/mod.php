@@ -103,6 +103,29 @@ class mod extends Page
         return $data;
     }
 
+    public function onDelete($sender, $param)
+    {
+        $cmd=$this->db->createCommand("DELETE FROM hr_timux_request WHERE id =:id");
+        $cmd->bindParameter(":id",$this->id->Value);
+        if($cmd->execute())
+        {
+            $nDelete++;
+        }
+        $cmd=$this->db->createCommand("DELETE FROM hr_timux_request_leave WHERE request_id =:id");
+        $cmd->bindParameter(":id",$this->id->Value);
+        $cmd->execute();
+        $cmd=$this->db->createCommand("DELETE FROM hr_timux_request_workflow WHERE request_id =:id");
+        $cmd->bindParameter(":id",$this->id->Value);
+
+        $pBack = array('okMsg'=>Prado::localize('{n} leave was deleted',array('n'=>$nDelete)));
+
+
+        if($this->Request['back'])
+            $this->Response->redirect($this->Service->constructUrl($this->Request['back'], $pBack));
+        else
+            $this->Response->redirect($this->Service->constructUrl('components.timuxuser.leave.leave', $pBack));
+    }
+
     public function onSave($sender, $param)
     {
         if($this->Page->IsValid)
@@ -114,7 +137,10 @@ class mod extends Page
             else
                 $pBack = array('koMsg'=>Prado::localize('The leave was not modified'));
 
-            $this->Response->redirect($this->Service->constructUrl('components.timuxuser.leave.leave',$pBack));
+            if($this->Request['back'])
+                $this->Response->redirect($this->Service->constructUrl($this->Request['back'],$pBack));
+            else
+                $this->Response->redirect($this->Service->constructUrl('components.timuxuser.leave.leave',$pBack));
         }
     }
 
@@ -125,11 +151,19 @@ class mod extends Page
             if($this->saveData())
             {
                 $pBack = array('okMsg'=>Prado::localize('The leave was modified successfully'), 'id'=>$this->id->Value);
+
+                if($this->Request['back'])
+                    $pBack['back'] = $this->Request['back'];
+
                 $this->Response->redirect($this->Service->constructUrl('components.timuxuser.leave.mod', $pBack));
             }
             else
             {
                 $pBack = array('koMsg'=>Prado::localize('The leave was not modified'), 'id'=>$this->id->Value);
+
+                if($this->Request['back'])
+                    $pBack['back'] = $this->Request['back'];
+
                 $this->Response->redirect($this->Service->constructUrl('components.timuxuser.leave.mod', $pBack));
             }
         }
@@ -196,6 +230,9 @@ class mod extends Page
 
     public function onCancel($sender, $param)
     {
-        $this->Response->redirect($this->Service->constructUrl('components.timuxuser.leave.leave'));
+        if($this->Request['back'])
+            $this->Response->redirect($this->Service->constructUrl($this->Request['back']));
+        else
+            $this->Response->redirect($this->Service->constructUrl('components.timuxuser.leave.leave'));
     }
 }
