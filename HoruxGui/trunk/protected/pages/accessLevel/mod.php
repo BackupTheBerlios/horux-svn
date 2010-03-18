@@ -48,15 +48,6 @@ class mod extends Page
             $this->weekEndAccess->setChecked($data['week_end']);
             $this->mondayDefault->setChecked($data['monday_default']);
 
-            if($data['validity_date'] != '0000-00-00' && $data['validity_date'] != NULL)
-            {
-                $this->from->Text = $this->dateFromSql($data['validity_date']);
-            }
-
-            if($data['validity_date_to'] != '0000-00-00'  && $data['validity_date_to'] != NULL)
-            {
-                $this->until->Text = $this->dateFromSql($data['validity_date_to']);
-            }
         }
     }
 
@@ -109,11 +100,6 @@ class mod extends Page
         $cmd->bindParameter(":week_end",$this->weekEndAccess->Checked,PDO::PARAM_STR);
         $cmd->bindParameter(":monday_default",$this->mondayDefault->Checked,PDO::PARAM_STR);
 
-        $from = $this->dateToSql($this->from->SafeText);
-        $until = $this->dateToSql($this->until->SafeText);
-
-        $cmd->bindParameter(":from",$from,PDO::PARAM_STR);
-        $cmd->bindParameter(":until",$until,PDO::PARAM_STR);
         $cmd->bindParameter(":comment",$this->comment->SafeText,PDO::PARAM_STR);
 
         $res2 = $cmd->execute();
@@ -174,15 +160,7 @@ class mod extends Page
         $cmd->execute();
     }
 
-    protected function serverUntilValidate($sender, $param)
-    {
-        if( $this->until->SafeText == "" ) return;
 
-        $until = strtotime($this->until->SafeText);
-        $from = strtotime($this->from->SafeText);
-        if($until<$from)
-        $param->IsValid=false;
-    }
 
     public function OnLoadAppointments($sender, $param)
     {

@@ -63,12 +63,6 @@ class add extends Page
         $cmd->bindParameter(":week_end",$this->weekEndAccess->Checked,PDO::PARAM_STR);
         $cmd->bindParameter(":monday_default",$this->mondayDefault->Checked,PDO::PARAM_STR);
 
-        $from = $this->dateToSql($this->from->SafeText);
-        $until = $this->dateToSql($this->until->SafeText);
-
-
-        $cmd->bindParameter(":from",$from,PDO::PARAM_STR);
-        $cmd->bindParameter(":until",$until,PDO::PARAM_STR);
         $cmd->bindParameter(":comment",$this->comment->SafeText,PDO::PARAM_STR);
 
         $res = $cmd->execute();
@@ -128,15 +122,6 @@ class add extends Page
         $cmd->execute();
     }
 
-    protected function serverUntilValidate($sender, $param)
-    {
-        if( $this->until->SafeText == "" ) return;
-
-        $until = strtotime($this->until->SafeText);
-        $from = strtotime($this->from->SafeText);
-        if($until<$from)
-        $param->IsValid=false;
-    }
 
     public function OnLoadAppointments($sender, $param)
     {
