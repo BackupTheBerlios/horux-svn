@@ -63,40 +63,7 @@
                     </td>
                 </tr>
 
-                <tr>
-                    <td valign="top" class="key"><span onmouseover="Tip('<%[Date when this open time is valid]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Valid from]%></span></td>
-                    <td>
-                        <com:TDatePicker CssClass="text_area" ID="from" Mode="ImageButton"/>
-                        <com:TDataTypeValidator
-                            ValidationGroup="Group1"
-                            ControlToValidate="from"
-                            DataType="Date"
-                            DateFormat="d-M-yyyy"
-                            Display="Dynamic"
-                            Text="<%[You must enter a valid date (d-M-yyyy).]%>" />
-                    </td>
-                </tr>
-
-                <tr>
-                    <td valign="top" class="key"><span onmouseover="Tip('<%[Date when this open time is unvalid]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Valid until]%></span></td>
-                    <td>
-                        <com:TDatePicker CssClass="text_area" ID="until" Mode="ImageButton"/>
-                        <com:TDataTypeValidator
-                            ValidationGroup="Group1"
-                            ControlToValidate="until"
-                            DataType="Date"
-                            DateFormat="d-M-yyyy"
-                            Display="Dynamic"
-                            Text="<%[You must enter a valid date (d-M-yyyy).]%>" />
-                        <com:TCustomValidator
-                            ValidationGroup="Group1"
-                            EnableClientScript="false"
-                            ControlToValidate="until"
-                            Display="Dynamic"
-                            OnServerValidate="serverUntilValidate"
-                            Text="<%[This date must be bigger that from]%>" />
-                    </td>
-                </tr>
+                
                 <tr>
                     <td valign="top" class="key">
                         <span onmouseover="Tip('<%[You could insert a description for this open time]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Description]%></span>

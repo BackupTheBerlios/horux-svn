@@ -34,8 +34,6 @@ class SQL {
                         `non_working_day`,
                         `week_end`,
                         `monday_default`,
-                        `validity_date`,
-                        `validity_date_to`,
                         `comment`
                   )
                   VALUES (
@@ -43,8 +41,6 @@ class SQL {
                         :non_working_day,
                         :week_end,
                         :monday_default,
-                        :from,
-                        :until,
                         :comment
                   )";
 
@@ -53,8 +49,6 @@ class SQL {
                         `non_working_day`=:non_working_day,
                         `week_end`=:week_end,
                         `monday_default`=:monday_default,
-                        `validity_date`=:from,
-                        `validity_date_to`=:until,
                         `comment`=:comment
                         WHERE id=:id"
     ;

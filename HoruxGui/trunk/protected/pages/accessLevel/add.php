@@ -78,7 +78,7 @@ class add extends Page
         }
         $this->log("Add the access level: ".$this->name->SafeText);
 
-        return $lastId;
+        return $res;
     }
 
     protected function saveTimeData($day, $hourStart, $duration ,$lastId)
