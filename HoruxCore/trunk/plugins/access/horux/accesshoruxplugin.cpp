@@ -250,98 +250,98 @@ bool AccessHoruxPlugin::isAccess(QMap<QString, QVariant> params, bool emitAction
 
 bool AccessHoruxPlugin::checkAccess(QMap<QString, QVariant> params, bool emitAction)
 {
-  if(params.contains("key") && params.contains("deviceId"))
-  {
-    QString key = params["key"].toString();
-    QString deviceId = params["deviceId"].toString();
-
-
-    //! Step 1 is key exists
-    QSqlQuery query("SELECT COUNT(*) FROM hr_keys WHERE serialNumber='" + key + "'");
-    query.next();
-
-    if(query.value(0).toInt() == 0)
+    if(params.contains("key") && params.contains("deviceId"))
     {
-     	insertTracking("1", "1", deviceId, KEY_UNKNOW_BY_APP, false, key,emitAction);
-      return false;
+        QString key = params["key"].toString();
+        QString deviceId = params["deviceId"].toString();
+
+
+        //! Step 1 is key exists
+        QSqlQuery query("SELECT COUNT(*) FROM hr_keys WHERE serialNumber='" + key + "'");
+        query.next();
+
+        if(query.value(0).toInt() == 0)
+        {
+            insertTracking("1", "1", deviceId, KEY_UNKNOW_BY_APP, false, key,emitAction);
+          return false;
+        }
+
+        //! Step 2 is the key blocked
+        query = "SELECT COUNT(*) FROM hr_keys WHERE serialNumber='" + key + "' AND isBlocked=0";
+        query.next();
+
+        if(query.value(0).toInt() == 0)
+        {
+          insertTracking("1", "1", deviceId, KEY_BLOCKED, false, key,emitAction);
+          return false;
+        }
+
+        //! Step 3 is the key attributed
+        query = "SELECT COUNT(*) FROM hr_keys_attribution AS ka LEFT JOIN hr_keys AS k ON k.id=ka.id_key WHERE k.serialNumber='" + key + "'";
+        query.next();
+
+        if(query.value(0).toInt() == 0)
+        {
+            insertTracking("1", "1", deviceId, KEY_NOT_ATTRIBUTED, false, key,emitAction);
+          return false;
+        }
+
+        //! Step 4 is the user attribution is blocked
+        query = "SELECT u.id AS uid, k.id AS kid, k.serialNumber FROM hr_keys_attribution AS ka LEFT JOIN hr_keys AS k ON k.id=ka.id_key LEFT JOIN hr_user AS u ON ka.id_user=u.id WHERE k.serialNumber='" + key + "' AND u.isBlocked=0";
+
+        if(!query.next())
+        {
+
+            insertTracking("1", "1", deviceId, USER_BLOCKED, false, key,emitAction);
+          return false;
+        }
+
+        QString userId = query.value(0).toString();
+        QString keyId = query.value(1).toString();
+        QString keyNumber = query.value(2).toString();
+
+        //! Step 5 is the user belong to one or more group
+        query = "SELECT id_group  FROM hr_user_group_attribution WHERE id_user=" + userId;
+
+        if(!query.next())
+        {
+            insertTracking(userId, keyId, deviceId, USER_HAS_NO_GROUP, false, key,emitAction);
+          return false;
+        }
+
+        QString reason = "0";
+
+        QString groupId = query.value(0).toString();
+
+        //! check if this group must be handle by this plugin
+        query = "SELECT accessPlugin FROM hr_user_group WHERE id=" + groupId;
+        QString plName = "";
+        if(query.next())
+        {
+                plName = query.value(0).toString();
+        }
+
+        if(plName == "access_horux" || plName == "" || !emitAction)
+        {
+            do
+            {
+                    //! Step 6 check for all groups if there is an access level defined
+
+                    if(checkAccessLevel(groupId, deviceId, &reason))
+                    {
+                                    //! we can send an order to the device to open the door-lock
+                                    insertTracking(userId, keyId, deviceId, ACCESS_OK, true, key,emitAction);
+                                    return true;
+                    }
+
+            }
+            while(query.next());
+
+            insertTracking(userId, keyId, deviceId, reason, false, key,emitAction);
+        }
     }
-
-    //! Step 2 is the key blocked
-    query = "SELECT COUNT(*) FROM hr_keys WHERE serialNumber='" + key + "' AND isBlocked=0";
-    query.next();
-
-    if(query.value(0).toInt() == 0)
-    {
-      insertTracking("1", "1", deviceId, KEY_BLOCKED, false, key,emitAction);
-      return false;
-    }
-
-    //! Step 3 is the key attributed
-    query = "SELECT COUNT(*) FROM hr_keys_attribution AS ka LEFT JOIN hr_keys AS k ON k.id=ka.id_key WHERE k.serialNumber='" + key + "'";
-    query.next();
-
-    if(query.value(0).toInt() == 0)
-    {
-    	insertTracking("1", "1", deviceId, KEY_NOT_ATTRIBUTED, false, key,emitAction);
-      return false;
-    }
-
-    //! Step 4 is the user attribution is blocked
-    query = "SELECT u.id AS uid, k.id AS kid, k.serialNumber FROM hr_keys_attribution AS ka LEFT JOIN hr_keys AS k ON k.id=ka.id_key LEFT JOIN hr_user AS u ON ka.id_user=u.id WHERE k.serialNumber='" + key + "' AND u.isBlocked=0";
-
-    if(!query.next())
-    {
-
-     	insertTracking("1", "1", deviceId, USER_BLOCKED, false, key,emitAction);
-      return false;
-    }
-
-    QString userId = query.value(0).toString(); 
-    QString keyId = query.value(1).toString();
-    QString keyNumber = query.value(2).toString(); 
-
-    //! Step 5 is the user belong to one or more group
-    query = "SELECT id_group  FROM hr_user_group_attribution WHERE id_user=" + userId;
-
-    if(!query.next())
-    {
-    	insertTracking(userId, keyId, deviceId, USER_HAS_NO_GROUP, false, key,emitAction);
-      return false;
-    }
-
-    QString reason = "0"; 
-
-    QString groupId = query.value(0).toString();
-
-		//! check if this group must be handle by this plugin
-		query = "SELECT accessPlugin FROM hr_user_group WHERE id=" + groupId;
-		QString plName = "";
-		if(query.next())
-		{
-			plName = query.value(0).toString();
-		}
-
-		if(plName == "access_horux" || plName == "" || !emitAction)
-		{
-			do
-			{
-				//! Step 6 check for all groups if there is an access level defined
 	
-				if(checkAccessLevel(groupId, deviceId, &reason))
-				{
-						//! we can send an order to the device to open the door-lock
-						insertTracking(userId, keyId, deviceId, ACCESS_OK, true, key,emitAction);
-						return true;
-				}
-				
-			}
-			while(query.next());
-
-	   	insertTracking(userId, keyId, deviceId, reason, false, key,emitAction);
-		}	
-  }
-	
-	return false;
+    return false;
 }
 
 bool AccessHoruxPlugin::checkAccessLevel(QString groupId, QString deviceId, QString *reason)
@@ -396,36 +396,7 @@ bool AccessHoruxPlugin::checkAccessLevel(QString groupId, QString deviceId, QStr
     }
   }
 
-
-  //! step 4 check if the access level is still valid
-  if(validityDateStart.isValid() && validityDateEnd.isValid())
-  {
-    if(now < validityDateStart || now > validityDateEnd)
-    {
-      *reason = VALIDITY_DATE_OUT;
-      return false;
-    }
-  }
-  
-  if(validityDateStart.isValid() && validityDateEnd.isNull())
-  {
-    if(validityDateStart > now )
-    {
-      *reason = VALIDITY_DATE_OUT;
-      return false;
-    }
-  }
-  
-  if(validityDateStart.isNull() && validityDateEnd.isValid())
-  {
-    if(now > validityDateEnd )
-    {
-      *reason = VALIDITY_DATE_OUT;
-      return false;
-    }
-  }
-
-  //! step 5 Check the time area
+  //! step 4 Check the time area
 
   QTime time = QTime::currentTime();
   QString timeEnMinuteStr = QString::number(time.minute() + time.hour()*60);
