@@ -306,7 +306,7 @@ void CHoruxGui::currentIndexChanged ( int index )
         fid->setEnabled(false);
     }
 
-    if(index == 2)
+    if(index == 2 || index == 0)
     {
         customPort->setEnabled(true);
     }

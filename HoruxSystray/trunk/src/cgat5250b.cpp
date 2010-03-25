@@ -10,19 +10,28 @@ CGAT5250B::CGAT5250B(QObject *parent)
     gat = new QAxObject(this);
     gat->setControl("0A530613-6024-11D5-A3AC-0050BF2CF639");
 #elif defined(Q_WS_X11)
-    if( (ftdic = ftdi_new()) == NULL)
-        qDebug("Cannot initialise the context");
-    else
-    {
-        int vendorid = 0x0403;
-        int product = 0xED6B;
-        int ret;
 
-        // Open the ftdi device
-        if((ret = ftdi_usb_open(ftdic, vendorid, product)) < 0) {
-            qDebug() << ret << "/" << ret, ftdi_get_error_string(ftdic);
-        }
-    }
+  QSettings settings ( "Horux", "HoruxGuiSys" );
+
+  QString portStr = settings.value("port", "/dev/ttyUSB0").toString();
+
+  port = new QextSerialPort(portStr);
+
+  port->setBaudRate(BAUD38400 );
+  //port->setFlowControl(FLOW_OFF);
+  port->setParity(PAR_NONE);
+  port->setDataBits(DATA_8);
+  port->setStopBits(STOP_1);
+ // port->setTimeout(0,1);
+  if(!port->open(QIODevice::ReadWrite))
+  {
+    delete port;
+    port = NULL;
+    emit deviceError();
+  }
+  else
+      qDebug() << "device opened";
+
 #endif
 }
 
@@ -97,23 +106,25 @@ void CGAT5250B::run()
         QThread::msleep(100);
     }
 #elif defined(Q_WS_X11)
-   unsigned char r[10] = {0,0,0,0,0,0,0,0,0,0};
-             unsigned char m[] = { 0x03, 0x14, 0x01, 0x16};
 
-            if(ftdi_write_data(ftdic,m,4) == 4)
-            {
-                qDebug() << "WRITE OK";
-            }
-            else
-                qDebug() << "Write ERROR";
-    while(!stop)
+    while(true)
     {
-       if(ftdi_read_data(ftdic,r,10)>0)
-        {
-            qDebug("%02X %02X %02X %02X ",r[0],r[1],r[2],r[3]);
-        }
-        QThread::msleep(100);
-    }
+           const char msg[] = {0x03, 0x14, 0x01, 0x16};
+
+           port->write( msg , 4);
+           port->flush();
+           QCoreApplication::processEvents();
+
+           QByteArray r = port->readAll();
+
+           QString s, s1;
+           for(int i=0; i<r.size(); i++)
+               s += s.sprintf("%02X ", r.at(i));
+
+           qDebug() << s;
+
+           QThread::msleep(100);
+       }
 #endif
 }
 
@@ -122,8 +133,7 @@ void CGAT5250B::close(bool )
     stop = true;
 #if defined(Q_OS_WIN)
 #elif defined(Q_WS_X11)
-    ftdi_usb_close(ftdic);
-    ftdi_deinit(ftdic);
+    port->close();
 #endif
 
 }
