@@ -21,11 +21,12 @@
 #define CGAT5250B_H
 
 #include "cdevice.h"
-#if defined(Q_OS_WIN)
+/*#if defined(Q_OS_WIN)
     #include <QAxObject>
-#elif defined(Q_WS_X11)
+#elif defined(Q_WS_X11)*/
     #include <qextserialport.h>
-#endif
+    #include "ftd2xx.h"
+//#endif
 
 class CGAT5250B : public CDevice
 {
@@ -44,11 +45,11 @@ protected:
     virtual void handleKey();
 
 private:
-    #if defined(Q_OS_WIN)
+    /*#if defined(Q_OS_WIN)
         QAxObject *gat;
-    #elif defined(Q_WS_X11)
-        QextSerialPort *port;
-    #endif
+    #elif defined(Q_WS_X11)*/
+        FT_HANDLE ftHandle;
+    //#endif
 
     QString key;
     bool stop;

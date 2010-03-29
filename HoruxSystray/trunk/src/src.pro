@@ -34,6 +34,8 @@ QT += xml network
 
 win32 {
 CONFIG += qaxcontainer
+LIBS +=C:\projets\Horux\D2XX\i386\ftd2xx.lib
+INCLUDEPATH += C:\projets\Horux\D2XX
 }
 
 unix:LIBS += -lftdi
