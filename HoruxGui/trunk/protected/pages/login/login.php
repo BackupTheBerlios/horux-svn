@@ -26,7 +26,20 @@ class Login extends Page
             if($authManager->login(strtolower($this->username->SafeText),$this->password->SafeText))
             {
                 $this->log($this->username->SafeText." is logged in");
-                $this->Response->redirect($this->Service->constructUrl('controlPanel.ControlPanel',array('lang'=>$this->lang->getSelectedValue())));
+
+                $userID = Prado::getApplication()->getUser()->getUserID();
+
+                $cmd=$this->db->createCommand("SELECT defaultPage FROM hr_superuser_group AS sg LEFT JOIN  hr_superusers AS s ON s.group_id=sg.id WHERE s.id=$userID");
+                $data = $cmd->query();
+                $dataUser = $data->read();
+                $defaultPage = $dataUser['defaultPage'];
+
+                if($defaultPage == '')
+                    $this->Response->redirect($this->Service->constructUrl('controlPanel.ControlPanel',array('lang'=>$this->lang->getSelectedValue())));
+                else
+                    $this->Response->redirect($this->Service->constructUrl($defaultPage,array('lang'=>$this->lang->getSelectedValue())));
+
+                //$this->Response->redirect($this->Service->constructUrl('controlPanel.ControlPanel',array('lang'=>$this->lang->getSelectedValue())));
             }
         }
 
@@ -66,7 +79,19 @@ class Login extends Page
         else
         {
             $this->log($this->username->SafeText." is logged in");
-            $this->Response->redirect($this->Service->constructUrl('controlPanel.ControlPanel',array('lang'=>$this->lang->getSelectedValue())));
+
+            $userID = Prado::getApplication()->getUser()->getUserID();
+
+            $cmd=$this->db->createCommand("SELECT defaultPage FROM hr_superuser_group AS sg LEFT JOIN  hr_superusers AS s ON s.group_id=sg.id WHERE s.id=$userID");
+            $data = $cmd->query();
+            $dataUser = $data->read();
+            $defaultPage = $dataUser['defaultPage'];
+
+
+            if($defaultPage == '')
+                $this->Response->redirect($this->Service->constructUrl('controlPanel.ControlPanel',array('lang'=>$this->lang->getSelectedValue())));
+            else
+                $this->Response->redirect($this->Service->constructUrl($defaultPage,array('lang'=>$this->lang->getSelectedValue())));
         }
     }
 }

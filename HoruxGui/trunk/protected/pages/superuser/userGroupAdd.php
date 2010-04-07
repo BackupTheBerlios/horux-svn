@@ -29,7 +29,35 @@ class userGroupAdd extends Page
             $this->DataGrid->DataSource=$this->Data;
             $this->DataGrid->dataBind();
 
+            $this->defaultPage->DataTextField='pagename';
+            $this->defaultPage->DataValueField='page';
+            $this->defaultPage->DataSource=$this->DataPage;
+            $this->defaultPage->dataBind();
+            $this->defaultPage->setSelectedValue('controlPanel.ControlPanel');
+
         }
+
+
+    }
+
+    public function getDataPage()
+    {
+        $cmd = $this->db->createCommand( "SELECT c.menuname AS pagename, c.page, i . * FROM hr_component AS c LEFT JOIN hr_install AS i ON i.id=c.id_install  ORDER BY pagename" );
+        $data_ = $cmd->query();
+        $data_ = $data_->readAll();
+
+        for($i=0;$i<count($data_); $i++)
+        {
+            $data_[$i]['pagename'] = Prado::localize($data_[$i]['pagename'],array(), $data_[$i]['name'])." ({$data_[$i]['name']})" ;
+        }
+
+
+        $data_[] = array('page'=>'controlPanel.ControlPanel', 'pagename'=>Prado::localize('Control Panel'));
+        $data_[] = array('page'=>'system.Alarms', 'pagename'=>Prado::localize('Alarms'));
+        $data_[] = array('page'=>'system.Status', 'pagename'=>Prado::localize('Status'));
+        $data_[] = array('page'=>'user.UserList', 'pagename'=>Prado::localize('User List'));
+
+        return $data_;
     }
 
     public function addComponent($data)
@@ -187,6 +215,7 @@ class userGroupAdd extends Page
         $cmd->bindParameter(":name",$this->name->SafeText,PDO::PARAM_STR);
         $cmd->bindParameter(":superAdmin",$this->superAdmin->getChecked(),PDO::PARAM_STR);
         $cmd->bindParameter(":description",$this->description->SafeText,PDO::PARAM_STR);
+        $cmd->bindParameter(":defaultPage",$this->defaultPage->getSelectedValue(),PDO::PARAM_STR);
 
         $f1 = $this->dispUserLoggedIn->getChecked();
         $f2 = $this->dispLastAlarm->getChecked();

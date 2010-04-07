@@ -37,6 +37,12 @@ class userGroupMod extends Page
             $this->blockRecord('hr_superuser_group', $this->Request['id'], $userId);
 
             $this->id->Value = $this->Request['id'];
+
+            $this->defaultPage->DataTextField='pagename';
+            $this->defaultPage->DataValueField='page';
+            $this->defaultPage->DataSource=$this->DataPage;
+            $this->defaultPage->dataBind();
+
             $this->setData();
 
             $this->Session['dataPage'] = array();
@@ -52,7 +58,32 @@ class userGroupMod extends Page
                 $this->tbb->apply->setEnabled(false);
                 $this->tbb->Save->setEnabled(false);
             }
+
+            $this->DataGrid->DataSource=$this->Data;
+            $this->DataGrid->dataBind();
+
+
         }
+    }
+
+    public function getDataPage()
+    {
+        $cmd = $this->db->createCommand( "SELECT c.menuname AS pagename, c.page, i . * FROM hr_component AS c LEFT JOIN hr_install AS i ON i.id=c.id_install  ORDER BY pagename" );
+        $data_ = $cmd->query();
+        $data_ = $data_->readAll();
+
+        for($i=0;$i<count($data_); $i++)
+        {
+            $data_[$i]['pagename'] = Prado::localize($data_[$i]['pagename'],array(), $data_[$i]['name'])." ({$data_[$i]['name']})" ;
+        }
+
+
+        $data_[] = array('page'=>'controlPanel.ControlPanel', 'pagename'=>Prado::localize('Control Panel'));
+        $data_[] = array('page'=>'system.Alarms', 'pagename'=>Prado::localize('Alarms'));
+        $data_[] = array('page'=>'system.Status', 'pagename'=>Prado::localize('Status'));
+        $data_[] = array('page'=>'user.UserList', 'pagename'=>Prado::localize('User List'));
+
+        return $data_;
     }
 
     public function addComponent($data)
@@ -124,6 +155,11 @@ class userGroupMod extends Page
             $this->dispLastTracking->setChecked($data['dispLastTracking']);
 
             $this->webservice->setChecked($data['webservice']);
+
+            if($data['defaultPage'] != '')
+                $this->defaultPage->setSelectedValue($data['defaultPage']);
+            else
+                $this->defaultPage->setSelectedValue('controlPanel.ControlPanel');
         }
 
     }
@@ -277,6 +313,9 @@ class userGroupMod extends Page
         $cmd->bindParameter(":dispLastTracking",$f3,PDO::PARAM_STR);
 
         $cmd->bindParameter(":webservice",$f4,PDO::PARAM_STR);
+        $cmd->bindParameter(":defaultPage",$this->defaultPage->getSelectedValue(),PDO::PARAM_STR);
+
+
 
         $cmd->execute();
 

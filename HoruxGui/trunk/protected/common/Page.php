@@ -48,6 +48,22 @@ class Page extends TPage
 		  $data = $cmd->query();
 		  $data = $data->read();
 		  $lang = $data['param'];
+
+          $userID = Prado::getApplication()->getUser()->getUserID();
+
+          $cmd=$this->db->createCommand("SELECT user_id FROM hr_superusers WHERE id=$userID");
+          $data = $cmd->query();
+          $dataUser = $data->read();
+          $userID = $dataUser['user_id'];
+
+          if($userID>0)
+          {
+              $cmd=$this->db->createCommand("SELECT language FROM hr_user WHERE id=$userID");
+              $data = $cmd->query();
+              $dataUser = $data->read();
+              $lang = $dataUser['language'];
+          }
+
 		  $this->Session['lang'] = $lang;
 			
 		}

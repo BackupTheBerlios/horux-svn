@@ -51,7 +51,9 @@ class SQL {
                         `dispLastAlarm` ,
                         `dispLastTracking` ,
                         `description`,
-                        `webservice`
+                        `webservice`,
+                        `defaultPage`
+
                   )
                   VALUES (
                         :name,
@@ -60,7 +62,8 @@ class SQL {
                         :dispLastAlarm,
                         :dispLastTracking,
                         :description,
-                        :webservice
+                        :webservice,
+                        :defaultPage
                   )";
 
     const SQL_ADD_PERMISSION = "INSERT INTO hr_gui_permissions (
@@ -113,7 +116,8 @@ class SQL {
                         `dispLastAlarm`=:dispLastAlarm,
                         `dispLastTracking`=:dispLastTracking,
                         `description`=:description,
-                        `webservice`=:webservice
+                        `webservice`=:webservice,
+                        `defaultPage`=:defaultPage
                         WHERE id=:id"
     ;
 }

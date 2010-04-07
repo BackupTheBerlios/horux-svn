@@ -65,7 +65,7 @@ class MTUserManager extends TModule implements IUserManager {
 		$sql = "UPDATE ".$this->_UserTable." SET isLogged=1, session_id='".session_id()."', lastConnection='".$now."' WHERE id=".$row['id'];
         $cmd = $db->createCommand($sql);
 		$res = $cmd->execute();
-		
+
 		return true;
 	}
  

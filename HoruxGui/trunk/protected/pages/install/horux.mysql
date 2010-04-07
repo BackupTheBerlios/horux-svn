@@ -9,8 +9,7 @@ CREATE TABLE IF NOT EXISTS `hr_access_level` (
   `name` varchar(50) NOT NULL,
   `full_access` smallint(1) NOT NULL default '0',
   `non_working_day` smallint(1) NOT NULL default '0',
-  `week_end` smallint(1) NOT NULL default '0',
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            `monday_default` smallint(6) NOT NULL default '0',
+  `week_end` smallint(1) NOT NULL default '0',                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            `monday_default` smallint(6) NOT NULL default '0',
   `comment` varchar(50) default NULL,
   `locked` int(11) NOT NULL default '0',
   PRIMARY KEY  (`id`),
@@ -22,13 +21,16 @@ CREATE TABLE IF NOT EXISTS `hr_access_level` (
 #
 
 CREATE TABLE IF NOT EXISTS `hr_access_time` (
-  `id` bigint(20) unsigned NOT NULL auto_increment,
-  `id_access_level` bigint(20) NOT NULL default '0',
-  `day` varchar(10) NOT NULL default '0',
-  `from` int(11) NOT NULL default '0',
-  `until` int(11) NOT NULL default '0',
-  PRIMARY KEY  (`id`)
-) TYPE=MyISAM CHARACTER SET `utf8`;
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `id_access_level` bigint(20) NOT NULL DEFAULT '0',
+  `day` varchar(10) NOT NULL DEFAULT '0',
+  `from` int(11) NOT NULL DEFAULT '0',
+  `until` int(11) NOT NULL DEFAULT '0',
+  `pinCodeNecessary` smallint(1) NOT NULL DEFAULT '0',
+  `specialRelayPlan` smallint(6) NOT NULL DEFAULT '0',
+  `exitingOnly` smallint(6) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=`utf8`;
 
 #
 # Structure de la table `hr_openTime`
