@@ -102,7 +102,9 @@ XWeekPlanner.prototype = {
 		this.updateHeader();
 		
 		this.loadAppointments();
-		
+
+        document.getElementById('weekScheduler_content').scrollTop = 420;
+
 		Event.observe(document, 'keypress', this.keyPress.bindEvent(this) );
 		Event.observe(document, 'dblclick', this.dblclick.bindEvent(this) );
 		Event.observe(this.options.startTime,'change',this.change.bind(this));
