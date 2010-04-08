@@ -144,6 +144,7 @@ class NotificationAdd extends Page
         if($this->n_t_9->getChecked()) $this->insertNotificationCode($lastId, "ACCESS", $this->n_t_9->Value );
         if($this->n_t_10->getChecked()) $this->insertNotificationCode($lastId, "ACCESS", $this->n_t_10->Value );
 
+        if($this->n_900->getChecked()) $this->insertNotificationCode($lastId, "ALARM", $this->n_900->Value );
         if($this->n_1001->getChecked()) $this->insertNotificationCode($lastId, "ALARM", $this->n_1001->Value );
         if($this->n_1002->getChecked()) $this->insertNotificationCode($lastId, "ALARM", $this->n_1002->Value );
         if($this->n_1003->getChecked()) $this->insertNotificationCode($lastId, "ALARM", $this->n_1003->Value );

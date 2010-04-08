@@ -1,0 +1,7 @@
+Le contrôleur Horux n'a plus mis à jour le status (mode SAAS) :
+
+Site : %site%
+Date : %date%
+Heure : %time%
+
+Ne pas répondre à ce message.

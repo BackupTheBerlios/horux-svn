@@ -1,0 +1,7 @@
+The Horux Controler don't update the status (SAAS mode) :
+
+Site : %site%
+Date : %date%
+Time : %time%
+
+Don't response to this message.

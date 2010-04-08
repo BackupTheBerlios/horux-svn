@@ -107,6 +107,7 @@
                         <%[Event exception]%>
                     </td>
                     <td>
+                        <com:TCheckBox InputAttributes.value="900" Text="<%[Horux controler down]%>" ID="n_900" /><br/>
                         <com:TCheckBox InputAttributes.value="1001" Text="<%[Device anti vandal forced]%>" ID="n_1001" /><br/>
                         <com:TCheckBox InputAttributes.value="1002" Text="<%[Device anti vandal cleared]%>" ID="n_1002" /><br/>
                         <com:TCheckBox InputAttributes.value="1003" Text="<%[Device connection opened]%>" ID="n_1003" /><br/>

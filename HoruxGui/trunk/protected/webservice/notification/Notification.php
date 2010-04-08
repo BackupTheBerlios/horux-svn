@@ -135,6 +135,9 @@ class Notification
 
                     switch($code)
                     {
+                        case 900:
+                            $mailer->setObject(Prado::localize("Horux notification: Horux Controler seems to be down"));
+                            break;
                         case 1001:
                             $mailer->setObject(Prado::localize("Horux notification: Antivandale acivated on {device}", array('device'=>$device)));
                             break;
