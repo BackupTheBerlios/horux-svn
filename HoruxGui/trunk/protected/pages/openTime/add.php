@@ -72,7 +72,8 @@ class add extends Page
             $this->timeArray = $this->getViewState('timeArray',array());
             foreach($this->timeArray as $time)
             {
-                $this->saveTimeData($time['day'], $time['hourStart'], $time['duration'], $this->lastId);
+                $this->saveTimeData($time['day'], $time['hourStart'], $time['duration'], $this->lastId
+                                    , $time['unlocking'], $time['supOpenTooLongAlarm'], $time['supWithoutPermAlarm'], $time['checkOnlyCompanyID'], $time['specialRelayPlan']);
             }
         }
 
@@ -82,7 +83,7 @@ class add extends Page
     }
 
 
-    protected function saveTimeData($day, $hourStart, $duration ,$lastId)
+    protected function saveTimeData($day, $hourStart, $duration ,$lastId, $unlocking, $supOpenTooLongAlarm, $supWithoutPermAlarm, $checkOnlyCompanyID, $specialRelayPlan)
     {
         switch($day)
         {
@@ -119,6 +120,11 @@ class add extends Page
         $cmd->bindParameter(":day",$dayName,PDO::PARAM_STR);
         $cmd->bindParameter(":from",$indexStartHours,PDO::PARAM_INT);
         $cmd->bindParameter(":until",$indexEndHours,PDO::PARAM_INT);
+        $cmd->bindParameter(":unlocking",$unlocking,PDO::PARAM_INT);
+        $cmd->bindParameter(":supOpenTooLongAlarm",$supOpenTooLongAlarm,PDO::PARAM_INT);
+        $cmd->bindParameter(":supWithoutPermAlarm",$supWithoutPermAlarm,PDO::PARAM_INT);
+        $cmd->bindParameter(":checkOnlyCompanyID",$checkOnlyCompanyID,PDO::PARAM_INT);
+        $cmd->bindParameter(":specialRelayPlan",$specialRelayPlan,PDO::PARAM_INT);
 
         $cmd->execute();
     }
@@ -134,7 +140,15 @@ class add extends Page
         $this->timeArray = $this->getViewState('timeArray',array());
 
         $p = $param->getCallbackParameter()->CommandParameter;
-        $this->timeArray[$p->id] = array("day"=> $p->day, "duration"=>$p->duration,"hourStart"=>$p->hour);
+        $this->timeArray[$p->id] = array("day"=> $p->day,
+                                         "duration"=>$p->duration,
+                                         "hourStart"=>$p->hour,
+                                         "unlocking"=>$p->unlocking,
+                                         "supOpenTooLongAlarm"=>$p->supOpenTooLongAlarm,
+                                         "supWithoutPermAlarm"=>$p->supWithoutPermAlarm,
+                                         "checkOnlyCompanyID"=>$p->checkOnlyCompanyID,
+                                         "specialRelayPlan"=>$p->specialRelayPlan
+                                        );
 
         $this->setViewState('timeArray',$this->timeArray,'');
     }

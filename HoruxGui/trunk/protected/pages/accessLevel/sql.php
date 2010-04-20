@@ -54,13 +54,20 @@ class SQL {
                         `id_access_level` ,
                         `day`,
                         `from`,
-                        `until`
+                        `until`,
+                        `pinCodeNecessary`,
+                        `specialRelayPlan`,
+                        `exitingOnly`
+
                   )
                   VALUES (
                         :id_access_level,
                         :day,
                         :from,
-                        :until
+                        :until,
+                        :pinCodeNecessary,
+                        :specialRelayPlan,
+                        :exitingOnly
                   )";
 
     const SQL_REMOVE_ACCESS_LEVEL = "DELETE FROM hr_access_level WHERE id=:id";

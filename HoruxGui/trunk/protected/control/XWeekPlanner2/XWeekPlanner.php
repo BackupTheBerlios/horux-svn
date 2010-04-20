@@ -25,6 +25,13 @@ class XWeekPlanner extends TWebControl
 	private $_currentDataSourceValid = null;
 	private $startTime = null;
 	private $endTime = null;
+    private $pinCode = null;
+    private $exitingOnly = null;
+    private $specialRelayPlan = null;
+    private $unlocking = null;
+    private $supOpenTooLongAlarm = null;
+    private $supWithoutPermAlarm = null;
+    private $checkOnlyCompanyID = null;
 
 	public function onLoad($param)
 	{
@@ -42,6 +49,55 @@ class XWeekPlanner extends TWebControl
         $this->endTime->setID('endTime');
         $this->addedControl($this->endTime);
 
+        $plannerType = "";
+
+        if($this->getPlannerType() == 'Access')
+        {
+            $this->pinCode = new TCheckBox();
+            $this->pinCode->setID('pinCode');
+            $this->addedControl($this->pinCode);
+
+            $this->exitingOnly = new TCheckBox();
+            $this->exitingOnly->setID('exitingOnly');
+            $this->addedControl($this->exitingOnly);
+
+            $plannerType .= 'pinCode           : $(\''.$this->pinCode->getClientID().'\'),';
+            $plannerType .= 'exitingOnly           : $(\''.$this->exitingOnly->getClientID().'\'),';
+
+        }
+        else
+        {
+            $this->unlocking = new TCheckBox();
+            $this->unlocking->setID('unlocking');
+            $this->addedControl($this->unlocking);
+
+            $this->supOpenTooLongAlarm = new TCheckBox();
+            $this->supOpenTooLongAlarm->setID('supOpenTooLongAlarm');
+            $this->addedControl($this->supOpenTooLongAlarm);
+
+            $this->supWithoutPermAlarm = new TCheckBox();
+            $this->supWithoutPermAlarm->setID('supWithoutPermAlarm');
+            $this->addedControl($this->supWithoutPermAlarm);
+
+            $this->checkOnlyCompanyID = new TCheckBox();
+            $this->checkOnlyCompanyID->setID('checkOnlyCompanyID');
+            $this->addedControl($this->checkOnlyCompanyID);
+
+
+            $plannerType .= 'unlocking           : $(\''.$this->unlocking->getClientID().'\'),';
+            $plannerType .= 'supOpenTooLongAlarm           : $(\''.$this->supOpenTooLongAlarm->getClientID().'\'),';
+            $plannerType .= 'supWithoutPermAlarm           : $(\''.$this->supWithoutPermAlarm->getClientID().'\'),';
+            $plannerType .= 'checkOnlyCompanyID           : $(\''.$this->checkOnlyCompanyID->getClientID().'\'),';
+
+        }
+        
+        $this->specialRelayPlan = new TCheckBox();
+        $this->specialRelayPlan->setID('specialRelayPlan');
+        $this->addedControl($this->specialRelayPlan);
+
+        $plannerType .= 'specialRelayPlan           : $(\''.$this->specialRelayPlan->getClientID().'\'),';
+
+
 		$script = 'var wp = new XWeekPlanner("'. $this->getClientID() .'",
 		{startDate				 : "'.$this->getStartDate().'",
          allowItemEdit     		 : "'.$this->getAllowInlineEdit().'",
@@ -57,6 +113,7 @@ class XWeekPlanner extends TWebControl
          readOnly			 : 0,
          startTime           : $(\''.$this->startTime->getClientID().'\'),
          endTime           :$(\''.$this->endTime->getClientID().'\'),
+         '.$plannerType.'
          levelId : 0
 		});';
 
@@ -126,6 +183,82 @@ class XWeekPlanner extends TWebControl
             		$writer->renderEndTag();
                     $writer->renderBeginTag('td');
                         $this->endTime->render($writer);
+            		$writer->renderEndTag();
+
+                    if($this->getPlannerType() == 'Access')
+                    {
+                        $writer->renderBeginTag('td');
+                            $pincodeLabel = new TLabel();
+                            $pincodeLabel->setText(Prado::localize("Pin Code necessary"));
+                            $this->addedControl($pincodeLabel);
+                            $pincodeLabel->render($writer);
+                        $writer->renderEndTag();
+                        $writer->renderBeginTag('td');
+                            $this->pinCode->render($writer);
+                        $writer->renderEndTag();
+
+                        $writer->renderBeginTag('td');
+                            $exitingOnlyLabel = new TLabel();
+                            $exitingOnlyLabel->setText(Prado::localize("Exiting only"));
+                            $this->addedControl($exitingOnlyLabel);
+                            $exitingOnlyLabel->render($writer);
+                        $writer->renderEndTag();
+                        $writer->renderBeginTag('td');
+                            $this->exitingOnly->render($writer);
+                        $writer->renderEndTag();
+                    }
+                    else
+                    {
+                        $writer->renderBeginTag('td');
+                            $unlockingLabel = new TLabel();
+                            $unlockingLabel->setText(Prado::localize("Unlocking"));
+                            $this->addedControl($unlockingLabel);
+                            $unlockingLabel->render($writer);
+                        $writer->renderEndTag();
+                        $writer->renderBeginTag('td');
+                            $this->unlocking->render($writer);
+                        $writer->renderEndTag();
+                        
+                        $writer->renderBeginTag('td');
+                            $supOpenTooLongAlarmLabel = new TLabel();
+                            $supOpenTooLongAlarmLabel->setText(Prado::localize("Sup. 'door open too long alarm'"));
+                            $this->addedControl($supOpenTooLongAlarmLabel);
+                            $supOpenTooLongAlarmLabel->render($writer);
+                        $writer->renderEndTag();
+                        $writer->renderBeginTag('td');
+                            $this->supOpenTooLongAlarm->render($writer);
+                        $writer->renderEndTag();
+
+                        $writer->renderBeginTag('td');
+                            $supWithoutPermAlarmLabel = new TLabel();
+                            $supWithoutPermAlarmLabel->setText(Prado::localize("Sup. 'open without permission alarm'"));
+                            $this->addedControl($supWithoutPermAlarmLabel);
+                            $supWithoutPermAlarmLabel->render($writer);
+                        $writer->renderEndTag();
+                        $writer->renderBeginTag('td');
+                            $this->supWithoutPermAlarm->render($writer);
+                        $writer->renderEndTag();
+
+                        $writer->renderBeginTag('td');
+                            $checkOnlyCompanyIDLabel = new TLabel();
+                            $checkOnlyCompanyIDLabel->setText(Prado::localize("Check only company ID"));
+                            $this->addedControl($checkOnlyCompanyIDLabel);
+                            $checkOnlyCompanyIDLabel->render($writer);
+                        $writer->renderEndTag();
+                        $writer->renderBeginTag('td');
+                            $this->checkOnlyCompanyID->render($writer);
+                        $writer->renderEndTag();
+
+                    }
+
+                    $writer->renderBeginTag('td');
+                        $specialRelayPlanLabel = new TLabel();
+                        $specialRelayPlanLabel->setText(Prado::localize("Use special relay plan"));
+                        $this->addedControl($specialRelayPlanLabel);
+                        $specialRelayPlanLabel->render($writer);
+            		$writer->renderEndTag();
+                    $writer->renderBeginTag('td');
+                        $this->specialRelayPlan->render($writer);
             		$writer->renderEndTag();
 
         		$writer->renderEndTag();
@@ -583,7 +716,18 @@ class XWeekPlanner extends TWebControl
 	public function setDataColorField($value)
 	{
 		$this->setViewState('DataDurationField',$value);
-	}		
+	}
+
+	public function getPlannerType()
+	{
+		return $this->getViewState('PlannerType');
+	}
+
+	public function setPlannerType($value)
+	{
+		$this->setViewState('PlannerType',$value);
+	}
+
 	
 }
 

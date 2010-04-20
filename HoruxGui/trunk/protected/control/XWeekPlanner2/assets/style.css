@@ -159,17 +159,18 @@
 	border-width:0px;
 	right:1px;
 	top:3px;
-	width:50px;
+	width:110px;
 	height:11px;
 	z-index:100000;
 	font-size:9px;
 	padding:1px;
 	background-color:#333333;
 	color:#FFFFFF;
+    text-align:right;
 }
 
 .weekScheduler_appointment_time_close{
-	position:absolute;
+    position:absolute;
 	border-width:0px;
 	left:1px;
 	top:1px;

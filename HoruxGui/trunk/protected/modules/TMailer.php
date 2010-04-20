@@ -111,10 +111,14 @@ class TMailer extends TModule
       
       return true;
     }
-    catch(Swift_ConnectionException  $e)
-    {
-      return false;
+    catch (Swift_ConnectionException $e) {
+        echo "There was a problem communicating with : " . $e->getMessage(); exit;
+        return false;
+    } catch (Swift_Message_MimeException $e) {
+        echo "There was an unexpected problem building the email:" . $e->getMessage();exit;
+        return false;
     }
+
   }
 
   public function sendConfigChange()

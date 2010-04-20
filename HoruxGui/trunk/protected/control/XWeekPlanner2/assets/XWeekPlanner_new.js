@@ -110,8 +110,98 @@ XWeekPlanner.prototype = {
 		Event.observe(this.options.startTime,'change',this.change.bind(this));
 		Event.observe(this.options.endTime,'change',this.change.bind(this));
 
+        if(this.options.pinCode)
+            Event.observe(this.options.pinCode,'click',this.pcChange.bind(this));
+
+        if(this.options.exitingOnly)
+    		Event.observe(this.options.exitingOnly,'click',this.eoChange.bind(this));
+
+        if(this.options.unlocking)
+    		Event.observe(this.options.unlocking,'click',this.uChange.bind(this));
+
+        if(this.options.supOpenTooLongAlarm)
+    		Event.observe(this.options.supOpenTooLongAlarm,'click',this.a1Change.bind(this));
+
+        if(this.options.supWithoutPermAlarm)
+    		Event.observe(this.options.supWithoutPermAlarm,'click',this.a2Change.bind(this));
+
+        if(this.options.checkOnlyCompanyID)
+    		Event.observe(this.options.checkOnlyCompanyID,'click',this.cChange.bind(this));
+
+
+		Event.observe(this.options.specialRelayPlan,'click',this.srpChange.bind(this));
+
 	},
-	
+
+
+    uChange: function () {
+        if(this.activeItem)
+        {
+            if(!this.options.unlocking.checked)
+            {
+                 this.options.supWithoutPermAlarm.checked = false;
+                 this.activeItem.supWithoutPermAlarm = this.options.supWithoutPermAlarm.checked;
+            }
+            this.activeItem.unlocking = this.options.unlocking.checked;
+            this.activeItem.resize2(this.options.startTime.value,this.options.endTime.value);
+        }
+    },
+
+    a1Change: function () {
+        if(this.activeItem)
+        {
+            this.activeItem.supOpenTooLongAlarm = this.options.supOpenTooLongAlarm.checked;
+            this.activeItem.resize2(this.options.startTime.value,this.options.endTime.value);
+        }
+    },
+
+    a2Change: function () {
+        if(this.activeItem)
+        {
+            if(this.options.supWithoutPermAlarm.checked)
+            {
+                this.options.unlocking.checked = true;
+                this.activeItem.unlocking = this.options.unlocking.checked;
+            }
+            this.activeItem.supWithoutPermAlarm = this.options.supWithoutPermAlarm.checked;
+            this.activeItem.resize2(this.options.startTime.value,this.options.endTime.value);
+        }
+    },
+
+    cChange: function () {
+        if(this.activeItem)
+        {
+            this.activeItem.checkOnlyCompanyID = this.options.checkOnlyCompanyID.checked;
+            this.activeItem.resize2(this.options.startTime.value,this.options.endTime.value);
+        }
+    },
+
+
+    pcChange: function () {
+        if(this.activeItem)
+        {
+            this.activeItem.pinCode = this.options.pinCode.checked;
+            this.activeItem.resize2(this.options.startTime.value,this.options.endTime.value);
+        }
+    },
+
+    eoChange: function () {
+        if(this.activeItem)
+        {
+            this.activeItem.exitingOnly = this.options.exitingOnly.checked;
+            this.activeItem.resize2(this.options.startTime.value,this.options.endTime.value);
+        }
+    },
+
+    srpChange: function () {
+        if(this.activeItem)
+        {
+            this.activeItem.specialRelayPlan = this.options.specialRelayPlan.checked;
+            this.activeItem.resize2(this.options.startTime.value,this.options.endTime.value);
+        }
+    },
+
+
 	getScrollTop: function () {
 		
 		return $('weekScheduler_content').scrollTop;
@@ -131,7 +221,14 @@ XWeekPlanner.prototype = {
          startHour			 : 0,
          endHour			 : 23,
          onitemclick		 : '',
-         readOnly			 : 0
+         readOnly			 : 0,
+         pinCode         : 0,
+         exitingOnly     : 0,
+         specialRelayPlan : 0,
+         unlocking : 0,
+         supOpenTooLongAlarm : 0,
+         supWithoutPermAlarm : 0,
+         checkOnlyCompanyID : 0,
       }
       Object.extend(this.options, options || {});
    },
@@ -345,6 +442,9 @@ XWeekPlanner.prototype = {
             item.id = this.idIndexNew++;
 			item = this.addItem(item);
             this.saveAppointment(item);
+
+            this.options.startTime.value = item.getTimeStart();
+            this.options.endTime.value = item.getTimeEnd();
 		}
 		
 	},
@@ -401,9 +501,21 @@ XAppointment.prototype = {
 		this.isEditInProgress = false;
 		this.ondblclick = '';
         this.zIndex = 501;
+        this.pinCode = "0";
+        this.exitingOnly = "0";
+        this.specialRelayPlan = "0";
+
+        this.unlocking = "0";
+        this.supOpenTooLongAlarm = "0";
+        this.supWithoutPermAlarm = "0";
+        this.checkOnlyCompanyID = "0";
+
+        
 		if(info)
 			this.loadFromServer(info);
-		//alert(this.startDate);
+        
+
+
 	},
 	// Gets the information of the XAppointment as an array
 	getAsArray: function () {
@@ -412,7 +524,14 @@ XAppointment.prototype = {
 			"id"			: this.id,
 			'day' 			: this.startDate.getDay(),
 			'duration' 		: this.duration,
-			'hour' 			: this.startDate.getHours() + ':' + this.startDate.getMinutes()
+			'hour' 			: this.startDate.getHours() + ':' + this.startDate.getMinutes(),
+            'pinCode'       : this.pinCode,
+            'exitingOnly'       : this.exitingOnly,
+            'specialRelayPlan'       : this.specialRelayPlan,
+            'unlocking'       : this.unlocking,
+            'supOpenTooLongAlarm'       : this.supOpenTooLongAlarm,
+            'supWithoutPermAlarm'       : this.supWithoutPermAlarm,
+            'checkOnlyCompanyID'       : this.checkOnlyCompanyID,
 		};	
 		
 		
@@ -474,6 +593,13 @@ XAppointment.prototype = {
         this.startDate = new Date(2007,2,11+itm.day,hour[0],hour[1],0,0);
         this.duration = itm.duration;
 		this.id = itm.id;
+        this.pinCode = itm.pinCode;
+        this.exitingOnly = itm.exitingOnly;
+        this.specialRelayPlan = itm.specialRelayPlan;
+        this.unlocking = itm.unlocking;
+        this.supOpenTooLongAlarm = itm.supOpenTooLongAlarm;
+        this.supWithoutPermAlarm = itm.supWithoutPermAlarm;
+        this.checkOnlyCompanyID = itm.checkOnlyCompanyID;
 		
 	},
 	
@@ -505,7 +631,29 @@ XAppointment.prototype = {
 		var timeDiv = document.createElement('DIV');
 		timeDiv.id 			= 'weekScheduler_appointment_time_' + this.id;
 		timeDiv.className	= 'weekScheduler_appointment_time';
-		timeDiv.innerHTML 	= this.getTime();		
+
+        var tcOption = "";
+        if(this.pinCode == "1")
+            tcOption += "PC ";
+        if(this.exitingOnly == "1")
+            tcOption += "EO ";
+
+        if(this.unlocking == "1" && this.supWithoutPermAlarm == "0")
+            tcOption += "U ";
+        if(this.unlocking == "1" && this.supWithoutPermAlarm == "1")
+            tcOption += "UA ";
+        if(this.supOpenTooLongAlarm == "1")
+            tcOption += "A ";
+        if(this.checkOnlyCompanyID == "1")
+            tcOption += "C ";
+
+        if(this.specialRelayPlan == "1")
+            tcOption += "SR ";
+
+
+        tcOption += " ";
+
+		timeDiv.innerHTML 	= tcOption + this.getTime();
 		div.appendChild(timeDiv);
 
 	
@@ -568,10 +716,29 @@ XAppointment.prototype = {
 		this.startDate = this.weekPlanner.getStartDateFromPosition(this.divElement);
 		this.duration = this.getDuration();
 		this.weekPlanner.saveAppointment(this);
-		
+
+        var tcOption = "";
+        if(this.pinCode == "1")
+            tcOption += "PC ";
+        if(this.exitingOnly == "1")
+            tcOption += "EO ";
+
+        if(this.unlocking == "1" && this.supWithoutPermAlarm == "0")
+            tcOption += "U ";
+        if(this.unlocking == "1" && this.supWithoutPermAlarm == "1")
+            tcOption += "UA ";
+        if(this.supOpenTooLongAlarm == "1")
+            tcOption += "A ";
+        if(this.checkOnlyCompanyID == "1")
+            tcOption += "C ";
+
+        if(this.specialRelayPlan == "1")
+            tcOption += "SR ";
+        tcOption += " ";
+
 		document.onmouseup = null;
 		this.weekPlanner.container.onmousemove = null;
-		$('weekScheduler_appointment_time_' + this.id).innerHTML = this.getTime();       			
+		$('weekScheduler_appointment_time_' + this.id).innerHTML = tcOption + this.getTime();
 		
 	},
 	
@@ -584,7 +751,27 @@ XAppointment.prototype = {
 	       this.divElement.style.height = height + "px"; 
        }
 	   this.duration = this.getDuration();
-       $('weekScheduler_appointment_time_' + this.id).innerHTML = this.getTime(); 
+
+        var tcOption = "";
+        if(this.pinCode == "1")
+            tcOption += "PC ";
+        if(this.exitingOnly == "1")
+            tcOption += "EO ";
+
+        if(this.unlocking == "1" && this.supWithoutPermAlarm == "0")
+            tcOption += "U ";
+        if(this.unlocking == "1" && this.supWithoutPermAlarm == "1")
+            tcOption += "UA ";
+        if(this.supOpenTooLongAlarm == "1")
+            tcOption += "A ";
+        if(this.checkOnlyCompanyID == "1")
+            tcOption += "C ";
+
+        if(this.specialRelayPlan == "1")
+            tcOption += "SR ";
+        tcOption += " ";
+
+       $('weekScheduler_appointment_time_' + this.id).innerHTML = tcOption + this.getTime();
 	   this.weekPlanner.options.startTime.value = this.getTimeStart();
        this.weekPlanner.options.endTime.value = this.getTimeEnd();
 	},
@@ -606,7 +793,28 @@ XAppointment.prototype = {
         this.duration = duration;
 		this.divElement.style.top 		= this.getTopPos() + 'px';
 		this.divElement.style.height 	= this.getHeight() + 'px';
-        $('weekScheduler_appointment_time_' + this.id).innerHTML = this.getTime();
+
+        var tcOption = "";
+        if(this.pinCode == "1")
+            tcOption += "PC ";
+        if(this.exitingOnly == "1")
+            tcOption += "EO ";
+
+        if(this.unlocking == "1" && this.supWithoutPermAlarm == "0")
+            tcOption += "U ";
+        if(this.unlocking == "1" && this.supWithoutPermAlarm == "1")
+            tcOption += "UA ";
+        if(this.supOpenTooLongAlarm == "1")
+            tcOption += "A ";
+        if(this.checkOnlyCompanyID == "1")
+            tcOption += "C ";
+
+        if(this.specialRelayPlan == "1")
+            tcOption += "SR ";
+        tcOption += " ";
+
+
+        $('weekScheduler_appointment_time_' + this.id).innerHTML = tcOption + this.getTime();
         this.weekPlanner.saveAppointment(this);
     },
 	
@@ -622,7 +830,28 @@ XAppointment.prototype = {
         if(left >= 0)
         	this.divElement.style.left = left + "px";
 	   this.startDate = this.weekPlanner.getStartDateFromPosition(this.divElement);
-       $('weekScheduler_appointment_time_' + this.id).innerHTML = this.getTime();
+
+        var tcOption = "";
+        if(this.pinCode == "1")
+            tcOption += "PC ";
+        if(this.exitingOnly == "1")
+            tcOption += "EO ";
+
+        if(this.unlocking == "1" && this.supWithoutPermAlarm == "0")
+            tcOption += "U ";
+        if(this.unlocking == "1" && this.supWithoutPermAlarm == "1")
+            tcOption += "UA ";
+        if(this.supOpenTooLongAlarm == "1")
+            tcOption += "A ";
+        if(this.checkOnlyCompanyID == "1")
+            tcOption += "C ";
+
+        if(this.specialRelayPlan == "1")
+            tcOption += "SR ";
+        tcOption += " ";
+
+
+       $('weekScheduler_appointment_time_' + this.id).innerHTML = tcOption + this.getTime();
 		this.weekPlanner.options.startTime.value = this.getTimeStart();
 		this.weekPlanner.options.endTime.value = this.getTimeEnd();
 
@@ -633,6 +862,44 @@ XAppointment.prototype = {
 		this.weekPlanner.setActiveItem(this);
 		this.weekPlanner.options.startTime.value = this.getTimeStart();
 		this.weekPlanner.options.endTime.value = this.getTimeEnd();
+
+        if(this.pinCode == '1')
+            this.weekPlanner.options.pinCode.checked = true ;
+        else
+            this.weekPlanner.options.pinCode.checked = false ;
+
+        if(this.exitingOnly == '1')
+            this.weekPlanner.options.exitingOnly.checked = true ;
+        else
+            this.weekPlanner.options.exitingOnly.checked = false ;
+
+        if(this.specialRelayPlan == '1')
+            this.weekPlanner.options.specialRelayPlan.checked = true ;
+        else
+            this.weekPlanner.options.specialRelayPlan.checked = false ;
+
+
+        if(this.unlocking == '1')
+            this.weekPlanner.options.unlocking.checked = true ;
+        else
+            this.weekPlanner.options.unlocking.checked = false ;
+
+        if(this.supOpenTooLongAlarm == '1')
+            this.weekPlanner.options.supOpenTooLongAlarm.checked = true ;
+        else
+            this.weekPlanner.options.supOpenTooLongAlarm.checked = false ;
+
+        if(this.supWithoutPermAlarm == '1')
+            this.weekPlanner.options.supWithoutPermAlarm.checked = true ;
+        else
+            this.weekPlanner.options.supWithoutPermAlarm.checked = false ;
+
+        if(this.checkOnlyCompanyID == '1')
+            this.weekPlanner.options.checkOnlyCompanyID.checked = true ;
+        else
+            this.weekPlanner.options.checkOnlyCompanyID.checked = false ;
+
+
 		Event.stop(event);
 		
 	},

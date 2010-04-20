@@ -111,7 +111,7 @@ class mod extends Page
         $this->timeArray = $this->getViewState('timeArray',array());
         foreach($this->timeArray as $time)
         {
-            $this->saveTimeData($time['day'], $time['hourStart'], $time['duration'], $this->Request['id']);
+            $this->saveTimeData($time['day'], $time['hourStart'], $time['duration'], $this->Request['id'], $time['pinCode'], $time['exitingOnly'], $time['specialRelayPlan']);
         }
 
         $this->log("Modify the access level: ".$this->name->SafeText);
@@ -119,7 +119,7 @@ class mod extends Page
         return $res || $res2;
     }
 
-    protected function saveTimeData($day, $hourStart, $duration ,$lastId)
+    protected function saveTimeData($day, $hourStart, $duration ,$lastId, $pinCode, $exitingOnly, $specialRelayPlan)
     {
         switch($day)
         {
@@ -156,6 +156,9 @@ class mod extends Page
         $cmd->bindParameter(":day",$dayName,PDO::PARAM_STR);
         $cmd->bindParameter(":from",$indexStartHours,PDO::PARAM_INT);
         $cmd->bindParameter(":until",$indexEndHours,PDO::PARAM_INT);
+        $cmd->bindParameter(":pinCodeNecessary", $pinCode);
+        $cmd->bindParameter(":specialRelayPlan", $specialRelayPlan);
+        $cmd->bindParameter(":exitingOnly", $exitingOnly);
 
         $cmd->execute();
     }
@@ -187,9 +190,12 @@ class mod extends Page
                 $arrItems[] = array('id' => $d['id'],
                          'day' => $days[$d['day']],
                          'hour' => $from,
-                         'duration' => $duration);
+                         'duration' => $duration,
+                         "pinCode"=>$d['pinCodeNecessary'],
+                         "exitingOnly"=>$d['exitingOnly'],
+                         "specialRelayPlan"=>$d['specialRelayPlan']);
 
-                $this->timeArray[$d['id']] = array("day"=> $days[$d['day']], "duration"=>$duration,"hourStart"=>$from);
+                $this->timeArray[$d['id']] = array("day"=> $days[$d['day']], "duration"=>$duration,"hourStart"=>$from, "pinCode"=>$d['pinCodeNecessary'], "exitingOnly"=>$d['exitingOnly'], "specialRelayPlan"=>$d['specialRelayPlan']);
             }
             $this->setViewState('timeArray',$this->timeArray,'');
             $this->getResponse()->getAdapter()->setResponseData($arrItems);
@@ -201,7 +207,13 @@ class mod extends Page
         $this->timeArray = $this->getViewState('timeArray',array());
 
         $p = $param->getCallbackParameter()->CommandParameter;
-        $this->timeArray[$p->id] = array("day"=> $p->day, "duration"=>$p->duration,"hourStart"=>$p->hour);
+        $this->timeArray[$p->id] = array("day"=> $p->day,
+                                         "duration"=>$p->duration,
+                                         "hourStart"=>$p->hour,
+                                         "pinCode"=>$p->pinCode,
+                                         "exitingOnly"=>$p->exitingOnly,
+                                         "specialRelayPlan"=>$p->specialRelayPlan,
+                                        );
 
         $this->setViewState('timeArray',$this->timeArray,'');
     }

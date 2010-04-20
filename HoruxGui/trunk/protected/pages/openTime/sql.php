@@ -58,13 +58,23 @@ class SQL {
                         `id_openTime` ,
                         `day`,
                         `from`,
-                        `until`
+                        `until`,
+                        `unlocking`,
+                        `supOpenTooLongAlarm`,
+                        `supWithoutPermAlarm`,
+                        `checkOnlyCompanyID`,
+                        `specialRelayPlan`
                   )
                   VALUES (
                         :id_openTime,
                         :day,
                         :from,
-                        :until
+                        :until,
+                        :unlocking,
+                        :supOpenTooLongAlarm,
+                        :supWithoutPermAlarm,
+                        :checkOnlyCompanyID,
+                        :specialRelayPlan
                   )";
 
     const SQL_REMOVE_OPEN_TIME = "DELETE FROM hr_openTime WHERE id=:id";

@@ -120,6 +120,7 @@
                           OnLoadAppointments="OnLoadAppointments"
                           OnSaveAppointment="OnSaveAppointment"
                           OnDeleteAppointment="OnDeleteAppointment"
+                          PlannerType="Access"
                           />
 
     </fieldset>
