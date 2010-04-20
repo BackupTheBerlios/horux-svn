@@ -27,8 +27,8 @@ CREATE TABLE IF NOT EXISTS `hr_access_time` (
   `from` int(11) NOT NULL DEFAULT '0',
   `until` int(11) NOT NULL DEFAULT '0',
   `pinCodeNecessary` smallint(1) NOT NULL DEFAULT '0',
-  `specialRelayPlan` smallint(6) NOT NULL DEFAULT '0',
-  `exitingOnly` smallint(6) NOT NULL DEFAULT '0',
+  `specialRelayPlan` smallint(1) NOT NULL DEFAULT '0',
+  `exitingOnly` smallint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=`utf8`;
 
@@ -53,12 +53,17 @@ CREATE TABLE IF NOT EXISTS `hr_openTime` (
 #
 
 CREATE TABLE IF NOT EXISTS `hr_openTime_time` (
-  `id` bigint(20) unsigned NOT NULL auto_increment,
-  `id_openTime` bigint(20) NOT NULL default '0',
-  `day` varchar(10) NOT NULL default '0',
-  `from` int(11) NOT NULL default '0',
-  `until` int(11) NOT NULL default '0',
-  PRIMARY KEY  (`id`)
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `id_openTime` bigint(20) NOT NULL DEFAULT '0',
+  `day` varchar(10) NOT NULL DEFAULT '0',
+  `from` int(11) NOT NULL DEFAULT '0',
+  `until` int(11) NOT NULL DEFAULT '0',
+  `unlocking` smallint(1) NOT NULL,
+  `supOpenTooLongAlarm` smallint(1) NOT NULL DEFAULT '0',
+  `supWithoutPermAlarm` smallint(1) NOT NULL DEFAULT '0',
+  `checkOnlyCompanyID` smallint(1) NOT NULL DEFAULT '0',
+  `specialRelayPlan` smallint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
 ) TYPE=MyISAM CHARACTER SET `utf8`;
 
 #
@@ -431,6 +436,7 @@ CREATE TABLE IF NOT EXISTS `hr_superuser_group` (
   `dispLastAlarm` int(1) NOT NULL,
   `dispLastTracking` int(1) NOT NULL,
   `webservice` smallint(1) NOT NULL,
+  `defaultPage` varchar(255) NOT NULL,
   PRIMARY KEY  (`id`)
 ) TYPE=MyISAM CHARACTER SET `utf8`;
 
@@ -439,7 +445,7 @@ CREATE TABLE IF NOT EXISTS `hr_superuser_group` (
 #
 
 INSERT INTO `hr_superuser_group` (`id`, `name`, `superAdmin`, `description`, `locked`, `dispUserLoggedIn`, `dispLastAlarm`, `dispLastTracking`) VALUES
-(1, 'admin', 1, 'Admin', 0, 1, 1, 1);
+(1, 'admin', 1, 'Admin', 0, 1, 1, 1, 1, 'controlPanel.ControlPanel');
 
 # --------------------------------------------------------
 
