@@ -641,6 +641,14 @@ void CGantnerTimeTerminal::checkConfigFile(QString xml)
 
     bool isOk = true;
 
+    if( !xml.startsWith('<') )
+    {
+        int startXml = xml.indexOf("<");
+
+        if(startXml>0)
+            xml = xml.right(xml.length()-startXml);
+    }
+
     if( !config.setContent(xml, true, &errorStr, &errorLine, &errorColumn) )
     {
         QString xml = CXmlFactory::deviceEvent(QString::number(this->id), "1017", QString("XML Config file error at line %1, column %2 : %3").arg(errorLine).arg(errorColumn).arg(errorStr));
