@@ -507,7 +507,7 @@ void CHorux::readSoapResponse()
 
             QtSoapMessage message2;
             message2.setMethod("createTrigger");
-
+qDebug() << "createTrigger";
             QMap<QString,QStringList> tables;
             QStringList tablesList;
             QStringList tablesRmList;
