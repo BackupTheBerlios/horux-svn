@@ -309,6 +309,10 @@ bool CGantnerTimeTerminal::open()
     udp->write(result.call(QScriptValue(), args).toString().toLatin1());*/
 
     timerSyncTime = startTimer(1000 * 60 * 60); // sync the time every 1 hour
+    result = engine.evaluate("setUnitTime");
+    QScriptValueList args;
+    args << QScriptValue(&engine,QDateTime::currentDateTime().toString(Qt::ISODate));
+    udp->write(result.call(QScriptValue(), args).toString().toLatin1());
 
     return true;
   }
@@ -823,6 +827,9 @@ void CGantnerTimeTerminal::reinit()
     QString config = "";
     QScriptValue result;
     QScriptValueList args;
+
+    result = engine.evaluate("resetDeviceConfig");
+    config += result.call().toString() + "\n";
 
     result = engine.evaluate("resetReaderConfig");
     config += result.call().toString() + "\n";
