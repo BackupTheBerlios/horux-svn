@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <xliff version="1.0">
- <file source-language="FR" target-language="fr" datatype="plaintext" original="messages" date="2010-04-20T16:21:07Z" product-name="messages">
+ <file source-language="FR" target-language="fr" datatype="plaintext" original="messages" date="2010-04-27T15:35:21Z" product-name="messages">
   <body>
   
 <trans-unit id="1" lock="1">
@@ -1161,253 +1161,247 @@
 <target>Acc&#xE8;s durant les jours non ouvrables</target>
 </trans-unit>
 
+
+
+
+
+
+
 <trans-unit id="210" lock="1">
-<source>Check it if you want an access level having&lt;br /&gt; access during the week-end</source>
-<target>Cochez si vous d&#xE9;sirez avoir acc&#xE8;s durant le week-end</target>
-</trans-unit>
-
-<trans-unit id="211" lock="1">
-<source>Week-end access</source>
-<target>Acc&#xE8;s durant le week-end</target>
-</trans-unit>
-
-
-
-<trans-unit id="212" lock="1">
 <source>Valid from</source>
 <target>Date de d&#xE9;but de validit&#xE9;</target>
 </trans-unit>
 
 
 
-<trans-unit id="213" lock="1">
+<trans-unit id="211" lock="1">
 <source>Valid until</source>
 <target>Date de fin de validit&#xE9;</target>
 </trans-unit>
 
-<trans-unit id="214" lock="1">
+<trans-unit id="212" lock="1">
 <source>You could insert a description for this access level</source>
 <target>Vous pouvez donner une description &#xE0; ce niveau d\'acc&#xE8;s</target>
 </trans-unit>
 
-<trans-unit id="215" lock="1">
+<trans-unit id="213" lock="1">
 <source>Time area</source>
 <target>Horaires</target>
 </trans-unit>
 
-<trans-unit id="216" lock="1">
+<trans-unit id="214" lock="1">
 <source>Check it if you want to take Monday configuration&lt;br/&gt; as default for the rest of the week.</source>
 <target>Cochez cette option si le lundi est la configuration par d&#xE9;faut des autres jours</target>
 </trans-unit>
 
-<trans-unit id="217" lock="1">
+<trans-unit id="215" lock="1">
 <source>All days as Monday</source>
 <target>Tous les jours comme le lundi </target>
 </trans-unit>
 
-<trans-unit id="218" lock="1">
+<trans-unit id="216" lock="1">
 <source>Monday</source>
 <target>Lundi</target>
 </trans-unit>
 
-<trans-unit id="219" lock="1">
+<trans-unit id="217" lock="1">
 <source>Tuesday</source>
 <target>Mardi</target>
 </trans-unit>
 
-<trans-unit id="220" lock="1">
+<trans-unit id="218" lock="1">
 <source>Wednesday</source>
 <target>Mercredi</target>
 </trans-unit>
 
-<trans-unit id="221" lock="1">
+<trans-unit id="219" lock="1">
 <source>Thursday</source>
 <target>Jeudi</target>
 </trans-unit>
 
-<trans-unit id="222" lock="1">
+<trans-unit id="220" lock="1">
 <source>Friday</source>
 <target>Vendredi</target>
 </trans-unit>
 
-<trans-unit id="223" lock="1">
+<trans-unit id="221" lock="1">
 <source>Saturday</source>
 <target>Samedi</target>
 </trans-unit>
 
-<trans-unit id="224" lock="1">
+<trans-unit id="222" lock="1">
 <source>Sunday</source>
 <target>Dimanche</target>
 </trans-unit>
 
-<trans-unit id="225" lock="1">
+<trans-unit id="223" lock="1">
 <source>Modify an access level</source>
 <target>Modifier un niveau d'acc&#xE8;s</target>
 </trans-unit>
 
-<trans-unit id="226" lock="1">
+<trans-unit id="224" lock="1">
 <source>This identificator is already used</source>
 <target>Cet identificateur est d&#xE9;j&#xE0; utilis&#xE9;</target>
 </trans-unit>
 
-<trans-unit id="227" lock="1">
+<trans-unit id="225" lock="1">
 <source>This serialNumber is already used</source>
 <target>Ce num&#xE9;ro de s&#xE9;rie est d&#xE9;j&#xE0; utilis&#xE9;</target>
 </trans-unit>
 
-<trans-unit id="228" lock="1">
+<trans-unit id="226" lock="1">
 <source>---- No attribution ----</source>
 <target>---- Pas d'attribution ----</target>
 </trans-unit>
 
-<trans-unit id="229" lock="1">
+<trans-unit id="227" lock="1">
 <source>Add a Key</source>
 <target>Ajouter une cl&#xE9;</target>
 </trans-unit>
 
-<trans-unit id="230" lock="1">
+<trans-unit id="228" lock="1">
 <source>Enter a &lt;strong&gt;unique&lt;/strong&gt; identificator for this key</source>
 <target>Entrez un identificateur unique pour cette cl&#xE9;</target>
 </trans-unit>
 
-<trans-unit id="231" lock="1">
+<trans-unit id="229" lock="1">
 <source>Attribute this key to somebody</source>
 <target>Attribuer cette cl&#xE9; &#xE0; quelqu\'un</target>
 </trans-unit>
 
-<trans-unit id="232" lock="1">
+<trans-unit id="230" lock="1">
 <source>Modify a Key</source>
 <target>Modifier la cl&#xE9;</target>
 </trans-unit>
 
-<trans-unit id="233" lock="1">
+<trans-unit id="231" lock="1">
 <source>Modify a Non Working Day</source>
 <target>Modifier le jour non ouvrable</target>
 </trans-unit>
 
-<trans-unit id="234" lock="1">
+<trans-unit id="232" lock="1">
 <source>Enter a name for this non working day</source>
 <target>Entrez un nom pour ce jour non ouvrable</target>
 </trans-unit>
 
-<trans-unit id="235" lock="1">
+<trans-unit id="233" lock="1">
 <source>Date when start this non working day</source>
 <target>Date de d&#xE9;but des jours non ouvrables</target>
 </trans-unit>
 
-<trans-unit id="236" lock="1">
+<trans-unit id="234" lock="1">
 <source>From</source>
 <target>D&#xE9;but</target>
 </trans-unit>
 
-<trans-unit id="237" lock="1">
+<trans-unit id="235" lock="1">
 <source>Date when finish this non working day.&lt;br/&gt;Do not insert the date if it is only one day</source>
 <target>Date de fin des jours non ouvrables</target>
 </trans-unit>
 
-<trans-unit id="238" lock="1">
+<trans-unit id="236" lock="1">
 <source>Until</source>
 <target>Fin</target>
 </trans-unit>
 
-<trans-unit id="239" lock="1">
+<trans-unit id="237" lock="1">
 <source>You could insert a description for this non working day</source>
 <target>Vous pouvez entrer une description pour ce jour non ouvrable</target>
 </trans-unit>
 
-<trans-unit id="240" lock="1">
+<trans-unit id="238" lock="1">
 <source>Add a Non Working Day</source>
 <target>Ajouter un jour non ouvrable</target>
 </trans-unit>
 
-<trans-unit id="241" lock="1">
+<trans-unit id="239" lock="1">
 <source>This name is already used</source>
 <target>Ce nom est d&#xE9;j&#xE0; utilis&#xE9;</target>
 </trans-unit>
 
-<trans-unit id="242" lock="1">
+<trans-unit id="240" lock="1">
 <source>The password must be equal to the confirmation</source>
 <target>Le mot de passe doit &#xEA;tre &#xE9;gal &#xE0; la confirmation</target>
 </trans-unit>
 
-<trans-unit id="243" lock="1">
+<trans-unit id="241" lock="1">
 <source>Add a super user</source>
 <target>Ajouter un super utilisateur</target>
 </trans-unit>
 
-<trans-unit id="244" lock="1">
+<trans-unit id="242" lock="1">
 <source>Global</source>
 <target>G&#xE9;n&#xE9;ral</target>
 </trans-unit>
 
-<trans-unit id="245" lock="1">
+<trans-unit id="243" lock="1">
 <source>Enter the username for this super user</source>
 <target>Entrez un nom d\'utilisateur pour ce super utilisateur</target>
 </trans-unit>
 
-<trans-unit id="246" lock="1">
+<trans-unit id="244" lock="1">
 <source>Enter the password for this super user</source>
 <target>Entrez un mot de passe pour ce super utilisateur</target>
 </trans-unit>
 
-<trans-unit id="247" lock="1">
+<trans-unit id="245" lock="1">
 <source>Enter the confirmation password for this super user</source>
 <target>Entrez la confirmation du mot de passe pour ce super utilistateur</target>
 </trans-unit>
 
-<trans-unit id="248" lock="1">
+<trans-unit id="246" lock="1">
 <source>Confirmation</source>
 <target>Confirmation</target>
 </trans-unit>
 
-<trans-unit id="249" lock="1">
+<trans-unit id="247" lock="1">
 <source>Select super user group</source>
 <target>S&#xE9;lectionnez un super groupe utilisateur</target>
 </trans-unit>
 
-<trans-unit id="250" lock="1">
+<trans-unit id="248" lock="1">
 <source>Select user link</source>
 <target>S&#xE9;lectionnez l\'utilisateur li&#xE9;</target>
 </trans-unit>
 
-<trans-unit id="251" lock="1">
+<trans-unit id="249" lock="1">
 <source>Modify a super user</source>
 <target>Modifier un super utilisateur</target>
 </trans-unit>
 
 
-<trans-unit id="252" lock="1">
+<trans-unit id="250" lock="1">
 <source>User Group</source>
 <target>Groupe utilisateur</target>
 </trans-unit>
 
-<trans-unit id="253" lock="1">
+<trans-unit id="251" lock="1">
 <source>Install/Uninstall</source>
 <target>Installer/D&#xE9;sinstaller</target>
 </trans-unit>
 
 
-<trans-unit id="254" lock="1">
+<trans-unit id="252" lock="1">
 <source>Page</source>
 <target>Page</target>
 </trans-unit>
 
-<trans-unit id="255" lock="1">
+<trans-unit id="253" lock="1">
 <source>Add access</source>
 <target>Ajouter une acc&#xE8;s</target>
 </trans-unit>
 
-<trans-unit id="256" lock="1">
+<trans-unit id="254" lock="1">
 <source>Add a super user group</source>
 <target>Ajouter un groupe super utilisateur</target>
 </trans-unit>
 
-<trans-unit id="257" lock="1">
+<trans-unit id="255" lock="1">
 <source>Enter the name for this super user group</source>
 <target>Entrez un nom pour ce groupe super utilisateur</target>
 </trans-unit>
 
-<trans-unit id="258" lock="1">
+<trans-unit id="256" lock="1">
 <source>You could insert a description for this group.</source>
 <target>Vous pouvez ins&#xE9;rer une description pour ce groupe.</target>
 </trans-unit>
@@ -1420,12 +1414,12 @@
 
 
 
-<trans-unit id="259" lock="1">
+<trans-unit id="257" lock="1">
 <source>Modify a super user group</source>
 <target>Modifier le groupe super utilisateur</target>
 </trans-unit>
 
-<trans-unit id="260" lock="1">
+<trans-unit id="258" lock="1">
 <source>Action</source>
 <target>Action</target>
 </trans-unit>
@@ -1444,32 +1438,32 @@
 
 
 
-<trans-unit id="261" lock="1">
+<trans-unit id="259" lock="1">
 <source>Attribute</source>
 <target>Attribuer</target>
 </trans-unit>
 
-<trans-unit id="262" lock="1">
+<trans-unit id="260" lock="1">
 <source>Unattribute</source>
 <target>D&#xE9;satribuer</target>
 </trans-unit>
 
-<trans-unit id="263" lock="1">
+<trans-unit id="261" lock="1">
 <source>Key Attribution</source>
 <target>Attribution de cl&#xE9;</target>
 </trans-unit>
 
-<trans-unit id="264" lock="1">
+<trans-unit id="262" lock="1">
 <source>Attribute the key</source>
 <target>Attribuer la cl&#xE9;</target>
 </trans-unit>
 
-<trans-unit id="265" lock="1">
+<trans-unit id="263" lock="1">
 <source>Groups Attribution</source>
 <target>Attribution de groupe</target>
 </trans-unit>
 
-<trans-unit id="266" lock="1">
+<trans-unit id="264" lock="1">
 <source>Attribute the group</source>
 <target>Attribuer le groupe</target>
 </trans-unit>
@@ -1486,252 +1480,252 @@
 
 
 
-<trans-unit id="267" lock="1">
+<trans-unit id="265" lock="1">
 <source>Add a user</source>
 <target>Ajouter un utilisateur</target>
 </trans-unit>
 
-<trans-unit id="268" lock="1">
+<trans-unit id="266" lock="1">
 <source>Select the sex for this user</source>
 <target>S&#xE9;lectionnez le sex de l\'utilisateur</target>
 </trans-unit>
 
-<trans-unit id="269" lock="1">
+<trans-unit id="267" lock="1">
 <source>Sex</source>
 <target>Titre civil</target>
 </trans-unit>
 
-<trans-unit id="270" lock="1">
+<trans-unit id="268" lock="1">
 <source>Enter the name for this user</source>
 <target>Entrez un nom pour cet utilisateur</target>
 </trans-unit>
 
-<trans-unit id="271" lock="1">
+<trans-unit id="269" lock="1">
 <source>Enter the firstname for this user</source>
 <target>Entrez un pr&#xE9;nom pour cet utilisateur</target>
 </trans-unit>
 
-<trans-unit id="272" lock="1">
+<trans-unit id="270" lock="1">
 <source>Select the language for this user</source>
 <target>S&#xE9;lectionnez une langue pour cet utilisateur</target>
 </trans-unit>
 
-<trans-unit id="273" lock="1">
+<trans-unit id="271" lock="1">
 <source>Add the picture of the user</source>
 <target>Ajouter une photo de l\'utilisateur</target>
 </trans-unit>
 
-<trans-unit id="274" lock="1">
+<trans-unit id="272" lock="1">
 <source>Personal information</source>
 <target>Information priv&#xE9;</target>
 </trans-unit>
 
-<trans-unit id="275" lock="1">
+<trans-unit id="273" lock="1">
 <source>Enter the personal street</source>
 <target>Entrez la rue</target>
 </trans-unit>
 
-<trans-unit id="276" lock="1">
+<trans-unit id="274" lock="1">
 <source>Enter the personal zip number</source>
 <target>Entrez le NPA</target>
 </trans-unit>
 
-<trans-unit id="277" lock="1">
+<trans-unit id="275" lock="1">
 <source>Enter the personal city</source>
 <target>Entrez la ville</target>
 </trans-unit>
 
-<trans-unit id="278" lock="1">
+<trans-unit id="276" lock="1">
 <source>Enter the personal country</source>
 <target>Entrez le pays</target>
 </trans-unit>
 
-<trans-unit id="279" lock="1">
+<trans-unit id="277" lock="1">
 <source>Country</source>
 <target>Pays</target>
 </trans-unit>
 
-<trans-unit id="280" lock="1">
+<trans-unit id="278" lock="1">
 <source>Enter the personal phone number</source>
 <target>Entrez le num&#xE9;ro priv&#xE9;</target>
 </trans-unit>
 
-<trans-unit id="281" lock="1">
+<trans-unit id="279" lock="1">
 <source>Enter the personal email</source>
 <target>Entrez l\'email priv&#xE9;</target>
 </trans-unit>
 
-<trans-unit id="282" lock="1">
+<trans-unit id="280" lock="1">
 <source>Professional information</source>
 <target>Information professionnelle</target>
 </trans-unit>
 
-<trans-unit id="283" lock="1">
+<trans-unit id="281" lock="1">
 <source>Enter the firme</source>
 <target>Entrez le nom de la compagnie</target>
 </trans-unit>
 
-<trans-unit id="284" lock="1">
+<trans-unit id="282" lock="1">
 <source>Firme</source>
 <target>Compagnie</target>
 </trans-unit>
 
-<trans-unit id="285" lock="1">
+<trans-unit id="283" lock="1">
 <source>Enter the department</source>
 <target>Entrez le nom du d&#xE9;partement</target>
 </trans-unit>
 
-<trans-unit id="286" lock="1">
+<trans-unit id="284" lock="1">
 <source>Department</source>
 <target>D&#xE9;partement</target>
 </trans-unit>
 
-<trans-unit id="287" lock="1">
+<trans-unit id="285" lock="1">
 <source>Enter the professional street</source>
 <target>Entrez le nom de la rue</target>
 </trans-unit>
 
-<trans-unit id="288" lock="1">
+<trans-unit id="286" lock="1">
 <source>Enter the professional zip number</source>
 <target>Entrez le NPA</target>
 </trans-unit>
 
-<trans-unit id="289" lock="1">
+<trans-unit id="287" lock="1">
 <source>Enter the professional city</source>
 <target>Entrez la ville</target>
 </trans-unit>
 
-<trans-unit id="290" lock="1">
+<trans-unit id="288" lock="1">
 <source>Enter the professional country</source>
 <target>Entrez le pays</target>
 </trans-unit>
 
-<trans-unit id="291" lock="1">
+<trans-unit id="289" lock="1">
 <source>Enter the professional phone number</source>
 <target>Entrez le num&#xE9;ro de t&#xE9;l&#xE9;phone professionnel</target>
 </trans-unit>
 
-<trans-unit id="292" lock="1">
+<trans-unit id="290" lock="1">
 <source>Enter the professional email</source>
 <target>Entrez son email professionnel</target>
 </trans-unit>
 
-<trans-unit id="293" lock="1">
+<trans-unit id="291" lock="1">
 <source>Modify a user</source>
 <target>Modifier l'utilisateur</target>
 </trans-unit>
 
-<trans-unit id="294" lock="1">
+<trans-unit id="292" lock="1">
 <source>Check it if you want to&lt;br/&gt;delete an existing picture</source>
 <target>Cochez si vous voulez supprimer la photo existante</target>
 </trans-unit>
 
-<trans-unit id="295" lock="1">
+<trans-unit id="293" lock="1">
 <source>Step 1 : User information</source>
 <target>Etape 1 : Information de l'utilsateur</target>
 </trans-unit>
 
-<trans-unit id="296" lock="1">
+<trans-unit id="294" lock="1">
 <source>Complete</source>
 <target>Complet</target>
 </trans-unit>
 
-<trans-unit id="297" lock="1">
+<trans-unit id="295" lock="1">
 <source>Next</source>
 <target>Suivant</target>
 </trans-unit>
 
-<trans-unit id="298" lock="1">
+<trans-unit id="296" lock="1">
 <source>Previous</source>
 <target>Pr&#xE9;c&#xE9;dant</target>
 </trans-unit>
 
-<trans-unit id="299" lock="1">
+<trans-unit id="297" lock="1">
 <source>Add a User Group</source>
 <target>Ajouter un groupe utilisateur</target>
 </trans-unit>
 
-<trans-unit id="300" lock="1">
+<trans-unit id="298" lock="1">
 <source>Enter a unique name for this group</source>
 <target>Entrez un nom unique pour ce groupe</target>
 </trans-unit>
 
-<trans-unit id="301" lock="1">
+<trans-unit id="299" lock="1">
 <source>Access Right</source>
 <target>Droit d'acc&#xE8;s</target>
 </trans-unit>
 
-<trans-unit id="302" lock="1">
+<trans-unit id="300" lock="1">
 <source>Modify a User Group</source>
 <target>Modifier un groupe utilisateur</target>
 </trans-unit>
 
-<trans-unit id="303" lock="1">
+<trans-unit id="301" lock="1">
 <source>Horux About</source>
 <target>A propos de Horux</target>
 </trans-unit>
 
-<trans-unit id="304" lock="1">
+<trans-unit id="302" lock="1">
 <source>About</source>
 <target>A propos</target>
 </trans-unit>
 
-<trans-unit id="305" lock="1">
+<trans-unit id="303" lock="1">
 <source>The group was added successfully</source>
 <target>Le groupe a &#xE9;t&#xE9; ajout&#xE9; avec succ&#xE8;s</target>
 </trans-unit>
 
-<trans-unit id="306" lock="1">
+<trans-unit id="304" lock="1">
 <source>Horux</source>
 <target>Horux</target>
 </trans-unit>
 
-<trans-unit id="307" lock="1">
+<trans-unit id="305" lock="1">
 <source>Horux Version</source>
 <target>Version de Horux</target>
 </trans-unit>
 
-<trans-unit id="308" lock="1">
+<trans-unit id="306" lock="1">
 <source>Community Forum</source>
 <target>Forum de la communaut&#xE9;</target>
 </trans-unit>
 
-<trans-unit id="309" lock="1">
+<trans-unit id="307" lock="1">
 <source>Copyright</source>
 <target>Copyright</target>
 </trans-unit>
 
-<trans-unit id="310" lock="1">
+<trans-unit id="308" lock="1">
 <source>The user was added successfully</source>
 <target>L'utilisateur a &#xE9;t&#xE9; ajout&#xE9; avec succ&#xE8;s</target>
 </trans-unit>
 
-<trans-unit id="311" lock="1">
+<trans-unit id="309" lock="1">
 <source>Info</source>
 <target>Info</target>
 </trans-unit>
 
-<trans-unit id="312" lock="1">
+<trans-unit id="310" lock="1">
 <source>This record is modified by &lt;b&gt;</source>
 <target>Cet enregistrement est entrain d\'&#xEA;tre modifi&#xE9; par &lt;b&gt;</target>
 </trans-unit>
 
-<trans-unit id="313" lock="1">
+<trans-unit id="311" lock="1">
 <source>Unique serial number of the Key</source>
 <target>Num&#xE9;ro de s&#xE9;rie unique de la cl&#xE9;</target>
 </trans-unit>
 
-<trans-unit id="314" lock="1">
+<trans-unit id="312" lock="1">
 <source>Key number</source>
 <target>Num&#xE9;ro de la cl&#xE9;</target>
 </trans-unit>
 
-<trans-unit id="315" lock="1">
+<trans-unit id="313" lock="1">
 <source>Check it if the key must be blocked</source>
 <target>Cochez pour bloquer la cl&#xE9;</target>
 </trans-unit>
 
-<trans-unit id="316" lock="1">
+<trans-unit id="314" lock="1">
 <source>Key Number</source>
 <target>Num&#xE9;ro de la cl&#xE9;</target>
 </trans-unit>
@@ -1740,44 +1734,44 @@
 
 
 
-<trans-unit id="317" lock="1">
+<trans-unit id="315" lock="1">
 <source>Super admin group</source>
 <target>Groupe super admin</target>
 </trans-unit>
 
-<trans-unit id="318" lock="1">
+<trans-unit id="316" lock="1">
 <source>The user was not modified</source>
 <target>L'utilisateur n'a pas &#xE9;t&#xE9; modifi&#xE9;</target>
 </trans-unit>
 
 
 
-<trans-unit id="319" lock="1">
+<trans-unit id="317" lock="1">
 <source>The user was not modified. The password was not changed</source>
 <target>L'utilisateur n'a pas &#xE9;t&#xE9; modifi&#xE9;. Le mot de passe n'a pas chang&#xE9;</target>
 </trans-unit>
 
-<trans-unit id="320" lock="1">
+<trans-unit id="318" lock="1">
 <source>The user was modified successfully. The password was changed</source>
 <target>L'utilisateur a &#xE9;t&#xE9; modifi&#xE9; avec succ&#xE8;s. Le mot de passe a &#xE9;t&#xE9; chang&#xE9;</target>
 </trans-unit>
 
-<trans-unit id="321" lock="1">
+<trans-unit id="319" lock="1">
 <source>The user was modified successfully. The password was not changed</source>
 <target>L'utilisateur a &#xE9;t&#xE9; modifi&#xE9; avec succ&#xE8;s. Le mot de passe n'a pas chang&#xE9;</target>
 </trans-unit>
 
-<trans-unit id="322" lock="1">
+<trans-unit id="320" lock="1">
 <source>If you check this option, you will be able&lt;br&gt; to modify the password for all super user</source>
 <target>Si vous cochez cette option, vous serez capable de modifier les mots de passe des super utilisateurs</target>
 </trans-unit>
 
-<trans-unit id="323" lock="1">
+<trans-unit id="321" lock="1">
 <source>The access level was added successfully</source>
 <target>Le niveau d'acc&#xE8;s a &#xE9;t&#xE9; ajout&#xE9; avec succ&#xE8;s</target>
 </trans-unit>
 
-<trans-unit id="324" lock="1">
+<trans-unit id="322" lock="1">
 <source>{n} access level was deleted</source>
 <target>{n} niveaux d'acc&#xE8;s ont &#xE9;t&#xE9; supprim&#xE9;s</target>
 </trans-unit>
@@ -1786,63 +1780,63 @@
 
 
 
-<trans-unit id="325" lock="1">
+<trans-unit id="323" lock="1">
 <source>Use a valid username and password to gain access Horux.</source>
 <target>Utilsez un nom d'utilisateur et un mot de passe pour acc&#xE9;der Horux</target>
 </trans-unit>
 
-<trans-unit id="326" lock="1">
+<trans-unit id="324" lock="1">
 <source>default</source>
 <target>d&#xE9;faut</target>
 </trans-unit>
 
 
-<trans-unit id="327" lock="1">
+<trans-unit id="325" lock="1">
 <source>For your most common questions the best place to start looking for answers is the &lt;a href="http://forum.horux.ch" target="_blank"&gt;Frequently Asked Questions (FAQ)&lt;/a&gt; area.  If you are stuck on a particular screen in the Administration area of Horux (which is where you are now), then try clicking on the Help toolbar button which you will find on almost all screens.</source>
 <target>Pour la plus part de vos questions, le meilleur endroit pour d&#xE9;buter est de regarder les r&#xE9;ponses dans la &lt;a href="http://forum.horux.ch" target="_blank"&gt;FAQ&lt;/a&gt;. Si vous avez besoin d'aide sur un &#xE9;cran sp&#xE9;cial dans l'administration de Horux, l&#xE0; ou vous vous trouvez actuellement, cliquez sur le bouton d'aide, lequel se trouve sur la plus part des &#xE9;crans. Cela vous donnera une page d'aide concernant l'&#xE9;cran courant depuis le site d'aide.</target>
 </trans-unit>
 
-<trans-unit id="328" lock="1">
+<trans-unit id="326" lock="1">
 <source>Warning! JavaScript must be enabled for proper operation of the Administrator Back-end</source>
 <target>Attention! Javascript doit &#xEA;tre activ&#xE9; pour pouvoir utiliser l'interface Horux</target>
 </trans-unit>
 
-<trans-unit id="329" lock="1">
+<trans-unit id="327" lock="1">
 <source>The user was modified successfully</source>
 <target>L'utilisateur a &#xE9;t&#xE9; modifi&#xE9; avec succ&#xE8;s</target>
 </trans-unit>
 
 
 
-<trans-unit id="330" lock="1">
+<trans-unit id="328" lock="1">
 <source>There was an error uploading this file to the server.</source>
 <target>Il y a eu une erreur lors de l'envoie du fichier sur le serveur</target>
 </trans-unit>
 
-<trans-unit id="331" lock="1">
+<trans-unit id="329" lock="1">
 <source>Warning! - Failed to move file. Unknown Archive Type</source>
 <target>Attention! - Ce n'est pas un fichier compatible avec Horux</target>
 </trans-unit>
 
-<trans-unit id="332" lock="1">
+<trans-unit id="330" lock="1">
 <source>Global Checkin</source>
 <target>V&#xE9;rification globale</target>
 </trans-unit>
 
 
 
-<trans-unit id="333" lock="1">
+<trans-unit id="331" lock="1">
 <source>The group was modified successfully</source>
 <target>Le groupe a &#xE9;t&#xE9; modifi&#xE9; avec succ&#xE8;s</target>
 </trans-unit>
 
-<trans-unit id="334" lock="1">
+<trans-unit id="332" lock="1">
 <source>The group was not modified</source>
 <target>Le groupe n'a pas &#xE9;t&#xE9; modifi&#xE9;</target>
 </trans-unit>
 
 
-<trans-unit id="335" lock="1">
+<trans-unit id="333" lock="1">
 <source>The key was modified successfully</source>
 <target>La cl&#xE9; a &#xE9;t&#xE9; modifi&#xE9;e avec succ&#xE8;s</target>
 </trans-unit>
@@ -1851,7 +1845,7 @@
 
 
 
-<trans-unit id="336" lock="1">
+<trans-unit id="334" lock="1">
 <source>The config was modified successfully</source>
 <target>La configuration a &#xE9;t&#xE9; modifi&#xE9;e avec succ&#xE8;s</target>
 </trans-unit>
@@ -1864,77 +1858,77 @@
 
 
 
-<trans-unit id="337" lock="1">
+<trans-unit id="335" lock="1">
 <source>{n} key was unattributed</source>
 <target>{n} cl&#xE9;s ont &#xE9;t&#xE9; d&#xE9;sattribu&#xE9;es</target>
 </trans-unit>
 
-<trans-unit id="338" lock="1">
+<trans-unit id="336" lock="1">
 <source>{n} group was unattributed</source>
 <target>{n} groupes ont &#xE9;t&#xE9; d&#xE9;stribu&#xE9;s</target>
 </trans-unit>
 
-<trans-unit id="339" lock="1">
+<trans-unit id="337" lock="1">
 <source>{n} user(s) was deleted</source>
 <target>{n} utilisateurs ont &#xE9;t&#xE9; supprim&#xE9;s</target>
 </trans-unit>
 
-<trans-unit id="340" lock="1">
+<trans-unit id="338" lock="1">
 <source>{n} group was deleted</source>
 <target>{n} groupes ont &#xE9;t&#xE9; supprim&#xE9;s</target>
 </trans-unit>
 
-<trans-unit id="341" lock="1">
+<trans-unit id="339" lock="1">
 <source>{n} key was deleted</source>
 <target>{n} cl&#xE9;s ont &#xE9;t&#xE9; supprim&#xE9;es</target>&gt;
 </trans-unit>
 
-<trans-unit id="342" lock="1">
+<trans-unit id="340" lock="1">
 <source>The access level was not modified</source>
 <target>Le niveau d'acc&#xE8;s n'a pas &#xE9;t&#xE9; modifi&#xE9;</target>
 </trans-unit>
 
-<trans-unit id="343" lock="1">
+<trans-unit id="341" lock="1">
 <source>The non working day was not modified</source>
 <target>Le jour non ouvrable n'a pas &#xE9;t&#xE9; modifi&#xE9;</target>
 </trans-unit>
 
-<trans-unit id="344" lock="1">
+<trans-unit id="342" lock="1">
 <source>The non working day was deleted successfully</source>
 <target>Le jour non ouvrable a &#xE9;t&#xE9; supprim&#xE9; avec succ&#xE8;s</target>
 </trans-unit>
 
-<trans-unit id="345" lock="1">
+<trans-unit id="343" lock="1">
 <source>{n} devices was deleted</source>
 <target>{n} p&#xE9;riph&#xE9;riques ont &#xE9;t&#xE9; supprim&#xE9;s</target>
 </trans-unit>
 
-<trans-unit id="346" lock="1">
+<trans-unit id="344" lock="1">
 <source>New default language updated</source>
 <target>La langue par d&#xE9;faut a &#xE9;t&#xE9; mise &#xE0; jour</target>
 </trans-unit>
 
-<trans-unit id="347" lock="1">
+<trans-unit id="345" lock="1">
 <source>Upload File and Install</source>
 <target>Envoyer un fichier et installer</target>
 </trans-unit>
 
-<trans-unit id="348" lock="1">
+<trans-unit id="346" lock="1">
 <source>Warning! - This language is already installed</source>
 <target>Attention! - Cette langue est d&#xE9;j&#xE0; install&#xE9;e</target>
 </trans-unit>
 
-<trans-unit id="349" lock="1">
+<trans-unit id="347" lock="1">
 <source>The non working day was added successfully</source>
 <target>Les jours non ouvrables ont &#xE9;t&#xE9; ajout&#xE9;s avec succ&#xE8;s</target>
 </trans-unit>
 
-<trans-unit id="350" lock="1">
+<trans-unit id="348" lock="1">
 <source>The key was added successfully</source>
 <target>La cl&#xE9; a &#xE9;t&#xE9; ajout&#xE9;e avec succ&#xE8;s</target>
 </trans-unit>
 
-<trans-unit id="351" lock="1">
+<trans-unit id="349" lock="1">
 <source>The access level was modified successfully</source>
 <target>Le niveau d'acc&#xE8;s a &#xE9;t&#xE9; modifi&#xE9; avec succ&#xE8;s</target>
 </trans-unit>
@@ -1979,236 +1973,236 @@
 
 
 
-<trans-unit id="352" lock="1">
+<trans-unit id="350" lock="1">
 <source>Log all debug message from horuxd</source>
 <target>Journalise tous les messages de debug provenant de horuxd</target>
 </trans-unit>
 
-<trans-unit id="353" lock="1">
+<trans-unit id="351" lock="1">
 <source>Debug info</source>
 <target>Debug info</target>
 </trans-unit>
 
-<trans-unit id="354" lock="1">
+<trans-unit id="352" lock="1">
 <source>Horux Status</source>
 <target>Etat de Horux</target>
 </trans-unit>
 
-<trans-unit id="355" lock="1">
+<trans-unit id="353" lock="1">
 <source>The server horux seems to be down</source>
 <target>Le serveur horux ne semble pas en fonction</target>
 </trans-unit>
 
-<trans-unit id="356" lock="1">
+<trans-unit id="354" lock="1">
 <source>Horux Core Info</source>
 <target>Information de Horux Core</target>
 </trans-unit>
 
-<trans-unit id="357" lock="1">
+<trans-unit id="355" lock="1">
 <source>Plugins</source>
 <target>Plugins</target>
 </trans-unit>
 
-<trans-unit id="358" lock="1">
+<trans-unit id="356" lock="1">
 <source>Horux Core Information</source>
 <target>Information de Horux Core</target>
 </trans-unit>
 
-<trans-unit id="359" lock="1">
+<trans-unit id="357" lock="1">
 <source>Horux Core Plugins Information</source>
 <target>Information des plugins de Horux Core</target>
 </trans-unit>
 
-<trans-unit id="360" lock="1">
+<trans-unit id="358" lock="1">
 <source>Horux Core Devices Information</source>
 <target>Information des p&#xE9;riph&#xE9;riques de Horux Core</target>
 </trans-unit>
 
-<trans-unit id="361" lock="1">
+<trans-unit id="359" lock="1">
 <source>Horux Core Version</source>
 <target>Version de Horux Core</target>
 </trans-unit>
 
-<trans-unit id="362" lock="1">
+<trans-unit id="360" lock="1">
 <source>Horux time live</source>
 <target>Temps de vie de Horux</target>
 </trans-unit>
 
-<trans-unit id="363" lock="1">
+<trans-unit id="361" lock="1">
 <source>ID</source>
 <target>ID</target>
 </trans-unit>
 
-<trans-unit id="364" lock="1">
+<trans-unit id="362" lock="1">
 <source>Serial Number</source>
 <target>Num&#xE9;ro de s&#xE9;rie</target>
 </trans-unit>
 
-<trans-unit id="365" lock="1">
+<trans-unit id="363" lock="1">
 <source>Connection status</source>
 <target>Etat de la connexion</target>
 </trans-unit>
 
-<trans-unit id="366" lock="1">
+<trans-unit id="364" lock="1">
 <source>Firmware Version</source>
 <target>Version du lociel embarqu&#xE9;</target>
 </trans-unit>
 
-<trans-unit id="367" lock="1">
+<trans-unit id="365" lock="1">
 <source>No</source>
 <target>Non</target>
 </trans-unit>
 
-<trans-unit id="368" lock="1">
+<trans-unit id="366" lock="1">
 <source>Details</source>
 <target>D&#xE9;tails</target>
 </trans-unit>
 
-<trans-unit id="369" lock="1">
+<trans-unit id="367" lock="1">
 <source>show</source>
 <target>voir</target>
 </trans-unit>
 
-<trans-unit id="370" lock="1">
+<trans-unit id="368" lock="1">
 <source>Device Info</source>
 <target>Information des p&#xE9;riph&#xE9;riques</target>
 </trans-unit>
 
-<trans-unit id="371" lock="1">
+<trans-unit id="369" lock="1">
 <source>The server &lt;i&gt;horuxd&lt;/i&gt; is running</source>
 <target>Le serveur &lt;i&gt;horuxd&lt;/i&gt; est en fonction</target>
 </trans-unit>
 
 
 
-<trans-unit id="372" lock="1">
+<trans-unit id="370" lock="1">
 <source>Step 1 :Pre-installation Check</source>
 <target>Etape 1 : Contr&#xF4;le de pr&#xE9;-installation</target>
 </trans-unit>
 
-<trans-unit id="373" lock="1">
+<trans-unit id="371" lock="1">
 <source>Step 2 : License</source>
 <target>Etape 2 : Licence</target>
 </trans-unit>
 
-<trans-unit id="374" lock="1">
+<trans-unit id="372" lock="1">
 <source>Ok</source>
 <target>Ok</target>
 </trans-unit>
 
-<trans-unit id="375" lock="1">
+<trans-unit id="373" lock="1">
 <source>Pre-installation check for Horux 1.0.0 Production/Stable</source>
 <target>Contr&#xF4;le de pr&#xE9;-installation pour la version de production stable Horux 1.0.5</target>
 </trans-unit>
 
-<trans-unit id="376" lock="1">
+<trans-unit id="374" lock="1">
 <source>If any of these items is not supported (marked as &lt;strong&gt;&lt;font color="#ff0000"&gt;No&lt;/font&gt;&lt;/strong&gt;) your system does not match the minimum requirements necessary. Please take the appropriate actions to correct the errors. Failure to do so could lead to your Horux installation not functioning correctly.</source>
 <target>Si l'un des &#xE9;l&#xE9;ments n'est pas support&#xE9; ( marqu&#xE9; comme &lt;strong&gt;&lt;font color="#ff0000"&gt;Non&lt;/font&gt;&lt;/strong&gt;) votre syst&#xE8;me n'a pas les requis minimum pour fonctionner. Veuillez faire les changements n&#xE9;cessaires pour corriger les erreurs. Des erreurs pourraient rendre l'installation de Horux impossible.</target>
 </trans-unit>
 
-<trans-unit id="377" lock="1">
+<trans-unit id="375" lock="1">
 <source>{n} group(s) was deleted</source>
 <target>{n} groupes ont &#xE9;t&#xE9; suprim&#xE9;s</target>
 </trans-unit>
 
 
-<trans-unit id="378" lock="1">
+<trans-unit id="376" lock="1">
 <source>One or more groups cannot be deleted. The group musst not contains super user to be deleted.</source>
 <target>Un ou plusieur groupes n'ont pas pu &#xEA;tre supprim&#xE9;s. Le groupe ne doit pas contenir de super utilisateur pour pouvoir &#xEA;tre supprim&#xE9;.</target>
 </trans-unit>
 
-<trans-unit id="379" lock="1">
+<trans-unit id="377" lock="1">
 <source>The main super user group cannot be deleted</source>
 <target>Le groupe principal d'administration ne peut pas &#xEA;tre supprim&#xE9;.</target>
 </trans-unit>
 
-<trans-unit id="380" lock="1">
+<trans-unit id="378" lock="1">
 <source>The site was not modified</source>
 <target>Les param&#xE8;tres du site n'on pas &#xE9;t&#xE9; modifi&#xE9;s</target>
 </trans-unit>
 
-<trans-unit id="381" lock="1">
+<trans-unit id="379" lock="1">
 <source>The site was modifed successfully</source>
 <target>Les param&#xE8;tres du site on &#xE9;t&#xE9; modifi&#xE9;s</target>
 </trans-unit>
 
-<trans-unit id="382" lock="1">
+<trans-unit id="380" lock="1">
 <source>Unwriteable</source>
 <target>En lecture seule</target>
 </trans-unit>
 
-<trans-unit id="383" lock="1">
+<trans-unit id="381" lock="1">
 <source>Enter the key allowing to access the online help</source>
 <target>Entrer le num&#xE9;ro de la cl&#xE9; permettant d\'avoir acc&#xE8;s &#xE0; l\'aide en ligne</target>
 </trans-unit>
 
-<trans-unit id="384" lock="1">
+<trans-unit id="382" lock="1">
 <source>These settings are recommended for PHP in order to ensure full compatibility with Horux. However, Horux! will still operate if your settings do not quite match the recommended.</source>
 <target>Ces param&#xE8;tres sont recommand&#xE9;s pour PHP pour &#xEA;tre s&#xFB;re d'avoir une compl&#xE8;te compatibilit&#xE9; avec Horux. Cependant, Horux va fonctionner m&#xEA;me si les param&#xE8;tres n'ont pas la configuration recommand&#xE9;e.</target>
 </trans-unit>
 
-<trans-unit id="385" lock="1">
+<trans-unit id="383" lock="1">
 <source>Recommended Settings:</source>
 <target>Param&#xE8;tres recommand&#xE9;s:</target>
 </trans-unit>
 
 
-<trans-unit id="386" lock="1">
+<trans-unit id="384" lock="1">
 <source>XML support</source>
 <target>Support de XML</target>
 </trans-unit>
 
-<trans-unit id="387" lock="1">
+<trans-unit id="385" lock="1">
 <source>MySQL support</source>
 <target>Support de MySQL</target>
 </trans-unit>
 
-<trans-unit id="388" lock="1">
+<trans-unit id="386" lock="1">
 <source>Writeable</source>
 <target>Modifiable</target>
 </trans-unit>
 
-<trans-unit id="389" lock="1">
+<trans-unit id="387" lock="1">
 <source>PHP Version</source>
 <target>Version de PHP</target>
 </trans-unit>
 
-<trans-unit id="390" lock="1">
+<trans-unit id="388" lock="1">
 <source>Off</source>
 <target>Activ&#xE9;</target>
 </trans-unit>
 
-<trans-unit id="391" lock="1">
+<trans-unit id="389" lock="1">
 <source>Directive</source>
 <target>Directive</target>
 </trans-unit>
 
-<trans-unit id="392" lock="1">
+<trans-unit id="390" lock="1">
 <source>Suggest</source>
 <target>Recommand&#xE9;</target>
 </trans-unit>
 
-<trans-unit id="393" lock="1">
+<trans-unit id="391" lock="1">
 <source>Current</source>
 <target>Actuel</target>
 </trans-unit>
 
-<trans-unit id="394" lock="1">
+<trans-unit id="392" lock="1">
 <source>Display the errors:</source>
 <target>Afficher les erreurs</target>
 </trans-unit>
 
-<trans-unit id="395" lock="1">
+<trans-unit id="393" lock="1">
 <source>File transfert:</source>
 <target>Transfert de fichier</target>
 </trans-unit>
 
-<trans-unit id="396" lock="1">
+<trans-unit id="394" lock="1">
 <source>On</source>
 <target>D&#xE9;sactiv&#xE9;</target>
 </trans-unit>
 
-<trans-unit id="397" lock="1">
+<trans-unit id="395" lock="1">
 <source>Connection Settings:</source>
 <target>Configuration de la connexion:</target>
 </trans-unit>
@@ -2217,47 +2211,47 @@
 
 
 
-<trans-unit id="398" lock="1">
+<trans-unit id="396" lock="1">
 <source>Host Name</source>
 <target>Nom du serveur</target>
 </trans-unit>
 
-<trans-unit id="399" lock="1">
+<trans-unit id="397" lock="1">
 <source>This is usually localhost or a host name provided by the administrator</source>
 <target>Habituellement localhost ou un nom d'h&#xF4;te fourni par votre administrateur</target>
 </trans-unit>
 
-<trans-unit id="400" lock="1">
+<trans-unit id="398" lock="1">
 <source>User Name</source>
 <target>Nom d'utilisateur</target>
 </trans-unit>
 
-<trans-unit id="401" lock="1">
+<trans-unit id="399" lock="1">
 <source>This can be the default MySQL username root or a username provided by the administrator, or one that you have created whilst setting up your database server.</source>
 <target>Soit root ou un identifiant fourni par votre administrateur </target>
 </trans-unit>
 
-<trans-unit id="402" lock="1">
+<trans-unit id="400" lock="1">
 <source>Database Name</source>
 <target>Nom de la base de donn&#xE9;es</target>
 </trans-unit>
 
-<trans-unit id="403" lock="1">
+<trans-unit id="401" lock="1">
 <source>Basic Settings</source>
 <target>Param&#xE8;tres de base</target>
 </trans-unit>
 
-<trans-unit id="404" lock="1">
+<trans-unit id="402" lock="1">
 <source>Step 3 : Database</source>
 <target>Etape 3: Base de donn&#xE9;es</target>
 </trans-unit>
 
-<trans-unit id="405" lock="1">
+<trans-unit id="403" lock="1">
 <source>Step 4 : Site</source>
 <target>Etape 4: Site</target>
 </trans-unit>
 
-<trans-unit id="406" lock="1">
+<trans-unit id="404" lock="1">
 <source>Step 5 : Administrator</source>
 <target>Step 5 : Administrateur</target>
 </trans-unit>
@@ -2265,52 +2259,52 @@
 
 
 
-<trans-unit id="407" lock="1">
+<trans-unit id="405" lock="1">
 <source>Enter the name of the access site.</source>
 <target>Entez le nom du site d'acc&#xE8;s</target>
 </trans-unit>
 
-<trans-unit id="408" lock="1">
+<trans-unit id="406" lock="1">
 <source>Site Name</source>
 <target>Nom du site</target>
 </trans-unit>
 
-<trans-unit id="409" lock="1">
+<trans-unit id="407" lock="1">
 <source>Site configuration:</source>
 <target>Configuration du site</target>
 </trans-unit>
 
-<trans-unit id="410" lock="1">
+<trans-unit id="408" lock="1">
 <source>Administrator Settings:</source>
 <target>Configuration de l'administrateur</target>
 </trans-unit>
 
-<trans-unit id="411" lock="1">
+<trans-unit id="409" lock="1">
 <source>Administrator</source>
 <target>Administrateur</target>
 </trans-unit>
 
-<trans-unit id="412" lock="1">
+<trans-unit id="410" lock="1">
 <source>Administrator Username</source>
 <target>Nom d'utilisateur de l'administrateur</target>
 </trans-unit>
 
-<trans-unit id="413" lock="1">
+<trans-unit id="411" lock="1">
 <source>Cannot connect to the database, please check your parameters.</source>
 <target>Impossible de se connecter &#xE0; MySql, veuillez v&#xE9;rifier vos param&#xE8;tres</target>
 </trans-unit>
 
-<trans-unit id="414" lock="1">
+<trans-unit id="412" lock="1">
 <source>ZIP support</source>
 <target>Support ZIP</target>
 </trans-unit>
 
-<trans-unit id="415" lock="1">
+<trans-unit id="413" lock="1">
 <source>Steps</source>
 <target>Etapes</target>
 </trans-unit>
 
-<trans-unit id="416" lock="1">
+<trans-unit id="414" lock="1">
 <source>Configuration not ok</source>
 <target>La configuration de base n'est pas correcte</target>
 </trans-unit>
@@ -2318,89 +2312,89 @@
 
 
 
-<trans-unit id="417" lock="1">
+<trans-unit id="415" lock="1">
 <source>The directory ./tmp must be writeable to install an extension</source>
 <target>Le r&#xE9;pertoire ./tmp doit &#xEA;tre en &#xE9;criture pour pouvoir installer une extension</target>
 </trans-unit>
 
-<trans-unit id="418" lock="1">
+<trans-unit id="416" lock="1">
 <source>The directory ./protected/pages/hardware/device must be writeable to install a device extension</source>
 <target>Le r&#xE9;pertoire ./protected/pages/hardware/device doit &#xEA;tre en &#xE9;criture pour pouvoir installer une extension de p&#xE9;riph&#xE9;rique</target>
 </trans-unit>
 
-<trans-unit id="419" lock="1">
+<trans-unit id="417" lock="1">
 <source>The directory ./protected/messages must be writeable to install a language extension</source>
 <target>Le r&#xE9;pertoire ./protected/messages doit &#xEA;tre en &#xE9;criture pour pouvoir installer une extension de langue</target>
 </trans-unit>
 
-<trans-unit id="420" lock="1">
+<trans-unit id="418" lock="1">
 	<source>The directory ./protected/pages/components must be writeable to install a component extension</source>
 	<target>Le r&#xE9;pertoire ./protected/pages/components doit &#xEA;tre en &#xE9;criture pour pouvoir installer une extension de composant</target>
 </trans-unit>
 
-<trans-unit id="421" lock="1">
+<trans-unit id="419" lock="1">
 	<source>The directory ./themes must be writeable to install a template extension</source>
 	<target>Le r&#xE9;pertoire ./themes doit &#xEA;tre en &#xE9;criture pour pouvoir installer une extension de gabarit</target>
 </trans-unit>
 
 
 
-<trans-unit id="422" lock="1">
+<trans-unit id="420" lock="1">
 	<source>The component is well installed. You have now to give the right access for this component.</source>
 	<target>Le composant est install&#xE9; correctement. Vous devez encore donner les droits d'acc&#xE8;s &#xE0; ce composant</target>
 </trans-unit>
 
-<trans-unit id="423" lock="1">
+<trans-unit id="421" lock="1">
 	<source>{n} components was deleted</source>
 	<target>{n} composants ont &#xE9;t&#xE9; supprim&#xE9;s</target>
 </trans-unit>
 
-<trans-unit id="424" lock="1">
+<trans-unit id="422" lock="1">
 	<source>Access Plugin Name</source>
 	<target>Nom du plugin d'acc&#xE8;s</target>
 </trans-unit>
 
-<trans-unit id="425" lock="1">
+<trans-unit id="423" lock="1">
 	<source>Define the access plugin used for the access control.&lt;br/&gt;If empty, all plugins are likely to give the access</source>
 	<target>D&#xE9;finit le plugin d\'acc&#xE8;s utilis&#xE9; pour le control d\'acc&#xE8;s.&lt;br/&gt;Si vide, tous les plugins sont susceptibles de pouvoir donner l\'acc&#xE8;s</target>
 </trans-unit>
 
-<trans-unit id="426" lock="1">
+<trans-unit id="424" lock="1">
 	<source>VAT</source>
 	<target>TVA</target>
 </trans-unit>
 
-<trans-unit id="427" lock="1">
+<trans-unit id="425" lock="1">
 	<source>Currency</source>
 	<target>Devise</target>
 </trans-unit>
 
-<trans-unit id="428" lock="1">
+<trans-unit id="426" lock="1">
 	<source>Commercial</source>
 	<target>Commercial</target>
 </trans-unit>
 
-<trans-unit id="429" lock="1">
+<trans-unit id="427" lock="1">
 	<source>Enter your VAT number</source>
 	<target>Entrez votre num&#xE9;ro TVA</target>
 </trans-unit>
 
-<trans-unit id="430" lock="1">
+<trans-unit id="428" lock="1">
 	<source>Enter your currency</source>
 	<target>Entrez votre devise</target>
 </trans-unit>
 
-<trans-unit id="431" lock="1">
+<trans-unit id="429" lock="1">
 	<source>VAT Number</source>
 	<target>Num&#xE9;ro TVA</target>
 </trans-unit>
 
-<trans-unit id="432" lock="1">
+<trans-unit id="430" lock="1">
 	<source>Enter the VAT value</source>
 	<target>Entrez la valeur de la TVA</target>
 </trans-unit>
 
-<trans-unit id="433" lock="1">
+<trans-unit id="431" lock="1">
 	<source>Cannot delete the group {name}, it contains one or more person</source>
 	<target>Ne peut pas supprimer {name}, il contient une ou plusieur persones</target>
 </trans-unit>
@@ -2408,7 +2402,7 @@
 
 
 
-<trans-unit id="434" lock="1">
+<trans-unit id="432" lock="1">
 <source>The access level was not added</source>
 <target>Le niveau d'acc&#xE8;s n'a pas &#xE9;t&#xE9; ajout&#xE9;</target>
 </trans-unit>
@@ -2417,586 +2411,580 @@
 
 
 
-<trans-unit id="435" lock="1">
+<trans-unit id="433" lock="1">
 <source>n/a</source>
 <target>n/a</target>
 </trans-unit>
 
-<trans-unit id="436" lock="1">
+<trans-unit id="434" lock="1">
 <source>Cannot create the database:</source>
 <target>Ne peut pas cr&#xE9;er la base de donn&#xE9;es</target>
 </trans-unit>
 
-<trans-unit id="437" lock="1">
+<trans-unit id="435" lock="1">
 <source>Impossible to select the database {n}</source>
 <target>Impossible de s&#xE9;lectionner la base de donn&#xE9;es {n}</target>
 </trans-unit>
 
 
 
-<trans-unit id="438" lock="1">
+<trans-unit id="436" lock="1">
 <source>Query error:</source>
 <target>Erreur SQL:</target>
 </trans-unit>
 
 
 
-<trans-unit id="439" lock="1">
+<trans-unit id="437" lock="1">
 <source>Cannot open the application configuration file : ./protected/application_p.xml</source>
 <target>Ne peut pas ouvir le fichier de configuration : ./protected/application_p.xml</target>
 </trans-unit>
 
-<trans-unit id="440" lock="1">
+<trans-unit id="438" lock="1">
 <source>Cannot write the application configuration file : ./protected/application_p.xml</source>
 <target>Ne peut pas &#xE9;crire le fichier de configuration : ./protected/application_p.xml</target>
 </trans-unit>
 
-<trans-unit id="441" lock="1">
+<trans-unit id="439" lock="1">
 <source>The configuration was saved successfully</source>
 <target>La configuration a &#xE9;t&#xE9; sauv&#xE9;e avec succ&#xE8;s</target>
 </trans-unit>
 
-<trans-unit id="442" lock="1">
+<trans-unit id="440" lock="1">
 <source>The configuration was not saved</source>
 <target>La configuration n'a pas &#xE9;t&#xE9; sauv&#xE9;e</target>
 </trans-unit>
 
-<trans-unit id="443" lock="1">
+<trans-unit id="441" lock="1">
 <source>{n} themes was deleted</source>
 <target>{n} gabarits ont &#xE9;t&#xE9; supprim&#xE9;s</target>
 </trans-unit>
 
-<trans-unit id="444" lock="1">
+<trans-unit id="442" lock="1">
 <source>{n} language was deleted</source>
 <target>{n} langues ont &#xE9;t&#xE9; supprim&#xE9;es</target>
 </trans-unit>
 
-<trans-unit id="445" lock="1">
+<trans-unit id="443" lock="1">
 <source>Warning! - This component is already installed</source>
 <target>Attention! - Ce composant est d&#xE9;j&#xE0; install&#xE9;</target>
 </trans-unit>
 
-<trans-unit id="446" lock="1">
+<trans-unit id="444" lock="1">
 <source>The language is well installed.</source>
 <target>La langue a &#xE9;t&#xE9; install&#xE9;e avec succ&#xE8;s</target>
 </trans-unit>
 
-<trans-unit id="447" lock="1">
+<trans-unit id="445" lock="1">
 <source>Warning! - This template is already installed</source>
 <target>Attention! - Ce gabarit est d&#xE9;j&#xE0; install&#xE9;</target>
 </trans-unit>
 
-<trans-unit id="448" lock="1">
+<trans-unit id="446" lock="1">
 <source>The theme is well installed.</source>
 <target>Le gabarit a &#xE9;t&#xE9; install&#xE9; avec succ&#xE8;s</target>
 </trans-unit>
 
-<trans-unit id="449" lock="1">
+<trans-unit id="447" lock="1">
 <source>Warning! - Unknown install type:{type}</source>
 <target>Attention! - Extension inconnue {type}</target>
 </trans-unit>
 
-<trans-unit id="450" lock="1">
+<trans-unit id="448" lock="1">
 <source>Warning! - Failed to move file. Impossible to unzip the archive</source>
 <target>Attention! Erreur durant la copie. Impossible de d&#xE9;compresser l'archive</target>
 </trans-unit>
 
-<trans-unit id="451" lock="1">
+<trans-unit id="449" lock="1">
 <source>Warning! - Failed to move file. Cannot save the archive</source>
 <target>Attention! - Erreur durant la copie. Ne peut pas sauver l'archive</target>
 </trans-unit>
 
-<trans-unit id="452" lock="1">
+<trans-unit id="450" lock="1">
 <source>This archive does not contain the file install.xml</source>
 <target>L'archive ne contient pas de fichier install.xml</target>
 </trans-unit>
 
-<trans-unit id="453" lock="1">
+<trans-unit id="451" lock="1">
 <source>Select only one item</source>
 <target>S&#xE9;lectionner uniquement un enregistrement</target>
 </trans-unit>
 
-<trans-unit id="454" lock="1">
+<trans-unit id="452" lock="1">
 <source>New default template updated</source>
 <target>Le nouveau gabarit par d&#xE9;faut a &#xE9;t&#xE9; mis &#xE0; jour</target>
 </trans-unit>
 
-<trans-unit id="455" lock="1">
+<trans-unit id="453" lock="1">
 <source>The key was not added</source>
 <target>La cl&#xE9; n'a pas &#xE9;t&#xE9; ajout&#xE9;e</target>
 </trans-unit>
 
-<trans-unit id="456" lock="1">
+<trans-unit id="454" lock="1">
 <source>The key was not modified</source>
 <target>La cl&#xE9; n'a pas &#xE9;t&#xE9; modifi&#xE9;e</target>
 </trans-unit>
 
-<trans-unit id="457" lock="1">
+<trans-unit id="455" lock="1">
 <source>The non working day was not added</source>
 <target>Le jour non ouvrable n'a pas &#xE9;t&#xE9; ajout&#xE9;</target>
 </trans-unit>
 
-<trans-unit id="458" lock="1">
+<trans-unit id="456" lock="1">
 <source>The non working day was modified successfully</source>
 <target>Le jour non oubrable a &#xE9;t&#xE9; modifi&#xE9; avec succ&#xE8;s</target>
 </trans-unit>
 
-<trans-unit id="459" lock="1">
+<trans-unit id="457" lock="1">
 <source>The non workong day was not modified</source>
 <target>Le jour non ouvrable n'a pas &#xE9;t&#xE9; modifi&#xE9;</target>
 </trans-unit>
 
-<trans-unit id="460" lock="1">
+<trans-unit id="458" lock="1">
 <source>The picture is bigger than 10K bytes</source>
 <target>La taille de l'image est plus grande que 10k bytes</target>
 </trans-unit>
 
-<trans-unit id="461" lock="1">
+<trans-unit id="459" lock="1">
 <source>The picture is not a picture (jpg, png, gif)</source>
 <target>L'image n'est pas du type jpg, png, gif</target>
 </trans-unit>
 
-<trans-unit id="462" lock="1">
+<trans-unit id="460" lock="1">
 <source>The user was not added</source>
 <target>L'utilisateur n'a pas &#xE9;t&#xE9; ajout&#xE9;</target>
 </trans-unit>
 
-<trans-unit id="463" lock="1">
+<trans-unit id="461" lock="1">
 <source>The user was not saved</source>
 <target>L'utilisateur n'a pas &#xE9;t&#xE9; sauv&#xE9;</target>
 </trans-unit>
 
-<trans-unit id="464" lock="1">
+<trans-unit id="462" lock="1">
 <source>The group was not added</source>
 <target>Le groupe n'a pas &#xE9;t&#xE9; ajout&#xE9;</target>
 </trans-unit>
 
-<trans-unit id="465" lock="1">
+<trans-unit id="463" lock="1">
 <source>The group was not saved</source>
 <target>Le groupe n'a pas &#xE9;t&#xE9; sauv&#xE9;</target>
 </trans-unit>
 
-<trans-unit id="466" lock="1">
+<trans-unit id="464" lock="1">
 <source>You don't have the right to modify this user'</source>
 <target>Vous n'avez pas les droits pour modifier cet utilisateur</target>
 </trans-unit>
 
 
 
-<trans-unit id="467" lock="1">
+<trans-unit id="465" lock="1">
 <source>Extension</source>
 <target>Extension</target>
 </trans-unit>
 
-<trans-unit id="468" lock="1">
+<trans-unit id="466" lock="1">
 <source>The new user is registred</source>
 <target>Le nouvel utilisateur a &#xE9;t&#xE9; enregistr&#xE9;</target>
 </trans-unit>
 
-<trans-unit id="469" lock="1">
+<trans-unit id="467" lock="1">
 <source>Select all the groups&lt;br/&gt;attributes to this user</source>
 <target>S&#xE9;lectionner tous les groupes&lt;br/&gt;attribu&#xE9;s &#xE0; cet utilisateur</target>
 </trans-unit>
 
-<trans-unit id="470" lock="1">
+<trans-unit id="468" lock="1">
 <source>Select all the keys&lt;br/&gt;attributes to this user</source>
 <target>S&#xE9;lectionner toutes les cl&#xE9;s&lt;br/&gt;attribut&#xE9;es &#xE0; cet utilisateur</target>
 </trans-unit>
 
-<trans-unit id="471" lock="1">
+<trans-unit id="469" lock="1">
 <source>Options</source>
 <target>Options</target>
 </trans-unit>
 
-<trans-unit id="472" lock="1">
+<trans-unit id="470" lock="1">
 <source>Open time</source>
 <target>Libre acc&#xE8;s</target>
 </trans-unit>
 
-<trans-unit id="473" lock="1">
+<trans-unit id="471" lock="1">
 <source>Attribute one or more open time</source>
 <target>Attribuer un ou plusieur libre acc&#xE8;s</target>
 </trans-unit>
 
-<trans-unit id="474" lock="1">
+<trans-unit id="472" lock="1">
 <source>Add an open time</source>
 <target>Ajouter un libre acc&#xE8;s</target>
 </trans-unit>
 
-<trans-unit id="475" lock="1">
+<trans-unit id="473" lock="1">
 <source>Enter a name for this open time</source>
 <target>Entrer un nom pour ce libre acc&#xE8;s</target>
 </trans-unit>
 
-<trans-unit id="476" lock="1">
+<trans-unit id="474" lock="1">
 <source>Check it if you want that the access point is opened during the non working day</source>
 <target>Cocher si vous voulez que le point d\'acc&#xE8;s soit aussi ouvert pendant les jours non ouvrables</target>
 </trans-unit>
 
-<trans-unit id="477" lock="1">
+<trans-unit id="475" lock="1">
 <source>Non working day open time</source>
 <target>Activer le libre acc&#xE8;s pendant les jours non ouvrables</target>
 </trans-unit>
 
-<trans-unit id="478" lock="1">
-<source>Check it if you want that the access point is opened during the week-end</source>
-<target>Cocher si vous voulez que le point d\'acc&#xE8;s soit aussi ouvert pendant le week-end</target>
-</trans-unit>
-
-<trans-unit id="479" lock="1">
-<source>Week-end open time</source>
-<target>Libre acc&#xE8;s pendant le week-end</target>
-</trans-unit>
 
 
 
 
 
-<trans-unit id="480" lock="1">
+
+
+
+<trans-unit id="476" lock="1">
 <source>You could insert a description for this open time</source>
 <target>Vous pouvez ins&#xE9;rer une description pour ce libre acc&#xE8;s</target>
 </trans-unit>
 
-<trans-unit id="481" lock="1">
+<trans-unit id="477" lock="1">
 <source>The open time was added successfully</source>
 <target>Le libre acc&#xE8;s a &#xE9;t&#xE9; ajout&#xE9; avec succ&#xE8;s</target>
 </trans-unit>
 
-<trans-unit id="482" lock="1">
+<trans-unit id="478" lock="1">
 <source>The open time was not added</source>
 <target>Le libre acc&#xE8;s n'a pas &#xE9;t&#xE9; ajout&#xE9;</target>
 </trans-unit>
 
-<trans-unit id="483" lock="1">
+<trans-unit id="479" lock="1">
 <source>Open time Attribution</source>
 <target>Attribution de libre acc&#xE8;s</target>
 </trans-unit>
 
-<trans-unit id="484" lock="1">
+<trans-unit id="480" lock="1">
 <source>Available Open time</source>
 <target>Libre acc&#xE8;s disponibles</target>
 </trans-unit>
 
-<trans-unit id="485" lock="1">
+<trans-unit id="481" lock="1">
 <source>{n} open time was unattributed</source>
 <target>{n} libre acc&#xE8;s ont &#xE9;t&#xE9; d&#xE9;sattibu&#xE9;s</target>
 </trans-unit>
 
-<trans-unit id="486" lock="1">
+<trans-unit id="482" lock="1">
 <source>Modify an open time</source>
 <target>Modifier un libre acc&#xE8;s</target>
 </trans-unit>
 
-<trans-unit id="487" lock="1">
+<trans-unit id="483" lock="1">
 <source>The open time was modified successfully</source>
 <target>Le libre acc&#xE8;s a &#xE9;t&#xE9; modifi&#xE9; avec succ&#xE8;s</target>
 </trans-unit>
 
-<trans-unit id="488" lock="1">
+<trans-unit id="484" lock="1">
 <source>The open time was not modified</source>
 <target>Le libre acc&#xE8;s n'a pas &#xE9;t&#xE9; modifi&#xE9;</target>
 </trans-unit>
 
-<trans-unit id="489" lock="1">
+<trans-unit id="485" lock="1">
 <source>Open Time List</source>
 <target>Liste des libre acc&#xE8;s</target>
 </trans-unit>
 
-<trans-unit id="490" lock="1">
+<trans-unit id="486" lock="1">
 <source>{n} open time was deleted</source>
 <target>{n} libre acc&#xE8;s ont &#xE9;t&#xE9; supprim&#xE9;s</target>
 </trans-unit>
 
-<trans-unit id="491" lock="1">
+<trans-unit id="487" lock="1">
 <source>Opent time</source>
 <target>Libre acc&#xE8;s</target>
 </trans-unit>
 
 
 
-<trans-unit id="492" lock="1">
+<trans-unit id="488" lock="1">
 <source>Report generate at {date} by {user}</source>
 <target>Rapport g&#xE9;n&#xE9;r&#xE9; le {date} par {user}</target>
 </trans-unit>
 
-<trans-unit id="493" lock="1">
+<trans-unit id="489" lock="1">
 <source>Print</source>
 <target>Imprimer</target>
 </trans-unit>
 
-<trans-unit id="494" lock="1">
+<trans-unit id="490" lock="1">
 <source>List of the access level</source>
 <target>Liste des niveaux d'acc&#xE8;s</target>
 </trans-unit>
 
-<trans-unit id="495" lock="1">
+<trans-unit id="491" lock="1">
 <source>Apply to the week-end</source>
 <target>Appliquer au week-end</target>
 </trans-unit>
 
-<trans-unit id="496" lock="1">
+<trans-unit id="492" lock="1">
 <source>Apply to the non working day</source>
 <target>Appliquer aux jours non ouvrables</target>
 </trans-unit>
 
-<trans-unit id="497" lock="1">
+<trans-unit id="493" lock="1">
 <source>List of the hardware</source>
 <target>Liste des p&#xE9;riph&#xE9;riques</target>
 </trans-unit>
 
-<trans-unit id="498" lock="1">
+<trans-unit id="494" lock="1">
 <source>Debug</source>
 <target>Debug</target>
 </trans-unit>
 
-<trans-unit id="499" lock="1">
+<trans-unit id="495" lock="1">
 <source>Access plugin</source>
 <target>Plugin d'acc&#xE8;s</target>
 </trans-unit>
 
-<trans-unit id="500" lock="1">
+<trans-unit id="496" lock="1">
 <source>List of the keys</source>
 <target>Liste des cl&#xE9;s</target>
 </trans-unit>
 
-<trans-unit id="501" lock="1">
+<trans-unit id="497" lock="1">
 <source>List of the non working days since the {year}</source>
 <target>Liste des jours non ouvrables depuis le {year}</target>
 </trans-unit>
 
-<trans-unit id="502" lock="1">
+<trans-unit id="498" lock="1">
 <source>List of the open time</source>
 <target>Liste des acc&#xE8;s libres</target>
 </trans-unit>
 
-<trans-unit id="503" lock="1">
+<trans-unit id="499" lock="1">
 <source>Apply on the devices</source>
 <target>Appliquer aux p&#xE9;riph&#xE9;riques</target>
 </trans-unit>
 
-<trans-unit id="504" lock="1">
+<trans-unit id="500" lock="1">
 <source>List of the super users groups</source>
 <target>Liste des groupes super utilisateurs</target>
 </trans-unit>
 
 
 
-<trans-unit id="505" lock="1">
+<trans-unit id="501" lock="1">
 <source>List of the super users</source>
 <target>Liste des super utilisateurs</target>
 </trans-unit>
 
-<trans-unit id="506" lock="1">
+<trans-unit id="502" lock="1">
 <source>List of the users</source>
 <target>Liste des utilisateurs</target>
 </trans-unit>
 
-<trans-unit id="507" lock="1">
+<trans-unit id="503" lock="1">
 <source>Is Blocked</source>
 <target>Est bloqu&#xE9;</target>
 </trans-unit>
 
-<trans-unit id="508" lock="1">
+<trans-unit id="504" lock="1">
 <source>Enter the pin code for this user, if used</source>
 <target>Entrer le PIN code pour cet utilisateur, si n&#xE9;cessaire</target>
 </trans-unit>
 
-<trans-unit id="509" lock="1">
+<trans-unit id="505" lock="1">
 <source>PIN Code</source>
 <target>PIN Code</target>
 </trans-unit>
 
-<trans-unit id="510" lock="1">
+<trans-unit id="506" lock="1">
 <source>List of the users groups</source>
 <target>Liste des groupes utilisateurs</target>
 </trans-unit>
 
-<trans-unit id="511" lock="1">
+<trans-unit id="507" lock="1">
 <source>Step 2 : Group Attribution</source>
 <target>Etape 2: Attribution du groupe</target>
 </trans-unit>
 
-<trans-unit id="512" lock="1">
+<trans-unit id="508" lock="1">
 <source>Step 3 : Key Attribution</source>
 <target>Etape 3: Attribution de la cl&#xE9;</target>
 </trans-unit>
 
-<trans-unit id="513" lock="1">
+<trans-unit id="509" lock="1">
 <source>...Reading...</source>
 <target>...Lecture...</target>
 </trans-unit>
 
-<trans-unit id="514" lock="1">
+<trans-unit id="510" lock="1">
 <source>The key is already attributed</source>
 <target>La cl&#xE9; est d&#xE9;j&#xE0; attribu&#xE9;e</target>
 </trans-unit>
 
-<trans-unit id="515" lock="1">
+<trans-unit id="511" lock="1">
 <source>Horux Configuration Changed</source>
 <target>La configuration de Horux a chang&#xE9;</target>
 </trans-unit>
 
-<trans-unit id="516" lock="1">
+<trans-unit id="512" lock="1">
 <source>The Horux configuration was changed succeffuly!</source>
 <target>La configuration de Horux a &#xE9;t&#xE9; chang&#xE9;e avec succ&#xE8;s!</target>
 </trans-unit>
 
-<trans-unit id="517" lock="1">
+<trans-unit id="513" lock="1">
 <source>Mail Settings</source>
 <target>Configuration pour les emails</target>
 </trans-unit>
 
-<trans-unit id="518" lock="1">
+<trans-unit id="514" lock="1">
 <source>Select which mailer you wish to use for the delivery of site emails.</source>
 <target>S&#xE9;lectionnez quel service est utilis&#xE9; pour envoyer les emails du site.</target>
 </trans-unit>
 
-<trans-unit id="519" lock="1">
+<trans-unit id="515" lock="1">
 <source>Mailer</source>
 <target>Serveur de mail</target>
 </trans-unit>
 
-<trans-unit id="520" lock="1">
+<trans-unit id="516" lock="1">
 <source>PHP Mail Function</source>
 <target>Fonction mail de PHP</target>
 </trans-unit>
 
-<trans-unit id="521" lock="1">
+<trans-unit id="517" lock="1">
 <source>The e-mail address that will be used to send site e-mails from.</source>
 <target>Adresse utilis&#xE9;e pour envoyer les emails.</target>
 </trans-unit>
 
-<trans-unit id="522" lock="1">
+<trans-unit id="518" lock="1">
 <source>Mail From</source>
 <target>Adresse de l'exp&#xE9;diteur</target>
 </trans-unit>
 
-<trans-unit id="523" lock="1">
+<trans-unit id="519" lock="1">
 <source>From Name</source>
 <target>Nom de l'exp&#xE9;diteur</target>
 </trans-unit>
 
-<trans-unit id="524" lock="1">
+<trans-unit id="520" lock="1">
 <source>Sendmail Path</source>
 <target>Chemin d'acc&#xE8;s &#xE0; sendmail</target>
 </trans-unit>
 
-<trans-unit id="525" lock="1">
+<trans-unit id="521" lock="1">
 <source>SMTP Authentication</source>
 <target>Identification SMTP requise </target>
 </trans-unit>
 
-<trans-unit id="526" lock="1">
+<trans-unit id="522" lock="1">
 <source>TLS</source>
 <target>TLS</target>
 </trans-unit>
 
-<trans-unit id="527" lock="1">
+<trans-unit id="523" lock="1">
 <source>SSL</source>
 <target>SSL</target>
 </trans-unit>
 
-<trans-unit id="528" lock="1">
+<trans-unit id="524" lock="1">
 <source>None</source>
 <target>Aucune</target>
 </trans-unit>
 
-<trans-unit id="529" lock="1">
+<trans-unit id="525" lock="1">
 <source>Safe Connection</source>
 <target>Connexion s&#xE9;curis&#xE9;e</target>
 </trans-unit>
 
-<trans-unit id="530" lock="1">
+<trans-unit id="526" lock="1">
 <source>SMTP Username</source>
 <target>Utilisateur SMTP </target>
 </trans-unit>
 
-<trans-unit id="531" lock="1">
+<trans-unit id="527" lock="1">
 <source>SMTP Password</source>
 <target>Mot de passe SMTP</target>
 </trans-unit>
 
-<trans-unit id="532" lock="1">
+<trans-unit id="528" lock="1">
 <source>SMTP Host</source>
 <target>H&#xF4;te SMTP</target>
 </trans-unit>
 
-<trans-unit id="533" lock="1">
+<trans-unit id="529" lock="1">
 <source>SMTP Port</source>
 <target>Port SMTP</target>
 </trans-unit>
 
-<trans-unit id="534" lock="1">
+<trans-unit id="530" lock="1">
 <source>By default, this field is populated with the site name entered during installation.</source>
 <target>Par d&#xE9;faut ce champ contient le nom du site saisi lors de l\'installation.</target>
 </trans-unit>
 
-<trans-unit id="535" lock="1">
+<trans-unit id="531" lock="1">
 <source>Enter the path to the sendmail program directory on the host server.</source>
 <target>Entrez le chemin du r&#xE9;pertoire de l\'ex&#xE9;cutable Sendmail sur le serveur.</target>
 </trans-unit>
 
-<trans-unit id="536" lock="1">
+<trans-unit id="532" lock="1">
 <source>Select Yes if your SMTP Host requires SMTP Authentication.</source>
 <target>Choisir oui si votre serveur SMTP requiert une authentification</target>
 </trans-unit>
 
-<trans-unit id="537" lock="1">
+<trans-unit id="533" lock="1">
 <source>Enter the username for access to the SMTP host</source>
 <target>Entrez le nom d\'utilisateur du compte SMTP.</target>
 </trans-unit>
 
-<trans-unit id="538" lock="1">
+<trans-unit id="534" lock="1">
 <source>Enter the password for access to the SMTP host</source>
 <target>Entrez le mot de passe du compte SMTP</target>
 </trans-unit>
 
-<trans-unit id="539" lock="1">
+<trans-unit id="535" lock="1">
 <source>Enter the name of the SMTP host.</source>
 <target>Entrez le nom du compte SMTP.</target>
 </trans-unit>
 
-<trans-unit id="540" lock="1">
+<trans-unit id="536" lock="1">
 <source>Enter the number of the port of the SMTP host.</source>
 <target>Entrez le num&#xE9;ro de port du compte SMTP.</target>
 </trans-unit>
 
-<trans-unit id="541" lock="1">
+<trans-unit id="537" lock="1">
 <source>The config was not modified.</source>
 <target>La configuration n'a pas &#xE9;t&#xE9; modifi&#xE9;e</target>
 </trans-unit>
 
-<trans-unit id="542" lock="1">
+<trans-unit id="538" lock="1">
 <source>Prado</source>
 <target>Prado</target>
 </trans-unit>
 
-<trans-unit id="543" lock="1">
+<trans-unit id="539" lock="1">
 <source>Choice the server database.</source>
 <target>Choisir le serveur de base de donn&#xE9;es</target>
 </trans-unit>
 
-<trans-unit id="544" lock="1">
+<trans-unit id="540" lock="1">
 <source>DB Server</source>
 <target>Serveur de base de donn&#xE9;es</target>
 </trans-unit>
 
-<trans-unit id="545" lock="1">
+<trans-unit id="541" lock="1">
 <source>Enter the database username, password, and database name you wish to use with Horux. These must already exist for the database you are going to use.</source>
 <target>Entrez le nom d'utilisateur, mot de passe et le nom de la base de donn&#xE9;es utilis&#xE9; pour Horux. </target>
 </trans-unit>
 
-<trans-unit id="546" lock="1">
+<trans-unit id="542" lock="1">
 <source>Sqlite support (optional)</source>
 <target>Support Sqlite (optionel)</target>
 </trans-unit>
 
-<trans-unit id="547" lock="1">
+<trans-unit id="543" lock="1">
 <source>Cannot read the sql installation file :</source>
 <target>Ne peut pas lire le fichier sql d'installation:</target>
 </trans-unit>
 
-<trans-unit id="548" lock="1">
+<trans-unit id="544" lock="1">
 <source>Cannot read the application configuration file :</source>
 <target>Ne peut pas lire le fichier de configuration:</target>
 </trans-unit>
@@ -3005,587 +2993,587 @@
 
 
 
-<trans-unit id="549" lock="1">
+<trans-unit id="545" lock="1">
 <source>1001</source>
 <target>L'antivandale du p&#xE9;riph&#xE9;rique a &#xE9;t&#xE9; forc&#xE9;</target>
 </trans-unit>
 
-<trans-unit id="550" lock="1">
+<trans-unit id="546" lock="1">
 <source>1002</source>
 <target>L'antivandale du p&#xE9;riph&#xE9;rique est r&#xE9;tabli</target>
 </trans-unit>
 
-<trans-unit id="551" lock="1">
+<trans-unit id="547" lock="1">
 <source>1003</source>
 <target>La communication avec le p&#xE9;riph&#xE9;rique est ouverte</target>
 </trans-unit>
 
-<trans-unit id="552" lock="1">
+<trans-unit id="548" lock="1">
 <source>1004</source>
 <target>La communication avec le p&#xE9;riph&#xE9;rique est ferm&#xE9;e</target>
 </trans-unit>
 
-<trans-unit id="553" lock="1">
+<trans-unit id="549" lock="1">
 <source>1005</source>
 <target>Porte entrouverte</target>
 </trans-unit>
 
-<trans-unit id="554" lock="1">
+<trans-unit id="550" lock="1">
 <source>1006</source>
 <target>Fin de porte entreouvert</target>
 </trans-unit>
 
-<trans-unit id="555" lock="1">
+<trans-unit id="551" lock="1">
 <source>1007</source>
 <target>Porte forc&#xE9;e ouverte</target>
 </trans-unit>
 
-<trans-unit id="556" lock="1">
+<trans-unit id="552" lock="1">
 <source>1008</source>
 <target>Trop gand nombre de PIN non valides</target>
 </trans-unit>
 
-<trans-unit id="557" lock="1">
+<trans-unit id="553" lock="1">
 <source>1009</source>
 <target>La temp&#xE9;rature du p&#xE9;riph&#xE9;rique est trop &#xE9;lev&#xE9;e</target>
 </trans-unit>
 
-<trans-unit id="558" lock="1">
+<trans-unit id="554" lock="1">
 <source>1010</source>
 <target>La base de donn&#xE9;es du p&#xE9;riph&#xE9;rique est pleine</target>
 </trans-unit>
 
-<trans-unit id="559" lock="1">
+<trans-unit id="555" lock="1">
 <source>1011</source>
 <target>La base de donn&#xE9;es du p&#xE9;riph&#xE9;rique est bient&#xF4;t pleine</target>
 </trans-unit>
 
-<trans-unit id="560" lock="1">
+<trans-unit id="556" lock="1">
 <source>1012</source>
 <target>Impossible d'ajouter une cl&#xE9; dans la base de donn&#xE9;es du p&#xE9;riph&#xE9;rique</target>
 </trans-unit>
 
-<trans-unit id="561" lock="1">
+<trans-unit id="557" lock="1">
 <source>1013</source>
 <target>Impossible de supprimer une cl&#xE9; de la base de donn&#xE9;es du p&#xE9;riph&#xE9;rique</target>
 </trans-unit>
 
-<trans-unit id="562" lock="1">
+<trans-unit id="558" lock="1">
 <source>1014</source>
 <target>L'antenne du p&#xE9;riph&#xE9;rique fonctionne correctement</target>
 </trans-unit>
 
-<trans-unit id="563" lock="1">
+<trans-unit id="559" lock="1">
 <source>1015</source>
 <target>L'antenne du p&#xE9;riph&#xE9;rique est hors service</target>
 </trans-unit>
 
-<trans-unit id="564" lock="1">
+<trans-unit id="560" lock="1">
 <source>1100</source>
 <target>Quelqu'un utilise une cl&#xE9; bloqu&#xE9;e</target>
 </trans-unit>
 
-<trans-unit id="565" lock="1">
+<trans-unit id="561" lock="1">
 <source>1101</source>
 <target>Une personne non autoris&#xE9;e tente d'entrer </target>
 </trans-unit>
 
-<trans-unit id="566" lock="1">
+<trans-unit id="562" lock="1">
 <source>1200</source>
 <target>Le webservice XMLRPC de horux core ne peut pas &#xEA;tre d&#xE9;marr&#xE9; </target>
 </trans-unit>
 
-<trans-unit id="567" lock="1">
+<trans-unit id="563" lock="1">
 <source>Enter the email</source>
 <target>Entrez l\'adresse email</target>
 </trans-unit>
 
-<trans-unit id="568" lock="1">
+<trans-unit id="564" lock="1">
 <source>Notification</source>
 <target>Notification</target>
 </trans-unit>
 
-<trans-unit id="569" lock="1">
+<trans-unit id="565" lock="1">
 <source>Notification List</source>
 <target>Liste des notifications</target>
 </trans-unit>
 
-<trans-unit id="570" lock="1">
+<trans-unit id="566" lock="1">
 <source>{n} notification was deleted</source>
 <target>{n} notification ont &#xE9;t&#xE9; supprim&#xE9;es</target>
 </trans-unit>
 
-<trans-unit id="571" lock="1">
+<trans-unit id="567" lock="1">
 <source>Add a notification</source>
 <target>Ajouter une notification</target>
 </trans-unit>
 
-<trans-unit id="572" lock="1">
+<trans-unit id="568" lock="1">
 <source>Enter a name for this notification</source>
 <target>Entrez un nom pour cette notification</target>
 </trans-unit>
 
-<trans-unit id="573" lock="1">
+<trans-unit id="569" lock="1">
 <source>Select all super user who should receive the notification</source>
 <target>S&#xE9;lectionnez tous les super utilisateurs devant recevoir la notification</target>
 </trans-unit>
 
-<trans-unit id="574" lock="1">
+<trans-unit id="570" lock="1">
 <source>Super user</source>
 <target>Super utilisateur</target>
 </trans-unit>
 
-<trans-unit id="575" lock="1">
+<trans-unit id="571" lock="1">
 <source>Enter more email address who should receive the notification. 	Separated by a comma</source>
 <target>Entrez plus d\'adresse email devant recevoir la notification. S&#xE9;parer par une virgule.</target>
 </trans-unit>
 
-<trans-unit id="576" lock="1">
+<trans-unit id="572" lock="1">
 <source>You could insert a description for this notification</source>
 <target>Vous pouvez ins&#xE9;rer une description pour la notification</target>
 </trans-unit>
 
-<trans-unit id="577" lock="1">
+<trans-unit id="573" lock="1">
 <source>Right user access</source>
 <target>Acc&#xE8;s valide pour</target>
 </trans-unit>
 
-<trans-unit id="578" lock="1">
+<trans-unit id="574" lock="1">
 <source>Event access</source>
 <target>Ev&#xE9;nement d'acc&#xE8;s</target>
 </trans-unit>
 
-<trans-unit id="579" lock="1">
+<trans-unit id="575" lock="1">
 <source>User not in a group</source>
 <target>L'utilisateur ne se trouve pas dans un groupe</target>
 </trans-unit>
 
-<trans-unit id="580" lock="1">
+<trans-unit id="576" lock="1">
 <source>Access blocked during the week-end</source>
 <target>Acc&#xE8;s bloqu&#xE9; pendant le week-end</target>
 </trans-unit>
 
-<trans-unit id="581" lock="1">
+<trans-unit id="577" lock="1">
 <source>Access blocked during the non working day</source>
 <target>Acc&#xE8;s bloqu&#xE9; pendant les jours non ouvrables</target>
 </trans-unit>
 
-<trans-unit id="582" lock="1">
+<trans-unit id="578" lock="1">
 <source>Access blocked, out of date</source>
 <target>Acc&#xE8;s bloqu&#xE9;, hors date</target>
 </trans-unit>
 
-<trans-unit id="583" lock="1">
+<trans-unit id="579" lock="1">
 <source>Access blocked, out of time</source>
 <target>Acc&#xE8;s bloqu&#xE9;, en dehors des heures</target>
 </trans-unit>
 
-<trans-unit id="584" lock="1">
+<trans-unit id="580" lock="1">
 <source>Access blocked, no access right defined for the group</source>
 <target>Acc&#xE8;s bloqu&#xE9;, pas de niveau d'acc&#xE8;s pour le groupe</target>
 </trans-unit>
 
-<trans-unit id="585" lock="1">
+<trans-unit id="581" lock="1">
 <source>Access by an unknown key</source>
 <target>Acc&#xE8;s par une cl&#xE9; inconnue</target>
 </trans-unit>
 
-<trans-unit id="586" lock="1">
+<trans-unit id="582" lock="1">
 <source>Key not attributed</source>
 <target>Cl&#xE9; non attribu&#xE9;e</target>
 </trans-unit>
 
-<trans-unit id="587" lock="1">
+<trans-unit id="583" lock="1">
 <source>Key access blocked</source>
 <target>Acc&#xE8;s de la cl&#xE9; bloqu&#xE9;</target>
 </trans-unit>
 
-<trans-unit id="588" lock="1">
+<trans-unit id="584" lock="1">
 <source>User access blocked</source>
 <target>Acc&#xE8;s de l'utilisateur bloqu&#xE9;</target>
 </trans-unit>
 
-<trans-unit id="589" lock="1">
+<trans-unit id="585" lock="1">
 <source>Event exception</source>
 <target>Exception &#xE9;v&#xE9;nement</target>
 </trans-unit>
 
-<trans-unit id="590" lock="1">
+<trans-unit id="586" lock="1">
 <source>Device anti vandal forced</source>
 <target>Antivandal du p&#xE9;riph&#xE9;rique forc&#xE9;</target>
 </trans-unit>
 
-<trans-unit id="591" lock="1">
+<trans-unit id="587" lock="1">
 <source>Device anti vandal cleared</source>
 <target>Antivandal du p&#xE9;riph&#xE9;rique annul&#xE9;</target>
 </trans-unit>
 
-<trans-unit id="592" lock="1">
+<trans-unit id="588" lock="1">
 <source>Device connection opened</source>
 <target>Communication du p&#xE9;riph&#xE9;rique ouverte</target>
 </trans-unit>
 
-<trans-unit id="593" lock="1">
+<trans-unit id="589" lock="1">
 <source>Device connection closed</source>
 <target>Communication du p&#xE9;riph&#xE9;rique ferm&#xE9;e</target>
 </trans-unit>
 
-<trans-unit id="594" lock="1">
+<trans-unit id="590" lock="1">
 <source>Door forced open</source>
 <target>Ouverture de porte forc&#xE9;e</target>
 </trans-unit>
 
-<trans-unit id="595" lock="1">
+<trans-unit id="591" lock="1">
 <source>Door ajar</source>
 <target>Porte entrouverte</target>
 </trans-unit>
 
-<trans-unit id="596" lock="1">
+<trans-unit id="592" lock="1">
 <source>End door ajar</source>
 <target>Fin porte entrouverte</target>
 </trans-unit>
 
-<trans-unit id="597" lock="1">
+<trans-unit id="593" lock="1">
 <source>Too many invalid PIN</source>
 <target>Trop de PIN invalide</target>
 </trans-unit>
 
-<trans-unit id="598" lock="1">
+<trans-unit id="594" lock="1">
 <source>Device temperature too hot</source>
 <target>Temp&#xE9;rature du p&#xE9;riph&#xE9;rique trop &#xE9;lev&#xE9;e</target>
 </trans-unit>
 
-<trans-unit id="599" lock="1">
+<trans-unit id="595" lock="1">
 <source>Device internal memory full</source>
 <target>M&#xE9;moire du p&#xE9;riph&#xE9;rique pleine</target>
 </trans-unit>
 
-<trans-unit id="600" lock="1">
+<trans-unit id="596" lock="1">
 <source>Device internal memory warning</source>
 <target>M&#xE9;moire du p&#xE9;riph&#xE9;rique bient&#xF4;t pleine</target>
 </trans-unit>
 
-<trans-unit id="601" lock="1">
+<trans-unit id="597" lock="1">
 <source>Device internal insert key error</source>
 <target>Impossible d'ins&#xE9;rer une cl&#xE9; dans la m&#xE9;moire du p&#xE9;riph&#xE9;rique</target>
 </trans-unit>
 
-<trans-unit id="602" lock="1">
+<trans-unit id="598" lock="1">
 <source>Device internal remove key error</source>
 <target>Impossible de supprimer une cl&#xE9; dans la m&#xE9;moire du p&#xE9;riph&#xE9;rique</target>
 </trans-unit>
 
-<trans-unit id="603" lock="1">
+<trans-unit id="599" lock="1">
 <source>Device antenna on</source>
 <target>L'antenne du p&#xE9;riph&#xE9;rique est activ&#xE9;e</target>
 </trans-unit>
 
-<trans-unit id="604" lock="1">
+<trans-unit id="600" lock="1">
 <source>Device antenna off</source>
 <target>L'antenne du p&#xE9;riph&#xE9;rique est d&#xE9;sactiv&#xE9;e</target>
 </trans-unit>
 
-<trans-unit id="605" lock="1">
+<trans-unit id="601" lock="1">
 <source>Horux XMLRPC server not started</source>
 <target>Le webservice Horux XMLRPC  n'a pas d&#xE9;marr&#xE9; correctement</target>
 </trans-unit>
 
-<trans-unit id="606" lock="1">
+<trans-unit id="602" lock="1">
 <source>The notification was added successfully</source>
 <target>La notification a &#xE9;t&#xE9; ajout&#xE9;e avec succ&#xE8;s</target>
 </trans-unit>
 
-<trans-unit id="607" lock="1">
+<trans-unit id="603" lock="1">
 <source>The notification was not added</source>
 <target>La notification n'a pas &#xE9;t&#xE9; ajout&#xE9;e</target>
 </trans-unit>
 
-<trans-unit id="608" lock="1">
+<trans-unit id="604" lock="1">
 <source>Mod a notification</source>
 <target>Modifier une notification</target>
 </trans-unit>
 
-<trans-unit id="609" lock="1">
+<trans-unit id="605" lock="1">
 <source>The notification was modified successfully</source>
 <target>La notification a &#xE9;t&#xE9; modifi&#xE9;e avec succ&#xE8;s</target>
 </trans-unit>
 
-<trans-unit id="610" lock="1">
+<trans-unit id="606" lock="1">
 <source>The notification was not modified</source>
 <target>La notification n'a pas &#xE9;t&#xE9; modifi&#xE9;e</target>
 </trans-unit>
 
-<trans-unit id="611" lock="1">
+<trans-unit id="607" lock="1">
 <source>Horux notification: Antivandale acivated on {device}</source>
 <target>Notification Horux : Antivandal du p&#xE9;riph&#xE9;rique forc&#xE9; sur {device}</target>
 </trans-unit>
 
-<trans-unit id="612" lock="1">
+<trans-unit id="608" lock="1">
 <source>Horux notification: Antivandale cleared on {device}</source>
 <target>Notification Horux : Antivandal du p&#xE9;riph&#xE9;rique annul&#xE9; sur {device}</target>
 </trans-unit>
 
-<trans-unit id="613" lock="1">
+<trans-unit id="609" lock="1">
 <source>Horux notification: Device communication opened on {device}</source>
 <target>Notification Horux : Communication du p&#xE9;riph&#xE9;rique ouverte sur {device}</target>
 </trans-unit>
 
-<trans-unit id="614" lock="1">
+<trans-unit id="610" lock="1">
 <source>Horux notification: Device communication closed on {device}</source>
 <target>Notification Horux : Communication du p&#xE9;riph&#xE9;rique ferm&#xE9;e sur {device}</target>
 </trans-unit>
 
-<trans-unit id="615" lock="1">
+<trans-unit id="611" lock="1">
 <source>Horux notification: Device ajar on {device}</source>
 <target>Notification Horux : Porte entrouverte sur {device}</target>
 </trans-unit>
 
-<trans-unit id="616" lock="1">
+<trans-unit id="612" lock="1">
 <source>Horux notification: End device ajar on {device}</source>
 <target>Notification Horux : Fin porte entrouverte sur {device}</target>
 </trans-unit>
 
-<trans-unit id="617" lock="1">
+<trans-unit id="613" lock="1">
 <source>Horux notification: Door forced on {device}</source>
 <target>Notification Horux : Ouverture de porte forc&#xE9;e sur {device}</target>
 </trans-unit>
 
-<trans-unit id="618" lock="1">
+<trans-unit id="614" lock="1">
 <source>Horux notification: Too many PIN on {device}</source>
 <target>Notification Horux : Trop de PIN sur {device}</target>
 </trans-unit>
 
-<trans-unit id="619" lock="1">
+<trans-unit id="615" lock="1">
 <source>Horux notification: Temperature alarm on {device}</source>
 <target>Notification Horux : Temp&#xE9;rature du p&#xE9;riph&#xE9;rique trop &#xE9;lev&#xE9;e sur {device}</target>
 </trans-unit>
 
-<trans-unit id="620" lock="1">
+<trans-unit id="616" lock="1">
 <source>Horux notification: Memory full on {device}</source>
 <target>Notification Horux : M&#xE9;moire du p&#xE9;riph&#xE9;rique pleine sur {device}</target>
 </trans-unit>
 
-<trans-unit id="621" lock="1">
+<trans-unit id="617" lock="1">
 <source>Horux notification: Memory warning on {device}</source>
 <target>Notification Horux : M&#xE9;moire du p&#xE9;riph&#xE9;rique bient&#xF4;t pleine sur {device}</target>
 </trans-unit>
 
-<trans-unit id="622" lock="1">
+<trans-unit id="618" lock="1">
 <source>Horux notification: Memory key inserted error on {device}</source>
 <target>Notification Horux : Impossible d'ins&#xE9;rer une cl&#xE9; dans la m&#xE9;moire du p&#xE9;riph&#xE9;rique sur {device}</target>
 </trans-unit>
 
-<trans-unit id="623" lock="1">
+<trans-unit id="619" lock="1">
 <source>Horux notification: Memory key removed error on {device}</source>
 <target>Notification Horux : Impossible de supprimer une cl&#xE9; dans la m&#xE9;moire du p&#xE9;riph&#xE9;rique sur {device}</target>
 </trans-unit>
 
-<trans-unit id="624" lock="1">
+<trans-unit id="620" lock="1">
 <source>Horux notification: Device antenna enabled on {device}</source>
 <target>Notification Horux : L'antenne du p&#xE9;riph&#xE9;rique est activ&#xE9;e sur {device}</target>
 </trans-unit>
 
-<trans-unit id="625" lock="1">
+<trans-unit id="621" lock="1">
 <source>Horux notification: Device antenna disabled on {device}</source>
 <target>Notification Horux : L'antenne du p&#xE9;riph&#xE9;rique est d&#xE9;sactiv&#xE9;e sur {device}</target>
 </trans-unit>
 
-<trans-unit id="626" lock="1">
+<trans-unit id="622" lock="1">
 <source>Horux notification: Cannot start Horux XMLRPC server</source>
 <target>Notification Horux : Le webservice Horux XMLRPC n'a pas d&#xE9;marr&#xE9; correctement</target>
 </trans-unit>
 
-<trans-unit id="627" lock="1">
+<trans-unit id="623" lock="1">
 <source>Horux notification: Access by {user}</source>
 <target>Notification Horux : Acc&#xE8;s accept&#xE9; pour {user}</target>
 </trans-unit>
 
-<trans-unit id="628" lock="1">
+<trans-unit id="624" lock="1">
 <source>Horux notification: Acces bloked - Key blocked</source>
 <target>Notification Horux : Acc&#xE8;s bloqu&#xE9; - Cl&#xE9; bloqu&#xE9;e</target>
 </trans-unit>
 
-<trans-unit id="629" lock="1">
+<trans-unit id="625" lock="1">
 <source>Horux notification: Acces bloked - Key unknown</source>
 <target>Notification Horux : Acc&#xE8;s bloqu&#xE9; - Cl&#xE9; inconnue</target>
 </trans-unit>
 
-<trans-unit id="630" lock="1">
+<trans-unit id="626" lock="1">
 <source>Horux notification: Acces bloked - Key not attributed</source>
 <target>Notification Horux : Acc&#xE8;s bloqu&#xE9; - Cl&#xE9; non attribu&#xE9;e</target>
 </trans-unit>
 
-<trans-unit id="631" lock="1">
+<trans-unit id="627" lock="1">
 <source>Horux notification: Acces bloked - User not in a group</source>
 <target>Notification Horux : Acc&#xE8;s bloqu&#xE9; - L'utilisateur n'appartient &#xE0; aucun groupe</target>
 </trans-unit>
 
-<trans-unit id="632" lock="1">
+<trans-unit id="628" lock="1">
 <source>Horux notification: Acces bloked - Key blocked during the week-end</source>
 <target>Notification Horux : Acc&#xE8;s bloqu&#xE9; - Cl&#xE9; bloqu&#xE9;e pendant le week-end</target>
 </trans-unit>
 
-<trans-unit id="633" lock="1">
+<trans-unit id="629" lock="1">
 <source>Horux notification: Acces bloked - Key blocked during the non working day</source>
 <target>Notification Horux : Acc&#xE8;s bloqu&#xE9; - Cl&#xE9; bloqu&#xE9;e pendant les jours non ouvrables</target>
 </trans-unit>
 
-<trans-unit id="634" lock="1">
+<trans-unit id="630" lock="1">
 <source>Horux notification: Acces bloked - Out of date</source>
 <target>Notification Horux : Acc&#xE8;s bloqu&#xE9; - Hors date</target>
 </trans-unit>
 
-<trans-unit id="635" lock="1">
+<trans-unit id="631" lock="1">
 <source>Horux notification: Acces bloked - Out of time</source>
 <target>Notification Horux : Acc&#xE8;s bloqu&#xE9; - Hors des heures</target>
 </trans-unit>
 
-<trans-unit id="636" lock="1">
+<trans-unit id="632" lock="1">
 <source>Horux notification: Acces bloked - No access right defined for the group</source>
 <target>Notification Horux : Acc&#xE8;s bloqu&#xE9; - Pas de niveau d'acc&#xE8;s pour le groupe</target>
 </trans-unit>
 
-<trans-unit id="637" lock="1">
+<trans-unit id="633" lock="1">
 <source>Horux notification: Acces bloked - User blocked</source>
 <target>Notification Horux : Acc&#xE8;s bloqu&#xE9; - Utilisateur bloqu&#xE9;</target>
 </trans-unit>
 
-<trans-unit id="638" lock="1">
+<trans-unit id="634" lock="1">
 <source>1016</source>
 <target>Erreur de connexion du p&#xE9;riph&#xE9;rique</target>
 </trans-unit>
 
-<trans-unit id="639" lock="1">
+<trans-unit id="635" lock="1">
 <source>Device connection error</source>
 <target>Erreur de connexion du p&#xE9;riph&#xE9;rique</target>
 </trans-unit>
 
-<trans-unit id="640" lock="1">
+<trans-unit id="636" lock="1">
 <source>Horux notification: Device connection not opened on {device}</source>
 <target>Notification Horux : Erreur de connexion du p&#xE9;riph&#xE9;rique</target>
 </trans-unit>
 
-<trans-unit id="641" lock="1">
+<trans-unit id="637" lock="1">
 <source>Description 2</source>
 <target>Description 2</target>
 </trans-unit>
 
-<trans-unit id="642" lock="1">
+<trans-unit id="638" lock="1">
 <source>1017</source>
 <target>Erreur de communication</target>
 </trans-unit>
 
-<trans-unit id="643" lock="1">
+<trans-unit id="639" lock="1">
 <source>Horux Gui Log</source>
 <target>Journal de Horux Gui</target>
 </trans-unit>
 
-<trans-unit id="644" lock="1">
+<trans-unit id="640" lock="1">
 <source>Who</source>
 <target>Qui</target>
 </trans-unit>
 
-<trans-unit id="645" lock="1">
+<trans-unit id="641" lock="1">
 <source>Horux Gui log</source>
 <target>Journal de Horux Gui</target>
 </trans-unit>
 
-<trans-unit id="646" lock="1">
+<trans-unit id="642" lock="1">
 <source>The directory ./protected/sqlitedb must be writeable</source>
 <target>Impossible d'&#xE9;crire dans le r&#xE9;pertoire ./protected/sqlitedb</target>
 </trans-unit>
 
-<trans-unit id="647" lock="1">
+<trans-unit id="643" lock="1">
 <source>The database is already existing in ./protected/sqlitedb</source>
 <target>La base de donn&#xE9;es existe d&#xE9;j&#xE0; dans./protected/sqlitedb </target>
 </trans-unit>
 
-<trans-unit id="648" lock="1">
+<trans-unit id="644" lock="1">
 <source>Are you sure you want to delete this item?</source>
 <target>&#xCA;tes-vous s&#xFB;re de vouloir supprimer cet enregistrement?</target>
 </trans-unit>
 
-<trans-unit id="649" lock="1">
+<trans-unit id="645" lock="1">
 <source>Start time</source>
 <target>D&#xE9;but de l'heure</target>
 </trans-unit>
 
-<trans-unit id="650" lock="1">
+<trans-unit id="646" lock="1">
 <source>End time</source>
 <target>Fin de l'heure</target>
 </trans-unit>
 
-<trans-unit id="651" lock="1">
+<trans-unit id="647" lock="1">
 <source>Enter the host&lt;br /&gt; of the XMLRPC server for Horux</source>
 <target>Entrez le host&lt;br/&gt; du webservice XMLRPC pour Horux</target>
 </trans-unit>
 
-<trans-unit id="652" lock="1">
+<trans-unit id="648" lock="1">
 <source>XMLRPC server</source>
 <target>Webservice XMLRPC</target>
 </trans-unit>
 
-<trans-unit id="653" lock="1">
+<trans-unit id="649" lock="1">
 <source>Port XMLRPC</source>
 <target>Port XMLRPC</target>
 </trans-unit>
 
-<trans-unit id="654" lock="1">
+<trans-unit id="650" lock="1">
 <source>The config was modified successfully.</source>
 <target>La configuration a &#xE9;t&#xE9; modifi&#xE9; avec succ&#xE8;s</target>
 </trans-unit>
 
-<trans-unit id="655" lock="1">
+<trans-unit id="651" lock="1">
 <source>Inform about bugs and request</source>
 <target>Bugs et nouvelles demandes</target>
 </trans-unit>
 
-<trans-unit id="656" lock="1">
+<trans-unit id="652" lock="1">
 <source>Super users List</source>
 <target>Liste des super utilisateurs</target>
 </trans-unit>
 
-<trans-unit id="657" lock="1">
+<trans-unit id="653" lock="1">
 <source>Stop</source>
 <target>Stopper</target>
 </trans-unit>
 
-<trans-unit id="658" lock="1">
+<trans-unit id="654" lock="1">
 <source>Start</source>
 <target>D&#xE9;marrer</target>
 </trans-unit>
 
-<trans-unit id="659" lock="1">
+<trans-unit id="655" lock="1">
 <source>Refresh</source>
 <target>Rafra&#xEE;chir</target>
 </trans-unit>
 
-<trans-unit id="660" lock="1">
+<trans-unit id="656" lock="1">
 <source>Super User Group List</source>
 <target>Liste des groupes des super utilisateurs</target>
 </trans-unit>
 
-<trans-unit id="661" lock="1">
+<trans-unit id="657" lock="1">
 <source>The confirmation email cannot be sended. Please check your mail settings</source>
 <target>. La confirmation par email ne peut pas &#xEA;tre envoy&#xE9;e. Veuillez v&#xE9;rifier la configuration de l'envoie d'email</target>
 </trans-unit>
 
-<trans-unit id="662" lock="1">
+<trans-unit id="658" lock="1">
 <source>Key recycling</source>
 <target>Recyclage de cl&#xE9;s</target>
 </trans-unit>
 
-<trans-unit id="663" lock="1">
+<trans-unit id="659" lock="1">
 <source>Recycling a Key</source>
 <target>Recycler une cl&#xE9;</target>
 </trans-unit>
 
-<trans-unit id="664" lock="1">
+<trans-unit id="660" lock="1">
 <source>Present the key to the reader for the recycle</source>
 <target>Pr&#xE9;senter la cl&#xE9; au lecteur pour la recycler</target>
 </trans-unit>
 
-<trans-unit id="665" lock="1">
+<trans-unit id="661" lock="1">
 <source>The key was recycled</source>
 <target>La cl&#xE9; a &#xE9;t&#xE9; recycl&#xE9;e</target>
 </trans-unit>
@@ -3594,354 +3582,354 @@
 
 
 
-<trans-unit id="666" lock="1">
+<trans-unit id="662" lock="1">
 <source>Horux super user password</source>
 <target>Mot de passe Horux super utilisateur</target>
 </trans-unit>
 
-<trans-unit id="667" lock="1">
+<trans-unit id="663" lock="1">
 <source>{sitename} user password</source>
 <target>Mot de passe utilisateur pour {sitename}</target>
 </trans-unit>
 
-<trans-unit id="668" lock="1">
+<trans-unit id="664" lock="1">
 <source>Public web site</source>
 <target>Site Internet publique</target>
 </trans-unit>
 
-<trans-unit id="669" lock="1">
+<trans-unit id="665" lock="1">
 <source>Enter the address of the public web site</source>
 <target>Entrez l\'adresse internet du site public</target>
 </trans-unit>
 
-<trans-unit id="670" lock="1">
+<trans-unit id="666" lock="1">
 <source>Url</source>
 <target>Url</target>
 </trans-unit>
 
-<trans-unit id="671" lock="1">
+<trans-unit id="667" lock="1">
 <source>Enter the password for this user</source>
 <target>Entrez le mot de passe pour cet utilisateur</target>
 </trans-unit>
 
-<trans-unit id="672" lock="1">
+<trans-unit id="668" lock="1">
 <source>Enter the confirmation password for this user</source>
 <target>Entrez la confirmation du mot de passe pour cet utilisateur</target>
 </trans-unit>
 
-<trans-unit id="673" lock="1">
+<trans-unit id="669" lock="1">
 <source>Hello {username}&lt;br/&gt;&lt;br/&gt;A new super user has registered for the access control.&lt;br/&gt;This e-mail contains their details:&lt;br/&gt;&lt;br/&gt;Username: {un}&lt;br/&gt;Password: {password}&lt;br/&gt;&lt;br/&gt;Please do not respond to this message. It is automatically generated and is for information purposes only.</source>
 <target>Bonjour {username}&lt;br/&gt;&lt;br/&gt;Un nouveau super utilisateur a &#xE9;t&#xE9; cr&#xE9;&#xE9; pour le contr&#xF4;le d'acc&#xE8;s.&lt;br/&gt;Cet email contient les d&#xE9;tails:&lt;br/&gt;&lt;br/&gt;Nom d'utilisateur: {un}&lt;br/&gt;Mot de passe: {password}&lt;br/&gt;&lt;br/&gt;Veuillez ne pas r&#xE9;pondre &#xE0; cet email. C'est un message g&#xE9;n&#xE9;r&#xE9; automatiquement pour information uniquement.</target>
 </trans-unit>
 
-<trans-unit id="674" lock="1">
+<trans-unit id="670" lock="1">
 <source>Hello {name} {firstname}&lt;br/&gt;&lt;br/&gt;A new user has registered for {sitename}.&lt;br/&gt;This e-mail contains their details:&lt;br/&gt;&lt;br/&gt;Username: {email}&lt;br/&gt;Password: {password}&lt;br/&gt;Web site: {url}&lt;br/&gt;&lt;br/&gt;Please do not respond to this message. It is automatically generated and is for information purposes only.</source>
 <target>Bonjour {name} {firstname}&lt;br/&gt;&lt;br/&gt;Un nouvel utilisateur a &#xE9;t&#xE9; cr&#xE9;&#xE9; pour {sitename}.&lt;br/&gt;Cet email contient les d&#xE9;tails:&lt;br/&gt;&lt;br/&gt;Nom d'utilisateur: {email}&lt;br/&gt;Mot de passe:  {password}&lt;br/&gt;Site Internet: {url}&lt;br/&gt;&lt;br/&gt;Veuillez ne pas r&#xE9;pondre &#xE0; cet email. C'est un message g&#xE9;n&#xE9;r&#xE9; automatiquement pour information uniquement.</target>
 </trans-unit>
 
-<trans-unit id="675" lock="1">
+<trans-unit id="671" lock="1">
 <source>Sub page</source>
 <target>Sous page</target>
 </trans-unit>
 
-<trans-unit id="676" lock="1">
+<trans-unit id="672" lock="1">
 <source>Click here to give access or not</source>
 <target>Cliquez ici pour donner ou supprimer l\'acc&#xE8;s</target>
 </trans-unit>
 
-<trans-unit id="677" lock="1">
+<trans-unit id="673" lock="1">
 <source>Check the box for the information to appear in the control panel</source>
 <target>Cocher les cases pour les informations devant appara&#xEE;tre dans le panel de contr&#xF4;le</target>
 </trans-unit>
 
-<trans-unit id="678" lock="1">
+<trans-unit id="674" lock="1">
 <source>Control Panel Info</source>
 <target>Information du panel de contr&#xF4;le</target>
 </trans-unit>
 
-<trans-unit id="679" lock="1">
+<trans-unit id="675" lock="1">
 <source>Control panel shortcut</source>
 <target>Raccourcit du panel de contr&#xF4;le </target>
 </trans-unit>
 
-<trans-unit id="680" lock="1">
+<trans-unit id="676" lock="1">
 <source>Click here to put shortcut on the control panel</source>
 <target>Cliquez ici pour ajouter le raccourcit dans le panel de contr&#xF4;le</target>
 </trans-unit>
 
-<trans-unit id="681" lock="1">
+<trans-unit id="677" lock="1">
 <source>Step</source>
 <target>Etape</target>
 </trans-unit>
 
-<trans-unit id="682" lock="1">
+<trans-unit id="678" lock="1">
 <source>Mrs.</source>
 <target>Madame</target>
 </trans-unit>
 
-<trans-unit id="683" lock="1">
+<trans-unit id="679" lock="1">
 <source>Mr.</source>
 <target>Monsieur</target>
 </trans-unit>
 
-<trans-unit id="684" lock="1">
+<trans-unit id="680" lock="1">
 <source>Choose a color for this non working day</source>
 <target>Choisir une couleur pour ce jour non ouvrable</target>
 </trans-unit>
 
-<trans-unit id="685" lock="1">
+<trans-unit id="681" lock="1">
 <source>Color</source>
 <target>Couleur</target>
 </trans-unit>
 
-<trans-unit id="686" lock="1">
+<trans-unit id="682" lock="1">
 <source>Enter the professional fax number</source>
 <target>Entrez le num&#xE9;ro de fax professionnel</target>
 </trans-unit>
 
 
 
-<trans-unit id="687">
+<trans-unit id="683">
 <source>Add a Department</source>
 <target>Ajouter un d&#xE9;partement</target>
 </trans-unit>
 
-<trans-unit id="688">
+<trans-unit id="684">
 <source>Enter a name for this department</source>
 <target>Entrez un nom pour ce d&#xE9;partement</target>
 </trans-unit>
 
-<trans-unit id="689">
+<trans-unit id="685">
 <source>You could insert a description for this department.</source>
 <target>Vous pouvez entrer une description pour ce d&#xE9;partement</target>
 </trans-unit>
 
-<trans-unit id="690">
+<trans-unit id="686">
 <source>The department was added successfully</source>
 <target>Le d&#xE9;partement a &#xE9;t&#xE9; ajout&#xE9; avec succ&#xE8;s</target>
 </trans-unit>
 
-<trans-unit id="691">
+<trans-unit id="687">
 <source>The department was not added</source>
 <target>Le d&#xE9;partement n'a pas &#xE9;t&#xE9; ajout&#xE9;</target>
 </trans-unit>
 
-<trans-unit id="692">
+<trans-unit id="688">
 <source>Department List</source>
 <target>Liste des d&#xE9;partements</target>
 </trans-unit>
 
-<trans-unit id="693">
+<trans-unit id="689">
 <source>{n} department(s) was deleted</source>
 <target>{n} d&#xE9;partement(s) ont &#xE9;t&#xE9; supprim&#xE9;s</target>
 </trans-unit>
 
-<trans-unit id="694">
+<trans-unit id="690">
 <source>Modify the Department</source>
 <target>Modifier le d&#xE9;partement</target>
 </trans-unit>
 
-<trans-unit id="695">
+<trans-unit id="691">
 <source>The department was modified successfully</source>
 <target>Le d&#xE9;partement a &#xE9;t&#xE9; modifi&#xE9; avec succ&#xE8;s</target>
 </trans-unit>
 
-<trans-unit id="696">
+<trans-unit id="692">
 <source>The department was not modified</source>
 <target>Le d&#xE9;partement n'a pas &#xE9;t&#xE9; modifi&#xE9;</target>
 </trans-unit>
 
-<trans-unit id="697">
+<trans-unit id="693">
 <source>---- No department ----</source>
 <target>---- Pas de d&#xE9;partement ----</target>
 </trans-unit>
 
-<trans-unit id="698">
+<trans-unit id="694">
 <source>Select the period</source>
 <target>S&#xE9;lectionner une p&#xE9;riode</target>
 </trans-unit>
 
-<trans-unit id="699">
+<trans-unit id="695">
 <source>Period</source>
 <target>P&#xE9;riode</target>
 </trans-unit>
 
-<trans-unit id="700">
+<trans-unit id="696">
 <source>All the day</source>
 <target>Toute la journ&#xE9;e</target>
 </trans-unit>
 
-<trans-unit id="701">
+<trans-unit id="697">
 <source>Morning only</source>
 <target>Seulement le matin</target>
 </trans-unit>
 
-<trans-unit id="702">
+<trans-unit id="698">
 <source>Afternoon only</source>
 <target>Seulement l'apr&#xE8;s-midi</target>
 </trans-unit>
 
-<trans-unit id="703">
+<trans-unit id="699">
 <source>Morning</source>
 <target>Matin</target>
 </trans-unit>
 
-<trans-unit id="704">
+<trans-unit id="700">
 <source>Afternoon</source>
 <target>Apr&#xE8;s-midi</target>
 </trans-unit>
 
-<trans-unit id="705">
+<trans-unit id="701">
 <source>Print Card</source>
 <target>Imprimer la carte</target>
 </trans-unit>
 
-<trans-unit id="706">
+<trans-unit id="702">
 <source>You don't have the right to modify this users group</source>
 <target>Vous n'avez pas les droits pour modifier ce groupe d'utilisateurs</target>
 </trans-unit>
 
-<trans-unit id="707">
+<trans-unit id="703">
 <source>Super users in "{g}" group</source>
 <target>Super utilisateurs du groupe "{g}"</target>
 </trans-unit>
 
-<trans-unit id="708">
+<trans-unit id="704">
 <source>Last status update</source>
 <target>Derni&#xE8;re mise &#xE0; jour du status</target>
 </trans-unit>
 
-<trans-unit id="709">
+<trans-unit id="705">
 <source>Reload database</source>
 <target>Rechargement de la base de donn&#xE9;es</target>
 </trans-unit>
 
-<trans-unit id="710">
+<trans-unit id="706">
 <source>Database reloaded</source>
 <target>La base de donn&#xE9;es a &#xE9;t&#xE9; recharg&#xE9;e</target>
 </trans-unit>
 
-<trans-unit id="711">
+<trans-unit id="707">
 <source>Horux notification: Reload database...</source>
 <target>Notification Horux :Rechargement de la base de donn&#xE9;es</target>
 </trans-unit>
 
-<trans-unit id="712">
+<trans-unit id="708">
 <source>Horux notification: Database reloaded</source>
 <target>Notification Horux : Base de donn&#xE9;es recharg&#xE9;e</target>
 </trans-unit>
 
-<trans-unit id="713">
+<trans-unit id="709">
 <source>Picture path</source>
 <target>Chemin des images</target>
 </trans-unit>
 
-<trans-unit id="714">
+<trans-unit id="710">
 <source>Enter the path where the picture will be saved</source>
 <target>Entrez le chemin o&#xF9; les images seront sauv&#xE9;es</target>
 </trans-unit>
 
-<trans-unit id="715">
+<trans-unit id="711">
 <source>The directory ./pictures{p} must be writeable to save your logo</source>
 <target>Le r&#xE9;pertoire ./pictures{p} doit &#xEA;tre en &#xE9;criture pour sauver votre logo</target>
 </trans-unit>
 
-<trans-unit id="716">
+<trans-unit id="712">
 <source>If you check this option, you will give to all user contain in this group to have access to Horux Gui Web service</source>
 <target>Si vous cochez cette option, vous donnez alors acc&#xE8;s aux webservices &#xE0; tous les utilisateurs contenus dans ce groupe.</target>
 </trans-unit>
 
-<trans-unit id="717">
+<trans-unit id="713">
 <source>Webservice</source>
 <target>Service web</target>
 </trans-unit>
 
-<trans-unit id="718">
+<trans-unit id="714">
 <source>The directory ./pictures{p} must be writeable to save/delete your picture</source>
 <target>Le r&#xE9;pertoire ./pictures{p} doit &#xEA;tre en &#xE9;criture pour pouvoir sauver/supprimer vos images</target>
 </trans-unit>
 
-<trans-unit id="719">
+<trans-unit id="715">
 <source>The directory ./pictures{p} must be writeable to save your picture</source>
 <target>Le r&#xE9;pertoire ./pictures{p} doit &#xEA;tre en &#xE9;criture pour pouvoir sauver vos images</target>
 </trans-unit>
 
-<trans-unit id="720">
+<trans-unit id="716">
 <source>Cannot use this service in Saas mode</source>
 <target>Ne peut pas utilis&#xE9; ce service en mode Saas</target>
 </trans-unit>
 
-<trans-unit id="721">
+<trans-unit id="717">
 <source>AVS</source>
 <target>AVS</target>
 </trans-unit>
 
-<trans-unit id="722">
+<trans-unit id="718">
 <source>Enter the Insurance for elderly people and survivors</source>
 <target>Entrez son num&#xE9;ro d\'assurance de vieillesse et de survivants</target>
 </trans-unit>
 
-<trans-unit id="723">
+<trans-unit id="719">
 <source>Add more</source>
 <target>Ajout suppl&#xE9;mentaire</target>
 </trans-unit>
 
-<trans-unit id="724">
+<trans-unit id="720">
 <source>Select the default page</source>
 <target>S&#xE9;lectionnez la page par d&#xE9;faut</target>
 </trans-unit>
 
-<trans-unit id="725">
+<trans-unit id="721">
 <source>Default page</source>
 <target>Page par d&#xE9;faut</target>
 </trans-unit>
 
-<trans-unit id="726">
+<trans-unit id="722">
 <source>User List</source>
 <target>Liste utilisateur</target>
 </trans-unit>
 
-<trans-unit id="727">
+<trans-unit id="723">
 <source>Horux controler down</source>
 <target>Le contr&#xF4;leur Horux ne fonctionne plus</target>
 </trans-unit>
 
-<trans-unit id="728">
+<trans-unit id="724">
 <source>Horux notification: Horux Controler seems to be down</source>
 <target>Notification Horux: Le contr&#xF4;leur Horux semble ne plus fonctionner</target>
 </trans-unit>
 
-<trans-unit id="729">
+<trans-unit id="725">
 <source>Pin Code necessary</source>
 <target>Pin Code n&#xE9;cessaire</target>
 </trans-unit>
 
-<trans-unit id="730">
+<trans-unit id="726">
 <source>Exiting only</source>
 <target>Sortie uniquement</target>
 </trans-unit>
 
-<trans-unit id="731">
+<trans-unit id="727">
 <source>Unlocking</source>
 <target>Ouvrir</target>
 </trans-unit>
 
-<trans-unit id="732">
+<trans-unit id="728">
 <source>Sup. 'door open too long alarm'</source>
 <target>Sup. 'alarm ouverture de porte'</target>
 </trans-unit>
 
-<trans-unit id="733">
+<trans-unit id="729">
 <source>Sup. 'open without permission alarm'</source>
 <target>Sup. 'alarm ouverture sans permission'</target>
 </trans-unit>
 
-<trans-unit id="734">
+<trans-unit id="730">
 <source>Check only company ID</source>
 <target>Contr&#xF4;le uniquement l'ID de l'entreprise</target>
 </trans-unit>
 
-<trans-unit id="735">
+<trans-unit id="731">
 <source>Use special relay plan</source>
 <target>Plan de relais sp&#xE9;cial</target>
 </trans-unit>
