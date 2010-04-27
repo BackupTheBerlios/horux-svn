@@ -32,14 +32,12 @@ class SQL {
     const SQL_ADD_OPEN_TIME = "INSERT INTO hr_openTime (
                         `name` ,
                         `non_working_day`,
-                        `week_end`,
                         `monday_default`,
                         `comment`
                   )
                   VALUES (
                         :name,
                         :non_working_day,
-                        :week_end,
                         :monday_default,
                         :comment
                   )";
@@ -47,7 +45,6 @@ class SQL {
     const SQL_MOD_OPEN_TIME = "UPDATE hr_openTime SET
                         `name`=:name,
                         `non_working_day`=:non_working_day,
-                        `week_end`=:week_end,
                         `monday_default`=:monday_default,
                         `comment`=:comment
                         WHERE id=:id"

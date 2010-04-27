@@ -142,6 +142,7 @@ XWeekPlanner.prototype = {
                  this.options.supWithoutPermAlarm.checked = false;
                  this.activeItem.supWithoutPermAlarm = this.options.supWithoutPermAlarm.checked;
             }
+            
             this.activeItem.unlocking = this.options.unlocking.checked;
             this.activeItem.resize2(this.options.startTime.value,this.options.endTime.value);
         }
@@ -228,7 +229,7 @@ XWeekPlanner.prototype = {
          unlocking : 0,
          supOpenTooLongAlarm : 0,
          supWithoutPermAlarm : 0,
-         checkOnlyCompanyID : 0,
+         checkOnlyCompanyID : 0
       }
       Object.extend(this.options, options || {});
    },
@@ -434,7 +435,7 @@ XWeekPlanner.prototype = {
 		if(Event.element(event).className == 'weekScheduler_appointmentHour')
 		{
 			var tmpDate = new Date(this.dateStartOfWeek);
-			
+
 			tmpDate.setDate(tmpDate.getDate() + this.getXPosition(Event.pointerX(event)) / this.columnWidth);
 			tmpDate.setHours(this.getYPosition(Event.pointerY(event)) / this.rowHeight -1);
 			var item = new XAppointment(this);
@@ -519,7 +520,9 @@ XAppointment.prototype = {
 	},
 	// Gets the information of the XAppointment as an array
 	getAsArray: function () {
-		
+
+        if(this.duration == "24:00") this.duration = "23:59";
+
 		return { 
 			"id"			: this.id,
 			'day' 			: this.startDate.getDay(),
@@ -531,7 +534,7 @@ XAppointment.prototype = {
             'unlocking'       : this.unlocking,
             'supOpenTooLongAlarm'       : this.supOpenTooLongAlarm,
             'supWithoutPermAlarm'       : this.supWithoutPermAlarm,
-            'checkOnlyCompanyID'       : this.checkOnlyCompanyID,
+            'checkOnlyCompanyID'       : this.checkOnlyCompanyID
 		};	
 		
 		
@@ -557,6 +560,7 @@ XAppointment.prototype = {
 	},
 	
 	getLeftPos: function () {
+        
 		return this.weekPlanner.getXPositionFromDay(this.startDate.getDay());
 	},	
 	
@@ -773,11 +777,20 @@ XAppointment.prototype = {
 
        $('weekScheduler_appointment_time_' + this.id).innerHTML = tcOption + this.getTime();
 	   this.weekPlanner.options.startTime.value = this.getTimeStart();
-       this.weekPlanner.options.endTime.value = this.getTimeEnd();
+
+       if(this.getTimeEnd() == '0:00')
+       {
+           this.weekPlanner.options.endTime.value = "23:59";
+       }
+       else
+           this.weekPlanner.options.endTime.value = this.getTimeEnd();
 	},
 
     resize2: function(start, end)
     {
+        if(end == "0:00")
+            end = "23:59";
+
         var day = this.startDate.getDay();
 
         var hourStart = start.split(':');
@@ -789,7 +802,13 @@ XAppointment.prototype = {
         tmpDate = tmpDate.getTime()-this.startDate.getTime();
         tmpDate = new Date(tmpDate);
 
-        var duration = (tmpDate.getHours()-1) + ':' + tmpDate.getMinutes();
+        var duration = 0;
+        
+        if(tmpDate.getHours() > 0)
+            duration = (tmpDate.getHours()-1) + ':' + tmpDate.getMinutes();
+        else
+            duration = '23:' + tmpDate.getMinutes();
+
         this.duration = duration;
 		this.divElement.style.top 		= this.getTopPos() + 'px';
 		this.divElement.style.height 	= this.getHeight() + 'px';
@@ -815,6 +834,8 @@ XAppointment.prototype = {
 
 
         $('weekScheduler_appointment_time_' + this.id).innerHTML = tcOption + this.getTime();
+
+
         this.weekPlanner.saveAppointment(this);
     },
 	

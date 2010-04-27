@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <xliff version="1.0">
- <file source-language="FR" target-language="fr" datatype="plaintext" original="messages" date="2010-04-08T08:06:06Z" product-name="messages">
+ <file source-language="FR" target-language="fr" datatype="plaintext" original="messages" date="2010-04-20T16:21:07Z" product-name="messages">
   <body>
   
 <trans-unit id="1" lock="1">
@@ -1202,7 +1202,7 @@
 
 <trans-unit id="217" lock="1">
 <source>All days as Monday</source>
-<target>Tous les jours comme le lundi</target>
+<target>Tous les jours comme le lundi </target>
 </trans-unit>
 
 <trans-unit id="218" lock="1">
@@ -2635,7 +2635,7 @@
 
 <trans-unit id="477" lock="1">
 <source>Non working day open time</source>
-<target>Libre acc&#xE8;s pendant les jours non ouvrables</target>
+<target>Activer le libre acc&#xE8;s pendant les jours non ouvrables</target>
 </trans-unit>
 
 <trans-unit id="478" lock="1">
@@ -3909,6 +3909,41 @@
 <trans-unit id="728">
 <source>Horux notification: Horux Controler seems to be down</source>
 <target>Notification Horux: Le contr&#xF4;leur Horux semble ne plus fonctionner</target>
+</trans-unit>
+
+<trans-unit id="729">
+<source>Pin Code necessary</source>
+<target>Pin Code n&#xE9;cessaire</target>
+</trans-unit>
+
+<trans-unit id="730">
+<source>Exiting only</source>
+<target>Sortie uniquement</target>
+</trans-unit>
+
+<trans-unit id="731">
+<source>Unlocking</source>
+<target>Ouvrir</target>
+</trans-unit>
+
+<trans-unit id="732">
+<source>Sup. 'door open too long alarm'</source>
+<target>Sup. 'alarm ouverture de porte'</target>
+</trans-unit>
+
+<trans-unit id="733">
+<source>Sup. 'open without permission alarm'</source>
+<target>Sup. 'alarm ouverture sans permission'</target>
+</trans-unit>
+
+<trans-unit id="734">
+<source>Check only company ID</source>
+<target>Contr&#xF4;le uniquement l'ID de l'entreprise</target>
+</trans-unit>
+
+<trans-unit id="735">
+<source>Use special relay plan</source>
+<target>Plan de relais sp&#xE9;cial</target>
 </trans-unit>
 </body>
 </file>

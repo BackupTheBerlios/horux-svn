@@ -64,17 +64,7 @@
                             />
                     </td>
                 </tr>
-
-                <tr>
-                    <td valign="top" class="key"><span onmouseover="Tip('<%[Check it if you want an access level having<br /> access during the week-end]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Week-end access]%></span></td>
-                    <td>
-                        <com:TCheckBox
-                            ID="weekEndAccess"
-                            Text=""
-                            InputAttributes.value="1"
-                            />
-                    </td>
-                </tr>
+                
 
                 
                 <tr>

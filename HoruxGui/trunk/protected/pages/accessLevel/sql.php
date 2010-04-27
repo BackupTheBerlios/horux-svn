@@ -26,7 +26,6 @@ class SQL {
                         `name` ,
                         `full_access`,
                         `non_working_day`,
-                        `week_end`,
                         `monday_default`,
                         `comment`
                   )
@@ -34,7 +33,6 @@ class SQL {
                         :name,
                         :full_access,
                         :non_working_day,
-                        :week_end,
                         :monday_default,
                         :comment
                   )";
@@ -43,7 +41,6 @@ class SQL {
                         `name`=:name,
                         `full_access`=:full_access,
                         `non_working_day`=:non_working_day,
-                        `week_end`=:week_end,
                         `monday_default`=:monday_default,
                         `comment`=:comment
                         WHERE id=:id"

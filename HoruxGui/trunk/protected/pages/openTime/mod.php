@@ -53,7 +53,6 @@ class mod extends Page
             $this->name->Text = $data['name'];
             $this->comment->Text = $data['comment'];
             $this->nonWorkingDayAccess->setChecked($data['non_working_day']);
-            $this->weekEndAccess->setChecked($data['week_end']);
             $this->mondayDefault->setChecked($data['monday_default']);
         }
     }
@@ -103,7 +102,6 @@ class mod extends Page
         $cmd->bindParameter(":id",$this->id->Value, PDO::PARAM_INT);
         $cmd->bindParameter(":name",$this->name->SafeText,PDO::PARAM_STR);
         $cmd->bindParameter(":non_working_day",$this->nonWorkingDayAccess->Checked,PDO::PARAM_STR);
-        $cmd->bindParameter(":week_end",$this->weekEndAccess->Checked,PDO::PARAM_STR);
         $cmd->bindParameter(":monday_default",$this->mondayDefault->Checked,PDO::PARAM_STR);
 
         $cmd->bindParameter(":comment",$this->comment->SafeText,PDO::PARAM_STR);

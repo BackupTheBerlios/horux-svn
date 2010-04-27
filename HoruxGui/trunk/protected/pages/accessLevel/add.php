@@ -22,6 +22,7 @@ class add extends Page
     public function onLoad($param)
     {
         parent::onLoad($param);
+
     }
 
     public function onApply($sender, $param)
@@ -60,7 +61,6 @@ class add extends Page
         $cmd->bindParameter(":name",$this->name->SafeText,PDO::PARAM_STR);
         $cmd->bindParameter(":full_access",$this->fullAccess->Checked,PDO::PARAM_STR);
         $cmd->bindParameter(":non_working_day",$this->nonWorkingDayAccess->Checked,PDO::PARAM_STR);
-        $cmd->bindParameter(":week_end",$this->weekEndAccess->Checked,PDO::PARAM_STR);
         $cmd->bindParameter(":monday_default",$this->mondayDefault->Checked,PDO::PARAM_STR);
 
         $cmd->bindParameter(":comment",$this->comment->SafeText,PDO::PARAM_STR);

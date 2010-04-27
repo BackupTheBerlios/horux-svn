@@ -153,6 +153,12 @@ class XWeekPlanner extends TWebControl
 		$this->Page->getControls()->add($t1);	
 	}
 
+    public function setEnabled($flag)
+    {
+
+        
+    }
+
 	/**
 	 * Renders the body content enclosed between the control tag.
 	 * By default, child controls and text strings will be rendered.

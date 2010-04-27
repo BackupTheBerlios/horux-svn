@@ -59,7 +59,6 @@ class add extends Page
         $cmd = $this->db->createCommand( SQL::SQL_ADD_OPEN_TIME );
         $cmd->bindParameter(":name",$this->name->SafeText,PDO::PARAM_STR);
         $cmd->bindParameter(":non_working_day",$this->nonWorkingDayAccess->Checked,PDO::PARAM_STR);
-        $cmd->bindParameter(":week_end",$this->weekEndAccess->Checked,PDO::PARAM_STR);
         $cmd->bindParameter(":monday_default",$this->mondayDefault->Checked,PDO::PARAM_STR);
 
         $cmd->bindParameter(":comment",$this->comment->SafeText,PDO::PARAM_STR);
