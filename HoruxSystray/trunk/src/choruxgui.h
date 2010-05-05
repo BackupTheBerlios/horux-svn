@@ -43,9 +43,11 @@ public:
 
     ~CHoruxGui();
 
+    void openCom();
+
  protected:
      void closeEvent(QCloseEvent *event);
-     void openCom();
+
 
      void timerEvent(QTimerEvent *e);
 

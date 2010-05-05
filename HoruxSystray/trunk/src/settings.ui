@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>238</height>
+    <height>258</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -43,6 +43,13 @@
           </property>
          </widget>
         </item>
+        <item>
+         <widget class="QLabel" name="label_5">
+          <property name="text">
+           <string>Beep</string>
+          </property>
+         </widget>
+        </item>
        </layout>
       </item>
       <item>
@@ -75,6 +82,13 @@
         </item>
         <item>
          <widget class="QLineEdit" name="fid"/>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="isBeep">
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
         </item>
        </layout>
       </item>

@@ -21,12 +21,13 @@
 #define CGAT5250B_H
 
 #include "cdevice.h"
-/*#if defined(Q_OS_WIN)
+
+#if defined(Q_OS_WIN)
     #include <QAxObject>
-#elif defined(Q_WS_X11)*/
+#elif defined(Q_WS_X11)
     #include <qextserialport.h>
-    #include "ftd2xx.h"
-//#endif
+    #include <QTimer>
+#endif
 
 class CGAT5250B : public CDevice
 {
@@ -36,24 +37,45 @@ public:
 
     ~CGAT5250B();
 
+     void open();
      void run();
      void close(bool isError=false);
      void setFID(QString _fid);
+     void isBeep(bool flag);
 
 protected:
     virtual void handleMsg();
     virtual void handleKey();
 
+
+signals:
+    void keyDetected(QByteArray key);
+    void deviceError();
+    void readError();
+
+protected slots:
+    void readyRead();
+    void setGreenLED();
+    void setRedLED();
+    void setBeep();
+    void smIdle();
+    void readUniqueSerialNumber();
+
+
 private:
-    /*#if defined(Q_OS_WIN)
+    #if defined(Q_OS_WIN)
         QAxObject *gat;
-    #elif defined(Q_WS_X11)*/
-        FT_HANDLE ftHandle;
-    //#endif
+    #elif defined(Q_WS_X11)
+        QextSerialPort *port;
+        QTimer *readPort;
+        QList<QByteArray>msgList;
+    #endif
 
     QString key;
     bool stop;
     QString fid;
+    bool isStarted;
+    bool beep;
 };
 
 #endif // CGAT5250B_H

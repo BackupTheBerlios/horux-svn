@@ -68,6 +68,7 @@ CHoruxGui::CHoruxGui(QWidget *parent)
     customPort->setText(settings.value("port", "").toString());
     techComboBox->setCurrentIndex(settings.value("tech", 0).toInt());
     fid->setText( settings.value("fid", "").toString());
+    isBeep->setChecked( settings.value("beep", true).toBool());
 
     al_usb_reader = NULL;
     al_serial_reader = NULL;
@@ -112,18 +113,20 @@ void CHoruxGui::openCom()
   QString portStr = settings.value("port", "").toString();
   int techno = settings.value("tech", 0).toInt();
   QString fid = settings.value("fid", "9999").toString();
+  bool beep = settings.value("beep", true).toBool();
 
   switch( techno )
   {
       case 0: //GAT Writer 5250 B
           gat5250_serial_reader = new CGAT5250B(this);
-          gat5250_serial_reader->setFID(fid);
+          gat5250_serial_reader->isBeep(beep);
 
           connect(gat5250_serial_reader, SIGNAL(deviceError()), this, SLOT(deviceError()));
           connect(gat5250_serial_reader, SIGNAL(readError()), this, SLOT(readError()));
           connect(gat5250_serial_reader, SIGNAL(keyDetected(QByteArray)), this, SLOT(keyDetected(QByteArray)));
+          gat5250_serial_reader->open();
+          gat5250_serial_reader->setFID(fid);
 
-          gat5250_serial_reader->start();
 
           break;
       case 1: // Acces Link USB
@@ -153,6 +156,7 @@ void CHoruxGui::on_apply_clicked()
   settings.setValue ( "port", customPort->text() );
   settings.setValue ( "tech", techComboBox->currentIndex() );
   settings.setValue ( "fid", fid->text() );
+  settings.setValue ( "beep", isBeep->isChecked() );
 
   if(gat5250_serial_reader)
   {
@@ -183,6 +187,7 @@ void CHoruxGui::on_save_clicked()
   settings.setValue ( "port", customPort->text() );
   settings.setValue ( "tech", techComboBox->currentText() );
   settings.setValue ( "fid", fid->text() );
+  settings.setValue ( "beep", isBeep->isChecked() );
 
   if(gat5250_serial_reader)
   {
