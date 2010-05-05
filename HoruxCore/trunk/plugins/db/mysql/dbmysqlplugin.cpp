@@ -112,10 +112,7 @@ bool DbMysqlPlugin::loadData ( const QString queries )
                 QSqlQuery createTable;
                 if(!createTable.exec(q))
                 {
-                    qDebug() << q;
                     qWarning() << createTable.lastError().databaseText();
-                    QSqlQuery drop;
-                    drop.exec("DROP DATABASE " + dbase.databaseName());
                     return false;
                 }
             }
@@ -155,9 +152,10 @@ int DbMysqlPlugin::getParentDevice(int deviceId)
 {
   QSqlQuery query("SELECT parent_id FROM hr_device WHERE id=" + QString::number(deviceId));
 
-  query.next();
-
-  return query.value(0).toInt();
+  if(query.next())
+      return query.value(0).toInt();
+  else
+      return -1;
 
 }
 
@@ -168,7 +166,8 @@ QMap<QString, QVariant> DbMysqlPlugin::getDeviceConfiguration(const int deviceId
   QString sql = "SELECT d.name, d.isLog, d.accessPlugin , dt.* FROM hr_device AS d LEFT JOIN hr_" + type + " AS dt ON d.id = dt.id_device WHERE d.id="+QString::number(deviceId);
 
   QSqlQuery query(sql);
-  query.next();
+  if(!query.next())
+      return values;
 
   QSqlRecord r = query.record();
 
@@ -194,13 +193,13 @@ QVariant DbMysqlPlugin::getConfigParam(QString paramName)
   if(query.next())
     return query.value(0);
 
-  return 0;
+  return "unknow parameter";
 }
 
 bool DbMysqlPlugin::isXMLRPCAccess(QString username, QString password)
 {
   QSqlQuery query;
-  query.prepare("SELECT COUNT(*) FROM hr_superusers WHERE name=:name AND password=:password");
+  query.prepare("SELECT COUNT(*) FROM hr_superusers AS su LEFT JOIN hr_superuser_group as sug ON su.group_id = sug.id  WHERE su.name=:name AND su.password=:password AND sug.webservice=1");
   query.bindValue(":name",username);
   query.bindValue(":password",password);
   query.exec();

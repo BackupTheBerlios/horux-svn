@@ -367,23 +367,13 @@ bool AccessHoruxPlugin::checkAccessLevel(QString groupId, QString deviceId, QStr
 
   bool fullAccess = query.value(2).toBool();
   bool nonWorkingDay = query.value(3).toBool();
-  bool weekEnd = query.value(4).toBool();
-  QDate validityDateStart = query.value(5).toDate();
-  QDate validityDateEnd = query.value(6).toDate();
-  bool mondayDefault = query.value(7).toBool();
+  bool mondayDefault = query.value(4).toBool();
 
   //! step 1 check for full access
   if(fullAccess)  return true;
 
   QDate now(QDate::currentDate());
   int today = now.dayOfWeek();
-
-  //! step 2 check if the person has access during the week-end
-  if((today == 6 || today == 7) && !weekEnd)   {
-    *reason = BLOCK_DURING_THE_WEEK_END; 
-    return false;
-  }
-
 
   //! step 3 check for the non working day
   if(!nonWorkingDay)
