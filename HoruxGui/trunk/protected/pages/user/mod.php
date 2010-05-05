@@ -131,6 +131,7 @@ class Mod extends Page
             $this->pin_code->Text = $data['pin_code'];
             $this->currentPswd->Value = $data['password'];
 
+            $this->masterAuthorization->setChecked($data['masterAuthorization']);
 
             //Personal
             $this->avs->Text = $data['avs'];
@@ -236,6 +237,10 @@ class Mod extends Page
         $cmd->bindParameter(":language",$this->language->getSelectedValue(),PDO::PARAM_STR);
         $cmd->bindParameter(":pin_code",$this->pin_code->SafeText,PDO::PARAM_STR);
         $cmd->bindParameter(":password",$this->password->SafeText,PDO::PARAM_STR);
+
+        $f1 = $this->masterAuthorization->getChecked() ? 1 : 0;
+        $cmd->bindParameter(":masterAuthorization",$f1,PDO::PARAM_STR);
+
 
         if($this->password->SafeText == "")
         {

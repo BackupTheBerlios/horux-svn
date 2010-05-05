@@ -502,6 +502,7 @@ CREATE TABLE IF NOT EXISTS `hr_user` (
   `password` varchar(64) NOT NULL,
   `fax` varchar(16) NOT NULL,
   `avs` varchar(50) NOT NULL,
+  `masterAuthorization` smallint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `name` (`name`),
   KEY `firstname` (`firstname`)

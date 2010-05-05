@@ -206,6 +206,12 @@
                                         </td>
                                     </tr>
 
+                                    <tr>
+                                        <td valign="top" class="key"><span onmouseover="Tip('<%[Use when a two person access is necessary. If it is check, this user is the master]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Master authorization]%></span></td>
+                                        <td>
+                                            <com:TCheckBox ID="masterAuthorization"/>
+                                        </td>
+                                    </tr>
 
                                     <tr>
                                         <td valign="top" class="key">
