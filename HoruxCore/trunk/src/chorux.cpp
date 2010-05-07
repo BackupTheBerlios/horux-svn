@@ -72,14 +72,14 @@ void CHorux::initSAASMode()
     saas_path = settings.value ( "saas_path", "" ).toString();
     saas_info_send_timer = settings.value ( "saas_info_send_timer", 5 ).toInt();
 
+    soapClient.setHost(saas_host,saas_ssl);
+
+    connect(&soapClient, SIGNAL(responseReady()),this, SLOT(readSoapResponse()));
+    connect(soapClient.networkAccessManager(),SIGNAL(sslErrors( QNetworkReply *, const QList<QSslError> & )),
+            this, SLOT(soapSSLErrors(QNetworkReply*,QList<QSslError>)));
+
     if(saas)
     {
-        soapClient.setHost(saas_host,saas_ssl);
-
-        connect(&soapClient, SIGNAL(responseReady()),this, SLOT(readSoapResponse()));
-        connect(soapClient.networkAccessManager(),SIGNAL(sslErrors( QNetworkReply *, const QList<QSslError> & )),
-                this, SLOT(soapSSLErrors(QNetworkReply*,QList<QSslError>)));
-
         timerSoapInfo = new QTimer(this);
         connect(timerSoapInfo, SIGNAL(timeout()), this, SLOT(getInfo()));
 
@@ -458,7 +458,7 @@ QString CHorux::getInfo( )
 }
 
 void CHorux::sendNotification(QMap<QString, QVariant> params)
-{
+{qDebug() << params;
     QtSoapMessage message;
     message.setMethod("sendMail");
 

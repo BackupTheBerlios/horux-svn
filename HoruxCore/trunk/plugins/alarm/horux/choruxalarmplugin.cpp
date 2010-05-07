@@ -217,6 +217,11 @@ void CHoruxAlarmPlugin::handleHalarm(QString name, QMap<QString, QVariant>params
     type = ALARM_PERSON_BLOCKED;
   } 
 
+  if(name=="1102")
+  {
+    type = ALARM_PINCODE_HOLDUP;
+  }
+
 
   if(name == "1200")
   {

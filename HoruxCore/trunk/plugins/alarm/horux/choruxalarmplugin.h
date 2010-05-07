@@ -50,7 +50,7 @@
 //! access
 #define ALARM_KEY_BLOCKED		            "1100" //! old 1080
 #define ALARM_PERSON_BLOCKED		        "1101" //! old 1100
-
+#define ALARM_PINCODE_HOLDUP                    "1102"
 
 //! System
 #define ALARM_XML_RPC_SERVER                "1200" //! old 1050
