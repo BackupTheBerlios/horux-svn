@@ -240,15 +240,15 @@ void AccessHoruxPlugin::deviceEvent(QString xml)
 
     if(query.next() && query.value(0).toString() != metaObject()->classInfo ( index ).value()) return;
 
-    isAccess(params, true);
+    isAccess(params, true, true);
 }
 
-bool AccessHoruxPlugin::isAccess(QMap<QString, QVariant> params, bool emitAction)
+bool AccessHoruxPlugin::isAccess(QMap<QString, QVariant> params, bool emitAction, bool emitNotification)
 {
-  return checkAccess(params, emitAction);
+  return checkAccess(params, emitAction, emitNotification);
 }
 
-bool AccessHoruxPlugin::checkAccess(QMap<QString, QVariant> params, bool emitAction)
+bool AccessHoruxPlugin::checkAccess(QMap<QString, QVariant> params, bool emitAction, bool emitNotification)
 {
     if(params.contains("key") && params.contains("deviceId"))
     {
@@ -262,7 +262,7 @@ bool AccessHoruxPlugin::checkAccess(QMap<QString, QVariant> params, bool emitAct
 
         if(query.value(0).toInt() == 0)
         {
-            insertTracking("1", "1", deviceId, KEY_UNKNOW_BY_APP, false, key,emitAction);
+            insertTracking("1", "1", deviceId, KEY_UNKNOW_BY_APP, false, key,emitAction,emitNotification);
           return false;
         }
 
@@ -272,7 +272,7 @@ bool AccessHoruxPlugin::checkAccess(QMap<QString, QVariant> params, bool emitAct
 
         if(query.value(0).toInt() == 0)
         {
-          insertTracking("1", "1", deviceId, KEY_BLOCKED, false, key,emitAction);
+          insertTracking("1", "1", deviceId, KEY_BLOCKED, false, key,emitAction,emitNotification);
           return false;
         }
 
@@ -282,7 +282,7 @@ bool AccessHoruxPlugin::checkAccess(QMap<QString, QVariant> params, bool emitAct
 
         if(query.value(0).toInt() == 0)
         {
-            insertTracking("1", "1", deviceId, KEY_NOT_ATTRIBUTED, false, key,emitAction);
+            insertTracking("1", "1", deviceId, KEY_NOT_ATTRIBUTED, false, key,emitAction,emitNotification);
           return false;
         }
 
@@ -292,7 +292,7 @@ bool AccessHoruxPlugin::checkAccess(QMap<QString, QVariant> params, bool emitAct
         if(!query.next())
         {
 
-            insertTracking("1", "1", deviceId, USER_BLOCKED, false, key,emitAction);
+            insertTracking("1", "1", deviceId, USER_BLOCKED, false, key,emitAction,emitNotification);
           return false;
         }
 
@@ -305,7 +305,7 @@ bool AccessHoruxPlugin::checkAccess(QMap<QString, QVariant> params, bool emitAct
 
         if(!query.next())
         {
-            insertTracking(userId, keyId, deviceId, USER_HAS_NO_GROUP, false, key,emitAction);
+          insertTracking(userId, keyId, deviceId, USER_HAS_NO_GROUP, false, key,emitAction,emitNotification);
           return false;
         }
 
@@ -318,7 +318,7 @@ bool AccessHoruxPlugin::checkAccess(QMap<QString, QVariant> params, bool emitAct
 
         if(!query.next())
         {
-          insertTracking(userId, keyId, deviceId, VALIDITY_DATE_OUT, false, key,emitAction);
+          insertTracking(userId, keyId, deviceId, VALIDITY_DATE_OUT, false, key,emitAction,emitNotification);
           return false;
         }
 
@@ -340,14 +340,14 @@ bool AccessHoruxPlugin::checkAccess(QMap<QString, QVariant> params, bool emitAct
                     if(checkAccessLevel(groupId, deviceId, &reason))
                     {
                                     //! we can send an order to the device to open the door-lock
-                                    insertTracking(userId, keyId, deviceId, ACCESS_OK, true, key,emitAction);
+                                    insertTracking(userId, keyId, deviceId, ACCESS_OK, true, key,emitAction,emitNotification);
                                     return true;
                     }
 
             }
             while(query.next());
 
-            insertTracking(userId, keyId, deviceId, reason, false, key,emitAction);
+            insertTracking(userId, keyId, deviceId, reason, false, key,emitAction,emitNotification);
         }
     }
 	
@@ -435,7 +435,7 @@ bool AccessHoruxPlugin::checkAccessLevel(QString groupId, QString deviceId, QStr
 
 }
 
-void AccessHoruxPlugin::insertTracking(QString userId, QString keyId, QString entryId, QString reason, bool isAccess, QString serialNumber, bool emitAction)
+void AccessHoruxPlugin::insertTracking(QString userId, QString keyId, QString entryId, QString reason, bool isAccess, QString serialNumber, bool emitAction, bool emitNotification)
 {
 
   if(isAccess)
@@ -547,8 +547,9 @@ void AccessHoruxPlugin::insertTracking(QString userId, QString keyId, QString en
         p["userId"] = userId;
         p["serialNumber"] = serialNumber;
         p["entryId"] = entryId;
-                        
-        emit notification(p);
+
+        if(emitNotification)
+            emit notification(p);
     }
 }
 

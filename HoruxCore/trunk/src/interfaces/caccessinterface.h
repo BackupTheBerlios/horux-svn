@@ -32,7 +32,7 @@ class CAccessInterface
 
         virtual ~CAccessInterface() {}
 
-        virtual bool isAccess ( QMap<QString, QVariant> params, bool emitAction ) = 0;
+        virtual bool isAccess ( QMap<QString, QVariant> params, bool emitAction, bool emitNotification ) = 0;
 
         /*!
           Return the meta object

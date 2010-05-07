@@ -58,7 +58,7 @@ class AccessHoruxPlugin : public QObject, CAccessInterface
 public:
     AccessHoruxPlugin(QObject *parent=0);
     QObject *getMetaObject() { return this;}
-    bool isAccess(QMap<QString, QVariant> params, bool emitAction);
+    bool isAccess(QMap<QString, QVariant> params, bool emitAction, bool emitNotification);
 
 public slots:
     void deviceConnectionMonitor(int, bool);
@@ -66,9 +66,9 @@ public slots:
     void deviceInputMonitor ( int  , int , bool  ) { }
 
 protected:
-  bool checkAccess(QMap<QString, QVariant> params, bool emitAction);
+  bool checkAccess(QMap<QString, QVariant> params, bool emitAction, bool emitNotification);
   bool checkAccessLevel(QString groupId, QString deviceId, QString *reason);
-  void insertTracking(QString userId, QString keyId, QString entryId, QString reason, bool isAccess, QString serialNumber, bool emitAction);
+  void insertTracking(QString userId, QString keyId, QString entryId, QString reason, bool isAccess, QString serialNumber, bool emitAction, bool emitNotification);
   void timerEvent(QTimerEvent *e);
   void checkFreeAccess();
 
