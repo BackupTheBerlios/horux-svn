@@ -127,6 +127,8 @@
                         <com:TCheckBox InputAttributes.value="1200" Text="<%[Horux XMLRPC server not started]%>" ID="n_1200" /><br/>
                         <com:TCheckBox InputAttributes.value="1300" Text="<%[Reload database]%>" ID="n_1300" /><br/>
                         <com:TCheckBox InputAttributes.value="1301" Text="<%[Database reloaded]%>" ID="n_1301" /><br/>
+                        <com:TCheckBox InputAttributes.value="1102" Text="<%[PIN-Code Hold-Up]%>" ID="n_1102" /><br/>
+
                     </td>
                 </tr>
 

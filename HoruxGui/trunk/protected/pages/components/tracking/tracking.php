@@ -333,6 +333,7 @@ class tracking extends PageList
             $accessMessage[13] = Prado::localize("Refused because repeated access barrier is active");
             $accessMessage[14] = Prado::localize("Authorize access without door opening");
             $accessMessage[15] = Prado::localize("AUTHORIZE ACCESS WITH HOLD-UP PIN-CODE");
+            $accessMessage[16] = Prado::localize("1 Person for 2 persons access");
 
             if($item->ItemType==='Item' || $item->ItemType==='AlternatingItem' )
             {

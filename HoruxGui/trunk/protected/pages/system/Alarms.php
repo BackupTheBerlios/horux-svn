@@ -31,7 +31,7 @@ class Alarms extends PageList
 
             $data[$i]['description'] = $text;
 
-            if($data[$i]['type'] >= 1001 && $data[$i]['type'] <= 1099)
+            if($data[$i]['type'] >= 1001 && $data[$i]['type'] <= 1099 || $data[$i]['type']== 1102)
             {
                 $object_type = Prado::localize("Device");
                 $sql = "SELECT * FROM hr_device WHERE id=".$data[$i]['id_object'];
@@ -41,7 +41,7 @@ class Alarms extends PageList
                 $object = $dataObj['name'];
             }
 
-            if($data[$i]['type'] >= 1100 && $data[$i]['type'] <= 1199)
+            if($data[$i]['type'] >= 1100 && $data[$i]['type'] <= 1199 && $data[$i]['type'] != 1102)
             {
                 $object_type =  Prado::localize("User");
                 $sql = "SELECT * FROM hr_user WHERE id=".$data[$i]['id_object'];
@@ -85,6 +85,7 @@ class Alarms extends PageList
 
         $this->alarmMessage[1100] = Prado::localize("1100");
         $this->alarmMessage[1101] = Prado::localize("1101");
+        $this->alarmMessage[1102] = Prado::localize("1102");
 
         $this->alarmMessage[1200] = Prado::localize("1200");
 

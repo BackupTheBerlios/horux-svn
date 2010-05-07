@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff version="1.0">
-<file source-language="en" target-language="fr" datatype="plaintext" original="messages" date="2009-08-25T14:34:41Z" product-name="messages">
+<file source-language="en" target-language="fr" datatype="plaintext" original="messages" date="2010-05-07T11:25:15Z" product-name="messages">
 <body>
 
 <trans-unit id="1" lock="1">
@@ -127,6 +127,31 @@
 <trans-unit id="30" lock="1">
 <source>No</source>
 <target>Non</target>
+</trans-unit>
+
+<trans-unit id="31">
+<source>PIN-Code incorrect</source>
+<target>Pin code incorrecte</target>
+</trans-unit>
+
+<trans-unit id="32">
+<source>Refused because repeated access barrier is active</source>
+<target>Refusé parce que l'accès répété est activé</target>
+</trans-unit>
+
+<trans-unit id="33">
+<source>Authorize access without door opening</source>
+<target>Accès autorisé sans ouverture de porte</target>
+</trans-unit>
+
+<trans-unit id="34">
+<source>AUTHORIZE ACCESS WITH HOLD-UP PIN-CODE</source>
+<target>ACCÈS AUTORISE AVEC LE PIN CODE HOLD-UP</target>
+</trans-unit>
+
+<trans-unit id="35">
+<source>1 Person for 2 persons access</source>
+<target>Accès de 1 personne pour 2 personnes</target>
 </trans-unit>
 </body>
 </file>

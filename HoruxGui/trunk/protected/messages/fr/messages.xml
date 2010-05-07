@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <xliff version="1.0">
- <file source-language="FR" target-language="fr" datatype="plaintext" original="messages" date="2010-04-27T15:35:21Z" product-name="messages">
+ <file source-language="FR" target-language="fr" datatype="plaintext" original="messages" date="2010-05-07T12:07:08Z" product-name="messages">
   <body>
   
 <trans-unit id="1" lock="1">
@@ -3932,6 +3932,31 @@
 <trans-unit id="731">
 <source>Use special relay plan</source>
 <target>Plan de relais sp&#xE9;cial</target>
+</trans-unit>
+
+<trans-unit id="732">
+<source>Use when a two person access is necessary. If it is check, this user is the master</source>
+<target>Utilis&#xE9; quand deux personnes sont n&#xE9;cessaire pour avoir l\'acc&#xE8;s. Si vous l\'activez, alors cet utilisateur est consid&#xE9;r&#xE9; comme le ma&#xEE;tre.</target>
+</trans-unit>
+
+<trans-unit id="733">
+<source>Master authorization</source>
+<target>Autorisation ma&#xEE;tre </target>
+</trans-unit>
+
+<trans-unit id="734">
+<source>1102</source>
+<target>Acc&#xE8;s avec le PIN CODE HOLD-UP</target>
+</trans-unit>
+
+<trans-unit id="735">
+<source>PIN-Code Hold-Up</source>
+<target>PIN-Code Hold-Up</target>
+</trans-unit>
+
+<trans-unit id="736">
+<source>Horux notification: HOLDUP PIN CODE</source>
+<target>Notification Horux: HOLD-UP PIN CODE</target>
 </trans-unit>
 </body>
 </file>
