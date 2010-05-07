@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>237</width>
-    <height>260</height>
+    <height>241</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -92,52 +92,57 @@
         <property name="text">
          <string>Top</string>
         </property>
-        <property name="buddy">
-         <cstring>top</cstring>
-        </property>
        </widget>
-      </item>
-      <item row="3" column="1">
-       <widget class="QLineEdit" name="top"/>
       </item>
       <item row="4" column="0">
        <widget class="QLabel" name="label_5">
         <property name="text">
          <string>Left</string>
         </property>
-        <property name="buddy">
-         <cstring>left</cstring>
-        </property>
        </widget>
-      </item>
-      <item row="4" column="1">
-       <widget class="QLineEdit" name="left"/>
       </item>
       <item row="5" column="0">
        <widget class="QLabel" name="label_6">
         <property name="text">
          <string>Width</string>
         </property>
-        <property name="buddy">
-         <cstring>widthEdit</cstring>
-        </property>
        </widget>
       </item>
       <item row="5" column="1">
-       <widget class="QLineEdit" name="widthEdit"/>
-      </item>
-      <item row="6" column="0">
-       <widget class="QLabel" name="label_7">
-        <property name="text">
-         <string>Height</string>
+       <widget class="QSpinBox" name="widthEdit">
+        <property name="maximum">
+         <number>1000</number>
         </property>
-        <property name="buddy">
-         <cstring>heightEdit</cstring>
+        <property name="singleStep">
+         <number>5</number>
         </property>
        </widget>
       </item>
-      <item row="6" column="1">
-       <widget class="QLineEdit" name="heightEdit"/>
+      <item row="4" column="1">
+       <widget class="QSpinBox" name="left">
+        <property name="minimum">
+         <number>-300</number>
+        </property>
+        <property name="maximum">
+         <number>300</number>
+        </property>
+        <property name="singleStep">
+         <number>5</number>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="QSpinBox" name="top">
+        <property name="minimum">
+         <number>-300</number>
+        </property>
+        <property name="maximum">
+         <number>300</number>
+        </property>
+        <property name="singleStep">
+         <number>5</number>
+        </property>
+       </widget>
       </item>
      </layout>
     </widget>
@@ -149,10 +154,6 @@
   <tabstop>source</tabstop>
   <tabstop>file</tabstop>
   <tabstop>pixFileButton</tabstop>
-  <tabstop>top</tabstop>
-  <tabstop>left</tabstop>
-  <tabstop>widthEdit</tabstop>
-  <tabstop>heightEdit</tabstop>
  </tabstops>
  <resources/>
  <connections/>

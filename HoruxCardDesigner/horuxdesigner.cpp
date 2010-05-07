@@ -809,10 +809,10 @@ void HoruxDesigner::setParamView(QGraphicsItem *item)
                     connect(textPage->name, SIGNAL(textChanged ( const QString & )), textItem, SLOT(setName(const QString &)));
                     connect(textPage, SIGNAL(changeFont(const QFont &)), textItem, SLOT(fontChanged(const QFont &)));
                     connect(textPage, SIGNAL(changeColor ( const QColor & )), textItem, SLOT(colorChanged(const QColor &)));
-                    connect(textPage->rotation, SIGNAL(textChanged(QString)), textItem, SLOT(rotationChanged(const QString &)));
+                    connect(textPage->rotation, SIGNAL(valueChanged(QString)), textItem, SLOT(rotationChanged(const QString &)));
                     connect(textPage->source, SIGNAL(currentIndexChanged ( int )), textItem, SLOT(sourceChanged(int)));
-                    connect(textPage->top, SIGNAL(textChanged(QString)), textItem, SLOT(topChanged(const QString &)));
-                    connect(textPage->left, SIGNAL(textChanged(QString)), textItem, SLOT(leftChanged(const QString &)));
+                    connect(textPage->top, SIGNAL(valueChanged(QString)), textItem, SLOT(topChanged(const QString &)));
+                    connect(textPage->left, SIGNAL(valueChanged(QString)), textItem, SLOT(leftChanged(const QString &)));
                     connect(textPage->alignment, SIGNAL(currentIndexChanged ( int )), textItem, SLOT(alignmentChanged(int)));
 
 
@@ -827,9 +827,9 @@ void HoruxDesigner::setParamView(QGraphicsItem *item)
                         textPage->colorText->setStyleSheet("background-color: " + textItem->defaultTextColor().name() + ";");
                     }
 
-                    textPage->rotation->setText(QString::number(textItem->rotation));
-                    textPage->top->setText(QString::number(textItem->pos().y()));
-                    textPage->left->setText(QString::number(textItem->pos().x()));
+                    textPage->rotation->setValue(textItem->rotation);
+                    textPage->top->setValue(textItem->pos().y());
+                    textPage->left->setValue(textItem->pos().x());
                     textPage->alignment->setCurrentIndex(textItem->alignment);
 
                     textPage->source->setCurrentIndex( textItem->source );
@@ -866,21 +866,19 @@ void HoruxDesigner::setParamView(QGraphicsItem *item)
 
                     pixmapPage->name->setText(pixmapItem->name);
                     pixmapPage->file->setText(pixmapItem->file);
-                    pixmapPage->widthEdit->setText(QString::number(pixmapItem->boundingRect().width()));
-                    pixmapPage->heightEdit->setText(QString::number(pixmapItem->boundingRect().height()));
+                    pixmapPage->widthEdit->setValue(pixmapItem->boundingRect().width());
 
                     connect(pixmapPage->name, SIGNAL(textChanged ( const QString & )), pixmapItem, SLOT(setName(const QString &)));
                     connect(pixmapPage->file, SIGNAL(textChanged(const QString & )), pixmapItem, SLOT(setPixmapFile(QString)));
                     connect(pixmapPage->source, SIGNAL(currentIndexChanged ( int )), pixmapItem, SLOT(sourceChanged(int)));
                     connect(pixmapPage, SIGNAL(newPicture(QByteArray)), pixmapItem, SLOT(setHoruxPixmap(QByteArray )));
-                    connect(pixmapPage->widthEdit, SIGNAL(textChanged ( const QString & )), pixmapItem, SLOT(setWidth(const QString &)));
-                    connect(pixmapPage->heightEdit, SIGNAL(textChanged ( const QString & )), pixmapItem, SLOT(setHeight(const QString &)));
+                    connect(pixmapPage->widthEdit, SIGNAL(valueChanged ( const QString & )), pixmapItem, SLOT(setWidth(const QString &)));
 
-                    connect(pixmapPage->top, SIGNAL(textChanged(QString)), pixmapItem, SLOT(topChanged(const QString &)));
-                    connect(pixmapPage->left, SIGNAL(textChanged(QString)), pixmapItem, SLOT(leftChanged(const QString &)));
+                    connect(pixmapPage->top, SIGNAL(valueChanged(QString)), pixmapItem, SLOT(topChanged(const QString &)));
+                    connect(pixmapPage->left, SIGNAL(valueChanged(QString)), pixmapItem, SLOT(leftChanged(const QString &)));
 
-                    pixmapPage->top->setText(QString::number(pixmapItem->pos().y()));
-                    pixmapPage->left->setText(QString::number(pixmapItem->pos().x()));
+                    pixmapPage->top->setValue(pixmapItem->pos().y());
+                    pixmapPage->left->setValue(pixmapItem->pos().x());
 
 
                     pixmapPage->source->setCurrentIndex( pixmapItem->source );
@@ -1016,16 +1014,16 @@ void HoruxDesigner::itemMoved(QGraphicsItem *item)
         {
             if(textPage)
             {
-                textPage->top->setText(QString::number(item->pos().y()));
-                textPage->left->setText(QString::number(item->pos().x()));
+                textPage->top->setValue(item->pos().y());
+                textPage->left->setValue(item->pos().x());
             }
         }
         if(item->type() == QGraphicsItem::UserType + 4)
         {
             if(pixmapPage)
             {
-                pixmapPage->top->setText(QString::number(item->pos().y()));
-                pixmapPage->left->setText(QString::number(item->pos().x()));
+                pixmapPage->top->setValue(item->pos().y());
+                pixmapPage->left->setValue(item->pos().x());
             }
         }
     }

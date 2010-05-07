@@ -43,8 +43,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>196</width>
-         <height>668</height>
+         <width>190</width>
+         <height>678</height>
         </rect>
        </property>
        <attribute name="label">
@@ -88,7 +88,7 @@
      <widget class="QWidget" name="widget" native="true">
       <property name="minimumSize">
        <size>
-        <width>300</width>
+        <width>400</width>
         <height>0</height>
        </size>
       </property>
@@ -102,7 +102,7 @@
      <x>0</x>
      <y>0</y>
      <width>1200</width>
-     <height>22</height>
+     <height>24</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
