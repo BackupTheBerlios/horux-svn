@@ -34,7 +34,7 @@ CGantnerTime::CGantnerTime(QObject *parent) : QObject(parent)
     initSAASMode();
 }
 
-bool CGantnerTime::isAccess(QMap<QString, QVariant> params, bool)
+bool CGantnerTime::isAccess(QMap<QString, QVariant> params, bool, bool )
 {
     QString userId = params["userId"].toString();
     QString deviceId = params["deviceId"].toString();
@@ -119,7 +119,7 @@ void CGantnerTime::deviceEvent(QString xml)
     QString event = params["event"].toString();
 
     if(event == "bookingDetected")
-        isAccess(params, true);
+        isAccess(params, true, true);
 
     if(event == "reloadAllData" )
         reloadAllData();

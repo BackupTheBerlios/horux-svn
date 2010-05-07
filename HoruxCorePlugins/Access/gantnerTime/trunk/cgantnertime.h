@@ -48,7 +48,7 @@ class CGantnerTime : public QObject, CAccessInterface
 public:
     CGantnerTime(QObject *parent=NULL);
     void deviceEvent(QMap<QString, QVariant> params);
-    bool isAccess(QMap<QString, QVariant> params, bool emitAction);
+    bool isAccess(QMap<QString, QVariant> params, bool emitAction, bool emitNotification);
     QObject *getMetaObject() { return this;}
 
 public slots:
