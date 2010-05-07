@@ -323,7 +323,7 @@ class tracking extends PageList
             $accessMessage[3] = Prado::localize("The key is not attributed");
             $accessMessage[4] = Prado::localize("The person does not belong to any group");
             $accessMessage[5] = Prado::localize("Access refused during the week-end");
-            $accessMessage[6] = Prado::localize("Access refused during the non-workinf day");
+            $accessMessage[6] = Prado::localize("Access refused during the non-working day");
             $accessMessage[7] = Prado::localize("Access refused at this date");
             $accessMessage[8] = Prado::localize("Access refused at this time");
             $accessMessage[9] = Prado::localize("No access for this access point");
@@ -334,6 +334,7 @@ class tracking extends PageList
             $accessMessage[14] = Prado::localize("Authorize access without door opening");
             $accessMessage[15] = Prado::localize("AUTHORIZE ACCESS WITH HOLD-UP PIN-CODE");
             $accessMessage[16] = Prado::localize("1 Person for 2 persons access");
+            $accessMessage[17] = Prado::localize("Authorization period of person not valid");
 
             if($item->ItemType==='Item' || $item->ItemType==='AlternatingItem' )
             {

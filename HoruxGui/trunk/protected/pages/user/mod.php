@@ -133,6 +133,11 @@ class Mod extends Page
 
             $this->masterAuthorization->setChecked($data['masterAuthorization']);
 
+            if($data['validity_date'] != '0000-00-00')
+                $this->validity_date->Text = $this->dateFromSql($data['validity_date']);
+            else
+                $this->validity_date->Text = '';
+
             //Personal
             $this->avs->Text = $data['avs'];
             $this->street->Text = $data['street'];
@@ -237,6 +242,8 @@ class Mod extends Page
         $cmd->bindParameter(":language",$this->language->getSelectedValue(),PDO::PARAM_STR);
         $cmd->bindParameter(":pin_code",$this->pin_code->SafeText,PDO::PARAM_STR);
         $cmd->bindParameter(":password",$this->password->SafeText,PDO::PARAM_STR);
+        $cmd->bindParameter(":validity_date",$this->dateToSql($this->validity_date->SafeText),PDO::PARAM_STR);
+
 
         $f1 = $this->masterAuthorization->getChecked() ? 1 : 0;
         $cmd->bindParameter(":masterAuthorization",$f1,PDO::PARAM_STR);

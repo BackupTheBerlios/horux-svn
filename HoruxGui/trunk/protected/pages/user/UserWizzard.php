@@ -285,6 +285,8 @@ class UserWizzard extends Page
         $cmd->bindParameter(":picture",$this->pictureName->Value,PDO::PARAM_STR);
         $cmd->bindParameter(":pin_code",$this->pin_code->SafeText,PDO::PARAM_STR);
         $cmd->bindParameter(":password",sha1($this->password->SafeText),PDO::PARAM_STR);
+        $cmd->bindParameter(":validity_date",$this->dateToSql($this->validity_date->SafeText),PDO::PARAM_STR);
+
 
         $f1 = $this->masterAuthorization->getChecked() ? 1 : 0;
         $cmd->bindParameter(":masterAuthorization",$f1,PDO::PARAM_STR);

@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <xliff version="1.0">
- <file source-language="FR" target-language="fr" datatype="plaintext" original="messages" date="2010-05-07T12:07:08Z" product-name="messages">
+ <file source-language="FR" target-language="fr" datatype="plaintext" original="messages" date="2010-05-07T13:12:56Z" product-name="messages">
   <body>
   
 <trans-unit id="1" lock="1">
@@ -3957,6 +3957,11 @@
 <trans-unit id="736">
 <source>Horux notification: HOLDUP PIN CODE</source>
 <target>Notification Horux: HOLD-UP PIN CODE</target>
+</trans-unit>
+
+<trans-unit id="737">
+<source>This user is valid from the inserted date</source>
+<target>L\'utilisateur est valide d&#xE8;s la date entr&#xE9;e</target>
 </trans-unit>
 </body>
 </file>
