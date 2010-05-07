@@ -458,7 +458,7 @@ QString CHorux::getInfo( )
 }
 
 void CHorux::sendNotification(QMap<QString, QVariant> params)
-{qDebug() << params;
+{
     QtSoapMessage message;
     message.setMethod("sendMail");
 
