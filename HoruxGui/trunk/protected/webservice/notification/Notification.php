@@ -237,8 +237,9 @@ class Notification
                     $data = $cmd->query();
                     $data = $data->read();
                     $lang = $data['param'];
-                    $this->getApplication()->getGlobalization()->setCulture($lang);
+                    Prado::getApplication()->getGlobalization()->setCulture($lang);
                     $body = "";
+
 
                     $body = file_get_contents("./protected/webservice/notification/access/$lang/$code.txt");
 
