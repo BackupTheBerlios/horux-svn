@@ -151,4 +151,15 @@ bool CardScene::isItemChange(int type)
 void CardScene::setFont(const QFont &font)
 {
     defaultFont = font;
+
+    if( selectedItems().size() > 0)
+    {
+        QGraphicsItem *item = selectedItems().at(0);
+
+        if(item->type() > QGraphicsItem::UserType + 1)
+        {
+            CardTextItem *textItem = qgraphicsitem_cast<CardTextItem *>(selectedItems().at(0));
+            textItem->setFont(font);
+        }
+    }
 }
