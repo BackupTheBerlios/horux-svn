@@ -313,6 +313,16 @@ bool AccessHoruxPlugin::checkAccess(QMap<QString, QVariant> params, bool emitAct
 
         QString groupId = query.value(0).toString();
 
+        //! step 6 check the validity date of the user
+        query = "SELECT * FROM hr_user WHERE validity_date<='" + QDate::currentDate().toString("yyyy-MM-dd") + "' AND id="+userId;
+
+        if(!query.next())
+        {
+          insertTracking(userId, keyId, deviceId, VALIDITY_DATE_OUT, false, key,emitAction);
+          return false;
+        }
+
+
         //! check if this group must be handle by this plugin
         query = "SELECT accessPlugin FROM hr_user_group WHERE id=" + groupId;
         QString plName = "";
