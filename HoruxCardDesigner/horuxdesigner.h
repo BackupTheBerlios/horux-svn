@@ -9,6 +9,8 @@
 #include <QtSoapHttpTransport>
 #include <QMap>
 #include <QSplashScreen>
+#include <QtSql>
+
 
 #include "cardscene.h"
 #include "confpage.h"
@@ -30,6 +32,7 @@ public:
     HoruxDesigner(QWidget *parent = 0);
     ~HoruxDesigner();
 
+    void loadData(QSplashScreen *sc);
     void loadHoruxSoap(QSplashScreen *sc);
 
 private:
@@ -113,6 +116,8 @@ private:
     QHttp pictureHttp;
     QBuffer pictureBuffer;
     QMap<QString, QString> userValue;
+
+    QSqlDatabase dbase;
 };
 
 #endif // HORUXDESIGNER_H

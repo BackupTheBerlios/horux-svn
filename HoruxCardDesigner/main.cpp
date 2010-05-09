@@ -31,7 +31,7 @@ int main(int argc, char *argv[])
 #endif
 
     HoruxDesigner w;
-    w.loadHoruxSoap(&splash);
+    w.loadData(&splash);
     splash.hide();
     w.show();
     return a.exec();

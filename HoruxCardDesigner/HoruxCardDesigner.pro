@@ -16,7 +16,8 @@ SOURCES += main.cpp \
     printpreview.cpp \
     pixmapitem.cpp \
     horuxdialog.cpp \
-    horuxfields.cpp
+    horuxfields.cpp \
+    databaseconnection.cpp
 HEADERS += horuxdesigner.h \
     cardscene.h \
     carditemtext.h \
@@ -25,14 +26,16 @@ HEADERS += horuxdesigner.h \
     printpreview.h \
     pixmapitem.h \
     horuxdialog.h \
-    horuxfields.h
+    horuxfields.h \
+    databaseconnection.h
 FORMS += horuxdesigner.ui \
     textsetting.ui \
     cardsetting.ui \
     printpreview.ui \
     pixmapsetting.ui \
     horuxdialog.ui \
-    horuxfields.ui
+    horuxfields.ui \
+    databaseconnection.ui
 RESOURCES += ressource.qrc
 win32:RC_FILE = myapp.rc
 TRANSLATIONS = horuxcarddesigner_fr.ts

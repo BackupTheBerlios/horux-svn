@@ -1,7 +1,7 @@
 #include "horuxdialog.h"
 #include "ui_horuxdialog.h"
 #include <QMessageBox>
- #include <QNetworkRequest>
+#include <QNetworkRequest>
 
 HoruxDialog::HoruxDialog(QWidget *parent) :
         QDialog(parent),

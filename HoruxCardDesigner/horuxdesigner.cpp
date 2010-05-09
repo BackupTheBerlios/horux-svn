@@ -8,6 +8,7 @@
 #include "confpage.h"
 #include "printpreview.h"
 #include "horuxdialog.h"
+#include "databaseconnection.h"
 
 const int InsertTextButton = 10;
 const int InsertImageButton = 11;
@@ -40,6 +41,71 @@ HoruxDesigner::~HoruxDesigner()
     delete ui;
 }
 
+void HoruxDesigner::loadData(QSplashScreen *sc)
+{
+    QSettings settings("Letux", "HoruxCardDesigner", this);
+
+    QString host = settings.value("host", "localhost").toString();
+    QString username = settings.value("username", "root").toString();
+    QString password = settings.value("password", "").toString();
+    QString path = settings.value("path", "").toString();
+    QString database = settings.value("database", "").toString();
+    int engine = settings.value("engine", 0).toInt();
+
+    switch(engine)
+    {
+        case 0:
+            loadHoruxSoap(sc);
+            break;
+        case 1:
+            dbase = QSqlDatabase::addDatabase("QMYSQL");
+            dbase.setHostName(host);
+            dbase.setDatabaseName(database);
+            dbase.setUserName(username);
+            dbase.setPassword(password);
+            break;
+        case 2:
+            dbase = QSqlDatabase::addDatabase("QSQLITE");
+            dbase.setDatabaseName(database);
+            break;
+        case 3:
+            dbase = QSqlDatabase::addDatabase("QPSQL");
+            dbase.setHostName(host);
+            dbase.setDatabaseName(database);
+            dbase.setUserName(username);
+            dbase.setPassword(password);
+            break;
+        case 4:
+            dbase = QSqlDatabase::addDatabase("QODBC");
+            dbase.setHostName(host);
+            dbase.setDatabaseName(database);
+            dbase.setUserName(username);
+            dbase.setPassword(password);
+            break;
+        case 5:
+            dbase = QSqlDatabase::addDatabase("QOCI");
+            dbase.setHostName(host);
+            dbase.setDatabaseName(database);
+            dbase.setUserName(username);
+            dbase.setPassword(password);
+            break;
+    }
+
+    if(engine > 0)
+    {
+        if(dbase.open())
+        {
+
+
+        }
+        else
+        {
+
+        }
+
+    }
+}
+
 void HoruxDesigner::loadHoruxSoap(QSplashScreen *sc)
 {
     if(sc != NULL)
@@ -56,7 +122,7 @@ void HoruxDesigner::loadHoruxSoap(QSplashScreen *sc)
 
     QSettings settings("Letux", "HoruxCardDesigner", this);
 
-    QString host = settings.value("horux", "localhost").toString();
+    QString host = settings.value("host", "localhost").toString();
     QString username = settings.value("username", "root").toString();
     QString password = settings.value("password", "").toString();
     QString path = settings.value("path", "").toString();
@@ -478,29 +544,37 @@ void HoruxDesigner::open()
 
 void HoruxDesigner::setDatabase()
 {
-    HoruxDialog dlg(this);
+
+
+    DatabaseConnection dlg(this);
 
     QSettings settings("Letux", "HoruxCardDesigner", this);
-
-    QString host = settings.value("horux", "localhost").toString();
+    QString host = settings.value("host", "localhost").toString();
     QString username = settings.value("username", "root").toString();
     QString password = settings.value("password", "").toString();
     QString path = settings.value("path", "").toString();
+    QString database = settings.value("database", "").toString();
     bool ssl = settings.value("ssl", "").toBool();
+    int engine = settings.value("engine", 0).toInt();
 
-    dlg.setHorux(host);
+    dlg.setHost(host);
     dlg.setUsername(username);
     dlg.setPassword(password);
     dlg.setPath(path);
+    dlg.setDatabase(database);
     dlg.setSSL(ssl);
+    dlg.setEngine(engine);
+
 
     if(dlg.exec() == QDialog::Accepted)
     {
-        settings.setValue("horux",dlg.getHorux());
+        settings.setValue("host",dlg.getHost());
         settings.setValue("username",dlg.getUsername());
         settings.setValue("password",dlg.getPassword());
         settings.setValue("path",dlg.getPath());
+        settings.setValue("database",dlg.getDatabase());
         settings.setValue("ssl",dlg.getSSL());
+        settings.setValue("engine",dlg.getEngine());
 
         if(dlg.getSSL())
         {
@@ -513,7 +587,47 @@ void HoruxDesigner::setDatabase()
             isSecure->setPixmap(QPixmap(":/images/decrypted.png"));
         }
 
-        loadHoruxSoap(NULL);
+        switch(dlg.getEngine())
+        {
+            switch(engine)
+            {
+                case 0:
+                    loadHoruxSoap(NULL);
+                    break;
+                case 1:
+                    dbase = QSqlDatabase::addDatabase("QMYSQL");
+                    dbase.setHostName(host);
+                    dbase.setDatabaseName(database);
+                    dbase.setUserName(username);
+                    dbase.setPassword(password);
+                    break;
+                case 2:
+                    dbase = QSqlDatabase::addDatabase("QSQLITE");
+                    dbase.setDatabaseName(database);
+                    break;
+                case 3:
+                    dbase = QSqlDatabase::addDatabase("QPSQL");
+                    dbase.setHostName(host);
+                    dbase.setDatabaseName(database);
+                    dbase.setUserName(username);
+                    dbase.setPassword(password);
+                    break;
+                case 4:
+                    dbase = QSqlDatabase::addDatabase("QODBC");
+                    dbase.setHostName(host);
+                    dbase.setDatabaseName(database);
+                    dbase.setUserName(username);
+                    dbase.setPassword(password);
+                    break;
+                case 5:
+                    dbase = QSqlDatabase::addDatabase("QOCI");
+                    dbase.setHostName(host);
+                    dbase.setDatabaseName(database);
+                    dbase.setUserName(username);
+                    dbase.setPassword(password);
+                    break;
+            }
+        }
     }
 }
 
