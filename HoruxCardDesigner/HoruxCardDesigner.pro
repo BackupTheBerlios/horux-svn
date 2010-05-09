@@ -41,3 +41,4 @@ win32:RC_FILE = myapp.rc
 TRANSLATIONS = horuxcarddesigner_fr.ts
 CODECFORTR = ISO-8859-5
 include(./qtsoap-2.7_1-opensource/src/qtsoap.pri)
+OTHER_FILES += TODO.txt

@@ -1,0 +1,2 @@
+1. Ajouter la gestion des fichiers CSV
+2. Pouvoir sauver les sessions de base de données dans un projet de carte

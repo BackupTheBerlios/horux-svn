@@ -544,8 +544,6 @@ void HoruxDesigner::open()
 
 void HoruxDesigner::setDatabase()
 {
-
-
     DatabaseConnection dlg(this);
 
     QSettings settings("Letux", "HoruxCardDesigner", this);
@@ -555,7 +553,8 @@ void HoruxDesigner::setDatabase()
     QString path = settings.value("path", "").toString();
     QString database = settings.value("database", "").toString();
     bool ssl = settings.value("ssl", "").toBool();
-    int engine = settings.value("engine", 0).toInt();
+    QString engine = settings.value("engine", "HORUX").toString();
+    QString file = settings.value("file", "").toString();
 
     dlg.setHost(host);
     dlg.setUsername(username);
@@ -564,7 +563,7 @@ void HoruxDesigner::setDatabase()
     dlg.setDatabase(database);
     dlg.setSSL(ssl);
     dlg.setEngine(engine);
-
+    dlg.setFile(file);
 
     if(dlg.exec() == QDialog::Accepted)
     {
@@ -575,6 +574,7 @@ void HoruxDesigner::setDatabase()
         settings.setValue("database",dlg.getDatabase());
         settings.setValue("ssl",dlg.getSSL());
         settings.setValue("engine",dlg.getEngine());
+        settings.setValue("file",dlg.getFile());
 
         if(dlg.getSSL())
         {
@@ -587,45 +587,36 @@ void HoruxDesigner::setDatabase()
             isSecure->setPixmap(QPixmap(":/images/decrypted.png"));
         }
 
-        switch(dlg.getEngine())
+        if(engine == "HORUX")
         {
-            switch(engine)
+            loadHoruxSoap(NULL);
+        }
+        else
+        {
+            if(engine == "CSV")
             {
-                case 0:
-                    loadHoruxSoap(NULL);
-                    break;
-                case 1:
-                    dbase = QSqlDatabase::addDatabase("QMYSQL");
-                    dbase.setHostName(host);
-                    dbase.setDatabaseName(database);
-                    dbase.setUserName(username);
-                    dbase.setPassword(password);
-                    break;
-                case 2:
-                    dbase = QSqlDatabase::addDatabase("QSQLITE");
-                    dbase.setDatabaseName(database);
-                    break;
-                case 3:
-                    dbase = QSqlDatabase::addDatabase("QPSQL");
-                    dbase.setHostName(host);
-                    dbase.setDatabaseName(database);
-                    dbase.setUserName(username);
-                    dbase.setPassword(password);
-                    break;
-                case 4:
-                    dbase = QSqlDatabase::addDatabase("QODBC");
-                    dbase.setHostName(host);
-                    dbase.setDatabaseName(database);
-                    dbase.setUserName(username);
-                    dbase.setPassword(password);
-                    break;
-                case 5:
-                    dbase = QSqlDatabase::addDatabase("QOCI");
-                    dbase.setHostName(host);
-                    dbase.setDatabaseName(database);
-                    dbase.setUserName(username);
-                    dbase.setPassword(password);
-                    break;
+
+            }
+            else
+            {
+                if(engine != "NOT_USED")
+                {
+                    dbase = QSqlDatabase::addDatabase(engine);
+                    if(engine == "QSQLITE")
+                    {
+                        dbase.setDatabaseName(file);
+                    }
+                    else
+                    {
+                        dbase.setHostName(host);
+                        dbase.setDatabaseName(database);
+                        dbase.setUserName(username);
+                        dbase.setPassword(password);
+                    }
+
+                    if(!dbase.open())
+                        QMessageBox::warning(this,tr("Database connection error"),tr("Not able to connect to the database"));
+                }
             }
         }
     }

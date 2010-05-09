@@ -17,20 +17,22 @@ public:
     DatabaseConnection(QWidget *parent = 0);
     ~DatabaseConnection();
 
-    void setEngine(const int engine);
+    void setEngine(const QString engine);
     void setHost(const QString url);
     void setUsername(const QString u);
     void setPassword(const QString p);
     void setSSL(const bool ssl);
     void setPath(const QString p);
     void setDatabase(const QString p);
+    void setFile(const QString p);
     QString getHost();
     QString getUsername();
     QString getPassword();
     QString getPath();
     bool getSSL();
-    int getEngine();
+    QString getEngine();
     QString getDatabase();
+    QString getFile();
 
 
 protected:

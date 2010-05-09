@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>296</width>
-    <height>243</height>
+    <height>274</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -21,36 +21,21 @@
      </property>
     </widget>
    </item>
-   <item row="0" column="1" colspan="2">
+   <item row="0" column="1">
     <widget class="QComboBox" name="engine">
      <item>
       <property name="text">
-       <string>Horux - Available</string>
+       <string>Not used</string>
       </property>
      </item>
      <item>
       <property name="text">
-       <string>MySql</string>
+       <string>Horux</string>
       </property>
      </item>
      <item>
       <property name="text">
-       <string>Sqlite</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>PostgreSQL</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>ODBC</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>Oracle</string>
+       <string>CSV</string>
       </property>
      </item>
     </widget>
@@ -111,31 +96,52 @@
    <item row="4" column="1" colspan="2">
     <widget class="QLineEdit" name="database"/>
    </item>
-   <item row="5" column="0" colspan="2">
+   <item row="5" column="0">
+    <widget class="QLabel" name="label_8">
+     <property name="text">
+      <string>File</string>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="1" colspan="2">
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <widget class="QLineEdit" name="file"/>
+     </item>
+     <item>
+      <widget class="QToolButton" name="search">
+       <property name="text">
+        <string>...</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="6" column="0">
     <widget class="QLabel" name="label_6">
      <property name="text">
       <string>Web service path</string>
      </property>
     </widget>
    </item>
-   <item row="5" column="2">
+   <item row="6" column="1" colspan="2">
     <widget class="QLineEdit" name="path"/>
    </item>
-   <item row="6" column="0" colspan="2">
+   <item row="7" column="0">
     <widget class="QLabel" name="label_7">
      <property name="text">
       <string>Secure (SSL)</string>
      </property>
     </widget>
    </item>
-   <item row="6" column="2">
+   <item row="7" column="1" colspan="2">
     <widget class="QCheckBox" name="ssl">
      <property name="text">
       <string/>
      </property>
     </widget>
    </item>
-   <item row="7" column="0" colspan="3">
+   <item row="8" column="0" colspan="3">
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
       <widget class="QPushButton" name="testButton">

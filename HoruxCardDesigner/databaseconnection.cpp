@@ -10,6 +10,11 @@ DatabaseConnection::DatabaseConnection(QWidget *parent) :
 {
     m_ui->setupUi(this);
 
+    m_ui->engine->setItemData(0,"NOT_USED");
+    m_ui->engine->setItemData(1,"HORUX");
+    m_ui->engine->setItemData(2,"CSV");
+
+
     connect(m_ui->testButton, SIGNAL(clicked()), this, SLOT(onTest()));
 
     connect(&transport, SIGNAL(responseReady()), SLOT(readResponse()));
@@ -18,21 +23,20 @@ DatabaseConnection::DatabaseConnection(QWidget *parent) :
 
     foreach(QString driver, QSqlDatabase::drivers())
     {
-        qDebug() << driver;
         if(driver == "QMYSQL")
-            m_ui->engine->setItemText(1, tr("MySql - Available"));
+            m_ui->engine->addItem("Mysql", "QMYSQL");
 
         if(driver == "QSQLITE")
-            m_ui->engine->setItemText(2, tr("Sqlite 3 - Available"));
+            m_ui->engine->addItem("Sqlite 3", "QSQLITE");
 
         if(driver == "QPSQL")
-            m_ui->engine->setItemText(3, tr("Postgres - Available"));
+            m_ui->engine->addItem("Postgresql", "QPSQL");
 
         if(driver == "QODBC")
-            m_ui->engine->setItemText(4, tr("ODBC - Available"));
+            m_ui->engine->addItem("ODBC", "QODBC");
 
         if(driver == "QOCI")
-            m_ui->engine->setItemText(5, tr("Oracle - Available"));
+            m_ui->engine->addItem("Oracle", "QOCI");
 
     }
 }
@@ -54,20 +58,63 @@ void DatabaseConnection::changeEvent(QEvent *e)
     }
 }
 
-void DatabaseConnection::setEngine(const int engine)
+void DatabaseConnection::setEngine(const QString engine)
 {
-    m_ui->engine->setCurrentIndex(engine);
+    int index = m_ui->engine->findData(engine);
+qDebug() << engine;
+    m_ui->engine->setCurrentIndex(index);
 
-    if(engine == 0)
+    m_ui->database->setEnabled(false);
+    m_ui->password->setEnabled(false);
+    m_ui->username->setEnabled(false);
+    m_ui->ssl->setEnabled(false);
+    m_ui->path->setEnabled(false);
+    m_ui->host->setEnabled(false);
+    m_ui->testButton->setEnabled(false);
+    m_ui->search->setEnabled(false);
+    m_ui->file->setEnabled(false);
+
+    QString engineData = m_ui->engine->itemData(m_ui->engine->currentIndex()).toString();
+
+    if(engineData == "HORUX")
     {
-        m_ui->database->setEnabled(false);
+        m_ui->database->setEnabled(true);
+        m_ui->password->setEnabled(true);
+        m_ui->username->setEnabled(true);
+        m_ui->ssl->setEnabled(true);
         m_ui->path->setEnabled(true);
+        m_ui->host->setEnabled(true);
+        m_ui->testButton->setEnabled(true);
     }
     else
     {
-        m_ui->database->setEnabled(true);
-        m_ui->path->setEnabled(false);
-
+        if(engineData == "CSV")
+        {
+            m_ui->search->setEnabled(true);
+            m_ui->file->setEnabled(true);
+            m_ui->testButton->setEnabled(true);
+        }
+        else
+        {
+            if(engineData == "QSQLITE")
+            {
+                m_ui->file->setEnabled(true);;
+                m_ui->search->setEnabled(true);
+                m_ui->testButton->setEnabled(true);
+            }
+            else
+            {
+                if(engineData != "NOT_USED")
+                {
+                    m_ui->database->setEnabled(true);
+                    m_ui->password->setEnabled(true);
+                    m_ui->username->setEnabled(true);
+                    m_ui->path->setEnabled(true);
+                    m_ui->host->setEnabled(true);
+                    m_ui->testButton->setEnabled(true);
+                }
+            }
+        }
     }
 
 }
@@ -97,10 +144,15 @@ void DatabaseConnection::setDatabase(const QString p)
     m_ui->database->setText(p);
 }
 
-
-int DatabaseConnection::getEngine()
+void DatabaseConnection::setFile(const QString p)
 {
-    return m_ui->engine->currentIndex();
+    m_ui->file->setText(p);
+}
+
+
+QString DatabaseConnection::getEngine()
+{
+    return m_ui->engine->itemData(m_ui->engine->currentIndex()).toString();
 }
 
 
@@ -129,38 +181,57 @@ QString DatabaseConnection::getDatabase()
     return m_ui->database->text();
 }
 
-
+QString DatabaseConnection::getFile()
+{
+    return m_ui->file->text();
+}
 
 void DatabaseConnection::onTest()
 {
-    switch(m_ui->engine->currentIndex()){
-        case 0: //horux
+    QString engine = m_ui->engine->itemData(m_ui->engine->currentIndex()).toString();
+
+    if(engine == "HORUX")
+    {
+        QtSoapMessage message;
+        message.setMethod("getUserById");
+
+        // test if we receive the user with id 1
+        message.addMethodArgument("id","", "1");
+
+        if(getSSL())
+        {
+            connect(transport.networkAccessManager(),SIGNAL(sslErrors( QNetworkReply *, const QList<QSslError> & )),
+                    this, SLOT(sslErrors(QNetworkReply*,QList<QSslError>)));
+        }
+
+
+        transport.setHost(m_ui->host->text(), getSSL());
+
+        transport.submitRequest(message, m_ui->path->text()+"index.php?soap=horux&password=" + m_ui->password->text() + "&username=" + m_ui->username->text() );
+    }
+    else
+    {
+        if(engine == "CSV")
+        {
+
+        }
+        else
+        {
+            if(engine != "NOT_USED")
             {
-                QtSoapMessage message;
-                message.setMethod("getUserById");
-
-                // test if we receive the user with id 1
-                message.addMethodArgument("id","", "1");
-
-                if(getSSL())
+                dbase = QSqlDatabase::addDatabase(engine);
+                if(engine == "QSQLITE")
                 {
-                    connect(transport.networkAccessManager(),SIGNAL(sslErrors( QNetworkReply *, const QList<QSslError> & )),
-                            this, SLOT(sslErrors(QNetworkReply*,QList<QSslError>)));
+                    dbase.setDatabaseName(m_ui->file->text());
+                }
+                else
+                {
+                    dbase.setHostName(m_ui->host->text());
+                    dbase.setDatabaseName(m_ui->database->text());
+                    dbase.setUserName(m_ui->username->text());
+                    dbase.setPassword(m_ui->password->text());
                 }
 
-
-                transport.setHost(m_ui->host->text(), getSSL());
-
-                transport.submitRequest(message, m_ui->path->text()+"index.php?soap=horux&password=" + m_ui->password->text() + "&username=" + m_ui->username->text() );
-            }
-            break;
-        case 1: //mysql
-            {
-                dbase = QSqlDatabase::addDatabase("QMYSQL");
-                dbase.setHostName(m_ui->host->text());
-                dbase.setDatabaseName(m_ui->database->text());
-                dbase.setUserName(m_ui->username->text());
-                dbase.setPassword(m_ui->password->text());
                 if(dbase.open())
                 {
                     QMessageBox::information(this,tr("Database connection"),tr("The configuration is well done"));
@@ -168,66 +239,7 @@ void DatabaseConnection::onTest()
                 else
                     QMessageBox::warning(this,tr("Database connection error"),tr("Not able to connect to the database"));
             }
-            break;
-        case 2: //sqlite
-            {
-                dbase = QSqlDatabase::addDatabase("QSQLITE");
-                dbase.setDatabaseName(m_ui->database->text());
-                if(dbase.open())
-                {
-                    QMessageBox::information(this,tr("Database connection"),tr("The configuration is well done"));
-                }
-                else
-                    QMessageBox::warning(this,tr("Database connection error"),tr("Not able to connect to the database"));
-            }
-            break;
-        case 3: //postgresql
-            {
-                dbase = QSqlDatabase::addDatabase("QPSQL");
-                dbase.setHostName(m_ui->host->text());
-                dbase.setDatabaseName(m_ui->database->text());
-                dbase.setUserName(m_ui->username->text());
-                dbase.setPassword(m_ui->password->text());
-                if(dbase.open())
-                {
-                    QMessageBox::information(this,tr("Database connection"),tr("The configuration is well done"));
-                }
-                else
-                    QMessageBox::warning(this,tr("Database connection error"),tr("Not able to connect to the database"));
-            }
-            break;
-        case 4: //odbc
-            {
-                dbase = QSqlDatabase::addDatabase("QODBC");
-                dbase.setHostName(m_ui->host->text());
-                dbase.setDatabaseName(m_ui->database->text());
-                dbase.setUserName(m_ui->username->text());
-                dbase.setPassword(m_ui->password->text());
-                if(dbase.open())
-                {
-                    QMessageBox::information(this,tr("Database connection"),tr("The configuration is well done"));
-                }
-                else
-                    QMessageBox::warning(this,tr("Database connection error"),tr("Not able to connect to the database"));
-
-            }
-            break;
-        case 5: //oracle
-            {
-                dbase = QSqlDatabase::addDatabase("QOCI");
-                dbase.setHostName(m_ui->host->text());
-                dbase.setDatabaseName(m_ui->database->text());
-                dbase.setUserName(m_ui->username->text());
-                dbase.setPassword(m_ui->password->text());
-                if(dbase.open())
-                {
-                    QMessageBox::information(this,tr("Database connection"),tr("The configuration is well done"));
-                }
-                else
-                    QMessageBox::warning(this,tr("Database connection error"),tr("Not able to connect to the database"));
-
-            }
-            break;
+        }
     }
 }
 
@@ -273,16 +285,6 @@ bool DatabaseConnection::getSSL()
 
 void DatabaseConnection::onEngineCurrentIndexChanged(int index)
 {
-    if(index == 0)
-    {
-        m_ui->database->setEnabled(false);
-        m_ui->path->setEnabled(true);
-    }
-    else
-    {
-        m_ui->database->setEnabled(true);
-        m_ui->path->setEnabled(false);
-
-    }
+    setEngine(m_ui->engine->itemData(index).toString());
 
 }
