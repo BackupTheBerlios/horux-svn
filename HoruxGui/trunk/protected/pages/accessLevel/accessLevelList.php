@@ -76,10 +76,6 @@ class accessLevelList extends PageList
             $this->pdf->Cell(0,6,utf8_decode($ot['week_end'] == "1" ? Prado::localize('Yes') : Prado::localize('No')),'B',1,'L');
             $this->pdf->Cell(60,6,utf8_decode(Prado::localize('Apply to the non working day')),'B',0,'L');
             $this->pdf->Cell(0,6,utf8_decode($ot['non_working_day'] == "1" ? Prado::localize('Yes') : Prado::localize('No')),'B',1,'L');
-            $this->pdf->Cell(60,6,utf8_decode(Prado::localize('Valid from')),'B',0,'L');
-            $this->pdf->Cell(0,6,utf8_decode($ot['validity_date'] == "0000-00-00" ? "-" : $this->dateFromSql($ot['validity_date'])),'B',1,'L');
-            $this->pdf->Cell(60,6,utf8_decode(Prado::localize('Valid until')),'B',0,'L');
-            $this->pdf->Cell(0,6,utf8_decode($ot['validity_date_to'] == "0000-00-00" ? "-" : $this->dateFromSql($ot['validity_date_to'])),'B',1,'L');
 
 
             $this->pdf->SetLineWidth(0.2);

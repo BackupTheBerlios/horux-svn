@@ -491,6 +491,12 @@
                                                         HeaderStyle.Width = "20px"
                                                     />
 
+                                                    <com:TBoundColumn
+                                                        HeaderText="<%[Last connection]%>"
+                                                        DataField="lastConnection"
+                                                        HeaderStyle.Width = "20px"
+                                                    />
+
                                                     </com:TDataGrid>
 
                                                 </div>

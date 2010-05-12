@@ -20,7 +20,6 @@ class UserList extends PageList
 
     protected function getData()
     {
-    
         if(isset($this->Request['f1']))
         {
             $name = $this->Request['f1'];
@@ -58,11 +57,11 @@ class UserList extends PageList
             {
                 if($access == 0)
                 {
-                    $sql = "SELECT u.name, u.firstname, u.email2, u.phone2, u.id, u.isBlocked, u.locked, d.name AS department FROM  hr_user AS u LEFT JOIN hr_user_group_attribution AS g ON g.id_user = u.id LEFT JOIN hr_department AS d ON u.department=d.id WHERE u.name<>'??' AND $status u.name LIKE '%$name%' AND u.firstname LIKE '%$firstName%' AND g.id_group=".$group." ORDER BY u.name, u.firstname";
+                    $sql = "SELECT u.name, u.firstname, u.email2, u.email1, u.phone2, u.id, u.isBlocked, u.locked, d.name AS department FROM  hr_user AS u LEFT JOIN hr_user_group_attribution AS g ON g.id_user = u.id LEFT JOIN hr_department AS d ON u.department=d.id WHERE u.name<>'??' AND $status u.name LIKE '%$name%' AND u.firstname LIKE '%$firstName%' AND g.id_group=".$group." ORDER BY u.name, u.firstname";
                 }
                 else
                 {
-                    $sql = "SELECT u.name, u.firstname, u.email2, u.phone2, u.id, u.isBlocked, u.locked, d.name AS department  FROM  hr_user AS u LEFT JOIN hr_user_group_attribution AS ga ON ga.id_user = u.id LEFT JOIN hr_user_group_access AS a ON a.id_group=ga.id_group LEFT JOIN hr_user_group AS g ON g.id=ga.id_group LEFT JOIN hr_department AS d ON u.department=d.id  WHERE u.name<>'??' AND $status u.name LIKE '%$name%' AND u.firstname LIKE '%$firstName%' AND a.id_device=".$access." AND g.id=".$group." ORDER BY u.name, u.firstname";
+                    $sql = "SELECT u.name, u.firstname, u.email2, u.email1,u.phone2, u.id, u.isBlocked, u.locked, d.name AS department  FROM  hr_user AS u LEFT JOIN hr_user_group_attribution AS ga ON ga.id_user = u.id LEFT JOIN hr_user_group_access AS a ON a.id_group=ga.id_group LEFT JOIN hr_user_group AS g ON g.id=ga.id_group LEFT JOIN hr_department AS d ON u.department=d.id  WHERE u.name<>'??' AND $status u.name LIKE '%$name%' AND u.firstname LIKE '%$firstName%' AND a.id_device=".$access." AND g.id=".$group." ORDER BY u.name, u.firstname";
 
                 }
             }
@@ -70,11 +69,11 @@ class UserList extends PageList
             {
                 if($access == 0)
                 {
-                    $sql = "SELECT u.name, u.firstname, u.email2, u.phone2, u.id, u.isBlocked, u.locked, d.name AS department  FROM  hr_user AS u LEFT JOIN hr_department AS d ON u.department=d.id  WHERE u.name<>'??' AND $status u.name LIKE '%$name%' AND u.firstname LIKE '%$firstName%' ORDER BY u.name, u.firstname";
+                    $sql = "SELECT u.name, u.firstname, u.email2,u.email1, u.phone2, u.id, u.isBlocked, u.locked, d.name AS department  FROM  hr_user AS u LEFT JOIN hr_department AS d ON u.department=d.id  WHERE u.name<>'??' AND $status u.name LIKE '%$name%' AND u.firstname LIKE '%$firstName%' ORDER BY u.name, u.firstname";
                 }
                 else
                 {
-                    $sql = "SELECT u.name, u.firstname, u.email2, u.phone2, u.id, u.isBlocked, u.locked, d.name AS department  FROM  hr_user AS u LEFT JOIN hr_user_group_attribution AS ga ON ga.id_user = u.id LEFT JOIN hr_user_group_access AS a ON a.id_group=ga.id_group LEFT JOIN hr_user_group AS g ON g.id=ga.id_group LEFT JOIN hr_department AS d ON u.department=d.id  WHERE u.name<>'??' AND $status u.name LIKE '%$name%' AND u.firstname LIKE '%$firstName%' AND a.id_device=".$access." ORDER BY u.name, u.firstname";
+                    $sql = "SELECT u.name, u.firstname, u.email2,u.email1, u.phone2, u.id, u.isBlocked, u.locked, d.name AS department  FROM  hr_user AS u LEFT JOIN hr_user_group_attribution AS ga ON ga.id_user = u.id LEFT JOIN hr_user_group_access AS a ON a.id_group=ga.id_group LEFT JOIN hr_user_group AS g ON g.id=ga.id_group LEFT JOIN hr_department AS d ON u.department=d.id  WHERE u.name<>'??' AND $status u.name LIKE '%$name%' AND u.firstname LIKE '%$firstName%' AND a.id_device=".$access." ORDER BY u.name, u.firstname";
 
                 }
             }
@@ -87,7 +86,28 @@ class UserList extends PageList
 
             $connection->Active=false;
 
-            return $dataReader;
+            $data = $dataReader->readAll();
+
+            for($i=0; $i<count($data); $i++)
+            {
+                $id = $data[$i]['id'];
+
+                $cmd=$this->db->createCommand("SELECT * FROM hr_user_group AS ug LEFT JOIN hr_user_group_attribution AS uga ON uga.id_group = ug.id WHERE uga.id_user=".$id);
+                $data2 = $cmd->query();
+                $data2 = $data2->readAll();
+
+                $groupes = array();
+                foreach($data2 as $d)
+                    $groupes[] = $d['name'];
+
+                $groupes = implode(", ",$groupes);
+
+                $data[$i]['groups'] = $groupes;
+                
+            }
+
+
+            return $data;
         }
 
 
