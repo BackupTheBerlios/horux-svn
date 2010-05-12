@@ -58,11 +58,11 @@ class UserList extends PageList
             {
                 if($access == 0)
                 {
-                    $sql = "SELECT u.name, u.firstname, u.email2, u.phone2, u.id, u.isBlocked, u.locked FROM  hr_user AS u LEFT JOIN hr_user_group_attribution AS g ON g.id_user = u.id WHERE u.name<>'??' AND $status u.name LIKE '%$name%' AND u.firstname LIKE '%$firstName%' AND g.id_group=".$group." ORDER BY u.name, u.firstname";
+                    $sql = "SELECT u.name, u.firstname, u.email2, u.phone2, u.id, u.isBlocked, u.locked, d.name AS department FROM  hr_user AS u LEFT JOIN hr_user_group_attribution AS g ON g.id_user = u.id LEFT JOIN hr_department AS d ON u.department=d.id WHERE u.name<>'??' AND $status u.name LIKE '%$name%' AND u.firstname LIKE '%$firstName%' AND g.id_group=".$group." ORDER BY u.name, u.firstname";
                 }
                 else
                 {
-                    $sql = "SELECT u.name, u.firstname, u.email2, u.phone2, u.id, u.isBlocked, u.locked FROM  hr_user AS u LEFT JOIN hr_user_group_attribution AS ga ON ga.id_user = u.id LEFT JOIN hr_user_group_access AS a ON a.id_group=ga.id_group LEFT JOIN hr_user_group AS g ON g.id=ga.id_group WHERE u.name<>'??' AND $status u.name LIKE '%$name%' AND u.firstname LIKE '%$firstName%' AND a.id_device=".$access." AND g.id=".$group." ORDER BY u.name, u.firstname";
+                    $sql = "SELECT u.name, u.firstname, u.email2, u.phone2, u.id, u.isBlocked, u.locked, d.name AS department  FROM  hr_user AS u LEFT JOIN hr_user_group_attribution AS ga ON ga.id_user = u.id LEFT JOIN hr_user_group_access AS a ON a.id_group=ga.id_group LEFT JOIN hr_user_group AS g ON g.id=ga.id_group LEFT JOIN hr_department AS d ON u.department=d.id  WHERE u.name<>'??' AND $status u.name LIKE '%$name%' AND u.firstname LIKE '%$firstName%' AND a.id_device=".$access." AND g.id=".$group." ORDER BY u.name, u.firstname";
 
                 }
             }
@@ -70,11 +70,11 @@ class UserList extends PageList
             {
                 if($access == 0)
                 {
-                    $sql = "SELECT name, firstname, email2, phone2, id, isBlocked, locked FROM  hr_user AS u WHERE name<>'??' AND $status name LIKE '%$name%' AND firstname LIKE '%$firstName%' ORDER BY name, firstname";
+                    $sql = "SELECT u.name, u.firstname, u.email2, u.phone2, u.id, u.isBlocked, u.locked, d.name AS department  FROM  hr_user AS u LEFT JOIN hr_department AS d ON u.department=d.id  WHERE u.name<>'??' AND $status u.name LIKE '%$name%' AND u.firstname LIKE '%$firstName%' ORDER BY u.name, u.firstname";
                 }
                 else
                 {
-                    $sql = "SELECT u.name, u.firstname, u.email2, u.phone2, u.id, u.isBlocked, u.locked FROM  hr_user AS u LEFT JOIN hr_user_group_attribution AS ga ON ga.id_user = u.id LEFT JOIN hr_user_group_access AS a ON a.id_group=ga.id_group LEFT JOIN hr_user_group AS g ON g.id=ga.id_group WHERE u.name<>'??' AND $status u.name LIKE '%$name%' AND u.firstname LIKE '%$firstName%' AND a.id_device=".$access." ORDER BY u.name, u.firstname";
+                    $sql = "SELECT u.name, u.firstname, u.email2, u.phone2, u.id, u.isBlocked, u.locked, d.name AS department  FROM  hr_user AS u LEFT JOIN hr_user_group_attribution AS ga ON ga.id_user = u.id LEFT JOIN hr_user_group_access AS a ON a.id_group=ga.id_group LEFT JOIN hr_user_group AS g ON g.id=ga.id_group LEFT JOIN hr_department AS d ON u.department=d.id  WHERE u.name<>'??' AND $status u.name LIKE '%$name%' AND u.firstname LIKE '%$firstName%' AND a.id_device=".$access." ORDER BY u.name, u.firstname";
 
                 }
             }

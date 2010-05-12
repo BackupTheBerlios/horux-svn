@@ -186,6 +186,9 @@ class Notification
                         case 1016:
                             $mailer->setObject(Prado::localize("Horux notification: Device connection not opened on {device}", array('device'=>$device)));
                             break;
+                        case 1017:
+                            $mailer->setObject(Prado::localize("Horux notification: Device communicaiton error on {device}", array('device'=>$device)));
+                            break;
                         case 1102:
                             $mailer->setObject(Prado::localize("Horux notification: HOLDUP PIN CODE"));
                             break;

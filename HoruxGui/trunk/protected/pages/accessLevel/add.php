@@ -76,6 +76,7 @@ class add extends Page
                 $this->saveTimeData($time['day'], $time['hourStart'], $time['duration'], $this->lastId, $time['pinCode'], $time['exitingOnly'], $time['specialRelayPlan']);
             }
         }
+        
         $this->log("Add the access level: ".$this->name->SafeText);
 
         return $res;

@@ -114,6 +114,19 @@ class mod extends Page
 
         $this->log("Modify the access level: ".$this->name->SafeText);
 
+        if($res)
+        {
+            $cmd = $this->db->createCommand( "SELECT * FROM hr_device WHERE accessPoint=1" );
+            $data = $cmd->query();
+            $row = $data->readAll();
+
+            foreach($row as $r)
+            {
+                $sa = new TStandAlone();
+                $sa->addStandalone('add', $r['id'], 'reinit');
+            }
+        }
+
         return $res || $res2;
     }
 

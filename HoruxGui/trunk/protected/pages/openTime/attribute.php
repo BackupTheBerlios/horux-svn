@@ -80,6 +80,13 @@ class attribute extends Page
             $cmd->bindParameter(":id_openTime",$id_openTime);
             $cmd->execute();
 
+            $horuxService = new THoruxService();
+            $horuxService->onStopDevice($id_device);
+            $horuxService->onStartDevice($id_device);
+
+            $sa = new TStandAlone();
+            $sa->addStandalone("add", $id_device, 'reinit');
+
             $this->Response->redirect($this->Service->constructUrl('openTime.attribute',array('id'=>$id_device)));
         }
     }
@@ -121,11 +128,28 @@ class attribute extends Page
                 if( (bool)$cb->getChecked() && $cb->Value != "0")
                 {
 
+                    $cmd = $this->db->createCommand("SELECT * FROM hr_openTime_attribution WHERE id=:id");
+                    $cmd->bindParameter(":id",$cb->Value);
+                    $data = $cmd->query();
+                    $data = $data->read();
+
+                    $deviceId = $data['id_device'];
+
                     $cmd=$this->db->createCommand(SQL::SQL_DELETE_OPEN_TIME_ATTRIBUTION);
                     $cmd->bindParameter(":id",$cb->Value);
 
                     if($cmd->execute())
-                    $nUnAttributed++;
+                    {
+                        $nUnAttributed++;
+
+
+                        $horuxService = new THoruxService();
+                        $horuxService->onStopDevice($deviceId);
+                        $horuxService->onStartDevice($deviceId);
+
+                        $sa = new TStandAlone();
+                        $sa->addStandalone("add", $deviceId, 'reinit');
+                    }
                 }
             }
         }

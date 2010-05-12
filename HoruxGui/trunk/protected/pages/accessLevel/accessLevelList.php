@@ -257,12 +257,27 @@ class accessLevelList extends PageList
                     $cmd=$this->db->createCommand(SQL::SQL_REMOVE_ACCESS_LEVEL);
                     $cmd->bindParameter(":id",$cb->Value);
                     if($cmd->execute())
-                    $nDelete++;
+                        $nDelete++;
 
                     $cmd=$this->db->createCommand(SQL::SQL_REMOVE_ACCESS_TIME);
                     $cmd->bindParameter(":id",$cb->Value);
                     $cmd->execute();
 
+
+
+                }
+            }
+
+            if($nDelete>0)
+            {
+                $cmd = $this->db->createCommand( "SELECT * FROM hr_device WHERE accessPoint=1" );
+                $data = $cmd->query();
+                $row = $data->readAll();
+
+                foreach($row as $r)
+                {
+                    $sa = new TStandAlone();
+                    $sa->addStandalone('add', $r['id'], 'reinit');
                 }
             }
         }

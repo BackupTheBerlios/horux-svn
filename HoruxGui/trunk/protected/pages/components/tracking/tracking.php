@@ -171,7 +171,7 @@ class tracking extends PageList
 
             }
 
-            $cmd=$this->db->createCommand("SELECT t.id, u.name, u.firstName, t.date, t.time, d.name AS device, t.id_comment, k.identificator, t.is_access FROM hr_tracking AS t LEFT JOIN hr_user AS u ON u.id = t.id_user LEFT JOIN hr_device AS d ON d.id=t.id_entry LEFT JOIN hr_keys AS k ON k.serialNumber=t.key WHERE $date $entry $status $user d.name!='' ORDER BY t.id DESC LIMIT 0,1000");
+            $cmd=$this->db->createCommand("SELECT t.id, u.name, u.firstName, t.date, t.time, d.name AS device, t.id_comment, k.identificator, t.is_access FROM hr_tracking AS t LEFT JOIN hr_user AS u ON u.id = t.id_user LEFT JOIN hr_device AS d ON d.id=t.id_entry LEFT JOIN hr_keys AS k ON k.serialNumber=t.key WHERE $date $entry $status $user d.name!='' ORDER BY t.date, t.time DESC LIMIT 0,1000");
             $data = $cmd->query();
             $data = $data->readAll();
 
@@ -335,6 +335,7 @@ class tracking extends PageList
             $accessMessage[15] = Prado::localize("AUTHORIZE ACCESS WITH HOLD-UP PIN-CODE");
             $accessMessage[16] = Prado::localize("1 Person for 2 persons access");
             $accessMessage[17] = Prado::localize("Authorization period of person not valid");
+            $accessMessage[18] = Prado::localize("Card number or card verion invalid");
 
             if($item->ItemType==='Item' || $item->ItemType==='AlternatingItem' )
             {

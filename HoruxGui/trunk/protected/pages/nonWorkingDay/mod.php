@@ -74,10 +74,22 @@ class mod extends Page
         $cmd = $this->db->createCommand( SQL::SQL_DELETE_NONWORKINGDAY );
         $cmd->bindParameter(":id",$this->id->Value, PDO::PARAM_INT);
 
-        $cmd->execute();
+        $res = $cmd->execute();
 
         $pBack = array('okMsg'=>Prado::localize('The non working day was deleted successfully'), 'id'=>$this->id->Value);
 
+        if($res)
+        {
+            $cmd = $this->db->createCommand( "SELECT * FROM hr_device WHERE accessPoint=1" );
+            $data = $cmd->query();
+            $row = $data->readAll();
+
+            foreach($row as $r)
+            {
+                $sa = new TStandAlone();
+                $sa->addStandalone('add', $r['id'], 'reinit');
+            }
+        }
 
         if($this->Request['back'])
             $this->Response->redirect($this->Service->constructUrl($this->Request['back'], $pBack));
@@ -176,7 +188,22 @@ class mod extends Page
 
         $this->log("Modify the non working day: ".$this->name->SafeText);
 
-        return $cmd->execute();
+        $res = $cmd->execute();
+
+        if($res)
+        {
+            $cmd = $this->db->createCommand( "SELECT * FROM hr_device WHERE accessPoint=1" );
+            $data = $cmd->query();
+            $row = $data->readAll();
+
+            foreach($row as $r)
+            {
+                $sa = new TStandAlone();
+                $sa->addStandalone('add', $r['id'], 'reinit');
+            }
+        }
+
+        return $res;
     }
 
     protected function serverUntilValidate($sender, $param)

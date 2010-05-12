@@ -156,6 +156,11 @@
     DataField="email1"
     />
 
+<com:TBoundColumn
+    HeaderText="<%[Department]%>"
+    DataField="department"
+    />
+
 <com:TTemplateColumn HeaderStyle.Width = "20px">
     <prop:HeaderTemplate><%[Groups]%></prop:HeaderTemplate>
     <prop:ItemTemplate>
