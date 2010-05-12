@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff version="1.0">
-<file source-language="en" target-language="fr" datatype="plaintext" original="messages" date="2010-01-20T07:23:18Z" product-name="messages">
+<file source-language="en" target-language="fr" datatype="plaintext" original="messages" date="2010-05-12T09:51:56Z" product-name="messages">
 <body>
 <trans-unit id="1">
    <source>Configuration</source>
@@ -531,6 +531,16 @@
 <trans-unit id="128">
 <source>Super user</source>
 <target>Super utilisateur</target>
+</trans-unit>
+
+<trans-unit id="129">
+<source>Choose a color for this timecode</source>
+<target>Choisir une couleur pour ce code de temps</target>
+</trans-unit>
+
+<trans-unit id="130">
+<source>Color</source>
+<target>Couleur</target>
 </trans-unit>
 </body>
 </file>
