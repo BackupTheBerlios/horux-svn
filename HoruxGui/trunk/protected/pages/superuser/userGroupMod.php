@@ -114,11 +114,11 @@ class userGroupMod extends Page
 
                 if(!$isComponentHasOne)
                 {
-                    $data[] = array('Type'=>Prado::localize('Components'), 'id'=>$data2['page'], 'Text'=>Prado::localize($name->getValue()), 'access'=>$this->isAccess($data2['page']), 'composantname'=>$installName, 'shortcut'=>$this->isShortcut($data2['page']));
+                    $data[] = array('Type'=>Prado::localize('Components'), 'id'=>$data2['page'], 'Text'=>Prado::localize($name->getValue(), array(),$installName ), 'access'=>$this->isAccess($data2['page']), 'composantname'=>$installName, 'shortcut'=>$this->isShortcut($data2['page']));
                     $isComponentHasOne = true;
                 }
                 else
-                    $data[] = array('Type'=>'', 'id'=>$data2['page'], 'Text'=>Prado::localize($name->getValue()), 'access'=>$this->isAccess($data2['page']), 'composantname'=>$installName, 'shortcut'=>$this->isShortcut($data2['page']));
+                    $data[] = array('Type'=>'', 'id'=>$data2['page'], 'Text'=>Prado::localize($name->getValue(), array(),$installName ), 'access'=>$this->isAccess($data2['page']), 'composantname'=>$installName, 'shortcut'=>$this->isShortcut($data2['page']));
 
 
                 $cmd = $this->db->createCommand("SELECT * FROM hr_install AS i LEFT JOIN hr_component as c ON c.id_install=i.id WHERE i.type='component' AND c.parentmenu=".$data2['id']." AND c.parentmenu>0 AND i.id=".$d1['id']);
@@ -127,7 +127,7 @@ class userGroupMod extends Page
 
                 foreach($data2 as $d2)
                 {
-                    $data[] = array('Type'=>'', 'id'=>$d2['page'], 'Text'=>'', 'Text2'=>Prado::localize($d2['menuname']), 'access'=>$this->isAccess($d2['page']), 'composantname'=>$installName, 'shortcut'=>$this->isShortcut($d2['page']));
+                    $data[] = array('Type'=>'', 'id'=>$d2['page'], 'Text'=>'', 'Text2'=>Prado::localize($d2['menuname'], array(),$installName ), 'access'=>$this->isAccess($d2['page']), 'composantname'=>$installName, 'shortcut'=>$this->isShortcut($d2['page']));
                 }
 
             }

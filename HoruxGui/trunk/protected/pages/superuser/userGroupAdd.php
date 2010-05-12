@@ -88,11 +88,11 @@ class userGroupAdd extends Page
 
                 if(!$isComponentHasOne)
                 {
-                    $data[] = array('Type'=>Prado::localize('Components'), 'id'=>$data2['page'], 'Text'=>Prado::localize($name->getValue()), 'access'=>true, 'composantname'=>$installName, 'shortcut'=>false);
+                    $data[] = array('Type'=>Prado::localize('Components'), 'id'=>$data2['page'], 'Text'=>Prado::localize($name->getValue(), array(),$installName ), 'access'=>true, 'composantname'=>$installName, 'shortcut'=>false);
                     $isComponentHasOne = true;
                 }
                 else
-                    $data[] = array('Type'=>'', 'id'=>$data2['page'], 'Text'=>Prado::localize($name->getValue()), 'access'=>true, 'composantname'=>$installName, 'shortcut'=>false);
+                    $data[] = array('Type'=>'', 'id'=>$data2['page'], 'Text'=>Prado::localize($name->getValue(), array(),$installName ), 'access'=>true, 'composantname'=>$installName, 'shortcut'=>false);
 
 
                 $cmd = $this->db->createCommand("SELECT * FROM hr_install AS i LEFT JOIN hr_component as c ON c.id_install=i.id WHERE i.type='component' AND c.parentmenu=".$data2['id']." AND c.parentmenu>0 AND i.id=".$d1['id']);
@@ -101,7 +101,7 @@ class userGroupAdd extends Page
 
                 foreach($data2 as $d2)
                 {
-                    $data[] = array('Type'=>'', 'id'=>$d2['page'], 'Text'=>'', 'Text2'=>Prado::localize($d2['menuname']), 'access'=>true, 'composantname'=>$installName, 'shortcut'=>false);
+                    $data[] = array('Type'=>'', 'id'=>$d2['page'], 'Text'=>'', 'Text2'=>Prado::localize($d2['menuname'], array(),$installName ), 'access'=>true, 'composantname'=>$installName, 'shortcut'=>false);
                 }
 
             }
