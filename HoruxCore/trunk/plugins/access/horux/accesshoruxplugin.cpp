@@ -24,7 +24,8 @@
 AccessHoruxPlugin::AccessHoruxPlugin(QObject *parent) : QObject(parent)
 {
     
-    timerFreeAccess = startTimer(10000);
+   // timerFreeAccess = startTimer(10000);
+     timerFreeAccess = 0;
 }
 
 void AccessHoruxPlugin::timerEvent(QTimerEvent *e)

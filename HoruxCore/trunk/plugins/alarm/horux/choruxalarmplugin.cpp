@@ -203,7 +203,7 @@ void CHoruxAlarmPlugin::handleHalarm(QString name, QMap<QString, QVariant>params
 
   if(name == "1017")
   {
-      type = ALARM_DEVICE_CONNECTION_ERROR;
+      type = ALARM_DEVICE_CMD_ERROR;
   }
 
 
