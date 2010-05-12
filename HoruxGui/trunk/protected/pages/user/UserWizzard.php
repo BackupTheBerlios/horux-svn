@@ -119,8 +119,8 @@ class UserWizzard extends Page
                 if($lastId)
                 {
                     $this->saveGroup($lastId);
-                    $this->saveKey($lastId, $this->Request['serialNumber']);
                     $this->addStandalone('add', $lastId);
+                    $this->saveKey($lastId, $this->Request['serialNumber']);
                     $this->log("Create with the wizard the user: ".$this->name->SafeText." ".$this->firstname->SafeText);
                     $this->Response->redirect($this->Service->constructUrl('user.UserList'));
                 }
@@ -265,6 +265,12 @@ class UserWizzard extends Page
         $sa->addStandalone($function, $userId, 'UserWizzard');
     }
 
+    protected function addStandaloneKey($function, $keyId)
+    {
+        $sa = new TStandAlone();
+        $sa->addStandalone($function, $keyId, 'UserAttributionKey');
+    }
+
     protected function savePerson()
     {
         if($this->koMessage != "")
@@ -365,7 +371,7 @@ class UserWizzard extends Page
                 $cmd->bindParameter(":flag",$flag);
                 $cmd->execute();
 
-                $this->addStandalone('add', $data['id']);
+                $this->addStandaloneKey('add', $data['id']);
 
                 return true;
             }
@@ -394,7 +400,7 @@ class UserWizzard extends Page
                     $cmd->bindParameter(":id_key",$lastId2);
                     $cmd->execute();
 
-                    $this->addStandalone('add', $lastId2);
+                    $this->addStandaloneKey('add', $lastId2);
 
                     return true;
 
@@ -422,6 +428,8 @@ class UserWizzard extends Page
                 $flag = 1;
                 $cmd->bindParameter(":flag",$flag,PDO::PARAM_STR);
                 $cmd->execute();
+
+                $this->addStandaloneKey('add', $id_key);
             }
         }
     }
