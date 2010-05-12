@@ -304,7 +304,14 @@ void CGantnerTime::reloadAllData()
 
 void CGantnerTime::deviceConnectionMonitor(int id, bool status)
 {
-    devices[id] = status;
+
+
+    QSqlQuery query("SELECT * FROM hr_device WHERE type='gantner_TimeTerminal' AND id=" + QString::number(id));
+
+    if(query.next())
+    {
+        devices[id] = status;
+    }
 }
 
 void CGantnerTime::deviceInputMonitor ( int , int , bool )

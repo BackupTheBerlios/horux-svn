@@ -915,7 +915,7 @@ void CGantnerTimeTerminal::reinit()
         {
             args.clear();
             args << QScriptValue(&engine,queryButton.value(2).toString());
-            args << QScriptValue(&engine,QString(queryButton.value(3).toString().toUtf8() ));
+            args << QScriptValue(&engine,QString(queryButton.value(3).toString() ));
             args << QScriptValue(&engine,queryButton.value(4).toString());
 
             result = engine.evaluate("setFixedKey");
@@ -926,7 +926,7 @@ void CGantnerTimeTerminal::reinit()
         {
             args.clear();
             args << QScriptValue(&engine,queryButton.value(2).toString());
-            args << QScriptValue(&engine,QString(queryButton.value(3).toString().toUtf8()));
+            args << QScriptValue(&engine,QString(queryButton.value(3).toString() ));
             args << QScriptValue(&engine,queryButton.value(4).toString());
 
             QString img = "";
@@ -993,6 +993,7 @@ void CGantnerTimeTerminal::reinit()
     action = WAITING;
     ftp->close();
 
+    emit deviceConnection(id, true);
 }
 
 void CGantnerTimeTerminal::close()
@@ -1257,7 +1258,7 @@ void CGantnerTimeTerminal::s_addUser(QObject *p, QMap<QString, QVariant>params)
     QScriptValueList args;
     args << QScriptValue(&(pThis->engine),params["userId"].toString());
     args << QScriptValue(&(pThis->engine),params["userNo"].toString());
-    args << QScriptValue(&(pThis->engine),QString(params["displayName"].toString().toUtf8()));
+    args << QScriptValue(&(pThis->engine),QString(params["displayName"].toString()));
     args << QScriptValue(&(pThis->engine),params["lang"].toString());
     args << QScriptValue(&(pThis->engine),params["fiuUse"].toString());
     args << QScriptValue(&(pThis->engine),params["attendanceStatus"].toString());
