@@ -386,6 +386,10 @@ bool AccessHoruxPlugin::checkAccessLevel(QString groupId, QString deviceId, QStr
   QDate now(QDate::currentDate());
   int today = now.dayOfWeek();
 
+  QTime time = QTime::currentTime();
+  QString timeEnMinuteStr = QString::number(time.minute() + time.hour()*60);
+  QString todayStr;
+
   //! step 3 check for the non working day
   if(!nonWorkingDay)
   {
@@ -396,12 +400,30 @@ bool AccessHoruxPlugin::checkAccessLevel(QString groupId, QString deviceId, QStr
       return false;
     }
   }
+  else
+  {
+      todayStr = "dimanche";
+      if( mondayDefault ) todayStr = "lundi";
+
+      query = "SELECT * FROM hr_access_time AS at WHERE at.day='dimanche" +
+                      todayStr +
+                      "' AND at.id_access_level=" +
+                      id_access_level +
+                      " AND at.from<=" +
+                      timeEnMinuteStr +
+                      " AND at.until>=" +
+                      timeEnMinuteStr;
+
+      if(!query.next())     {
+          *reason = BLOCK_DURING_NON_WORK_DAY;
+          return false;
+      }
+
+  }
 
   //! step 4 Check the time area
 
-  QTime time = QTime::currentTime();
-  QString timeEnMinuteStr = QString::number(time.minute() + time.hour()*60);
-  QString todayStr;
+
 
   //! Monday default means that all days will have the same access as Monday
   if(mondayDefault)
