@@ -86,17 +86,53 @@ bool CGantnerTime::isAccess(QMap<QString, QVariant> params, bool, bool )
         {
             if(round == 1)
             {
-               roundBooking.setHMS(noRoundBooking.hour(),noRoundBooking.minute()+1,0);
+               if(code == "255" || reason.right(3) == "_IN") // arrive
+               {
+                    roundBooking.setHMS(noRoundBooking.hour(),noRoundBooking.minute()+1,0);
+               }
+               else
+               {
+                    if(code == "254" || reason.right(4) == "_OUT") // leave
+                    {
+                        roundBooking.setHMS(noRoundBooking.hour(),noRoundBooking.minute(),0);
+                    }                    
+               }
+
             }
             else
             {
                 int m = noRoundBooking.minute();
                 while(m % round != 0)
-                    m++;
-                roundBooking.setHMS(noRoundBooking.hour(),m,0);
+                {
+                    qDebug() << (m % round);
+                    if(code == "255" || reason.right(3) == "_IN") // arrive
+                    {
+                        m++;
+                    }
+                    else
+                    {
+                        if(code == "254" || reason.right(4) == "_OUT") // leave
+                        {
+                            m--;
+                        }
+                    }
+                }
+
+                if(code == "255" || reason.right(3) == "_IN") // arrive
+                {
+                    roundBooking.setHMS(noRoundBooking.hour(),m,0);
+                }
+                else
+                {
+                    if(code == "254" || reason.right(4) == "_OUT") // leave
+                    {
+                        roundBooking.setHMS(noRoundBooking.hour(),m,0);
+                    }
+                }
             }
         }
     }
+
 
     QSqlQuery bookquery("INSERT INTO `hr_timux_booking` ( `tracking_id` , `action` , `actionReason`, `roundBooking` ) VALUES (" +
                 last +
