@@ -22,7 +22,6 @@ class component
      */
     public function callServiceComponent($params)
     {
-
         if(is_array($params))
         {            
             if(array_key_exists(0, $params)) //component
