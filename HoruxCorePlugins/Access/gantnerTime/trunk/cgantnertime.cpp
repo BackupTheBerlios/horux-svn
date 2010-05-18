@@ -145,6 +145,8 @@ bool CGantnerTime::isAccess(QMap<QString, QVariant> params, bool, bool )
                 "')"
                 );
 
+    checkBalances(userId.toInt());
+
     return true;
 }
 
@@ -549,10 +551,23 @@ void CGantnerTime::initSAASMode()
         timerCheckBalances->start(1000 * 60 * 60 * 12); // check every 12 hours
         checkBalances();
     }
+    else
+    {
+        soapClientBalances.setHost(saas_host,saas_ssl);
+
+        connect(&soapClientBalances, SIGNAL(responseReady()),this, SLOT(readSoapBalancesResponse()));
+        connect(soapClientBalances.networkAccessManager(),SIGNAL(sslErrors( QNetworkReply *, const QList<QSslError> & )),
+                this, SLOT(soapSSLErrors(QNetworkReply*,QList<QSslError>)));
+
+        timerCheckBalances = new QTimer(this);
+        connect(timerCheckBalances, SIGNAL(timeout()), this, SLOT(checkBalances()));
+        timerCheckBalances->start(1000 * 60 * 60 * 12); // check every 12 hours
+        checkBalances();
+    }
 }
 
 
-void CGantnerTime::checkBalances()
+void CGantnerTime::checkBalances(int id)
 {
     QtSoapMessage message;
     message.setMethod("callServiceComponent");
@@ -562,6 +577,7 @@ void CGantnerTime::checkBalances()
     array->insert(0, new QtSoapSimpleType(QtSoapQName("component"),"timuxadmin"));
     array->insert(1, new QtSoapSimpleType(QtSoapQName("class"),"timuxAdminDevice"));
     array->insert(2, new QtSoapSimpleType(QtSoapQName("function"),"syncBalances"));
+    array->insert(3, new QtSoapSimpleType(QtSoapQName("id"),QString::number(id)));
 
     message.addMethodArgument(array);
 
@@ -619,7 +635,7 @@ void CGantnerTime::readSoapBalancesResponse()
         balances += holidays + " " + daysText + ";";
         balances +=  overtime + " " + hoursText + ";";
 
-        // Reload all absent reason
+        // insert new balances values
         QSqlQuery deviceQuery("SELECT id_device FROM hr_gantner_TimeTerminal");
 
         while( deviceQuery.next())

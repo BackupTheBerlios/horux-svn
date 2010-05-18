@@ -62,7 +62,7 @@ protected:
 
 protected slots:
     void checkDb();
-    void checkBalances();
+    void checkBalances(int id=0);
 
     /*!
       Read the soap response from Horux Gui
