@@ -1,0 +1,1174 @@
+<com:TContent ID="Main">
+
+    <%include Application.common.template.headerContent %>
+
+    <com:TToolbarBox
+        ID="tbb"
+        Title="<%[Add Gantner Access Terminal]%>"
+        CssIcon="icon-48-ifcs"
+        ApplyVisible="true"
+        SaveVisible="true"
+        CancelVisible="true"
+        HelpVisible="true"
+        />
+
+    <%include Application.common.template.headerBoxContent %>
+
+    <fieldset class="adminform">
+     <legend><%[Parameters]%></legend>
+          <table class="admintable" cellspacing="1">
+            <tbody>
+              <tr>
+                <td valign="top" class="key">
+                  <span onmouseover="Tip('<%[Enter a <strong>unique</strong> name for this device]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)">* <%[Name]%></span>
+                </td>
+                <td>
+                  <com:TTextBox
+                    CssClass="text_area"
+                    ID="name"
+                    Width="50" />
+                  <com:TCustomValidator
+                    ValidationGroup="Group1"
+                    EnableClientScript="false"
+                    ControlToValidate="name"
+                    OnServerValidate="serverValidateName"
+                    Display="Dynamic"
+                    Text="<%[This name is already used]%>" />
+                  <com:TRequiredFieldValidator
+                    ValidationGroup="Group1"
+                    ControlToValidate="name"
+                    Text="<%[This field is required]%>"
+                    Display="Dynamic"/>
+                </td>
+             </tr>
+
+              <tr>
+                <td valign="top" class="key">
+                  <span onmouseover="Tip('<%[Enter an IP address or the dhcp name for this device.<br/> <em>Ex:192.168.1.50 or AccessDevice</em>]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)">* <%[IP Address/DHCP name]%></span>
+                </td>
+                <td>
+                  <com:TTextBox
+                    CssClass="text_area"
+                    ID="ipOrDhcp"
+                    Width="50" />
+                  <com:TRequiredFieldValidator
+                        ValidationGroup="Group1"
+                        ControlToValidate="ipOrDhcp"
+                        Text="<%[This field is required]%>"
+                        Display="Dynamic"/>
+                </td>
+              </tr>
+
+              <tr>
+                <td valign="top" class="key">
+                  <span onmouseover="Tip('<%[Timer to check the booking data from the device (in minutes)]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)">* <%[Booking checking]%></span>
+                </td>
+                <td>
+                  <com:TTextBox
+                    CssClass="text_area"
+                    ID="checkBooking"
+                    Width="50px"
+                    Text="10" /> <%[(minutes)]%>
+                  <com:TRequiredFieldValidator
+                        ValidationGroup="Group1"
+                        ControlToValidate="checkBooking"
+                        Text="<%[This field is required]%>"
+                        Display="Dynamic"/>
+                </td>
+              </tr>
+
+              <tr>
+                <td valign="top" class="key"><span onmouseover="Tip('<%[Allow to log the communication in a log file]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Debug]%></span></td>
+                <td>
+                    <com:TCheckBox Text="" ID="isLog"/>
+                </td>
+              </tr>
+
+              <tr>
+                <td valign="top" class="key"><span onmouseover="Tip('<%[You could insert a description for this device.]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Description]%></span></td>
+                <td>
+                  <com:TTextBox CssClass="text_area" ID="comment" Width="400px"/>
+                </td>
+              </tr>
+
+
+            </tbody>
+          </table>
+      </fieldset>
+
+     <fieldset class="adminform">
+     <legend><%[Memory configuration]%></legend>
+          <table class="admintable" cellspacing="1">
+            <tbody>
+
+              <tr>
+                <td valign="top" class="key"><span onmouseover="Tip('<%[How many memory capacity is supposed to be reserved for the users.]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[User memory]%></span></td>
+                <td>
+                  <com:TDropDownList ID="userMemory">
+                    <com:TListItem Text="500" Value="500"  />
+                    <com:TListItem Text="1000" Value="1000"  />
+                    <com:TListItem Text="5000" Value="5000"  />
+                    <com:TListItem Text="10000" Value="10000"  Selected="true" />
+                    <com:TListItem Text="15000" Value="15000"  />
+                    <com:TListItem Text="20000" Value="20000"  />
+                    <com:TListItem Text="25000" Value="25000"  />
+                  </com:TDropDownList>
+                </td>
+              </tr>
+
+              <tr>
+                <td valign="top" class="key">
+                  <span onmouseover="Tip('<%[How many memory capacity is supposed to be reserved for the bookings.]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Booking memory]%></span>
+                </td>
+                <td>
+                  <com:TDropDownList ID="accessMemory">
+                    <com:TListItem Text="500" Value="500"  />
+                    <com:TListItem Text="1000" Value="1000"  />
+                    <com:TListItem Text="5000" Value="5000"  />
+                    <com:TListItem Text="10000" Value="10000"  Selected="true" />
+                    <com:TListItem Text="15000" Value="15000"  />
+                    <com:TListItem Text="25000" Value="25000"  />
+                  </com:TDropDownList>
+                </td>
+             </tr>
+
+            </tbody>
+          </table>
+      </fieldset>
+
+     <fieldset class="adminform">
+     <legend><%[Subscriber data]%></legend>
+          <table class="admintable" cellspacing="1">
+            <tbody>
+              
+              <tr>
+                <td valign="top" class="key">
+                  <span onmouseover="Tip('<%[The subscriber number is a distinguishing mark for different companies.<br>This character is issued in the booking set as well for<br>assigning the bookings to the particular subscriber.]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Subscriber Number]%></span>
+                </td>
+                <td>
+                  <com:TTextBox
+                    CssClass="text_area"
+                    ID="subscriberNumber"
+                    Width="40px"
+                    Text="0" />
+
+                    <com:TRangeValidator
+                        ValidationGroup="Group1"
+                        Display="Dynamic"
+                        ControlToValidate="subscriberNumber"
+                        DataType="Integer"
+                        MinValue="0"
+                        MaxValue="9999"
+                        Text="<%[Input must be between 0 and 9999]%>" />
+
+
+                </td>
+             </tr>
+
+
+
+              <tr>
+                <td valign="top" class="key"><span onmouseover="Tip('<%[The plant number is a distinguishing mark for different plants of the same company.<br>This character is issued in the booking set for assigning the bookings<br>to the particular plant of a company.]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Plant Number]%></span></td>
+                <td>
+                  <com:TTextBox
+                    CssClass="text_area"
+                    ID="plantNumber"
+                    Width="40px"
+                    Text="0" />
+
+                    <com:TRangeValidator
+                        ValidationGroup="Group1"
+                        Display="Dynamic"
+                        ControlToValidate="plantNumber"
+                        DataType="Integer"
+                        MinValue="0"
+                        MaxValue="99"
+                        Text="<%[Input must be between 0 and 99]%>" />
+
+                </td>
+              </tr>
+
+
+
+
+              <tr>
+                <td valign="top" class="key">
+                  <span onmouseover="Tip('<%[It is avoided that card keepers of the same system but different companies are able to execute bookings.<br>Certain number circles are given to retailers for company identification by Gantner Electronic. The<br>subscriber\'s data deletes all additional company IDs automatically.]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Main Company ID Card]%></span>
+                </td>
+                <td>
+                    <com:TTextBox
+                    CssClass="text_area"
+                    ID="mainCompIdCard"
+                    Width="40px"
+                    Text="0" />
+                    <com:TRangeValidator
+                        ValidationGroup="Group1"
+                        Display="Dynamic"
+                        ControlToValidate="mainCompIdCard"
+                        DataType="Integer"
+                        MinValue="0"
+                        MaxValue="9999"
+                        Text="<%[Input must be between 0 and 9999]%>" />
+
+                </td>
+             </tr>
+
+
+
+
+
+              <tr>
+                <td valign="top" class="key"><span onmouseover="Tip('<%[If this code is unequal to 0, a booking is executed on a summertime/wintertime switch-over. This booking<br/>code is used as code then.]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Booking code summertime/ wintertime switch-over]%></span></td>
+                <td>
+                    <com:TTextBox
+                    CssClass="text_area"
+                    ID="bookingCodeSumWinSwitchOver"
+                    Width="40px"
+                    Text="0" />
+                    <com:TRangeValidator
+                        ValidationGroup="Group1"
+                        Display="Dynamic"
+                        ControlToValidate="bookingCodeSumWinSwitchOver"
+                        DataType="Integer"
+                        MinValue="0"
+                        MaxValue="255"
+                        Text="<%[Input must be between 0 and 255]%>" />
+
+              </tr>
+
+
+              <tr>
+                <td valign="top" class="key"><span onmouseover="Tip('<%[This field indicates how many hours the time is going to be set ahead or back for a summertime/wintertime<br/>switch-over. If this value is set on 0, there will be no summertime/wintertime switch-over.]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Switch Over Leap]%></span></td>
+                <td>
+                    <com:TTextBox
+                    CssClass="text_area"
+                    ID="switchOverLeap"
+                    Width="40px"
+                    Text="0" />
+                    <com:TRangeValidator
+                        ValidationGroup="Group1"
+                        Display="Dynamic"
+                        ControlToValidate="switchOverLeap"
+                        DataType="Integer"
+                        MinValue="0"
+                        MaxValue="9"
+                        Text="<%[Input must be between 0 and 9]%>" />
+                </td>
+              </tr>
+
+
+              <tr>
+                <td valign="top" class="key"><span onmouseover="Tip('<%[For this time (in seconds) it is waited for an input. If there is no input during this time, it will leap to the main menu.]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Waiting Time Input]%></span></td>
+                <td>
+                    <com:TTextBox
+                    CssClass="text_area"
+                    ID="waitingTimeInput"
+                    Width="40px"
+                    Text="0" />
+                    <com:TRangeValidator
+                        ValidationGroup="Group1"
+                        Display="Dynamic"
+                        ControlToValidate="waitingTimeInput"
+                        DataType="Integer"
+                        MinValue="0"
+                        MaxValue="99"
+                        Text="<%[Input must be between 0 and 99]%>" />
+                </td>
+              </tr>
+
+
+              <tr>
+                <td valign="top" class="key"><span onmouseover="Tip('<%[For this time (in seconds) outputs like confirmations and error messages are monitored.]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Monitoring Time]%></span></td>
+                <td>
+                    <com:TTextBox
+                    CssClass="text_area"
+                    ID="monitoringTime"
+                    Width="40px"
+                    Text="0" />
+                    <com:TRangeValidator
+                        ValidationGroup="Group1"
+                        Display="Dynamic"
+                        ControlToValidate="monitoringTime"
+                        DataType="Integer"
+                        MinValue="0"
+                        MaxValue="99"
+                        Text="<%[Input must be between 0 and 99]%>" />
+                </td>
+              </tr>
+
+
+              <tr>
+                <td valign="top" class="key"><span onmouseover="Tip('<%[For this time (in seconds) the confirmation of a time booking is monitored on time attendance terminals<br/>until it is changed to access input or access confirmation.]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Monitoring Changing Time]%></span></td>
+                <td>
+                    <com:TTextBox
+                    CssClass="text_area"
+                    ID="monitorinChangingTime"
+                    Width="40px"
+                    Text="0" />
+                    <com:TRangeValidator
+                        ValidationGroup="Group1"
+                        Display="Dynamic"
+                        ControlToValidate="monitorinChangingTime"
+                        DataType="Integer"
+                        MinValue="0"
+                        MaxValue="99"
+                        Text="<%[Input must be between 0 and 99]%>" />
+                </td>
+              </tr>
+
+              <tr>
+                <td valign="top" class="key"><span onmouseover="Tip('<%[This flag indicated the type of card reader]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Card reader type]%></span></td>
+                <td>
+                  <com:TDropDownList ID="cardReaderType">
+                    <com:TListItem Text="<%[No card reader]%>" Value="0"  />
+                    <com:TListItem Text="<%[Magnetic reader,Contactless reader, Smart card]%>" Value="1"  Selected="true" />
+                    <com:TListItem Text="<%[Chip card reader 50 %]%>" Value="2"  />
+                    <com:TListItem Text="<%[Chip card reader 100 %]%>" Value="3"  />
+                  </com:TDropDownList>
+                </td>
+              </tr>
+
+
+            </tbody>
+          </table>
+      </fieldset>
+
+     <fieldset class="adminform">
+     <legend><%[Access Configuration]%></legend>
+          <table class="admintable" cellspacing="1">
+            <tbody>
+              <tr>
+                <td valign="top" class="key"><span onmouseover="Tip('<%[Maximum of door open time (in seconds)]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Maximum of door open time (in seconds)]%></span></td>
+                <td>
+                    <com:TTextBox
+                    CssClass="text_area"
+                    ID="maxDoorOpenTime"
+                    Width="40px"
+                    Text="0" />
+                    <com:TRangeValidator
+                        ValidationGroup="Group1"
+                        Display="Dynamic"
+                        ControlToValidate="maxDoorOpenTime"
+                        DataType="Integer"
+                        MinValue="0"
+                        MaxValue="99"
+                        Text="<%[Input must be between 0 and 99]%>" />
+                </td>
+              </tr>
+
+              <tr>
+                <td valign="top" class="key"><span onmouseover="Tip('<%[Warning time for door open time (in seconds)]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Warning time for door open time (in seconds)]%></span></td>
+                <td>
+                    <com:TTextBox
+                    CssClass="text_area"
+                    ID="warningTimeDoorOpenTime"
+                    Width="40px"
+                    Text="0" />
+                    <com:TRangeValidator
+                        ValidationGroup="Group1"
+                        Display="Dynamic"
+                        ControlToValidate="warningTimeDoorOpenTime"
+                        DataType="Integer"
+                        MinValue="0"
+                        MaxValue="99"
+                        Text="<%[Input must be between 0 and 99]%>" />
+                </td>
+              </tr>
+
+              <tr>
+                <td valign="top" class="key"><span onmouseover="Tip('<%[Unlocking time (in seconds)]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Unlocking time (in seconds)]%></span></td>
+                <td>
+                    <com:TTextBox
+                    CssClass="text_area"
+                    ID="unlockingTime"
+                    Width="40px"
+                    Text="0" />
+                    <com:TRangeValidator
+                        ValidationGroup="Group1"
+                        Display="Dynamic"
+                        ControlToValidate="unlockingTime"
+                        DataType="Integer"
+                        MinValue="0"
+                        MaxValue="99"
+                        Text="<%[Input must be between 0 and 99]%>" />
+
+                </td>
+              </tr>
+
+              <tr>
+                <td valign="top" class="key"><span onmouseover="Tip('<%[Configure the behaviour of the relay 1<br/>If there is set 0 at a relay as relaytime, the relay is bistable.<br/>If there is set a time unequal to 0, the relay is monostable with the set time.<br/>If there is set 0 at a door open alarm relay as relaytime, an alarm will be activatet and stays active as long<br/>as the door is closed again. If the time is unequal to 0 the alarm is active for the set time.]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Relay 1]%></span></td>
+                <td>
+                  <com:TDropDownList ID="relay1">
+                    <com:TListItem Text="<%[Do not use]%>" Value="0"  />
+                    <com:TListItem Text="<%[Unlocking active energized]%>" Value="1"  />
+                    <com:TListItem Text="<%[Unlocking passive energized]%>" Value="2"  />
+                    <com:TListItem Text="<%[Alarm suppression active energized]%>" Value="3"  />
+                    <com:TListItem Text="<%[Alarm suppression passive energized]%>" Value="4"  />
+                    <com:TListItem Text="<%[Door open alarm active energized]%>" Value="5"  />
+                    <com:TListItem Text="<%[Door open alarm passive energized]%>" Value="6"  />
+                    <com:TListItem Text="<%[Hold-up code active energized]%>" Value="7"  />
+                    <com:TListItem Text="<%[Hold-up code passive energized]%>" Value="8"  />
+                    <com:TListItem Text="<%[Entering active energized]%>" Value="B"  />
+                    <com:TListItem Text="<%[Entering passive energized]%>" Value="C"  />
+                    <com:TListItem Text="<%[Exiting active energized]%>" Value="D"  />
+                    <com:TListItem Text="<%[Exiting passive energized]%>" Value="E"  />
+                    <com:TListItem Text="<%[Video function active energized]%>" Value="F"  />
+                    <com:TListItem Text="<%[Master active energized]%>" Value="G"  />
+                    <com:TListItem Text="<%[Master passive energized]%>" Value="H"  />
+                    <com:TListItem Text="<%[Relay (always with PIN Code) active energized]%>" Value="I"  />
+                    <com:TListItem Text="<%[Relay (always with PIN Code) passive energized]%>" Value="J"  />
+                    <com:TListItem Text="<%[Relay (PIN Code selectable via schedule) active energized]%>" Value="K"  />
+                    <com:TListItem Text="<%[Relay (PIN Code selectable via schedule) passive energized]%>" Value="L"  />
+                  </com:TDropDownList>
+                </td>
+              </tr>
+
+
+              <tr>
+                <td valign="top" class="key"><span onmouseover="Tip('<%[Please consider that the time for the unlocking relay can be set in the field of its own starting with position 16.<br/>The relay time can be set from 0 or 1 up to 99 seconds depending on the type of relay. The time must<br/>exceed 0 for the setting of hold-up code or for video function.]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Time for Relay 1]%></span></td>
+                <td>
+                    <com:TTextBox
+                    CssClass="text_area"
+                    ID="timeRelay1"
+                    Width="40px"
+                    Text="0" />
+                    <com:TRangeValidator
+                        ValidationGroup="Group1"
+                        Display="Dynamic"
+                        ControlToValidate="timeRelay1"
+                        DataType="Integer"
+                        MinValue="0"
+                        MaxValue="99"
+                        Text="<%[Input must be between 0 and 99]%>" />
+                </td>
+              </tr>
+
+              <tr>
+                <td valign="top" class="key"><span onmouseover="Tip('<%[Configure the behaviour of the relay 2<br/>If there is set 0 at a relay as relaytime, the relay is bistable.<br/>If there is set a time unequal to 0, the relay is monostable with the set time.<br/>If there is set 0 at a door open alarm relay as relaytime, an alarm will be activatet and stays active as long<br/>as the door is closed again. If the time is unequal to 0 the alarm is active for the set time.]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Relay 2]%></span></td>
+                <td>
+                  <com:TDropDownList ID="relay2">
+                    <com:TListItem Text="<%[Do not use]%>" Value="0"  />
+                    <com:TListItem Text="<%[Unlocking active energized]%>" Value="1"  />
+                    <com:TListItem Text="<%[Unlocking passive energized]%>" Value="2"  />
+                    <com:TListItem Text="<%[Alarm suppression active energized]%>" Value="3"  />
+                    <com:TListItem Text="<%[Alarm suppression passive energized]%>" Value="4"  />
+                    <com:TListItem Text="<%[Door open alarm active energized]%>" Value="5"  />
+                    <com:TListItem Text="<%[Door open alarm passive energized]%>" Value="6"  />
+                    <com:TListItem Text="<%[Hold-up code active energized]%>" Value="7"  />
+                    <com:TListItem Text="<%[Hold-up code passive energized]%>" Value="8"  />
+                    <com:TListItem Text="<%[Entering active energized]%>" Value="B"  />
+                    <com:TListItem Text="<%[Entering passive energized]%>" Value="C"  />
+                    <com:TListItem Text="<%[Exiting active energized]%>" Value="D"  />
+                    <com:TListItem Text="<%[Exiting passive energized]%>" Value="E"  />
+                    <com:TListItem Text="<%[Video function active energized]%>" Value="F"  />
+                    <com:TListItem Text="<%[Master active energized]%>" Value="G"  />
+                    <com:TListItem Text="<%[Master passive energized]%>" Value="H"  />
+                    <com:TListItem Text="<%[Relay (always with PIN Code) active energized]%>" Value="I"  />
+                    <com:TListItem Text="<%[Relay (always with PIN Code) passive energized]%>" Value="J"  />
+                    <com:TListItem Text="<%[Relay (PIN Code selectable via schedule) active energized]%>" Value="K"  />
+                    <com:TListItem Text="<%[Relay (PIN Code selectable via schedule) passive energized]%>" Value="L"  />
+                  </com:TDropDownList>
+                </td>
+              </tr>
+
+              <tr>
+                <td valign="top" class="key"><span onmouseover="Tip('<%[Please consider that the time for the unlocking relay can be set in the field of its own starting with position 16.<br/>The relay time can be set from 0 or 1 up to 99 seconds depending on the type of relay. The time must<br/>exceed 0 for the setting of hold-up code or for video function.]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Time for Relay 2]%></span></td>
+                <td>
+                    <com:TTextBox
+                    CssClass="text_area"
+                    ID="timeRelay2"
+                    Width="40px"
+                    Text="0" />
+                    <com:TRangeValidator
+                        ValidationGroup="Group1"
+                        Display="Dynamic"
+                        ControlToValidate="timeRelay2"
+                        DataType="Integer"
+                        MinValue="0"
+                        MaxValue="99"
+                        Text="<%[Input must be between 0 and 99]%>" />
+                </td>
+              </tr>
+
+
+              <tr>
+                <td valign="top" class="key"><span onmouseover="Tip('<%[Configure the behaviour of the relay 3<br/>If there is set 0 at a relay as relaytime, the relay is bistable.<br/>If there is set a time unequal to 0, the relay is monostable with the set time.<br/>If there is set 0 at a door open alarm relay as relaytime, an alarm will be activatet and stays active as long<br/>as the door is closed again. If the time is unequal to 0 the alarm is active for the set time.]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Relay 3]%></span></td>
+                <td>
+                  <com:TDropDownList ID="relay3">
+                    <com:TListItem Text="<%[Do not use]%>" Value="0"  />
+                    <com:TListItem Text="<%[Unlocking active energized]%>" Value="1"  />
+                    <com:TListItem Text="<%[Unlocking passive energized]%>" Value="2"  />
+                    <com:TListItem Text="<%[Alarm suppression active energized]%>" Value="3"  />
+                    <com:TListItem Text="<%[Alarm suppression passive energized]%>" Value="4"  />
+                    <com:TListItem Text="<%[Door open alarm active energized]%>" Value="5"  />
+                    <com:TListItem Text="<%[Door open alarm passive energized]%>" Value="6"  />
+                    <com:TListItem Text="<%[Hold-up code active energized]%>" Value="7"  />
+                    <com:TListItem Text="<%[Hold-up code passive energized]%>" Value="8"  />
+                    <com:TListItem Text="<%[Entering active energized]%>" Value="B"  />
+                    <com:TListItem Text="<%[Entering passive energized]%>" Value="C"  />
+                    <com:TListItem Text="<%[Exiting active energized]%>" Value="D"  />
+                    <com:TListItem Text="<%[Exiting passive energized]%>" Value="E"  />
+                    <com:TListItem Text="<%[Video function active energized]%>" Value="F"  />
+                    <com:TListItem Text="<%[Master active energized]%>" Value="G"  />
+                    <com:TListItem Text="<%[Master passive energized]%>" Value="H"  />
+                    <com:TListItem Text="<%[Relay (always with PIN Code) active energized]%>" Value="I"  />
+                    <com:TListItem Text="<%[Relay (always with PIN Code) passive energized]%>" Value="J"  />
+                    <com:TListItem Text="<%[Relay (PIN Code selectable via schedule) active energized]%>" Value="K"  />
+                    <com:TListItem Text="<%[Relay (PIN Code selectable via schedule) passive energized]%>" Value="L"  />
+                  </com:TDropDownList>
+                </td>
+              </tr>
+
+              <tr>
+                <td valign="top" class="key"><span onmouseover="Tip('<%[Please consider that the time for the unlocking relay can be set in the field of its own starting with position 16.<br/>The relay time can be set from 0 or 1 up to 99 seconds depending on the type of relay. The time must<br/>exceed 0 for the setting of hold-up code or for video function.]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Time for Relay 3]%></span></td>
+                <td>
+                    <com:TTextBox
+                    CssClass="text_area"
+                    ID="timeRelay3"
+                    Width="40px"
+                    Text="0" />
+                    <com:TRangeValidator
+                        ValidationGroup="Group1"
+                        Display="Dynamic"
+                        ControlToValidate="timeRelay3"
+                        DataType="Integer"
+                        MinValue="0"
+                        MaxValue="99"
+                        Text="<%[Input must be between 0 and 99]%>" />
+                </td>
+              </tr>
+
+
+              <tr>
+                <td valign="top" class="key"><span onmouseover="Tip('<%[Configure the behaviour of the relay 3<br/>If there is set 0 at a relay as relaytime, the relay is bistable.<br/>If there is set a time unequal to 0, the relay is monostable with the set time.<br/>If there is set 0 at a door open alarm relay as relaytime, an alarm will be activatet and stays active as long<br/>as the door is closed again. If the time is unequal to 0 the alarm is active for the set time.]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Relay 4]%></span></td>
+                <td>
+                  <com:TDropDownList ID="relay4">
+                    <com:TListItem Text="<%[Do not use]%>" Value="0"  />
+                    <com:TListItem Text="<%[Unlocking active energized]%>" Value="1"  />
+                    <com:TListItem Text="<%[Unlocking passive energized]%>" Value="2"  />
+                    <com:TListItem Text="<%[Alarm suppression active energized]%>" Value="3"  />
+                    <com:TListItem Text="<%[Alarm suppression passive energized]%>" Value="4"  />
+                    <com:TListItem Text="<%[Door open alarm active energized]%>" Value="5"  />
+                    <com:TListItem Text="<%[Door open alarm passive energized]%>" Value="6"  />
+                    <com:TListItem Text="<%[Hold-up code active energized]%>" Value="7"  />
+                    <com:TListItem Text="<%[Hold-up code passive energized]%>" Value="8"  />
+                    <com:TListItem Text="<%[Entering active energized]%>" Value="B"  />
+                    <com:TListItem Text="<%[Entering passive energized]%>" Value="C"  />
+                    <com:TListItem Text="<%[Exiting active energized]%>" Value="D"  />
+                    <com:TListItem Text="<%[Exiting passive energized]%>" Value="E"  />
+                    <com:TListItem Text="<%[Video function active energized]%>" Value="F"  />
+                    <com:TListItem Text="<%[Master active energized]%>" Value="G"  />
+                    <com:TListItem Text="<%[Master passive energized]%>" Value="H"  />
+                    <com:TListItem Text="<%[Relay (always with PIN Code) active energized]%>" Value="I"  />
+                    <com:TListItem Text="<%[Relay (always with PIN Code) passive energized]%>" Value="J"  />
+                    <com:TListItem Text="<%[Relay (PIN Code selectable via schedule) active energized]%>" Value="K"  />
+                    <com:TListItem Text="<%[Relay (PIN Code selectable via schedule) passive energized]%>" Value="L"  />
+                  </com:TDropDownList>
+                </td>
+              </tr>
+
+              <tr>
+                <td valign="top" class="key"><span onmouseover="Tip('<%[Please consider that the time for the unlocking relay can be set in the field of its own starting with position 16.<br/>The relay time can be set from 0 or 1 up to 99 seconds depending on the type of relay. The time must<br/>exceed 0 for the setting of hold-up code or for video function.]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Time for Relay 4]%></span></td>
+                <td>
+                    <com:TTextBox
+                    CssClass="text_area"
+                    ID="timeRelay4"
+                    Width="40px"
+                    Text="0" />
+                    <com:TRangeValidator
+                        ValidationGroup="Group1"
+                        Display="Dynamic"
+                        ControlToValidate="timeRelay4"
+                        DataType="Integer"
+                        MinValue="0"
+                        MaxValue="99"
+                        Text="<%[Input must be between 0 and 99]%>" />
+                </td>
+              </tr>
+
+
+              <tr>
+                <td valign="top" class="key"><span onmouseover="Tip('<%[If an optokoppler is defined as enable for relay, the relay can only be set, if the optokoppler is - depending<br/>on the definition - bestromt or not bestromt. The relay can always be set back.]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Opto 1]%></span></td>
+                <td>
+                  <com:TDropDownList ID="opto1">
+                    <com:TListItem Text="<%[Do not use]%>" Value="0"  />
+                    <com:TListItem Text="<%[Door report bestromt if door open]%>" Value="1"  />
+                    <com:TListItem Text="<%[Door report bestromt if door closed]%>" Value="2"  />
+                    <com:TListItem Text="<%[Unlocking button bestromt if unlocking is desired]%>" Value="3"  />
+                    <com:TListItem Text="<%[Unlocking button bestromt if no unlocking is desired]%>" Value="4"  />
+                    <com:TListItem Text="<%[Barrier Entering and Exiting if bestromt]%>" Value="5"  />
+                    <com:TListItem Text="<%[Barrier Entering and Exiting if not bestromt]%>" Value="6"  />
+                    <com:TListItem Text="<%[Barrier Entering if bestromt]%>" Value="7"  />
+                    <com:TListItem Text="<%[Barrier Entering if not bestromt]%>" Value="8"  />
+                    <com:TListItem Text="<%[general alarm active bestromt]%>" Value="9"  />
+                    <com:TListItem Text="<%[general alarm passive bestromt]%>" Value="A"  />
+                    <com:TListItem Text="<%[general status]%>" Value="B"  />
+                    <com:TListItem Text="<%[general control 1 with booking at status change]%>" Value="C"  />
+                    <com:TListItem Text="<%[general control 2 with booking at status change]%>" Value="D"  />
+                    <com:TListItem Text="<%[lock report bestromt if key-bolt open]%>" Value="E"  />
+                    <com:TListItem Text="<%[lock report not bestromt if key-bolt open]%>" Value="F"  />
+                    <com:TListItem Text="<%[Enable for Relay if bestromt]%>" Value="G"  />
+                    <com:TListItem Text="<%[Enable for Relay if not bestromt]%>" Value="H"  />
+                    <com:TListItem Text="<%[suppress generally open if bestromt]%>" Value="I"  />
+                    <com:TListItem Text="<%[suppress generally open if not bestromt]%>" Value="J"  />
+
+                  </com:TDropDownList>
+                </td>
+              </tr>
+
+              <tr>
+                <td valign="top" class="key"><span onmouseover="Tip('<%[If an optokoppler is defined as enable for relay, the relay can only be set, if the optokoppler is - depending<br/>on the definition - bestromt or not bestromt. The relay can always be set back.]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Opto 2]%></span></td>
+                <td>
+                  <com:TDropDownList ID="opto2">
+                    <com:TListItem Text="<%[Do not use]%>" Value="0"  />
+                    <com:TListItem Text="<%[Door report bestromt if door open]%>" Value="1"  />
+                    <com:TListItem Text="<%[Door report bestromt if door closed]%>" Value="2"  />
+                    <com:TListItem Text="<%[Unlocking button bestromt if unlocking is desired]%>" Value="3"  />
+                    <com:TListItem Text="<%[Unlocking button bestromt if no unlocking is desired]%>" Value="4"  />
+                    <com:TListItem Text="<%[Barrier Entering and Exiting if bestromt]%>" Value="5"  />
+                    <com:TListItem Text="<%[Barrier Entering and Exiting if not bestromt]%>" Value="6"  />
+                    <com:TListItem Text="<%[Barrier Entering if bestromt]%>" Value="7"  />
+                    <com:TListItem Text="<%[Barrier Entering if not bestromt]%>" Value="8"  />
+                    <com:TListItem Text="<%[general alarm active bestromt]%>" Value="9"  />
+                    <com:TListItem Text="<%[general alarm passive bestromt]%>" Value="A"  />
+                    <com:TListItem Text="<%[general status]%>" Value="B"  />
+                    <com:TListItem Text="<%[general control 1 with booking at status change]%>" Value="C"  />
+                    <com:TListItem Text="<%[general control 2 with booking at status change]%>" Value="D"  />
+                    <com:TListItem Text="<%[lock report bestromt if key-bolt open]%>" Value="E"  />
+                    <com:TListItem Text="<%[lock report not bestromt if key-bolt open]%>" Value="F"  />
+                    <com:TListItem Text="<%[Enable for Relay if bestromt]%>" Value="G"  />
+                    <com:TListItem Text="<%[Enable for Relay if not bestromt]%>" Value="H"  />
+                    <com:TListItem Text="<%[suppress generally open if bestromt]%>" Value="I"  />
+                    <com:TListItem Text="<%[suppress generally open if not bestromt]%>" Value="J"  />
+
+                  </com:TDropDownList>
+                </td>
+              </tr>
+
+              <tr>
+                <td valign="top" class="key"><span onmouseover="Tip('<%[If an optokoppler is defined as enable for relay, the relay can only be set, if the optokoppler is - depending<br/>on the definition - bestromt or not bestromt. The relay can always be set back.]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Opto 3]%></span></td>
+                <td>
+                  <com:TDropDownList ID="opto3">
+                    <com:TListItem Text="<%[Do not use]%>" Value="0"  />
+                    <com:TListItem Text="<%[Door report bestromt if door open]%>" Value="1"  />
+                    <com:TListItem Text="<%[Door report bestromt if door closed]%>" Value="2"  />
+                    <com:TListItem Text="<%[Unlocking button bestromt if unlocking is desired]%>" Value="3"  />
+                    <com:TListItem Text="<%[Unlocking button bestromt if no unlocking is desired]%>" Value="4"  />
+                    <com:TListItem Text="<%[Barrier Entering and Exiting if bestromt]%>" Value="5"  />
+                    <com:TListItem Text="<%[Barrier Entering and Exiting if not bestromt]%>" Value="6"  />
+                    <com:TListItem Text="<%[Barrier Entering if bestromt]%>" Value="7"  />
+                    <com:TListItem Text="<%[Barrier Entering if not bestromt]%>" Value="8"  />
+                    <com:TListItem Text="<%[general alarm active bestromt]%>" Value="9"  />
+                    <com:TListItem Text="<%[general alarm passive bestromt]%>" Value="A"  />
+                    <com:TListItem Text="<%[general status]%>" Value="B"  />
+                    <com:TListItem Text="<%[general control 1 with booking at status change]%>" Value="C"  />
+                    <com:TListItem Text="<%[general control 2 with booking at status change]%>" Value="D"  />
+                    <com:TListItem Text="<%[lock report bestromt if key-bolt open]%>" Value="E"  />
+                    <com:TListItem Text="<%[lock report not bestromt if key-bolt open]%>" Value="F"  />
+                    <com:TListItem Text="<%[Enable for Relay if bestromt]%>" Value="G"  />
+                    <com:TListItem Text="<%[Enable for Relay if not bestromt]%>" Value="H"  />
+                    <com:TListItem Text="<%[suppress generally open if bestromt]%>" Value="I"  />
+                    <com:TListItem Text="<%[suppress generally open if not bestromt]%>" Value="J"  />
+
+                  </com:TDropDownList>
+                </td>
+              </tr>
+
+              <tr>
+                <td valign="top" class="key"><span onmouseover="Tip('<%[If an optokoppler is defined as enable for relay, the relay can only be set, if the optokoppler is - depending<br/>on the definition - bestromt or not bestromt. The relay can always be set back.]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Opto 4]%></span></td>
+                <td>
+                  <com:TDropDownList ID="opto4">
+                    <com:TListItem Text="<%[Do not use]%>" Value="0"  />
+                    <com:TListItem Text="<%[Door report bestromt if door open]%>" Value="1"  />
+                    <com:TListItem Text="<%[Door report bestromt if door closed]%>" Value="2"  />
+                    <com:TListItem Text="<%[Unlocking button bestromt if unlocking is desired]%>" Value="3"  />
+                    <com:TListItem Text="<%[Unlocking button bestromt if no unlocking is desired]%>" Value="4"  />
+                    <com:TListItem Text="<%[Barrier Entering and Exiting if bestromt]%>" Value="5"  />
+                    <com:TListItem Text="<%[Barrier Entering and Exiting if not bestromt]%>" Value="6"  />
+                    <com:TListItem Text="<%[Barrier Entering if bestromt]%>" Value="7"  />
+                    <com:TListItem Text="<%[Barrier Entering if not bestromt]%>" Value="8"  />
+                    <com:TListItem Text="<%[general alarm active bestromt]%>" Value="9"  />
+                    <com:TListItem Text="<%[general alarm passive bestromt]%>" Value="A"  />
+                    <com:TListItem Text="<%[general status]%>" Value="B"  />
+                    <com:TListItem Text="<%[general control 1 with booking at status change]%>" Value="C"  />
+                    <com:TListItem Text="<%[general control 2 with booking at status change]%>" Value="D"  />
+                    <com:TListItem Text="<%[lock report bestromt if key-bolt open]%>" Value="E"  />
+                    <com:TListItem Text="<%[lock report not bestromt if key-bolt open]%>" Value="F"  />
+                    <com:TListItem Text="<%[Enable for Relay if bestromt]%>" Value="G"  />
+                    <com:TListItem Text="<%[Enable for Relay if not bestromt]%>" Value="H"  />
+                    <com:TListItem Text="<%[suppress generally open if bestromt]%>" Value="I"  />
+                    <com:TListItem Text="<%[suppress generally open if not bestromt]%>" Value="J"  />
+
+                  </com:TDropDownList>
+                </td>
+              </tr>
+
+              <tr>
+                <td valign="top" class="key"><span onmouseover="Tip('<%[Enter/exit information]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Enter/exit information]%></span></td>
+                <td>
+                  <com:TDropDownList ID="enterExitInfo">
+                    <com:TListItem Text="<%[Terminal entering, no subreader]%>" Value="0"  />
+                    <com:TListItem Text="<%[Terminal exiting, no subreader]%>" Value="1"  />
+                    <com:TListItem Text="<%[Terminal entering, subreader exiting]%>" Value="2"  />
+                    <com:TListItem Text="<%[Terminal exiting, subreader entering]%>" Value="3"  />
+                  </com:TDropDownList>
+                </td>
+              </tr>
+
+              <tr>
+                <td valign="top" class="key"><span onmouseover="Tip('<%[TODO]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Autonomous unlocking]%></span></td>
+                <td>
+                    <com:TCheckBox Text="" ID="autoUnlocking" Checked="true" />
+                </td>
+              </tr>
+
+              <tr>
+                <td valign="top" class="key"><span onmouseover="Tip('<%[If there is no autonomous unlocking, this checkbox must be set on.]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Lock and unlock by command possible]%></span></td>
+                <td>
+                    <com:TCheckBox Text="" ID="lockUnlockCommand"/>
+                </td>
+              </tr>
+
+              <tr>
+                <td valign="top" class="key"><span onmouseover="Tip('<%[If an X is registered, the number of the personal PIN-Code must be keyd in at this point. Otherwise use the number as stated.]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Hold-up-PIN-Code (8 digits)]%></span></td>
+                <td>
+                    <com:TTextBox
+                    CssClass="text_area"
+                    ID="holdUpPINCode"
+                    Width="80px"
+                    Text="XXXXXXXX"
+                    MaxLength="8" />
+                </td>
+              </tr>
+
+              <tr>
+                <td valign="top" class="key"><span onmouseover="Tip('<%[Two person are needed to have access]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Two person access]%></span></td>
+                <td>
+                    <com:TCheckBox Text="" ID="twoPersonAccess"/>
+                </td>
+              </tr>
+
+
+              <tr>
+                <td valign="top" class="key"><span onmouseover="Tip('<%[If this value is unequal to 0, there must take place 600 new accesses at this door or a certain time must<br/>pass by for renewing a person\'s access authorization<br/>This value indicates the time that lies between the automatic shift in the repeated shift register. The<br/>repeated shift register includes 600 positions. The stated value is multiplied with 100 ms. Therefore, value<br/>1 corresponds with a stop of 1 minute. Attention! Time shortens for 100 ms per booking that is made.<br/>]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Barriere at repeated access]%></span></td>
+                <td>
+                    <com:TTextBox
+                    CssClass="text_area"
+                    ID="barriereRepeatedAccess"
+                    Width="40px"
+                    Text="0" />
+                    <com:TRangeValidator
+                        ValidationGroup="Group1"
+                        Display="Dynamic"
+                        ControlToValidate="barriereRepeatedAccess"
+                        DataType="Integer"
+                        MinValue="0"
+                        MaxValue="99"
+                        Text="<%[Input must be between 0 and 999]%>" />
+                </td>
+              </tr>
+
+
+              <tr>
+                <td valign="top" class="key"><span onmouseover="Tip('<%[TODO]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Anti-pass active]%></span></td>
+                <td>
+                    <com:TCheckBox Text="" ID="antiPassActive"/>
+                </td>
+              </tr>
+
+
+              <tr>
+                <td valign="top" class="key"><span onmouseover="Tip('<%[If there exists a valid relay plan, the terminal will demand a relay number. If authorization is given for the<br/>chosen relay, the relay will be activated and the number will be reported to the option information of the booking.]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Relay expander control]%></span></td>
+                <td>
+                  <com:TDropDownList ID="relayExpanderControl">
+                    <com:TListItem Text="<%[The relay of the relay expander is controlled with the unlocking relay]%>" Value="0"  />
+                    <com:TListItem Text="<%[Relay expander for safe deposit box]%>" Value="1"  />
+                  </com:TDropDownList>
+                </td>
+              </tr>
+
+              <tr>
+                <td valign="top" class="key"><span onmouseover="Tip('<%[Unit of the maximum door open [seconds or minutes]]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Door open time unit]%></span></td>
+                <td>
+                  <com:TDropDownList ID="doorOpenTimeUnit">
+                    <com:TListItem Text="<%[Maximum door open time in seconds]%>" Value="0"  />
+                    <com:TListItem Text="<%[Maximum door open time in minutes]%>" Value="1"  />
+                  </com:TDropDownList>
+                </td>
+              </tr>
+
+            </tbody>
+          </table>
+      </fieldset>
+
+
+
+
+     <fieldset class="adminform">
+     <legend><%[Optional company ID]%></legend>
+          <table class="admintable" cellspacing="1">
+            <tbody>
+
+              <tr>
+                <td valign="top" class="key"><span onmouseover="Tip('<%[Up to 11 different card groupscan be authorized on the terminal by the optional company ID]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Optional company ID 1]%></span></td>
+                <td>
+                    <com:TTextBox
+                    CssClass="text_area"
+                    ID="optionalCompanyID1"
+                    Width="40px"
+                    Text="0" />
+                    <com:TRangeValidator
+                        ValidationGroup="Group1"
+                        Display="Dynamic"
+                        ControlToValidate="optionalCompanyID1"
+                        DataType="Integer"
+                        MinValue="0"
+                        MaxValue="9999"
+                        Text="<%[Input must be between 0 and 9999]%>" />
+                </td>
+              </tr>
+
+              <tr>
+                <td valign="top" class="key"><span onmouseover="Tip('<%[Up to 11 different card groupscan be authorized on the terminal by the optional company ID]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Optional company ID 2]%></span></td>
+                <td>
+                    <com:TTextBox
+                    CssClass="text_area"
+                    ID="optionalCompanyID2"
+                    Width="40px"
+                    Text="0" />
+                    <com:TRangeValidator
+                        ValidationGroup="Group1"
+                        Display="Dynamic"
+                        ControlToValidate="optionalCompanyID2"
+                        DataType="Integer"
+                        MinValue="0"
+                        MaxValue="9999"
+                        Text="<%[Input must be between 0 and 9999]%>" />
+                </td>
+              </tr>
+
+              <tr>
+                <td valign="top" class="key"><span onmouseover="Tip('<%[Up to 11 different card groupscan be authorized on the terminal by the optional company ID]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Optional company ID 3]%></span></td>
+                <td>
+                    <com:TTextBox
+                    CssClass="text_area"
+                    ID="optionalCompanyID3"
+                    Width="40px"
+                    Text="0" />
+                    <com:TRangeValidator
+                        ValidationGroup="Group1"
+                        Display="Dynamic"
+                        ControlToValidate="optionalCompanyID3"
+                        DataType="Integer"
+                        MinValue="0"
+                        MaxValue="9999"
+                        Text="<%[Input must be between 0 and 9999]%>" />
+                </td>
+              </tr>
+
+              <tr>
+                <td valign="top" class="key"><span onmouseover="Tip('<%[Up to 11 different card groupscan be authorized on the terminal by the optional company ID]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Optional company ID 4]%></span></td>
+                <td>
+                    <com:TTextBox
+                    CssClass="text_area"
+                    ID="optionalCompanyID4"
+                    Width="40px"
+                    Text="0" />
+                    <com:TRangeValidator
+                        ValidationGroup="Group1"
+                        Display="Dynamic"
+                        ControlToValidate="optionalCompanyID4"
+                        DataType="Integer"
+                        MinValue="0"
+                        MaxValue="9999"
+                        Text="<%[Input must be between 0 and 9999]%>" />
+                </td>
+              </tr>
+
+              <tr>
+                <td valign="top" class="key"><span onmouseover="Tip('<%[Up to 11 different card groupscan be authorized on the terminal by the optional company ID]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Optional company ID 5]%></span></td>
+                <td>
+                    <com:TTextBox
+                    CssClass="text_area"
+                    ID="optionalCompanyID5"
+                    Width="40px"
+                    Text="0" />
+                    <com:TRangeValidator
+                        ValidationGroup="Group1"
+                        Display="Dynamic"
+                        ControlToValidate="optionalCompanyID5"
+                        DataType="Integer"
+                        MinValue="0"
+                        MaxValue="9999"
+                        Text="<%[Input must be between 0 and 9999]%>" />
+                </td>
+              </tr>
+
+              <tr>
+                <td valign="top" class="key"><span onmouseover="Tip('<%[Up to 11 different card groupscan be authorized on the terminal by the optional company ID]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Optional company ID 6]%></span></td>
+                <td>
+                    <com:TTextBox
+                    CssClass="text_area"
+                    ID="optionalCompanyID6"
+                    Width="40px"
+                    Text="0" />
+                    <com:TRangeValidator
+                        ValidationGroup="Group1"
+                        Display="Dynamic"
+                        ControlToValidate="optionalCompanyID6"
+                        DataType="Integer"
+                        MinValue="0"
+                        MaxValue="9999"
+                        Text="<%[Input must be between 0 and 9999]%>" />
+                </td>
+              </tr>
+
+              <tr>
+                <td valign="top" class="key"><span onmouseover="Tip('<%[Up to 11 different card groupscan be authorized on the terminal by the optional company ID]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Optional company ID 7]%></span></td>
+                <td>
+                    <com:TTextBox
+                    CssClass="text_area"
+                    ID="optionalCompanyID7"
+                    Width="40px"
+                    Text="0" />
+                    <com:TRangeValidator
+                        ValidationGroup="Group1"
+                        Display="Dynamic"
+                        ControlToValidate="optionalCompanyID7"
+                        DataType="Integer"
+                        MinValue="0"
+                        MaxValue="9999"
+                        Text="<%[Input must be between 0 and 9999]%>" />
+                </td>
+              </tr>
+
+              <tr>
+                <td valign="top" class="key"><span onmouseover="Tip('<%[Up to 11 different card groupscan be authorized on the terminal by the optional company ID]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Optional company ID 8]%></span></td>
+                <td>
+                    <com:TTextBox
+                    CssClass="text_area"
+                    ID="optionalCompanyID8"
+                    Width="40px"
+                    Text="0" />
+                    <com:TRangeValidator
+                        ValidationGroup="Group1"
+                        Display="Dynamic"
+                        ControlToValidate="optionalCompanyID8"
+                        DataType="Integer"
+                        MinValue="0"
+                        MaxValue="9999"
+                        Text="<%[Input must be between 0 and 9999]%>" />
+                </td>
+              </tr>
+
+              <tr>
+                <td valign="top" class="key"><span onmouseover="Tip('<%[Up to 11 different card groupscan be authorized on the terminal by the optional company ID]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Optional company ID 9]%></span></td>
+                <td>
+                    <com:TTextBox
+                    CssClass="text_area"
+                    ID="optionalCompanyID9"
+                    Width="40px"
+                    Text="0" />
+                    <com:TRangeValidator
+                        ValidationGroup="Group1"
+                        Display="Dynamic"
+                        ControlToValidate="optionalCompanyID9"
+                        DataType="Integer"
+                        MinValue="0"
+                        MaxValue="9999"
+                        Text="<%[Input must be between 0 and 9999]%>" />
+                </td>
+              </tr>
+
+              <tr>
+                <td valign="top" class="key"><span onmouseover="Tip('<%[Up to 11 different card groupscan be authorized on the terminal by the optional company ID]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Optional company ID 10]%></span></td>
+                <td>
+                    <com:TTextBox
+                    CssClass="text_area"
+                    ID="optionalCompanyID10"
+                    Width="40px"
+                    Text="0" />
+                    <com:TRangeValidator
+                        ValidationGroup="Group1"
+                        Display="Dynamic"
+                        ControlToValidate="optionalCompanyID10"
+                        DataType="Integer"
+                        MinValue="0"
+                        MaxValue="9999"
+                        Text="<%[Input must be between 0 and 9999]%>" />
+                </td>
+              </tr>
+
+
+            </tbody>
+          </table>
+      </fieldset>
+
+
+     <fieldset class="adminform">
+     <legend><%[Optional card data]%></legend>
+          <table class="admintable" cellspacing="1">
+            <tbody>
+              <tr>
+
+
+                <td valign="top" class="key"><span onmouseover="Tip('<%[The card structure determines the lay-out of card contents. Such card contents are card number, card<br/>version, plant number (company ID), branch key, country code, card type (personnel card, cost account<br/>card etc.) and lots of more.]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Card structur]%></span></td>
+                <td>
+                    <com:TTextBox
+                    CssClass="text_area"
+                    ID="optionalCardStructur"
+                    Width="40px"
+                    Text="1" />
+                    <com:TRangeValidator
+                        ValidationGroup="Group1"
+                        Display="Dynamic"
+                        ControlToValidate="optionalCardStructur"
+                        DataType="Integer"
+                        MinValue="0"
+                        MaxValue="99"
+                        Text="<%[Input must be between 0 and 99]%>" />
+                </td>
+              </tr>
+
+              <tr>
+                <td valign="top" class="key"><span onmouseover="Tip('<%[The Gantner National Code in the Legic terminalformat2.0 serves administration of installations in<br/>different countries. If the GNC is set on 00 in the terminal, the GNC of the data carrier will not be tested. If<br/>the GNC is unequal to 00 in the terminal, the GNC of the data carrier must correspond with the one in the<br/>terminal.]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Gantner National Code]%></span></td>
+                <td>
+                    <com:TTextBox
+                    CssClass="text_area"
+                    ID="optionalGantnerNationalCode"
+                    Width="40px"
+                    Text="0" />
+                    <com:TRangeValidator
+                        ValidationGroup="Group1"
+                        Display="Dynamic"
+                        ControlToValidate="optionalGantnerNationalCode"
+                        DataType="Integer"
+                        MinValue="0"
+                        MaxValue="99"
+                        Text="<%[Input must be between 0 and 99]%>" />
+                </td>
+              </tr>
+
+              <tr>
+                <td valign="top" class="key"><span onmouseover="Tip('<%[The Gantner Customer Code in the Legic terminalformat 2.0 serves for the issue of number circles especially<br/>for Gantner partners who purchase high quantities of data carrriers. This code specifies which Gantner<br/>Customer Codes are evaluated by the terminal.]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Gantner customer code 1]%></span></td>
+                <td>
+                    <com:TTextBox
+                    CssClass="text_area"
+                    ID="optionalGantnerCustomerCode1"
+                    Width="40px"
+                    Text="22" />
+                    <com:TRangeValidator
+                        ValidationGroup="Group1"
+                        Display="Dynamic"
+                        ControlToValidate="optionalGantnerCustomerCode1"
+                        DataType="Integer"
+                        MinValue="0"
+                        MaxValue="99"
+                        Text="<%[Input must be between 0 and 99]%>" />
+                </td>
+              </tr>
+
+              <tr>
+                <td valign="top" class="key"><span onmouseover="Tip('<%[The Gantner Customer Code in the Legic terminalformat 2.0 serves for the issue of number circles especially<br/>for Gantner partners who purchase high quantities of data carrriers. This code specifies which Gantner<br/>Customer Codes are evaluated by the terminal.]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Gantner customer code 2]%></span></td>
+                <td>
+                    <com:TTextBox
+                    CssClass="text_area"
+                    ID="optionalGantnerCustomerCode2"
+                    Width="40px"
+                    Text="0" />
+                    <com:TRangeValidator
+                        ValidationGroup="Group1"
+                        Display="Dynamic"
+                        ControlToValidate="optionalGantnerCustomerCode2"
+                        DataType="Integer"
+                        MinValue="0"
+                        MaxValue="99"
+                        Text="<%[Input must be between 0 and 99]%>" />
+                </td>
+              </tr>
+
+              <tr>
+                <td valign="top" class="key"><span onmouseover="Tip('<%[The Gantner Customer Code in the Legic terminalformat 2.0 serves for the issue of number circles especially<br/>for Gantner partners who purchase high quantities of data carrriers. This code specifies which Gantner<br/>Customer Codes are evaluated by the terminal.]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Gantner customer code 3]%></span></td>
+                <td>
+                    <com:TTextBox
+                    CssClass="text_area"
+                    ID="optionalGantnerCustomerCode3"
+                    Width="40px"
+                    Text="21" />
+                    <com:TRangeValidator
+                        ValidationGroup="Group1"
+                        Display="Dynamic"
+                        ControlToValidate="optionalGantnerCustomerCode3"
+                        DataType="Integer"
+                        MinValue="0"
+                        MaxValue="99"
+                        Text="<%[Input must be between 0 and 99]%>" />
+                </td>
+              </tr>
+
+              <tr>
+                <td valign="top" class="key"><span onmouseover="Tip('<%[The Gantner Customer Code in the Legic terminalformat 2.0 serves for the issue of number circles especially<br/>for Gantner partners who purchase high quantities of data carrriers. This code specifies which Gantner<br/>Customer Codes are evaluated by the terminal.]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Gantner customer code 4]%></span></td>
+                <td>
+                    <com:TTextBox
+                    CssClass="text_area"
+                    ID="optionalGantnerCustomerCode4"
+                    Width="40px"
+                    Text="0" />
+                    <com:TRangeValidator
+                        ValidationGroup="Group1"
+                        Display="Dynamic"
+                        ControlToValidate="optionalGantnerCustomerCode4"
+                        DataType="Integer"
+                        MinValue="0"
+                        MaxValue="99"
+                        Text="<%[Input must be between 0 and 99]%>" />
+                </td>
+              </tr>
+
+              <tr>
+                <td valign="top" class="key"><span onmouseover="Tip('<%[The Gantner Customer Code in the Legic terminalformat 2.0 serves for the issue of number circles especially<br/>for Gantner partners who purchase high quantities of data carrriers. This code specifies which Gantner<br/>Customer Codes are evaluated by the terminal.]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Gantner customer code 5]%></span></td>
+                <td>
+                    <com:TTextBox
+                    CssClass="text_area"
+                    ID="optionalGantnerCustomerCode5"
+                    Width="40px"
+                    Text="0" />
+                    <com:TRangeValidator
+                        ValidationGroup="Group1"
+                        Display="Dynamic"
+                        ControlToValidate="optionalGantnerCustomerCode5"
+                        DataType="Integer"
+                        MinValue="0"
+                        MaxValue="99"
+                        Text="<%[Input must be between 0 and 99]%>" />
+                </td>
+              </tr>
+
+              <tr>
+                <td valign="top" class="key"><span onmouseover="Tip('<%[TODO]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Optional reader initialisation]%></span></td>
+                <td>
+                    <com:TTextBox
+                    CssClass="text_area"
+                    ID="optionalReaderInitialisation"
+                    Width="200px"
+                    Text="" />                    
+                </td>
+              </tr>
+
+              <tr>
+                <td valign="top" class="key"><span onmouseover="Tip('<%[TODO]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Optional table card type]%></span></td>
+                <td>
+                    <com:TTextBox
+                    CssClass="text_area"
+                    ID="optionalTableCardType"
+                    Width="200px"
+                    Text="" />
+                </td>
+              </tr>
+
+            </tbody>
+          </table>
+      </fieldset>
+
+    <%include Application.common.template.footerContent %>
+</com:TContent>

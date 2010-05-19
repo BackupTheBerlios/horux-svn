@@ -1,0 +1,91 @@
+--
+-- Structure de la table `hr_gantner_standalone_action`
+--
+
+CREATE TABLE IF NOT EXISTS `hr_gantner_standalone_action` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `type` set('user','key','key_user','reason','balancesText','balances','reinit') NOT NULL,
+  `func` set('add','sub') NOT NULL,
+  `userId` int(11) NOT NULL DEFAULT '0',
+  `keyId` int(11) NOT NULL DEFAULT '0',
+  `deviceId` int(11) NOT NULL DEFAULT '0',
+  `param` varchar(255) NOT NULL DEFAULT '',
+  `param2` varchar(255) NOT NULL DEFAULT '',
+  `param3` varchar(255) NOT NULL,
+  `reasonId` varchar(30) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `hr_gantner_AccessTerminal`
+--
+
+CREATE TABLE IF NOT EXISTS `hr_gantner_AccessTerminal` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_device` int(11) NOT NULL,
+  `ipOrDhcp` varchar(40) NOT NULL,
+  `userMemory` int(11) NOT NULL,
+  `accessMemory` int(11) NOT NULL,
+  `subscriberNumber` int(11) NOT NULL,
+  `plantNumber` int(11) NOT NULL,
+  `mainCompIdCard` int(11) NOT NULL,
+  `bookingCodeSumWinSwitchOver` int(11) NOT NULL,
+  `switchOverLeap` int(11) NOT NULL,
+  `waitingTimeInput` int(11) NOT NULL,
+  `monitoringTime` int(11) NOT NULL,
+  `monitorinChangingTime` int(11) NOT NULL,
+  `cardReaderType` int(11) NOT NULL,
+  `normalRelayPlan` int(11) NOT NULL,
+  `specialRelayPlan` int(11) NOT NULL,
+  `maxDoorOpenTime` int(11) NOT NULL,
+  `warningTimeDoorOpenTime` int(11) NOT NULL,
+  `unlockingTime` int(11) NOT NULL,
+  `relay1` int(11) NOT NULL,
+  `timeRelay1` int(11) NOT NULL,
+  `relay2` int(11) NOT NULL,
+  `timeRelay2` int(11) NOT NULL,
+  `relay3` int(11) NOT NULL,
+  `timeRelay3` int(11) NOT NULL,
+  `relay4` int(11) NOT NULL,
+  `timeRelay4` int(11) NOT NULL,
+  `opto1` int(11) NOT NULL,
+  `opto2` int(11) NOT NULL,
+  `opto3` int(11) NOT NULL,
+  `opto4` int(11) NOT NULL,
+  `enterExitInfo` int(11) NOT NULL,
+  `autoUnlocking` int(11) NOT NULL,
+  `lockUnlockCommand` int(11) NOT NULL,
+  `holdUpPINCode` varchar(8) NOT NULL,
+  `twoPersonAccess` int(11) NOT NULL,
+  `barriereRepeatedAccess` int(11) NOT NULL,
+  `timeBookingControl` int(11) NOT NULL,
+  `antiPassActive` int(11) NOT NULL,
+  `relayExpanderControl` int(11) NOT NULL,
+  `terminalType` int(11) NOT NULL,
+  `doorOpenTimeUnit` int(11) NOT NULL,
+  `readerTimeout` int(11) NOT NULL,
+  `readerFiu` int(11) NOT NULL,
+  `readerEntryExit` int(11) NOT NULL,
+  `optionalCompanyID1` int(11) NOT NULL,
+  `optionalCompanyID2` int(11) NOT NULL,
+  `optionalCompanyID3` int(11) NOT NULL,
+  `optionalCompanyID4` int(11) NOT NULL,
+  `optionalCompanyID5` int(11) NOT NULL,
+  `optionalCompanyID6` int(11) NOT NULL,
+  `optionalCompanyID7` int(11) NOT NULL,
+  `optionalCompanyID8` int(11) NOT NULL,
+  `optionalCompanyID9` int(11) NOT NULL,
+  `optionalCompanyID10` int(11) NOT NULL,
+  `optionalCardStructur` int(11) NOT NULL,
+  `optionalGantnerNationalCode` int(11) NOT NULL,
+  `optionalGantnerCustomerCode1` varchar(2) NOT NULL,
+  `optionalGantnerCustomerCode2` varchar(2) NOT NULL,
+  `optionalGantnerCustomerCode3` varchar(2) NOT NULL,
+  `optionalGantnerCustomerCode4` varchar(2) NOT NULL,
+  `optionalGantnerCustomerCode5` varchar(2) NOT NULL,
+  `optionalReaderInitialisation` varchar(100) NOT NULL,
+  `optionalTableCardType` varchar(60) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;

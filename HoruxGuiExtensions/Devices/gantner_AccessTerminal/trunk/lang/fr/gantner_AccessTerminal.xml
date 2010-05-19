@@ -1,0 +1,674 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.0">
+<file source-language="en" target-language="fr" datatype="plaintext" original="messages" date="2010-05-19T14:12:38Z" product-name="messages">
+<body>
+<trans-unit id="1">
+   <source>Add Gantner Access Terminal</source>
+   <target>Ajouter un terminal d'accès Gantner</target>
+</trans-unit>
+<trans-unit id="2">
+   <source>Parameters</source>
+   <target>Paramêtres</target>
+</trans-unit>
+<trans-unit id="3">
+   <source>Enter a &lt;strong&gt;unique&lt;/strong&gt; name for this device</source>
+   <target>Entrez un nom &lt;strong&gt;unique&lt;/strong&gt; pour ce périphérique</target>
+</trans-unit>
+<trans-unit id="4">
+   <source>Name</source>
+   <target>Nom</target>
+</trans-unit>
+<trans-unit id="5">
+   <source>This name is already used</source>
+   <target>Ce nom est déjà utilisé</target>
+</trans-unit>
+<trans-unit id="6">
+   <source>This field is required</source>
+   <target>Ce champs est requit</target>
+</trans-unit>
+<trans-unit id="7">
+   <source>Enter an IP address or the dhcp name for this device.&lt;br/&gt; &lt;em&gt;Ex:192.168.1.50 or AccessDevice&lt;/em&gt;</source>
+   <target>Entrez une adresse IP ou DHCP pour ce périphérique.&lt;br&gt;&lt;em&gt;Ex:192.168.1.50 ou AccessDevice&lt;/em&gt;</target>
+</trans-unit>
+<trans-unit id="8">
+   <source>IP Address/DHCP name</source>
+   <target>Adresse IP/Nom DHCP</target>
+</trans-unit>
+<trans-unit id="9">
+   <source>Timer to check the booking data from the device (in minutes)</source>
+   <target>Compteur pour la récupération des événements depuis le périphérique (en minutes)</target>
+</trans-unit>
+<trans-unit id="10">
+   <source>Booking checking</source>
+   <target>Contrôle des événements</target>
+</trans-unit>
+<trans-unit id="11">
+   <source>(minutes)</source>
+   <target>(minutes)</target>
+</trans-unit>
+<trans-unit id="12">
+   <source>Allow to log the communication in a log file</source>
+   <target>Permet de journaliser la communication dans un fichier</target>
+</trans-unit>
+<trans-unit id="13">
+   <source>Debug</source>
+   <target>Journalisation</target>
+</trans-unit>
+<trans-unit id="14">
+   <source>You could insert a description for this device.</source>
+   <target>Vous pouvez donner une description pour ce périphérique</target>
+</trans-unit>
+<trans-unit id="15">
+   <source>Description</source>
+   <target>Description</target>
+</trans-unit>
+<trans-unit id="16">
+   <source>Memory configuration</source>
+   <target>Configuration de la mémoire</target>
+</trans-unit>
+<trans-unit id="17">
+   <source>How many memory capacity is supposed to be reserved for the users.</source>
+   <target>Taille de la mémoire réservée pour les utilisateurs </target>
+</trans-unit>
+<trans-unit id="18">
+   <source>User memory</source>
+   <target>Mémoire utilisateurs</target>
+</trans-unit>
+<trans-unit id="19">
+   <source>How many memory capacity is supposed to be reserved for the bookings.</source>
+   <target>Taille de la mémoire réservé pour les événements</target>
+</trans-unit>
+<trans-unit id="20">
+   <source>Booking memory</source>
+   <target>Mémoire des événements</target>
+</trans-unit>
+<trans-unit id="21">
+   <source>Subscriber data</source>
+   <target>Données du souscripteur</target>
+</trans-unit>
+<trans-unit id="22" lock="0">
+   <source>The subscriber number is a distinguishing mark for different companies.&lt;br&gt;This character is issued in the booking set as well for&lt;br&gt;assigning the bookings to the particular subscriber.</source>
+   <target>Le numéro du souscripteur est une marque distinctive pour différentes entreprises. &lt;br&gt; Ce caractère est émis lors de la réservation ainsi fixé pour l'attribution des &lt;br&gt; réservations au souscripteur particulier.</target>
+</trans-unit>
+<trans-unit id="23">
+   <source>Subscriber Number</source>
+   <target>Numéro du souscripteur</target>
+</trans-unit>
+<trans-unit id="24">
+   <source>Input must be between 0 and 9999</source>
+   <target>La valeur doit être comprise entre 0 et 9999</target>
+</trans-unit>
+<trans-unit id="25">
+   <source>The plant number is a distinguishing mark for different plants of the same company.&lt;br&gt;This character is issued in the booking set for assigning the bookings&lt;br&gt;to the particular plant of a company.</source>
+   <target>Le numéro de département est une marque distinctive pour les différents départements d\'une même société. &lt;br&gt; Ce caractère est émis lors de la réservation fixés pour l\'attribution des réservations &lt;br&gt; à l\'usine d'une société particulière.</target>
+</trans-unit>
+<trans-unit id="26">
+   <source>Plant Number</source>
+   <target>Numéro du département</target>
+</trans-unit>
+<trans-unit id="27">
+   <source>Input must be between 0 and 99</source>
+   <target>L'entrée doit être comprise entre 0 et 99</target>
+</trans-unit>
+
+<trans-unit id="28">
+   <source>Main Company ID Card</source>
+   <target>Carte ID de la société principale</target>
+</trans-unit>
+<trans-unit id="29">
+   <source>If this code is unequal to 0, a booking is executed on a summertime/wintertime switch-over. This booking&lt;br/&gt;code is used as code then.</source>
+   <target>Si ce code est différent de 0, une événement est exécutée sur un basculement été / hiver.</target>
+</trans-unit>
+<trans-unit id="30">
+   <source>Booking code summertime/ wintertime switch-over</source>
+   <target>Basculement d'événement d'été/hiver</target>
+</trans-unit>
+<trans-unit id="31">
+   <source>Input must be between 0 and 255</source>
+   <target>Entrée doit être comprise entre 0 et 255</target>
+</trans-unit>
+<trans-unit id="32">
+   <source>This field indicates how many hours the time is going to be set ahead or back for a summertime/wintertime&lt;br/&gt;switch-over. If this value is set on 0, there will be no summertime/wintertime switch-over.</source>
+   <target>Ce champ indique combien d'heures l\'heure sera mise en avant ou en arrière pour un basculement été/hiver,&lt;br/&gt;.Si cette valeur est définie sur 0, il n\'y aura pas de basculement été/hiver.</target>
+</trans-unit>
+<trans-unit id="33">
+   <source>Switch Over Leap</source>
+   <target>Switch Over Leap</target>
+</trans-unit>
+<trans-unit id="34">
+   <source>Input must be between 0 and 9</source>
+   <target>L'entrée doit être comprise entre 0 et 9</target>
+</trans-unit>
+<trans-unit id="35">
+   <source>For this time (in seconds) it is waited for an input. If there is no input during this time, it will leap to the main menu.</source>
+   <target>Pour cette durée (en secondes), il est attendu pour une action. S'il n'y a pas d\'action pendant cette durée, il reviendra au menu principal.</target>
+</trans-unit>
+<trans-unit id="36">
+   <source>Waiting Time Input</source>
+   <target>Temps d'attente d'entrée</target>
+</trans-unit>
+<trans-unit id="37">
+   <source>For this time (in seconds) outputs like confirmations and error messages are monitored.</source>
+   <target>Pour ce moment (en secondes) sorties comme des confirmations et des messages d\'erreur sont surveillés.</target>
+</trans-unit>
+<trans-unit id="38">
+   <source>Monitoring Time</source>
+   <target>Temps de surveillance</target>
+</trans-unit>
+<trans-unit id="39">
+   <source>For this time (in seconds) the confirmation of a time booking is monitored on time attendance terminals&lt;br/&gt;until it is changed to access input or access confirmation.</source>
+   <target>Pour ce moment (en secondes) la confirmation d'une réservation est vérifié sur des terminaux à fréquenter à temps &lt;br/&gt; jusqu\'à ce qu'il soit modifié pour l'accès d\'entrée ou de confirmation d\'accès.</target>
+</trans-unit>
+<trans-unit id="40">
+   <source>Monitoring Changing Time</source>
+   <target>Surveiller l'évolution des temps</target>
+</trans-unit>
+<trans-unit id="41">
+   <source>This flag indicated the type of card reader</source>
+   <target>Indique le type de du lecteur de carte</target>
+</trans-unit>
+<trans-unit id="42">
+   <source>Card reader type</source>
+   <target>Type de lecteur de carte</target>
+</trans-unit>
+<trans-unit id="43">
+   <source>No card reader</source>
+   <target>Pas de lecteur de carte</target>
+</trans-unit>
+<trans-unit id="44">
+   <source>Magnetic reader,Contactless reader, Smart card</source>
+   <target>Carte magnétique, carte sans contacte, carte à puce</target>
+</trans-unit>
+<trans-unit id="45">
+   <source>Chip card reader 50 %</source>
+   <target>Lecteur de carte 50%</target>
+</trans-unit>
+<trans-unit id="46">
+   <source>Chip card reader 100 %</source>
+   <target>Lecteur de carte 100%</target>
+</trans-unit>
+<trans-unit id="47">
+   <source>Access Configuration</source>
+   <target>Configuration d'accès</target>
+</trans-unit>
+<trans-unit id="48">
+   <source>Maximum of door open time (in seconds)</source>
+   <target>Temps maximum d'ouverture de porte(en secondes)</target>
+</trans-unit>
+<trans-unit id="49">
+   <source>Warning time for door open time (in seconds)</source>
+   <target>Temps d'avertissement d'ouverture de porte (en secondes)</target>
+</trans-unit>
+<trans-unit id="50">
+   <source>Unlocking time (in seconds)</source>
+   <target>Temps d'ouverture (en secondes)</target>
+</trans-unit>
+<trans-unit id="51">
+   <source>Configure the behaviour of the relay 1&lt;br/&gt;If there is set 0 at a relay as relaytime, the relay is bistable.&lt;br/&gt;If there is set a time unequal to 0, the relay is monostable with the set time.&lt;br/&gt;If there is set 0 at a door open alarm relay as relaytime, an alarm will be activatet and stays active as long&lt;br/&gt;as the door is closed again. If the time is unequal to 0 the alarm is active for the set time.</source>
+   <target>Configurer le comportement du relais 1 &lt;br/&gt; Si définie à 0 à un relais comme relaytime, le relais est bistable. &lt;br/&gt; Si il est un temps différent de 0, le relais est monostable avec le délai prévu. &lt;br/&gt; Si définie à 0 à un relais d\'alarme porte ouverte que relaytime, une alarme sera activatet et reste actif en tant que &lt;br/&gt; longtemps que la porte est refermée. Si le temps est différent de 0 l\'alarme est activée pour l'heure fixée.</target>
+</trans-unit>
+<trans-unit id="52">
+   <source>Relay 1</source>
+   <target>Relais 1</target>
+</trans-unit>
+<trans-unit id="53">
+   <source>Do not use</source>
+   <target>N'est pas utilisé</target>
+</trans-unit>
+<trans-unit id="54">
+   <source>Unlocking active energized</source>
+   <target>Ouverture activé</target>
+</trans-unit>
+<trans-unit id="55">
+   <source>Unlocking passive energized</source>
+   <target>Ouverture désactivé</target>
+</trans-unit>
+
+<trans-unit id="56">
+   <source>Alarm suppression passive energized</source>
+   <target>passive suppression d'alarme sous tension</target>
+</trans-unit>
+<trans-unit id="57">
+   <source>Door open alarm active energized</source>
+   <target>Alarme de porte ouverte actifs sous tension</target>
+</trans-unit>
+<trans-unit id="58">
+   <source>Door open alarm passive energized</source>
+   <target>passive Alarme de porte ouverte sous tension</target>
+</trans-unit>
+<trans-unit id="59">
+   <source>Hold-up code active energized</source>
+   <target>Hold-up code actif sous tension</target>
+</trans-unit>
+<trans-unit id="60">
+   <source>Hold-up code passive energized</source>
+   <target>Hold-up passive code sous tension</target>
+</trans-unit>
+<trans-unit id="61">
+   <source>Entering active energized</source>
+   <target>Saisie actifs sous tension</target>
+</trans-unit>
+<trans-unit id="62">
+   <source>Entering passive energized</source>
+   <target>Entrée passive sous tension</target>
+</trans-unit>
+<trans-unit id="63">
+   <source>Exiting active energized</source>
+   <target>Sortie active sous tension</target>
+</trans-unit>
+<trans-unit id="64">
+   <source>Exiting passive energized</source>
+   <target>Sortie de tension passive</target>
+</trans-unit>
+<trans-unit id="65">
+   <source>Video function active energized</source>
+   <target>Vidéo fonction active sous tension</target>
+</trans-unit>
+<trans-unit id="66">
+   <source>Master active energized</source>
+   <target>Master actifs sous tension</target>
+</trans-unit>
+<trans-unit id="67">
+   <source>Master passive energized</source>
+   <target>Master passive sous tension</target>
+</trans-unit>
+<trans-unit id="68">
+   <source>Relay (always with PIN Code) active energized</source>
+   <target>Relais (toujours avec code PIN), active sous tension</target>
+</trans-unit>
+<trans-unit id="69">
+   <source>Relay (always with PIN Code) passive energized</source>
+   <target>Relais (toujours avec code PIN), passive sous tension</target>
+</trans-unit>
+<trans-unit id="70">
+   <source>Relay (PIN Code selectable via schedule) active energized</source>
+   <target>Relais (PIN Code sélectionnable via le calendrier) actifs sous tension</target>
+</trans-unit>
+<trans-unit id="71">
+   <source>Relay (PIN Code selectable via schedule) passive energized</source>
+   <target>Relais (PIN Code sélectionnable via le calendrier) passive sous tension</target>
+</trans-unit>
+<trans-unit id="72">
+   <source>Please consider that the time for the unlocking relay can be set in the field of its own starting with position 16.&lt;br/&gt;The relay time can be set from 0 or 1 up to 99 seconds depending on the type of relay. The time must&lt;br/&gt;exceed 0 for the setting of hold-up code or for video function.</source>
+   <target>S\'il vous plaît considérer que le temps pour le relais de déverrouillage peut être réglé dans le domaine de son départ de la sienne à la position 16. &lt;br/&gt; Le temps du relais peut être réglé de 0 ou 1 à 99 secondes selon le type de relais. Le temps doit &lt;br/&gt; dépasse pas 0 pour le réglage de code de hold-up ou pour une fonction vidéo.</target>
+</trans-unit>
+<trans-unit id="73">
+   <source>Time for Relay 1</source>
+   <target>Temps pour le relais 1</target>
+</trans-unit>
+<trans-unit id="74">
+   <source>Configure the behaviour of the relay 2&lt;br/&gt;If there is set 0 at a relay as relaytime, the relay is bistable.&lt;br/&gt;If there is set a time unequal to 0, the relay is monostable with the set time.&lt;br/&gt;If there is set 0 at a door open alarm relay as relaytime, an alarm will be activatet and stays active as long&lt;br/&gt;as the door is closed again. If the time is unequal to 0 the alarm is active for the set time.</source>
+   <target>Configurer le comportement du relais 2 &lt;br/&gt; Si définie à 0 à un relais comme relaytime, le relais est bistable. &lt;br/&gt; Si il est un temps différent de 0, le relais est monostable avec le délai prévu. &lt;br/&gt; Si définie à 0 à un relais d\'alarme porte ouverte que relaytime, une alarme sera activatet et reste actif en tant que &lt;br/&gt; longtemps que la porte est refermée. Si le temps est différent de 0 l\'alarme est activée pour l\'heure fixée.</target>
+</trans-unit>
+<trans-unit id="75">
+   <source>Relay 2</source>
+   <target>Relais 2</target>
+</trans-unit>
+<trans-unit id="76">
+   <source>Time for Relay 2</source>
+   <target>Durée pour le relais 2</target>
+</trans-unit>
+<trans-unit id="77">
+   <source>Configure the behaviour of the relay 3&lt;br/&gt;If there is set 0 at a relay as relaytime, the relay is bistable.&lt;br/&gt;If there is set a time unequal to 0, the relay is monostable with the set time.&lt;br/&gt;If there is set 0 at a door open alarm relay as relaytime, an alarm will be activatet and stays active as long&lt;br/&gt;as the door is closed again. If the time is unequal to 0 the alarm is active for the set time.</source>
+   <target>Configurer le comportement du relais 3 &lt;br/&gt; Si définie à 0 à un relais comme relaytime, le relais est bistable. &lt;br/&gt; Si il est un temps différent de 0, le relais est monostable avec le délai prévu. &lt;br/&gt; Si définie à 0 à un relais d\'alarme porte ouverte que relaytime, une alarme sera activatet et reste actif en tant que &lt;br/&gt; longtemps que la porte est refermée. Si le temps est différent de 0 l\'alarme est activée pour l\'heure fixée.</target>
+</trans-unit>
+<trans-unit id="78">
+   <source>Relay 3</source>
+   <target>Relais 3</target>
+</trans-unit>
+<trans-unit id="79">
+   <source>Time for Relay 3</source>
+   <target>Durée pour le relais 3</target>
+</trans-unit>
+<trans-unit id="80">
+   <source>Relay 4</source>
+   <target>Relais 4</target>
+</trans-unit>
+<trans-unit id="81">
+   <source>Time for Relay 4</source>
+   <target>Durée pour le relais 4</target>
+</trans-unit>
+<trans-unit id="82">
+   <source>If an optokoppler is defined as enable for relay, the relay can only be set, if the optokoppler is - depending&lt;br/&gt;on the definition - bestromt or not bestromt. The relay can always be set back.</source>
+   <target>Si un Optokoppler est défini comme étant de permettre pour le relais, le relais peut être réglée que si le Optokoppler est - &lt;br/&gt; selon la définition - ou non bestromt bestromt. Le relais peut toujours être réglé.</target>
+</trans-unit>
+<trans-unit id="83">
+   <source>Opto 1</source>
+   <target>Opto 1</target>
+</trans-unit>
+<trans-unit id="84">
+   <source>Door report bestromt if door open</source>
+   <target>bestromt rapport porte si la porte ouverte</target>
+</trans-unit>
+<trans-unit id="85">
+   <source>Door report bestromt if door closed</source>
+   <target>bestromt rapport porte si la porte fermée</target>
+</trans-unit>
+<trans-unit id="86">
+   <source>Unlocking button bestromt if unlocking is desired</source>
+   <target>Libérer bestromt bouton si le déverrouillage est souhaitée</target>
+</trans-unit>
+<trans-unit id="87">
+   <source>Unlocking button bestromt if no unlocking is desired</source>
+   <target>Libérer bestromt touche si aucun déblocage est souhaitée</target>
+</trans-unit>
+<trans-unit id="88">
+   <source>Barrier Entering and Exiting if bestromt</source>
+   <target>Barrière accès et de sortie si bestromt</target>
+</trans-unit>
+<trans-unit id="89">
+   <source>Barrier Entering and Exiting if not bestromt</source>
+   <target>Barrière accès et de sortie, sinon bestromt</target>
+</trans-unit>
+<trans-unit id="90">
+   <source>Barrier Entering if bestromt</source>
+   <target>Barrière Saisie si bestromt</target>
+</trans-unit>
+<trans-unit id="91">
+   <source>Barrier Entering if not bestromt</source>
+   <target>Barrière Saisie sinon bestromt</target>
+</trans-unit>
+<trans-unit id="92">
+   <source>general alarm active bestromt</source>
+   <target>bestromt alarme générale active</target>
+</trans-unit>
+<trans-unit id="93">
+   <source>general alarm passive bestromt</source>
+   <target>bestromt alarme générale passive</target>
+</trans-unit>
+<trans-unit id="94">
+   <source>general status</source>
+   <target>situation générale</target>
+</trans-unit>
+<trans-unit id="95">
+   <source>general control 1 with booking at status change</source>
+   <target>contrôle général 1 avec réservation au changement de statut</target>
+</trans-unit>
+<trans-unit id="96">
+   <source>general control 2 with booking at status change</source>
+   <target>contrôle général 2 avec réservation au changement de statut</target>
+</trans-unit>
+<trans-unit id="97">
+   <source>lock report bestromt if key-bolt open</source>
+   <target>bestromt rapport blocage si la clé-verrou ouvert</target>
+</trans-unit>
+<trans-unit id="98">
+   <source>lock report not bestromt if key-bolt open</source>
+   <target>rapport de serrure non bestromt si la clé-verrou ouvert</target>
+</trans-unit>
+<trans-unit id="99">
+   <source>Enable for Relay if bestromt</source>
+   <target>Activer le relais si bestromt</target>
+</trans-unit>
+<trans-unit id="100">
+   <source>Enable for Relay if not bestromt</source>
+   <target>Activer le relais, sinon bestromt</target>
+</trans-unit>
+<trans-unit id="101">
+   <source>suppress generally open if bestromt</source>
+   <target>supprimer généralement ouverts si bestromt</target>
+</trans-unit>
+<trans-unit id="102">
+   <source>suppress generally open if not bestromt</source>
+   <target>supprimer généralement ouverts sinon bestromt</target>
+</trans-unit>
+<trans-unit id="103">
+   <source>Opto 2</source>
+   <target>Opto 2</target>
+</trans-unit>
+<trans-unit id="104">
+   <source>Opto 3</source>
+   <target>Opto 3</target>
+</trans-unit>
+<trans-unit id="105">
+   <source>Opto 4</source>
+   <target>Opto 4</target>
+</trans-unit>
+<trans-unit id="106">
+   <source>Enter/exit information</source>
+   <target>Entrée / sortie d'informations</target>
+</trans-unit>
+<trans-unit id="107">
+   <source>Terminal entering, no subreader</source>
+   <target>Terminal d'entrer, pas subreader</target>
+</trans-unit>
+<trans-unit id="108">
+   <source>Terminal exiting, no subreader</source>
+   <target>Terminal sortie, pas de subreader</target>
+</trans-unit>
+<trans-unit id="109">
+   <source>Terminal entering, subreader exiting</source>
+   <target>Terminal entrant, sortant subreader</target>
+</trans-unit>
+<trans-unit id="110">
+   <source>Terminal exiting, subreader entering</source>
+   <target>sortie Terminal, entrer subreader</target>
+</trans-unit>
+
+<trans-unit id="111">
+   <source>If there is no autonomous unlocking, this checkbox must be set on.</source>
+   <target>S'il n'ya pas de déblocage autonome, cette case doit être activée.</target>
+</trans-unit>
+<trans-unit id="112">
+   <source>Lock and unlock by command possible</source>
+   <target>Verrouiller et déverrouiller par la commande possible</target>
+</trans-unit>
+<trans-unit id="113">
+   <source>If an X is registered, the number of the personal PIN-Code must be keyd in at this point. Otherwise use the number as stated.</source>
+   <target>Si un X est enregistrée, le nombre des personnels code PIN doit être keyd en ce moment. Sinon, utiliser le numéro comme indiqué.</target>
+</trans-unit>
+<trans-unit id="114">
+   <source>Hold-up-PIN-Code (8 digits)</source>
+   <target>Hold-up-PIN-Code (8 chiffres)</target>
+</trans-unit>
+<trans-unit id="115">
+   <source>Two person are needed to have access</source>
+   <target>Deux personnes sont nécessaires pour avoir accès</target>
+</trans-unit>
+<trans-unit id="116">
+   <source>Two person access</source>
+   <target>Deux accès personne</target>
+</trans-unit>
+
+<trans-unit id="117">
+   <source>Barriere at repeated access</source>
+   <target>Barrière à l'accès répétés</target>
+</trans-unit>
+<trans-unit id="118">
+   <source>Input must be between 0 and 999</source>
+   <target>Entrée doit être comprise entre 0 et 999</target>
+</trans-unit>
+
+<trans-unit id="119">
+   <source>If there exists a valid relay plan, the terminal will demand a relay number. If authorization is given for the&lt;br/&gt;chosen relay, the relay will be activated and the number will be reported to the option information of the booking.</source>
+   <target>S'il existe un plan de relais en cours de validité, le terminal demande un certain nombre de relais. Si l'autorisation est donnée pour le &lt;br/&gt; choisi de relais, le relais sera activé et le numéro sera signalé à l'information de l'option de réservation.</target>
+</trans-unit>
+<trans-unit id="120">
+   <source>Relay expander control</source>
+   <target>de contrôle d'extension de relais</target>
+</trans-unit>
+<trans-unit id="121">
+   <source>The relay of the relay expander is controlled with the unlocking relay</source>
+   <target>Le relais de l'extension de relais est contrôlé par le relais de déverrouillage</target>
+</trans-unit>
+<trans-unit id="122">
+   <source>Relay expander for safe deposit box</source>
+   <target>extension de relais pour un coffre-fort</target>
+</trans-unit>
+<trans-unit id="123">
+   <source>Unit of the maximum door open [seconds or minutes]</source>
+   <target>Unité de la porte secondes maximum [ouvert ou minutes]</target>
+</trans-unit>
+<trans-unit id="124">
+   <source>Door open time unit</source>
+   <target>unité de temps d'ouverture de porte</target>
+</trans-unit>
+<trans-unit id="125">
+   <source>Maximum door open time in seconds</source>
+   <target>Durée maximale de la porte ouverte en quelques secondes</target>
+</trans-unit>
+<trans-unit id="126">
+   <source>Maximum door open time in minutes</source>
+   <target>Durée maximale de la porte ouverte en quelques minutes</target>
+</trans-unit>
+<trans-unit id="127">
+   <source>Optional company ID</source>
+   <target>Société facultatif ID</target>
+</trans-unit>
+<trans-unit id="128">
+   <source>Up to 11 different card groupscan be authorized on the terminal by the optional company ID</source>
+   <target>Jusqu'à 11 cartes différentes groupscan être autorisé sur le terminal par la société en option ID</target>
+</trans-unit>
+<trans-unit id="129">
+   <source>Optional company ID 1</source>
+   <target>Société facultatif ID 1</target>
+</trans-unit>
+<trans-unit id="130">
+   <source>Optional company ID 2</source>
+   <target>Société facultatif ID 2</target>
+</trans-unit>
+<trans-unit id="131">
+   <source>Optional company ID 3</source>
+   <target>Société facultatif ID 3</target>
+</trans-unit>
+<trans-unit id="132">
+   <source>Optional company ID 4</source>
+   <target>Société facultatif ID 4</target>
+</trans-unit>
+<trans-unit id="133">
+   <source>Optional company ID 5</source>
+   <target>Société facultatif ID 5</target>
+</trans-unit>
+<trans-unit id="134">
+   <source>Optional company ID 6</source>
+   <target>Société facultatif ID 6</target>
+</trans-unit>
+<trans-unit id="135">
+   <source>Optional company ID 7</source>
+   <target>Société facultatif ID 7</target>
+</trans-unit>
+<trans-unit id="136">
+   <source>Optional company ID 8</source>
+   <target>Société facultatif ID 8</target>
+</trans-unit>
+<trans-unit id="137">
+   <source>Optional company ID 9</source>
+   <target>Société facultatif ID 9</target>
+</trans-unit>
+<trans-unit id="138">
+   <source>Optional company ID 10</source>
+   <target>Société facultatif ID 10</target>
+</trans-unit>
+<trans-unit id="139">
+   <source>Optional card data</source>
+   <target>données de la carte en option</target>
+</trans-unit>
+<trans-unit id="140">
+   <source>The card structure determines the lay-out of card contents. Such card contents are card number, card&lt;br/&gt;version, plant number (company ID), branch key, country code, card type (personnel card, cost account&lt;br/&gt;card etc.) and lots of more.</source>
+   <target>La structure de la carte détermine le lay-out du contenu de la carte. contenu de la carte Ces numéro de carte, version &lt;br/&gt; carte, numéro d 'usine (la société ID), clé de la branche, le code du pays, type de carte (carte de personnel, compte des coûts &lt;br/&gt; carte etc) et beaucoup de plus.</target>
+</trans-unit>
+<trans-unit id="141">
+   <source>Card structur</source>
+   <target>structur carte</target>
+</trans-unit>
+<trans-unit id="142">
+   <source>The Gantner National Code in the Legic terminalformat2.0 serves administration of installations in&lt;br/&gt;different countries. If the GNC is set on 00 in the terminal, the GNC of the data carrier will not be tested. If&lt;br/&gt;the GNC is unequal to 00 in the terminal, the GNC of the data carrier must correspond with the one in the&lt;br/&gt;terminal.</source>
+   <target>Le Code national de Gantner dans le sert Legic terminalformat2.0 administration des installations en &lt;br/&gt; différents pays. Si le GNC est réglé sur 00 dans le terminal, le GNC du support de données ne sera pas testé. Si &lt;br/&gt; le GNC n'est pas égale à 00 dans le terminal, le GNC du support de données doit correspondre à celui de la borne &lt;br/&gt;.</target>
+</trans-unit>
+<trans-unit id="143">
+   <source>Gantner National Code</source>
+   <target>Gantner Code national du</target>
+</trans-unit>
+<trans-unit id="144">
+   <source>The Gantner Customer Code in the Legic terminalformat 2.0 serves for the issue of number circles especially&lt;br/&gt;for Gantner partners who purchase high quantities of data carrriers. This code specifies which Gantner&lt;br/&gt;Customer Codes are evaluated by the terminal.</source>
+   <target>Le client Gantner Code de la terminalformat Legic 2,0 sert pour la délivrance des cercles nombre particulièrement pour les partenaires &lt;br/&gt; Gantner qui achètent de grandes quantités de données carrriers. Ce code précise les codes Gantner client &lt;br/&gt; sont évalués par le terminal.</target>
+</trans-unit>
+<trans-unit id="145">
+   <source>Gantner customer code 1</source>
+   <target>code client Gantner 1</target>
+</trans-unit>
+<trans-unit id="146">
+   <source>Gantner customer code 2</source>
+   <target>code client Gantner 2</target>
+</trans-unit>
+<trans-unit id="147">
+   <source>Gantner customer code 3</source>
+   <target>code client Gantner 3</target>
+</trans-unit>
+<trans-unit id="148">
+   <source>Gantner customer code 4</source>
+   <target>code client Gantner 4</target>
+</trans-unit>
+<trans-unit id="149">
+   <source>Gantner customer code 5</source>
+   <target>code client Gantner 5</target>
+</trans-unit>
+
+
+<trans-unit id="150">
+   <source>The device was added successfully</source>
+   <target>Le dispositif a été ajouté avec succès</target>
+</trans-unit>
+<trans-unit id="151">
+   <source>The device was not added</source>
+   <target>Le dispositif n'a pas été ajoutée</target>
+</trans-unit>
+<trans-unit id="152">
+   <source>The device was not saved</source>
+   <target>Le dispositif n'a pas été enregistré</target>
+</trans-unit>
+<trans-unit id="153">
+   <source>Modify a Gantner Access Terminal</source>
+   <target>Modifier un terminal d'accès Gantner</target>
+</trans-unit>
+<trans-unit id="154">
+   <source>The device was modified successfully</source>
+   <target>Le dispositif a été modifié avec succès</target>
+</trans-unit>
+<trans-unit id="155">
+   <source>The device was not modified</source>
+   <target>Le dispositif n'a pas été modifié</target>
+</trans-unit>
+
+<trans-unit id="156">
+<source>It is avoided that card keepers of the same system but different companies are able to execute bookings.&lt;br&gt;Certain number circles are given to retailers for company identification by Gantner Electronic. The&lt;br&gt;subscriber\'s data deletes all additional company IDs automatically.</source>
+<target>Il est d'éviter que les détenteurs de cartes d'un même système, mais différentes entreprises sont en mesure d'exécuter les réservations. &lt;br&gt; Cercles certain nombre sont donnés aux détaillants pour identification de l'entreprise par Gantner Electronic. les données de l \ 'abonné &lt;br&gt;' efface tous les codes complémentaires sur la société automatiquement.</target>
+</trans-unit>
+
+<trans-unit id="157">
+<source>Alarm suppression active energized</source>
+<target>suppression alarme active sous tension</target>
+</trans-unit>
+
+<trans-unit id="158">
+<source>TODO</source>
+<target>TODO</target>
+</trans-unit>
+
+<trans-unit id="159">
+<source>Autonomous unlocking</source>
+<target>Autonome de déverrouillage</target>
+</trans-unit>
+
+<trans-unit id="160">
+<source>If this value is unequal to 0, there must take place 600 new accesses at this door or a certain time must&lt;br/&gt;pass by for renewing a person\'s access authorization&lt;br/&gt;This value indicates the time that lies between the automatic shift in the repeated shift register. The&lt;br/&gt;repeated shift register includes 600 positions. The stated value is multiplied with 100 ms. Therefore, value&lt;br/&gt;1 corresponds with a stop of 1 minute. Attention! Time shortens for 100 ms per booking that is made.&lt;br/&gt;</source>
+<target>Si cette valeur n'est pas égale à 0, il doit avoir lieu 600 nouveaux accès à cette porte ou d'un certain temps doit passer par &lt;br/&gt; de renouvellement d'une personne \ 'autorisation d' accès s &lt;br/&gt; Cette valeur indique le temps qui se situe entre le passage automatique dans le registre à décalage répété. Le &lt;br/&gt; répétées registre à décalage comprend 600 postes. La valeur indiquée est multiplié par 100 ms. Par conséquent, la valeur &lt;br/&gt; 1 correspond à un arrêt de 1 minute. Attention! En raccourcissant le délai de 100 ms par réservation qui est faite. &lt;br/&gt;</target>
+</trans-unit>
+
+<trans-unit id="161">
+<source>Anti-pass active</source>
+<target>Anti-Active Pass</target>
+</trans-unit>
+
+<trans-unit id="162">
+<source>Optional reader initialisation</source>
+<target>initialisation lecteur en option</target>
+</trans-unit>
+
+<trans-unit id="163">
+<source>Optional table card type</source>
+<target>Facultatif type de carte de table</target>
+</trans-unit>
+</body>
+</file>
+</xliff>
