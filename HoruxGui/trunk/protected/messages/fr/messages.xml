@@ -122,7 +122,7 @@
 
 <trans-unit id="24" lock="1">
 <source>Access Level</source>
-<target>Niveau d'acc&#xE8;s</target>
+<target>Niveaux d'acc&#xE8;s</target>
 </trans-unit>
 
 <trans-unit id="25" lock="1">
@@ -137,7 +137,7 @@
 
 <trans-unit id="27" lock="1">
 <source>Tracking</source>
-<target>Suivit des acc&#xE8;s</target>
+<target>Suivi des acc&#xE8;s</target>
 </trans-unit>
 
 <trans-unit id="28" lock="1">
@@ -147,27 +147,27 @@
 
 <trans-unit id="29" lock="1">
 <source>Install/Uninstal</source>
-<target>Installer/D&#xE9;sinstaller</target>
+<target>Gestionnaire d'extensions</target>
 </trans-unit>
 
 <trans-unit id="30" lock="1">
 <source>Devices Manager</source>
-<target>Gestionnaire de p&#xE9;riph&#xE9;rique</target>
+<target>P&#xE9;riph&#xE9;rique</target>
 </trans-unit>
 
 <trans-unit id="31" lock="1">
 <source>Component Manager</source>
-<target>Gestionnaire de composant</target>
+<target>Composant</target>
 </trans-unit>
 
 <trans-unit id="32" lock="1">
 <source>Template Manager</source>
-<target>Gestionnaire de template</target>
+<target>Gabarit</target>
 </trans-unit>
 
 <trans-unit id="33" lock="1">
 <source>Language Manager</source>
-<target>Gestionnaire de langue</target>
+<target>Langue</target>
 </trans-unit>
 
 <trans-unit id="34" lock="1">
@@ -191,68 +191,6 @@
 <source>System Info</source>
 <target>Information syst&#xE8;me</target>
 </trans-unit>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 <trans-unit id="38" lock="1">
 <source>Super User Manager</source>
@@ -283,7 +221,7 @@
 
 <trans-unit id="43" lock="1">
 <source>Last tracking</source>
-<target>Derniers suivits</target>
+<target>Derniers suivis</target>
 </trans-unit>
 
 <trans-unit id="44" lock="1">
@@ -297,18 +235,18 @@
 
 <trans-unit id="45" lock="1">
 <source>Congratulations on choosing Horux as your access control system. We hope you are able to manage your access with our program and maybe you will be able to give something back to the community later.</source>
-<target>F&#xE9;licitation pour avoir choisit Horux pour votre contr&#xF4;le d'acc&#xE8;s. On esp&#xE8;re que Horux vous permettra de g&#xE9;rer votre syst&#xE8;me d'acc&#xE8;s et que peut-&#xEA;tre vous serez &#xE0; m&#xEA;me de donner votre sentiment &#xE0; la communaut&#xE9; du libre.</target>
+<target>Félicitation pour avoir choisi Horux pour votre contrôle d'accès. Nous espérons que Horux vous permettra de gérer votre système d'accès et que peut-être vous serez à même de donner votre sentiment à la communauté du libre.</target>
 </trans-unit>
 
 
 <trans-unit id="46" lock="1">
 <source>If you still have questions then take a look on our &lt;a href="http://forum.horux.ch" target="_blank"&gt;forum&lt;/a&gt; which is most likely the biggest resource on Horux there is and you will find almost every question answered at least once, so please try using the search function before asking your question.</source>
-<target>Si vous avez encore des questions, vous pouvez aller voire du c&#xF4;t&#xE9; du &lt;a href="http://forum.horux.ch" target="_blank"&gt;forum&lt;/a&gt; lequel est la plus grande ressource sur Horux. Vous y trouverez la plus part du temps la r&#xE9;ponse &#xE0; votre question, donc tenter d'utiliser la recherche avant de poser votre question.</target>
+<target>Si vous avez encore des questions, vous pouvez aller sur notre &lt;a href="http://forum.horux.ch" target="_blank"&gt;forum&lt;/a&gt; lequel est la plus grande ressource sur Horux. Vous y trouverez la plupart du temps la réponse à votre question, donc tentez d'utiliser la recherche avant de poser votre question.</target>
 </trans-unit>
 
 <trans-unit id="47" lock="1">
 <source>We hope you have much fun and success with Horux and hope to see you in the forum.</source>
-<target>Nous esp&#xE9;rons que vous aurez du succ&#xE8;s avec Horux et de vous voire prochainenemnt sur le forum.</target>
+<target>Nous espérons que vous aurez du succès avec Horux et de vous voire prochainement sur notre forum.</target>
 </trans-unit>
 
 <trans-unit id="48" lock="1">
@@ -483,7 +421,7 @@
 
 <trans-unit id="82" lock="1">
 <source>Non Working Day</source>
-<target>Jour non ouvrable</target>
+<target>Jours non ouvrables</target>
 </trans-unit>
 
 <trans-unit id="83" lock="1">
@@ -1377,7 +1315,7 @@
 
 <trans-unit id="251" lock="1">
 <source>Install/Uninstall</source>
-<target>Installer/D&#xE9;sinstaller</target>
+<target>Gestionnaire d'extensions</target>
 </trans-unit>
 
 
@@ -1793,7 +1731,7 @@
 
 <trans-unit id="325" lock="1">
 <source>For your most common questions the best place to start looking for answers is the &lt;a href="http://forum.horux.ch" target="_blank"&gt;Frequently Asked Questions (FAQ)&lt;/a&gt; area.  If you are stuck on a particular screen in the Administration area of Horux (which is where you are now), then try clicking on the Help toolbar button which you will find on almost all screens.</source>
-<target>Pour la plus part de vos questions, le meilleur endroit pour d&#xE9;buter est de regarder les r&#xE9;ponses dans la &lt;a href="http://forum.horux.ch" target="_blank"&gt;FAQ&lt;/a&gt;. Si vous avez besoin d'aide sur un &#xE9;cran sp&#xE9;cial dans l'administration de Horux, l&#xE0; ou vous vous trouvez actuellement, cliquez sur le bouton d'aide, lequel se trouve sur la plus part des &#xE9;crans. Cela vous donnera une page d'aide concernant l'&#xE9;cran courant depuis le site d'aide.</target>
+<target>Pour la plupart de vos questions, le meilleur endroit pour débuter est de regarder les réponses dans la &lt;a href="http://forum.horux.ch" target="_blank"&gt;FAQ&lt;/a&gt;. Si vous avez besoin d'aide sur un écran spécial dans l'administration de Horux, là où vous vous trouvez actuellement, cliquez sur le bouton d'aide, lequel se trouve sur la plus part des écrans. Cela vous donnera une page d'aide concernant l'écran courant depuis le site d'aide.</target>
 </trans-unit>
 
 <trans-unit id="326" lock="1">
