@@ -29,10 +29,10 @@ class install extends TPage
 
         if(
             !version_compare(PHP_VERSION, '5.1.0', '>=') ||
-            //!extension_loaded('xml') ||
-            //!extension_loaded('mysql') ||
-            //!extension_loaded('pgsql') ||
-            //!extension_loaded('zip') ||
+            !extension_loaded('xml') ||
+            !extension_loaded('mysql') ||
+            //!extension_loaded('sqlite') ||
+            !extension_loaded('zip') ||
             !is_writable('./protected/application_p.xml')
         )
         {
@@ -72,7 +72,7 @@ class install extends TPage
             !version_compare(PHP_VERSION, '5.1.0', '>=') ||
             !extension_loaded('xml') ||
             !extension_loaded('mysql') ||
-            !extension_loaded('sqlite') ||
+            //!extension_loaded('sqlite') ||
             //!extension_loaded('pgsql') ||
             !extension_loaded('zip') ||
             !is_writable('./protected/application_p.xml')
