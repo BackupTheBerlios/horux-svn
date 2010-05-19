@@ -12,6 +12,8 @@
 * See COPYRIGHT.php for copyright notices and details.
 */
 
+Prado::using("horux.pages.components.translate.gtranslate.GTranslate");
+
 class translate extends PageList
 {
     private $scanned_files = array();
@@ -1085,55 +1087,18 @@ class translate extends PageList
     protected function traduction_google_v1($mot_a_traduire)
     {
 
-        $lg_lg = "en|".substr($this->language->getSelectedValue(),-2,2);
+        $translate_string = "Das ist wunderschön";
+        try{
+            $gt = new Gtranslate;
+            $gt->setRequestType('curl');
+            $function = "en_to_".substr($this->language->getSelectedValue(),-2,2);
+            return $gt->$function($mot_a_traduire);
 
-        $ch = curl_init();
-        curl_setopt ($ch,CURLOPT_FRESH_CONNECT, 1);
-        curl_setopt ($ch, CURLOPT_POST, 1);
-        curl_setopt ($ch, CURLOPT_POSTFIELDS, 'text='.$mot_a_traduire.'&h1=en&ie=UTF8');
-        curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
-        curl_setopt ($ch, CURLOPT_REFERER, "http://www.google.fr");
-        //curl_setopt ($ch, CURLOPT_USERAGENT, "Curl");
-        curl_setopt ($ch, CURLOPT_USERAGENT, "Mozilla/5.001 (windows; U; NT4.0; en-us) Gecko/25250101");
-        curl_setopt($ch, CURLOPT_URL, "http://translate.google.com/translate_t?langpair=$lg_lg");
-        $contenu=curl_exec($ch);
-        curl_close($ch);
-        //recup du mot traduit dans la variable $contenu par l'intermediaire du dom (31 ieme balise td , 2 ieme balise br et noeud suivant)
-        //echo $contenu; exit;
-        $doc = @DOMDocument::loadHTML($contenu);
-          /*echo"$contenu";
-
-          //si dessus en cas de modif de la page
-          //permet de retrouver le numero du div contenant le mot traduit
-
-          $i=0;
-          while($i<50)
-          {
-          echo"Div numero--->".$i;
-          $liste_td = $doc -> getElementsByTagName('div') ->  item($i)->  nodeValue;
-          echo($liste_td);
-          echo"<br><br>";
-          $i++;
-          }
-          */
-        $isFind = false;
-        $i=0;
-        while(!$isFind && $i < 100)
-        {
-            $mot_traduit = $doc->getElementsByTagName('div')->item($i)/*->nodeValue*/;
-            if($mot_traduit)
-            {
-                if($mot_traduit->hasAttribute('id') && $mot_traduit->getAttribute('id') == 'result_box' )
-                {
-                    $mot_traduit = $mot_traduit->nodeValue."<br>";
-                    $isFind = true;
-                }
-            }
-            $i++;
         }
-
-        if ($mot_traduit!==""){return utf8_decode($mot_traduit);}else{return FALSE;}
-
+        catch (GTranslateException $ge)
+        {
+            return "";
+        }
     }
 }
 
