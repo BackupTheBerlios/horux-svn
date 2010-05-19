@@ -442,7 +442,7 @@ CREATE TABLE IF NOT EXISTS `hr_superuser_group` (
 # Contenu de la table `hr_superuser_group`
 #
 
-INSERT INTO `hr_superuser_group` (`id`, `name`, `superAdmin`, `description`, `locked`, `dispUserLoggedIn`, `dispLastAlarm`, `dispLastTracking`) VALUES
+INSERT INTO `hr_superuser_group` (`id`, `name`, `superAdmin`, `description`, `locked`, `dispUserLoggedIn`, `dispLastAlarm`, `dispLastTracking`,`webservice`,`defaultPage`) VALUES
 (1, 'admin', 1, 'Admin', 0, 1, 1, 1, 1, 'controlPanel.ControlPanel');
 
 # --------------------------------------------------------
