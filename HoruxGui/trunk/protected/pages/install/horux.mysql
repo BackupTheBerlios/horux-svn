@@ -227,6 +227,8 @@ INSERT INTO `hr_gui_permissions` (`page`, `selector`, `value`, `allowed`, `short
 ('controlPanel.ControlPanel', 'group_id', 1, '1', 0),
 ('site.Site', 'group_id', 1, '1', 1),
 ('site.department', 'group_id', 1, '1', 0),
+('site.add', 'group_id', 1, '1', 0),
+('site.mod', 'group_id', 1, '1', 0),
 ('system.Alarms', 'group_id', 1, '1', 1),
 ('system.Service', 'group_id', 1, '1', 1),
 ('system.Status', 'group_id', 1, '1', 1),
