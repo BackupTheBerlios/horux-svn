@@ -2,7 +2,7 @@
   <install type="component">
   <installName>timuxadmin</installName>
   <name>Timux Admin</name>
-  <version>1.0.0</version>
+  <version>1.0.1</version>
   <creationDate>09/11/09</creationDate>
   <author>Jean-Luc Gyger / Letux</author>
   <authorEmail>info@letux.ch</authorEmail>

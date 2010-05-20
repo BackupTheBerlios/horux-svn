@@ -1,5 +1,3 @@
--- --------------------------------------------------------
-
 --
 -- Structure de la table `hr_timux_activity_counter`
 --
@@ -13,6 +11,7 @@ CREATE TABLE IF NOT EXISTS `hr_timux_activity_counter` (
   `month` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
 -- --------------------------------------------------------
 
 --
@@ -51,6 +50,7 @@ CREATE TABLE IF NOT EXISTS `hr_timux_closed_month` (
 --
 
 CREATE TABLE IF NOT EXISTS `hr_timux_config` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `daysByWeek` int(11) NOT NULL DEFAULT '5',
   `minimumBreaks` int(11) NOT NULL,
   `bookingRounding` int(11) NOT NULL,
@@ -63,8 +63,9 @@ CREATE TABLE IF NOT EXISTS `hr_timux_config` (
   `hoursBlockAfternoon1` time DEFAULT NULL,
   `hoursBlockAfternoon2` time DEFAULT NULL,
   `hoursBlockAfternoon3` time DEFAULT NULL,
-  `hoursBlockAfternoon4` time DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  `hoursBlockAfternoon4` time DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -84,6 +85,7 @@ CREATE TABLE IF NOT EXISTS `hr_timux_request` (
   `remark` text NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
 -- --------------------------------------------------------
 
 --
@@ -104,7 +106,6 @@ CREATE TABLE IF NOT EXISTS `hr_timux_request_leave` (
 -- Structure de la table `hr_timux_request_workflow`
 --
 
-
 CREATE TABLE IF NOT EXISTS `hr_timux_request_workflow` (
   `request_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
@@ -117,7 +118,6 @@ CREATE TABLE IF NOT EXISTS `hr_timux_request_workflow` (
 -- Structure de la table `hr_timux_timeclass`
 --
 
-
 CREATE TABLE IF NOT EXISTS `hr_timux_timeclass` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
@@ -127,7 +127,6 @@ CREATE TABLE IF NOT EXISTS `hr_timux_timeclass` (
   `locked` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
-
 
 -- --------------------------------------------------------
 
@@ -190,7 +189,6 @@ CREATE TABLE IF NOT EXISTS `hr_timux_workflow` (
   `validator32` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
-
 
 -- --------------------------------------------------------
 

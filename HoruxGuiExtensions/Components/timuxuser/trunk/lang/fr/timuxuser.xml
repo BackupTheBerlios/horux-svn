@@ -236,7 +236,7 @@
 </trans-unit>
 <trans-unit id="58">
    <source>Sign in/out</source>
-   <target>Timbrage d'entrée/sortie</target>
+   <target>Ajouter/modifier manuellement</target>
 </trans-unit>
 <trans-unit id="59">
    <source>Select the employee</source>
