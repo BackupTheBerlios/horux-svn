@@ -458,10 +458,12 @@ class userGroupAdd extends Page
                 if($data[$i]['access'])
                 {
                    $data[$i]['access'] = false;
+                   $sender->ImageUrl = './themes/letux/images/menu/icon-16-access.png';
                 }
                 else
                 {
                    $data[$i]['access'] = true;
+                   $sender->ImageUrl = './themes/letux/images/menu/icon-16-checkin.png';
                 }
 
                 $i = count($data);
@@ -470,9 +472,6 @@ class userGroupAdd extends Page
 
 
         $this->Session['dataPage'] = $data;
-
-        $this->DataGrid->DataSource=$data;
-        $this->DataGrid->dataBind();
     }
 
     public function onChangeShortcut($sender, $param)
@@ -486,17 +485,20 @@ class userGroupAdd extends Page
             if($data[$i]['id'] == $sender->Text)
             {
                 if($data[$i]['shortcut'])
+                {
                    $data[$i]['shortcut'] = false;
+                   $sender->ImageUrl = './themes/letux/images/menu/icon-16-cross.png';
+                }
                 else
+                {
                    $data[$i]['shortcut'] = true;
+                   $sender->ImageUrl = './themes/letux/images/menu/icon-16-checkin.png';
+                }
             }
         }
 
 
         $this->Session['dataPage'] = $data;
-
-        $this->DataGrid->DataSource=$data;
-        $this->DataGrid->dataBind();
     }
 
     public function onCancel($sender, $param)
