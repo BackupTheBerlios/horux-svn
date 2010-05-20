@@ -127,6 +127,9 @@ void CHoruxGui::openCom()
           gat5250_serial_reader->open();
           gat5250_serial_reader->setFID(fid);
 
+          #if defined(Q_OS_WIN)
+          gat5250_serial_reader->start();
+          #endif
 
           break;
       case 1: // Acces Link USB

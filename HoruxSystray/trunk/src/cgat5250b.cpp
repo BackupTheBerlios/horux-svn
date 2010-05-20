@@ -23,12 +23,12 @@ CGAT5250B::~CGAT5250B()
 {
     stop = true;
 
-    /*while(isRunning())
-    {
-        QCoreApplication::processEvents ();
-    }*/
 
 #if defined(Q_OS_WIN)
+    while(isRunning())
+    {
+        QCoreApplication::processEvents ();
+    }
 
     if(gat)
     {
@@ -51,6 +51,8 @@ void CGAT5250B::isBeep(bool flag)
 
 void CGAT5250B::open()
 {
+#if defined(Q_OS_WIN)
+#elif defined(Q_WS_X11)
     QSettings settings ( "Horux", "HoruxGuiSys" );
     QString portStr = settings.value("port", "").toString();
 
@@ -83,10 +85,13 @@ void CGAT5250B::open()
     }
 
     readPort->start(100);
+#endif
 }
 
 void CGAT5250B::smIdle()
 {
+#if defined(Q_OS_WIN)
+#elif defined(Q_WS_X11)
     unsigned char TxSmIdle[4] = {0x03, 0x14, 0x01, 0x16};
     QByteArray TxBuffer;
 
@@ -94,10 +99,13 @@ void CGAT5250B::smIdle()
         TxBuffer.append(TxSmIdle[i]);
 
     msgList.append(TxBuffer);
+#endif
 }
 
 void CGAT5250B::setGreenLED()
 {
+#if defined(Q_OS_WIN)
+#elif defined(Q_WS_X11)
     if(port && port->isOpen())
     {
         unsigned char TxGreen[7] = {0x06,0x74,0x00,0x00,0x00,0x8a,0xf8};
@@ -108,10 +116,13 @@ void CGAT5250B::setGreenLED()
 
         msgList.append(TxBuffer);
     }
+#endif
 }
 
 void CGAT5250B::setRedLED()
 {
+#if defined(Q_OS_WIN)
+#elif defined(Q_WS_X11)
     if(port && port->isOpen())
     {
         unsigned char TxRed[7] = {0x06,0x74,0x00,0x00,0x8a,0x00,0xf8};
@@ -122,10 +133,13 @@ void CGAT5250B::setRedLED()
 
         msgList.append(TxBuffer);
     }
+#endif
 }
 
 void CGAT5250B::setBeep()
 {
+#if defined(Q_OS_WIN)
+#elif defined(Q_WS_X11)
     if(port && port->isOpen())
     {
         unsigned char TxBeep[7] = {0x06,0x74,0x00,0x81,0x00,0x00,0xf3};
@@ -136,10 +150,13 @@ void CGAT5250B::setBeep()
 
         msgList.append(TxBuffer);
     }
+#endif
 }
 
 void CGAT5250B::readUniqueSerialNumber()
 {
+#if defined(Q_OS_WIN)
+#elif defined(Q_WS_X11)
     if(port && port->isOpen())
     {
         unsigned char TxSN[11] = {0x0A,0x80,0x00,0x07,0x04,0x01,0x00,0x00,0x04,0x01,0x8D };
@@ -150,6 +167,7 @@ void CGAT5250B::readUniqueSerialNumber()
 
         msgList.append(TxBuffer);
     }
+#endif
 }
 
 void CGAT5250B::setFID(QString _fid)
@@ -235,6 +253,8 @@ void CGAT5250B::handleKey()
 
 void CGAT5250B::readyRead()
 {
+#if defined(Q_OS_WIN)
+#elif defined(Q_WS_X11)
     int ret = port->bytesAvailable();
 
     if(!isStarted)
@@ -301,7 +321,7 @@ void CGAT5250B::readyRead()
         }
     }
 
-
+#endif
 }
 
 
@@ -332,10 +352,10 @@ void CGAT5250B::run()
 void CGAT5250B::close(bool )
 {
     stop = true;
-/*#if defined(Q_OS_WIN)
-#elif defined(Q_WS_X11)*/
+#if defined(Q_OS_WIN)
+#elif defined(Q_WS_X11)
     port->close();
-//#endif
+#endif
 
 }
 
