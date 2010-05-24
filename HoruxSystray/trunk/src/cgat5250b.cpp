@@ -232,16 +232,37 @@ void CGAT5250B::handleMsg()
                 break;
            case 0x80:   //unique serial number
                {
-                   bool ok;
-                   QString s1;
-                   QString s = s1.sprintf("%02X%02X%02X%02X", (unsigned char)msg.at(10), (unsigned char)msg.at(11), (unsigned char)msg.at(12), (unsigned char)msg.at(13));
-                   qDebug() << s;
 
-                   unsigned long sn = s.toLong(&ok, 16);
-                   qDebug() << sn;
-                   key = QString::number(sn);
-                   qDebug()<< key;
-                   handleKey();
+                   if(len == 0x14)
+                   {
+                       bool ok;
+                       QString s1;
+                       QString fidCard = s1.sprintf("%02X%02X", (unsigned char)msg.at(14), (unsigned char)msg.at(15));
+
+                       if(fid == fidCard)
+                       {
+                           QString s = s1.sprintf("%02X%02X%02X", (unsigned char)msg.at(17), (unsigned char)msg.at(18), (unsigned char)msg.at(19));
+                           unsigned long sn = s.toLong();
+                           qDebug() << sn;
+                           key = QString::number(sn);
+                           qDebug()<< key;
+                           handleKey();
+                       }
+
+                   }
+                   else
+                   {
+                       bool ok;
+                       QString s1;
+                       QString s = s1.sprintf("%02X%02X%02X%02X", (unsigned char)msg.at(10), (unsigned char)msg.at(11), (unsigned char)msg.at(12), (unsigned char)msg.at(13));
+                       qDebug() << s;
+
+                       unsigned long sn = s.toLong(&ok, 16);
+                       qDebug() << sn;
+                       key = QString::number(sn);
+                       qDebug()<< key;
+                       handleKey();
+                   }
                 }
                 break;
            default:
@@ -249,7 +270,11 @@ void CGAT5250B::handleMsg()
         }
 
         msg.remove(0, len+1);
+
+        if(msg.size() > 0)
+            handleMsg();
     }
+
 
 #endif
 }
@@ -348,9 +373,9 @@ void CGAT5250B::run()
 {
     stop = false;
 #if defined(Q_OS_WIN)
-    //gat->dynamicCall("Beep(int)",100);
-    //gat->dynamicCall("LEDGreen(int)",1000);
-    //gat->dynamicCall("LEDRed(int)",1000);
+    gat->dynamicCall("Beep(int)",100);
+    gat->dynamicCall("LEDGreen(int)",1000);
+    gat->dynamicCall("LEDRed(int)",1000);
     while(!stop)
     {
         QString t =  gat->dynamicCall("GetCardNumber()").toString();
@@ -359,7 +384,7 @@ void CGAT5250B::run()
             key = t;
             handleMsg();
         }
-        QThread::msleep(1000);
+        QThread::msleep(100);
     }
 #elif defined(Q_WS_X11)
 
