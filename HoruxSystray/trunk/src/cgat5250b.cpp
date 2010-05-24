@@ -170,6 +170,23 @@ void CGAT5250B::readUniqueSerialNumber()
 #endif
 }
 
+void CGAT5250B::readCardNumberNumber()
+{
+#if defined(Q_OS_WIN)
+#elif defined(Q_WS_X11)
+    if(port && port->isOpen())
+    {
+        unsigned char TxSN[12] = {0x0b,0x80,0x00,0x12,0x0a,0x01,0x00,0x1C,0x05,0x01,0x1A, 0x90 };
+        QByteArray TxBuffer;
+
+        for(int i=0;i<12; i++)
+            TxBuffer.append(TxSN[i]);
+
+        msgList.append(TxBuffer);
+    }
+#endif
+}
+
 void CGAT5250B::setFID(QString _fid)
 {
     fid = _fid;
@@ -315,7 +332,8 @@ void CGAT5250B::readyRead()
                 port->flush();
             }
             else
-                readUniqueSerialNumber();
+                readCardNumberNumber();
+                //readUniqueSerialNumber();
 
 
         }
@@ -330,18 +348,18 @@ void CGAT5250B::run()
 {
     stop = false;
 #if defined(Q_OS_WIN)
-    gat->dynamicCall("Beep(int)",100);
-    gat->dynamicCall("LEDGreen(int)",1000);
-    gat->dynamicCall("LEDRed(int)",1000);
+    //gat->dynamicCall("Beep(int)",100);
+    //gat->dynamicCall("LEDGreen(int)",1000);
+    //gat->dynamicCall("LEDRed(int)",1000);
     while(!stop)
     {
-        QString t = gat->dynamicCall("GetCardNumber()").toString();
+        QString t =  gat->dynamicCall("GetCardNumber()").toString();
         if(key != t)
         {
             key = t;
             handleMsg();
         }
-        QThread::msleep(100);
+        QThread::msleep(1000);
     }
 #elif defined(Q_WS_X11)
 

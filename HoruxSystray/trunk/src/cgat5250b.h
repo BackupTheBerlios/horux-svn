@@ -60,6 +60,7 @@ protected slots:
     void setBeep();
     void smIdle();
     void readUniqueSerialNumber();
+    void readCardNumberNumber();
 
 
 private:
