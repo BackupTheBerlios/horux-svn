@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
      myappTranslator.load(app.applicationDirPath() +  "/horux_" + lang +".qm");
      app.installTranslator(&myappTranslator);
 
-     int counter = 5 * 60 * 1000;   // test during 5 minutes
+     int counter = 5 * 60;   // test during 5 minutes
 
      while(!QSystemTrayIcon::isSystemTrayAvailable() && counter > 0)
      {
