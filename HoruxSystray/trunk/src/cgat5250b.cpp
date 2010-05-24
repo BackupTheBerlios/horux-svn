@@ -397,7 +397,8 @@ void CGAT5250B::close(bool )
     stop = true;
 #if defined(Q_OS_WIN)
 #elif defined(Q_WS_X11)
-    port->close();
+    if(port)
+        port->close();
 #endif
 
 }

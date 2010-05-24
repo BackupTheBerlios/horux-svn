@@ -181,6 +181,7 @@ void CHoruxGui::on_apply_clicked()
     delete al_usb_reader;
     al_usb_reader = NULL;
   }
+
   openCom();
 }
 
