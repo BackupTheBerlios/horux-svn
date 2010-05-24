@@ -19,7 +19,7 @@
                 kc = window.event.keyCode;  // IE
             }
 
-            if(kc == 16 || kc==17 || kc ==18)
+            if(kc == 16 || kc==17 || kc ==18 || kc == 0)
             {
                 specialKey = true;
                 return false;
