@@ -38,6 +38,21 @@ int main(int argc, char *argv[])
      myappTranslator.load(app.applicationDirPath() +  "/horux_" + lang +".qm");
      app.installTranslator(&myappTranslator);
 
+     int counter = 5 * 60 * 1000;   // test during 5 minutes
+
+     while(!QSystemTrayIcon::isSystemTrayAvailable() && counter > 0)
+     {
+         QApplication::processEvents();
+
+         #if defined(Q_OS_WIN)
+             Sleep(1000);
+        #elif defined(Q_WS_X11)
+             sleep(1);
+        #endif
+
+       counter--;
+     }
+
      if (!QSystemTrayIcon::isSystemTrayAvailable()) {
          QMessageBox::critical(0, QObject::tr("Systray"),
                                QObject::tr("I couldn't detect any system tray "
