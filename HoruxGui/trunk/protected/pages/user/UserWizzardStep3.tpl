@@ -41,29 +41,33 @@
                 serial.push(51);
                 counter++;
                 specialKey = false;
-                if(serial[serial.length-1] == 51 && serial[serial.length-2] == 51)
+
+                if(counter == 4)
                 {
-                    var sn = "";
-                    for(i=2; i<serial.length-2; i++)
-                        sn += String.fromCharCode(serial[i]);
 
+                    if(serial[serial.length-1] == 51 && serial[serial.length-2] == 51)
+                    {
+                        var sn = "";
 
-                    //window.location.replace('index.php?page=user.UserWizzard&sn=' + sn);
-                    document.getElementById('serialNumber').value = sn;
-                    document.getElementById('ctl0_adminForm').submit();
+                        for(i=2; i<serial.length-2; i++)
+                            sn += String.fromCharCode(serial[i]);
 
-                    counter = 0;
-                    delete serial;
-                    serial = new Array();
-                    serialDetected = false;
-                }
+                        //window.location.replace('index.php?page=user.UserWizzard&sn=' + sn);
+                        document.getElementById('serialNumber').value = sn;
+                        document.getElementById('ctl0_adminForm').submit();
+
+                        counter = 0;
+                        delete serial;
+                        serial = new Array();
+                        serialDetected = false;
+                    }
+                 }
             }
             else
             {
                 if(serialDetected)
                 {
                     serial.push(kc);
-                    counter++;
                 }
                 else
                 {
