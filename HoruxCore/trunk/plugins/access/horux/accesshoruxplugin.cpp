@@ -405,7 +405,7 @@ bool AccessHoruxPlugin::checkAccessLevel(QString groupId, QString deviceId, QStr
       todayStr = "dimanche";
       if( mondayDefault ) todayStr = "lundi";
 
-      query = "SELECT * FROM hr_access_time AS at WHERE at.day='dimanche" +
+      query = "SELECT * FROM hr_access_time AS at WHERE at.day='" +
                       todayStr +
                       "' AND at.id_access_level=" +
                       id_access_level +
