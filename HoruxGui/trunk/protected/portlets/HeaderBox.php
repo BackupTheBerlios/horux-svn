@@ -250,7 +250,7 @@ class HeaderBox extends Portlet
         if($this->isAccess('hardware.HardwareList'))
             $this->systemMenuCount++;
 
-		$system->addMenuItem( new MenuItem("'<img src=\"./themes/letux/images/menu/icon-16-accessLevel.png\" />'", 
+		$system->addMenuItem( new MenuItem("'<img src=\"./themes/letux/images/menu/icon-16-openLevel.png\" />'",
 										  Prado::localize('Open time',array(), "messages"), 
 										  $this->Service->constructUrl('openTime.openTimeList'),
 										  $this->isAccess('openTime.openTimeList')
