@@ -3,7 +3,7 @@
     <com:TToolbarBox
         ID="tbb"
         Title="<%[Open time Attribution]%>"
-        CssIcon="icon-48-accesslevel"
+        CssIcon="icon-48-openLevel"
         CancelVisible="true"
         HelpVisible="true"
         AttributeVisible="true"

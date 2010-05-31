@@ -57,7 +57,6 @@
 
                 if(counter == 4)
                 {
-
                     if(serial[serial.length-1] == 51 && serial[serial.length-2] == 51)
                     {
                         document.getElementById("detected").innerHTML = '';

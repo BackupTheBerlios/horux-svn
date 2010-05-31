@@ -6,7 +6,7 @@
  * @link http://www.pradosoft.com/
  * @copyright Copyright &copy; 2005-2008 PradoSoft
  * @license http://www.pradosoft.com/license/
- * @version $Id: TCallbackClientScript.php 2626 2009-03-20 06:51:50Z godzilla80@gmx.net $
+ * @version $Id: TCallbackClientScript.php 2773 2010-02-17 13:55:18Z Christophe.Boulain $
  * @package System.Web.UI.ActiveControls
  */
 
@@ -28,7 +28,7 @@
  * </code>
  *
  * @author Wei Zhuo <weizhuo[at]gamil[dot]com>
- * @version $Id: TCallbackClientScript.php 2626 2009-03-20 06:51:50Z godzilla80@gmx.net $
+ * @version $Id: TCallbackClientScript.php 2773 2010-02-17 13:55:18Z Christophe.Boulain $
  * @package System.Web.UI.ActiveControls
  * @since 3.1
  */
@@ -126,8 +126,8 @@ class TCallbackClientScript extends TApplicationComponent
 	}
 
 	/**
-	 * Client script to click on an element. <b>This client-side function
-	 * is unpredictable.</b>
+	 * Client script to click on an element. <b>This client-side function is unpredictable.</b>
+	 * 
 	 * @param TControl control element or element id
 	 */
 	public function click($control)

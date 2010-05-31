@@ -7,9 +7,9 @@
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
  * @link http://www.pradosoft.com/
- * @copyright Copyright &copy; 2005-2008 PradoSoft
+ * @copyright Copyright &copy; 2005-2010 PradoSoft
  * @license http://www.pradosoft.com/license/
- * @version $Id: PradoBase.php 2696 2009-07-22 06:51:21Z Christophe.Boulain $
+ * @version $Id: PradoBase.php 2782 2010-02-22 12:03:50Z Christophe.Boulain $
  * @package System
  */
 
@@ -34,7 +34,7 @@ if(!defined('PRADO_CHMOD'))
  * rewritten for customization.
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
- * @version $Id: PradoBase.php 2696 2009-07-22 06:51:21Z Christophe.Boulain $
+ * @version $Id: PradoBase.php 2782 2010-02-22 12:03:50Z Christophe.Boulain $
  * @package System
  * @since 3.0
  */
@@ -71,7 +71,7 @@ class PradoBase
 	 */
 	public static function getVersion()
 	{
-		return '3.1.6';
+		return '3.1.7';
 	}
 
 	/**
@@ -625,7 +625,7 @@ class PradoBase
  * This class was originally written to cope with the incompatibility between different PHP versions.
  * It is equivalent to ReflectionClass for PHP version >= 5.1.0
  * @author Qiang Xue <qiang.xue@gmail.com>
- * @version $Id: PradoBase.php 2696 2009-07-22 06:51:21Z Christophe.Boulain $
+ * @version $Id: PradoBase.php 2782 2010-02-22 12:03:50Z Christophe.Boulain $
  * @package System
  * @since 3.0
  */

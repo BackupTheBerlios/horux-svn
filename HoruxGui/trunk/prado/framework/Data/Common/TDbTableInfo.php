@@ -6,7 +6,7 @@
  * @link http://www.pradosoft.com/
  * @copyright Copyright &copy; 2005-2008 PradoSoft
  * @license http://www.pradosoft.com/license/
- * @version $Id: TDbTableInfo.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TDbTableInfo.php 2761 2010-02-08 08:44:21Z godzilla80@gmx.net $
  * @package System.Data.Common
  */
 
@@ -14,7 +14,7 @@
  * TDbTableInfo class describes the meta data of a database table.
  *
  * @author Wei Zhuo <weizho[at]gmail[dot]com>
- * @version $Id: TDbTableInfo.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TDbTableInfo.php 2761 2010-02-08 08:44:21Z godzilla80@gmx.net $
  * @package System.Data.Common
  * @since 3.1
  */
@@ -28,6 +28,12 @@ class TDbTableInfo extends TComponent
 	private $_columns;
 
 	private $_lowercase;
+
+	/**
+	 * @var null|array
+	 * @since 3.1.7
+	 */
+	private $_names = null;
 
 	/**
 	 * Sets the database table meta data information.
@@ -119,10 +125,13 @@ class TDbTableInfo extends TComponent
 	 */
 	public function getColumnNames()
 	{
-		$names=array();
-		foreach($this->getColumns() as $column)
-			$names[] = $column->getColumnName();
-		return $names;
+		if($this->_names===null)
+		{
+			$this->_names=array();
+			foreach($this->getColumns() as $column)
+				$this->_names[] = $column->getColumnName();
+		}
+		return $this->_names;
 	}
 
 	/**
@@ -155,4 +164,3 @@ class TDbTableInfo extends TComponent
 		return $this->_lowercase;
 	}
 }
-

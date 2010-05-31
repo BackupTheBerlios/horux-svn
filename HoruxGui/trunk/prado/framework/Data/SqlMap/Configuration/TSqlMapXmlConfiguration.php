@@ -6,7 +6,7 @@
  * @link http://www.pradosoft.com/
  * @copyright Copyright &copy; 2005-2008 PradoSoft
  * @license http://www.pradosoft.com/license/
- * @version $Id: TSqlMapXmlConfiguration.php 2675 2009-06-07 08:13:34Z godzilla80@gmx.net $
+ * @version $Id: TSqlMapXmlConfiguration.php 2757 2010-01-15 14:47:40Z Christophe.Boulain $
  * @package System.Data.SqlMap.Configuration
  */
 
@@ -16,7 +16,7 @@ Prado::using('System.Data.SqlMap.Configuration.TSqlMapStatement');
  * TSqlMapXmlConfig class file.
  *
  * @author Wei Zhuo <weizhuo[at]gmail[dot]com>
- * @version $Id: TSqlMapXmlConfiguration.php 2675 2009-06-07 08:13:34Z godzilla80@gmx.net $
+ * @version $Id: TSqlMapXmlConfiguration.php 2757 2010-01-15 14:47:40Z Christophe.Boulain $
  * @package System.Data.SqlMap.Configuration
  */
 abstract class TSqlMapXmlConfigBuilder
@@ -128,7 +128,7 @@ abstract class TSqlMapXmlConfigBuilder
  * Configures the TSqlMapManager using xml configuration file.
  *
  * @author Wei Zhuo <weizho[at]gmail[dot]com>
- * @version $Id: TSqlMapXmlConfiguration.php 2675 2009-06-07 08:13:34Z godzilla80@gmx.net $
+ * @version $Id: TSqlMapXmlConfiguration.php 2757 2010-01-15 14:47:40Z Christophe.Boulain $
  * @package System.Data.SqlMap.Configuration
  * @since 3.1
  */
@@ -301,7 +301,7 @@ class TSqlMapXmlConfiguration extends TSqlMapXmlConfigBuilder
  * description
  *
  * @author Wei Zhuo <weizho[at]gmail[dot]com>
- * @version $Id: TSqlMapXmlConfiguration.php 2675 2009-06-07 08:13:34Z godzilla80@gmx.net $
+ * @version $Id: TSqlMapXmlConfiguration.php 2757 2010-01-15 14:47:40Z Christophe.Boulain $
  * @package System.Data.SqlMap.Configuration
  * @since 3.1
  */
@@ -710,7 +710,7 @@ class TSqlMapXmlMappingConfiguration extends TSqlMapXmlConfigBuilder
 			if(in_array(strtolower($name), $properties))
 				$cacheModel->{'set'.$name}((string)$value);
 		}
-		$cache = Prado::createComponent($cacheModel->getImplementationClass());
+		$cache = Prado::createComponent($cacheModel->getImplementationClass(), $cacheModel);
 		$this->setObjectPropFromNode($cache,$node,$properties);
 
 		foreach($node->xpath('property') as $propertyNode)

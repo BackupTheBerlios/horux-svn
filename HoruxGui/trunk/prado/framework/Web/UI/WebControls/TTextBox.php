@@ -6,7 +6,7 @@
  * @link http://www.pradosoft.com/
  * @copyright Copyright &copy; 2005-2008 PradoSoft
  * @license http://www.pradosoft.com/license/
- * @version $Id: TTextBox.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TTextBox.php 2744 2009-11-08 11:47:56Z godzilla80@gmx.net $
  * @package System.Web.UI.WebControls
  */
 
@@ -44,7 +44,7 @@
  * Currently, no alternatives are available.
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
- * @version $Id: TTextBox.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TTextBox.php 2744 2009-11-08 11:47:56Z godzilla80@gmx.net $
  * @package System.Web.UI.WebControls
  * @since 3.0
  */
@@ -245,7 +245,7 @@ class TTextBox extends TWebControl implements IPostBackDataHandler, IValidatable
 	}
 
 	/**
-	 * Returns true if this control validated successfully. 
+	 * Returns true if this control validated successfully.
 	 * Defaults to true.
 	 * @return bool wether this control validated successfully.
 	 */
@@ -296,6 +296,18 @@ class TTextBox extends TWebControl implements IPostBackDataHandler, IValidatable
 	{
 		if($this->getTextMode()==='MultiLine')
 			$writer->write(THttpUtility::htmlEncode($this->getText()));
+	}
+
+	/**
+	 * Renders an additional line-break after the opening tag when it
+	 * is in MultiLine text mode.
+	 * @param THtmlWriter the writer used for the rendering purpose^M
+	 */
+	public function renderBeginTag($writer)
+	{
+		parent::renderBeginTag($writer);
+		if($this->getTextMode()==='MultiLine')
+			$writer->write("\n");
 	}
 
 	/**
@@ -579,7 +591,7 @@ class TTextBox extends TWebControl implements IPostBackDataHandler, IValidatable
  * - Password: the textbox will hide user input like a password input box
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
- * @version $Id: TTextBox.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TTextBox.php 2744 2009-11-08 11:47:56Z godzilla80@gmx.net $
  * @package System.Web.UI.WebControls
  * @since 3.0.4
  */
@@ -596,7 +608,7 @@ class TTextBoxMode extends TEnumerable
  * by a {@link TTextBox} control.
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
- * @version $Id: TTextBox.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TTextBox.php 2744 2009-11-08 11:47:56Z godzilla80@gmx.net $
  * @package System.Web.UI.WebControls
  * @since 3.0.4
  */

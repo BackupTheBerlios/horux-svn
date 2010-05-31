@@ -6,7 +6,7 @@
  * @link http://www.pradosoft.com/
  * @copyright Copyright &copy; 2005-2008 PradoSoft
  * @license http://www.pradosoft.com/license/
- * @version $Id: TRegularExpressionValidator.php 2550 2008-10-29 19:47:02Z haertl.mike $
+ * @version $Id: TRegularExpressionValidator.php 2754 2010-01-14 11:29:33Z Christophe.Boulain $
  * @package System.Web.UI.WebControls
  */
 
@@ -43,7 +43,7 @@ Prado::using('System.Web.UI.WebControls.TBaseValidator');
  * Use a {@link TRequiredFieldValidator} to ensure the input is not empty.
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
- * @version $Id: TRegularExpressionValidator.php 2550 2008-10-29 19:47:02Z haertl.mike $
+ * @version $Id: TRegularExpressionValidator.php 2754 2010-01-14 11:29:33Z Christophe.Boulain $
  * @package System.Web.UI.WebControls
  * @since 3.0
  */
@@ -86,7 +86,7 @@ class TRegularExpressionValidator extends TBaseValidator
 	{
 		if(($value=$this->getValidationValue($this->getValidationTarget()))==='')
 			return true;
-		if(($expression=$this->getRegularExpression())!=='')
+		if(($expression=addcslashes($this->getRegularExpression(),"/"))!=='')
 		{
 			$mods = $this->getPatternModifiers();
 			return preg_match("/^$expression\$/{$mods}",$value);

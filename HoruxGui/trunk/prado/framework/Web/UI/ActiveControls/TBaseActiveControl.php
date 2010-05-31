@@ -6,7 +6,7 @@
  * @link http://www.pradosoft.com/
  * @copyright Copyright &copy; 2005-2008 PradoSoft
  * @license http://www.pradosoft.com/license/
- * @version $Id: TBaseActiveControl.php 2624 2009-03-19 21:20:47Z godzilla80@gmx.net $
+ * @version $Id: TBaseActiveControl.php 2773 2010-02-17 13:55:18Z Christophe.Boulain $
  * @package System.Web.UI.ActiveControls
  */
 
@@ -23,18 +23,18 @@ Prado::using('System.Web.UI.ActiveControls.TCallbackClientSide');
  * response returns.
  *
  * @author Wei Zhuo <weizhuo[at]gamil[dot]com>
- * @version $Id: TBaseActiveControl.php 2624 2009-03-19 21:20:47Z godzilla80@gmx.net $
+ * @version $Id: TBaseActiveControl.php 2773 2010-02-17 13:55:18Z Christophe.Boulain $
  * @package System.Web.UI.ActiveControls
  * @since 3.1
  */
 class TBaseActiveControl extends TComponent
 {
 	/**
-	 * @TMap map of active control options.
+	 * @var TMap map of active control options.
 	 */
 	private $_options;
 	/**
-	 * @TControl attached control.
+	 * @var TControl attached control.
 	 */
 	private $_control;
 
@@ -154,7 +154,7 @@ class TBaseActiveControl extends TComponent
  * </code>
  *
  * @author Wei Zhuo <weizhuo[at]gmail[dot]com>
- * @version $Id: TBaseActiveControl.php 2624 2009-03-19 21:20:47Z godzilla80@gmx.net $
+ * @version $Id: TBaseActiveControl.php 2773 2010-02-17 13:55:18Z Christophe.Boulain $
  * @package System.Web.UI.ActiveControls
  * @since 3.1
  */

@@ -6,7 +6,7 @@
  * @link http://www.pradosoft.com/
  * @copyright Copyright &copy; 2005-2008 PradoSoft
  * @license http://www.pradosoft.com/license/
- * @version $Id: TErrorHandler.php 2677 2009-06-07 12:31:01Z godzilla80@gmx.net $
+ * @version $Id: TErrorHandler.php 2778 2010-02-20 18:56:09Z godzilla80@gmx.net $
  * @package System.Exceptions
  */
 
@@ -45,7 +45,7 @@
  * <module id="error" class="TErrorHandler" ErrorTemplatePath="System.Exceptions" />
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
- * @version $Id: TErrorHandler.php 2677 2009-06-07 12:31:01Z godzilla80@gmx.net $
+ * @version $Id: TErrorHandler.php 2778 2010-02-20 18:56:09Z godzilla80@gmx.net $
  * @package System.Exceptions
  * @since 3.0
  */
@@ -161,6 +161,7 @@ class TErrorHandler extends TModule
 		$aRpl[$_SERVER['DOCUMENT_ROOT']] = '${DocumentRoot}';
 		$aRpl[str_replace('/', DIRECTORY_SEPARATOR, $_SERVER['DOCUMENT_ROOT'])] = '${DocumentRoot}';
 		$aRpl[PRADO_DIR . DIRECTORY_SEPARATOR] = '${PradoFramework}' . DIRECTORY_SEPARATOR;
+		if(isset($aRpl[DIRECTORY_SEPARATOR])) unset($aRpl[DIRECTORY_SEPARATOR]);
 		$aRpl = array_reverse($aRpl, true);
 
 		return str_replace(array_keys($aRpl), $aRpl, $value);

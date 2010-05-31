@@ -6,7 +6,7 @@
  * @link http://www.pradosoft.com/
  * @copyright Copyright &copy; 2005-2008 PradoSoft
  * @license http://www.pradosoft.com/license/
- * @version $Id: TSqlMapConfig.php 2659 2009-05-23 07:52:15Z godzilla80@gmx.net $
+ * @version $Id: TSqlMapConfig.php 2745 2009-11-08 15:11:14Z godzilla80@gmx.net $
  * @package System.Data.SqlMap
  */
 
@@ -18,7 +18,7 @@ Prado::using('System.Data.TDataSourceConfig');
  * Database connection and TSqlMapManager configuration.
  *
  * @author Wei Zhuo <weizho[at]gmail[dot]com>
- * @version $Id: TSqlMapConfig.php 2659 2009-05-23 07:52:15Z godzilla80@gmx.net $
+ * @version $Id: TSqlMapConfig.php 2745 2009-11-08 15:11:14Z godzilla80@gmx.net $
  * @package System.Data.SqlMap
  * @since 3.1
  */
@@ -50,6 +50,31 @@ class TSqlMapConfig extends TDataSourceConfig
 		if($cache !== null) {
 			$cache->delete($this->getCacheKey());
 		}
+	}
+
+	/**
+	 * Create and configure the data mapper using sqlmap configuration file.
+	 * Or if cache is enabled and manager already cached load from cache.
+	 * If cache is enabled, the data mapper instance is cached.
+	 *
+	 * @return TSqlMapManager SqlMap manager instance
+	 * @since 3.1.7
+	 */
+	public function getSqlMapManager() {
+		Prado::using('System.Data.SqlMap.TSqlMapManager');
+		if(($manager = $this->loadCachedSqlMapManager())===null)
+		{
+			$manager = new TSqlMapManager($this->getDbConnection());
+			if(strlen($file=$this->getConfigFile()) > 0)
+			{
+				$manager->configureXml($file);
+				$this->cacheSqlMapManager($manager);
+			}
+		}
+		elseif($this->getConnectionID() !== '') {
+			$manager->setDbConnection($this->getDbConnection());
+		}
+		return $manager;
 	}
 
 	/**
@@ -87,6 +112,7 @@ class TSqlMapConfig extends TDataSourceConfig
 					return $manager;
 			}
 		}
+		return null;
 	}
 
 	/**
@@ -134,26 +160,11 @@ class TSqlMapConfig extends TDataSourceConfig
 	}
 
 	/**
-	 * Configure the data mapper using sqlmap configuration file.
-	 * If cache is enabled, the data mapper instance is cached.
 	 * @return TSqlMapGateway SqlMap gateway instance.
 	 */
 	protected function createSqlMapGateway()
 	{
-		Prado::using('System.Data.SqlMap.TSqlMapManager');
-		if(($manager = $this->loadCachedSqlMapManager())===null)
-		{
-			$manager = new TSqlMapManager($this->getDbConnection());
-			if(strlen($file=$this->getConfigFile()) > 0)
-			{
-				$manager->configureXml($file);
-				$this->cacheSqlMapManager($manager);
-			}
-		}
-		else {
-			$manager->setDbConnection($this->getDbConnection());
-		}
-		return $manager->getSqlmapGateway();
+		return $this->getSqlMapManager()->getSqlmapGateway();
 	}
 
 	/**

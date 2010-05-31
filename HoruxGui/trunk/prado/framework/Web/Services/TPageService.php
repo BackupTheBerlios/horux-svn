@@ -6,7 +6,7 @@
  * @link http://www.pradosoft.com/
  * @copyright Copyright &copy; 2005-2008 PradoSoft
  * @license http://www.pradosoft.com/license/
- * @version $Id: TPageService.php 2597 2009-01-06 14:38:07Z christophe.boulain $
+ * @version $Id: TPageService.php 2737 2009-11-08 07:33:48Z godzilla80@gmx.net $
  * @package System.Web.Services
  */
 
@@ -69,7 +69,7 @@ Prado::using('System.Web.UI.TThemeManager');
  * accessing to any resources.
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
- * @version $Id: TPageService.php 2597 2009-01-06 14:38:07Z christophe.boulain $
+ * @version $Id: TPageService.php 2737 2009-11-08 07:33:48Z godzilla80@gmx.net $
  * @package System.Web.Services
  * @since 3.0
  */
@@ -99,6 +99,11 @@ class TPageService extends TService
 	 * @var string base path class in namespace format
 	 */
 	private $_basePageClass='TPage';
+	/**
+	 * @var string clientscript manager class in namespace format
+	 * @since 3.1.7
+	 */
+	private $_clientScriptManagerClass='System.Web.UI.TClientScriptManager';
 	/**
 	 * @var string default page
 	 */
@@ -409,6 +414,25 @@ class TPageService extends TService
 	}
 
 	/**
+	 * Sets the clientscript manager class (in namespace format).
+	 * @param string class name
+	 * @since 3.1.7
+	 */
+	public function setClientScriptManagerClass($value)
+	{
+		$this->_clientScriptManagerClass=$value;
+	}
+
+	/**
+	 * @return string clientscript manager class in namespace format. Defaults to 'System.Web.UI.TClientScriptManager'.
+	 * @since 3.1.7
+	 */
+	public function getClientScriptManagerClass()
+	{
+		return $this->_clientScriptManagerClass;
+	}
+
+	/**
 	 * Runs the service.
 	 * This will create the requested page, initializes it with the property values
 	 * specified in the configuration, and executes the page.
@@ -497,7 +521,7 @@ class TPageService extends TService
  * Configurations along this path are merged together to be provided for the page.
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
- * @version $Id: TPageService.php 2597 2009-01-06 14:38:07Z christophe.boulain $
+ * @version $Id: TPageService.php 2737 2009-11-08 07:33:48Z godzilla80@gmx.net $
  * @package System.Web.Services
  * @since 3.0
  */

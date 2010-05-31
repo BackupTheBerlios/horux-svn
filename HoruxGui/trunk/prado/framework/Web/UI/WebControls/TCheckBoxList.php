@@ -6,7 +6,7 @@
  * @link http://www.pradosoft.com/
  * @copyright Copyright &copy; 2005-2008 PradoSoft
  * @license http://www.pradosoft.com/license/
- * @version $Id: TCheckBoxList.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TCheckBoxList.php 2702 2009-07-27 10:47:39Z carlgmathisen $
  * @package System.Web.UI.WebControls
  */
 
@@ -43,7 +43,7 @@ Prado::using('System.Web.UI.WebControls.TCheckBox');
  * The alignment of the text besides each checkbox can be specified via {@link setTextAlign TextAlign}.
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
- * @version $Id: TCheckBoxList.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TCheckBoxList.php 2702 2009-07-27 10:47:39Z carlgmathisen $
  * @package System.Web.UI.WebControls
  * @since 3.0
  */
@@ -253,6 +253,31 @@ class TCheckBoxList extends TListControl implements IRepeatInfoUser, INamingCont
 	public function getHasSeparators()
 	{
 		return false;
+	}
+	
+	/**
+	 * @param boolean whether the control is to be enabled.
+	 */
+	public function setEnabled($value)
+	{
+		parent::setEnabled($value);
+		$value = !TPropertyValue::ensureBoolean($value);
+		// if this is an active control, 
+		// and it's a callback, 
+		// and we can update clientside,
+		// then update the 'disabled' attribute of the items.
+		if(($this instanceof IActiveControl) &&
+				$this->getPage()->getIsCallBack() &&
+				$this->getActiveControl()->canUpdateClientSide())
+		{
+			$items = $this->getItems();
+			$cs = $this->getPage()->getCallbackClient();
+			$baseClientID = $this->getClientID().'_c';
+			foreach($items as $index=>$item)
+			{
+				$cs->setAttribute($baseClientID.$index, 'disabled', $value);
+			}
+		}
 	}
 
 	/**

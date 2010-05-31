@@ -9,7 +9,7 @@
     <com:TToolbarBox
         ID="tbb"
         Title="<%[Open Time List]%>"
-        CssIcon="icon-48-accesslevel"
+        CssIcon="icon-48-openLevel"
         EditVisible="true"
         AddVisible="true"
         AddUrl="openTime.add"

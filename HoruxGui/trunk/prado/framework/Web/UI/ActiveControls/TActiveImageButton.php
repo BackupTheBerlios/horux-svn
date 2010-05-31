@@ -6,7 +6,7 @@
  * @link http://www.pradosoft.com/
  * @copyright Copyright &copy; 2005-2008 PradoSoft
  * @license http://www.pradosoft.com/license/
- * @version $Id: TActiveImageButton.php 2482 2008-07-30 02:07:13Z knut $
+ * @version $Id: TActiveImageButton.php 2773 2010-02-17 13:55:18Z Christophe.Boulain $
  * @package System.Web.UI.ActiveControls
  */
 
@@ -21,7 +21,7 @@
  * and it is raise <b>after</b> the {@link onClick OnClick} event.
  *
  * @author Wei Zhuo <weizhuo[at]gmail[dot]com>
- * @version $Id: TActiveImageButton.php 2482 2008-07-30 02:07:13Z knut $
+ * @version $Id: TActiveImageButton.php 2773 2010-02-17 13:55:18Z Christophe.Boulain $
  * @package System.Web.UI.ActiveControls
  * @since 3.1
  */
@@ -100,11 +100,11 @@ class TActiveImageButton extends TImageButton implements IActiveControl, ICallba
 	}
 
 	/**
-	 * Raises the callback event. This method is required by {@link
-	 * ICallbackEventHandler} interface. If {@link getCausesValidation
-	 * CausesValidation} is true, it will invoke the page's {@link TPage::
-	 * validate validate} method first. It will raise {@link onClick
-	 * OnClick} event first and then the {@link onCallback OnCallback} event.
+	 * Raises the callback event. This method is required by
+	 * {@link ICallbackEventHandler ICallbackEventHandler} interface. If
+	 * {@link getCausesValidation CausesValidation} is true, it will invoke the page's
+	 * {@link TPage::validate} method first. It will raise
+	 * {@link onClick OnClick} event first and then the {@link onCallback OnCallback} event.
 	 * This method is mainly used by framework and control developers.
 	 * @param TCallbackEventParameter the event parameter
 	 */

@@ -74,10 +74,10 @@ class TMailer extends TModule
       switch($this->mailer)
       {
         case 'mail':
-            $this->swift =& new Swift(new Swift_Connection_NativeMail());
+            $this->swift = new Swift(new Swift_Connection_NativeMail());
             break;
         case 'sendmail':
-            $this->swift =& new Swift(new Swift_Connection_Sendmail($this->sendmail_path));
+            $this->swift = new Swift(new Swift_Connection_Sendmail($this->sendmail_path));
             break;
         case 'smtp':
             //! no authentication
@@ -86,10 +86,10 @@ class TMailer extends TModule
             switch($this->smtp_safe)
             {
               case 'none':
-                $smtp =& new Swift_Connection_SMTP($this->smtp_host, $this->smtp_port);
+                $smtp = new Swift_Connection_SMTP($this->smtp_host, $this->smtp_port);
                 break;
               case 'ssl':
-                $smtp =& new Swift_Connection_SMTP($this->smtp_host, $this->smtp_port, Swift_Connection_SMTP::ENC_SSL);
+                $smtp = new Swift_Connection_SMTP($this->smtp_host, $this->smtp_port, Swift_Connection_SMTP::ENC_SSL);
                 break;
               case 'tls':
                 if($this->smtp_port>0)
@@ -105,7 +105,7 @@ class TMailer extends TModule
               $smtp->setpassword($this->smtp_password);
             }
 
-            $this->swift =& new Swift($smtp);
+            $this->swift = new Swift($smtp);
             break;
       }
       
@@ -127,7 +127,7 @@ class TMailer extends TModule
 
     try
     {
-      $message =& new Swift_Message(Prado::localize("Horux Configuration Changed"), Prado::localize("The Horux configuration was changed succeffuly!"));
+      $message = new Swift_Message(Prado::localize("Horux Configuration Changed"), Prado::localize("The Horux configuration was changed succeffuly!"));
       $res = $this->swift->send($message, $this->mail_from, new Swift_Address($this->mail_from, $this->from_name));
   
       $this->swift->disconnect();
@@ -147,7 +147,7 @@ class TMailer extends TModule
     {
       $text = Prado::localize("Hello {username}<br/><br/>A new super user has registered for the access control.<br/>This e-mail contains their details:<br/><br/>Username: {un}<br/>Password: {password}<br/><br/>Please do not respond to this message. It is automatically generated and is for information purposes only.", array('username'=>$username, 'un'=>$username, 'password'=>$password));
 
-      $message =& new Swift_Message(Prado::localize("Horux super user password"));
+      $message = new Swift_Message(Prado::localize("Horux super user password"));
       $message->attach(new Swift_Message_Part($text, "text/html"));
       $res = $this->swift->send($message, $email, new Swift_Address($this->mail_from, $this->from_name));
 
@@ -170,7 +170,7 @@ class TMailer extends TModule
       $text = Prado::localize("Hello {name} {firstname}<br/><br/>A new user has registered for {sitename}.<br/>This e-mail contains their details:<br/><br/>Username: {email}<br/>Password: {password}<br/>Web site: {url}<br/><br/>Please do not respond to this message. It is automatically generated and is for information purposes only.",
                         array('name'=>$name, 'firstname'=>$firstname,'email'=>$email, 'password'=>$password, 'sitename'=>$sitename, 'url'=>$url));
 
-      $message =& new Swift_Message(Prado::localize("{sitename} user password", array('sitename'=>$sitename)));
+      $message = new Swift_Message(Prado::localize("{sitename} user password", array('sitename'=>$sitename)));
       $message->attach(new Swift_Message_Part($text, "text/html"));
       $res = $this->swift->send($message, $email, new Swift_Address($this->mail_from, $this->from_name));
 
@@ -190,10 +190,10 @@ class TMailer extends TModule
   
     try
     {
-      $message =& new Swift_Message($this->object);
+      $message = new Swift_Message($this->object);
       $message->attach(new Swift_Message_Part($this->body, "text/html"));
 
-      $recipients =& new Swift_RecipientList();
+      $recipients = new Swift_RecipientList();
       foreach($this->addRecipient as $r)
       {
         if($r['name'] != '')
@@ -242,10 +242,10 @@ class TMailer extends TModule
     {
       $this->openConnection();
     
-      $message =& new Swift_Message($this->object, '');
+      $message = new Swift_Message($this->object, '');
       $message->attach(new Swift_Message_Part($this->body));
 
-      $recipients =& new Swift_RecipientList();
+      $recipients = new Swift_RecipientList();
       foreach($this->addRecipient as $r)
       {
         if($r['name'] != '')

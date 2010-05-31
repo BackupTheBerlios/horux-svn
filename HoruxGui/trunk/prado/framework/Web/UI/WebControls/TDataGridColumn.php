@@ -6,7 +6,7 @@
  * @link http://www.pradosoft.com/
  * @copyright Copyright &copy; 2005-2008 PradoSoft
  * @license http://www.pradosoft.com/license/
- * @version $Id: TDataGridColumn.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TDataGridColumn.php 2756 2010-01-14 13:12:27Z Christophe.Boulain $
  * @package System.Web.UI.WebControls
  */
 
@@ -58,7 +58,7 @@ Prado::using('System.Web.UI.WebControls.TDataGrid');
  * which is the major logic for managing the data and presentation of cells in the column.
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
- * @version $Id: TDataGridColumn.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TDataGridColumn.php 2756 2010-01-14 13:12:27Z Christophe.Boulain $
  * @package System.Web.UI.WebControls
  * @since 3.0
  */
@@ -418,6 +418,7 @@ abstract class TDataGridColumn extends TApplicationComponent
 		if(($classPath=$this->getHeaderRenderer())!=='')
 		{
 			$control=Prado::createComponent($classPath);
+			$cell->getControls()->add($control);
 			if($control instanceof IDataRenderer)
 			{
 				if($control instanceof IItemDataRenderer)
@@ -428,7 +429,6 @@ abstract class TDataGridColumn extends TApplicationComponent
 				}
 				$control->setData($text);
 			}
-			$cell->getControls()->add($control);
 		}
 		else if($this->getAllowSorting())
 		{
@@ -489,6 +489,7 @@ abstract class TDataGridColumn extends TApplicationComponent
 		if(($classPath=$this->getFooterRenderer())!=='')
 		{
 			$control=Prado::createComponent($classPath);
+			$cell->getControls()->add($control);
 			if($control instanceof IDataRenderer)
 			{
 				if($control instanceof IItemDataRenderer)
@@ -499,7 +500,6 @@ abstract class TDataGridColumn extends TApplicationComponent
 				}
 				$control->setData($text);
 			}
-			$cell->getControls()->add($control);
 		}
 		else if($text!=='')
 			$cell->setText($text);
@@ -554,7 +554,7 @@ abstract class TDataGridColumn extends TApplicationComponent
  * - ImageButton: image buttons
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
- * @version $Id: TDataGridColumn.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TDataGridColumn.php 2756 2010-01-14 13:12:27Z Christophe.Boulain $
  * @package System.Web.UI.WebControls
  * @since 3.0.4
  */

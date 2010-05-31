@@ -6,7 +6,7 @@
  * @link http://www.pradosoft.com/
  * @copyright Copyright &copy; 2005-2008 PradoSoft
  * @license http://www.pradosoft.com/license/
- * @version $Id: TKeyboard.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TKeyboard.php 2773 2010-02-17 13:55:18Z Christophe.Boulain $
  * @package System.Web.UI.WebControls
  * @since 3.1.1
  */
@@ -33,7 +33,8 @@
  * also be changed by specifying {@link setKeyboardCssClass KeyboardCssClass}.
  *
  * @author Sergey Morkovkin <sergeymorkovkin@mail.ru> and Qiang Xue <qiang.xue@gmail.com>
- * @version $Id: TKeyboard.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TKeyboard.php 2773 2010-02-17 13:55:18Z Christophe.Boulain $
+ * @package System.Web.UI.WebControls
  * @since 3.1.1
  */
 class TKeyboard extends TWebControl

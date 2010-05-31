@@ -6,7 +6,7 @@
  * @link http://www.pradosoft.com/
  * @copyright Copyright &copy; 2005-2008 PradoSoft
  * @license http://www.pradosoft.com/license/
- * @version $Id: TCallbackResponseAdapter.php 2482 2008-07-30 02:07:13Z knut $
+ * @version $Id: TCallbackResponseAdapter.php 2773 2010-02-17 13:55:18Z Christophe.Boulain $
  * @package System.Web.UI.ActiveControls
  */
 
@@ -22,18 +22,18 @@
  * property.
  *
  * @author Wei Zhuo <weizhuo[at]gmail[dot]com>
- * @version $Id: TCallbackResponseAdapter.php 2482 2008-07-30 02:07:13Z knut $
+ * @version $Id: TCallbackResponseAdapter.php 2773 2010-02-17 13:55:18Z Christophe.Boulain $
  * @package System.Web.UI.ActiveControls
  * @since 3.1
  */
 class TCallbackResponseAdapter extends THttpResponseAdapter
 {
 	/**
-	 * @TCallbackResponseWriter[] list of writers.
+	 * @var TCallbackResponseWriter[] list of writers.
 	 */
 	private $_writers=array();
 	/**
-	 * @mixed callback response data.
+	 * @var mixed callback response data.
 	 */
 	private $_data;
 
@@ -110,7 +110,7 @@ class TCallbackResponseAdapter extends THttpResponseAdapter
  * is generated using microtime.
  *
  * @author Wei Zhuo <weizhuo[at]gmail[dot]com>
- * @version $Id: TCallbackResponseAdapter.php 2482 2008-07-30 02:07:13Z knut $
+ * @version $Id: TCallbackResponseAdapter.php 2773 2010-02-17 13:55:18Z Christophe.Boulain $
  * @package System.Web.UI.ActiveControls
  * @since 3.1
  */

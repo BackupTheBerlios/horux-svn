@@ -5,7 +5,8 @@
  * @author Christophe BOULAIN (Christophe.Boulain@gmail.com)
  * @copyright Copyright &copy; 2008, PradoSoft
  * @license http://www.pradosoft.com/license
- * @version $Id: TDropContainer.php 2650 2009-05-11 08:40:37Z Christophe.Boulain $
+ * @version $Id: TDropContainer.php 2773 2010-02-17 13:55:18Z Christophe.Boulain $
+ * @package System.Web.UI.ActiveControls
  */
 
 /**
@@ -30,12 +31,13 @@ Prado::using('System.Web.UI.ActiveControls.TActivePanel');
  * 
  * Events:
  * 
- * <b>{@link OnDrop OnDrop} : raised when a TDraggable control is dropped. The dropped control is encapsulated in the event parameter
+ * <b>{@link OnDrop OnDrop}</b> : raised when a TDraggable control is dropped. The dropped control is encapsulated in the event parameter
  * 
  * @author Christophe BOULAIN (Christophe.Boulain@gmail.com)
  * @copyright Copyright &copy; 2008, PradoSoft
  * @license http://www.pradosoft.com/license
- * @version $Id: TDropContainer.php 2650 2009-05-11 08:40:37Z Christophe.Boulain $
+ * @version $Id: TDropContainer.php 2773 2010-02-17 13:55:18Z Christophe.Boulain $
+ * @package System.Web.UI.ActiveControls
  */
 class TDropContainer extends TPanel implements IActiveControl, ICallbackEventHandler 
 {	
@@ -60,6 +62,13 @@ class TDropContainer extends TPanel implements IActiveControl, ICallbackEventHan
 		return $this->getAdapter()->getBaseActiveControl();
 	}
 
+	/**
+	 * @return TCallbackClientSide client side request options.
+	 */
+	public function getClientSide()
+	{
+		return $this->getAdapter()->getBaseActiveControl()->getClientSide();
+	}
 
 	/**
 	 * Gets the Css class name that this container can accept.
@@ -240,7 +249,8 @@ class TDropContainer extends TPanel implements IActiveControl, ICallbackEventHan
  * @author Christophe BOULAIN (Christophe.Boulain@ceram.fr)
  * @copyright Copyright &copy; 2008, PradoSoft
  * @license http://www.pradosoft.com/license
- * @version $Id: TDropContainer.php 2650 2009-05-11 08:40:37Z Christophe.Boulain $
+ * @version $Id: TDropContainer.php 2773 2010-02-17 13:55:18Z Christophe.Boulain $
+ * @package System.Web.UI.ActiveControls
  */
 class TDropContainerEventParameter extends TEventParameter
 {

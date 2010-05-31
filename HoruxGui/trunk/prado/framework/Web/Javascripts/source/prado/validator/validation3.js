@@ -795,7 +795,7 @@ Prado.WebUI.TBaseValidator.prototype =
 		 * Wether the validator is enabled (default true)
 		 * @var {boolean} enabled
 		 */
-		this.enabled = true;
+		this.enabled = options.Enabled;
 		/**
 		 * Visibility state of validator(default false)
 		 * @var {boolean} visible
@@ -837,6 +837,7 @@ Prado.WebUI.TBaseValidator.prototype =
 		 * @var {element} message
 		 */
 		this.message = $(options.ID);
+
 		Prado.Registry.set(options.ID, this);
 		if(this.control && this.message)
 		{
@@ -1103,7 +1104,7 @@ Prado.WebUI.TBaseValidator.prototype =
 	 * @param {optional element} control - Control to get value from (default: this.control) 
 	 * @return Control value to validate
 	 */
-	 getValidationValue : function(control)
+	 getRawValidationValue : function(control)
 	 {
 	 	if(!control)
 	 		control = this.control
@@ -1112,11 +1113,11 @@ Prado.WebUI.TBaseValidator.prototype =
 	 		case 'TDatePicker':
 	 			if(control.type == "text")
 	 			{
-	 				value = this.trim($F(control));
+	 				var value = this.trim($F(control));
 
 					if(this.options.DateFormat)
 	 				{
-	 					date = value.toDate(this.options.DateFormat);
+	 					var date = value.toDate(this.options.DateFormat);
 	 					return date == null ? value : date;
 	 				}
 	 				else
@@ -1131,7 +1132,7 @@ Prado.WebUI.TBaseValidator.prototype =
 	 		case 'THtmlArea':
 	 			if(typeof tinyMCE != "undefined")
 					tinyMCE.triggerSave();
-				return this.trim($F(control));
+				return $F(control);
 			case 'TRadioButton':
 				if(this.options.GroupName)
 					return this.getRadioButtonGroupValue();
@@ -1139,8 +1140,25 @@ Prado.WebUI.TBaseValidator.prototype =
 	 			if(this.isListControlType())
 	 				return this.getFirstSelectedListValue();
 	 			else
-		 			return this.trim($F(control));
+		 			return $F(control);
 	 	}
+	 },
+	
+	/**
+	 * Get a trimmed value that should be validated.
+	 * The ControlType property comes from TBaseValidator::getClientControlClass()
+	 * Be sure to update the TBaseValidator::$_clientClass if new cases are added.
+	 * @function {mixed} ?
+	 * @param {optional element} control - Control to get value fron (default: this.control)
+	 * @return Control value to validate
+	 */
+	 getValidationValue : function(control)
+	 {
+	 	var value = this.getRawValidationValue(control);
+		if(Object.isString(value))
+			return this.trim(value);
+		else
+			return value;
 	 },
 
 	/**
@@ -1150,8 +1168,8 @@ Prado.WebUI.TBaseValidator.prototype =
 	 */
 	getRadioButtonGroupValue : function()
 	{
-		name = this.control.name;
-		value = "";
+		var name = this.control.name;
+		var value = "";
 		$A(document.getElementsByName(name)).each(function(el)
 		{
 			if(el.checked)
@@ -1224,6 +1242,7 @@ Prado.WebUI.TBaseValidator.prototype =
 			case 'TListBox':
 				var elements = [];
 				var element = $(this.options.ControlToValidate);
+				var type;
 				if(element && (type = element.type.toLowerCase()))
 				{
 					if(type == "select-one" || type == "select-multiple")
@@ -1457,7 +1476,7 @@ Prado.WebUI.TCustomValidator = Class.extend(Prado.WebUI.TBaseValidator,
 		var clientFunction = this.options.ClientValidationFunction;
 		if(typeof(clientFunction) == "string" && clientFunction.length > 0)
 		{
-			validate = clientFunction.toFunction();
+			var validate = clientFunction.toFunction();
 			return validate(this, value);
 		}
 		return true;
@@ -1533,11 +1552,11 @@ Prado.WebUI.TActiveCustomValidator = Class.extend(Prado.WebUI.TBaseValidator,
 	 */
 	evaluateIsValid : function()
 	{
-		value = this.getValidationValue();
+		var value = this.getValidationValue();
 		if(!this.requestDispatched && (""+value) != (""+this.validatingValue))
 		{
 			this.validatingValue = value;
-			request = new Prado.CallbackRequest(this.options.EventTarget, this.options);
+			var request = new Prado.CallbackRequest(this.options.EventTarget, this.options);
 			if(this.options.DateFormat && value instanceof Date) //change date to string with formatting.
 				value = value.SimpleFormat(this.options.DateFormat);
 			request.setCallbackParameter(value);
@@ -1685,11 +1704,11 @@ Prado.WebUI.TRegularExpressionValidator = Class.extend(Prado.WebUI.TBaseValidato
 	 */
 	evaluateIsValid : function()
 	{
-		var value = this.getValidationValue();
+		var value = this.getRawValidationValue();
 		if (value.length <= 0)
 	    	return true;
 
-		var rx = new RegExp(this.options.ValidationExpression,this.options.PatternModifiers);
+		var rx = new RegExp('^'+this.options.ValidationExpression+'$',this.options.PatternModifiers);
 		var matches = rx.exec(value);
 		return (matches != null && value == matches[0]);
 	}
@@ -1830,7 +1849,7 @@ Prado.WebUI.TDataTypeValidator = Class.extend(Prado.WebUI.TBaseValidator,
 	 */
 	evaluateIsValid : function()
 	{
-		value = this.getValidationValue();
+		var value = this.getValidationValue();
 		if(value.length <= 0)
 			return true;
 		return this.convert(this.options.DataType, value) != null;

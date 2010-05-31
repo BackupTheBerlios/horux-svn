@@ -6,7 +6,7 @@
  * @link http://www.pradosoft.com/
  * @copyright Copyright &copy; 2005-2008 PradoSoft
  * @license http://www.pradosoft.com/license/
- * @version $Id: TApplication.php 2578 2008-12-01 22:50:15Z carlgmathisen $
+ * @version $Id: TApplication.php 2704 2009-09-15 08:23:47Z Christophe.Boulain $
  * @package System
  */
 
@@ -105,7 +105,7 @@ Prado::using('System.I18N.TGlobalization');
  * </code>
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
- * @version $Id: TApplication.php 2578 2008-12-01 22:50:15Z carlgmathisen $
+ * @version $Id: TApplication.php 2704 2009-09-15 08:23:47Z Christophe.Boulain $
  * @package System
  * @since 3.0
  */
@@ -1152,7 +1152,7 @@ class TApplication extends TComponent
  * - Normal: the application is running in normal production mode.
  * - Performance: the application is running in performance mode.
  * @author Qiang Xue <qiang.xue@gmail.com>
- * @version $Id: TApplication.php 2578 2008-12-01 22:50:15Z carlgmathisen $
+ * @version $Id: TApplication.php 2704 2009-09-15 08:23:47Z Christophe.Boulain $
  * @package System
  * @since 3.0.4
  */
@@ -1171,7 +1171,7 @@ class TApplicationMode extends TEnumerable
  * This class is used internally by TApplication to parse and represent application configuration.
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
- * @version $Id: TApplication.php 2578 2008-12-01 22:50:15Z carlgmathisen $
+ * @version $Id: TApplication.php 2704 2009-09-15 08:23:47Z Christophe.Boulain $
  * @package System
  * @since 3.0
  */
@@ -1311,7 +1311,7 @@ class TApplicationConfiguration extends TComponent
 					break;
 				}
 				default:
-					throw new TConfigurationException('appconfig_paths_invalid',$tagName);
+					throw new TConfigurationException('appconfig_paths_invalid',$element->getTagName());
 			}
 		}
 	}
@@ -1513,7 +1513,7 @@ class TApplicationConfiguration extends TComponent
  * Cache will be exploited if it is enabled.
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
- * @version $Id: TApplication.php 2578 2008-12-01 22:50:15Z carlgmathisen $
+ * @version $Id: TApplication.php 2704 2009-09-15 08:23:47Z Christophe.Boulain $
  * @package System
  * @since 3.0
  */

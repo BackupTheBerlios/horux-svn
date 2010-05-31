@@ -6,7 +6,7 @@
  * @link http://www.pradosoft.com/
  * @copyright Copyright &copy; 2005-2008 PradoSoft
  * @license http://www.pradosoft.com/license/
- * @version $Id: TTabPanel.php 2501 2008-08-18 23:00:14Z knut $
+ * @version $Id: TTabPanel.php 2773 2010-02-17 13:55:18Z Christophe.Boulain $
  * @package System.Web.UI.WebControls
  * @since 3.1.1
  */
@@ -51,7 +51,8 @@
  * </code>
  *
  * @author Tomasz Wolny <tomasz.wolny@polecam.to.pl> and Qiang Xue <qiang.xue@gmail.com>
- * @version $Id: TTabPanel.php 2501 2008-08-18 23:00:14Z knut $
+ * @version $Id: TTabPanel.php 2773 2010-02-17 13:55:18Z Christophe.Boulain $
+ * @package System.Web.UI.WebControls
  * @since 3.1.1
  */
 class TTabPanel extends TWebControl implements IPostBackDataHandler
@@ -413,6 +414,7 @@ class TTabPanel extends TWebControl implements IPostBackDataHandler
 		$cs->registerEndScript("prado:$id", $code);
 		$cs->registerHiddenField($id.'_1',$this->getActiveViewIndex());
 		$page->registerRequiresPostData($this);
+		$page->registerRequiresPostData($id."_1");
 	}
 
 	/**
@@ -505,7 +507,8 @@ class TTabPanel extends TWebControl implements IPostBackDataHandler
  * setting the {@link setActive Active} property.
  *
  * @author Tomasz Wolny <tomasz.wolny@polecam.to.pl> and Qiang Xue <qiang.xue@gmail.com>
- * @version $Id: TTabPanel.php 2501 2008-08-18 23:00:14Z knut $
+ * @version $Id: TTabPanel.php 2773 2010-02-17 13:55:18Z Christophe.Boulain $
+ * @package System.Web.UI.WebControls
  * @since 3.1.1
  */
 class TTabView extends TWebControl
@@ -658,7 +661,8 @@ class TTabView extends TWebControl
  * TTabViewCollection is used to maintain a list of views belong to a {@link TTabPanel}.
  *
  * @author Tomasz Wolny <tomasz.wolny@polecam.to.pl> and Qiang Xue <qiang.xue@gmail.com>
- * @version $Id: TTabPanel.php 2501 2008-08-18 23:00:14Z knut $
+ * @version $Id: TTabPanel.php 2773 2010-02-17 13:55:18Z Christophe.Boulain $
+ * @package System.Web.UI.WebControls
  * @since 3.1.1
  */
 class TTabViewCollection extends TControlCollection

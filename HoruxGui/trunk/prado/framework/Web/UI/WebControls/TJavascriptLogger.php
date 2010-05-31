@@ -6,7 +6,7 @@
  * @link http://www.pradosoft.com/
  * @copyright Copyright &copy; 2005-2008 PradoSoft
  * @license http://www.pradosoft.com/license/
- * @version $Id: TJavascriptLogger.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TJavascriptLogger.php 2747 2010-01-11 12:58:38Z Christophe.Boulain $
  * @package System.Web.UI.WebControls
  */
 
@@ -23,10 +23,10 @@
  *
  * To see the logger and console, press ALT-D (or CTRL-D on OS X).
  * More information on the logger can be found at
- * http://gleepglop.com/javascripts/logger/
+ * http://web.archive.org/web/20060512041505/gleepglop.com/javascripts/logger/
  *
  * @author Wei Zhuo<weizhuo[at]gmail[dot]com>
- * @version $Id: TJavascriptLogger.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TJavascriptLogger.php 2747 2010-01-11 12:58:38Z Christophe.Boulain $
  * @package System.Web.UI.WebControls
  * @since 3.0
  */
@@ -84,7 +84,7 @@ class TJavascriptLogger extends TWebControl
 	public function renderContents($writer)
 	{
 		$code = strtoupper($this->getToggleKey());
-		$info = '(<a href="http://gleepglop.com/javascripts/logger/" target="_blank">more info</a>).';
+		$info = '(<a href="http://web.archive.org/web/20060512041505/gleepglop.com/javascripts/logger/" target="_blank">more info</a>).';
 		$link = '<a href="javascript:if(logConsole)logConsole.toggle()">toggle the javascript log console.</a>';
 		$usage = 'Press ALT-'.$code.' (Or CTRL-'.$code.' on OS X) to';
 		$writer->write("{$usage} {$link} {$info}");

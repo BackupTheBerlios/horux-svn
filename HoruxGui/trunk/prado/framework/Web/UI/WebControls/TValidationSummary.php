@@ -6,7 +6,7 @@
  * @link http://www.pradosoft.com/
  * @copyright Copyright &copy; 2005-2008 PradoSoft
  * @license http://www.pradosoft.com/license/
- * @version $Id: TValidationSummary.php 2637 2009-04-15 21:23:22Z godzilla80@gmx.net $
+ * @version $Id: TValidationSummary.php 2739 2009-11-08 08:26:42Z godzilla80@gmx.net $
  * @package System.Web.UI.WebControls
  */
 
@@ -30,7 +30,7 @@
  * {@link setEnableClientScript EnableClientScript} is true.
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
- * @version $Id: TValidationSummary.php 2637 2009-04-15 21:23:22Z godzilla80@gmx.net $
+ * @version $Id: TValidationSummary.php 2739 2009-11-08 08:26:42Z godzilla80@gmx.net $
  * @package System.Web.UI.WebControls
  * @since 3.0
  */
@@ -149,6 +149,22 @@ class TValidationSummary extends TWebControl
 	}
 
 	/**
+	 * @return boolean whether scroll summary into viewport or not. Defaults to true.
+	 */
+	public function getScrollToSummary()
+	{
+		return $this->getViewState('ScrollToSummary',true);
+	}
+
+	/**
+	 * @param boolean whether scroll summary into viewport or not.
+	 */
+	public function setScrollToSummary($value)
+	{
+		$this->setViewState('ScrollToSummary',TPropertyValue::ensureBoolean($value),true);
+	}
+
+	/**
 	 * @return boolean whether the validation summary should be anchored. Defaults to false.
 	 */
 	public function getShowAnchor()
@@ -254,6 +270,7 @@ class TValidationSummary extends TWebControl
 		if(!$this->getShowSummary())
 			$options['ShowSummary']=false;
 
+		$options['ScrollToSummary']=$this->getScrollToSummary();
 		$options['HeaderText']=$this->getHeaderText();
 		$options['DisplayMode']=$this->getDisplayMode();
 
@@ -413,7 +430,7 @@ class TValidationSummary extends TWebControl
  * See the quickstart documentation for further details.
  *
  * @author Wei Zhuo <weizhuo[at]gmail[dot]com>
- * @version $Id: TValidationSummary.php 2637 2009-04-15 21:23:22Z godzilla80@gmx.net $
+ * @version $Id: TValidationSummary.php 2739 2009-11-08 08:26:42Z godzilla80@gmx.net $
  * @package System.Web.UI.WebControls
  * @since 3.0
  */
@@ -483,7 +500,7 @@ class TClientSideValidationSummaryOptions extends TClientSideOptions
  * - HeaderOnly: only the HeaderText will be display.
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
- * @version $Id: TValidationSummary.php 2637 2009-04-15 21:23:22Z godzilla80@gmx.net $
+ * @version $Id: TValidationSummary.php 2739 2009-11-08 08:26:42Z godzilla80@gmx.net $
  * @package System.Web.UI.WebControls
  * @since 3.0.4
  */
@@ -507,7 +524,7 @@ class TValidationSummaryDisplayMode extends TEnumerable
  * - Fixed: Similar to Dynamic except that the error messages physically occupy the page layout (even though they may not be visible)
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
- * @version $Id: TValidationSummary.php 2637 2009-04-15 21:23:22Z godzilla80@gmx.net $
+ * @version $Id: TValidationSummary.php 2739 2009-11-08 08:26:42Z godzilla80@gmx.net $
  * @package System.Web.UI.WebControls
  * @since 3.0.4
  */

@@ -5,7 +5,8 @@
  * @author Christophe BOULAIN (Christophe.Boulain@gmail.com)
  * @copyright Copyright &copy; 2008, PradoSoft
  * @license http://www.pradosoft.com/license
- * @version $Id: TDraggable.php 2517 2008-10-13 13:40:34Z tof $
+ * @package System.Web.UI.ActiveControls
+ * @version $Id: TDraggable.php 2773 2010-02-17 13:55:18Z Christophe.Boulain $
  */
 
 /**
@@ -16,7 +17,8 @@
  * @author Christophe BOULAIN (Christophe.Boulain@gmail.com)
  * @copyright Copyright &copy; 2008, PradoSoft
  * @license http://www.pradosoft.com/license
- * @version $Id: TDraggable.php 2517 2008-10-13 13:40:34Z tof $
+ * @package System.Web.UI.ActiveControls
+ * @version $Id: TDraggable.php 2773 2010-02-17 13:55:18Z Christophe.Boulain $
  */
 class TDraggable extends TPanel 
 {

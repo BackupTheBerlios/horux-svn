@@ -6,7 +6,7 @@
  * @link http://www.pradosoft.com/
  * @copyright Copyright &copy; 2005-2008 PradoSoft
  * @license http://www.pradosoft.com/license/
- * @version $Id: THttpResponse.php 2682 2009-06-27 08:47:42Z godzilla80@gmx.net $
+ * @version $Id: THttpResponse.php 2740 2009-11-08 09:46:55Z godzilla80@gmx.net $
  * @package System.Web
  */
 
@@ -60,12 +60,15 @@ Prado::using('System.Web.THttpResponseAdapter');
  * will force the browser to ask for a username and a password.
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
- * @version $Id: THttpResponse.php 2682 2009-06-27 08:47:42Z godzilla80@gmx.net $
+ * @version $Id: THttpResponse.php 2740 2009-11-08 09:46:55Z godzilla80@gmx.net $
  * @package System.Web
  * @since 3.0
  */
 class THttpResponse extends TModule implements ITextWriter
 {
+	const DEFAULT_CONTENTTYPE	= 'text/html';
+	const DEFAULT_CHARSET		= 'UTF-8';
+
 	/**
 	 * @var The differents defined status code by RFC 2616 {@link http://www.faqs.org/rfcs/rfc2616}
 	 */
@@ -106,7 +109,7 @@ class THttpResponse extends TModule implements ITextWriter
 	 */
 	private $_contentType=null;
 	/**
-	 * @var string character set, e.g. UTF-8
+	 * @var string|boolean character set, e.g. UTF-8 or false if no character set should be send to client
 	 */
 	private $_charset='';
 	/**
@@ -212,7 +215,7 @@ class THttpResponse extends TModule implements ITextWriter
 	}
 
 	/**
-	 * @return string output charset.
+	 * @return string|boolean output charset.
 	 */
 	public function getCharset()
 	{
@@ -220,11 +223,11 @@ class THttpResponse extends TModule implements ITextWriter
 	}
 
 	/**
-	 * @param string output charset.
+	 * @param string|boolean output charset.
 	 */
 	public function setCharset($charset)
 	{
-		$this->_charset = $charset;
+		$this->_charset = (strToLower($charset) === 'false') ? false : (string)$charset;
 	}
 
 	/**
@@ -465,20 +468,22 @@ class THttpResponse extends TModule implements ITextWriter
 	}
 
 	/**
-	 * Sends content type header if charset is not empty.
+	 * Sends content type header with optional charset.
 	 */
 	protected function sendContentTypeHeader()
 	{
+		$contentType=$this->_contentType===null?self::DEFAULT_CONTENTTYPE:$this->_contentType;
 		$charset=$this->getCharset();
+		if($charset === false) {
+			$this->appendHeader('Content-Type: '.$contentType);
+			return;
+		}
+
 		if($charset==='' && ($globalization=$this->getApplication()->getGlobalization(false))!==null)
 			$charset=$globalization->getCharset();
-		if($charset!=='')
-		{
-			$contentType=$this->_contentType===null?'text/html':$this->_contentType;
-			$this->appendHeader('Content-Type: '.$contentType.';charset='.$charset);
-		}
-		else if($this->_contentType!==null)
-			$this->appendHeader('Content-Type: '.$this->_contentType.';charset=UTF-8');
+
+		if($charset==='') $charset = self::DEFAULT_CHARSET;
+		$this->appendHeader('Content-Type: '.$contentType.';charset='.$charset);
 	}
 
 	/**

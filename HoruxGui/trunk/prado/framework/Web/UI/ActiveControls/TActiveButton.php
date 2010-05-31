@@ -6,7 +6,7 @@
  * @link http://www.pradosoft.com/
  * @copyright Copyright &copy; 2005-2008 PradoSoft
  * @license http://www.pradosoft.com/license/
- * @version $Id: TActiveButton.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TActiveButton.php 2773 2010-02-17 13:55:18Z Christophe.Boulain $
  * @package System.Web.UI.ActiveControls
  */
 
@@ -29,7 +29,7 @@ Prado::using('System.Web.UI.ActiveControls.TActiveControlAdapter');
  * will update the button's caption upon callback response completion.
  *
  * @author Wei Zhuo <weizhuo[at]gamil[dot]com>
- * @version $Id: TActiveButton.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TActiveButton.php 2773 2010-02-17 13:55:18Z Christophe.Boulain $
  * @package System.Web.UI.ActiveControls
  * @since 3.1
  */
@@ -63,11 +63,11 @@ class TActiveButton extends TButton implements ICallbackEventHandler, IActiveCon
 	}
 
 	/**
-	 * Raises the callback event. This method is required by {@link
-	 * ICallbackEventHandler} interface. If {@link getCausesValidation
-	 * CausesValidation} is true, it will invoke the page's {@link TPage::
-	 * validate validate} method first. It will raise {@link onClick
-	 * OnClick} event first and then the {@link onCallback OnCallback} event.
+	 * Raises the callback event. This method is required by 
+	 * {@link ICallbackEventHandler} interface. If {@link getCausesValidation CausesValidation}
+	 * is true, it will invoke the page's {@link TPage::validate validate}
+	 * method first. It will raise {@link onClick OnClick} event first
+	 * and then the {@link onCallback OnCallback} event.
 	 * This method is mainly used by framework and control developers.
 	 * @param TCallbackEventParameter the event parameter
 	 */

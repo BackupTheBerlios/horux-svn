@@ -6,7 +6,7 @@
  * @link http://www.pradosoft.com/
  * @copyright Copyright &copy; 2005-2008 PradoSoft
  * @license http://www.pradosoft.com/license/
- * @version $Id: TSqlMapCacheModel.php 2636 2009-04-15 21:11:55Z godzilla80@gmx.net $
+ * @version $Id: TSqlMapCacheModel.php 2757 2010-01-15 14:47:40Z Christophe.Boulain $
  * @package System.Data.SqlMap.Configuration
  */
 
@@ -28,7 +28,7 @@
  * the current request.
  *
  * @author Wei Zhuo <weizho[at]gmail[dot]com>
- * @version $Id: TSqlMapCacheModel.php 2636 2009-04-15 21:11:55Z godzilla80@gmx.net $
+ * @version $Id: TSqlMapCacheModel.php 2757 2010-01-15 14:47:40Z Christophe.Boulain $
  * @package System.Data.SqlMap.Configuration
  * @since 3.1
  */
@@ -97,7 +97,7 @@ class TSqlMapCacheModel extends TComponent
 	public function initialize($cache=null)
 	{
 		if($cache===null)
-			$this->_cache= Prado::createComponent($this->getImplementationClass());
+			$this->_cache= Prado::createComponent($this->getImplementationClass(), $this);
 		else
 			$this->_cache=$cache;
 	}
@@ -180,7 +180,7 @@ class TSqlMapCacheModel extends TComponent
  * Implemented cache are 'Basic', 'FIFO' and 'LRU'.
  *
  * @author Wei Zhuo <weizho[at]gmail[dot]com>
- * @version $Id: TSqlMapCacheModel.php 2636 2009-04-15 21:11:55Z godzilla80@gmx.net $
+ * @version $Id: TSqlMapCacheModel.php 2757 2010-01-15 14:47:40Z Christophe.Boulain $
  * @package System.Data.SqlMap.Configuration
  * @since 3.1
  */
@@ -197,7 +197,7 @@ class TSqlMapCacheTypes extends TEnumerable
  * Provides a hash of the object to be cached.
  *
  * @author Wei Zhuo <weizho[at]gmail[dot]com>
- * @version $Id: TSqlMapCacheModel.php 2636 2009-04-15 21:11:55Z godzilla80@gmx.net $
+ * @version $Id: TSqlMapCacheModel.php 2757 2010-01-15 14:47:40Z Christophe.Boulain $
  * @package System.Data.SqlMap.Configuration
  * @since 3.1
  */

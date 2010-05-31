@@ -4,7 +4,8 @@
  * 
  * @author Bradley Booms <Bradley.Booms@nsighttel.com>
  * @author Christophe Boulain <Christophe.Boulain@gmail.com>
- * @version $Id: TActiveFileUpload.php 2634 2009-04-14 11:27:19Z Christophe.Boulain $
+ * @version $Id: TActiveFileUpload.php 2773 2010-02-17 13:55:18Z Christophe.Boulain $
+ * @package System.Web.UI.ActiveControls
  */
 
 /**
@@ -37,8 +38,8 @@ Prado::using('System.Web.UI.WebControls.TFileUpload');
  *  
  * @author Bradley Booms <Bradley.Booms@nsighttel.com>
  * @author Christophe Boulain <Christophe.Boulain@gmail.com>
- * 
- * @version $Id: TActiveFileUpload.php 2634 2009-04-14 11:27:19Z Christophe.Boulain $
+ * @package System.Web.UI.ActiveControls
+ * @version $Id: TActiveFileUpload.php 2773 2010-02-17 13:55:18Z Christophe.Boulain $
  */
 class TActiveFileUpload extends TFileUpload implements IActiveControl, ICallbackEventHandler, INamingContainer 
 {

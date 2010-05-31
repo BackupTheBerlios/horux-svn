@@ -4,7 +4,7 @@
     <com:TToolbarBox
         ID="tbb"
         Title="<%[Modify an open time]%>"
-        CssIcon="icon-48-accesslevel"
+        CssIcon="icon-48-openLevel"
         ApplyVisible="true"
         SaveVisible="true"
         CancelVisible="true"

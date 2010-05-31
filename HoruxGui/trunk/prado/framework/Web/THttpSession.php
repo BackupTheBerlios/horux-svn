@@ -6,7 +6,7 @@
  * @link http://www.pradosoft.com/
  * @copyright Copyright &copy; 2005-2008 PradoSoft
  * @license http://www.pradosoft.com/license/
- * @version $Id: THttpSession.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: THttpSession.php 2773 2010-02-17 13:55:18Z Christophe.Boulain $
  * @package System.Web
  */
 
@@ -14,8 +14,8 @@
  * THttpSession class
  *
  * THttpSession provides session-level data management and the related configurations.
- * To start the session, call {@open}; to complete and send out session data, call {@close};
- * to destroy the session, call {@destroy}. If AutoStart is true, then the session
+ * To start the session, call {@link open}; to complete and send out session data, call {@link close};
+ * to destroy the session, call {@link destroy}. If AutoStart is true, then the session
  * will be started once the session module is loaded and initialized.
  *
  * To access data stored in session, use THttpSession like an associative array. For example,
@@ -29,10 +29,10 @@
  * </code>
  *
  * The following configurations are available for session:
- * {@link setAutoStart AutoStart}, {@link setCookie Cookie},
- * {@link setCacheLimiter, {@link setSavePath SavePath},
+ * {@link setAutoStart AutoStart}, {@link setCookieMode CookieMode},
+ * {@link setSavePath SavePath},
  * {@link setUseCustomStorage UseCustomStorage}, {@link setGCProbability GCProbability},
- * {@link setCookieUsage CookieUsage}, {@link setTimeout Timeout}.
+ * {@link setTimeout Timeout}.
  * See the corresponding setter and getter documentation for more information.
  * Note, these properties must be set before the session is started.
  *
@@ -54,10 +54,10 @@
  * {@link getCookieMode CookieMode}, {@link getUseCustomStorage
  * UseCustomStorage}, {@link getAutoStart AutoStart}, {@link getGCProbability
  * GCProbability}, {@link getUseTransparentSessionID UseTransparentSessionID}
- * and {@link getTimeOut TimeOut} are configurable properties of THttpSession.
+ * and {@link getTimeout TimeOut} are configurable properties of THttpSession.
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
- * @version $Id: THttpSession.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: THttpSession.php 2773 2010-02-17 13:55:18Z Christophe.Boulain $
  * @package System.Web
  * @since 3.0
  */
@@ -296,6 +296,7 @@ class THttpSession extends TApplicationComponent implements IteratorAggregate,Ar
 			{
 				ini_set('session.use_cookies','1');
 				ini_set('session.use_only_cookies','1');
+				ini_set('session.use_trans_sid', 0);
 			}
 		}
 	}
@@ -366,7 +367,12 @@ class THttpSession extends TApplicationComponent implements IteratorAggregate,Ar
 		if($this->_started)
 			throw new TInvalidOperationException('httpsession_transid_unchangeable');
 		else
-			ini_set('session.use_trans_sid',TPropertyValue::ensureBoolean($value)?'1':'0');
+		{
+			$value=TPropertyValue::ensureBoolean($value);
+			if ($value && $this->getCookieMode()==THttpSessionCookieMode::Only)
+					throw new TInvalidOperationException('httpsession_transid_cookieonly');
+			ini_set('session.use_trans_sid',$value?'1':'0');
+		}
 	}
 
 	/**
@@ -608,7 +614,7 @@ class THttpSession extends TApplicationComponent implements IteratorAggregate,Ar
  * for traversing the session variables.
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
- * @version $Id: THttpSession.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: THttpSession.php 2773 2010-02-17 13:55:18Z Christophe.Boulain $
  * @package System.Web
  * @since 3.0
  */
@@ -697,7 +703,7 @@ class TSessionIterator implements Iterator
  * - Only: using cookie only.
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
- * @version $Id: THttpSession.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: THttpSession.php 2773 2010-02-17 13:55:18Z Christophe.Boulain $
  * @package System.Web
  * @since 3.0.4
  */

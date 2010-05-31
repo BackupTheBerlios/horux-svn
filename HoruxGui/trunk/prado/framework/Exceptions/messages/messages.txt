@@ -76,6 +76,7 @@ httpsession_autostart_unchangeable		= THttpSession.AutoStart cannot be modified 
 httpsession_gcprobability_unchangeable	= THttpSession.GCProbability cannot be modified after the session is started.
 httpsession_gcprobability_invalid		= THttpSession.GCProbability must be an integer between 0 and 100.
 httpsession_transid_unchangeable		= THttpSession.UseTransparentSessionID cannot be modified after the session is started.
+httpsession_transid_cookieonly			= THttpSession.UseTransparentSessionID cannot be set when THttpSession.CookieMode is set to Only.
 httpsession_maxlifetime_unchangeable	= THttpSession.Timeout cannot be modified after the session is started.
 
 assetmanager_basepath_invalid			= TAssetManager.BasePath '{0}' is invalid. Make sure it is in namespace form and points to a directory writable by the Web server process.
@@ -200,6 +201,7 @@ page_control_outofform					= {0} '{1}' must be enclosed within TForm.
 page_head_duplicated					= A page can contain at most one THead.
 page_head_required						= A THead control is needed in page template in order to render CSS and js in the HTML head section.
 page_statepersister_invalid				= Page state persister must implement IPageStatePersister interface.
+page_csmanagerclass_invalid				= ClientScriptManager class '{0}' must be an instance of TClientScriptManager.
 
 csmanager_pradoscript_invalid			= Unknown Prado script library name '{0}'.
 csmanager_invalid_packages				= Unkownn packages '{1}' for javascript packages defined in '{0}'. Valid packages are '{2}'.

@@ -6,7 +6,7 @@
  * @link http://www.pradosoft.com/
  * @copyright Copyright &copy; 2005-2008 PradoSoft
  * @license http://www.pradosoft.com/license/
- * @version $Id: TInPlaceTextBox.php 2624 2009-03-19 21:20:47Z godzilla80@gmx.net $
+ * @version $Id: TInPlaceTextBox.php 2765 2010-02-15 08:47:50Z Christophe.Boulain $
  * @package System.Web.UI.ActiveControls
  */
 
@@ -40,7 +40,7 @@ Prado::using('System.Web.UI.ActiveControls.TActiveTextBox');
  * the control not editable. This property can be also changed on callback
  * 
  * @author Wei Zhuo <weizhuo[at]gmail[dot]com>
- * @version $Id: TInPlaceTextBox.php 2624 2009-03-19 21:20:47Z godzilla80@gmx.net $
+ * @version $Id: TInPlaceTextBox.php 2765 2010-02-15 08:47:50Z Christophe.Boulain $
  * @package System.Web.UI.ActiveControls
  * @since 3.1
  */
@@ -218,9 +218,9 @@ class TInPlaceTextBox extends TActiveTextBox
 		$options['ExternalControl'] = $this->getExternalControlID();
 		$options['AutoHide'] = $this->getAutoHideTextBox() == false ? '' : true;
 		$options['AutoPostBack'] = $this->getAutoPostBack() == false ? '' : true;
+		$options['Columns'] = $this->getColumns();
 		if($this->getTextMode()==='MultiLine')
 		{
-			$options['Columns'] = $this->getColumns();
 			$options['Rows'] = $this->getRows();
 			$options['Wrap'] = $this->getWrap()== false ? '' : true;
 		}

@@ -6,7 +6,7 @@
  * @link http://www.pradosoft.com/
  * @copyright Copyright &copy; 2005-2008 PradoSoft
  * @license http://www.pradosoft.com/license/
- * @version $Id: TMysqlMetaData.php 2652 2009-05-13 06:01:17Z godzilla80@gmx.net $
+ * @version $Id: TMysqlMetaData.php 2750 2010-01-12 11:18:57Z Christophe.Boulain $
  * @package System.Data.Common.Mysql
  */
 
@@ -23,7 +23,7 @@ Prado::using('System.Data.Common.Mysql.TMysqlTableInfo');
  * See http://netevil.org/node.php?nid=795&SC=1
  *
  * @author Wei Zhuo <weizho[at]gmail[dot]com>
- * @version $Id: TMysqlMetaData.php 2652 2009-05-13 06:01:17Z godzilla80@gmx.net $
+ * @version $Id: TMysqlMetaData.php 2750 2010-01-12 11:18:57Z Christophe.Boulain $
  * @package System.Data.Commom.Sqlite
  * @since 3.1
  */
@@ -110,7 +110,7 @@ class TMysqlMetaData extends TDbMetaData
 
 			//find SET/ENUM values
 			if($this->isEnumSetType($info['DbType']))
-				$info['DbTypeValues'] = preg_split('/\s*,\s*|\s+/', preg_replace('/\'|"/', '', $match[1]));
+				$info['DbTypeValues'] = preg_split("/[',]/S", $match[1], -1, PREG_SPLIT_NO_EMPTY);
 
 			//find column size, precision and scale
 			$pscale = array();
@@ -212,9 +212,9 @@ class TMysqlMetaData extends TDbMetaData
 		if($this->getServerVersion()<5.01)
 			return false;
 		if($schemaName!==null)
-			$sql = "SHOW FULL TABLES FROM `{$schemaName}` LIKE ':table'";
+			$sql = "SHOW FULL TABLES FROM `{$schemaName}` LIKE :table";
 		else
-			$sql = "SHOW FULL TABLES LIKE ':table'";
+			$sql = "SHOW FULL TABLES LIKE :table";
 
 		$command = $this->getDbConnection()->createCommand($sql);
 		$command->bindValue(':table', $tableName);

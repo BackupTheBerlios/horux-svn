@@ -6,7 +6,7 @@
  * @link http://www.pradosoft.com/
  * @copyright Copyright &copy; 2005-2008 PradoSoft
  * @license http://www.pradosoft.com/license/
- * @version $Id: TActiveControlAdapter.php 2624 2009-03-19 21:20:47Z godzilla80@gmx.net $
+ * @version $Id: TActiveControlAdapter.php 2773 2010-02-17 13:55:18Z Christophe.Boulain $
  * @package System.Web.UI.ActiveControls
  */
 
@@ -29,7 +29,7 @@ Prado::using('System.Web.UI.ActiveControls.TBaseActiveControl');
  * corresponding client-side properties.
  *
  * @author Wei Zhuo <weizhuo[at]gmail[dot]com>
- * @version $Id: TActiveControlAdapter.php 2624 2009-03-19 21:20:47Z godzilla80@gmx.net $
+ * @version $Id: TActiveControlAdapter.php 2773 2010-02-17 13:55:18Z Christophe.Boulain $
  * @package System.Web.UI.ActiveControls
  * @since 3.1
  */
@@ -184,7 +184,7 @@ class TActiveControlAdapter extends TControlAdapter
  * Tracking changes to the page state during callback.
  *
  * @author Wei Zhuo <weizhuo[at]gmail[dot]com>
- * @version $Id: TActiveControlAdapter.php 2624 2009-03-19 21:20:47Z godzilla80@gmx.net $
+ * @version $Id: TActiveControlAdapter.php 2773 2010-02-17 13:55:18Z Christophe.Boulain $
  * @package System.Web.UI.ActiveControls
  * @since 3.1
  */
@@ -262,7 +262,7 @@ class TCallbackPageStateTracker
 	}
 
 	/**
-	 * @array list of viewstate and the changed data.
+	 * @return array list of viewstate and the changed data.
 	 */
 	protected function getChanges()
 	{
@@ -374,7 +374,7 @@ class TCallbackPageStateTracker
  * Calculates the viewstate changes during the request.
  *
  * @author Wei Zhuo <weizhuo[at]gmail[dot]com>
- * @version $Id: TActiveControlAdapter.php 2624 2009-03-19 21:20:47Z godzilla80@gmx.net $
+ * @version $Id: TActiveControlAdapter.php 2773 2010-02-17 13:55:18Z Christophe.Boulain $
  * @package System.Web.UI.ActiveControls
  * @since 3.1
  */
@@ -418,7 +418,7 @@ abstract class TViewStateDiff
  * Calculate the changes to a scalar value.
  *
  * @author Wei Zhuo <weizhuo[at]gmail[dot]com>
- * @version $Id: TActiveControlAdapter.php 2624 2009-03-19 21:20:47Z godzilla80@gmx.net $
+ * @version $Id: TActiveControlAdapter.php 2773 2010-02-17 13:55:18Z Christophe.Boulain $
  * @package System.Web.UI.ActiveControls
  * @since 3.1
  */
@@ -443,7 +443,7 @@ class TScalarDiff extends TViewStateDiff
  * Calculates the changes to the Style properties.
  *
  * @author Wei Zhuo <weizhuo[at]gmail[dot]com>
- * @version $Id: TActiveControlAdapter.php 2624 2009-03-19 21:20:47Z godzilla80@gmx.net $
+ * @version $Id: TActiveControlAdapter.php 2773 2010-02-17 13:55:18Z Christophe.Boulain $
  * @package System.Web.UI.ActiveControls
  * @since 3.1
  */
@@ -535,7 +535,7 @@ class TStyleDiff extends TViewStateDiff
  * Calculate the changes to attributes collection.
  *
  * @author Wei Zhuo <weizhuo[at]gmail[dot]com>
- * @version $Id: TActiveControlAdapter.php 2624 2009-03-19 21:20:47Z godzilla80@gmx.net $
+ * @version $Id: TActiveControlAdapter.php 2773 2010-02-17 13:55:18Z Christophe.Boulain $
  * @package System.Web.UI.ActiveControls
  * @since 3.1
  */

@@ -6,7 +6,7 @@
  * @link http://www.pradosoft.com/
  * @copyright Copyright &copy; 2005-2008 PradoSoft
  * @license http://www.pradosoft.com/license/
- * @version $Id: TPage.php 2686 2009-07-10 08:38:40Z godzilla80@gmx.net $
+ * @version $Id: TPage.php 2737 2009-11-08 07:33:48Z godzilla80@gmx.net $
  * @package System.Web.UI
  */
 
@@ -22,7 +22,7 @@ Prado::using('System.Web.UI.TClientScriptManager');
  * TPage class
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
- * @version $Id: TPage.php 2686 2009-07-10 08:38:40Z godzilla80@gmx.net $
+ * @version $Id: TPage.php 2737 2009-11-08 07:33:48Z godzilla80@gmx.net $
  * @package System.Web.UI
  * @since 3.0
  */
@@ -586,8 +586,17 @@ class TPage extends TTemplateControl
 	 */
 	public function getClientScript()
 	{
-		if(!$this->_clientScript)
-			$this->_clientScript=new TClientScriptManager($this);
+		if(!$this->_clientScript) {
+			$className = $classPath = $this->getService()->getClientScriptManagerClass();
+			Prado::using($className);
+			if(($pos=strrpos($className,'.'))!==false)
+				$className=substr($className,$pos+1);
+
+ 			if(!class_exists($className,false) || ($className!=='TClientScriptManager' && !is_subclass_of($className,'TClientScriptManager')))
+				throw new THttpException(404,'page_csmanagerclass_invalid',$classPath);
+
+			$this->_clientScript=new $className($this);
+		}
 		return $this->_clientScript;
 	}
 
@@ -1198,7 +1207,7 @@ class TPage extends TTemplateControl
  * classes.
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
- * @version $Id: TPage.php 2686 2009-07-10 08:38:40Z godzilla80@gmx.net $
+ * @version $Id: TPage.php 2737 2009-11-08 07:33:48Z godzilla80@gmx.net $
  * @package System.Web.UI
  * @since 3.1
  */
@@ -1287,7 +1296,7 @@ class TPageStateFormatter
 					return Prado::unserialize($str);
 			}
 			else
-				return $str;
+				return Prado::unserialize($str);
 		}
 		return null;
 	}

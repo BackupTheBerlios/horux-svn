@@ -6,7 +6,7 @@
  * @link http://www.pradosoft.com/
  * @copyright Copyright &copy; 2005-2008 PradoSoft
  * @license http://www.pradosoft.com/license/
- * @version $Id: TBoundColumn.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TBoundColumn.php 2705 2009-09-15 08:28:02Z Christophe.Boulain $
  * @package System.Web.UI.WebControls
  */
 
@@ -42,7 +42,7 @@ Prado::using('System.Web.UI.WebControls.TDataGridColumn');
  * For more details, see {@link TRepeater} and {@link TDataList}.
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
- * @version $Id: TBoundColumn.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TBoundColumn.php 2705 2009-09-15 08:28:02Z Christophe.Boulain $
  * @package System.Web.UI.WebControls
  * @since 3.0
  */
@@ -188,7 +188,7 @@ class TBoundColumn extends TDataGridColumn
 			case TListItemType::EditItem:
 				if(!$this->getReadOnly())
 				{
-					if(($classPath=$this->getItemRenderer())!=='')
+					if(($classPath=$this->getEditItemRenderer())!=='')
 					{
 						$control=Prado::createComponent($classPath);
 						if($control instanceof IItemDataRenderer)

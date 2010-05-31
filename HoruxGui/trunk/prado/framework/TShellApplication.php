@@ -6,7 +6,7 @@
  * @link http://www.pradosoft.com/
  * @copyright Copyright &copy; 2005-2008 PradoSoft
  * @license http://www.pradosoft.com/license/
- * @version $Id: TShellApplication.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TShellApplication.php 2751 2010-01-14 10:14:21Z Christophe.Boulain $
  * @package System
  */
 
@@ -29,12 +29,20 @@
  * accessibility to resources as the PRADO Web applications.
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
- * @version $Id: TShellApplication.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TShellApplication.php 2751 2010-01-14 10:14:21Z Christophe.Boulain $
  * @package System
  * @since 3.1.0
  */
 class TShellApplication extends TApplication
 {
+
+	/**
+	 * Override parent implementation. TShellApplication doesn't need to start any service
+	 */
+	public function startService($serviceID)
+	{
+
+	}
 	/**
 	 * Runs the application.
 	 * This method overrides the parent implementation by initializing

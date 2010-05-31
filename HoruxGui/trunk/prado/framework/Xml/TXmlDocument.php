@@ -6,7 +6,7 @@
  * @link http://www.pradosoft.com/
  * @copyright Copyright &copy; 2005-2008 PradoSoft
  * @license http://www.pradosoft.com/license/
- * @version $Id: TXmlDocument.php 2638 2009-04-16 09:26:55Z godzilla80@gmx.net $
+ * @version $Id: TXmlDocument.php 2771 2010-02-16 14:55:38Z Christophe.Boulain $
  * @package System.Xml
  */
 
@@ -22,7 +22,7 @@
  * TBD: xpath
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
- * @version $Id: TXmlDocument.php 2638 2009-04-16 09:26:55Z godzilla80@gmx.net $
+ * @version $Id: TXmlDocument.php 2771 2010-02-16 14:55:38Z Christophe.Boulain $
  * @package System.Xml
  * @since 3.0
  */
@@ -103,7 +103,7 @@ class TXmlElement extends TComponent
 	 */
 	public function setValue($value)
 	{
-		$this->_value=$value;
+		$this->_value=TPropertyValue::ensureString($value);
 	}
 
 	/**
@@ -139,7 +139,7 @@ class TXmlElement extends TComponent
 	 */
 	public function setAttribute($name,$value)
 	{
-		$this->getAttributes()->add($name,$value);
+		$this->getAttributes()->add($name,TPropertyValue::ensureString($value));
 	}
 
 	/**
@@ -300,7 +300,7 @@ class TXmlElement extends TComponent
  * </code>
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
- * @version $Id: TXmlDocument.php 2638 2009-04-16 09:26:55Z godzilla80@gmx.net $
+ * @version $Id: TXmlDocument.php 2771 2010-02-16 14:55:38Z Christophe.Boulain $
  * @package System.Xml
  * @since 3.0
  */
@@ -502,7 +502,7 @@ class TXmlDocument extends TXmlElement
  * You may manipulate the collection with the operations defined in {@link TList}.
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
- * @version $Id: TXmlDocument.php 2638 2009-04-16 09:26:55Z godzilla80@gmx.net $
+ * @version $Id: TXmlDocument.php 2771 2010-02-16 14:55:38Z Christophe.Boulain $
  * @package System.Xml
  * @since 3.0
  */

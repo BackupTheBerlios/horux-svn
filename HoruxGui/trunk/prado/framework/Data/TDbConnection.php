@@ -6,7 +6,7 @@
  * @link http://www.pradosoft.com/
  * @copyright Copyright &copy; 2005-2008 PradoSoft
  * @license http://www.pradosoft.com/license/
- * @version $Id: TDbConnection.php 2605 2009-01-29 07:43:23Z Christophe.Boulain $
+ * @version $Id: TDbConnection.php 2760 2010-02-08 07:19:50Z godzilla80@gmx.net $
  * @package System.Data
  */
 
@@ -27,10 +27,10 @@ Prado::using('System.Data.TDbCommand');
  * specifying {@link setConnectionString ConnectionString}, {@link setUsername Username}
  * and {@link setPassword Password}.
  *
- * Since 3.1.2, the connection charset can be set (for MySQL and PostgreSQL databases only) 
+ * Since 3.1.2, the connection charset can be set (for MySQL and PostgreSQL databases only)
  * using the {@link setCharset Charset} property. The value of this property is database dependant.
- * e.g. for mysql, you can use 'latin1' for cp1252 West European, 'utf8' for unicode, ... 
- * 
+ * e.g. for mysql, you can use 'latin1' for cp1252 West European, 'utf8' for unicode, ...
+ *
  * The following example shows how to create a TDbConnection instance and establish
  * the actual connection:
  * <code>
@@ -77,12 +77,18 @@ Prado::using('System.Data.TDbCommand');
  * of certain DBMS attributes, such as {@link getNullConversion NullConversion}.
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
- * @version $Id: TDbConnection.php 2605 2009-01-29 07:43:23Z Christophe.Boulain $
+ * @version $Id: TDbConnection.php 2760 2010-02-08 07:19:50Z godzilla80@gmx.net $
  * @package System.Data
  * @since 3.0
  */
 class TDbConnection extends TComponent
 {
+	/**
+	 *
+	 * @since 3.1.7
+	 */
+	const DEFAULT_TRANSACTION_CLASS = 'System.Data.TDbTransaction';
+
 	private $_dsn='';
 	private $_username='';
 	private $_password='';
@@ -93,12 +99,18 @@ class TDbConnection extends TComponent
 	private $_transaction;
 
 	/**
+	 * @var string
+	 * @since 3.1.7
+	 */
+	private $_transactionClass=self::DEFAULT_TRANSACTION_CLASS;
+
+	/**
 	 * Constructor.
 	 * Note, the DB connection is not established when this connection
 	 * instance is created. Set {@link setActive Active} property to true
 	 * to establish the connection.
 	 * Since 3.1.2, you can set the charset for MySql connection
-	 * 
+	 *
 	 * @param string The Data Source Name, or DSN, contains the information required to connect to the database.
 	 * @param string The user name for the DSN string.
 	 * @param string The password for the DSN string.
@@ -168,7 +180,7 @@ class TDbConnection extends TComponent
 			{
 				$this->_pdo=new PDO($this->getConnectionString(),$this->getUsername(),
 									$this->getPassword(),$this->_attributes);
-				// This attribute is only useful for PDO::MySql driver. 
+				// This attribute is only useful for PDO::MySql driver.
 				// Ignore the warning if a driver doesn't understand this.
 				@$this->_pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, true);
 				$this->_pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -194,7 +206,7 @@ class TDbConnection extends TComponent
 
 	/*
 	 * Set the database connection charset.
-	 * Only MySql databases are supported for now. 
+	 * Only MySql databases are supported for now.
 	 * @since 3.1.2
 	 */
 	protected function setConnectionCharset()
@@ -204,7 +216,7 @@ class TDbConnection extends TComponent
 		switch ($this->_pdo->getAttribute(PDO::ATTR_DRIVER_NAME))
 		{
 			case 'mysql':
-				$stmt = $this->_pdo->prepare('SET CHARACTER SET ?');
+				$stmt = $this->_pdo->prepare('SET NAMES ?');
 			break;
 			case 'pgsql':
 				$stmt = $this->_pdo->prepare('SET client_encoding TO ?');
@@ -212,7 +224,7 @@ class TDbConnection extends TComponent
 		}
 		$stmt->execute(array($this->_charset));
 	}
-		
+
 	/**
 	 * @return string The Data Source Name, or DSN, contains the information required to connect to the database.
 	 */
@@ -269,7 +281,7 @@ class TDbConnection extends TComponent
 	{
 		return $this->_charset;
 	}
-	
+
 	/**
 	 * @param string the charset used for database connection
 	 */
@@ -278,7 +290,7 @@ class TDbConnection extends TComponent
 		$this->_charset=$value;
 		$this->setConnectionCharset();
 	}
-	
+
 	/**
 	 * @return PDO the PDO instance, null if the connection is not established yet
 	 */
@@ -324,10 +336,29 @@ class TDbConnection extends TComponent
 		if($this->getActive())
 		{
 			$this->_pdo->beginTransaction();
-			return $this->_transaction=new TDbTransaction($this);
+			return $this->_transaction=Prado::createComponent($this->getTransactionClass(), $this);
 		}
 		else
 			throw new TDbException('dbconnection_connection_inactive');
+	}
+
+	/**
+	 * @return string Transaction class name to be created by calling {@link TDbConnection::beginTransaction}. Defaults to 'System.Data.TDbTransaction'.
+	 * @since 3.1.7
+	 */
+	public function getTransactionClass()
+	{
+		return $this->_transactionClass;
+	}
+
+
+	/**
+	 * @param string Transaction class name to be created by calling {@link TDbConnection::beginTransaction}.
+	 * @since 3.1.7
+	 */
+	public function setTransactionClass($value)
+	{
+		$this->_transactionClass = (string)$value;
 	}
 
 	/**
@@ -556,7 +587,7 @@ class TDbConnection extends TComponent
  * TDbColumnCaseMode
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
- * @version $Id: TDbConnection.php 2605 2009-01-29 07:43:23Z Christophe.Boulain $
+ * @version $Id: TDbConnection.php 2760 2010-02-08 07:19:50Z godzilla80@gmx.net $
  * @package System.Data
  * @since 3.0
  */
@@ -580,7 +611,7 @@ class TDbColumnCaseMode extends TEnumerable
  * TDbNullConversionMode
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
- * @version $Id: TDbConnection.php 2605 2009-01-29 07:43:23Z Christophe.Boulain $
+ * @version $Id: TDbConnection.php 2760 2010-02-08 07:19:50Z godzilla80@gmx.net $
  * @package System.Data
  * @since 3.0
  */

@@ -6,7 +6,7 @@
  * @link http://www.pradosoft.com/
  * @copyright Copyright &copy; 2005-2008 PradoSoft
  * @license http://www.pradosoft.com/license/
- * @version $Id: TSqlMapCache.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TSqlMapCache.php 2757 2010-01-15 14:47:40Z Christophe.Boulain $
  * @package System.Data.SqlMap
  */
 
@@ -16,7 +16,7 @@
  * a least-recently-used cache implementation.
  *
  * @author Wei Zhuo <weizhuo[at]gmail[dot]com>
- * @version $Id: TSqlMapCache.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TSqlMapCache.php 2757 2010-01-15 14:47:40Z Christophe.Boulain $
  * @package System.Data.SqlMap
  * @since 3.1
  */
@@ -25,16 +25,17 @@ abstract class TSqlMapCache implements ICache
 	protected $_keyList;
 	protected $_cache;
 	protected $_cacheSize = 100;
+	protected $_cacheModel = null;
 
 	/**
 	 * Create a new cache with limited cache size.
-	 * @param integer maxium number of items to cache.
+	 * @param TSqlMapCacheModel $cacheModel.
 	 */
-	public function __construct($cacheSize=100)
+	public function __construct($cacheModel=null)
 	{
 		$this->_cache = new TMap;
-		$this->_cacheSize = intval($cacheSize);
 		$this->_keyList = new TList;
+		$this->_cacheModel=$cacheModel;
 	}
 
 	/**
@@ -88,7 +89,7 @@ abstract class TSqlMapCache implements ICache
  * object that was first added when the cache is full.
  *
  * @author Wei Zhuo <weizhuo[at]gmail[dot]com>
- * @version $Id: TSqlMapCache.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TSqlMapCache.php 2757 2010-01-15 14:47:40Z Christophe.Boulain $
  * @package System.Data.SqlMap
  * @since 3.1
  */
@@ -125,7 +126,7 @@ class TSqlMapFifoCache extends TSqlMapCache
  * object that was accessed last when the cache is full.
  *
  * @author Wei Zhuo <weizhuo[at]gmail[dot]com>
- * @version $Id: TSqlMapCache.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TSqlMapCache.php 2757 2010-01-15 14:47:40Z Christophe.Boulain $
  * @package System.Data.SqlMap
  * @since 3.1
  */
@@ -167,26 +168,77 @@ class TSqlMapLruCache extends TSqlMapCache
  * caching SqlMap results.
  *
  * @author Wei Zhuo <weizho[at]gmail[dot]com>
- * @version $Id: TSqlMapCache.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: TSqlMapCache.php 2757 2010-01-15 14:47:40Z Christophe.Boulain $
  * @package System.Data.SqlMap
  * @since 3.1
  */
 class TSqlMapApplicationCache implements ICache
 {
+	protected $_cacheModel=null;
+
+	/**
+	 * Create a new cache with limited cache size.
+	 * @param TSqlMapCacheModel $cacheModel.
+	 */
+	public function __construct($cacheModel=null)
+	{
+		$this->_cacheModel=$cacheModel;
+	}
+
+	/**
+	 *
+	 * @return string a KeyListID for the cache model.
+	 */
+	protected function getKeyListId()
+	{
+		$id='keyList';
+		if ($this->_cacheModel instanceof TSqlMapCacheModel)
+				$id.='_'.$this->_cacheModel->getId();
+		return $id;
+	}
+	/**
+	 * Retreive keylist from cache or create it if it doesn't exists
+	 * @return TList
+	 */
+	protected function getKeyList()
+	{
+		if (($keyList=$this->getCache()->get($this->getKeyListId()))===false)
+		{
+			$keyList=new TList();
+			$this->getCache()->set($this->getKeyListId(), $keyList);
+		}
+		return $keyList;
+	}
+
+	protected function setKeyList($keyList)
+	{
+		$this->getCache()->set($this->getKeyListId(), $keyList);
+	}
+
 	/**
 	 * @param string item to be deleted.
 	 */
 	public function delete($key)
 	{
+		$keyList=$this->getKeyList();
+		$keyList->remove($key);
 		$this->getCache()->delete($key);
+		$this->setKeyList($keyList);
 	}
 
 	/**
-	 * Deletes all items in the cache.
+	 * Deletes all items in the cache, only for data cached by sqlmap cachemodel
 	 */
 	public function flush()
 	{
-		$this->getCache()->flush();
+		$keyList=$this->getKeyList();
+		$cache=$this->getCache();
+		foreach ($keyList as $key)
+		{
+			$cache->delete($key);
+		}
+		// Remove the old keylist
+		$cache->delete($this->getKeyListId());
 	}
 
 	/**
@@ -195,6 +247,16 @@ class TSqlMapApplicationCache implements ICache
 	public function get($key)
 	{
 		$result = $this->getCache()->get($key);
+		if ($result === false)
+		{
+			// if the key has not been found in cache (e.g expired), remove from keylist
+			$keyList=$this->getKeyList();
+			if ($keyList->contains($key))
+			{
+				$keyList->remove($key);
+				$this->setKeyList($keyList);
+			}
+		}
 		return $result === false ? null : $result;
 	}
 
@@ -206,6 +268,12 @@ class TSqlMapApplicationCache implements ICache
 	public function set($key, $value,$expire=0,$dependency=null)
 	{
 		$this->getCache()->set($key, $value, $expire,$dependency);
+		$keyList=$this->getKeyList();
+		if (!$keyList->contains($key))
+		{
+			$keyList->add($key);
+			$this->setKeyList($keyList);
+		}
 	}
 
 	/**

@@ -6,7 +6,7 @@
  * @link http://www.pradosoft.com/
  * @copyright Copyright &copy; 2005-2008 PradoSoft
  * @license http://www.pradosoft.com/license/
- * @version $Id: THttpRequest.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: THttpRequest.php 2781 2010-02-22 08:56:54Z godzilla80@gmx.net $
  * @package System.Web
  */
 
@@ -64,12 +64,14 @@ Prado::using('System.Web.TUrlManager');
  * request module. It can be accessed via {@link TApplication::getRequest()}.
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
- * @version $Id: THttpRequest.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: THttpRequest.php 2781 2010-02-22 08:56:54Z godzilla80@gmx.net $
  * @package System.Web
  * @since 3.0
  */
 class THttpRequest extends TApplicationComponent implements IteratorAggregate,ArrayAccess,Countable,IModule
 {
+	const CGIFIX__PATH_INFO		= 1;
+	const CGIFIX__SCRIPT_NAME	= 2;
 	/**
 	 * @var TUrlManager the URL manager module
 	 */
@@ -105,11 +107,12 @@ class THttpRequest extends TApplicationComponent implements IteratorAggregate,Ar
 	/**
 	 * @var boolean whether the session ID should be kept in cookie only
 	 */
-	private $_cookieOnly=false;
+	private $_cookieOnly=null;
 	private $_urlFormat=THttpRequestUrlFormat::Get;
 	private $_services;
 	private $_requestResolved=false;
 	private $_enableCookieValidation=false;
+	private $_cgiFix=0;
 	/**
 	 * @var string request URL
 	 */
@@ -172,8 +175,6 @@ class THttpRequest extends TApplicationComponent implements IteratorAggregate,Ar
 			$_SERVER['HTTP_USER_AGENT']='';
 		}
 
-		$this->_cookieOnly=(int)ini_get('session.use_cookies') && (int)ini_get('session.use_only_cookies');
-
 		// Info about server variables:
 		// PHP_SELF contains real URI (w/ path info, w/o query string)
 		// SCRIPT_NAME is the real URI for the requested script (w/o path info and query string)
@@ -185,7 +186,9 @@ class THttpRequest extends TApplicationComponent implements IteratorAggregate,Ar
 		else  // TBD: in this case, SCRIPT_NAME need to be escaped
 			$this->_requestUri=$_SERVER['SCRIPT_NAME'].(empty($_SERVER['QUERY_STRING'])?'':'?'.$_SERVER['QUERY_STRING']);
 
-		if(isset($_SERVER['PATH_INFO']))
+		if($this->_cgiFix&self::CGIFIX__PATH_INFO && isset($_SERVER['ORIG_PATH_INFO']))
+			$this->_pathInfo=substr($_SERVER['ORIG_PATH_INFO'], strlen($_SERVER['SCRIPT_NAME']));
+		elseif(isset($_SERVER['PATH_INFO']))
 			$this->_pathInfo=$_SERVER['PATH_INFO'];
 		else if(strpos($_SERVER['PHP_SELF'],$_SERVER['SCRIPT_NAME'])===0 && $_SERVER['PHP_SELF']!==$_SERVER['SCRIPT_NAME'])
 			$this->_pathInfo=substr($_SERVER['PHP_SELF'],strlen($_SERVER['SCRIPT_NAME']));
@@ -351,7 +354,7 @@ class THttpRequest extends TApplicationComponent implements IteratorAggregate,Ar
 	{
 		return isset($_SERVER['SERVER_PROTOCOL'])?$_SERVER['SERVER_PROTOCOL']:'';
 	}
-	
+
 	/**
 	 * @return string part of that request URL after the host info (including pathinfo and query string)
 	 */
@@ -378,6 +381,9 @@ class THttpRequest extends TApplicationComponent implements IteratorAggregate,Ar
 	 */
 	public function getApplicationUrl()
 	{
+		if($this->_cgiFix&self::CGIFIX__SCRIPT_NAME && isset($_SERVER['ORIG_SCRIPT_NAME']))
+			return $_SERVER['ORIG_SCRIPT_NAME'];
+
 		return $_SERVER['SCRIPT_NAME'];
 	}
 
@@ -500,6 +506,26 @@ class THttpRequest extends TApplicationComponent implements IteratorAggregate,Ar
 	}
 
 	/**
+	 * @return integer whether to use ORIG_PATH_INFO and/or ORIG_SCRIPT_NAME. Defaults to 0.
+	 * @see THttpRequest::CGIFIX__PATH_INFO, THttpRequest::CGIFIX__SCRIPT_NAME
+	 */
+	public function getCgiFix()
+	{
+		return $this->_cgiFix;
+	}
+
+	/**
+	 * Enable this, if you're using PHP via CGI with php.ini setting "cgi.fix_pathinfo=1"
+	 * and have trouble with friendly URL feature. Enable this only if you really know what you are doing!
+	 * @param integer enable bitwise to use ORIG_PATH_INFO and/or ORIG_SCRIPT_NAME.
+	 * @see THttpRequest::CGIFIX__PATH_INFO, THttpRequest::CGIFIX__SCRIPT_NAME
+	 */
+	public function setCgiFix($value)
+	{
+		$this->_cgiFix=TPropertyValue::ensureInteger($value);
+	}
+
+	/**
 	 * @return THttpCookieCollection list of cookies to be sent
 	 */
 	public function getCookies()
@@ -568,6 +594,8 @@ class THttpRequest extends TApplicationComponent implements IteratorAggregate,Ar
 	 */
 	public function constructUrl($serviceID,$serviceParam,$getItems=null,$encodeAmpersand=true,$encodeGetItems=true)
 	{
+		if ($this->_cookieOnly===null)
+				$this->_cookieOnly=(int)ini_get('session.use_cookies') && (int)ini_get('session.use_only_cookies');
 		$url=$this->_urlManager->constructUrl($serviceID,$serviceParam,$getItems,$encodeAmpersand,$encodeGetItems);
 		if(defined('SID') && SID != '' && !$this->_cookieOnly)
 			return $url . (strpos($url,'?')===false? '?' : ($encodeAmpersand?'&amp;':'&')) . SID;
@@ -818,7 +846,7 @@ class THttpRequest extends TApplicationComponent implements IteratorAggregate,Ar
  * </code>
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
- * @version $Id: THttpRequest.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: THttpRequest.php 2781 2010-02-22 08:56:54Z godzilla80@gmx.net $
  * @package System.Web
  * @since 3.0
  */
@@ -906,7 +934,7 @@ class THttpCookieCollection extends TList
  * domain, path, expire, and secure.
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
- * @version $Id: THttpRequest.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: THttpRequest.php 2781 2010-02-22 08:56:54Z godzilla80@gmx.net $
  * @package System.Web
  * @since 3.0
  */
@@ -1061,7 +1089,7 @@ class THttpCookie extends TComponent
  * - fragment: anchor
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
- * @version $Id: THttpRequest.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: THttpRequest.php 2781 2010-02-22 08:56:54Z godzilla80@gmx.net $
  * @package System.Web
  * @since 3.0
  */
@@ -1227,7 +1255,7 @@ class TUri extends TComponent
  * - Path: the URL format is like /path/to/index.php/name1,value1/name2,value2...
  *
  * @author Qiang Xue <qiang.xue@gmail.com>
- * @version $Id: THttpRequest.php 2541 2008-10-21 15:05:13Z qiang.xue $
+ * @version $Id: THttpRequest.php 2781 2010-02-22 08:56:54Z godzilla80@gmx.net $
  * @package System.Web
  * @since 3.0.4
  */
