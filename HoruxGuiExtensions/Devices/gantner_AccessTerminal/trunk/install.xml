@@ -9,7 +9,7 @@
 	<authorUrl>http://www.letux.ch</authorUrl>
 	<copyright>Letux</copyright>
 	<license>GNU/GPL</license>
-	<description>Configure Gantner Access Terminal GAT Terminal 3100 AK</description>
+	<description>Configure Gantner Access Terminal GAT Terminal</description>
 	<sqlinstall>install.sql</sqlinstall>
 	<sqluninstall>uninstall.sql</sqluninstall>
 
