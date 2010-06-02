@@ -59,7 +59,8 @@ class ControlPanel extends Page
 
     protected function getComponentShortCut()
     {
-		$app = $this->getApplication();
+        $data = array();
+	$app = $this->getApplication();
       	$db = $app->getModule('horuxDb')->DbConnection;
       	$db->Active=true;
 
