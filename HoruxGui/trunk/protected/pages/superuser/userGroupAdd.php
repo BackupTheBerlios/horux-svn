@@ -88,11 +88,11 @@ class userGroupAdd extends Page
 
                 if(!$isComponentHasOne)
                 {
-                    $data[] = array('Type'=>Prado::localize('Components'), 'id'=>$data2['page'], 'Text'=>Prado::localize($name->getValue(), array(),$installName ), 'access'=>true, 'composantname'=>$installName, 'shortcut'=>false);
+                    $data[] = array('Type'=>Prado::localize('Components'), 'id'=>$data2['page'], 'Text'=>Prado::localize($name->getValue(), array(),$installName ), 'Text2'=>'', 'access'=>true, 'composantname'=>$installName, 'shortcut'=>false);
                     $isComponentHasOne = true;
                 }
                 else
-                    $data[] = array('Type'=>'', 'id'=>$data2['page'], 'Text'=>Prado::localize($name->getValue(), array(),$installName ), 'access'=>true, 'composantname'=>$installName, 'shortcut'=>false);
+                    $data[] = array('Type'=>'', 'id'=>$data2['page'], 'Text'=>Prado::localize($name->getValue(), array(),$installName ), 'Text2'=>'', 'access'=>true, 'composantname'=>$installName, 'shortcut'=>false);
 
 
                 $cmd = $this->db->createCommand("SELECT * FROM hr_install AS i LEFT JOIN hr_component as c ON c.id_install=i.id WHERE i.type='component' AND c.parentmenu=".$data2['id']." AND c.parentmenu>0 AND i.id=".$d1['id']);
@@ -116,54 +116,54 @@ class userGroupAdd extends Page
         $param = $this->Application->getParameters();
         $groupId = $this->Application->getUser()->getGroupID();
 
-        $data[] = array('Type'=>'Horux', 'id'=>'superUser', 'Text'=>Prado::localize('Super User'), 'access'=>true, 'shortcut'=>false);
-        $data[] = array('Type'=>'', 'id'=>'superUserGroup', 'Text'=>Prado::localize('Super User Group'), 'access'=>true, 'shortcut'=>false);
+        $data[] = array('Type'=>'Horux', 'id'=>'superUser', 'Text'=>Prado::localize('Super User'), 'Text2'=>'', 'access'=>true, 'shortcut'=>false);
+        $data[] = array('Type'=>'', 'id'=>'superUserGroup', 'Text'=>Prado::localize('Super User Group'), 'Text2'=>'', 'access'=>true, 'shortcut'=>false);
 
         if( ($param['appMode'] == 'saas' && $groupId == 1) || $param['appMode'] != 'saas' )
         {
-            $data[] = array('Type'=>'', 'id'=>'configuration', 'Text'=>Prado::localize('Configuration'), 'access'=>true, 'shortcut'=>false);
+            $data[] = array('Type'=>'', 'id'=>'configuration', 'Text'=>Prado::localize('Configuration'), 'Text2'=>'', 'access'=>true, 'shortcut'=>false);
         }
 
-        $data[] = array('Type'=>Prado::localize('System'), 'id'=>'site', 'Text'=>Prado::localize('Site'), 'access'=>true, 'shortcut'=>false);
-        $data[] = array('Type'=>'', 'id'=>'department', 'Text'=>Prado::localize('Department'), 'access'=>true, 'shortcut'=>false);
-        $data[] = array('Type'=>'', 'id'=>'hardware', 'Text'=>Prado::localize('Hardware'), 'access'=>true, 'shortcut'=>false);
-        $data[] = array('Type'=>'', 'id'=>'openTime', 'Text'=>Prado::localize('Opent time'), 'access'=>true, 'shortcut'=>false);
-        $data[] = array('Type'=>'', 'id'=>'alarms', 'Text'=>Prado::localize('Alarms'), 'access'=>true, 'shortcut'=>false);
-        $data[] = array('Type'=>'', 'id'=>'notification', 'Text'=>Prado::localize('Notification'), 'access'=>true, 'shortcut'=>false);
+        $data[] = array('Type'=>Prado::localize('System'), 'id'=>'site', 'Text'=>Prado::localize('Site'), 'Text2'=>'', 'access'=>true, 'shortcut'=>false);
+        $data[] = array('Type'=>'', 'id'=>'department', 'Text'=>Prado::localize('Department'), 'Text2'=>'', 'access'=>true, 'shortcut'=>false);
+        $data[] = array('Type'=>'', 'id'=>'hardware', 'Text'=>Prado::localize('Hardware'), 'Text2'=>'', 'access'=>true, 'shortcut'=>false);
+        $data[] = array('Type'=>'', 'id'=>'openTime', 'Text'=>Prado::localize('Opent time'), 'Text2'=>'', 'access'=>true, 'shortcut'=>false);
+        $data[] = array('Type'=>'', 'id'=>'alarms', 'Text'=>Prado::localize('Alarms'), 'Text2'=>'', 'access'=>true, 'shortcut'=>false);
+        $data[] = array('Type'=>'', 'id'=>'notification', 'Text'=>Prado::localize('Notification'), 'Text2'=>'', 'access'=>true, 'shortcut'=>false);
 
         if( ($param['appMode'] == 'saas' && $groupId == 1) || $param['appMode'] != 'saas' )
         {
-            $data[] = array('Type'=>'', 'id'=>'service', 'Text'=>Prado::localize('Horux Service'), 'access'=>true, 'shortcut'=>false);
+            $data[] = array('Type'=>'', 'id'=>'service', 'Text'=>Prado::localize('Horux Service'), 'Text2'=>'', 'access'=>true, 'shortcut'=>false);
         }
         
-        $data[] = array('Type'=>'', 'id'=>'status', 'Text'=>Prado::localize('Horux Status'), 'access'=>true, 'shortcut'=>false);
+        $data[] = array('Type'=>'', 'id'=>'status', 'Text'=>Prado::localize('Horux Status'), 'Text2'=>'', 'access'=>true, 'shortcut'=>false);
 
-        $data[] = array('Type'=>Prado::localize('Access'), 'id'=>'user', 'Text'=>Prado::localize('User'), 'access'=>true, 'shortcut'=>false);
-        $data[] = array('Type'=>'', 'id'=>'userGroup', 'Text'=>Prado::localize('User Group'), 'access'=>true, 'shortcut'=>false);
-        $data[] = array('Type'=>'', 'id'=>'userWizard', 'Text'=>Prado::localize('User Wizard'), 'access'=>true, 'shortcut'=>false);
-        $data[] = array('Type'=>'', 'id'=>'key', 'Text'=>Prado::localize('Key'), 'access'=>true, 'shortcut'=>false);
-        $data[] = array('Type'=>'', 'id'=>'accessLevel', 'Text'=>Prado::localize('Access Level'), 'access'=>true, 'shortcut'=>false, 'shortcut'=>false);
-        $data[] = array('Type'=>'', 'id'=>'nonWorkingDay', 'Text'=>Prado::localize('Non Working Day'), 'access'=>true, 'shortcut'=>false);
+        $data[] = array('Type'=>Prado::localize('Access'), 'id'=>'user', 'Text'=>Prado::localize('User'), 'Text2'=>'', 'access'=>true, 'shortcut'=>false);
+        $data[] = array('Type'=>'', 'id'=>'userGroup', 'Text'=>Prado::localize('User Group'), 'Text2'=>'', 'access'=>true, 'shortcut'=>false);
+        $data[] = array('Type'=>'', 'id'=>'userWizard', 'Text'=>Prado::localize('User Wizard'), 'Text2'=>'', 'access'=>true, 'shortcut'=>false);
+        $data[] = array('Type'=>'', 'id'=>'key', 'Text'=>Prado::localize('Key'), 'access'=>true, 'Text2'=>'', 'shortcut'=>false);
+        $data[] = array('Type'=>'', 'id'=>'accessLevel', 'Text'=>Prado::localize('Access Level'), 'Text2'=>'', 'access'=>true, 'shortcut'=>false, 'shortcut'=>false);
+        $data[] = array('Type'=>'', 'id'=>'nonWorkingDay', 'Text'=>Prado::localize('Non Working Day'), 'Text2'=>'', 'access'=>true, 'shortcut'=>false);
 
 
         if( ($param['appMode'] == 'saas' && $groupId == 1) || $param['appMode'] != 'saas' )
         {
-            $data[] = array('Type'=>Prado::localize('Extensions'), 'id'=>'install_uninstall', 'Text'=>Prado::localize('Install/Uninstall'), 'access'=>true, 'shortcut'=>false);
-            $data[] = array('Type'=>'', 'id'=>'devices', 'Text'=>Prado::localize('Devices Manager'), 'access'=>true, 'shortcut'=>false);
-            $data[] = array('Type'=>'', 'id'=>'components', 'Text'=>Prado::localize('Component Manager'), 'access'=>true, 'shortcut'=>false);
-            $data[] = array('Type'=>'', 'id'=>'template', 'Text'=>Prado::localize('Template Manager'), 'access'=>true, 'shortcut'=>false);
-            $data[] = array('Type'=>'', 'id'=>'language', 'Text'=>Prado::localize('Language Manager'), 'access'=>true, 'shortcut'=>false);
+            $data[] = array('Type'=>Prado::localize('Extensions'), 'id'=>'install_uninstall', 'Text'=>Prado::localize('Install/Uninstall'), 'Text2'=>'', 'access'=>true, 'shortcut'=>false);
+            $data[] = array('Type'=>'', 'id'=>'devices', 'Text'=>Prado::localize('Devices Manager'), 'Text2'=>'', 'access'=>true, 'shortcut'=>false);
+            $data[] = array('Type'=>'', 'id'=>'components', 'Text'=>Prado::localize('Component Manager'), 'Text2'=>'', 'access'=>true, 'shortcut'=>false);
+            $data[] = array('Type'=>'', 'id'=>'template', 'Text'=>Prado::localize('Template Manager'), 'Text2'=>'', 'access'=>true, 'shortcut'=>false);
+            $data[] = array('Type'=>'', 'id'=>'language', 'Text'=>Prado::localize('Language Manager'), 'Text2'=>'', 'access'=>true, 'shortcut'=>false);
         }
         else
-            $data[] = array('Type'=>Prado::localize('Extensions'), 'id'=>'language', 'Text'=>Prado::localize('Language Manager'), 'access'=>true, 'shortcut'=>false);
+            $data[] = array('Type'=>Prado::localize('Extensions'), 'id'=>'language', 'Text'=>Prado::localize('Language Manager'), 'Text2'=>'', 'access'=>true, 'shortcut'=>false);
 
 
 
-        $data[] = array('Type'=>Prado::localize('Tools'), 'id'=>'guilog', 'Text'=>Prado::localize('Horux Gui Log'), 'access'=>true, 'shortcut'=>false);
-        $data[] = array('Type'=>'', 'id'=>'globalCheckin', 'Text'=>Prado::localize('Global Checkin'), 'access'=>true, 'shortcut'=>false);
-        $data[] = array('Type'=>'', 'id'=>'recycling', 'Text'=>Prado::localize('Recycling a Key'), 'access'=>true, 'shortcut'=>false);
+        $data[] = array('Type'=>Prado::localize('Tools'), 'id'=>'guilog', 'Text'=>Prado::localize('Horux Gui Log'), 'Text2'=>'', 'access'=>true, 'shortcut'=>false);
+        $data[] = array('Type'=>'', 'id'=>'globalCheckin', 'Text'=>Prado::localize('Global Checkin'), 'Text2'=>'', 'access'=>true, 'shortcut'=>false);
+        $data[] = array('Type'=>'', 'id'=>'recycling', 'Text'=>Prado::localize('Recycling a Key'), 'Text2'=>'', 'access'=>true, 'shortcut'=>false);
 
-        $data[] = array('Type'=>Prado::localize('Help'), 'id'=>'systemInfo', 'Text'=>Prado::localize('System Info'), 'access'=>true, 'shortcut'=>false);
+        $data[] = array('Type'=>Prado::localize('Help'), 'id'=>'systemInfo', 'Text'=>Prado::localize('System Info'), 'Text2'=>'', 'access'=>true, 'shortcut'=>false);
 
         $data = $this->addComponent($data);
 
