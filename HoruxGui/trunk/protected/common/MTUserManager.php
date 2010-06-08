@@ -53,8 +53,8 @@ class MTUserManager extends TModule implements IUserManager {
 			'WHERE `name`=:name AND `password`=:password';
 
 		$cmd = $db->createCommand($sql);
-		$cmd->bindParameter(':name', $name,PDO::PARAM_STR );
-		$cmd->bindParameter(':password', $password,PDO::PARAM_STR );
+		$cmd->bindValue(':name', $name,PDO::PARAM_STR );
+		$cmd->bindValue(':password', $password,PDO::PARAM_STR );
 		$res = $cmd->query();	
 		$row = $res->read();	
 
@@ -103,7 +103,7 @@ class MTUserManager extends TModule implements IUserManager {
 				'WHERE `u`.`name`=:name ';
 
 			$cmd = $db->createCommand($sql);
-			$cmd->bindParameter(':name', $name,PDO::PARAM_STR );
+			$cmd->bindValue(':name', $name,PDO::PARAM_STR );
 			$res = $cmd->query();	
 			$row = $res->read();				
 			// If we have such user in DB then create new User and

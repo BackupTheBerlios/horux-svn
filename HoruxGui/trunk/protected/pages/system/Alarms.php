@@ -105,18 +105,18 @@ class Alarms extends PageList
             if($from != "" && $until != "")
             {
                 $cmd=$this->db->createCommand(SQL::SQL_GET_ALARMS_BY_DATE);
-                $cmd->bindParameter(":from",$from,PDO::PARAM_STR);
-                $cmd->bindParameter(":until",$until,PDO::PARAM_STR);
+                $cmd->bindValue(":from",$from,PDO::PARAM_STR);
+                $cmd->bindValue(":until",$until,PDO::PARAM_STR);
             }
             if($from != "" && $until == "")
             {
                 $cmd=$this->db->createCommand(SQL::SQL_GET_ALARMS_BY_DATE_FROM);
-                $cmd->bindParameter(":from",$from,PDO::PARAM_STR);
+                $cmd->bindValue(":from",$from,PDO::PARAM_STR);
             }
             if($from == "" && $until != "")
             {
                 $cmd=$this->db->createCommand(SQL::SQL_GET_ALARMS_BY_DATE_UNTIL);
-                $cmd->bindParameter(":until",$until,PDO::PARAM_STR);
+                $cmd->bindValue(":until",$until,PDO::PARAM_STR);
             }
 
         }

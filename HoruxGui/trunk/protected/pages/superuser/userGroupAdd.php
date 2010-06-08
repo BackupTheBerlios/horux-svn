@@ -212,21 +212,21 @@ class userGroupAdd extends Page
     public function saveData()
     {
         $cmd = $this->db->createCommand( SQL::SQL_ADD_USER_GROUP );
-        $cmd->bindParameter(":name",$this->name->SafeText,PDO::PARAM_STR);
-        $cmd->bindParameter(":superAdmin",$this->superAdmin->getChecked(),PDO::PARAM_STR);
-        $cmd->bindParameter(":description",$this->description->SafeText,PDO::PARAM_STR);
-        $cmd->bindParameter(":defaultPage",$this->defaultPage->getSelectedValue(),PDO::PARAM_STR);
+        $cmd->bindValue(":name",$this->name->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":superAdmin",$this->superAdmin->getChecked(),PDO::PARAM_STR);
+        $cmd->bindValue(":description",$this->description->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":defaultPage",$this->defaultPage->getSelectedValue(),PDO::PARAM_STR);
 
         $f1 = $this->dispUserLoggedIn->getChecked();
         $f2 = $this->dispLastAlarm->getChecked();
         $f3 = $this->dispLastTracking->getChecked();
         $f4 = $this->webservice->getChecked();
 
-        $cmd->bindParameter(":dispUserLoggedIn",$f1,PDO::PARAM_STR);
-        $cmd->bindParameter(":dispLastAlarm",$f2,PDO::PARAM_STR);
-        $cmd->bindParameter(":dispLastTracking",$f3,PDO::PARAM_STR);
+        $cmd->bindValue(":dispUserLoggedIn",$f1,PDO::PARAM_STR);
+        $cmd->bindValue(":dispLastAlarm",$f2,PDO::PARAM_STR);
+        $cmd->bindValue(":dispLastTracking",$f3,PDO::PARAM_STR);
 
-        $cmd->bindParameter(":webservice",$f4,PDO::PARAM_STR);
+        $cmd->bindValue(":webservice",$f4,PDO::PARAM_STR);
 
 
         if(!$cmd->execute()) return false;
@@ -426,9 +426,9 @@ class userGroupAdd extends Page
     protected function insertNewPermission($lasetId, $page, $shortcut=false)
     {
         $cmd = $this->db->createCommand( SQL::SQL_ADD_PERMISSION );
-        $cmd->bindParameter(":page",$page,PDO::PARAM_STR);
-        $cmd->bindParameter(":id",$lasetId,PDO::PARAM_STR);
-        $cmd->bindParameter(":shortcut",$shortcut);
+        $cmd->bindValue(":page",$page,PDO::PARAM_STR);
+        $cmd->bindValue(":id",$lasetId,PDO::PARAM_STR);
+        $cmd->bindValue(":shortcut",$shortcut);
 
         $cmd->execute();
     }
@@ -436,7 +436,7 @@ class userGroupAdd extends Page
     public function serverValidateName($sender, $param)
     {
         $cmd = $this->db->createCommand( SQL::SQL_IS_GROUP_EXIST );
-        $cmd->bindParameter(":name",$this->name->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":name",$this->name->SafeText,PDO::PARAM_STR);
         $data = $cmd->query();
         $data = $data->read();
 

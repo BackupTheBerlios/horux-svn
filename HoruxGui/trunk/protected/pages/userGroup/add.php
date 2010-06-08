@@ -82,9 +82,9 @@ class add extends Page
     protected function saveData()
     {
         $cmd = $this->db->createCommand( SQL::SQL_ADD_GROUP );
-        $cmd->bindParameter(":name",$this->name->SafeText,PDO::PARAM_STR);
-        $cmd->bindParameter(":comment",$this->comment->SafeText,PDO::PARAM_STR);
-        $cmd->bindParameter(":accessPlugin",$this->accessPlugin->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":name",$this->name->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":comment",$this->comment->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":accessPlugin",$this->accessPlugin->SafeText,PDO::PARAM_STR);
 
         if(!$cmd->execute()) return false;
 
@@ -103,9 +103,9 @@ class add extends Page
                 $id_accessLevel = $al_obj->getSelectedValue();
 
                 $cmd = $this->db->createCommand( SQL::SQL_ADD_ACCESS_GROUP );
-                $cmd->bindParameter(":lastId",$lastId, PDO::PARAM_INT);
-                $cmd->bindParameter(":readerId",$id_device, PDO::PARAM_INT);
-                $cmd->bindParameter(":accessLevelId",$id_accessLevel, PDO::PARAM_INT);
+                $cmd->bindValue(":lastId",$lastId, PDO::PARAM_INT);
+                $cmd->bindValue(":readerId",$id_device, PDO::PARAM_INT);
+                $cmd->bindValue(":accessLevelId",$id_accessLevel, PDO::PARAM_INT);
 
                 $cmd->execute();
             }
@@ -119,7 +119,7 @@ class add extends Page
     public function serverValidateName($sender, $param)
     {
         $cmd = $this->db->createCommand( SQL::SQL_IS_NAME_EXIST);
-        $cmd->bindParameter(":name",$this->name->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":name",$this->name->SafeText,PDO::PARAM_STR);
         $array = $cmd->query()->readAll();
 
         if(count($array) > 0)

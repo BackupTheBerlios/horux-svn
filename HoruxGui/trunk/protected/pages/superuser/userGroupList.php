@@ -305,12 +305,12 @@ class UserGroupList extends PageList
 
                             //remove the group
                             $cmd=$this->db->createCommand(SQL::SQL_DELETE_GROUP);
-                            $cmd->bindParameter(":id",$id_group);
+                            $cmd->bindValue(":id",$id_group);
                             $cmd->execute();
 
                             // remove the permision of the group
                             $cmd=$this->db->createCommand(SQL::SQL_DELETE_GROUP_PERM);
-                            $cmd->bindParameter(":id",$id_group);
+                            $cmd->bindValue(":id",$id_group);
                             $cmd->execute();
                             $nDelete++;
                         }

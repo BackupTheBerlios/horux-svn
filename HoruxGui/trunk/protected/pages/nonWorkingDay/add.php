@@ -81,11 +81,11 @@ class add extends Page
         $until = $from;
 
         $cmd = $this->db->createCommand( SQL::SQL_ADD_NONWORKINGDAY );
-        $cmd->bindParameter(":name",$this->name->SafeText,PDO::PARAM_STR);
-        $cmd->bindParameter(":from",$from, PDO::PARAM_STR);
-        $cmd->bindParameter(":until",$until, PDO::PARAM_STR);
-        $cmd->bindParameter(":comment",$this->comment->SafeText, PDO::PARAM_STR);
-        $cmd->bindParameter(":color",$this->color->SafeText, PDO::PARAM_STR);
+        $cmd->bindValue(":name",$this->name->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":from",$from, PDO::PARAM_STR);
+        $cmd->bindValue(":until",$until, PDO::PARAM_STR);
+        $cmd->bindValue(":comment",$this->comment->SafeText, PDO::PARAM_STR);
+        $cmd->bindValue(":color",$this->color->SafeText, PDO::PARAM_STR);
 
         $period = "";
 
@@ -96,7 +96,7 @@ class add extends Page
         if($this->afternoon->getChecked())
             $period = 'afternoon';
 
-        $cmd->bindParameter(":period",$period,PDO::PARAM_STR);
+        $cmd->bindValue(":period",$period,PDO::PARAM_STR);
 
 
         $this->log("Add the non working day: ".$this->name->SafeText);

@@ -57,11 +57,11 @@ class add extends Page
     protected function saveData()
     {
         $cmd = $this->db->createCommand( SQL::SQL_ADD_OPEN_TIME );
-        $cmd->bindParameter(":name",$this->name->SafeText,PDO::PARAM_STR);
-        $cmd->bindParameter(":non_working_day",$this->nonWorkingDayAccess->Checked,PDO::PARAM_STR);
-        $cmd->bindParameter(":monday_default",$this->mondayDefault->Checked,PDO::PARAM_STR);
+        $cmd->bindValue(":name",$this->name->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":non_working_day",$this->nonWorkingDayAccess->Checked,PDO::PARAM_STR);
+        $cmd->bindValue(":monday_default",$this->mondayDefault->Checked,PDO::PARAM_STR);
 
-        $cmd->bindParameter(":comment",$this->comment->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":comment",$this->comment->SafeText,PDO::PARAM_STR);
 
         $res = $cmd->execute();
 
@@ -115,15 +115,15 @@ class add extends Page
         $indexEndHours= $indexStartHours + ($indexEndHours[0]*60) + $indexEndHours[1];
 
         $cmd = $this->db->createCommand( SQL::SQL_ADD_OPEN_TIME_TIME );
-        $cmd->bindParameter(":id_openTime",$lastId,PDO::PARAM_STR);
-        $cmd->bindParameter(":day",$dayName,PDO::PARAM_STR);
-        $cmd->bindParameter(":from",$indexStartHours,PDO::PARAM_INT);
-        $cmd->bindParameter(":until",$indexEndHours,PDO::PARAM_INT);
-        $cmd->bindParameter(":unlocking",$unlocking,PDO::PARAM_INT);
-        $cmd->bindParameter(":supOpenTooLongAlarm",$supOpenTooLongAlarm,PDO::PARAM_INT);
-        $cmd->bindParameter(":supWithoutPermAlarm",$supWithoutPermAlarm,PDO::PARAM_INT);
-        $cmd->bindParameter(":checkOnlyCompanyID",$checkOnlyCompanyID,PDO::PARAM_INT);
-        $cmd->bindParameter(":specialRelayPlan",$specialRelayPlan,PDO::PARAM_INT);
+        $cmd->bindValue(":id_openTime",$lastId,PDO::PARAM_STR);
+        $cmd->bindValue(":day",$dayName,PDO::PARAM_STR);
+        $cmd->bindValue(":from",$indexStartHours,PDO::PARAM_INT);
+        $cmd->bindValue(":until",$indexEndHours,PDO::PARAM_INT);
+        $cmd->bindValue(":unlocking",$unlocking,PDO::PARAM_INT);
+        $cmd->bindValue(":supOpenTooLongAlarm",$supOpenTooLongAlarm,PDO::PARAM_INT);
+        $cmd->bindValue(":supWithoutPermAlarm",$supWithoutPermAlarm,PDO::PARAM_INT);
+        $cmd->bindValue(":checkOnlyCompanyID",$checkOnlyCompanyID,PDO::PARAM_INT);
+        $cmd->bindValue(":specialRelayPlan",$specialRelayPlan,PDO::PARAM_INT);
 
         $cmd->execute();
     }
@@ -163,7 +163,7 @@ class add extends Page
     public function nameValidateIdentificator($sender, $param)
     {
         $cmd = $this->db->createCommand( SQL::SQL_IS_OPEN_TIME_NAME_EXIST);
-        $cmd->bindParameter(":name",$this->name->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":name",$this->name->SafeText,PDO::PARAM_STR);
         $array = $cmd->query()->readAll();
 
         if(count($array) > 0)

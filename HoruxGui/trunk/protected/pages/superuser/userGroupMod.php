@@ -140,7 +140,7 @@ class userGroupMod extends Page
     public function setData()
     {
         $cmd = $this->db->createCommand( SQL::SQL_GET_GROUP_BY_ID );
-        $cmd->bindParameter(":id",$this->id->Value, PDO::PARAM_INT);
+        $cmd->bindValue(":id",$this->id->Value, PDO::PARAM_INT);
         $query = $cmd->query();
         if($query)
         {
@@ -167,8 +167,8 @@ class userGroupMod extends Page
     protected function isAccess($page)
     {
         $cmd = $this->db->createCommand( "SELECT COUNT(*) AS n FROM hr_gui_permissions WHERE page=:page AND value=:id" );
-        $cmd->bindParameter(":id",$this->id->Value, PDO::PARAM_INT);
-        $cmd->bindParameter(":page",$page, PDO::PARAM_INT);
+        $cmd->bindValue(":id",$this->id->Value, PDO::PARAM_INT);
+        $cmd->bindValue(":page",$page, PDO::PARAM_INT);
         $query = $cmd->query();
         if($query)
         {
@@ -180,8 +180,8 @@ class userGroupMod extends Page
     protected function isShortcut($page)
     {
         $cmd = $this->db->createCommand( "SELECT COUNT(*) AS n FROM hr_gui_permissions WHERE page=:page AND value=:id AND shortcut=1" );
-        $cmd->bindParameter(":id",$this->id->Value, PDO::PARAM_INT);
-        $cmd->bindParameter(":page",$page, PDO::PARAM_INT);
+        $cmd->bindValue(":id",$this->id->Value, PDO::PARAM_INT);
+        $cmd->bindValue(":page",$page, PDO::PARAM_INT);
         $query = $cmd->query();
         if($query)
         {
@@ -297,10 +297,10 @@ class userGroupMod extends Page
     public function saveData()
     {
         $cmd = $this->db->createCommand( SQL::SQL_UPDATE_USER_GROUP );
-        $cmd->bindParameter(":name",$this->name->SafeText,PDO::PARAM_STR);
-        $cmd->bindParameter(":superAdmin",$this->superAdmin->getChecked(),PDO::PARAM_STR);
-        $cmd->bindParameter(":description",$this->description->SafeText,PDO::PARAM_STR);
-        $cmd->bindParameter(":id",$this->id->Value, PDO::PARAM_INT);
+        $cmd->bindValue(":name",$this->name->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":superAdmin",$this->superAdmin->getChecked(),PDO::PARAM_STR);
+        $cmd->bindValue(":description",$this->description->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":id",$this->id->Value, PDO::PARAM_INT);
 
         $f1 = $this->dispUserLoggedIn->getChecked();
         $f2 = $this->dispLastAlarm->getChecked();
@@ -308,19 +308,19 @@ class userGroupMod extends Page
         $f4 = $this->webservice->getChecked();
 
 
-        $cmd->bindParameter(":dispUserLoggedIn",$f1,PDO::PARAM_STR);
-        $cmd->bindParameter(":dispLastAlarm",$f2,PDO::PARAM_STR);
-        $cmd->bindParameter(":dispLastTracking",$f3,PDO::PARAM_STR);
+        $cmd->bindValue(":dispUserLoggedIn",$f1,PDO::PARAM_STR);
+        $cmd->bindValue(":dispLastAlarm",$f2,PDO::PARAM_STR);
+        $cmd->bindValue(":dispLastTracking",$f3,PDO::PARAM_STR);
 
-        $cmd->bindParameter(":webservice",$f4,PDO::PARAM_STR);
-        $cmd->bindParameter(":defaultPage",$this->defaultPage->getSelectedValue(),PDO::PARAM_STR);
+        $cmd->bindValue(":webservice",$f4,PDO::PARAM_STR);
+        $cmd->bindValue(":defaultPage",$this->defaultPage->getSelectedValue(),PDO::PARAM_STR);
 
 
 
         $cmd->execute();
 
         $cmd=$this->db->createCommand(SQL::SQL_DELETE_GROUP_PERM);
-        $cmd->bindParameter(":id",$this->id->Value);
+        $cmd->bindValue(":id",$this->id->Value);
         $cmd->execute();
 
         $this->updatePermissions($this->id->Value);
@@ -521,9 +521,9 @@ class userGroupMod extends Page
     protected function updatePermission($lasetId, $page, $shortcut=false)
     {
         $cmd = $this->db->createCommand( SQL::SQL_ADD_PERMISSION );
-        $cmd->bindParameter(":page",$page,PDO::PARAM_STR);
-        $cmd->bindParameter(":id",$lasetId,PDO::PARAM_STR);
-        $cmd->bindParameter(":shortcut",$shortcut);
+        $cmd->bindValue(":page",$page,PDO::PARAM_STR);
+        $cmd->bindValue(":id",$lasetId,PDO::PARAM_STR);
+        $cmd->bindValue(":shortcut",$shortcut);
 
         $cmd->execute();
     }
@@ -531,8 +531,8 @@ class userGroupMod extends Page
     public function serverValidateName($sender, $param)
     {
         $cmd = $this->db->createCommand( SQL::SQL_IS_GROUP_EXIST2 );
-        $cmd->bindParameter(":name",$this->name->SafeText,PDO::PARAM_STR);
-        $cmd->bindParameter(":id",$this->id->Value);
+        $cmd->bindValue(":name",$this->name->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":id",$this->id->Value);
         $data = $cmd->query();
         $data = $data->read();
 

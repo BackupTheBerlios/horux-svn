@@ -284,39 +284,39 @@ class UserWizzard extends Page
         $sex = 'M';
 
         // Global
-        $cmd->bindParameter(":sex",$sex,PDO::PARAM_STR);
-        $cmd->bindParameter(":name",$this->name->SafeText,PDO::PARAM_STR);
-        $cmd->bindParameter(":firstname",$this->firstname->SafeText,PDO::PARAM_STR);
-        $cmd->bindParameter(":language",$this->language->getSelectedValue(),PDO::PARAM_STR);
-        $cmd->bindParameter(":picture",$this->pictureName->Value,PDO::PARAM_STR);
-        $cmd->bindParameter(":pin_code",$this->pin_code->SafeText,PDO::PARAM_STR);
-        $cmd->bindParameter(":password",sha1($this->password->SafeText),PDO::PARAM_STR);
-        $cmd->bindParameter(":validity_date",$this->dateToSql($this->validity_date->SafeText),PDO::PARAM_STR);
+        $cmd->bindValue(":sex",$sex,PDO::PARAM_STR);
+        $cmd->bindValue(":name",$this->name->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":firstname",$this->firstname->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":language",$this->language->getSelectedValue(),PDO::PARAM_STR);
+        $cmd->bindValue(":picture",$this->pictureName->Value,PDO::PARAM_STR);
+        $cmd->bindValue(":pin_code",$this->pin_code->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":password",sha1($this->password->SafeText),PDO::PARAM_STR);
+        $cmd->bindValue(":validity_date",$this->dateToSql($this->validity_date->SafeText),PDO::PARAM_STR);
 
 
         $f1 = $this->masterAuthorization->getChecked() ? 1 : 0;
-        $cmd->bindParameter(":masterAuthorization",$f1,PDO::PARAM_STR);
+        $cmd->bindValue(":masterAuthorization",$f1,PDO::PARAM_STR);
 
 
         //Personal
-        $cmd->bindParameter(":avs",$this->avs->SafeText,PDO::PARAM_STR);
-        $cmd->bindParameter(":street",$this->street->SafeText,PDO::PARAM_STR);
-        $cmd->bindParameter(":zip",$this->zip->SafeText,PDO::PARAM_STR);
-        $cmd->bindParameter(":city",$this->city->SafeText,PDO::PARAM_STR);
-        $cmd->bindParameter(":country",$this->country->SafeText,PDO::PARAM_STR);
-        $cmd->bindParameter(":phone1",$this->phone1->SafeText,PDO::PARAM_STR);
-        $cmd->bindParameter(":email1",$this->email1->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":avs",$this->avs->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":street",$this->street->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":zip",$this->zip->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":city",$this->city->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":country",$this->country->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":phone1",$this->phone1->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":email1",$this->email1->SafeText,PDO::PARAM_STR);
 
         //Private
-        $cmd->bindParameter(":firme",$this->firme->SafeText,PDO::PARAM_STR);
-        $cmd->bindParameter(":department",$this->department->getSelectedValue(),PDO::PARAM_STR);
-        $cmd->bindParameter(":street_pr",$this->street_pr->SafeText,PDO::PARAM_STR);
-        $cmd->bindParameter(":npa_pr",$this->zip_pr->SafeText,PDO::PARAM_STR);
-        $cmd->bindParameter(":city_pr",$this->city_pr->SafeText,PDO::PARAM_STR);
-        $cmd->bindParameter(":phone2",$this->phone2->SafeText,PDO::PARAM_STR);
-        $cmd->bindParameter(":email2",$this->email2->SafeText,PDO::PARAM_STR);
-        $cmd->bindParameter(":country_pr",$this->country_pr->SafeText,PDO::PARAM_STR);
-        $cmd->bindParameter(":fax",$this->fax->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":firme",$this->firme->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":department",$this->department->getSelectedValue(),PDO::PARAM_STR);
+        $cmd->bindValue(":street_pr",$this->street_pr->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":npa_pr",$this->zip_pr->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":city_pr",$this->city_pr->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":phone2",$this->phone2->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":email2",$this->email2->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":country_pr",$this->country_pr->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":fax",$this->fax->SafeText,PDO::PARAM_STR);
 
         if(!$cmd->execute()) return false;
 
@@ -337,12 +337,12 @@ class UserWizzard extends Page
         foreach($indices as $index)
         {
             $cmd = $this->db->createCommand( SQL::SQL_ATTRIBUTE_GROUP );
-            $cmd->bindParameter(":id_user",$lastId,PDO::PARAM_STR);
+            $cmd->bindValue(":id_user",$lastId,PDO::PARAM_STR);
 
             $item=$this->UnusedGroup->Items[$index];
             $id_group = $item->Value;
 
-            $cmd->bindParameter(":id_group",$id_group,PDO::PARAM_STR);
+            $cmd->bindValue(":id_group",$id_group,PDO::PARAM_STR);
 
             $cmd->execute();
         }
@@ -355,20 +355,20 @@ class UserWizzard extends Page
         if($sn != '')
         {
             $cmd = $this->db->createCommand( "SELECT * FROM hr_keys WHERE serialNumber=:sn AND isUsed=0" );
-            $cmd->bindParameter(":sn",$sn,PDO::PARAM_STR);
+            $cmd->bindValue(":sn",$sn,PDO::PARAM_STR);
             $data=$cmd->query();
             $data = $data->read();
             if($data)
             {
                 $cmd=$this->db->createCommand(SQL::SQL_ATTRIBUTE_KEY);
-                $cmd->bindParameter(":id_user", $lastId);
-                $cmd->bindParameter(":id_key",$data['id']);
+                $cmd->bindValue(":id_user", $lastId);
+                $cmd->bindValue(":id_key",$data['id']);
                 $cmd->execute();
 
                 $cmd=$this->db->createCommand(SQL::SQL_SET_USED_KEY);
-                $cmd->bindParameter(":id",$data['id']);
+                $cmd->bindValue(":id",$data['id']);
                 $flag = 1;
-                $cmd->bindParameter(":flag",$flag);
+                $cmd->bindValue(":flag",$flag);
                 $cmd->execute();
 
                 $this->addStandaloneKey('add', $data['id']);
@@ -378,7 +378,7 @@ class UserWizzard extends Page
             else
             {
                 $cmd = $this->db->createCommand( "SELECT * FROM hr_keys WHERE serialNumber=:sn AND isUsed=1" );
-                $cmd->bindParameter(":sn",$sn,PDO::PARAM_STR);
+                $cmd->bindValue(":sn",$sn,PDO::PARAM_STR);
                 $data=$cmd->query();
                 $data = $data->read();
                 if($data)
@@ -389,15 +389,15 @@ class UserWizzard extends Page
                 {
                     //! add the new key in the database
                     $cmd=$this->db->createCommand(SQL::SQL_ADD_KEY);
-                    $cmd->bindParameter(":serialNumber",$sn);
+                    $cmd->bindValue(":serialNumber",$sn);
                     $cmd->execute();
                     //! attribute the new key
 
                     $lastId2 = $this->db->LastInsertID;
 
                     $cmd=$this->db->createCommand(SQL::SQL_ATTRIBUTE_KEY);
-                    $cmd->bindParameter(":id_user", $lastId);
-                    $cmd->bindParameter(":id_key",$lastId2);
+                    $cmd->bindValue(":id_user", $lastId);
+                    $cmd->bindValue(":id_key",$lastId2);
                     $cmd->execute();
 
                     $this->addStandaloneKey('add', $lastId2);
@@ -414,19 +414,19 @@ class UserWizzard extends Page
             foreach($indices as $index)
             {
                 $cmd = $this->db->createCommand( SQL::SQL_ATTRIBUTE_KEY );
-                $cmd->bindParameter(":id_user",$lastId,PDO::PARAM_STR);
+                $cmd->bindValue(":id_user",$lastId,PDO::PARAM_STR);
 
                 $item=$this->UnusedKey->Items[$index];
                 $id_key = $item->Value;
 
-                $cmd->bindParameter(":id_key",$id_key,PDO::PARAM_STR);
+                $cmd->bindValue(":id_key",$id_key,PDO::PARAM_STR);
 
                 $cmd->execute();
 
                 $cmd = $this->db->createCommand( SQL::SQL_SET_USED_KEY );
-                $cmd->bindParameter(":id",$id_key,PDO::PARAM_STR);
+                $cmd->bindValue(":id",$id_key,PDO::PARAM_STR);
                 $flag = 1;
-                $cmd->bindParameter(":flag",$flag,PDO::PARAM_STR);
+                $cmd->bindValue(":flag",$flag,PDO::PARAM_STR);
                 $cmd->execute();
 
                 $this->addStandaloneKey('add', $id_key);

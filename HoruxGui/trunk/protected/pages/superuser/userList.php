@@ -55,7 +55,7 @@ class UserList extends PageList
         else
         {
             $cmd=$this->db->createCommand(SQL::SQL_GET_ID_USER);
-            $cmd->bindParameter(":id",$this->Application->getUser()->getUserId(), PDO::PARAM_INT);
+            $cmd->bindValue(":id",$this->Application->getUser()->getUserId(), PDO::PARAM_INT);
             $dataReader=$cmd->query();
 
             $this->tbb->setAddVisible(false);
@@ -211,14 +211,14 @@ class UserList extends PageList
                     if($id_user>1)
                     {
                         $cmd=$this->db->createCommand(SQL::SQL_GET_USER_BY_ID);
-                        $cmd->bindParameter(":id",$id_user);
+                        $cmd->bindValue(":id",$id_user);
                         $res = $cmd->query();
                         $res = $res->read();
                         $this->log("Delete the super user: ".$res['name']);
 
                         //remove the person
                         $cmd=$this->db->createCommand(SQL::SQL_DELETE_USER);
-                        $cmd->bindParameter(":id",$id_user);
+                        $cmd->bindValue(":id",$id_user);
                         $cmd->execute();
                         $nDelete++;
                     }

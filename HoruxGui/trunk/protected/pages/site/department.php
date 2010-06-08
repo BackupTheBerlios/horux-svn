@@ -100,7 +100,7 @@ class department extends PageList
                         $this->log("Delete the department: ".$data['name']);
 
                         $cmd=$this->db->createCommand("DELETE FROM hr_department WHERE id=:id");
-                        $cmd->bindParameter(":id",$id);
+                        $cmd->bindValue(":id",$id);
                         $res = $cmd->query();
 
 

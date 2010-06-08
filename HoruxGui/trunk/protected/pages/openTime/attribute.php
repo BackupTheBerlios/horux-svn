@@ -21,7 +21,7 @@ class attribute extends Page
     {
         $id = $this->Request['id'];
         $cmd = $this->db->createCommand( SQL::SQL_GET_ATTRIBUTION );
-        $cmd->bindParameter(":id",$id,PDO::PARAM_INT);
+        $cmd->bindValue(":id",$id,PDO::PARAM_INT);
         $data=$cmd->query();
         $connection->Active=false;
 
@@ -32,7 +32,7 @@ class attribute extends Page
     {
         $id = $this->Request['id'];
         $cmd = $this->db->createCommand( SQL::SQL_GET_ALL_OPEN_TIME2 );
-        $cmd->bindParameter(":id",$id,PDO::PARAM_INT);
+        $cmd->bindValue(":id",$id,PDO::PARAM_INT);
         $data=$cmd->query();
         $connection->Active=false;
 
@@ -76,8 +76,8 @@ class attribute extends Page
         {
 
             $cmd=$this->db->createCommand(SQL::SQL_ATTRIBUTE_OPEN_TIME);
-            $cmd->bindParameter(":id_device",$id_device);
-            $cmd->bindParameter(":id_openTime",$id_openTime);
+            $cmd->bindValue(":id_device",$id_device);
+            $cmd->bindValue(":id_openTime",$id_openTime);
             $cmd->execute();
 
             $horuxService = new THoruxService();
@@ -129,14 +129,14 @@ class attribute extends Page
                 {
 
                     $cmd = $this->db->createCommand("SELECT * FROM hr_openTime_attribution WHERE id=:id");
-                    $cmd->bindParameter(":id",$cb->Value);
+                    $cmd->bindValue(":id",$cb->Value);
                     $data = $cmd->query();
                     $data = $data->read();
 
                     $deviceId = $data['id_device'];
 
                     $cmd=$this->db->createCommand(SQL::SQL_DELETE_OPEN_TIME_ATTRIBUTION);
-                    $cmd->bindParameter(":id",$cb->Value);
+                    $cmd->bindValue(":id",$cb->Value);
 
                     if($cmd->execute())
                     {

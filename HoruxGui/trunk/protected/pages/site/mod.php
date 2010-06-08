@@ -40,7 +40,7 @@ class mod extends Page
     protected function setData()
     {
         $cmd = $this->db->createCommand( "SELECT * FROM hr_department WHERE id=:id" );
-        $cmd->bindParameter(":id",$this->id->Value, PDO::PARAM_INT);
+        $cmd->bindValue(":id",$this->id->Value, PDO::PARAM_INT);
         $query = $cmd->query();
         if($query)
         {
@@ -91,9 +91,9 @@ class mod extends Page
     protected function saveData()
     {
         $cmd = $this->db->createCommand( "UPDATE hr_department SET name=:name, description=:description WHERE id=:id" );
-        $cmd->bindParameter(":name",$this->name->SafeText,PDO::PARAM_STR);
-        $cmd->bindParameter(":description",$this->comment->SafeText,PDO::PARAM_STR);
-        $cmd->bindParameter(":id",$this->id->Value, PDO::PARAM_INT);
+        $cmd->bindValue(":name",$this->name->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":description",$this->comment->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":id",$this->id->Value, PDO::PARAM_INT);
 
         if(!$cmd->execute()) return false;
 

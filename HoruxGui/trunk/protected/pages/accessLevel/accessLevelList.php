@@ -244,19 +244,19 @@ class accessLevelList extends PageList
                 if( (bool)$cb->getChecked() && $cb->Value != "0")
                 {
                     $cmd=$this->db->createCommand(SQL::SQL_GET_ACCESS_LEVEL_ID);
-                    $cmd->bindParameter(":id",$cb->Value);
+                    $cmd->bindValue(":id",$cb->Value);
                     $cmd = $cmd->query();
                     $data = $cmd->read();
 
                     $this->log("Delete the access level: ".$data['name']);
 
                     $cmd=$this->db->createCommand(SQL::SQL_REMOVE_ACCESS_LEVEL);
-                    $cmd->bindParameter(":id",$cb->Value);
+                    $cmd->bindValue(":id",$cb->Value);
                     if($cmd->execute())
                         $nDelete++;
 
                     $cmd=$this->db->createCommand(SQL::SQL_REMOVE_ACCESS_TIME);
-                    $cmd->bindParameter(":id",$cb->Value);
+                    $cmd->bindValue(":id",$cb->Value);
                     $cmd->execute();
 
 

@@ -21,7 +21,7 @@ class Attribution extends Page
 	{
 	  $id = $this->Request['id'];
       $cmd = $this->db->createCommand( SQL::SQL_GET_KEY );
-      $cmd->bindParameter(":id",$id,PDO::PARAM_INT);		
+      $cmd->bindValue(":id",$id,PDO::PARAM_INT);
       $data=$cmd->query();
       $connection->Active=false;
 
@@ -44,20 +44,20 @@ class Attribution extends Page
 		if(isset($this->Request['sn']))
 		{
                   $cmd = $this->db->createCommand( "SELECT * FROM hr_keys WHERE serialNumber=:sn AND isUsed=0" );
-                  $cmd->bindParameter(":sn",$this->Request['sn'],PDO::PARAM_STR);
+                  $cmd->bindValue(":sn",$this->Request['sn'],PDO::PARAM_STR);
                   $data=$cmd->query();
                   $data = $data->read();
                   if($data)
                   {
                           $cmd=$this->db->createCommand(SQL::SQL_ATTRIBUTE_KEY);
-                          $cmd->bindParameter(":id_user", $this->Request['id']);
-                          $cmd->bindParameter(":id_key",$data['id']);	
+                          $cmd->bindValue(":id_user", $this->Request['id']);
+                          $cmd->bindValue(":id_key",$data['id']);
                           $cmd->execute();
                           
                           $cmd=$this->db->createCommand(SQL::SQL_SET_USED_KEY);
-                          $cmd->bindParameter(":id",$data['id']);
+                          $cmd->bindValue(":id",$data['id']);
                           $flag = 1;
-                          $cmd->bindParameter(":flag",$flag);
+                          $cmd->bindValue(":flag",$flag);
                           $cmd->execute();
                           
                           $this->addStandalone('add', $data['id']);
@@ -68,7 +68,7 @@ class Attribution extends Page
                   else
                   {
                     $cmd = $this->db->createCommand( "SELECT * FROM hr_keys WHERE serialNumber=:sn AND isUsed=1" );
-                    $cmd->bindParameter(":sn",$this->Request['sn'],PDO::PARAM_STR);
+                    $cmd->bindValue(":sn",$this->Request['sn'],PDO::PARAM_STR);
                     $data=$cmd->query();
                     $data = $data->read();
                     if($data)
@@ -83,15 +83,15 @@ class Attribution extends Page
                             $cmd=$this->db->createCommand(SQL::SQL_ADD_KEY_SQLITE);
                         else
                             $cmd=$this->db->createCommand(SQL::SQL_ADD_KEY);
-                        $cmd->bindParameter(":serialNumber",$this->Request['sn']);   
+                        $cmd->bindValue(":serialNumber",$this->Request['sn']);
                         $cmd->execute();
                         //! attribute the new key
 
                         $lastId = $this->db->LastInsertID;
 
                         $cmd=$this->db->createCommand(SQL::SQL_ATTRIBUTE_KEY);
-                        $cmd->bindParameter(":id_user", $this->Request['id']);
-                        $cmd->bindParameter(":id_key",$lastId);   
+                        $cmd->bindValue(":id_user", $this->Request['id']);
+                        $cmd->bindValue(":id_key",$lastId);
                         $cmd->execute();
 
                         $this->addStandalone('add', $lastId);
@@ -137,18 +137,18 @@ class Attribution extends Page
     	$id_key = $this->UnusedKey->getSelectedValue();
 
 	    $cmd=$this->db->createCommand(SQL::SQL_ATTRIBUTE_KEY);
-    	$cmd->bindParameter(":id_user",$id_user);
-    	$cmd->bindParameter(":id_key",$id_key);	
+    	$cmd->bindValue(":id_user",$id_user);
+    	$cmd->bindValue(":id_key",$id_key);
     	$cmd->execute();
     	
 		$cmd=$this->db->createCommand(SQL::SQL_SET_USED_KEY);
-        $cmd->bindParameter(":id",$id_key);
+        $cmd->bindValue(":id",$id_key);
         $flag = 1;
-        $cmd->bindParameter(":flag",$flag);
+        $cmd->bindValue(":flag",$flag);
 		$cmd->execute();
 
         $cmd=$this->db->createCommand(SQL::SQL_GET_PERSON);
-        $cmd->bindParameter(":id",$id_user);
+        $cmd->bindValue(":id",$id_user);
         $cmd = $cmd->query();
         $data = $cmd->read();
 
@@ -158,7 +158,7 @@ class Attribution extends Page
         }
 
         $cmd=$this->db->createCommand(SQL::SQL_GET_KEY2);
-        $cmd->bindParameter(":id",$id_key);
+        $cmd->bindValue(":id",$id_key);
         $cmd = $cmd->query();
         $data2 = $cmd->read();
 
@@ -172,17 +172,17 @@ class Attribution extends Page
     {
       $id = $sender->Text;
       $cmd=$this->db->createCommand(SQL::SQL_UPDATE_SETBLOCK_KEY);
-      $cmd->bindParameter(":id",$id);
+      $cmd->bindValue(":id",$id);
 	  $func = "";
       if($sender->ImageUrl == "./themes/letux/images/menu/icon-16-checkin.png")
       {
         $flag = 1;
         $sender->ImageUrl = "./themes/letux/images/menu/icon-16-access.png";
-        $cmd->bindParameter(":flag",$flag);
+        $cmd->bindValue(":flag",$flag);
         $func = 'block';
 
         $cmd2=$this->db->createCommand(SQL::SQL_GET_KEY2);
-        $cmd2->bindParameter(":id",$id);
+        $cmd2->bindValue(":id",$id);
         $cmd2 = $cmd2->query();
         $data2 = $cmd2->read();
 
@@ -193,11 +193,11 @@ class Attribution extends Page
       {
         $flag = 0;
         $sender->ImageUrl = "./themes/letux/images/menu/icon-16-checkin.png";
-        $cmd->bindParameter(":flag",$flag);
+        $cmd->bindValue(":flag",$flag);
         $func = 'unblock';
 
         $cmd2=$this->db->createCommand(SQL::SQL_GET_KEY2);
-        $cmd2->bindParameter(":id",$id);
+        $cmd2->bindValue(":id",$id);
         $cmd2 = $cmd2->query();
         $data2 = $cmd2->read();
 
@@ -207,7 +207,7 @@ class Attribution extends Page
      $cmd->execute();
 
      $cmd=$this->db->createCommand(SQL::SQL_GET_PERSON);
-     $cmd->bindParameter(":id",$this->id->Value);
+     $cmd->bindValue(":id",$this->id->Value);
      $cmd = $cmd->query();
      $data = $cmd->read();
 
@@ -263,25 +263,25 @@ class Attribution extends Page
             	    $this->addStandalone('sub', $cb->Value);
 
 					$cmd=$this->db->createCommand(SQL::SQL_DELETE_KEY_ATTRIBUTION);
-	                $cmd->bindParameter(":id",$cb->Value);
+	                $cmd->bindValue(":id",$cb->Value);
 	                $cmd->execute();
 
 					$cmd=$this->db->createCommand(SQL::SQL_SET_USED_KEY);
-	                $cmd->bindParameter(":id",$cb->Value);
+	                $cmd->bindValue(":id",$cb->Value);
 	                $flag = 0;
-	                $cmd->bindParameter(":flag",$flag);
+	                $cmd->bindValue(":flag",$flag);
             	                
             	                
 	                if($cmd->execute())
                     {
                         $nUnAttributed++;
                         $cmd=$this->db->createCommand(SQL::SQL_GET_PERSON);
-                        $cmd->bindParameter(":id",$this->id->Value);
+                        $cmd->bindValue(":id",$this->id->Value);
                         $cmd = $cmd->query();
                         $data = $cmd->read();
 
                         $cmd=$this->db->createCommand(SQL::SQL_GET_KEY2);
-                        $cmd->bindParameter(":id",$cb->Value);
+                        $cmd->bindValue(":id",$cb->Value);
                         $cmd = $cmd->query();
                         $data2 = $cmd->read();
 

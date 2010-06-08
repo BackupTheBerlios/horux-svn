@@ -79,7 +79,7 @@ class userMod extends Page
     public function setData()
     {
         $cmd = $this->db->createCommand( SQL::SQL_GET_USER_BY_ID );
-        $cmd->bindParameter(":id",$this->id->Value, PDO::PARAM_INT);
+        $cmd->bindValue(":id",$this->id->Value, PDO::PARAM_INT);
         $query = $cmd->query();
         if($query)
         {
@@ -187,23 +187,23 @@ class userMod extends Page
     public function saveData()
     {
         $cmd = $this->db->createCommand( SQL::SQL_MOD_USER );
-        $cmd->bindParameter(":name",$this->name->SafeText,PDO::PARAM_STR);
-        $cmd->bindParameter(":email",$this->email->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":name",$this->name->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":email",$this->email->SafeText,PDO::PARAM_STR);
 
         if($this->password->SafeText == "")
         {
-            $cmd->bindParameter(":password",$this->currentPswd->Value,PDO::PARAM_STR);
+            $cmd->bindValue(":password",$this->currentPswd->Value,PDO::PARAM_STR);
             $this->isPasswordChanged = false;
         }
         else
         {
-            $cmd->bindParameter(":password",sha1( $this->password->SafeText),PDO::PARAM_STR);
+            $cmd->bindValue(":password",sha1( $this->password->SafeText),PDO::PARAM_STR);
             $this->isPasswordChanged = true;
         }
 
-        $cmd->bindParameter(":group_id",$this->group_id->getSelectedValue(),PDO::PARAM_INT);
-        $cmd->bindParameter(":user_id",$this->user_id->getSelectedValue(),PDO::PARAM_INT);
-        $cmd->bindParameter(":id",$this->id->Value, PDO::PARAM_INT);
+        $cmd->bindValue(":group_id",$this->group_id->getSelectedValue(),PDO::PARAM_INT);
+        $cmd->bindValue(":user_id",$this->user_id->getSelectedValue(),PDO::PARAM_INT);
+        $cmd->bindValue(":id",$this->id->Value, PDO::PARAM_INT);
 
         if(!$cmd->execute()) return false;
 
@@ -221,8 +221,8 @@ class userMod extends Page
     public function serverValidateName($sender, $param)
     {
         $cmd = $this->db->createCommand( SQL::SQL_IS_NAME_EXIST2 );
-        $cmd->bindParameter(":name",$this->name->SafeText,PDO::PARAM_STR);
-        $cmd->bindParameter(":id",$this->id->Value, PDO::PARAM_INT);
+        $cmd->bindValue(":name",$this->name->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":id",$this->id->Value, PDO::PARAM_INT);
         $data = $cmd->query();
         $data = $data->read();
 

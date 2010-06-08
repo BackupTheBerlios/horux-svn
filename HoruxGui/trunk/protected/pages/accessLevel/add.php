@@ -58,12 +58,12 @@ class add extends Page
     protected function saveData()
     {
         $cmd = $this->db->createCommand( SQL::SQL_ADD_ACCESS_LEVEL );
-        $cmd->bindParameter(":name",$this->name->SafeText,PDO::PARAM_STR);
-        $cmd->bindParameter(":full_access",$this->fullAccess->Checked,PDO::PARAM_STR);
-        $cmd->bindParameter(":non_working_day",$this->nonWorkingDayAccess->Checked,PDO::PARAM_STR);
-        $cmd->bindParameter(":monday_default",$this->mondayDefault->Checked,PDO::PARAM_STR);
+        $cmd->bindValue(":name",$this->name->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":full_access",$this->fullAccess->Checked,PDO::PARAM_STR);
+        $cmd->bindValue(":non_working_day",$this->nonWorkingDayAccess->Checked,PDO::PARAM_STR);
+        $cmd->bindValue(":monday_default",$this->mondayDefault->Checked,PDO::PARAM_STR);
 
-        $cmd->bindParameter(":comment",$this->comment->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":comment",$this->comment->SafeText,PDO::PARAM_STR);
 
         $res = $cmd->execute();
 
@@ -115,13 +115,13 @@ class add extends Page
         $indexEndHours= $indexStartHours + ($indexEndHours[0]*60) + $indexEndHours[1];
 
         $cmd = $this->db->createCommand( SQL::SQL_ADD_ACCESS_LEVEL_TIME );
-        $cmd->bindParameter(":id_access_level",$lastId,PDO::PARAM_STR);
-        $cmd->bindParameter(":day",$dayName,PDO::PARAM_STR);
-        $cmd->bindParameter(":from",$indexStartHours,PDO::PARAM_INT);
-        $cmd->bindParameter(":until",$indexEndHours,PDO::PARAM_INT);
-        $cmd->bindParameter(":pinCodeNecessary", $pinCode);
-        $cmd->bindParameter(":specialRelayPlan", $specialRelayPlan);
-        $cmd->bindParameter(":exitingOnly", $exitingOnly);
+        $cmd->bindValue(":id_access_level",$lastId,PDO::PARAM_STR);
+        $cmd->bindValue(":day",$dayName,PDO::PARAM_STR);
+        $cmd->bindValue(":from",$indexStartHours,PDO::PARAM_INT);
+        $cmd->bindValue(":until",$indexEndHours,PDO::PARAM_INT);
+        $cmd->bindValue(":pinCodeNecessary", $pinCode);
+        $cmd->bindValue(":specialRelayPlan", $specialRelayPlan);
+        $cmd->bindValue(":exitingOnly", $exitingOnly);
         
         $cmd->execute();
     }
@@ -160,7 +160,7 @@ class add extends Page
     public function nameValidateIdentificator($sender, $param)
     {
         $cmd = $this->db->createCommand( SQL::SQL_IS_ACCESS_LEVEL_NAME_EXIST);
-        $cmd->bindParameter(":name",$this->name->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":name",$this->name->SafeText,PDO::PARAM_STR);
         $array = $cmd->query()->readAll();
 
         if(count($array) > 0)

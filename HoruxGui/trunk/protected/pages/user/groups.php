@@ -20,7 +20,7 @@ class Groups extends Page
 	{
 	  $id = $this->id->Value;
       $cmd = $this->db->createCommand( SQL::SQL_GET_GROUPS );
-      $cmd->bindParameter(":id",$id,PDO::PARAM_INT);		
+      $cmd->bindValue(":id",$id,PDO::PARAM_INT);
       $data=$cmd->query();
       $connection->Active=false;
 
@@ -31,7 +31,7 @@ class Groups extends Page
 	{
 	  $id = $this->id->Value;
       $cmd = $this->db->createCommand( SQL::SQL_GET_UNATTRIBUTED_GROUP );
-      $cmd->bindParameter(":id",$id,PDO::PARAM_INT);		
+      $cmd->bindValue(":id",$id,PDO::PARAM_INT);
       $data=$cmd->query();
       $connection->Active=false;
  
@@ -73,20 +73,20 @@ class Groups extends Page
     	$id_group = $this->UnusedGroup->getSelectedValue();
 
 	    $cmd=$this->db->createCommand(SQL::SQL_ATTRIBUTE_GROUP);
-    	$cmd->bindParameter(":id_user",$id_user);
-    	$cmd->bindParameter(":id_group",$id_group);	
+    	$cmd->bindValue(":id_user",$id_user);
+    	$cmd->bindValue(":id_group",$id_group);
     	$cmd->execute();
 
         $this->addStandalone('add', $id_group.','.$id_user);
 
 
         $cmd=$this->db->createCommand(SQL::SQL_GET_PERSON);
-        $cmd->bindParameter(":id",$id_user);
+        $cmd->bindValue(":id",$id_user);
         $cmd = $cmd->query();
         $data = $cmd->read();
 
         $cmd=$this->db->createCommand(SQL::SQL_GET_GROUPS3);
-        $cmd->bindParameter(":id",$id_group);
+        $cmd->bindValue(":id",$id_group);
         $cmd = $cmd->query();
         $data2 = $cmd->read();
 
@@ -137,8 +137,8 @@ class Groups extends Page
 	            if( (bool)$cb->getChecked() && $cb->Value != "0")
 	            {
 					$cmd=$this->db->createCommand(SQL::SQL_DELETE_GROUP_ATTRIBUTION);
-	                $cmd->bindParameter(":id_group",$cb->Value);
-	                $cmd->bindParameter(":id_user",$this->id->Value);
+	                $cmd->bindValue(":id_group",$cb->Value);
+	                $cmd->bindValue(":id_user",$this->id->Value);
 
                     $this->addStandalone('sub', $cb->Value.','.$this->id->Value);
 
@@ -147,12 +147,12 @@ class Groups extends Page
 	                    $nUnAttributed++;
 
                         $cmd=$this->db->createCommand(SQL::SQL_GET_PERSON);
-                        $cmd->bindParameter(":id",$this->id->Value);
+                        $cmd->bindValue(":id",$this->id->Value);
                         $cmd = $cmd->query();
                         $data = $cmd->read();
 
                         $cmd=$this->db->createCommand(SQL::SQL_GET_GROUPS3);
-                        $cmd->bindParameter(":id",$cb->Value);
+                        $cmd->bindValue(":id",$cb->Value);
                         $cmd = $cmd->query();
                         $data2 = $cmd->read();
 

@@ -144,18 +144,18 @@ class extensions extends Page
             foreach($ids as $id)
             {
                 $cmd=$this->db->createCommand("SELECT * FROM hr_install WHERE id=:id AND type='component'");
-                $cmd->bindParameter(":id",$id);
+                $cmd->bindValue(":id",$id);
                 $data = $cmd->query();
                 $data = $data->read();
 
                 $name = $data['name'];
 
                 $cmd=$this->db->createCommand("DELETE FROM hr_install WHERE id=:id AND type='component'");
-                $cmd->bindParameter(":id",$id);
+                $cmd->bindValue(":id",$id);
                 $cmd->execute();
 
                 $cmd=$this->db->createCommand("DELETE FROM hr_component WHERE id_install=:id");
-                $cmd->bindParameter(":id",$id);
+                $cmd->bindValue(":id",$id);
                 $cmd->execute();
 
                 $doc=new TXmlDocument();
@@ -172,7 +172,7 @@ class extensions extends Page
                 foreach($permissions as $perm)
                 {
                     $cmd=$this->db->createCommand("DELETE FROM hr_gui_permissions WHERE page=:page");
-                    $cmd->bindParameter(":page", $perm->getValue());
+                    $cmd->bindValue(":page", $perm->getValue());
                     $cmd->execute();
                 }
 
@@ -221,14 +221,14 @@ class extensions extends Page
             foreach($ids as $id)
             {
                 $cmd=$this->db->createCommand("SELECT * FROM hr_install WHERE id=:id AND type='device'");
-                $cmd->bindParameter(":id",$id);
+                $cmd->bindValue(":id",$id);
                 $data = $cmd->query();
                 $data = $data->read();
 
                 $param = $data['param'];
 
                 $cmd=$this->db->createCommand("DELETE FROM hr_install WHERE id=:id AND type='device'");
-                $cmd->bindParameter(":id",$id);
+                $cmd->bindValue(":id",$id);
                 $cmd->execute();
 
                 $cmd=$this->db->createCommand("SELECT * FROM hr_".$param);
@@ -262,7 +262,7 @@ class extensions extends Page
                 foreach($permissions as $perm)
                 {
                     $cmd=$this->db->createCommand("DELETE FROM hr_gui_permissions WHERE page=:page");
-                    $cmd->bindParameter(":page", $perm->getValue());
+                    $cmd->bindValue(":page", $perm->getValue());
                     $cmd->execute();
                 }
 
@@ -313,14 +313,14 @@ class extensions extends Page
             foreach($ids as $id)
             {
                 $cmd=$this->db->createCommand("SELECT * FROM hr_install WHERE id=:id AND type='template'");
-                $cmd->bindParameter(":id",$id);
+                $cmd->bindValue(":id",$id);
                 $data = $cmd->query();
                 $data = $data->read();
 
                 $name = $data['name'];
 
                 $cmd=$this->db->createCommand("DELETE FROM hr_install WHERE id=:id AND type='template'");
-                $cmd->bindParameter(":id",$id);
+                $cmd->bindValue(":id",$id);
                 $cmd->execute();
                 $nDelete++;
 
@@ -362,7 +362,7 @@ class extensions extends Page
             foreach($ids as $id)
             {
                 $cmd=$this->db->createCommand("SELECT * FROM hr_install WHERE id=:id AND type='language'");
-                $cmd->bindParameter(":id",$id);
+                $cmd->bindValue(":id",$id);
                 $data = $cmd->query();
                 $data = $data->read();
 
@@ -373,7 +373,7 @@ class extensions extends Page
                 if($default)
                 {
                     $cmd=$this->db->createCommand("UPDATE hr_install SET `default`='1' WHERE param='en' AND name='English'");
-                    $cmd->bindParameter(":id",$cb->Value);
+                    $cmd->bindValue(":id",$cb->Value);
                     $cmd->execute();
 
                     $this->Session['lang'] ='en';
@@ -382,7 +382,7 @@ class extensions extends Page
                 }
 
                 $cmd=$this->db->createCommand("DELETE FROM hr_install WHERE id=:id AND type='language'");
-                $cmd->bindParameter(":id",$id);
+                $cmd->bindValue(":id",$id);
                 $cmd->execute();
                 $nDelete++;
 
@@ -836,8 +836,8 @@ class extensions extends Page
         $name = $doc->getElementByTagName('name');
 
         $cmd = $this->db->createCommand( "INSERT INTO hr_install (`name`,`type`,`system`, `default`, `param`) VALUES (:name, 'language',0,0,:installName)" );
-        $cmd->bindParameter(":name",$name->getValue(),PDO::PARAM_STR);
-        $cmd->bindParameter(":installName",$installName->getValue(),PDO::PARAM_STR);
+        $cmd->bindValue(":name",$name->getValue(),PDO::PARAM_STR);
+        $cmd->bindValue(":installName",$installName->getValue(),PDO::PARAM_STR);
         $cmd->execute();
     }
 
@@ -849,7 +849,7 @@ class extensions extends Page
         $installName = $doc->getElementByTagName('installName');
 
         $cmd = $this->db->createCommand( "INSERT INTO hr_install (`name`,`type`,`system`, `default`, `param`) VALUES (:installName, 'template',0,0,'')" );
-        $cmd->bindParameter(":installName",$installName->getValue(),PDO::PARAM_STR);
+        $cmd->bindValue(":installName",$installName->getValue(),PDO::PARAM_STR);
         $cmd->execute();
     }
 
@@ -866,8 +866,8 @@ class extensions extends Page
         $this->sqlInstall('.'.DIRECTORY_SEPARATOR.'protected'.DIRECTORY_SEPARATOR.'pages'.DIRECTORY_SEPARATOR.'hardware'.DIRECTORY_SEPARATOR.'device'.DIRECTORY_SEPARATOR.$deviceName.DIRECTORY_SEPARATOR.$sqlinstall->getValue());
 
         $cmd = $this->db->createCommand( "INSERT INTO hr_install (`name`,`type`,`system`, `default`, `param`) VALUES (:name, 'device',0,0,:installName)" );
-        $cmd->bindParameter(":installName",$installName->getValue(),PDO::PARAM_STR);
-        $cmd->bindParameter(":name",$name->getValue(),PDO::PARAM_STR);
+        $cmd->bindValue(":installName",$installName->getValue(),PDO::PARAM_STR);
+        $cmd->bindValue(":name",$name->getValue(),PDO::PARAM_STR);
         $cmd->execute();
 
         $this->moveLanguageDirectory('.'.DIRECTORY_SEPARATOR.'protected'.DIRECTORY_SEPARATOR.'pages'.DIRECTORY_SEPARATOR.'hardware'.DIRECTORY_SEPARATOR.'device'.DIRECTORY_SEPARATOR.$deviceName.DIRECTORY_SEPARATOR,$installName->getValue());
@@ -888,7 +888,7 @@ class extensions extends Page
         $this->sqlInstall('.'.DIRECTORY_SEPARATOR.'protected'.DIRECTORY_SEPARATOR.'pages'.DIRECTORY_SEPARATOR.'components'.DIRECTORY_SEPARATOR.$compName.DIRECTORY_SEPARATOR.$sqlinstall->getValue());
 
         $cmd = $this->db->createCommand( "INSERT INTO hr_install (`name`,`type`,`system`, `default`, `param`) VALUES (:name, 'component',0,0,'')" );
-        $cmd->bindParameter(":name",$installName->getValue(),PDO::PARAM_STR);
+        $cmd->bindValue(":name",$installName->getValue(),PDO::PARAM_STR);
         $cmd->execute();
 
         $lastId = $this->db->getLastInsertId();
@@ -903,11 +903,11 @@ class extensions extends Page
             $parentmenu = 0;
 
             $cmd = $this->db->createCommand( "INSERT INTO hr_component (`id_install`,`parentmenu`,`menuname`, `page`, `iconmenu`) VALUES (:lastId, :parentmenu,:menuname,:url,:iconmenu)" );
-            $cmd->bindParameter(":lastId",$lastId,PDO::PARAM_INT);
-            $cmd->bindParameter(":iconmenu",$iconmenu,PDO::PARAM_STR);
-            $cmd->bindParameter(":url",$url,PDO::PARAM_STR);
-            $cmd->bindParameter(":menuname",$menuname,PDO::PARAM_STR);
-            $cmd->bindParameter(":parentmenu",$parentmenu,PDO::PARAM_INT);
+            $cmd->bindValue(":lastId",$lastId,PDO::PARAM_INT);
+            $cmd->bindValue(":iconmenu",$iconmenu,PDO::PARAM_STR);
+            $cmd->bindValue(":url",$url,PDO::PARAM_STR);
+            $cmd->bindValue(":menuname",$menuname,PDO::PARAM_STR);
+            $cmd->bindValue(":parentmenu",$parentmenu,PDO::PARAM_INT);
             $cmd->execute();
 
             if($menu->getHasElement())
@@ -923,11 +923,11 @@ class extensions extends Page
                     $menuname = $smenu->getAttribute('name');
 
                     $cmd = $this->db->createCommand( "INSERT INTO hr_component (`id_install`,`parentmenu`,`menuname`, `page`, `iconmenu`) VALUES (:lastId, :parentmenu,:menuname,:url,:iconmenu)" );
-                    $cmd->bindParameter(":lastId",$lastId,PDO::PARAM_INT);
-                    $cmd->bindParameter(":iconmenu",$iconmenu,PDO::PARAM_STR);
-                    $cmd->bindParameter(":url",$url,PDO::PARAM_STR);
-                    $cmd->bindParameter(":menuname",$menuname,PDO::PARAM_STR);
-                    $cmd->bindParameter(":parentmenu",$lastMenuId,PDO::PARAM_INT);
+                    $cmd->bindValue(":lastId",$lastId,PDO::PARAM_INT);
+                    $cmd->bindValue(":iconmenu",$iconmenu,PDO::PARAM_STR);
+                    $cmd->bindValue(":url",$url,PDO::PARAM_STR);
+                    $cmd->bindValue(":menuname",$menuname,PDO::PARAM_STR);
+                    $cmd->bindValue(":parentmenu",$lastMenuId,PDO::PARAM_INT);
                     $cmd->execute();
                 }
 

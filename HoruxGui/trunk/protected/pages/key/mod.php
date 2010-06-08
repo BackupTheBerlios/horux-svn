@@ -82,7 +82,7 @@ class mod extends Page
     protected function setData()
     {
         $cmd = $this->db->createCommand( SQL::SQL_GET_KEY );
-        $cmd->bindParameter(":id",$this->id->Value, PDO::PARAM_INT);
+        $cmd->bindValue(":id",$this->id->Value, PDO::PARAM_INT);
         $query = $cmd->query();
         if($query)
         {
@@ -94,7 +94,7 @@ class mod extends Page
             if($data['isUsed'])
             {
                 $cmd = $this->db->createCommand( SQL::SQL_GET_ATTRIBUTION );
-                $cmd->bindParameter(":id",$this->id->Value, PDO::PARAM_INT);
+                $cmd->bindValue(":id",$this->id->Value, PDO::PARAM_INT);
                 $query = $cmd->query();
                 $data = $query->read();
 
@@ -154,10 +154,10 @@ class mod extends Page
         $res1 = $res2 = $res3 = true;
 
         $cmd = $this->db->createCommand( SQL::SQL_MOD_KEY );
-        $cmd->bindParameter(":identificator",$this->identificator->SafeText,PDO::PARAM_STR);
-        $cmd->bindParameter(":serialNumber",$this->serialNumber->SafeText, PDO::PARAM_STR);
-        $cmd->bindParameter(":id",$this->id->Value, PDO::PARAM_STR);
-        $cmd->bindParameter(":isBlocked",$this->isBlocked->getChecked(), PDO::PARAM_STR);
+        $cmd->bindValue(":identificator",$this->identificator->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":serialNumber",$this->serialNumber->SafeText, PDO::PARAM_STR);
+        $cmd->bindValue(":id",$this->id->Value, PDO::PARAM_STR);
+        $cmd->bindValue(":isBlocked",$this->isBlocked->getChecked(), PDO::PARAM_STR);
 
 
         if($this->person->getSelectedValue() != 'null')
@@ -165,7 +165,7 @@ class mod extends Page
         else
         $isUsed = 0;
 
-        $cmd->bindParameter(":isUsed",$isUsed, PDO::PARAM_STR);
+        $cmd->bindValue(":isUsed",$isUsed, PDO::PARAM_STR);
 
         $res1 = $cmd->execute();
 
@@ -174,7 +174,7 @@ class mod extends Page
 
         //remove the current tag attribution
         $cmd1=$this->db->createCommand(SQL::SQL_REMOVE_TAG_ATTRIBUTION);
-        $cmd1->bindParameter(":id",$this->id->Value);
+        $cmd1->bindValue(":id",$this->id->Value);
         $res2 = $cmd1->execute();
 
 
@@ -182,8 +182,8 @@ class mod extends Page
         if($this->person->getSelectedValue() != 'null')
         {
             $cmd2=$this->db->createCommand(SQL::SQL_ADD_TAG_ATTRIBUTION);
-            $cmd2->bindParameter(":id_key",$this->id->Value);
-            $cmd2->bindParameter(":id_user",$this->person->getSelectedValue());
+            $cmd2->bindValue(":id_key",$this->id->Value);
+            $cmd2->bindValue(":id_user",$this->person->getSelectedValue());
             $res3 = $cmd2->execute();
 
             if(!$this->isBlocked->getChecked())
@@ -213,8 +213,8 @@ class mod extends Page
     public function serverValidateSerialNumber($sender, $param)
     {
         $cmd = $this->db->createCommand( SQL::SQL_IS_SERIALNUMBER_EXIST_EXCEPT_ID);
-        $cmd->bindParameter(":serialNumber",$this->serialNumber->SafeText,PDO::PARAM_STR);
-        $cmd->bindParameter(":id",$this->id->Value,PDO::PARAM_STR);
+        $cmd->bindValue(":serialNumber",$this->serialNumber->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":id",$this->id->Value,PDO::PARAM_STR);
         $array = $cmd->query()->readAll();
 
         if(count($array) > 0)
@@ -226,8 +226,8 @@ class mod extends Page
     public function serverValidateIdentificator($sender, $param)
     {
         $cmd = $this->db->createCommand( SQL::SQL_IS_IDENTIFICATOR_EXIST_EXCEPT_ID);
-        $cmd->bindParameter(":identificator",$this->identificator->SafeText,PDO::PARAM_STR);
-        $cmd->bindParameter(":id",$this->id->Value,PDO::PARAM_STR);
+        $cmd->bindValue(":identificator",$this->identificator->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":id",$this->id->Value,PDO::PARAM_STR);
         $array = $cmd->query()->readAll();
 
         if(count($array) > 0)

@@ -228,7 +228,7 @@ class KeyList extends PageList
     {
         $id = $sender->Text;
         $cmd=$this->db->createCommand(SQL::SQL_SELECT_SETBLOCK_KEY);
-        $cmd->bindParameter(":id",$id);
+        $cmd->bindValue(":id",$id);
 
         $func = "";
 
@@ -236,11 +236,11 @@ class KeyList extends PageList
         {
             $flag = 1;
             $sender->ImageUrl = "./themes/letux/images/menu/icon-16-access.png";
-            $cmd->bindParameter(":flag",$flag);
+            $cmd->bindValue(":flag",$flag);
             $func = 'block';
 
             $cmd2=$this->db->createCommand(SQL::SQL_GET_KEY);
-            $cmd2->bindParameter(":id",$id);
+            $cmd2->bindValue(":id",$id);
             $cmd2 = $cmd2->query();
             $data2 = $cmd2->read();
 
@@ -250,11 +250,11 @@ class KeyList extends PageList
         {
             $flag = 0;
             $sender->ImageUrl = "./themes/letux/images/menu/icon-16-checkin.png";
-            $cmd->bindParameter(":flag",$flag);
+            $cmd->bindValue(":flag",$flag);
             $func = 'unblock';
 
             $cmd2=$this->db->createCommand(SQL::SQL_GET_KEY);
-            $cmd2->bindParameter(":id",$id);
+            $cmd2->bindValue(":id",$id);
             $cmd2 = $cmd2->query();
             $data2 = $cmd2->read();
 
@@ -339,19 +339,19 @@ class KeyList extends PageList
                     $this->addStandalone('sub',$cb->Value);
 
                     $cmd=$this->db->createCommand(SQL::SQL_GET_KEY);
-                    $cmd->bindParameter(":id",$cb->Value);
+                    $cmd->bindValue(":id",$cb->Value);
                     $cmd = $cmd->query();
                     $data = $cmd->read();
 
                     $this->log("Delete the key: ".$data['serialNumber']);
 
                     $cmd=$this->db->createCommand(SQL::SQL_REMOVE_TAG);
-                    $cmd->bindParameter(":id",$cb->Value);
+                    $cmd->bindValue(":id",$cb->Value);
                     if($cmd->execute())
                     $nDelete++;
 
                     $cmd=$this->db->createCommand(SQL::SQL_REMOVE_TAG_ATTRIBUTION);
-                    $cmd->bindParameter(":id",$cb->Value);
+                    $cmd->bindValue(":id",$cb->Value);
                     $cmd->execute();
 
                 }

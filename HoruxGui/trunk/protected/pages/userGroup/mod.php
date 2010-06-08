@@ -44,7 +44,7 @@ class mod extends Page
     protected function setData()
     {
         $cmd = $this->db->createCommand( SQL::SQL_GET_GROUP );
-        $cmd->bindParameter(":id",$this->id->Value, PDO::PARAM_INT);
+        $cmd->bindValue(":id",$this->id->Value, PDO::PARAM_INT);
         $query = $cmd->query();
         if($query)
         {
@@ -60,8 +60,8 @@ class mod extends Page
         foreach($comp as $cb)
         {
             $cmd = $this->db->createCommand( SQL::SQL_GET_ACCESS_GROUP );
-            $cmd->bindParameter(":id",$this->id->Value, PDO::PARAM_INT);
-            $cmd->bindParameter(":readerId",$cb->value, PDO::PARAM_INT);
+            $cmd->bindValue(":id",$this->id->Value, PDO::PARAM_INT);
+            $cmd->bindValue(":readerId",$cb->value, PDO::PARAM_INT);
             $query = $cmd->query();
 
             if($query)
@@ -131,17 +131,17 @@ class mod extends Page
     {
 
         $cmd = $this->db->createCommand( SQL::SQL_MOD_GROUP );
-        $cmd->bindParameter(":name",$this->name->SafeText,PDO::PARAM_STR);
-        $cmd->bindParameter(":comment",$this->comment->SafeText,PDO::PARAM_STR);
-        $cmd->bindParameter(":accessPlugin",$this->accessPlugin->SafeText,PDO::PARAM_STR);
-        $cmd->bindParameter(":id",$this->id->Value, PDO::PARAM_INT);
+        $cmd->bindValue(":name",$this->name->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":comment",$this->comment->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":accessPlugin",$this->accessPlugin->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":id",$this->id->Value, PDO::PARAM_INT);
 
         $cmd->execute();
 
         $this->addStandalone('sub', $this->id->Value);
 
         $cmd=$this->db->createCommand(SQL::SQL_REMOVE_ACCESS_GROUP);
-        $cmd->bindParameter(":id",$this->id->Value);
+        $cmd->bindValue(":id",$this->id->Value);
         $cmd->execute();
 
         $comp = $this->findControlsByType("TCheckBox");
@@ -157,9 +157,9 @@ class mod extends Page
                 $id_accessLevel = $al_obj->getSelectedValue();
 
                 $cmd = $this->db->createCommand( SQL::SQL_ADD_ACCESS_GROUP );
-                $cmd->bindParameter(":lastId",$this->id->Value, PDO::PARAM_INT);
-                $cmd->bindParameter(":readerId",$id_device, PDO::PARAM_INT);
-                $cmd->bindParameter(":accessLevelId",$id_accessLevel, PDO::PARAM_INT);
+                $cmd->bindValue(":lastId",$this->id->Value, PDO::PARAM_INT);
+                $cmd->bindValue(":readerId",$id_device, PDO::PARAM_INT);
+                $cmd->bindValue(":accessLevelId",$id_accessLevel, PDO::PARAM_INT);
 
                 $cmd->execute();
             }
@@ -181,8 +181,8 @@ class mod extends Page
     public function serverValidateName($sender, $param)
     {
         $cmd = $this->db->createCommand( SQL::SQL_IS_NAME_EXIST_EXCEPT_ID);
-        $cmd->bindParameter(":name",$this->name->SafeText,PDO::PARAM_STR);
-        $cmd->bindParameter(":id",$this->id->Value,PDO::PARAM_STR);
+        $cmd->bindValue(":name",$this->name->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":id",$this->id->Value,PDO::PARAM_STR);
         $array = $cmd->query()->readAll();
 
         if(count($array) > 0)

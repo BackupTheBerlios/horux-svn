@@ -23,7 +23,7 @@ class componentconfig extends Page
             $id = $this->Request["id"];
 
             $cmd = $this->db->createCommand( "SELECT i.name FROM hr_install AS i LEFT JOIN hr_component AS c ON c.id_install=i.id WHERE i.id=:id AND c.parentmenu=0" );
-            $cmd->bindParameter(":id",$id,PDO::PARAM_INT);
+            $cmd->bindValue(":id",$id,PDO::PARAM_INT);
 
             $cmd = $cmd->query();
             $data = $cmd->read();
@@ -138,7 +138,7 @@ class componentconfig extends Page
         $id = $this->Request["id"];
 
         $cmd = $this->db->createCommand( "SELECT i.name FROM hr_install AS i LEFT JOIN hr_component AS c ON c.id_install=i.id WHERE i.id=:id AND c.parentmenu=0" );
-        $cmd->bindParameter(":id",$id,PDO::PARAM_INT);
+        $cmd->bindValue(":id",$id,PDO::PARAM_INT);
 
         $cmd = $cmd->query();
         $data = $cmd->read();

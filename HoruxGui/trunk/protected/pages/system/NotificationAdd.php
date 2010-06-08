@@ -99,9 +99,9 @@ class NotificationAdd extends Page
 
 
         $cmd = $this->db->createCommand( SQL::SQL_NOTIFICATION );
-        $cmd->bindParameter(":name",$this->name->SafeText,PDO::PARAM_STR);
-        $cmd->bindParameter(":emails",$this->emailToSend->SafeText, PDO::PARAM_STR);
-        $cmd->bindParameter(":description",$this->comment->SafeText, PDO::PARAM_STR);
+        $cmd->bindValue(":name",$this->name->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":emails",$this->emailToSend->SafeText, PDO::PARAM_STR);
+        $cmd->bindValue(":description",$this->comment->SafeText, PDO::PARAM_STR);
 
 
         $res1 = $cmd->execute();
@@ -112,8 +112,8 @@ class NotificationAdd extends Page
         {
             $item = $this->superUserList->Items[$index];
             $cmd = $this->db->createCommand( SQL::SQL_NOTIFICATION_SU );
-            $cmd->bindParameter(":id_notification",$lastId,PDO::PARAM_STR);
-            $cmd->bindParameter(":id_superuser",$item->Value, PDO::PARAM_STR);
+            $cmd->bindValue(":id_notification",$lastId,PDO::PARAM_STR);
+            $cmd->bindValue(":id_superuser",$item->Value, PDO::PARAM_STR);
 
             $res2 = $cmd->execute();
         }
@@ -123,12 +123,12 @@ class NotificationAdd extends Page
         {
             $item = $this->userList->Items[$index];
             $cmd = $this->db->createCommand( SQL::SQL_NOTIFICATION_CODE );
-            $cmd->bindParameter(":id_notification",$lastId,PDO::PARAM_STR);
+            $cmd->bindValue(":id_notification",$lastId,PDO::PARAM_STR);
             $type = "ACCESS";
-            $cmd->bindParameter(":type",$type, PDO::PARAM_STR);
+            $cmd->bindValue(":type",$type, PDO::PARAM_STR);
             $code = 0;
-            $cmd->bindParameter(":code",$code, PDO::PARAM_STR);
-            $cmd->bindParameter(":param",$item->Value, PDO::PARAM_STR);
+            $cmd->bindValue(":code",$code, PDO::PARAM_STR);
+            $cmd->bindValue(":param",$item->Value, PDO::PARAM_STR);
 
             $res3 = $cmd->execute();
         }
@@ -174,10 +174,10 @@ class NotificationAdd extends Page
     protected function insertNotificationCode($not_id, $type, $code, $value='')
     {
         $cmd = $this->db->createCommand( SQL::SQL_NOTIFICATION_CODE );
-        $cmd->bindParameter(":id_notification",$not_id,PDO::PARAM_STR);
-        $cmd->bindParameter(":type",$type, PDO::PARAM_STR);
-        $cmd->bindParameter(":code",$code, PDO::PARAM_STR);
-        $cmd->bindParameter(":param",$value, PDO::PARAM_STR);
+        $cmd->bindValue(":id_notification",$not_id,PDO::PARAM_STR);
+        $cmd->bindValue(":type",$type, PDO::PARAM_STR);
+        $cmd->bindValue(":code",$code, PDO::PARAM_STR);
+        $cmd->bindValue(":param",$value, PDO::PARAM_STR);
 
         $cmd->execute();
     }

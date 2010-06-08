@@ -92,18 +92,18 @@ class add extends Page
 
 
         $cmd = $this->db->createCommand( SQL::SQL_ADD_KEY );
-        $cmd->bindParameter(":identificator",$this->identificator->SafeText,PDO::PARAM_STR);
-        $cmd->bindParameter(":serialNumber",$this->serialNumber->SafeText, PDO::PARAM_STR);
+        $cmd->bindValue(":identificator",$this->identificator->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":serialNumber",$this->serialNumber->SafeText, PDO::PARAM_STR);
 
         if($this->isBlocked->getChecked())
         {
             $isBlocked = 1;
-            $cmd->bindParameter(":isBlocked",$isBlocked, PDO::PARAM_STR);
+            $cmd->bindValue(":isBlocked",$isBlocked, PDO::PARAM_STR);
         }
         else
         {
             $isBlocked = 0;
-            $cmd->bindParameter(":isBlocked",$isBlocked, PDO::PARAM_STR);
+            $cmd->bindValue(":isBlocked",$isBlocked, PDO::PARAM_STR);
         }
 
         if($this->person->getSelectedValue() != 'null')
@@ -111,7 +111,7 @@ class add extends Page
         else
         $isUsed = 0;
 
-        $cmd->bindParameter(":isUsed",$isUsed, PDO::PARAM_STR);
+        $cmd->bindValue(":isUsed",$isUsed, PDO::PARAM_STR);
 
 
         $res1 = $cmd->execute();
@@ -122,8 +122,8 @@ class add extends Page
         if($this->person->getSelectedValue() != 'null')
         {
             $cmd2=$this->db->createCommand(SQL::SQL_ADD_TAG_ATTRIBUTION);
-            $cmd2->bindParameter(":id_key",$lastId);
-            $cmd2->bindParameter(":id_user",$this->person->getSelectedValue());
+            $cmd2->bindValue(":id_key",$lastId);
+            $cmd2->bindValue(":id_user",$this->person->getSelectedValue());
             $res2 = $cmd2->execute();
 
             if($isBlocked == 0)
@@ -146,7 +146,7 @@ class add extends Page
     public function serverValidateSerialNumber($sender, $param)
     {
         $cmd = $this->db->createCommand( SQL::SQL_IS_SERIALNUMBER_EXIST);
-        $cmd->bindParameter(":serialNumber",$this->serialNumber->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":serialNumber",$this->serialNumber->SafeText,PDO::PARAM_STR);
         $array = $cmd->query()->readAll();
 
         if(count($array) > 0)
@@ -158,7 +158,7 @@ class add extends Page
     public function serverValidateIdentificator($sender, $param)
     {
         $cmd = $this->db->createCommand( SQL::SQL_IS_IDENTIFICATOR_EXIST);
-        $cmd->bindParameter(":identificator",$this->identificator->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":identificator",$this->identificator->SafeText,PDO::PARAM_STR);
         $array = $cmd->query()->readAll();
 
         if(count($array) > 0)

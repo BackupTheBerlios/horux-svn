@@ -34,7 +34,7 @@ class mod extends Page
     protected function setData()
     {
         $cmd = $this->db->createCommand( SQL::SQL_GET_NONWORKINGDAY );
-        $cmd->bindParameter(":id",$this->id->Value, PDO::PARAM_INT);
+        $cmd->bindValue(":id",$this->id->Value, PDO::PARAM_INT);
         $query = $cmd->query();
         if($query)
         {
@@ -72,7 +72,7 @@ class mod extends Page
         $this->log("Delete the non working day: ".$this->name->SafeText);
 
         $cmd = $this->db->createCommand( SQL::SQL_DELETE_NONWORKINGDAY );
-        $cmd->bindParameter(":id",$this->id->Value, PDO::PARAM_INT);
+        $cmd->bindValue(":id",$this->id->Value, PDO::PARAM_INT);
 
         $res = $cmd->execute();
 
@@ -167,12 +167,12 @@ class mod extends Page
         $until = $from;
 
         $cmd = $this->db->createCommand( SQL::SQL_UPDATE_NONWORKINGDAY );
-        $cmd->bindParameter(":name",$this->name->SafeText,PDO::PARAM_STR);
-        $cmd->bindParameter(":from",$from, PDO::PARAM_STR);
-        $cmd->bindParameter(":until",$until, PDO::PARAM_STR);
-        $cmd->bindParameter(":comment",$this->comment->SafeText, PDO::PARAM_STR);
-        $cmd->bindParameter(":id",$this->id->Value, PDO::PARAM_INT);
-        $cmd->bindParameter(":color",$this->color->SafeText, PDO::PARAM_STR);
+        $cmd->bindValue(":name",$this->name->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":from",$from, PDO::PARAM_STR);
+        $cmd->bindValue(":until",$until, PDO::PARAM_STR);
+        $cmd->bindValue(":comment",$this->comment->SafeText, PDO::PARAM_STR);
+        $cmd->bindValue(":id",$this->id->Value, PDO::PARAM_INT);
+        $cmd->bindValue(":color",$this->color->SafeText, PDO::PARAM_STR);
 
         $period = "";
 
@@ -183,7 +183,7 @@ class mod extends Page
         if($this->afternoon->getChecked())
             $period = 'afternoon';
 
-        $cmd->bindParameter(":period",$period,PDO::PARAM_STR);
+        $cmd->bindValue(":period",$period,PDO::PARAM_STR);
 
 
         $this->log("Modify the non working day: ".$this->name->SafeText);

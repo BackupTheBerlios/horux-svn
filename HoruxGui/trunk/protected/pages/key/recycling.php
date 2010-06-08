@@ -30,11 +30,11 @@ class recycling extends Page
                 $this->label->Text = Prado::localize("The key was recycled");
 
                 $cmd = $this->db->createCommand( "UPDATE hr_keys SET isUsed=0 WHERE serialNumber=:serialNumber" );
-                $cmd->bindParameter(":serialNumber",$this->Request['sn'], PDO::PARAM_STR);
+                $cmd->bindValue(":serialNumber",$this->Request['sn'], PDO::PARAM_STR);
                 $res1 = $cmd->execute();
 
                 $cmd = $this->db->createCommand( "SELECT * FROM hr_keys WHERE serialNumber=:serialNumber" );
-                $cmd->bindParameter(":serialNumber",$this->Request['sn'], PDO::PARAM_STR);
+                $cmd->bindValue(":serialNumber",$this->Request['sn'], PDO::PARAM_STR);
                 $query = $cmd->query();
 
                 if($query)
@@ -42,7 +42,7 @@ class recycling extends Page
                     $data = $query->read();
 
                     $cmd = $this->db->createCommand( "DELETE FROM hr_keys_attribution WHERE id_key=:id" );
-                    $cmd->bindParameter(":id",$data['id'], PDO::PARAM_STR);
+                    $cmd->bindValue(":id",$data['id'], PDO::PARAM_STR);
                     $res1 = $cmd->execute();
 
                 }

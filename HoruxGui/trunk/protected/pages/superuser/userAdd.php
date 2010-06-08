@@ -116,11 +116,11 @@ class userAdd extends Page
     public function saveData()
     {
         $cmd = $this->db->createCommand( SQL::SQL_ADD_USER );
-        $cmd->bindParameter(":name",$this->name->SafeText,PDO::PARAM_STR);
-        $cmd->bindParameter(":password",sha1($this->password->SafeText),PDO::PARAM_STR);
-        $cmd->bindParameter(":email",$this->email->SafeText,PDO::PARAM_STR);
-        $cmd->bindParameter(":group_id",$this->group_id->getSelectedValue(),PDO::PARAM_INT);
-        $cmd->bindParameter(":user_id",$this->user_id->getSelectedValue(),PDO::PARAM_INT);
+        $cmd->bindValue(":name",$this->name->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":password",sha1($this->password->SafeText),PDO::PARAM_STR);
+        $cmd->bindValue(":email",$this->email->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":group_id",$this->group_id->getSelectedValue(),PDO::PARAM_INT);
+        $cmd->bindValue(":user_id",$this->user_id->getSelectedValue(),PDO::PARAM_INT);
 
 
         if(!$cmd->execute()) return false;
@@ -147,7 +147,7 @@ class userAdd extends Page
     public function serverValidateName($sender, $param)
     {
         $cmd = $this->db->createCommand( SQL::SQL_IS_NAME_EXIST );
-        $cmd->bindParameter(":name",$this->name->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":name",$this->name->SafeText,PDO::PARAM_STR);
         $data = $cmd->query();
         $data = $data->read();
 

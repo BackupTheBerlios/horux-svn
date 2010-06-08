@@ -167,7 +167,7 @@ class UserGroupList extends PageList
                 if( (bool)$cb->getChecked() && $cb->Value != "0")
                 {
                     $cmd=$this->db->createCommand(SQL::SQL_HAS_CHILDREN);
-                    $cmd->bindParameter(":id",$cb->Value);
+                    $cmd->bindValue(":id",$cb->Value);
                     $query = $cmd->query();
                     $hasChildren = false;
                     if($query)
@@ -178,16 +178,16 @@ class UserGroupList extends PageList
                     if(!$hasChildren)
                     {
                         $cmd=$this->db->createCommand(SQL::SQL_GET_GROUP);
-                        $cmd->bindParameter(":id",$cb->Value);
+                        $cmd->bindValue(":id",$cb->Value);
                         $cmd = $cmd->query();
                         $data = $cmd->read();
                         $this->log("Delete the user group: ".$data['name']);
 
                         $cmd=$this->db->createCommand(SQL::SQL_REMOVE_ACCESS_GROUP);
-                        $cmd->bindParameter(":id",$cb->Value);
+                        $cmd->bindValue(":id",$cb->Value);
                         $cmd->execute();
                         $cmd=$this->db->createCommand(SQL::SQL_REMOVE_GROUP);
-                        $cmd->bindParameter(":id",$cb->Value);
+                        $cmd->bindValue(":id",$cb->Value);
                         if($cmd->execute())
                         {
                             $nDelete++;
@@ -196,7 +196,7 @@ class UserGroupList extends PageList
                     else
                     {
                         $cmd = $this->db->createCommand( SQL::SQL_GET_GROUP );
-                        $cmd->bindParameter(":id",$cb->Value, PDO::PARAM_INT);
+                        $cmd->bindValue(":id",$cb->Value, PDO::PARAM_INT);
                         $query = $cmd->query();
                         if($query)
                         {

@@ -90,23 +90,23 @@ class Notification extends PageList
                 if( (bool)$cb->getChecked() && $cb->Value != "0")
                 {
                     $cmd=$this->db->createCommand(SQL::SQL_GET_NOTIFICATION);
-                    $cmd->bindParameter(":id",$cb->Value);
+                    $cmd->bindValue(":id",$cb->Value);
                     $cmd = $cmd->query();
                     $data = $cmd->read();
 
                     $this->log("Delete the notification: ".$data['name']);
 
                     $cmd=$this->db->createCommand(SQL::SQL_REMOVE_NOTIFICATION);
-                    $cmd->bindParameter(":id",$cb->Value);
+                    $cmd->bindValue(":id",$cb->Value);
                     if($cmd->execute())
                     $nDelete++;
 
                     $cmd=$this->db->createCommand(SQL::SQL_REMOVE_NOTIFICATION_CODE);
-                    $cmd->bindParameter(":id",$cb->Value);
+                    $cmd->bindValue(":id",$cb->Value);
                     $cmd->execute();
 
                     $cmd=$this->db->createCommand(SQL::SQL_REMOVE_NOTIFICATION_SU);
-                    $cmd->bindParameter(":id",$cb->Value);
+                    $cmd->bindValue(":id",$cb->Value);
                     $cmd->execute();
                 }
             }

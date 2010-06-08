@@ -109,7 +109,7 @@ class template extends PageList
                     $cmd->execute();
 
                     $cmd=$this->db->createCommand("UPDATE hr_install SET `default`='1' WHERE id=:id");
-                    $cmd->bindParameter(":id",$cb->Value);
+                    $cmd->bindValue(":id",$cb->Value);
                     $cmd->execute();
                 }
             }

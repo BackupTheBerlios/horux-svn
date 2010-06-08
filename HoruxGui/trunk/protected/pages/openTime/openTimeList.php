@@ -266,16 +266,16 @@ class openTimeList extends PageList
                 {
 
                     $cmd=$this->db->createCommand(SQL::SQL_REMOVE_OPEN_TIME);
-                    $cmd->bindParameter(":id",$cb->Value);
+                    $cmd->bindValue(":id",$cb->Value);
                     if($cmd->execute())
                     $nDelete++;
 
                     $cmd=$this->db->createCommand(SQL::SQL_REMOVE_OPEN_TIME_TIME);
-                    $cmd->bindParameter(":id",$cb->Value);
+                    $cmd->bindValue(":id",$cb->Value);
                     $cmd->execute();
 
                     $cmd=$this->db->createCommand(SQL::SQL_DELETE_OPEN_TIME_ATTRIBUTION_2);
-                    $cmd->bindParameter(":id",$cb->Value);
+                    $cmd->bindValue(":id",$cb->Value);
                     $cmd->execute();
 
                 }

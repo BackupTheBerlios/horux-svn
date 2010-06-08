@@ -122,18 +122,18 @@ class Site extends Page
 	  
       $cmd = $this->db->createCommand( SQL::SQL_UPDATE_SITE );
       	
-      $cmd->bindParameter(":name",$this->name->SafeText,PDO::PARAM_STR);
-      $cmd->bindParameter(":logo",$logo,PDO::PARAM_STR);
-      $cmd->bindParameter(":street",$this->street->SafeText,PDO::PARAM_STR);
-      $cmd->bindParameter(":npa",$this->npa->SafeText,PDO::PARAM_STR);
-      $cmd->bindParameter(":city",$this->city->SafeText,PDO::PARAM_STR);
-      $cmd->bindParameter(":phone",$this->phone->SafeText,PDO::PARAM_STR);
-      $cmd->bindParameter(":email",$this->email->SafeText,PDO::PARAM_STR);
-      $cmd->bindParameter(":fax",$this->fax->SafeText,PDO::PARAM_STR);
-      $cmd->bindParameter(":website",$this->website->SafeText,PDO::PARAM_STR);
-      $cmd->bindParameter(":tva_number",$this->tva_number->SafeText,PDO::PARAM_STR);
-      $cmd->bindParameter(":tva",$this->tva->SafeText,PDO::PARAM_STR);
-      $cmd->bindParameter(":devise",$this->devise->SafeText,PDO::PARAM_STR);
+      $cmd->bindValue(":name",$this->name->SafeText,PDO::PARAM_STR);
+      $cmd->bindValue(":logo",$logo,PDO::PARAM_STR);
+      $cmd->bindValue(":street",$this->street->SafeText,PDO::PARAM_STR);
+      $cmd->bindValue(":npa",$this->npa->SafeText,PDO::PARAM_STR);
+      $cmd->bindValue(":city",$this->city->SafeText,PDO::PARAM_STR);
+      $cmd->bindValue(":phone",$this->phone->SafeText,PDO::PARAM_STR);
+      $cmd->bindValue(":email",$this->email->SafeText,PDO::PARAM_STR);
+      $cmd->bindValue(":fax",$this->fax->SafeText,PDO::PARAM_STR);
+      $cmd->bindValue(":website",$this->website->SafeText,PDO::PARAM_STR);
+      $cmd->bindValue(":tva_number",$this->tva_number->SafeText,PDO::PARAM_STR);
+      $cmd->bindValue(":tva",$this->tva->SafeText,PDO::PARAM_STR);
+      $cmd->bindValue(":devise",$this->devise->SafeText,PDO::PARAM_STR);
       
       if(!$cmd->execute()) return false;
 

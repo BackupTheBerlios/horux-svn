@@ -67,8 +67,8 @@ class add extends Page
     protected function saveData()
     {
         $cmd = $this->db->createCommand( "INSERT hr_department SET name=:name, description=:description" );
-        $cmd->bindParameter(":name",$this->name->SafeText,PDO::PARAM_STR);
-        $cmd->bindParameter(":description",$this->comment->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":name",$this->name->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":description",$this->comment->SafeText,PDO::PARAM_STR);
 
         if(!$cmd->execute()) return false;
 

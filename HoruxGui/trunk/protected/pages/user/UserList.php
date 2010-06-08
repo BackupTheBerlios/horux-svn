@@ -445,17 +445,17 @@ class UserList extends PageList
         {
             $id = $sender->Text;
             $cmd=$this->db->createCommand(SQL::SQL_UPDATE_SETBLOCK_USER);
-            $cmd->bindParameter(":id",$id);
+            $cmd->bindValue(":id",$id);
 
             if($sender->ImageUrl == "./themes/letux/images/menu/icon-16-checkin.png")
             {
                 $flag = 1;
                 $sender->ImageUrl = "./themes/letux/images/menu/icon-16-access.png";
-                $cmd->bindParameter(":flag",$flag);
+                $cmd->bindValue(":flag",$flag);
                 $this->addStandalone('block',$id);
 
                 $cmd2=$this->db->createCommand(SQL::SQL_GET_PERSON);
-                $cmd2->bindParameter(":id",$id);
+                $cmd2->bindValue(":id",$id);
                 $cmd2 = $cmd2->query();
                 $data2 = $cmd2->read();
 
@@ -465,11 +465,11 @@ class UserList extends PageList
             {
                 $flag = 0;
                 $sender->ImageUrl = "./themes/letux/images/menu/icon-16-checkin.png";
-                $cmd->bindParameter(":flag",$flag);
+                $cmd->bindValue(":flag",$flag);
                 $this->addStandalone('unblock',$id);
 
                 $cmd2=$this->db->createCommand(SQL::SQL_GET_PERSON);
-                $cmd2->bindParameter(":id",$id);
+                $cmd2->bindValue(":id",$id);
                 $cmd2 = $cmd2->query();
                 $data2 = $cmd2->read();
 
@@ -564,14 +564,14 @@ class UserList extends PageList
                         $id_user = $cb->Value;
 
                         $cmd=$this->db->createCommand(SQL::SQL_GET_PERSON);
-                        $cmd->bindParameter(":id",$id_user);
+                        $cmd->bindValue(":id",$id_user);
                         $cmd = $cmd->query();
                         $data = $cmd->read();
                         $this->log("Delete the user: ".$data['name']." ".$data['firstname']);
 
                         //remove image
                         $cmd=$this->db->createCommand(SQL::SQL_GET_PICTURE);
-                        $cmd->bindParameter(":id",$id_user);
+                        $cmd->bindValue(":id",$id_user);
                         $cmd = $cmd->query();
                         $data = $cmd->read();
 
@@ -587,23 +587,23 @@ class UserList extends PageList
 
                         //remove the person
                         $cmd=$this->db->createCommand(SQL::SQL_DELETE_PERSON);
-                        $cmd->bindParameter(":id",$id_user);
+                        $cmd->bindValue(":id",$id_user);
                         $cmd->execute();
 
                         //remove the access group attribution
                         $cmd=$this->db->createCommand(SQL::SQL_DELETE_ALL_GROUP_ATTRIBUTION);
-                        $cmd->bindParameter(":id",$id_user);
+                        $cmd->bindValue(":id",$id_user);
                         $cmd->execute();
 
                         //set the key used to unsused
                         $cmd=$this->db->createCommand(SQL::SQL_UPDATE_KEYS_FOR_IDPERSON);
-                        $cmd->bindParameter(":id",$id_user);
+                        $cmd->bindValue(":id",$id_user);
                         $cmd->execute();
 
 
                         //remove the tag attribution
                         $cmd=$this->db->createCommand(SQL::SQL_DELETE_KEY_ATTRIBUTION_FROM_IDPERSON);
-                        $cmd->bindParameter(":id",$id_user);
+                        $cmd->bindValue(":id",$id_user);
                         $cmd->execute();
 
 

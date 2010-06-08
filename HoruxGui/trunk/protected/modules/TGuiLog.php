@@ -39,8 +39,8 @@ class TGuiLog extends TModule
                   )";
 
     $cmd = $db->createCommand( $sql );
-    $cmd->bindParameter(":who",$username,PDO::PARAM_STR);
-    $cmd->bindParameter(":what",$log, PDO::PARAM_STR);
+    $cmd->bindValue(":who",$username,PDO::PARAM_STR);
+    $cmd->bindValue(":what",$log, PDO::PARAM_STR);
     $cmd->execute();
   }
 }

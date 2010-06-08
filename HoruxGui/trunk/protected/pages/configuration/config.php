@@ -126,35 +126,35 @@ class Config extends Page
                 {
                     $cmd = $this->db->createCommand( SQL::SQL_UPDATE_CONFIG );
 
-                    $cmd->bindParameter(":xmlrpc_server",$this->xmlrpc_server->SafeText,PDO::PARAM_STR);
-                    $cmd->bindParameter(":xmlrpc_port",$this->xmlrpc_port->SafeText,PDO::PARAM_STR);
-                    $cmd->bindParameter(":log_path",$this->log_path->SafeText,PDO::PARAM_STR);
-                    $cmd->bindParameter(":debug_mode",$this->debug_mode->getChecked(),PDO::PARAM_STR);
-                    $cmd->bindParameter(":key",$this->key->SafeText,PDO::PARAM_STR);
+                    $cmd->bindValue(":xmlrpc_server",$this->xmlrpc_server->SafeText,PDO::PARAM_STR);
+                    $cmd->bindValue(":xmlrpc_port",$this->xmlrpc_port->SafeText,PDO::PARAM_STR);
+                    $cmd->bindValue(":log_path",$this->log_path->SafeText,PDO::PARAM_STR);
+                    $cmd->bindValue(":debug_mode",$this->debug_mode->getChecked(),PDO::PARAM_STR);
+                    $cmd->bindValue(":key",$this->key->SafeText,PDO::PARAM_STR);
 
-                    $cmd->bindParameter(":publicurl",$this->publicurl->SafeText,PDO::PARAM_STR);
-                    $cmd->bindParameter(":picturepath",$this->picturepath->SafeText,PDO::PARAM_STR);
+                    $cmd->bindValue(":publicurl",$this->publicurl->SafeText,PDO::PARAM_STR);
+                    $cmd->bindValue(":picturepath",$this->picturepath->SafeText,PDO::PARAM_STR);
 
 
-                    $cmd->bindParameter(":mail_mailer",$this->mailer->getSelectedValue(),PDO::PARAM_STR);
-                    $cmd->bindParameter(":mail_mail_from",$this->mail_from->SafeText,PDO::PARAM_STR);
-                    $cmd->bindParameter(":mail_from_name",$this->name_from->SafeText,PDO::PARAM_STR);
-                    $cmd->bindParameter(":mail_sendmail_path",$this->sendmail_path->SafeText,PDO::PARAM_STR);
+                    $cmd->bindValue(":mail_mailer",$this->mailer->getSelectedValue(),PDO::PARAM_STR);
+                    $cmd->bindValue(":mail_mail_from",$this->mail_from->SafeText,PDO::PARAM_STR);
+                    $cmd->bindValue(":mail_from_name",$this->name_from->SafeText,PDO::PARAM_STR);
+                    $cmd->bindValue(":mail_sendmail_path",$this->sendmail_path->SafeText,PDO::PARAM_STR);
 
                     $auth = $this->smtp_auth_yes->GetChecked() ? "1" : "0";
-                    $cmd->bindParameter(":mail_smtp_auth",$auth,PDO::PARAM_STR);
+                    $cmd->bindValue(":mail_smtp_auth",$auth,PDO::PARAM_STR);
 
                     $secure = "none";
                     if($this->smtp_secure_tls->GetChecked())
                     $secure = "tls";
                     if($this->smtp_secure_ssl->GetChecked())
                     $secure = "ssl";
-                    $cmd->bindParameter(":mail_smtp_safe",$secure,PDO::PARAM_STR);
+                    $cmd->bindValue(":mail_smtp_safe",$secure,PDO::PARAM_STR);
 
-                    $cmd->bindParameter(":mail_smtp_username",$this->smtp_user->SafeText,PDO::PARAM_STR);
-                    $cmd->bindParameter(":mail_smtp_password",$this->smtp_password->SafeText,PDO::PARAM_STR);
-                    $cmd->bindParameter(":mail_smtp_host",$this->smtp_host->SafeText,PDO::PARAM_STR);
-                    $cmd->bindParameter(":mail_smtp_port",$this->smtp_port->SafeText,PDO::PARAM_STR);
+                    $cmd->bindValue(":mail_smtp_username",$this->smtp_user->SafeText,PDO::PARAM_STR);
+                    $cmd->bindValue(":mail_smtp_password",$this->smtp_password->SafeText,PDO::PARAM_STR);
+                    $cmd->bindValue(":mail_smtp_host",$this->smtp_host->SafeText,PDO::PARAM_STR);
+                    $cmd->bindValue(":mail_smtp_port",$this->smtp_port->SafeText,PDO::PARAM_STR);
 
 
                     $_SESSION['helpKey'] = $this->key->SafeText;
