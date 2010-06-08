@@ -11,7 +11,7 @@
     <div id="list">
         <com:TDataGrid
             ID="DataGrid"
-            DataKeyField="id"
+            DataKeyField="name"
             AutoGenerateColumns="false"
             CssClass="adminlist"
             ItemStyle.CssClass = "row0"
