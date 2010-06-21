@@ -11,6 +11,8 @@ int main(int argc, char *argv[])
     Q_INIT_RESOURCE(ressource);
     QApplication a(argc, argv);
 
+    a.setWindowIcon(QIcon(":/images/logo.png"));
+
     QTranslator myappTranslator;
     QString lang = QLocale::system().name();
     if(lang.contains("fr"))
@@ -18,7 +20,7 @@ int main(int argc, char *argv[])
     myappTranslator.load(a.applicationDirPath() +  "/horuxcarddesigner_" + lang +".qm");
     a.installTranslator(&myappTranslator);
 
-    QPixmap pixmap(":/images/splash.jpg");
+    QPixmap pixmap(":/images/splash.png");
     QSplashScreen splash(pixmap);
     splash.show();
     splash.showMessage(QObject::tr("Loading..."),Qt::AlignLeft, Qt::white);

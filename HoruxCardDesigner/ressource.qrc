@@ -1,5 +1,5 @@
 <RCC>
-    <qresource prefix="/" >
+    <qresource prefix="/">
         <file>images/textpointer.png</file>
         <file>images/bold.png</file>
         <file>images/bringtofront.png</file>
@@ -17,8 +17,9 @@
         <file>images/viewmag.png</file>
         <file>images/gadu.png</file>
         <file>images/spinner.gif</file>
-        <file>images/splash.jpg</file>
         <file>images/decrypted.png</file>
         <file>images/encrypted.png</file>
+        <file>images/splash.png</file>
+        <file>images/logo.png</file>
     </qresource>
 </RCC>
