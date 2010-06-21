@@ -61,7 +61,8 @@
       </property>
       <widget class="QGraphicsView" name="graphicsView">
        <property name="styleSheet">
-        <string>background-color: rgb(228, 228, 228);</string>
+        <string notr="true">background-color: rgb(228, 228, 228);
+background-image: url(:/images/filigrane.png);</string>
        </property>
        <property name="frameShape">
         <enum>QFrame::StyledPanel</enum>
