@@ -35,9 +35,10 @@ CHoruxGui::CHoruxGui(QWidget *parent)
 
     connect(techComboBox, SIGNAL(currentIndexChanged ( int )), this, SLOT(currentIndexChanged ( int )));
 
+    setWindowIcon(QIcon(":/images/logo.png"));
 
     trayIcon = new QSystemTrayIcon(this);
-    trayIcon->setIcon(QIcon(":/images/logo.png"));
+    trayIcon->setIcon(QIcon(":/images/logo.ico"));
 
     trayIcon->show();
 
