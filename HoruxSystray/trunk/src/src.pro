@@ -4,7 +4,8 @@ SOURCES += main.cpp \
     caccesslinkserial.cpp \
     cdevice.cpp \
     caccesslinkdevice.cpp \
-    cgat5250b.cpp
+    cgat5250b.cpp \
+    cgat6000.cpp
 TEMPLATE = app
 CONFIG += warn_on \
     thread \
@@ -15,7 +16,8 @@ HEADERS += choruxgui.h \
     caccesslinkserial.h \
     cdevice.h \
     caccesslinkdevice.h \
-    cgat5250b.h
+    cgat5250b.h \
+    cgat6000.h
 RESOURCES += ressource.qrc
 TARGETDEPS += ../qextserialport/build/libqextserialport.a
 INCLUDEPATH += ../qextserialport
@@ -27,17 +29,11 @@ FORMS += settings.ui
 LIBS += ../qextserialport/build/libqextserialport.a
 LIBS += -lhid
 win32:LIBS += -lsetupapi
-CONFIG -= debug
-CONFIG += release
-
-QT += xml network
-
-win32 {
-CONFIG += qaxcontainer
-}
-
-
-
+CONFIG += debug
+CONFIG -= release
+QT += xml \
+    network
+win32:CONFIG += qaxcontainer
 TRANSLATIONS += horux_fr_FR.ts
 win32:RC_FILE = myapp.rc
 unix { 

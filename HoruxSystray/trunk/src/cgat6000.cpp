@@ -1,13 +1,13 @@
-#include "cgat5250b.h"
+#include "CGAT6000.h"
 #include <QSettings>
 #include <QtCore>
 
-CGAT5250B::CGAT5250B(QObject *parent)
+CGAT6000::CGAT6000(QObject *parent)
  : CDevice(parent)
 {
  #if defined(Q_OS_WIN)
     gat = new QAxObject(this);
-    
+
     gat->setControl("0A530613-6024-11D5-A3AC-0050BF2CF639");
 
 #elif defined(Q_WS_X11)
@@ -21,7 +21,7 @@ CGAT5250B::CGAT5250B(QObject *parent)
     beep = false;
 }
 
-CGAT5250B::~CGAT5250B()
+CGAT6000::~CGAT6000()
 {
     stop = true;
 
@@ -46,18 +46,25 @@ CGAT5250B::~CGAT5250B()
 #endif
 }
 
-void CGAT5250B::isBeep(bool flag)
+void CGAT6000::isBeep(bool flag)
 {
     beep = flag;
 }
 
-void CGAT5250B::open()
+void CGAT6000::open()
 {
 #if defined(Q_OS_WIN)
 
-    gat->dynamicCall("Beep(int)",100);
-    gat->dynamicCall("LEDGreen(int)",1000);
-    gat->dynamicCall("LEDRed(int)",1000);
+
+
+    if(gat->dynamicCall("OpenDevice()").toBool())
+    {
+        gat->dynamicCall("Beep(int)",100);
+        gat->dynamicCall("LEDGreen(int)",1000);
+        gat->dynamicCall("LEDRed(int)",1000);
+    }
+    else
+        qDebug() << "Not ready";
 
 #elif defined(Q_WS_X11)
     QSettings settings ( "Horux", "HoruxGuiSys" );
@@ -95,7 +102,7 @@ void CGAT5250B::open()
 #endif
 }
 
-void CGAT5250B::smIdle()
+void CGAT6000::smIdle()
 {
 #if defined(Q_OS_WIN)
 #elif defined(Q_WS_X11)
@@ -109,13 +116,13 @@ void CGAT5250B::smIdle()
 #endif
 }
 
-void CGAT5250B::setGreenLED()
+void CGAT6000::setGreenLED()
 {
 #if defined(Q_OS_WIN)
 #elif defined(Q_WS_X11)
     if(port && port->isOpen())
     {
-        unsigned char TxGreen[7] = {0x06,0x74,0x00,0x00,0x00,0x8a,0xf8};
+        unsigned char TxGreen[7] = {0x05,0xA5,0x01,0x00,0x8a,0x2B};
         QByteArray TxBuffer;
 
         for(int i=0;i<7; i++)
@@ -126,13 +133,13 @@ void CGAT5250B::setGreenLED()
 #endif
 }
 
-void CGAT5250B::setRedLED()
+void CGAT6000::setRedLED()
 {
 #if defined(Q_OS_WIN)
 #elif defined(Q_WS_X11)
     if(port && port->isOpen())
     {
-        unsigned char TxRed[7] = {0x06,0x74,0x00,0x00,0x8a,0x00,0xf8};
+        unsigned char TxRed[7] = {0x05,0xA5,0x02,0x00,0x8a,0x28};
         QByteArray TxBuffer;
 
         for(int i=0;i<7; i++)
@@ -143,13 +150,13 @@ void CGAT5250B::setRedLED()
 #endif
 }
 
-void CGAT5250B::setBeep()
+void CGAT6000::setBeep()
 {
 #if defined(Q_OS_WIN)
 #elif defined(Q_WS_X11)
     if(port && port->isOpen())
     {
-        unsigned char TxBeep[7] = {0x06,0x74,0x00,0x81,0x00,0x00,0xf3};
+        unsigned char TxBeep[7] = {0x04,0xA6,0x00,0x8a,0x28};
         QByteArray TxBuffer;
 
         for(int i=0;i<7; i++)
@@ -160,7 +167,7 @@ void CGAT5250B::setBeep()
 #endif
 }
 
-void CGAT5250B::readUniqueSerialNumber()
+void CGAT6000::readUniqueSerialNumber()
 {
 #if defined(Q_OS_WIN)
 #elif defined(Q_WS_X11)
@@ -177,7 +184,7 @@ void CGAT5250B::readUniqueSerialNumber()
 #endif
 }
 
-void CGAT5250B::readCardNumberNumber()
+void CGAT6000::readCardNumberNumber()
 {
 #if defined(Q_OS_WIN)
 #elif defined(Q_WS_X11)
@@ -194,12 +201,13 @@ void CGAT5250B::readCardNumberNumber()
 #endif
 }
 
-void CGAT5250B::setFID(QString _fid)
+void CGAT6000::setFID(QString _fid)
 {
     fid = _fid;
     #if defined(Q_OS_WIN)
         if(gat)
         {
+            gat->setProperty("CryptKey","31AEE34AFEF8D4F6F1821C487ACB8DC9");
             gat->setProperty("FID",fid.toInt());
         }
     #elif defined(Q_WS_X11)
@@ -211,7 +219,7 @@ void CGAT5250B::setFID(QString _fid)
 
 }
 
-void CGAT5250B::handleMsg()
+void CGAT6000::handleMsg()
 {
 #if defined(Q_OS_WIN)
     if(key != "")
@@ -288,7 +296,7 @@ void CGAT5250B::handleMsg()
 #endif
 }
 
-void CGAT5250B::handleKey()
+void CGAT6000::handleKey()
 {
 #if defined(Q_OS_WIN)
     if(beep)
@@ -302,7 +310,7 @@ void CGAT5250B::handleKey()
     emit keyDetected(key.toLatin1());
 }
 
-void CGAT5250B::readyRead()
+void CGAT6000::readyRead()
 {
 #if defined(Q_OS_WIN)
 #elif defined(Q_WS_X11)
@@ -327,7 +335,7 @@ void CGAT5250B::readyRead()
             if(msgList.size()>0)
                 msgList.removeFirst();
             port->readAll();
-            isStarted = true;          
+            isStarted = true;
             setBeep();
             setGreenLED();
             setRedLED();
@@ -346,7 +354,7 @@ void CGAT5250B::readyRead()
             if(msgList.size()>0)
                 msgList.removeFirst();
 
-            msg += port->readAll();            
+            msg += port->readAll();
 
             handleMsg();
 
@@ -366,8 +374,8 @@ void CGAT5250B::readyRead()
                 port->flush();
             }
             else
-                readCardNumberNumber();
-                //readUniqueSerialNumber();
+                //readCardNumberNumber();
+                readUniqueSerialNumber();
 
 
         }
@@ -378,7 +386,7 @@ void CGAT5250B::readyRead()
 
 
 
-void CGAT5250B::run()
+void CGAT6000::run()
 {
     stop = false;
 #if defined(Q_OS_WIN)
@@ -386,7 +394,7 @@ void CGAT5250B::run()
 
     while(!stop)
     {
-        QString t =  gat->dynamicCall("GetCardNumber()").toString();
+        QString t =  gat->dynamicCall("GetUniqueNumber()").toString();
         if(key != t)
         {
             key = t;
@@ -400,7 +408,7 @@ void CGAT5250B::run()
 #endif
 }
 
-void CGAT5250B::close(bool )
+void CGAT6000::close(bool )
 {
     stop = true;
 #if defined(Q_OS_WIN)

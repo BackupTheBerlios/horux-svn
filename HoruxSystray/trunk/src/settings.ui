@@ -63,6 +63,11 @@
           </item>
           <item>
            <property name="text">
+            <string>Gantner - GAT Writer 6000 (Mifare)</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
             <string>Access Link USB</string>
            </property>
           </item>

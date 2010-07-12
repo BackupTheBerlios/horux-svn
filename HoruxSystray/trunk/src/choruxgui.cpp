@@ -74,6 +74,7 @@ CHoruxGui::CHoruxGui(QWidget *parent)
     al_usb_reader = NULL;
     al_serial_reader = NULL;
     gat5250_serial_reader = NULL;
+    gat6000_serial_reader = NULL;
 
     openCom();
 
@@ -82,6 +83,10 @@ CHoruxGui::CHoruxGui(QWidget *parent)
 
 CHoruxGui::~CHoruxGui()
 {
+    if(gat6000_serial_reader)
+        gat6000_serial_reader->close();
+
+
   if(gat5250_serial_reader)
       gat5250_serial_reader->close();
 
@@ -125,15 +130,31 @@ void CHoruxGui::openCom()
           connect(gat5250_serial_reader, SIGNAL(deviceError()), this, SLOT(deviceError()));
           connect(gat5250_serial_reader, SIGNAL(readError()), this, SLOT(readError()));
           connect(gat5250_serial_reader, SIGNAL(keyDetected(QByteArray)), this, SLOT(keyDetected(QByteArray)));
-          gat5250_serial_reader->open();
           gat5250_serial_reader->setFID(fid);
+          gat5250_serial_reader->open();
 
           #if defined(Q_OS_WIN)
           gat5250_serial_reader->start();
           #endif
 
           break;
-      case 1: // Acces Link USB
+      case 1: //GAT Writer 6000
+          gat6000_serial_reader = new CGAT6000(this);
+          gat6000_serial_reader->isBeep(beep);
+
+          connect(gat6000_serial_reader, SIGNAL(deviceError()), this, SLOT(deviceError()));
+          connect(gat6000_serial_reader, SIGNAL(readError()), this, SLOT(readError()));
+          connect(gat6000_serial_reader, SIGNAL(keyDetected(QByteArray)), this, SLOT(keyDetected(QByteArray)));
+          gat6000_serial_reader->setFID(fid);
+          gat6000_serial_reader->open();
+
+          #if defined(Q_OS_WIN)
+          gat6000_serial_reader->start();
+          #endif
+
+
+          break;
+      case 2: // Acces Link USB
           al_usb_reader = new CAccessLinkUsb(this);
 
           connect(al_usb_reader, SIGNAL(deviceError()), this, SLOT(deviceError()));
@@ -142,7 +163,7 @@ void CHoruxGui::openCom()
 
           al_usb_reader->start();
           break;
-      case 2: // Acces Link Serial
+      case 3: // Acces Link Serial
           al_serial_reader = new CAccessLinkSerial(this);
 
           connect(al_serial_reader, SIGNAL(deviceError()), this, SLOT(deviceError()));
@@ -161,6 +182,14 @@ void CHoruxGui::on_apply_clicked()
   settings.setValue ( "tech", techComboBox->currentIndex() );
   settings.setValue ( "fid", fid->text() );
   settings.setValue ( "beep", isBeep->isChecked() );
+
+  if(gat6000_serial_reader)
+  {
+      gat6000_serial_reader->close();
+      delete gat6000_serial_reader;
+      gat6000_serial_reader = NULL;
+  }
+
 
   if(gat5250_serial_reader)
   {
@@ -193,6 +222,14 @@ void CHoruxGui::on_save_clicked()
   settings.setValue ( "tech", techComboBox->currentText() );
   settings.setValue ( "fid", fid->text() );
   settings.setValue ( "beep", isBeep->isChecked() );
+
+  if(gat6000_serial_reader)
+  {
+      gat6000_serial_reader->close();
+      delete gat6000_serial_reader;
+      gat6000_serial_reader = NULL;
+  }
+
 
   if(gat5250_serial_reader)
   {
@@ -316,7 +353,7 @@ void CHoruxGui::currentIndexChanged ( int index )
         fid->setEnabled(false);
     }
 
-    if(index == 2 || index == 0)
+    if(index == 2 || index == 0 || index == 1)
     {
         customPort->setEnabled(true);
     }
@@ -346,7 +383,7 @@ void CHoruxGui::keyDetected(QByteArray key)
 
   QString s, s1;
 
-  if(techno == 1 || techno == 2)
+  if(techno == 2 || techno == 3)
   {
       for(int i=0; i<key.length(); i++)
         s += s1.sprintf("%02X", (uchar)key[i]);

@@ -28,6 +28,7 @@
 #include "caccesslinkserial.h"
 #include "caccesslinkusb.h"
 #include "cgat5250b.h"
+#include "cgat6000.h"
 
 class QextSerialPort;
 class QTcpServer;
@@ -76,6 +77,7 @@ protected:
         CAccessLinkUsb *al_usb_reader;
         CAccessLinkSerial *al_serial_reader;
         CGAT5250B *gat5250_serial_reader;
+        CGAT6000 *gat6000_serial_reader;
 
         QHash<QString, int> antipassback;
 

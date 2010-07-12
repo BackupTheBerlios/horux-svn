@@ -17,8 +17,8 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef CGAT5250B_H
-#define CGAT5250B_H
+#ifndef CGAT6000_H
+#define CGAT6000_H
 
 #include "cdevice.h"
 
@@ -29,13 +29,13 @@
     #include <QTimer>
 #endif
 
-class CGAT5250B : public CDevice
+class CGAT6000 : public CDevice
 {
     Q_OBJECT
 public:
-    CGAT5250B(QObject * parent = 0);
+    CGAT6000(QObject * parent = 0);
 
-    ~CGAT5250B();
+    ~CGAT6000();
 
      void open();
      void run();
