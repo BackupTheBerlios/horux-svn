@@ -229,12 +229,12 @@ void CGAT6000::handleMsg()
     }
 #elif defined(Q_WS_X11)
 
+    readPort->stop();
+
     QString s, s1;
 
     for(int i=0; i<msg.size(); i++)
         s += s1.sprintf("%02X ",(unsigned char) msg.at(i));
-
-    qDebug() << s;
 
     int len = (unsigned char)msg.at(0);
 
@@ -256,16 +256,19 @@ void CGAT6000::handleMsg()
                    {
                        bool ok;
                        QString s1;
-                       QString s = s1.sprintf("%02X%02X%02X%02X", (unsigned char)msg.at(2), (unsigned char)msg.at(3), (unsigned char)msg.at(4), (unsigned char)msg.at(5));
-                       qDebug() << s;
+                       QString s = s1.sprintf("%02X%02X%02X%02X", (unsigned char)msg.at(3), (unsigned char)msg.at(4), (unsigned char)msg.at(5), (unsigned char)msg.at(6));
 
-                       unsigned long long sn = t.toLongLong();
-                       key = QString::number(sn,16);
-                       key = key.rightJustified(14, '0');
-                       key = key.left(8);
-                       key = QString::number(key.toLong(&ok,16));
-                       handleKey();
+                       unsigned long long sn = s1.toLongLong(&ok,16);
+
+                       if(key != QString::number(sn))
+                       {
+                            key = QString::number(sn);
+
+                            handleKey();
+                       }
                    }
+                   else
+                      key = "";
                 }
                 break;
            default:
@@ -278,7 +281,7 @@ void CGAT6000::handleMsg()
             handleMsg();
     }
 
-
+    readPort->start(100);
 #endif
 }
 

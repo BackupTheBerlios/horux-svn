@@ -334,8 +334,8 @@ void CHoruxGui::sendKey(QString key)
 	
 		arguments << "-text" << ("##" + keyToSend + "##");
 	
-		if(process)
-			delete process;
+                if(process)
+                    delete process;
 	
 		process = new QProcess(this);
 		process->start(program, arguments);
