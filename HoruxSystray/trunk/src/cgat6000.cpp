@@ -259,10 +259,11 @@ void CGAT6000::handleMsg()
                        QString s = s1.sprintf("%02X%02X%02X%02X", (unsigned char)msg.at(2), (unsigned char)msg.at(3), (unsigned char)msg.at(4), (unsigned char)msg.at(5));
                        qDebug() << s;
 
-                       unsigned long sn = s.toLong(&ok, 16);
-                       qDebug() << sn;
-                       key = QString::number(sn);
-                       qDebug()<< key;
+                       unsigned long long sn = t.toLongLong();
+                       key = QString::number(sn,16);
+                       key = key.rightJustified(14, '0');
+                       key = key.left(8);
+                       key = QString::number(key.toLong(&ok,16));
                        handleKey();
                    }
                 }
@@ -359,7 +360,6 @@ void CGAT6000::readyRead()
                 port->flush();
             }
             else
-                //readCardNumberNumber();
                 readUniqueSerialNumber();
 
 
@@ -373,22 +373,29 @@ void CGAT6000::readyRead()
 
 void CGAT6000::run()
 {
-    stop = false;
+   stop = false;
 #if defined(Q_OS_WIN)
-
-
+   QString keyTmp = "";
+    bool ok;
     while(!stop)
     {
         QString t =  gat->dynamicCall("GetUniqueNumber()").toString();
-        if(key != t)
+
+        if(t!= keyTmp)
         {
-            key = t;
-            handleMsg();
+            unsigned long long sn = t.toLongLong();
+            key = QString::number(sn,16);
+            key = key.rightJustified(14, '0');
+            key = key.left(8);
+            key = QString::number(key.toLong(&ok,16));
+            keyTmp = t;
+            if(t!="")
+                handleMsg();
         }
+
         QThread::msleep(100);
     }
 #elif defined(Q_WS_X11)
-
 
 #endif
 }
