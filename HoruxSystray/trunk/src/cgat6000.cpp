@@ -1,4 +1,4 @@
-#include "CGAT6000.h"
+#include "cgat6000.h"
 #include <QSettings>
 #include <QtCore>
 
@@ -72,7 +72,7 @@ void CGAT6000::open()
 
 
     port = new QextSerialPort(portStr);
-    port->setBaudRate(BAUD9600 );
+    port->setBaudRate(BAUD38400 );
     port->setFlowControl(FLOW_OFF);
     port->setParity(PAR_NONE);
     port->setDataBits(DATA_8);
@@ -106,10 +106,10 @@ void CGAT6000::smIdle()
 {
 #if defined(Q_OS_WIN)
 #elif defined(Q_WS_X11)
-    unsigned char TxSmIdle[4] = {0x03, 0x14, 0x01, 0x16};
+    unsigned char TxSmIdle[3] = {0x02, 0x04, 0x06};
     QByteArray TxBuffer;
 
-    for(int i=0;i<4; i++)
+    for(int i=0;i<3; i++)
         TxBuffer.append(TxSmIdle[i]);
 
     msgList.append(TxBuffer);
@@ -122,10 +122,10 @@ void CGAT6000::setGreenLED()
 #elif defined(Q_WS_X11)
     if(port && port->isOpen())
     {
-        unsigned char TxGreen[7] = {0x05,0xA5,0x01,0x00,0x8a,0x2B};
+        unsigned char TxGreen[6] = {0x05,0xA5,0x01,0x03,0xE8,0x4A};
         QByteArray TxBuffer;
 
-        for(int i=0;i<7; i++)
+        for(int i=0;i<6; i++)
             TxBuffer.append(TxGreen[i]);
 
         msgList.append(TxBuffer);
@@ -139,10 +139,10 @@ void CGAT6000::setRedLED()
 #elif defined(Q_WS_X11)
     if(port && port->isOpen())
     {
-        unsigned char TxRed[7] = {0x05,0xA5,0x02,0x00,0x8a,0x28};
+        unsigned char TxRed[6] = {0x05,0xA5,0x02,0x03,0xE8,0x49};
         QByteArray TxBuffer;
 
-        for(int i=0;i<7; i++)
+        for(int i=0;i<6; i++)
             TxBuffer.append(TxRed[i]);
 
         msgList.append(TxBuffer);
@@ -156,10 +156,10 @@ void CGAT6000::setBeep()
 #elif defined(Q_WS_X11)
     if(port && port->isOpen())
     {
-        unsigned char TxBeep[7] = {0x04,0xA6,0x00,0x8a,0x28};
+        unsigned char TxBeep[5] = {0x04,0xA6,0x00,0x64,0xC6};
         QByteArray TxBuffer;
 
-        for(int i=0;i<7; i++)
+        for(int i=0;i<5; i++)
             TxBuffer.append(TxBeep[i]);
 
         msgList.append(TxBuffer);
@@ -173,10 +173,11 @@ void CGAT6000::readUniqueSerialNumber()
 #elif defined(Q_WS_X11)
     if(port && port->isOpen())
     {
-        unsigned char TxSN[11] = {0x0A,0x80,0x00,0x07,0x04,0x01,0x00,0x00,0x04,0x01,0x8D };
+
+        unsigned char TxSN[3] = {0x02, 0x04, 0x06};
         QByteArray TxBuffer;
 
-        for(int i=0;i<11; i++)
+        for(int i=0;i<3; i++)
             TxBuffer.append(TxSN[i]);
 
         msgList.append(TxBuffer);
@@ -244,34 +245,18 @@ void CGAT6000::handleMsg()
 
         switch(cmd)
         {
-           case 0x74:
+           case 0xa5:
+           case 0xa6:
                 qDebug("Set LED/Beep ok");
                 break;
-           case 0x80:   //unique serial number
+           case 0x04:   //unique serial number
                {
 
-                   if(len == 0x14)
+                   if(len == 0x0A)
                    {
                        bool ok;
                        QString s1;
-                       QString fidCard = s1.sprintf("%02X%02X", (unsigned char)msg.at(14), (unsigned char)msg.at(15));
-
-                       if(fid == fidCard)
-                       {
-                           QString s = s1.sprintf("%02X%02X%02X", (unsigned char)msg.at(17), (unsigned char)msg.at(18), (unsigned char)msg.at(19));
-                           unsigned long sn = s.toLong();
-                           qDebug() << sn;
-                           key = QString::number(sn);
-                           qDebug()<< key;
-                           handleKey();
-                       }
-
-                   }
-                   else
-                   {
-                       bool ok;
-                       QString s1;
-                       QString s = s1.sprintf("%02X%02X%02X%02X", (unsigned char)msg.at(10), (unsigned char)msg.at(11), (unsigned char)msg.at(12), (unsigned char)msg.at(13));
+                       QString s = s1.sprintf("%02X%02X%02X%02X", (unsigned char)msg.at(2), (unsigned char)msg.at(3), (unsigned char)msg.at(4), (unsigned char)msg.at(5));
                        qDebug() << s;
 
                        unsigned long sn = s.toLong(&ok, 16);
