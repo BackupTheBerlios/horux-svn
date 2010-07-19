@@ -334,6 +334,7 @@ bool AccessHoruxPlugin::checkAccess(QMap<QString, QVariant> params, bool emitAct
 
         if(plName == "access_horux" || plName == "" || !emitAction)
         {
+
             do
             {
                     //! Step 6 check for all groups if there is an access level defined
