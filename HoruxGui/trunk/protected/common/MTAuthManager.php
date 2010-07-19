@@ -45,6 +45,7 @@ class MTAuthManager extends TAuthManager {
 
             if($app->getUser()->getUserID() == null)
             {
+
                 $authManager=$app->getModule('Auth');
                 
                 //Check if the user has access

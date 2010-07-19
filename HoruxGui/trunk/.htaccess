@@ -5,5 +5,7 @@ RewriteRule ^index\.php\?soap=notification\.wsdl(.*)$ index\.php\?soap=notificat
 RewriteRule ^index\.php\?soap=notification(.*)$ index\.php\?soap=notification$1
 RewriteRule ^index\.php\?soap=soapComponent\.wsdl(.*)$ index\.php\?soap=soapComponent\.wsdl$1
 RewriteRule ^index\.php\?soap=soapComponent(.*)$ index\.php\?soap=soapComponent$1
+RewriteRule ^index\.php\?soap=ticketing\.wsdl(.*)$ index\.php\?soap=ticketing\.wsdl$1
+RewriteRule ^index\.php\?soap=ticketing(.*)$ index\.php\?soap=ticketing$1
 
 php_flag session.use_only_cookies On
