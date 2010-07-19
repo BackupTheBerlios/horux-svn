@@ -26,6 +26,8 @@
 #include "caccessinterface.h"
 #include "cxmlfactory.h"
 
+#define TIME_DB_CHECKING 5000
+
 /**
 	@author Jean-Luc Gyger <jean-luc.gyger@letux.ch>
 */
@@ -35,31 +37,46 @@ class CVeloPark : public QObject, CAccessInterface
     Q_INTERFACES(CAccessInterface)
     Q_CLASSINFO ( "Author", "Jean-Luc Gyger" );
     Q_CLASSINFO ( "Copyright", "Letux - 2008" );
-    Q_CLASSINFO ( "Version", "0.0.1" );
+    Q_CLASSINFO ( "Version", "0.0.2" );
     Q_CLASSINFO ( "PluginName", "velopark" );
     Q_CLASSINFO ( "PluginType", "access" );
     Q_CLASSINFO ( "PluginDescription", "Handle the access for the plugin velopark" );
 
 public:
-    void deviceEvent(QMap<QString, QVariant> params);
-	bool isAccess(QMap<QString, QVariant> params, bool emitAction);
+    CVeloPark(QObject *parent=NULL);
+    bool isAccess( QMap<QString, QVariant> params, bool emitAction, bool emitNotification );
     QObject *getMetaObject() { return this;}
 
 protected:
-  	bool checkAccess(QMap<QString, QVariant> params, bool emitAction);
-	bool checkSubDate(QDateTime start, QDateTime end);
-	void acceptAccess(QMap<QString, QVariant> params, bool isOk);
+    bool checkAccess(QMap<QString, QVariant> params, bool emitAction);
+    bool checkSubDate(QDateTime start, QDateTime end);
+    void acceptAccess(QMap<QString, QVariant> params, bool isOk);
     void displayMessage(QString type, QString deviceId);
     void setLightStatus(QString deviceId, QString key);
 
     void timerEvent(QTimerEvent *e);
 signals:
-  void accessAction(QString xml);
-  void notification(QMap<QString, QVariant>param);
+    void accessAction(QString xml);
+    void notification(QMap<QString, QVariant>param);
+
+public slots:
+    void deviceEvent(QString xml);
+    void deviceConnectionMonitor(int, bool);
+    void deviceInputMonitor ( int , int , bool );
+
+protected slots:
+    void checkDb();
+
+protected:
+    void checkLastCredit(QMap<QString, QVariant> params);
+    void updateUser(QMap<QString, QVariant> params, bool multiticket);
+    void sendMessage(QMap<QString, QVariant> params, QString message);
 
 protected:
     QMap<int, int> displayTimeTimer; //! <Timer,displayId>
-
+    QString type;
+    QTimer *timerCheckDb;
+    QMap<int, bool> devices;
 };
 
 #endif
