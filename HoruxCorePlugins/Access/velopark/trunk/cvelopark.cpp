@@ -89,28 +89,26 @@ void CVeloPark::deviceEvent(QString xml)
         if(event != "Gantner_AccessTerminal_accessDetected" && event != "Gantner_AccessTerminal_accessDetectedBeforeBooking")
             return;
 
-
+        // check if the user musst be checked by this plugin
         QString sqlUser="SELECT accessPlugin, uga.id_user FROM hr_keys AS k LEFT JOIN hr_keys_attribution AS ka ON ka.id_key=k.id LEFT JOIN hr_user_group_attribution AS uga ON uga.id_user=ka.id_user LEFT JOIN hr_user_group AS ug ON ug.id=uga.id_group WHERE serialNumber='" + params["key"].toString() + "'  AND accessPlugin='velopark'";
 
         QSqlQuery queryUser(sqlUser);
 
+        //if not return
         if(!queryUser.next())
             return;
 
         QString isAccessStr = "";
         if(isAccess(params, false, false))
         {
-
-            //display the access message or the warning about the subscription
-            qDebug() << "VELOPARK ACCESS OK";
             isAccessStr = "1";
         }
         else
         {
             //display the no access message
-            qDebug() << "VELOPARK NO ACCESS";
             isAccessStr = "0";
 
+            // display the non access message on the specific device
             QSqlQuery queryMessage("SELECT * FROM hr_vp_parking");
             while(queryMessage.next())
             {
@@ -119,30 +117,23 @@ void CVeloPark::deviceEvent(QString xml)
 
                 if(idsList.contains(params["deviceId"].toString()))
                 {
-                    sendMessage(params, queryMessage.value(4).toString());
+                    displayMessage(params, queryMessage.value(4).toString());
                 }
             }
 
         }
 
+        // do not insert in the tracking, this will be done when we receive the booking
         if(event == "Gantner_AccessTerminal_accessDetectedBeforeBooking")
             return;
 
-        QString sqlUser2="SELECT accessPlugin, uga.id_user FROM hr_keys AS k LEFT JOIN hr_keys_attribution AS ka ON ka.id_key=k.id LEFT JOIN hr_user_group_attribution AS uga ON uga.id_user=ka.id_user LEFT JOIN hr_user_group AS ug ON ug.id=uga.id_group WHERE serialNumber='" + params["key"].toString() + "'  AND accessPlugin='velopark'";
-
-        QSqlQuery queryUser2(sqlUser2);
-
-        if(queryUser2.next())
+        // maybe the user was deleted during a device reinitialisation
+        if(params["userId"].toString() == "0")
         {
-            // maybe the user was deleted during a device reinitialisation
-            if(params["userId"].toString() == "0")
-            {
-                params["userId"] = queryUser2.value(1).toString();
-            }
+            params["userId"] = queryUser.value(1).toString();
         }
-        else
-            return;
 
+        // get the key id
         QString keyId = "1";
         QSqlQuery queryKey("SELECT id FROM hr_keys WHERE serialNumber='" + params["key"].toString() + "'");
 
@@ -170,7 +161,7 @@ void CVeloPark::deviceEvent(QString xml)
 
 }
 
-void CVeloPark::sendMessage(QMap<QString, QVariant> params, QString message)
+void CVeloPark::displayMessage(QMap<QString, QVariant> params, QString message)
 {
 
     QMap<QString, QString> p;
@@ -281,15 +272,21 @@ bool CVeloPark::checkAccess(QMap<QString, QVariant> params, bool emitAction)
 {
     bool userInTerminal = true;
 
+    // check if the key is blocked
+    QString sqlKey="SELECT * FROM hr_keys WHERE serialNumber='" +  params["key"].toString() + "' AND isBlocked=0";
+    QSqlQuery queryKey(sqlKey);
+    if(!queryKey.next())
+        return false;
 
 
-    //! be sure that the key must be checked by this plugin. This means that the user group must be set to be ckecked by this plugin
+    //! if we receive the event Gantner_AccessTerminal_accessDetectedBeforeBooking, we do not have the user id. So, we execute the following request to obtain the user id
     QString sql="SELECT accessPlugin, uga.id_user FROM hr_keys AS k LEFT JOIN hr_keys_attribution AS ka ON ka.id_key=k.id LEFT JOIN hr_user_group_attribution AS uga ON uga.id_user=ka.id_user LEFT JOIN hr_user_group AS ug ON ug.id=uga.id_group WHERE serialNumber='" + params["key"].toString() + "'  AND accessPlugin='velopark'";
 
     QSqlQuery query(sql);
 
     if(query.next())
     {
+        // check if the user has access to the device or if the user is bloqued
         QSqlQuery queryUser("SELECT u.id, uga.id_group, CONCAT(u.name,' ' ,u.firstname) AS fullname, k.serialNumber, u.pin_code,u.validity_date, u.masterAuthorization FROM hr_user AS u LEFT JOIN hr_keys_attribution AS ka ON ka.id_user=u.id LEFT JOIN hr_keys AS k ON k.id=ka.id_key LEFT JOIN hr_user_group_attribution AS uga ON uga.id_user=u.id  LEFT JOIN hr_user_group AS ug ON ug.id=uga.id_group WHERE ug.accessPlugin='velopark' AND u.name!='??' AND u.isBlocked=0  AND u.id=" + query.value(1).toString() );
 
         if(queryUser.next())
@@ -301,12 +298,12 @@ bool CVeloPark::checkAccess(QMap<QString, QVariant> params, bool emitAction)
             if(!queryHasAccessDevice.next())
                 return false;
         }
-
-
-        // if the RFID number should not be manages by velopark, just return.
-        if(query.value(0).toString() != "velopark")
+        else
+        {
             return false;
+        }
 
+        // the user has access. We receive the event Gantner_AccessTerminal_accessDetected with an user id 0,
         // maybe the user was deleted during a device reinitialisation
         if(params["userId"].toString() == "0" && params["event"].toString() == "Gantner_AccessTerminal_accessDetected" )
         {
@@ -362,7 +359,7 @@ bool CVeloPark::checkAccess(QMap<QString, QVariant> params, bool emitAction)
                                 {
                                     QString message = queryMessage.value(8).toString();
                                     message.replace("{credit}", querySub.value(5).toString());
-                                    sendMessage(params, message);
+                                    displayMessage(params, message);
                                 }
                             }
                         }
@@ -380,7 +377,7 @@ bool CVeloPark::checkAccess(QMap<QString, QVariant> params, bool emitAction)
                                 {
                                     QString message = queryMessage.value(9).toString();
                                     message.replace("{date}", QString(date.toString("dd-MM-yyyy")));
-                                    sendMessage(params, message);
+                                    displayMessage(params, message);
                                 }
                             }
                         }
@@ -466,7 +463,7 @@ bool CVeloPark::checkAccess(QMap<QString, QVariant> params, bool emitAction)
                                             {
                                                 QString message = queryMessage.value(8).toString();
                                                 message.replace("{credit}", QString::number(querySub.value(5).toInt()-1));
-                                                sendMessage(params, message);
+                                                displayMessage(params, message);
                                             }
                                         }
                                     }
@@ -484,7 +481,7 @@ bool CVeloPark::checkAccess(QMap<QString, QVariant> params, bool emitAction)
                                             {
                                                 QString message = queryMessage.value(9).toString();
                                                 message.replace("{date}", QString(date.toString("dd-MM-yyyy")));
-                                                sendMessage(params, message);
+                                                displayMessage(params, message);
                                             }
                                         }
                                     }
@@ -609,7 +606,7 @@ bool CVeloPark::checkAccess(QMap<QString, QVariant> params, bool emitAction)
                                     {
                                         QString message = queryMessage.value(8).toString();
                                         message.replace("{credit}", QString::number(querySub2.value(5).toInt()-1));
-                                        sendMessage(params, message);
+                                        displayMessage(params, message);
                                     }
                                 }
                             }
@@ -627,7 +624,7 @@ bool CVeloPark::checkAccess(QMap<QString, QVariant> params, bool emitAction)
                                     {
                                         QString message = queryMessage.value(9).toString();
                                         message.replace("{date}", QString(date.toString("dd-MM-yyyy")));
-                                        sendMessage(params, message);
+                                        displayMessage(params, message);
                                     }
                                 }
 

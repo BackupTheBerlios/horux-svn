@@ -70,7 +70,7 @@ protected slots:
 protected:
     void checkLastCredit(QMap<QString, QVariant> params);
     void updateUser(QMap<QString, QVariant> params, bool multiticket);
-    void sendMessage(QMap<QString, QVariant> params, QString message);
+    void displayMessage(QMap<QString, QVariant> params, QString message);
 
 protected:
     QMap<int, int> displayTimeTimer; //! <Timer,displayId>
