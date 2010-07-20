@@ -63,7 +63,7 @@ int main ( int argc, char *argv[] )
     // To allow testing Horux Core as non-root, we change the directory of the SystemScope settings file.
     QSettings::setPath(QSettings::NativeFormat, QSettings::SystemScope, QDir::tempPath());
 #endif
-    CHoruxService service(argc, argv);
+    CHoruxService service(argc, argv);      
     return service.exec();
 }
 

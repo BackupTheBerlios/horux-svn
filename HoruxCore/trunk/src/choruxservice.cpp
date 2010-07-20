@@ -65,4 +65,3 @@ void CHoruxService::stop()
         delete ptr_horux;
     }
 }
-
