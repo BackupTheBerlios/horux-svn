@@ -1159,7 +1159,7 @@ void CGantnerAccessTerminal::logComm(uchar *ba, bool isReceive, int len)
   QString s = "",s1;
   
   for(int i=0;i<len; i++)
-    s += s1.sprintf("%02X ",ba[i]);
+    s += ba[i];
 
   QTextStream out(&file);
 
