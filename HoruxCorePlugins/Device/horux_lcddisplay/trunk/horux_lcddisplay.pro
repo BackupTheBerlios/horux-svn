@@ -4,7 +4,7 @@ CONFIG += dll \
 plugin \
  release
 
-
+CONFIG -=debug
 
 HEADERS += clcddisplay.h
 

@@ -2,8 +2,8 @@ TEMPLATE = lib
 CONFIG += dll \
     plugin
 
-CONFIG -= release
-CONFIG += debug
+CONFIG += release
+CONFIG -= debug
 
 QT -= gui
 QT += xml \

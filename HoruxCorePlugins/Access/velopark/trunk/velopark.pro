@@ -4,6 +4,8 @@ CONFIG += dll \
 plugin \
  release
 
+CONFIG -= debug
+
 QT -= gui
 
 QT += sql \
