@@ -389,7 +389,7 @@ void CGantnerAccessTerminal::setParameter(QString paramName, QVariant value)
     name = value.toString();
   if(paramName == "id")
     id = value.toInt();
-  if(paramName == "isLog")
+  if(paramName == "_isLog")
     _isLog = value.toBool();
   if(paramName == "accessPlugin")
     accessPlugin = value.toString();
@@ -919,7 +919,7 @@ void CGantnerAccessTerminal::appendMessage(QByteArray *newMessage)
       // append the checksum of the message
       newMessage->append( getCheckSum(newMessage->constData() ));
 
-      qDebug() << "SEND: " << newMessage->constData();
+      //qDebug() << "SEND: " << newMessage->constData();
 
       //append the end character of the message
       newMessage->append( 0x0D );
@@ -994,7 +994,9 @@ void CGantnerAccessTerminal::dispatchMessage(QByteArray message)
 
     timeoutMsgError = 0;
 
-    qDebug() << "RECEIVE: " << message.constData();
+    //qDebug() << "RECEIVE: " << message.constData();
+    logComm((uchar*)message.constData(), false, message.length());
+
     bool ok;
     int cmd = message.mid(1,2).toInt(&ok, 16);
 
@@ -1402,9 +1404,7 @@ void CGantnerAccessTerminal::checkTerimalInformationResp( QByteArray message )
         terminalTypeFeature = message.mid(41,8);
         hardwareIdentification = message.mid(49,4);
 
-        qDebug() << openAccessBooking << ":"<<accessMemory ;
-
-        if(openAccessBooking < accessMemory)
+        if(openAccessBooking < (accessMemory/10))
         {
             readOutBookings();
         }
