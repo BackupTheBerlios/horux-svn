@@ -193,8 +193,8 @@ QString CGantnerTimeTerminal::getScript()
         QSettings settings(QCoreApplication::instance()->applicationDirPath() +"/horux.ini", QSettings::IniFormat);
         settings.beginGroup("GantnerTimeTerminal");
 
-        QString keyscript = settings.value("keyscript","").toString();
-        if(!settings.contains("keyscript")) settings.setValue("keyscript", "");
+        QString keyscript = settings.value("keyscript","0000000000000000").toString();
+        if(!settings.contains("keyscript")) settings.setValue("keyscript", "0000000000000000");
 
         unsigned char aesdata[16];
 
