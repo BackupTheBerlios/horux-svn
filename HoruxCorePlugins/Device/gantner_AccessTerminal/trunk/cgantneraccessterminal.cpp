@@ -995,7 +995,7 @@ void CGantnerAccessTerminal::dispatchMessage(QByteArray message)
     timeoutMsgError = 0;
 
     //qDebug() << "RECEIVE: " << message.constData();
-    logComm((uchar*)message.constData(), false, message.length());
+    logComm((uchar*)message.constData(), true, message.length());
 
     bool ok;
     int cmd = message.mid(1,2).toInt(&ok, 16);
