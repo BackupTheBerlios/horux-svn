@@ -40,16 +40,38 @@ class MTAuthManager extends TAuthManager {
             return;
         }
 
-        if( $app->getService()->getID() == 'soap' ) 
+        if( $app->getService()->getID() == 'soap' )
         {
 
             if($app->getUser()->getUserID() == null)
             {
 
                 $authManager=$app->getModule('Auth');
-                
+		$username="";
+		$password="";
+
+		if(!isset($this->Request['username']) && !isset($this->Request['password']))
+		{
+		  if($fp = fopen("./tmp/soapcache", "r"))
+		  {
+		      $line = fgets($fp);
+		      $line = explode(",", $line);
+		      $username = $line[0];
+		      $password = $line[1];
+
+		      fclose($fp);
+		      unlink("./tmp/soapcache");
+		  }
+		}
+		else
+		{
+		    $username = $this->Request['username'];
+		    $password = $this->Request['password'];
+
+		}
+
                 //Check if the user has access
-                if(!$authManager->login(strtolower($this->Request['username']),$this->Request['password'])  )
+                if(!$authManager->login(strtolower($username),$password ))
                 {
                     $this->DenyRequest();
                     return false;
@@ -64,7 +86,18 @@ class MTAuthManager extends TAuthManager {
                         return false;
                     }
                     else
+		    {
+			//if wsdl, else not
+			if(isset($this->Request['soap']) &&  substr($this->Request['soap'], -5,5) == ".wsdl")
+			{
+			  if($fp = fopen("./tmp/soapcache", "w"))
+			  {
+			      fwrite($fp, $this->Request['username'].",".$this->Request['password'].",");
+			      fclose($fp);
+			  }
+			}
                         return true;
+		    }
                 }
             }
             else
