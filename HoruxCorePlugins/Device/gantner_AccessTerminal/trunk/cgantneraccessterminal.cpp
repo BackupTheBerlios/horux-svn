@@ -3386,12 +3386,12 @@ void CGantnerAccessTerminal::checkAccessStatus(QByteArray message)
 {
     if(message.length() == 27)
     {
-        int alarm = message.mid(6,1).toInt();
-        int autoMessage = message.mid(7,1).toInt();
+        //int alarm = message.mid(6,1).toInt();
+        //int autoMessage = message.mid(7,1).toInt();
         int nonStored1 = message.mid(8,1).toInt();
         int nonStored2 = message.mid(9,1).toInt();
         unsigned long long cardNumber = message.mid(10,11).toLongLong();
-        int cardVersion = message.mid(21,2).toInt();
+        //int cardVersion = message.mid(21,2).toInt();
         int entering = message.mid(23,1).toInt();
 
         if(nonStored2 & 0x01)
