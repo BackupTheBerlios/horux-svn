@@ -34,7 +34,7 @@ class DbMysqlPlugin : public QObject, CDbInterface
     Q_INTERFACES(CDbInterface)
     Q_CLASSINFO ( "Author", "Jean-Luc Gyger" );
     Q_CLASSINFO ( "Copyright", "Letux - 2008" );
-    Q_CLASSINFO ( "Version", "0.0.1" );
+    Q_CLASSINFO ( "Version", "1.0.6" );
     Q_CLASSINFO ( "PluginName", "horux_mysql_db" );
     Q_CLASSINFO ( "PluginType", "db" );
     Q_CLASSINFO ( "PluginDescription", "Handle a MySql database for Horux Core" );
