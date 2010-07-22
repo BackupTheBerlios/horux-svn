@@ -18,8 +18,3 @@ INCLUDEPATH += ../../../../HoruxCore/trunk/src/interfaces \
 LIBS += ../../../../HoruxCore/trunk/maia_xmlrpc/libmaia_xmlrpc.a
 LIBS += -lcryptopp
 OBJECTS += ../../../../HoruxCore/trunk/src/cxmlfactory.o
-unix { 
-    library.path = /usr/share/horux/core/plugins/device
-    library.files = $$DESTDIR/libhorux_media.so
-    INSTALLS += library
-}

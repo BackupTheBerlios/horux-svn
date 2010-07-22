@@ -43,7 +43,7 @@ class CGantnerAccessTerminal : public QObject, CDeviceInterface
   Q_INTERFACES ( CDeviceInterface )
   Q_CLASSINFO ( "Author", "Jean-Luc Gyger" );
   Q_CLASSINFO ( "Copyright", "Letux - 2010" );
-  Q_CLASSINFO ( "Version", "0.0.1" );
+  Q_CLASSINFO ( "Version", "1.0.0" );
   Q_CLASSINFO ( "PluginName", "gantner_AccessTerminal" );
   Q_CLASSINFO ( "PluginType", "device" );
   Q_CLASSINFO ( "PluginDescription", "Handle a Gantner Access Terminal GAT 3100 AK" );

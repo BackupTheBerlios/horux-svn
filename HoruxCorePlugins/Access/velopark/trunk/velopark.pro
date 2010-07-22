@@ -21,11 +21,3 @@ DESTDIR = ../../../../HoruxCore/trunk/bin/plugins/access
 
 OBJECTS += ../../../../HoruxCore/trunk/src/cxmlfactory.o
 
-
-unix {
-    library.path = /usr/share/horux/core/plugins/access
-    library.files = $$DESTDIR/libvelopark.so
-
-    INSTALLS += library
-}
-

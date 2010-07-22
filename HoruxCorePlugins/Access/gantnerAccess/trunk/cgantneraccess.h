@@ -38,7 +38,7 @@ class CGantnerAccess : public QObject, CAccessInterface
     Q_INTERFACES(CAccessInterface)
     Q_CLASSINFO ( "Author", "Jean-Luc Gyger" );
     Q_CLASSINFO ( "Copyright", "Letux - 2010" );
-    Q_CLASSINFO ( "Version", "0.0.1" );
+    Q_CLASSINFO ( "Version", "1.0.0" );
     Q_CLASSINFO ( "PluginName", "gantneraccess" );
     Q_CLASSINFO ( "PluginType", "access" );
     Q_CLASSINFO ( "PluginDescription", "Handle the GAT Terminal 3100 AK" );
