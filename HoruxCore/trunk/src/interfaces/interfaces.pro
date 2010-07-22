@@ -5,7 +5,7 @@
 TARGET = 
 DEPENDPATH += .
 INCLUDEPATH += .
-QT += sql
+
 
 # Input
 HEADERS += caccessinterface.h cdbinterface.h cdeviceinterface.h cloginterface.h calarminterface.h

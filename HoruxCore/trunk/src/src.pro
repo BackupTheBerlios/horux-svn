@@ -10,7 +10,6 @@ SOURCES += main.cpp \
     choruxservice.cpp
 TEMPLATE = app
 CONFIG += warn_on \
-    thread \
     qt \
     release
 CONFIG -= debug

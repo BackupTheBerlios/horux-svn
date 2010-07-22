@@ -10,6 +10,3 @@ SUBDIRS +=  maia_xmlrpc \
  testunit/test_cdbhandling
 
 TEMPLATE = subdirs 
-CONFIG += warn_on \
-          qt \
-          thread 
