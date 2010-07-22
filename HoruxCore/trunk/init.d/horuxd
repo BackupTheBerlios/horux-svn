@@ -3,7 +3,7 @@
 #
 # Author: Kurt Garloff <feedback@suse.de>
 #
-# /etc/init.d/horux
+# /etc/init.d/horuxd
 #
 #   and symbolic its link
 #
@@ -21,7 +21,7 @@
 # Description:    Start Horux job daemon
 ### END INIT INFO
 
-ATD_BIN=/usr/share/horux/horuxd
+ATD_BIN=/usr/share/horux/core/horuxd
 test -x $ATD_BIN || exit 5
 
 # Return values acc. to LSB for all commands but status:
