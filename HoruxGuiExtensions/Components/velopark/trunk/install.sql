@@ -44,4 +44,4 @@ CREATE TABLE IF NOT EXISTS `hr_vp_subscription_attribution` (
 INSERT INTO `hr_user_action` (`name`, `page`, `icon`, `tip`, `catalog`, `type`) VALUES
 ('Subscription', 'components.velopark.attribution', './protected/pages/components/velopark/assets/icon-16-ticket.jpg', 'Velo Park - Subscription Attribution', 'velopark', 'userList'),
 ('Attribute a subscription', 'protected/pages/components/velopark/wizard.tpl', '', '', 'velopark', 'userWizardTpl'),
-('VeloparkModule', 'components.velopark.VeloparkModule', '', '', 'velopark', 'userWizardSave');
+('VeloparkModule', 'components.velopark.VeloparkModule', '', '', 'velopark', 'module');

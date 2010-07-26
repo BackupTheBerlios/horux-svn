@@ -1,611 +1,653 @@
 <?xml version="1.0"?>
 <xliff version="1.0">
-	<file source-language="EN" target-language="en" datatype="plaintext" original="velopark" date="2009-02-06T16:52:40Z" product-name="velopark">
-		<body>
-			<trans-unit id="1">
-				<source>Velo Park</source>
-				<target>Parque &#xE0; v&#xE9;lo</target>
-			</trans-unit>	
-			
-			
-			<trans-unit id="2">
-				<source>Subscription</source>
-				<target>Abonnement</target>
-			</trans-unit>
-			
-			
-			
-			<trans-unit id="3">
-				<source>Configuration</source>
-				<target>Configuration</target>
-			</trans-unit>
-			
-			<trans-unit id="4">
-				<source>Status</source>
-				<target>Etat</target>
-			</trans-unit>			
-		
-<trans-unit id="5">
-<source>Help</source>
-<target>Aide</target>
-</trans-unit>
-
-<trans-unit id="6">
-<source>Add a parking</source>
-<target>Ajouter un parc</target>
-</trans-unit>
-
-<trans-unit id="7">
-<source>Parameters</source>
-<target>Param&#xE8;tres</target>
-</trans-unit>
-
-<trans-unit id="8">
-<source>Enter the number of place to park</source>
-<target>Ajouter le nombre de places de parc disponibles</target>
-</trans-unit>
-
-<trans-unit id="9">
-<source>Area</source>
-<target>Places de parc</target>
-</trans-unit>
-
-<trans-unit id="10">
-<source>Must be an integer</source>
-<target>Doit &#xEA;tre un entier</target>
-</trans-unit>
-
-<trans-unit id="11">
-<source>This field is required</source>
-<target>Ce champs doit &#xEA;tre remplit</target>
-</trans-unit>
-
-<trans-unit id="12">
-<source>Select a access point device for this parking</source>
-<target>S&#xE9;lectionner un point d\'acc&#xE8;s pour ce parc</target>
-</trans-unit>
-
-<trans-unit id="13">
-<source>Access point device</source>
-<target>P&#xE9;riph&#xE9;rique d'acc&#xE8;s</target>
-</trans-unit>
-
-<trans-unit id="14">
-<source>Select a display for this parking if it has one</source>
-<target>S&#xE9;lectionner un afficheur pour ce parc si disponible</target>
-</trans-unit>
-
-<trans-unit id="15">
-<source>Display device</source>
-<target>P&#xE9;riph&#xE9;rique d'affichage</target>
-</trans-unit>
-
-<trans-unit id="16">
-<source>Enter the default text displayed on the display</source>
-<target>Entrer le texte par d&#xE9;faut affich&#xE9; sur l\'afficheur</target>
-</trans-unit>
-
-<trans-unit id="17">
-<source>Default text</source>
-<target>Message par d&#xE9;faut</target>
-</trans-unit>
-
-<trans-unit id="18">
-<source>You can insert the following tag in the message</source>
-<target>Vous pouvez mettre les tags suivants dans le texte</target>
-</trans-unit>
-
-<trans-unit id="19">
-<source>Enter the text displayed when the user has the access</source>
-<target>Entrer le texte affich&#xE9; quand l\'utilisateur &#xE0; acc&#xE8;s</target>
-</trans-unit>
-
-<trans-unit id="20">
-<source>Access text</source>
-<target>Texte d'acc&#xE8;s</target>
-</trans-unit>
-
-<trans-unit id="21">
-<source>Enter the text displayed when the user does not have thee access</source>
-<target>Entrer le texte affich&#xE9; quand l\'utilisateur n\'a pas l\'acc&#xE8;s</target>
-</trans-unit>
-
-<trans-unit id="22">
-<source>No access text</source>
-<target>Texte d'acc&#xE8;s refus&#xE9;</target>
-</trans-unit>
-
-<trans-unit id="23">
-<source>Enter the number of second to display a the access messages</source>
-<target>Entrer le nombre de seconde pour afficher un texte d\'acc&#xE8;s</target>
-</trans-unit>
-
-<trans-unit id="24">
-<source>Display time</source>
-<target>Temps d'affichage</target>
-</trans-unit>
-
-<trans-unit id="25">
-<source>seconds</source>
-<target>secondes</target>
-</trans-unit>
-
-<trans-unit id="26">
-<source>Select the device where a light information is connected</source>
-<target>S&#xE9;lectionner le p&#xE9;riph&#xE9;rique connect&#xE9; au t&#xE9;moin lumineux de remplissage du parc</target>
-</trans-unit>
-
-<trans-unit id="27">
-<source>Light information</source>
-<target>T&#xE9;moin d'information</target>
-</trans-unit>
-
-<trans-unit id="28">
-<source>---- None ----</source>
-<target>---- Aucun ----</target>
-</trans-unit>
-
-<trans-unit id="29">
-<source>Output 1</source>
-<target>Sortie 1</target>
-</trans-unit>
-
-<trans-unit id="30">
-<source>Output 2</source>
-<target>Sortie 2</target>
-</trans-unit>
-
-<trans-unit id="31">
-<source>Output 3</source>
-<target>Sortie 3</target>
-</trans-unit>
-
-<trans-unit id="32">
-<source>Output 4</source>
-<target>Sortie 4</target>
-</trans-unit>
-
-<trans-unit id="33">
-<source>Output 5</source>
-<target>Sortie 5</target>
-</trans-unit>
-
-<trans-unit id="34">
-<source>Output 6</source>
-<target>Sortie 6</target>
-</trans-unit>
-
-<trans-unit id="35">
-<source>Output 7</source>
-<target>Sortie 7</target>
-</trans-unit>
-
-<trans-unit id="36">
-<source>Output 8</source>
-<target>Sortie 8</target>
-</trans-unit>
-
-<trans-unit id="37">
-<source>The parking was added successfully</source>
-<target>Le parc a &#xE9;t&#xE9; ajout&#xE9; avec succ&#xE8;s</target>
-</trans-unit>
-
-<trans-unit id="38">
-<source>The parking was not added</source>
-<target>Le parc n'a pas &#xE9;t&#xE9; ajout&#xE9; avec succ&#xE8;s</target>
-</trans-unit>
-
-<trans-unit id="39">
-<source>Add a subscription</source>
-<target>Ajouter un abonnement</target>
-</trans-unit>
-
-<trans-unit id="40">
-<source>Enter a name for this subscription</source>
-<target>Entrer le nom de l\'abonnement</target>
-</trans-unit>
-
-<trans-unit id="41">
-<source>Name</source>
-<target>Nom</target>
-</trans-unit>
-
-<trans-unit id="42">
-<source>Set the validity of this subscription.</source>
-<target>Configurer la validit&#xE9; de l\'abonnement</target>
-</trans-unit>
-
-<trans-unit id="43">
-<source>Validity</source>
-<target>Validit&#xE9;</target>
-</trans-unit>
-
-<trans-unit id="44">
-<source>Year</source>
-<target>Ann&#xE9;e</target>
-</trans-unit>
-
-<trans-unit id="45">
-<source>Month</source>
-<target>Mois</target>
-</trans-unit>
-
-<trans-unit id="46">
-<source>Day</source>
-<target>Jour</target>
-</trans-unit>
-
-<trans-unit id="47">
-<source>Hour</source>
-<target>Heure</target>
-</trans-unit>
-
-<trans-unit id="48">
-<source>Number used for mulitple subscription</source>
-<target>Nombre utilis&#xE9; pour un abonnement multiple</target>
-</trans-unit>
-
-<trans-unit id="49">
-<source>Credit</source>
-<target>Cr&#xE9;dit</target>
-</trans-unit>
-
-<trans-unit id="50">
-<source>Price of the subscription</source>
-<target>Prix de l\'abonnement</target>
-</trans-unit>
-
-<trans-unit id="51">
-<source>Price</source>
-<target>Prix</target>
-</trans-unit>
-
-<trans-unit id="52">
-<source>You must enter a floating number.</source>
-<target>Vous devez entrer un nombre</target>
-</trans-unit>
-
-<trans-unit id="53">
-<source>You could insert a description for this subscription</source>
-<target>Vous pouvez entrer une description pour cette abonnement</target>
-</trans-unit>
-
-<trans-unit id="54">
-<source>The subscription was modified successfully</source>
-<target>L'abonnement a &#xE9;t&#xE9; modifi&#xE9; avec succ&#xE8;s</target>
-</trans-unit>
-
-<trans-unit id="55">
-<source>Modify a subscription</source>
-<target>Modifier l'abonnement</target>
-</trans-unit>
-
-<trans-unit id="56">
-<source>The parking was not modified</source>
-<target>Le parc a &#xE9;t&#xE9; modifier</target>
-</trans-unit>
-
-<trans-unit id="57">
-<source>The parking was modified successfully</source>
-<target>Le parc a &#xE9;t&#xE9; modifi&#xE9; avec succ&#xE8;s</target>
-</trans-unit>
-
-<trans-unit id="58">
-<source>Update de current filling</source>
-<target>Mise &#xE0; jour du remplissage courant</target>
-</trans-unit>
-
-<trans-unit id="59">
-<source>Modify a parking</source>
-<target>Modifier un parc</target>
-</trans-unit>
-
-<trans-unit id="60">
-<source>The attribution was not modified</source>
-<target>L'attribution n'a pas &#xE9;t&#xE9; modifi&#xE9;e</target>
-</trans-unit>
-
-<trans-unit id="61">
-<source>The attribution was modified successfully</source>
-<target>L'attribution a &#xE9;t&#xE9; modifi&#xE9;e avec succ&#xE8;s</target>
-</trans-unit>
-
-<trans-unit id="62">
-<source>Finnished time</source>
-<target>Temps termin&#xE9;</target>
-</trans-unit>
-
-<trans-unit id="63">
-<source>Modify the ending time</source>
-<target>Modifier l'heure de fin</target>
-</trans-unit>
-
-<trans-unit id="64">
-<source>Modify the ending date</source>
-<target>Modifier la date de fin</target>
-</trans-unit>
-
-<trans-unit id="65">
-<source>Please enter a valid time</source>
-<target>Veuillez entrer une heure valide</target>
-</trans-unit>
-
-<trans-unit id="66">
-<source>Starting time</source>
-<target>Heure de d&#xE9;but</target>
-</trans-unit>
-
-<trans-unit id="67">
-<source>Modify the starting time</source>
-<target>Modifier l'heure de d&#xE9;but</target>
-</trans-unit>
-
-<trans-unit id="68">
-<source>You must enter a valid date (d-M-yyyy).</source>
-<target>Vous devez entrer une date valide (d-M-yyyy)</target>
-</trans-unit>
-
-<trans-unit id="69">
-<source>Modify the starting date</source>
-<target>Modifier la date de d&#xE9;but</target>
-</trans-unit>
-
-<trans-unit id="70">
-<source>Modify the number of credit currently used</source>
-<target>Modifier le nombre de cr&#xE9;dit courament utilis&#xE9;</target>
-</trans-unit>
-
-<trans-unit id="71">
-<source>Type</source>
-<target>Type</target>
-</trans-unit>
-
-<trans-unit id="72">
-<source>Velo Park - Modify an attribution</source>
-<target>Parc &#xE0; v&#xE9;lo - Modifier une attribution</target>
-</trans-unit>
-
-<trans-unit id="73">
-<source>{n} parking was deleted</source>
-<target>{n} parcs ont &#xE9;t&#xE9; suprim&#xE9;s</target>
-</trans-unit>
-
-<trans-unit id="74">
-<source>Filling</source>
-<target>Remplissage</target>
-</trans-unit>
-
-<trans-unit id="75">
-<source>Velo Park - Configuration</source>
-<target>Parc &#xE0; V&#xE9;lo - Configuration</target>
-</trans-unit>
-
-<trans-unit id="76">
-<source>The template {tmpname} does not exist</source>
-<target>Le template {tmpname} n'existe pas</target>
-</trans-unit>
-
-<trans-unit id="77">
-<source>Please, select one subscription in the list</source>
-<target>Veuillez s&#xE9;lectionner un abonnement dans la liste</target>
-</trans-unit>
-
-<trans-unit id="78">
-<source>Finished</source>
-<target>Termin&#xE9;</target>
-</trans-unit>
-
-<trans-unit id="79">
-<source>Started</source>
-<target>D&#xE9;but&#xE9;</target>
-</trans-unit>
-
-<trans-unit id="80">
-<source>Not started</source>
-<target>Non d&#xE9;but&#xE9;</target>
-</trans-unit>
-
-<trans-unit id="81">
-<source>-- Select one --</source>
-<target>-- S&#xE9;lectionner --</target>
-</trans-unit>
-
-<trans-unit id="82">
-<source>{n} subscription attributed was deleted</source>
-<target>{n} attributions d'abonnement ont &#xE9;t&#xE9; supprim&#xE9;es</target>
-</trans-unit>
-
-<trans-unit id="83">
-<source>Select one item</source>
-<target>S&#xE9;lectioner un &#xE9;l&#xE9;ment</target>
-</trans-unit>
-
-<trans-unit id="84">
-<source>Print the subscription</source>
-<target>Imprimer l\'abonnement</target>
-</trans-unit>
-
-<trans-unit id="85">
-<source>Action</source>
-<target>Action</target>
-</trans-unit>
-
-<trans-unit id="86">
-<source>Finnished date</source>
-<target>Date de fin</target>
-</trans-unit>
-
-<trans-unit id="87">
-<source>Will start on the first access or when the last one subscription started is finished</source>
-<target>Va d&#xE9;buter au premier acc&#xE8;s ou quand le dernier abonnement en cours sera termin&#xE9;</target>
-</trans-unit>
-
-<trans-unit id="88">
-<source>Start date</source>
-<target>Date de d&#xE9;but</target>
-</trans-unit>
-
-<trans-unit id="89">
-<source>Credit used</source>
-<target>Cr&#xE9;dit utilis&#xE9;</target>
-</trans-unit>
-
-<trans-unit id="90">
-<source>Create date</source>
-<target>Date de cr&#xE9;ation</target>
-</trans-unit>
-
-<trans-unit id="91">
-<source>Create by</source>
-<target>Cr&#xE9;&#xE9; par</target>
-</trans-unit>
-
-<trans-unit id="92">
-<source>This record is modified by &lt;b&gt;</source>
-<target>Cette enregistrement est modifi&#xE9; par &lt;b&gt;</target>
-</trans-unit>
-
-<trans-unit id="93">
-<source>List of the subscription for the current user</source>
-<target>Liste des abonnements pour l'utilisateur courant</target>
-</trans-unit>
-
-<trans-unit id="94">
-<source>Subscription type</source>
-<target>Type d'abonnement</target>
-</trans-unit>
-
-<trans-unit id="95">
-<source>Select a subscription to attribute to the user</source>
-<target>S&#xE9;lectionner un abonnement a attribuer &#xE0; l'utilisateur</target>
-</trans-unit>
-
-<trans-unit id="96">
-<source>Velo Park - Attribution</source>
-<target>Parc &#xE0; V&#xE9;lo - Attribution</target>
-</trans-unit>
-
-<trans-unit id="97">
-<source>The subscriptio was added successfully</source>
-<target>L'abonnement n'a pas &#xE9;t&#xE9; ajout&#xE9; avec succ&#xE8;s</target>
-</trans-unit>
-
-<trans-unit id="98">
-<source>The subscription was not added</source>
-<target>L'abonnement n'a pas &#xE9;t&#xE9; ajout&#xE9;</target>
-</trans-unit>
-
-<trans-unit id="99">
-<source>The subscription was added successfully</source>
-<target>L'abonnement a &#xE9;t&#xE9; ajout&#xE9; avec succ&#xE8;s</target>
-</trans-unit>
-
-<trans-unit id="100">
-<source>Description</source>
-<target>Description</target>
-</trans-unit>
-
-<trans-unit id="101">
-<source>The subscription was not modified</source>
-<target>L'abonnement n'a pas &#xE9;t&#xE9; modifi&#xE9;</target>
-</trans-unit>
-
-<trans-unit id="102">
-<source>Bill number: {n}</source>
-<target>Ticket num&#xE9;ro: {n}</target>
-</trans-unit>
-
-<trans-unit id="103">
-<source>1x {name}</source>
-<target>1x {name}</target>
-</trans-unit>
-
-<trans-unit id="104">
-<source>{price} {currency}</source>
-<target>{price} {currency}</target>
-</trans-unit>
-
-<trans-unit id="105">
-<source>TOTAL :   {price} {currency}</source>
-<target>TOTAL : {price} {currency}</target>
-</trans-unit>
-
-<trans-unit id="106">
-<source>Incl VAT ({tva} %) {price} {currency}:    {value} {currency}</source>
-<target>TVA inc. ({tva} %) {price} {currency}: {value} {currency}</target>
-</trans-unit>
-
-
-
-<trans-unit id="107">
-<source>VAT Number:</source>
-<target>Num&#xE9;ro TVA:</target>
-</trans-unit>
-
-<trans-unit id="108">
-<source>Phone:</source>
-<target>T&#xE9;l&#xE9;phone:</target>
-</trans-unit>
-
-<trans-unit id="109">
-<source>Fax:</source>
-<target>Fax:</target>
-</trans-unit>
-
-<trans-unit id="110">
-<source>Email:</source>
-<target>Email:</target>
-</trans-unit>
-
-<trans-unit id="111">
-<source>Velo Park - Status</source>
-<target>Parc &#xE0; V&#xE9;lo - Etat</target>
-</trans-unit>
-
-<trans-unit id="112">
-<source>Parking statistics</source>
-<target>Statistiques des parcs</target>
-</trans-unit>
-
-<trans-unit id="113">
-<source>Subscription statistics</source>
-<target>Statistiques des abonnements</target>
-</trans-unit>
-
-<trans-unit id="114">
-<source>Used</source>
-<target>Utilis&#xE9;</target>
-</trans-unit>
-
-<trans-unit id="115">
-<source>Free</source>
-<target>Libre</target>
-</trans-unit>
-
-<trans-unit id="116">
-<source>Subscription sales</source>
-<target>Abonnement vendus</target>
-</trans-unit>
-
-<trans-unit id="117">
-<source>Parking {name}</source>
-<target>Parc {name}</target>
-</trans-unit>
-
-<trans-unit id="118">
-<source>Velo Park - Subscription</source>
-<target>Parc &#xE0; v&#xE9;lo - Abonnement</target>
-</trans-unit>
-
-<trans-unit id="119">
-<source>{n} subscription was deleted</source>
-<target>{n} abonnement ont &#xE9;t&#xE9; supprim&#xE9;s</target>
-</trans-unit>
-
-<trans-unit id="120">
-<source>At your service</source>
-<target>A votre service</target>
-</trans-unit>
-</body>
-	</file>
+    <file source-language="EN" target-language="en" datatype="plaintext" original="velopark" date="2010-07-15T15:52:56Z" product-name="velopark">
+        <body>
+            <trans-unit id="1">
+                <source>Velo Park</source>
+                <target>Parque &#xE0; v&#xE9;lo</target>
+            </trans-unit>
+
+
+            <trans-unit id="2">
+                <source>Subscription</source>
+                <target>Abonnement</target>
+            </trans-unit>
+
+
+
+            <trans-unit id="3">
+                <source>Configuration</source>
+                <target>Configuration</target>
+            </trans-unit>
+
+            <trans-unit id="4">
+                <source>Status</source>
+                <target>Etat</target>
+            </trans-unit>
+
+            <trans-unit id="5">
+                <source>Help</source>
+                <target>Aide</target>
+            </trans-unit>
+
+            <trans-unit id="6">
+                <source>Add a parking</source>
+                <target>Ajouter un parc</target>
+            </trans-unit>
+
+            <trans-unit id="7">
+                <source>Parameters</source>
+                <target>Param&#xE8;tres</target>
+            </trans-unit>
+
+            <trans-unit id="8">
+                <source>Enter the number of place to park</source>
+                <target>Ajouter le nombre de places de parc disponibles</target>
+            </trans-unit>
+
+            <trans-unit id="9">
+                <source>Area</source>
+                <target>Places de parc</target>
+            </trans-unit>
+
+            <trans-unit id="10">
+                <source>Must be an integer</source>
+                <target>Doit &#xEA;tre un entier</target>
+            </trans-unit>
+
+            <trans-unit id="11">
+                <source>This field is required</source>
+                <target>Ce champs doit &#xEA;tre remplit</target>
+            </trans-unit>
+
+
+
+            <trans-unit id="12">
+                <source>Access point device</source>
+                <target>P&#xE9;riph&#xE9;rique d'acc&#xE8;s</target>
+            </trans-unit>
+
+
+
+
+
+
+
+
+
+
+
+            <trans-unit id="13">
+                <source>Enter the text displayed when the user has the access</source>
+                <target>Entrer le texte affich&#xE9; quand l\'utilisateur &#xE0; acc&#xE8;s</target>
+            </trans-unit>
+
+            <trans-unit id="14">
+                <source>Access text</source>
+                <target>Texte d'acc&#xE8;s</target>
+            </trans-unit>
+
+            <trans-unit id="15">
+                <source>Enter the text displayed when the user does not have thee access</source>
+                <target>Entrer le texte affich&#xE9; quand l\'utilisateur n\'a pas l\'acc&#xE8;s</target>
+            </trans-unit>
+
+            <trans-unit id="16">
+                <source>No access text</source>
+                <target>Texte d'acc&#xE8;s refus&#xE9;</target>
+            </trans-unit>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <trans-unit id="17">
+                <source>The parking was added successfully</source>
+                <target>Le parc a &#xE9;t&#xE9; ajout&#xE9; avec succ&#xE8;s</target>
+            </trans-unit>
+
+            <trans-unit id="18">
+                <source>The parking was not added</source>
+                <target>Le parc n'a pas &#xE9;t&#xE9; ajout&#xE9; avec succ&#xE8;s</target>
+            </trans-unit>
+
+            <trans-unit id="19">
+                <source>Add a subscription</source>
+                <target>Ajouter un abonnement</target>
+            </trans-unit>
+
+            <trans-unit id="20">
+                <source>Enter a name for this subscription</source>
+                <target>Entrer le nom de l\'abonnement</target>
+            </trans-unit>
+
+            <trans-unit id="21">
+                <source>Name</source>
+                <target>Nom</target>
+            </trans-unit>
+
+            <trans-unit id="22">
+                <source>Set the validity of this subscription.</source>
+                <target>Configurer la validit&#xE9; de l\'abonnement</target>
+            </trans-unit>
+
+            <trans-unit id="23">
+                <source>Validity</source>
+                <target>Validit&#xE9;</target>
+            </trans-unit>
+
+            <trans-unit id="24">
+                <source>Year</source>
+                <target>Ann&#xE9;e</target>
+            </trans-unit>
+
+            <trans-unit id="25">
+                <source>Month</source>
+                <target>Mois</target>
+            </trans-unit>
+
+            <trans-unit id="26">
+                <source>Day</source>
+                <target>Jour</target>
+            </trans-unit>
+
+            <trans-unit id="27">
+                <source>Hour</source>
+                <target>Heure</target>
+            </trans-unit>
+
+            <trans-unit id="28">
+                <source>Number used for mulitple subscription</source>
+                <target>Nombre utilis&#xE9; pour un abonnement multiple</target>
+            </trans-unit>
+
+            <trans-unit id="29">
+                <source>Credit</source>
+                <target>Cr&#xE9;dit</target>
+            </trans-unit>
+
+            <trans-unit id="30">
+                <source>Price of the subscription</source>
+                <target>Prix de l\'abonnement</target>
+            </trans-unit>
+
+            <trans-unit id="31">
+                <source>Price</source>
+                <target>Prix</target>
+            </trans-unit>
+
+            <trans-unit id="32">
+                <source>You must enter a floating number.</source>
+                <target>Vous devez entrer un nombre</target>
+            </trans-unit>
+
+            <trans-unit id="33">
+                <source>You could insert a description for this subscription</source>
+                <target>Vous pouvez entrer une description pour cette abonnement</target>
+            </trans-unit>
+
+            <trans-unit id="34">
+                <source>The subscription was modified successfully</source>
+                <target>L'abonnement a &#xE9;t&#xE9; modifi&#xE9; avec succ&#xE8;s</target>
+            </trans-unit>
+
+            <trans-unit id="35">
+                <source>Modify a subscription</source>
+                <target>Modifier l'abonnement</target>
+            </trans-unit>
+
+            <trans-unit id="36">
+                <source>The parking was not modified</source>
+                <target>Le parc a &#xE9;t&#xE9; modifier</target>
+            </trans-unit>
+
+            <trans-unit id="37">
+                <source>The parking was modified successfully</source>
+                <target>Le parc a &#xE9;t&#xE9; modifi&#xE9; avec succ&#xE8;s</target>
+            </trans-unit>
+
+            <trans-unit id="38">
+                <source>Update de current filling</source>
+                <target>Mise &#xE0; jour du remplissage courant</target>
+            </trans-unit>
+
+            <trans-unit id="39">
+                <source>Modify a parking</source>
+                <target>Modifier un parc</target>
+            </trans-unit>
+
+            <trans-unit id="40">
+                <source>The attribution was not modified</source>
+                <target>L'attribution n'a pas &#xE9;t&#xE9; modifi&#xE9;e</target>
+            </trans-unit>
+
+            <trans-unit id="41">
+                <source>The attribution was modified successfully</source>
+                <target>L'attribution a &#xE9;t&#xE9; modifi&#xE9;e avec succ&#xE8;s</target>
+            </trans-unit>
+
+            <trans-unit id="42">
+                <source>Finnished time</source>
+                <target>Temps termin&#xE9;</target>
+            </trans-unit>
+
+            <trans-unit id="43">
+                <source>Modify the ending time</source>
+                <target>Modifier l'heure de fin</target>
+            </trans-unit>
+
+            <trans-unit id="44">
+                <source>Modify the ending date</source>
+                <target>Modifier la date de fin</target>
+            </trans-unit>
+
+            <trans-unit id="45">
+                <source>Please enter a valid time</source>
+                <target>Veuillez entrer une heure valide</target>
+            </trans-unit>
+
+            <trans-unit id="46">
+                <source>Starting time</source>
+                <target>Heure de d&#xE9;but</target>
+            </trans-unit>
+
+            <trans-unit id="47">
+                <source>Modify the starting time</source>
+                <target>Modifier l'heure de d&#xE9;but</target>
+            </trans-unit>
+
+            <trans-unit id="48">
+                <source>You must enter a valid date (d-M-yyyy).</source>
+                <target>Vous devez entrer une date valide (d-M-yyyy)</target>
+            </trans-unit>
+
+            <trans-unit id="49">
+                <source>Modify the starting date</source>
+                <target>Modifier la date de d&#xE9;but</target>
+            </trans-unit>
+
+            <trans-unit id="50">
+                <source>Modify the number of credit currently used</source>
+                <target>Modifier le nombre de cr&#xE9;dit courament utilis&#xE9;</target>
+            </trans-unit>
+
+            <trans-unit id="51">
+                <source>Type</source>
+                <target>Type</target>
+            </trans-unit>
+
+            <trans-unit id="52">
+                <source>Velo Park - Modify an attribution</source>
+                <target>Parc &#xE0; v&#xE9;lo - Modifier une attribution</target>
+            </trans-unit>
+
+            <trans-unit id="53">
+                <source>{n} parking was deleted</source>
+                <target>{n} parcs ont &#xE9;t&#xE9; suprim&#xE9;s</target>
+            </trans-unit>
+
+            <trans-unit id="54">
+                <source>Filling</source>
+                <target>Remplissage</target>
+            </trans-unit>
+
+            <trans-unit id="55">
+                <source>Velo Park - Configuration</source>
+                <target>Parc &#xE0; V&#xE9;lo - Configuration</target>
+            </trans-unit>
+
+            <trans-unit id="56">
+                <source>The template {tmpname} does not exist</source>
+                <target>Le template {tmpname} n'existe pas</target>
+            </trans-unit>
+
+            <trans-unit id="57">
+                <source>Please, select one subscription in the list</source>
+                <target>Veuillez s&#xE9;lectionner un abonnement dans la liste</target>
+            </trans-unit>
+
+            <trans-unit id="58">
+                <source>Finished</source>
+                <target>Termin&#xE9;</target>
+            </trans-unit>
+
+            <trans-unit id="59">
+                <source>Started</source>
+                <target>D&#xE9;but&#xE9;</target>
+            </trans-unit>
+
+            <trans-unit id="60">
+                <source>Not started</source>
+                <target>Non d&#xE9;but&#xE9;</target>
+            </trans-unit>
+
+            <trans-unit id="61">
+                <source>-- Select one --</source>
+                <target>-- S&#xE9;lectionner --</target>
+            </trans-unit>
+
+            <trans-unit id="62">
+                <source>{n} subscription attributed was deleted</source>
+                <target>{n} attributions d'abonnement ont &#xE9;t&#xE9; supprim&#xE9;es</target>
+            </trans-unit>
+
+            <trans-unit id="63">
+                <source>Select one item</source>
+                <target>S&#xE9;lectioner un &#xE9;l&#xE9;ment</target>
+            </trans-unit>
+
+            <trans-unit id="64">
+                <source>Print the subscription</source>
+                <target>Imprimer l\'abonnement</target>
+            </trans-unit>
+
+            <trans-unit id="65">
+                <source>Action</source>
+                <target>Action</target>
+            </trans-unit>
+
+            <trans-unit id="66">
+                <source>Finnished date</source>
+                <target>Date de fin</target>
+            </trans-unit>
+
+            <trans-unit id="67">
+                <source>Will start on the first access or when the last one subscription started is finished</source>
+                <target>Va d&#xE9;buter au premier acc&#xE8;s ou quand le dernier abonnement en cours sera termin&#xE9;</target>
+            </trans-unit>
+
+            <trans-unit id="68">
+                <source>Start date</source>
+                <target>Date de d&#xE9;but</target>
+            </trans-unit>
+
+            <trans-unit id="69">
+                <source>Credit used</source>
+                <target>Cr&#xE9;dit utilis&#xE9;</target>
+            </trans-unit>
+
+            <trans-unit id="70">
+                <source>Create date</source>
+                <target>Date de cr&#xE9;ation</target>
+            </trans-unit>
+
+            <trans-unit id="71">
+                <source>Create by</source>
+                <target>Cr&#xE9;&#xE9; par</target>
+            </trans-unit>
+
+            <trans-unit id="72">
+                <source>This record is modified by &lt;b&gt;</source>
+                <target>Cette enregistrement est modifi&#xE9; par &lt;b&gt;</target>
+            </trans-unit>
+
+            <trans-unit id="73">
+                <source>List of the subscription for the current user</source>
+                <target>Liste des abonnements pour l'utilisateur courant</target>
+            </trans-unit>
+
+            <trans-unit id="74">
+                <source>Subscription type</source>
+                <target>Type d'abonnement</target>
+            </trans-unit>
+
+            <trans-unit id="75">
+                <source>Select a subscription to attribute to the user</source>
+                <target>S&#xE9;lectionner un abonnement a attribuer &#xE0; l'utilisateur</target>
+            </trans-unit>
+
+
+
+            <trans-unit id="76">
+                <source>The subscriptio was added successfully</source>
+                <target>L'abonnement n'a pas &#xE9;t&#xE9; ajout&#xE9; avec succ&#xE8;s</target>
+            </trans-unit>
+
+            <trans-unit id="77">
+                <source>The subscription was not added</source>
+                <target>L'abonnement n'a pas &#xE9;t&#xE9; ajout&#xE9;</target>
+            </trans-unit>
+
+            <trans-unit id="78">
+                <source>The subscription was added successfully</source>
+                <target>L'abonnement a &#xE9;t&#xE9; ajout&#xE9; avec succ&#xE8;s</target>
+            </trans-unit>
+
+            <trans-unit id="79">
+                <source>Description</source>
+                <target>Description</target>
+            </trans-unit>
+
+            <trans-unit id="80">
+                <source>The subscription was not modified</source>
+                <target>L'abonnement n'a pas &#xE9;t&#xE9; modifi&#xE9;</target>
+            </trans-unit>
+
+            <trans-unit id="81">
+                <source>Bill number: {n}</source>
+                <target>Ticket num&#xE9;ro: {n}</target>
+            </trans-unit>
+
+            <trans-unit id="82">
+                <source>1x {name}</source>
+                <target>1x {name}</target>
+            </trans-unit>
+
+            <trans-unit id="83">
+                <source>{price} {currency}</source>
+                <target>{price} {currency}</target>
+            </trans-unit>
+
+            <trans-unit id="84">
+                <source>TOTAL :   {price} {currency}</source>
+                <target>TOTAL : {price} {currency}</target>
+            </trans-unit>
+
+            <trans-unit id="85">
+                <source>Incl VAT ({tva} %) {price} {currency}:    {value} {currency}</source>
+                <target>TVA inc. ({tva} %) {price} {currency}: {value} {currency}</target>
+            </trans-unit>
+
+
+
+            <trans-unit id="86">
+                <source>VAT Number:</source>
+                <target>Num&#xE9;ro TVA:</target>
+            </trans-unit>
+
+            <trans-unit id="87">
+                <source>Phone:</source>
+                <target>T&#xE9;l&#xE9;phone:</target>
+            </trans-unit>
+
+            <trans-unit id="88">
+                <source>Fax:</source>
+                <target>Fax:</target>
+            </trans-unit>
+
+            <trans-unit id="89">
+                <source>Email:</source>
+                <target>Email:</target>
+            </trans-unit>
+
+            <trans-unit id="90">
+                <source>Velo Park - Status</source>
+                <target>Parc &#xE0; V&#xE9;lo - Etat</target>
+            </trans-unit>
+
+            <trans-unit id="91">
+                <source>Parking statistics</source>
+                <target>Statistiques des parcs</target>
+            </trans-unit>
+
+            <trans-unit id="92">
+                <source>Subscription statistics</source>
+                <target>Statistiques des abonnements</target>
+            </trans-unit>
+
+            <trans-unit id="93">
+                <source>Used</source>
+                <target>Utilis&#xE9;</target>
+            </trans-unit>
+
+            <trans-unit id="94">
+                <source>Free</source>
+                <target>Libre</target>
+            </trans-unit>
+
+            <trans-unit id="95">
+                <source>Subscription sales</source>
+                <target>Abonnement vendus</target>
+            </trans-unit>
+
+            <trans-unit id="96">
+                <source>Parking {name}</source>
+                <target>Parc {name}</target>
+            </trans-unit>
+
+            <trans-unit id="97">
+                <source>Velo Park - Subscription</source>
+                <target>Parc &#xE0; v&#xE9;lo - Abonnement</target>
+            </trans-unit>
+
+            <trans-unit id="98">
+                <source>{n} subscription was deleted</source>
+                <target>{n} abonnement ont &#xE9;t&#xE9; supprim&#xE9;s</target>
+            </trans-unit>
+
+            <trans-unit id="99">
+                <source>At your service</source>
+                <target>A votre service</target>
+            </trans-unit>
+
+            <trans-unit id="100">
+                <source>Attribute a subscription</source>
+                <target>Attribuer un abonnement</target>
+            </trans-unit>
+
+            <trans-unit id="101">
+                <source>Velo Park - Subscription Attribution</source>
+                <target>Parc &#xE0; V&#xE9;lo - Attribution d\'un abonnement</target>
+            </trans-unit>
+
+            <trans-unit id="102">
+                <source>Enter the name for this parking</source>
+                <target>Entrez le nom du parking</target>
+            </trans-unit>
+
+            <trans-unit id="103">
+                <source>Enter the text displayed when the user has the access with a warning message for a subscription with credits</source>
+                <target>Entrez le texte affich&#xE9; quand l\'utilisateur a acc&#xE8;s mais avec un message informant de l\'&#xE9;tat de la situation d\'un abonnement multiticket</target>
+            </trans-unit>
+
+            <trans-unit id="104">
+                <source>Access text warning (credit)</source>
+                <target>Message d'acc&#xE8;s avec une attention</target>
+            </trans-unit>
+
+            <trans-unit id="105">
+                <source>Enter the text displayed when the user has the access with a warning message for a subscription</source>
+                <target>Entrez le texte affich&#xE9; quand l\'utilisateur a acc&#xE8;s mais avec un message informant de l\'&#xE9;tat de la situation d\'un abonnement</target>
+            </trans-unit>
+
+            <trans-unit id="106">
+                <source>Access text warning</source>
+                <target>Message d'acc&#xE8;s avec avertissement</target>
+            </trans-unit>
+
+            <trans-unit id="107">
+                <source>Is it a multi subscription. If yes, set the number of credit</source>
+                <target>Est-ce un multiticket. Si oui, mettre le nombre de cr&#xE9;dit</target>
+            </trans-unit>
+
+            <trans-unit id="108">
+                <source>Multi ticket</source>
+                <target>Multiticket</target>
+            </trans-unit>
+
+            <trans-unit id="109">
+                <source>Select the VTA type</source>
+                <target>S&#xE9;lectionnez le type de la TVA</target>
+            </trans-unit>
+
+            <trans-unit id="110">
+                <source>VAT</source>
+                <target>TVA</target>
+            </trans-unit>
+
+            <trans-unit id="111">
+                <source>Without VAT</source>
+                <target>Sans TVA</target>
+            </trans-unit>
+
+            <trans-unit id="112">
+                <source>Normal</source>
+                <target>Normal</target>
+            </trans-unit>
+
+            <trans-unit id="113">
+                <source>Reduce</source>
+                <target>R&#xE9;duction</target>
+            </trans-unit>
+
+            <trans-unit id="114">
+                <source>Canceled</source>
+                <target>Annul&#xE9;</target>
+            </trans-unit>
+
+            <trans-unit id="115">
+                <source>Waiting</source>
+                <target>En attente</target>
+            </trans-unit>
+
+            <trans-unit id="116">
+                <source>Invoice</source>
+                <target>Ticket</target>
+            </trans-unit>
+
+            <trans-unit id="117">
+                <source>Invoice List</source>
+                <target>Liste des tickets</target>
+            </trans-unit>
+
+            <trans-unit id="118">
+                <source>Statistic</source>
+                <target>Statistiques</target>
+            </trans-unit>
+
+            <trans-unit id="119">
+                <source>Velo Park - Message</source>
+                <target>Message -Velo park</target>
+            </trans-unit>
+
+            <trans-unit id="120">
+                <source>Select a subscription</source>
+                <target>S&#xE9;lectionnez un abonnement</target>
+            </trans-unit>
+        </body>
+    </file>
 </xliff>

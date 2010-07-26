@@ -205,45 +205,27 @@
 
 
                           <tr>
-                            <td valign="top" class="key"><span onmouseover="Tip('<%[Number used for mulitple subscription]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Credit]%></span></td>
+                            <td valign="top" class="key"><span onmouseover="Tip('<%[Is it a multi subscription. If yes, set the number of credit]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Multi ticket]%></span></td>
                             <td>
-                              <com:TTextBox 
-                                CssClass="text_area" 
-                                ID="multiple"
-								Text="1"
-                                Width="50" />
-                              <com:TDataTypeValidator
-                                ValidationGroup="Group1"
-                                ControlToValidate="multiple"
-                                Display="Dynamic"
-								DataType="Integer"
-                                Text="<%[Must be an integer]%>" />
-                              <com:TRequiredFieldValidator
-								ValidationGroup="Group1" 
-								ControlToValidate="multiple"
-								Text="<%[This field is required]%>" 
-								Display="Dynamic"/>
-                            </td> 
+
+                                <com:TCheckBox
+                                    ID="multipleticket" />
+
+                            </td>
                           </tr>
 
                           <tr>
-                            <td valign="top" class="key">
-                              <span onmouseover="Tip('<%[Price of the subscription]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Start]%></span>
-                            </td>
+                            <td valign="top" class="key"><span onmouseover="Tip('<%[Number used for mulitple subscription]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Credit]%></span></td>
                             <td>
-                            <com:TRadioButton
-                                ID="StartFirstAccess"
-                                GroupName="RadioGroup"
-                                Text="First access"
-                                Checked="true"
-                                />
-                              <com:TRadioButton
-                                ID="StartImmediatly"
-                                GroupName="RadioGroup"
-                                Text="<%[Immediatly]%>"
-                                />
 
-                            </td>
+                                <com:TDropDownList
+                                        ID="multiple"
+                                    DataTextField="Text"
+                                    DataValueField="Value"
+                                >
+                                </com:TDropDownList>
+
+                            </td> 
                           </tr>
 
 
@@ -266,6 +248,24 @@
                             </td> 
                           </tr>
 
+
+                          <tr>
+                            <td valign="top" class="key"><span onmouseover="Tip('<%[Select the VTA type]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[VAT]%></span></td>
+                            <td>
+
+                                <com:TDropDownList
+                                        ID="vat"
+                                    DataTextField="Text"
+                                    DataValueField="Value"
+                                >
+                                    <com:TListItem Text="<%[Without VAT]%>" Value="0" />
+                                    <com:TListItem Text="<%[Normal]%>" Value="1" Selected="true" />
+                                    <com:TListItem Text="<%[Reduce]%>" Value="2" />
+
+                                </com:TDropDownList>
+
+                            </td>
+                          </tr>
 
                           <tr>
                             <td valign="top" class="key">

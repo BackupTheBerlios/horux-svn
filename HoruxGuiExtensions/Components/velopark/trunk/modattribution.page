@@ -265,6 +265,7 @@
 									<com:TListItem Text="<%[Started]%>" Value="started" />
 									<com:TListItem Text="<%[Finished]%>" Value="finished" />
 									<com:TListItem Text="<%[Canceled]%>" Value="canceled" />
+									<com:TListItem Text="<%[Waiting]%>" Value="waiting" />
 								</com:TDropDownList>
 
                             </td> 

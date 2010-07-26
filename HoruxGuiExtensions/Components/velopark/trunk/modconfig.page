@@ -72,6 +72,34 @@
 	             	   <com:THiddenField ID="id" value="" />
                       <table class="admintable" cellspacing="1">
                         <tbody>
+                            <tr>
+                            <td valign="top" class="key">
+                              <span onmouseover="Tip('<%[Enter the name for this parking]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)">* <%[Name]%></span>
+                            </td>
+                            <td>
+                              <com:TTextBox
+                                CssClass="text_area"
+                                ID="name"
+                                Width="50" />
+                              <com:TRequiredFieldValidator
+								ValidationGroup="Group1"
+								ControlToValidate="area"
+								Text="<%[This field is required]%>"
+								Display="Dynamic"/>
+                            </td>
+                          </tr>
+
+                          <tr>
+                            <td valign="top" class="key">
+                              <span onmouseover="Tip('<%[Enter the name for this parking]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)">* <%[Access point device]%></span>
+                            </td>
+                            <td>
+                                <com:TCheckBoxList RepeatDirection="Horizontal" ID="accesspoint" DataTextField="Text" DataValueField="Value" >
+
+                                </com:TCheckBoxList>
+                            </td>
+                          </tr>
+
                           <tr>
                             <td valign="top" class="key">
                               <span onmouseover="Tip('<%[Enter the number of place to park]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)">* <%[Area]%></span>
@@ -95,40 +123,7 @@
                             </td> 
                           </tr>
 
-                          <tr>
-                            <td valign="top" class="key"><span onmouseover="Tip('<%[Select a access point device for this parking]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)">* <%[Access point device]%></span></td>
-                            <td>
-								<com:TDropDownList 
-									ID="accesspoint"
-						  		    DataTextField="Text"
-								    DataValueField="Value"
-								/>
-                            </td> 
-                          </tr>
-
-
-                          <tr>
-                            <td valign="top" class="key"><span onmouseover="Tip('<%[Select a display for this parking if it has one]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Display device]%></span></td>
-                            <td>
-								<com:TDropDownList 
-									ID="display"
-						  		    DataTextField="Text"
-								    DataValueField="Value"
-								/>
-                            </td> 
-                          </tr>
-
-                          <tr>
-                            <td valign="top" class="key">
-                              <span onmouseover="Tip('<%[Enter the default text displayed on the display]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"> <%[Default text]%></span>
-                            </td>
-                            <td>
-                              <com:TTextBox 
-                                CssClass="text_area" 
-                                ID="default_msg"
-                                Width="450px" /> <%[You can insert the following tag in the message]%> {date}/{time}
-                            </td> 
-                          </tr>
+                         
 
                           <tr>
                             <td valign="top" class="key">
@@ -138,7 +133,7 @@
                               <com:TTextBox 
                                 CssClass="text_area" 
                                 ID="access_ok_msg"
-                                Width="450px" />
+                                Width="450px" /> {nl}
                             </td> 
                           </tr>
                           
@@ -150,56 +145,35 @@
                               <com:TTextBox 
                                 CssClass="text_area" 
                                 ID="access_ko_msg"
-                                Width="450px" />
+                                Width="450px" /> {nl}
                             </td> 
                           </tr>                          
 
                           <tr>
                             <td valign="top" class="key">
-                              <span onmouseover="Tip('<%[Enter the number of second to display a the access messages]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"> <%[Display time]%></span>
+                              <span onmouseover="Tip('<%[Enter the text displayed when the user has the access with a warning message for a subscription with credits]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"> <%[Access text warning (credit)]%></span>
                             </td>
                             <td>
-                              <com:TTextBox 
-                                CssClass="text_area" 
-                                ID="displayTime"
-                                Width="50" /> <%[seconds]%>
-                              <com:TDataTypeValidator
-                                ValidationGroup="Group1"
-                                ControlToValidate="displayTime"
-                                Display="Dynamic"
-                                                                DataType="Integer"
-                                Text="<%[Must be an integer]%>" />
-                            </td> 
-                          </tr>                          
-
-
-                          <tr>
-                            <td valign="top" class="key"><span onmouseover="Tip('<%[Select the device where a light information is connected]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Light information]%></span></td>
-                            <td>
-                                  <com:TDropDownList 
-                                          ID="lightinfo"
-                                      DataTextField="Text"
-                                      DataValueField="Value"
-                                  />
-                                  <com:TDropDownList 
-                                      ID="lightinfo_io"
-                                      DataTextField="Text"
-                                      DataValueField="Value"
-                                  >
-                                    <com:TListItem Text="<%[---- None ----]%>" Value="0" />
-                                    <com:TListItem Text="<%[Output 1]%>" Value="1" />
-                                    <com:TListItem Text="<%[Output 2]%>" Value="2" />
-                                    <com:TListItem Text="<%[Output 3]%>" Value="3" />
-                                    <com:TListItem Text="<%[Output 4]%>" Value="4" />
-                                    <com:TListItem Text="<%[Output 5]%>" Value="5" />
-                                    <com:TListItem Text="<%[Output 6]%>" Value="6" />
-                                    <com:TListItem Text="<%[Output 7]%>" Value="7" />
-                                    <com:TListItem Text="<%[Output 8]%>" Value="8" />
-                                 </com:TDropDownList>
-                            </td> 
+                              <com:TTextBox
+                                CssClass="text_area"
+                                ID="access_credit_warning_msg"
+                                Width="450px" /> {nl},{credit}
+                            </td>
                           </tr>
-
-						  <tr>
+                                     
+                          <tr>
+                            <td valign="top" class="key">
+                              <span onmouseover="Tip('<%[Enter the text displayed when the user has the access with a warning message for a subscription]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"> <%[Access text warning]%></span>
+                            </td>
+                            <td>
+                              <com:TTextBox
+                                CssClass="text_area"
+                                ID="access_warning_msg"
+                                Width="450px" /> {nl},{date}
+                            </td>
+                          </tr>
+                       
+			 <tr>
                             <td valign="top" class="key"><span onmouseover="Tip('<%[Update de current filling]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Filling]%></span></td>
                             <td>
                               <com:TTextBox 

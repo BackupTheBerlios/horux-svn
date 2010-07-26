@@ -38,7 +38,7 @@ class config extends PageList
 
     protected function getData()
     {
-        $sql = "SELECT p.id, p.area, d.name, p.filling FROM  hr_vp_parking AS p LEFT JOIN hr_device AS d ON d.id = p.accesspoint_id";
+        $sql = "SELECT id, area, name, filling FROM  hr_vp_parking";
 
         $cmd=$this->db->createCommand($sql);
         $data = $cmd->query();
@@ -82,7 +82,7 @@ class config extends PageList
             if( (bool)$cb->getChecked() && $cb->Value != "0")
             {
                 $cmd=$this->db->createCommand("DELETE FROM hr_vp_parking WHERE id=:id");
-                $cmd->bindParameter(":id",$cb->Value);
+                $cmd->bindValue(":id",$cb->Value);
                 $cmd->execute();
 				$nDelete++;
                 

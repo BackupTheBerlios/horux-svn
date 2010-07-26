@@ -104,32 +104,35 @@ class status extends Page
           {
             $values[] = $d['n'];
           }
+
+          if(count($values) > 0) {
+              $plot = new Pie($values, PIE_EARTH);
+              $plot->setCenter(0.42, 0.55);
+              $plot->setSize(0.7, 0.7);
+              $plot->set3D(20);
+
+              $sql = "SELECT * FROM  hr_vp_subscription ORDER BY id";
+
+              $cmd=$this->db->createCommand($sql);
+              $dataSub = $cmd->query();
+              $dataSub = $dataSub->readAll();
+
+              $a = array();
+              foreach($dataSub as $d)
+              {
+                $a[] = utf8_decode($d['name']);
+              }
+
+              $plot->setLegend($a);
+
+              $plot->legend->setPosition(1.3);
+              $plot->legend->shadow->setSize(0);
+              $plot->legend->setBackgroundColor(new VeryLightGray(30));
+
           
-          $plot = new Pie($values, PIE_EARTH);
-          $plot->setCenter(0.42, 0.55);
-          $plot->setSize(0.7, 0.7);
-          $plot->set3D(20);
-
-          $sql = "SELECT * FROM  hr_vp_subscription ORDER BY id";
-
-          $cmd=$this->db->createCommand($sql);
-          $dataSub = $cmd->query();
-          $dataSub = $dataSub->readAll();
-
-          $a = array();
-          foreach($dataSub as $d)
-          {
-            $a[] = utf8_decode($d['name']);
+            $graph->add($plot);
           }
-
-          $plot->setLegend($a);
           
-          $plot->legend->setPosition(1.3);
-          $plot->legend->shadow->setSize(0);
-          $plot->legend->setBackgroundColor(new VeryLightGray(30));             
-
-
-          $graph->add($plot);
           $graph->draw();
 
           exit;
@@ -141,7 +144,7 @@ class status extends Page
 
           require_once "./protected/pages/components/velopark/artichow/Pie.class.php";
 		
-          $sql = "SELECT p.id, p.area,p.filling, d.name FROM  hr_vp_parking AS p LEFT JOIN hr_device AS d ON d.id = p.accesspoint_id WHERE p.id=".$id;
+          $sql = "SELECT id, area,filling, name FROM  hr_vp_parking ";
 
           $cmd=$this->db->createCommand($sql);
           $data = $cmd->query();

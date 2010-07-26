@@ -4,7 +4,7 @@
 
 		$sql = "SELECT * FROM hr_site WHERE id=1";
 		$cmd=$this->db->createCommand($sql);
-        $cmd->bindParameter(":id",$subId);
+        $cmd->bindValue(":id",$subId);
 		$site = $cmd->query();
 		$site = $site->read();	
 

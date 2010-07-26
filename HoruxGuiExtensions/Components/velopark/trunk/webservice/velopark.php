@@ -20,7 +20,7 @@ class velopark extends TService
             {
                 $sql = "SELECT COUNT(*) AS n FROM hr_vp_subscription_attribution WHERE user_id=:id AND status='started'";
                 $cmd=$this->db->createCommand($sql);
-                $cmd->bindParameter(":id",$params['userId']);
+                $cmd->bindValue(":id",$params['userId']);
                 $data = $cmd->query();
                 $data = $data->read();
 
@@ -28,7 +28,7 @@ class velopark extends TService
 
                 $sql = "SELECT * FROM hr_vp_subscription WHERE id=:id";
                 $cmd=$this->db->createCommand($sql);
-                $cmd->bindParameter(":id",$params['subId']);
+                $cmd->bindValue(":id",$params['subId']);
                 $data = $cmd->query();
                 $data = $data->read();
 
@@ -47,19 +47,19 @@ class velopark extends TService
 
                 $cmd=$this->db->createCommand($sql);
 
-                $cmd->bindParameter(":user_id",$params['userId'],PDO::PARAM_STR);
-                $cmd->bindParameter(":subcription_id",$params['subId'],PDO::PARAM_STR);
+                $cmd->bindValue(":user_id",$params['userId'],PDO::PARAM_STR);
+                $cmd->bindValue(":subcription_id",$params['subId'],PDO::PARAM_STR);
                 if($data["start"] == 'firstaccess'  || $nStarted>0)
-                    $cmd->bindParameter(":credit",$data["credit"],PDO::PARAM_STR);
+                    $cmd->bindValue(":credit",$data["credit"],PDO::PARAM_STR);
                 else
                 {
                     $credit = $data["credit"]-1;
-                    $cmd->bindParameter(":credit",$credit,PDO::PARAM_STR);
+                    $cmd->bindValue(":credit",$credit,PDO::PARAM_STR);
                 }
 
 
                 $createBy ="Vélorux";
-                $cmd->bindParameter(":create_by",$createBy,PDO::PARAM_STR);
+                $cmd->bindValue(":create_by",$createBy,PDO::PARAM_STR);
 
                 $cmd->execute();
 
@@ -82,7 +82,7 @@ class velopark extends TService
                  $sql = "SELECT id, name, price, description FROM hr_vp_subscription WHERE id=:id";
 
                 $cmd=$this->db->createCommand($sql);
-                $cmd->bindParameter(":id",$params['id'],PDO::PARAM_STR);
+                $cmd->bindValue(":id",$params['id'],PDO::PARAM_STR);
                 $data = $cmd->query();
                 if($data)
                 {
@@ -104,7 +104,7 @@ class velopark extends TService
         $sql = "SELECT id, name, price FROM hr_vp_subscription";
 
         $cmd=$this->db->createCommand($sql);
-        $cmd->bindParameter(":id",$params['userId'],PDO::PARAM_STR);
+        $cmd->bindValue(":id",$params['userId'],PDO::PARAM_STR);
         $data = $cmd->query();
         if($data)
         {
@@ -128,7 +128,7 @@ class velopark extends TService
                 $sql = "SELECT * FROM hr_tracking WHERE id_user=:id ORDER by id DESC $limit";
 
                 $cmd=$this->db->createCommand($sql);
-                $cmd->bindParameter(":id",$params['userId'],PDO::PARAM_STR);
+                $cmd->bindValue(":id",$params['userId'],PDO::PARAM_STR);
                 $data = $cmd->query();
                 if($data)
                 {
@@ -160,18 +160,18 @@ class velopark extends TService
                     $sql = "UPDATE hr_user SET name=:name, firstname=:firstname, street=:street, zip=:zip, city=:city, phone1=:phone1, email1=:email1 WHERE id=:id";
                     
                 $cmd=$this->db->createCommand($sql);
-                $cmd->bindParameter(":id",$params['userId'],PDO::PARAM_STR);
-                $cmd->bindParameter(":name",$params['name'],PDO::PARAM_STR);
-                $cmd->bindParameter(":firstname",$params['firstname'],PDO::PARAM_STR);
-                $cmd->bindParameter(":street",$params['street'],PDO::PARAM_STR);
-                $cmd->bindParameter(":zip",$params['zip'],PDO::PARAM_STR);
-                $cmd->bindParameter(":city",$params['city'],PDO::PARAM_STR);
-                $cmd->bindParameter(":phone1",$params['phone1'],PDO::PARAM_STR);
-                $cmd->bindParameter(":email1",$params['email1'],PDO::PARAM_STR);
+                $cmd->bindValue(":id",$params['userId'],PDO::PARAM_STR);
+                $cmd->bindValue(":name",$params['name'],PDO::PARAM_STR);
+                $cmd->bindValue(":firstname",$params['firstname'],PDO::PARAM_STR);
+                $cmd->bindValue(":street",$params['street'],PDO::PARAM_STR);
+                $cmd->bindValue(":zip",$params['zip'],PDO::PARAM_STR);
+                $cmd->bindValue(":city",$params['city'],PDO::PARAM_STR);
+                $cmd->bindValue(":phone1",$params['phone1'],PDO::PARAM_STR);
+                $cmd->bindValue(":email1",$params['email1'],PDO::PARAM_STR);
 
                 if($params['password'] !== "" )
                 {
-                    $cmd->bindParameter(":password",$params['password'],PDO::PARAM_STR);
+                    $cmd->bindValue(":password",$params['password'],PDO::PARAM_STR);
                 }
 
                 $cmd->execute();
@@ -195,7 +195,7 @@ class velopark extends TService
 
                 $sql = "SELECT id, name, firstname, street, city, country, zip, phone1, email1 FROM hr_user WHERE id=:id";
                 $cmd=$this->db->createCommand($sql);
-                $cmd->bindParameter(":id",$params['userId'],PDO::PARAM_STR);
+                $cmd->bindValue(":id",$params['userId'],PDO::PARAM_STR);
                 $data = $cmd->query();
                 if($data)
                 {
@@ -228,8 +228,8 @@ class velopark extends TService
                     $sql = "SELECT * FROM hr_user WHERE password=:password AND email1=:username";
 
                     $cmd=$this->db->createCommand($sql);
-                    $cmd->bindParameter(":password",sha1($params['password']),PDO::PARAM_STR);
-                    $cmd->bindParameter(":username",$params['username'],PDO::PARAM_STR);
+                    $cmd->bindValue(":password",sha1($params['password']),PDO::PARAM_STR);
+                    $cmd->bindValue(":username",$params['username'],PDO::PARAM_STR);
                     $data = $cmd->query();
                     $data = $data->readAll();
 
@@ -258,7 +258,7 @@ class velopark extends TService
 
                 $sql = "SELECT sa.id, sa.create_date, s.description, sa.status, sa.start, sa.end, sa.credit AS creditUsed, s.credit,s.name, s.price FROM hr_vp_subscription_attribution AS sa LEFT JOIN hr_vp_subscription AS s ON s.id=sa.subcription_id WHERE sa.user_id=:id ORDER BY sa.id DESC";
                 $cmd=$this->db->createCommand($sql);
-                $cmd->bindParameter(":id",$params['userId'],PDO::PARAM_STR);
+                $cmd->bindValue(":id",$params['userId'],PDO::PARAM_STR);
                 $data = $cmd->query();
                 if($data)
                 {
@@ -286,7 +286,7 @@ class velopark extends TService
             {
                 $sql = "SELECT sa.create_date, s.description, sa.status, sa.start, sa.end, sa.credit AS creditUsed, s.credit,s.name, s.price FROM hr_vp_subscription_attribution AS sa LEFT JOIN hr_vp_subscription AS s ON s.id=sa.subcription_id WHERE sa.user_id=:id AND ( sa.status='started' OR sa.status='not_start') ORDER BY sa.id LIMIT 0, 1";
                 $cmd=$this->db->createCommand($sql);
-                $cmd->bindParameter(":id",$params['userId'],PDO::PARAM_STR);
+                $cmd->bindValue(":id",$params['userId'],PDO::PARAM_STR);
                 $data = $cmd->query();
                 if($data)
                 {
