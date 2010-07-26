@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.0">
+<file source-language="en" target-language="fr" datatype="plaintext" original="messages" date="2009-08-25T09:58:05Z" product-name="messages">
+<body>
+<trans-unit id="1">
+   <source>Installation</source>
+   <target>Installation</target>
+</trans-unit>
+<trans-unit id="2">
+   <source>Version</source>
+   <target>Version</target>
+</trans-unit>
+<trans-unit id="3">
+   <source>Access Control Managment</source>
+   <target>Verwaltung der Zugangskontrolle</target>
+</trans-unit>
+<trans-unit id="4">
+   <source>!Warning! Javascript must be enabled for proper operation of the Administrator</source>
+   <target>Achtung! Für eine sachgemäße Verwendung der Verwaltung muss Javascript aktiviert sein.</target>
+</trans-unit>
+<trans-unit id="5">
+   <source>is Free Software released under the GNU/GPL License</source>
+   <target>ist eine freie Anwendung unter Lizenz von GNU/GPL</target>
+</trans-unit>
+</body>
+</file>
+</xliff>

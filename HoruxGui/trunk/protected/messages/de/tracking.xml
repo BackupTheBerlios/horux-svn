@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.0">
+<file source-language="en" target-language="fr" datatype="plaintext" original="messages" date="2010-07-26T14:18:58Z" product-name="messages">
+<body>
+
+<trans-unit id="1" lock="1">
+   <source>Tracking</source>
+   <target>Nachverfolgung der Zugänge</target>
+</trans-unit>
+<trans-unit id="2" lock="1">
+   <source>Filter</source>
+   <target>Filter</target>
+</trans-unit>
+<trans-unit id="3" lock="1">
+   <source>Name</source>
+   <target>Name</target>
+</trans-unit>
+<trans-unit id="4" lock="1">
+   <source>All</source>
+   <target>Alle</target>
+</trans-unit>
+
+<trans-unit id="5" lock="1">
+   <source>Status</source>
+   <target>Zustand</target>
+</trans-unit>
+<trans-unit id="6" lock="1">
+   <source>Access ok</source>
+   <target>Gültiger Zugang</target>
+</trans-unit>
+<trans-unit id="7" lock="1">
+   <source>Access ko</source>
+   <target>Ungültiger Zugang</target>
+</trans-unit>
+<trans-unit id="8" lock="1">
+   <source>Access point</source>
+   <target>Zugangspunkt</target>
+</trans-unit>
+<trans-unit id="9" lock="1">
+   <source>From</source>
+   <target>Seit</target>
+</trans-unit>
+<trans-unit id="10" lock="1">
+   <source>Until</source>
+   <target>Bis zum</target>
+</trans-unit>
+<trans-unit id="11" lock="1">
+   <source>Firstname</source>
+   <target>Vorname</target>
+</trans-unit>
+<trans-unit id="12" lock="1">
+   <source>Date</source>
+   <target>Datum</target>
+</trans-unit>
+<trans-unit id="13" lock="1">
+   <source>Time</source>
+   <target>Uhrzeit</target>
+</trans-unit>
+<trans-unit id="14" lock="1">
+   <source>Key</source>
+   <target>Schlüssel</target>
+</trans-unit>
+<trans-unit id="15" lock="1">
+   <source>Authorize access</source>
+   <target>Genehmigter Zugang</target>
+</trans-unit>
+<trans-unit id="16" lock="1">
+   <source>The key is bloqued</source>
+   <target>Der Schlüssel ist gesperrt</target>
+</trans-unit>
+<trans-unit id="17" lock="1">
+   <source>Unknown key</source>
+   <target>Unbekannter Schlüssel</target>
+</trans-unit>
+<trans-unit id="18" lock="1">
+   <source>The key is not attributed</source>
+   <target>Der Schlüssel ist nicht vergeben.</target>
+</trans-unit>
+<trans-unit id="19" lock="1">
+   <source>The person does not belong to any group</source>
+   <target>Der Benutzer gehört zu keiner Gruppe.</target>
+</trans-unit>
+<trans-unit id="20" lock="1">
+   <source>Access refused during the week-end</source>
+   <target>Zugang am Wochenende verweigert</target>
+</trans-unit>
+<trans-unit id="21" lock="1">
+   <source>Access refused during the non-workinf day</source>
+   <target>Zugang an arbeitsfreien Tagen verweigert</target>
+</trans-unit>
+<trans-unit id="22" lock="1">
+   <source>Access refused at this date</source>
+   <target>Zugang zu diesem Datum verweigert</target>
+</trans-unit>
+<trans-unit id="23" lock="1">
+   <source>Access refused at this time</source>
+   <target>Zugang zu dieser Uhrzeit verweigert</target>
+</trans-unit>
+<trans-unit id="24" lock="1">
+   <source>No access for this access point</source>
+   <target>Kein Zugang für diesen Zugangspunkt</target>
+</trans-unit>
+<trans-unit id="25" lock="1">
+   <source>Not handled by Horux</source>
+   <target>Wird nicht von Horux Core kontrolliert</target>
+</trans-unit>
+<trans-unit id="26" lock="1">
+   <source>The person is blocked</source>
+   <target>Der Benutzer ist gesperrt.</target>
+</trans-unit>
+
+<trans-unit id="27" lock="1">
+<source>List of tracking</source>
+<target>Liste der Nachverfolgungen der Zugänge</target>
+</trans-unit>
+
+<trans-unit id="28" lock="1">
+<source>Is Access</source>
+<target>Hat Zugang</target>
+</trans-unit>
+
+<trans-unit id="29" lock="1">
+<source>Yes</source>
+<target>Ja</target>
+</trans-unit>
+
+<trans-unit id="30" lock="1">
+<source>No</source>
+<target>Nein</target>
+</trans-unit>
+
+<trans-unit id="31">
+<source>PIN-Code incorrect</source>
+<target>PIN-Code nicht korrekt</target>
+</trans-unit>
+
+<trans-unit id="32">
+<source>Refused because repeated access barrier is active</source>
+<target>Verweigert, weil der wiederholte Zugang aktiviert ist</target>
+</trans-unit>
+
+<trans-unit id="33">
+<source>Authorize access without door opening</source>
+<target>Zugang ohne Öffnung des Anschlusses genehmigt</target>
+</trans-unit>
+
+<trans-unit id="34">
+<source>AUTHORIZE ACCESS WITH HOLD-UP PIN-CODE</source>
+<target>ZUGANG MIT DEM PIN CODE HOLD-UP GENEHMIGT</target>
+</trans-unit>
+
+<trans-unit id="35">
+<source>1 Person for 2 persons access</source>
+<target>Zugang von 1 Person für 2 Personen</target>
+</trans-unit>
+
+<trans-unit id="36">
+<source>Access refused during the non-working day</source>
+<target>Zugang an den arbeitsfreien Tagen verweigert</target>
+</trans-unit>
+
+<trans-unit id="37">
+<source>Authorization period of person not valid</source>
+<target>Gültigkeitsdatum der ungültigen Person</target>
+</trans-unit>
+
+<trans-unit id="38">
+<source>Card number or card verion invalid</source>
+<target>Die Karte ist nicht aktiviert.</target>
+</trans-unit>
+</body>
+</file>
+</xliff>

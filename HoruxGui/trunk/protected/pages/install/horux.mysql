@@ -305,6 +305,7 @@ INSERT INTO `hr_install` (`id`, `name`, `type`, `system`, `default`, `param`) VA
 (2, 'English', 'language', 1, 1, 'en'),
 (3, 'tracking', 'component', 1, 0, ''),
 (4, 'Français', 'language', 0, 0, 'fr');
+(5, 'Deutsch', 'language', 0, 0, 'de');
 # --------------------------------------------------------
 
 #
