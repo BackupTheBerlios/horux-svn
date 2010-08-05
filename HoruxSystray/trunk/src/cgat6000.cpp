@@ -254,9 +254,10 @@ void CGAT6000::handleMsg()
 
                    if(len == 0x0A)
                    {
+
                        bool ok;
                        QString s1;
-                       QString s = s1.sprintf("%02X%02X%02X%02X", (unsigned char)msg.at(3), (unsigned char)msg.at(4), (unsigned char)msg.at(5), (unsigned char)msg.at(6));
+                       QString s = s1.sprintf("%02X%02X%02X%02X", (unsigned char)msg.at(6), (unsigned char)msg.at(5), (unsigned char)msg.at(4), (unsigned char)msg.at(3));
 
                        unsigned long long sn = s1.toLongLong(&ok,16);
 
