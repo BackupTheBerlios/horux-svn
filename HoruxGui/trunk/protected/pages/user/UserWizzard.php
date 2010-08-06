@@ -101,18 +101,47 @@ class UserWizzard extends Page {
         }
 
         if(isset($this->Request['serialNumber']) && $this->Request['serialNumber'] != '') {
-            if($this->Step3->StepType == 'Finish') {
-                $lastId = $this->savePerson();
-                if($lastId) {
-                    $this->saveGroup($lastId);
-                    $this->addStandalone('add', $lastId);
-                    $this->saveKey($lastId, $this->Request['serialNumber']);
-                    $this->log("Create with the wizard the user: ".$this->name->SafeText." ".$this->firstname->SafeText);
-                    $this->Response->redirect($this->Service->constructUrl('user.UserList'));
+            if(isset($this->Request['serialNumber'])) {
+                $cmd = $this->db->createCommand( "SELECT * FROM hr_keys WHERE serialNumber=:sn AND isUsed=0" );
+                $cmd->bindValue(":sn",$this->Request['serialNumber'],PDO::PARAM_STR);
+                $data=$cmd->query();
+                $data = $data->read();
+                
+                if($data) {
+                    $this->UnusedKey->setSelectedValue($data['id']);
+                }
+                else {
+                    $cmd = $this->db->createCommand( "SELECT * FROM hr_keys WHERE serialNumber=:sn AND isUsed=1" );
+                    $cmd->bindValue(":sn",$this->Request['serialNumber'],PDO::PARAM_STR);
+                    $data=$cmd->query();
+                    $data = $data->read();
+                    if($data) {
+                        $this->displayMessage(Prado::localize("The key is already attributed"), false);
+                    }
+                    else {
+                        $cmd = NULL;
+                        //! add the new key in the database
+                        if($this->db->DriverName == 'sqlite')
+                            $cmd=$this->db->createCommand(SQL::SQL_ADD_KEY_SQLITE);
+                        else
+                            $cmd=$this->db->createCommand(SQL::SQL_ADD_KEY);
+                        $cmd->bindValue(":serialNumber",$this->Request['serialNumber']);
+                        $cmd->execute();
+
+                        $cmd = $this->db->createCommand( SQL::SQL_GET_UNATTRIBUTED_KEY );
+                        $data=$cmd->query();
+                        $connection->Active=false;
+
+                        $this->UnusedKey->DataSource=$data;
+                        $this->UnusedKey->dataBind();
+
+
+                        $this->UnusedKey->setSelectedValue($this->db->LastInsertID);
+                    }
+
                 }
             }
-            else
-                $this->Wizard1->setActiveStep($this->Step4);
+            $this->Wizard1->setActiveStep($this->Step3);
         }
 
         if(!$this->IsPostBack) {

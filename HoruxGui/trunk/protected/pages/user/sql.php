@@ -59,7 +59,7 @@ class SQL {
                         CONCAT('Key', ' - ', :serialNumber),
                         :serialNumber,
                         '0',
-                        '1'
+                        '0'
                   )";
 
     const SQL_ADD_KEY_SQLITE = "INSERT INTO hr_keys (
@@ -72,7 +72,7 @@ class SQL {
                         'Key' || ' - ' || :serialNumber,
                         :serialNumber,
                         '0',
-                        '1'
+                        '0'
                   )";
 
 }
