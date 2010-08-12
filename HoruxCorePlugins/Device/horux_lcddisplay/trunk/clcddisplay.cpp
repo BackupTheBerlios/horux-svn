@@ -28,6 +28,7 @@ CLCDDisplay::CLCDDisplay(QObject *parent) : QObject(parent)
   socket = NULL;
   timeDateTimer = NULL;
   messageTimer = new QTimer(this);
+
   connect(messageTimer, SIGNAL(timeout()), SLOT(displayDefaulfMessage()));
 
   addFunction("displayMessage", CLCDDisplay::s_displayMessage);
@@ -149,6 +150,22 @@ void CLCDDisplay::deviceConnected()
   
   emit deviceConnection(id, true);
 
+  QChar reset(0x0c);
+
+  QChar esc(0x1b);
+  QChar hiddenCursor('C');
+
+  QString clear = "";
+  clear += reset;
+  clear += esc;
+  clear += hiddenCursor;
+
+  uchar *m = new uchar[clear.toLatin1().length()];
+
+  for(int i=0; i<clear.toLatin1().length(); i++)
+      m[i] = clear.at(i).toLatin1();
+
+  appendMessage(m, clear.length());
 
   displayDefaulfMessage();
 }
@@ -158,26 +175,29 @@ void CLCDDisplay::displayDefaulfMessage()
     QDateTime dateTime = QDateTime::currentDateTime();
 
     QString mTmp = defaultMessage;
+    QString mTmp2 = mTmp;
+
 
     if(timeDateTimer == NULL && ( mTmp.contains("{date}") || mTmp.contains("{time}") ) )
     {
         timeDateTimer = new QTimer(this);
         connect(timeDateTimer, SIGNAL(timeout()), this, SLOT(displayDefaulfMessage()));
 
-        timeDateTimer->start(1000);
+        timeDateTimer->start(1000 * 60);
     }
 
 
     if( mTmp.contains("{date}") || mTmp.contains("{time}"))
     {
+
         //insert the time
-        mTmp.replace(QString("{time}"), QString(dateTime.toString("hh:mm:ss")));
+        mTmp.replace(QString("{time}"), QString(dateTime.toString("hh:mm")));
         //insert the date
         mTmp.replace(QString("{date}"), QString(dateTime.toString("dd-MM-yyyy")));
 
         // when we display a other message thant the default message, the timer was stopped
         if(!timeDateTimer->isActive())
-            timeDateTimer->start(1000);
+            timeDateTimer->start(1000 * 60);
     }
 
     displayMessage(mTmp);
@@ -185,23 +205,130 @@ void CLCDDisplay::displayDefaulfMessage()
 
 void CLCDDisplay::displayMessage(QString message)
 {
+    QString lineFeed = "";
+    lineFeed += QChar(0x0A) ;
+    lineFeed += QChar(0x0D) ;
     //replace the carriage return and at the next line
-    message.replace(QString("{nl}"), QString("^M^L"));
+    message.replace(QString("{nl}"), lineFeed);
 
     //replace the cursor position
     message.replace(QRegExp("\\{([0-9]*),([0-9]*)\\}"), " ESC O \\1 \\2 ");
 
     //add the reset screen char
-    message = "^L" + message;
+    QChar reset(0x0c);
 
-    uchar *m = new uchar[message.length()];
+    message = reset + message;
 
-    for(int i=0; i<message.length(); i++)
-        m[i] = message.at(i).toLatin1();
+    int length = 0;
 
-    appendMessage(m, message.length());
+    bool isUM = false;
+    uchar rep = 0;
 
-   // qDebug() << message;
+    for(int i=0; i<message.toLatin1().length(); i++)
+    {
+        switch((unsigned char)message.at(i).toLatin1())
+        {
+            case 0xC3:
+                //ignore this char
+                break;
+            case 0xA4:    // ä
+                length++;
+                break;
+            case 0xBC:    // ü
+                length++;
+                break;
+            case 0xB6:    // ö
+                length++;
+                break;
+            case 0x41:    // Ä
+                if(isUM)
+                    rep = 0x8E;
+                else
+                    length++;
+                break;
+            case 0x55:    // Ü
+                if(isUM)
+                    rep = 0x9A;
+                else
+                    length++;
+                break;
+            case 0x4F:    // Ö
+                if(isUM)
+                    rep = 0x99;
+                else
+                    length++;
+                break;
+            case 0x7B:
+                isUM = true;
+                break;
+            case 0x7D:
+                if(isUM)
+                    length++;
+                isUM = false;
+                break;
+            default:
+                length++;
+                break;
+        }
+    }
+
+    uchar *m = new uchar[length];
+
+
+    for(int i=0, j=0; i<message.toLatin1().length(); i++)
+    {
+
+        switch((unsigned char)message.at(i).toLatin1())
+        {
+            case 0xC3:
+                //ignore this char
+                break;
+            case 0xA4:    // ä
+                m[j++] = 0x84;
+                break;
+            case 0xBC:    // ü
+                m[j++] = 0x81;
+                break;
+            case 0xB6:    // ö
+                m[j++] = 0x94;
+                break;
+            case 0x41:    // Ä
+                if(isUM)
+                    rep = 0x8E;
+                else
+                    m[j++] = message.at(i).toAscii();
+                break;
+            case 0x55:    // Ü
+                if(isUM)
+                    rep = 0x9A;
+                else
+                    m[j++] = message.at(i).toAscii();
+                break;
+            case 0x4F:    // Ö
+                if(isUM)
+                    rep = 0x99;
+                else
+                    m[j++] = message.at(i).toAscii();
+                break;
+            case 0x7B:
+                isUM = true;
+                break;
+            case 0x7D:
+                if(isUM)
+                    m[j++] = rep;
+                isUM = false;
+                break;
+            default:
+                m[j++] = message.at(i).toAscii();
+                break;
+        }
+
+
+    }
+
+
+    appendMessage(m, length);
+
 }
 
 void CLCDDisplay::deviceDiconnected()
