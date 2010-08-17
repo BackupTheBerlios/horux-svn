@@ -269,7 +269,7 @@ class PageList extends TPage
 		return $date[2].'-'.$date[1].'-'.$date[0];	
     }
     
-    protected function onPrint()
+    protected function onPrint($orientation = 'P')
     {
         $this->db = $this->Application->getModule('horuxDb')->DbConnection;
         $this->db->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY,true);
@@ -281,7 +281,7 @@ class PageList extends TPage
             
             include_once("PrintList.php");
             
-            $this->pdf = new PrintListPDF();
+            $this->pdf = new PrintListPDF($orientation);
             $this->pdf->userName = $this->application->getUser()->getName();
             $this->pdf->siteName = utf8_decode($data['name']);
             //$this->pdf->AddPage();
