@@ -1,0 +1,60 @@
+<com:TContent ID="Main">
+
+    <script language="Javascript">
+        function onPrintRedirect()
+        {
+            <%= $this->jsPrint %>
+        }
+    </script>
+
+
+    <%include Application.common.template.headerContent %>
+
+    <com:TToolbarBox
+        ID="tbb"
+        Title="<%[Export the data]%>"
+        IconAsset="<%~ ./assets/icon-48-export.png %>"
+        RefreshVisible="true"
+        PrintVisible="true"
+        JsClickPrint="onPrintRedirect()"
+        HelpVisible="true"
+        CancelVisible="true"
+        />
+
+    <%include Application.common.template.headerBoxContent %>
+
+    <com:TPanel ID="filtre">
+    <com:TTranslate Catalogue="messages" >Filter</com:TTranslate>:
+
+    </com:TPanel>
+
+    <br/>
+    <%[Export format file]%>:
+    CSV <com:TRadioButton ID="csvExport" GroupName="exporFile" />
+    Excel 2007 <com:TRadioButton ID="excelExport" GroupName="exporFile" />
+    PDF <com:TRadioButton ID="pdfExport" GroupName="exporFile" Checked="true" />
+
+    <div id="list">
+        <com:TDataGrid
+            ID="DataGrid"
+            DataKeyField="id"
+            AutoGenerateColumns="true"
+            CssClass="adminlist"
+            AllowPaging="true"
+            PageSize="15"
+
+            ItemStyle.CssClass = "row0"
+            AlternatingItemStyle.CssClass="row1"
+
+            PagerStyle.Mode="Numeric"
+            PagerStyle.HorizontalAlign="Center"
+            OnPageIndexChanged="changePage"
+            OnPagerCreated="pagerCreated"
+            >
+
+        </com:TDataGrid>
+    </div>
+
+
+    <%include Application.common.template.footerContent %>
+</com:TContent>

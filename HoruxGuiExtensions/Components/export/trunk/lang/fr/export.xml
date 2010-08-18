@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.0">
+<file source-language="en" target-language="fr" datatype="plaintext" original="messages" date="2010-08-17T16:17:38Z" product-name="messages">
+<body>
+<trans-unit id="1">
+   <source>Add an export</source>
+   <target>Ajouter une exportation</target>
+</trans-unit>
+<trans-unit id="2">
+   <source>Enter a name for this export</source>
+   <target>Entrez un nom pour cette exportation</target>
+</trans-unit>
+<trans-unit id="3">
+   <source><![CDATA[This field is required]]></source>
+   <target/>
+</trans-unit>
+
+<trans-unit id="4">
+   <source>SQL Request</source>
+   <target>Requête SQL</target>
+</trans-unit>
+<trans-unit id="5">
+   <source>You could insert a description for this export</source>
+   <target>Vous pouvez insérer une description pour cette exportation</target>
+</trans-unit>
+<trans-unit id="6">
+   <source>The export was added successfully</source>
+   <target>L'exportation a été ajoutée avec succès</target>
+</trans-unit>
+<trans-unit id="7">
+   <source>The export was not added</source>
+   <target>L'exportation n'a pas été ajoutée</target>
+</trans-unit>
+<trans-unit id="8">
+   <source>Export</source>
+   <target>Exportation</target>
+</trans-unit>
+<trans-unit id="9">
+   <source><![CDATA[This record is modified by <b>]]></source>
+   <target/>
+</trans-unit>
+<trans-unit id="10">
+   <source>Access the page to export the data</source>
+   <target>Accéder à la page d\'exportation des données </target>
+</trans-unit>
+<trans-unit id="11">
+   <source><![CDATA[Name]]></source>
+   <target/>
+</trans-unit>
+<trans-unit id="12">
+   <source><![CDATA[Description]]></source>
+   <target/>
+</trans-unit>
+<trans-unit id="13">
+   <source><![CDATA[Select one item]]></source>
+   <target/>
+</trans-unit>
+<trans-unit id="14">
+   <source>{n} export was deleted</source>
+   <target>{n} exportation ont été supprimées</target>
+</trans-unit>
+<trans-unit id="15">
+   <source>Export the data</source>
+   <target>Exporter les données</target>
+</trans-unit>
+<trans-unit id="16">
+   <source>Export format file</source>
+   <target>Format du fichier d'exportation</target>
+</trans-unit>
+
+<trans-unit id="17">
+   <source>Modify an export</source>
+   <target>Modifier une exportation</target>
+</trans-unit>
+<trans-unit id="18">
+   <source>The export was modified successfully</source>
+   <target>L'exportation a été modifié avec succès</target>
+</trans-unit>
+<trans-unit id="19">
+   <source>The export was not modified</source>
+   <target>L'exportation n'a pas été modifiée</target>
+</trans-unit>
+
+
+<trans-unit id="20">
+<source>Insert the sql request</source>
+<target>Insérez une requête SQL</target>
+</trans-unit>
+
+<trans-unit id="21">
+<source>Data Export</source>
+<target>Exportation de données</target>
+</trans-unit>
+</body>
+</file>
+</xliff>

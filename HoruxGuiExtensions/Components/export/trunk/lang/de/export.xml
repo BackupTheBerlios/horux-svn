@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.0">
+<file source-language="en" target-language="de" datatype="plaintext" original="messages" date="2010-08-17T16:26:38Z" product-name="messages">
+<body>
+<trans-unit id="1">
+   <source>Add an export</source>
+   <target>Schreibe einen Export</target>
+</trans-unit>
+<trans-unit id="2">
+   <source>Enter a name for this export</source>
+   <target>Geben Sie einen Namen für diesen Export</target>
+</trans-unit>
+<trans-unit id="3">
+   <source>Insert the sql request</source>
+   <target>Legen Sie die SQL-Anfrage</target>
+</trans-unit>
+<trans-unit id="4">
+   <source>SQL Request</source>
+   <target>SQL Request</target>
+</trans-unit>
+<trans-unit id="5">
+   <source>You could insert a description for this export</source>
+   <target>Legen Sie könnten eine Beschreibung für diesen Export</target>
+</trans-unit>
+<trans-unit id="6">
+   <source><![CDATA[This field is required]]></source>
+   <target/>
+</trans-unit>
+<trans-unit id="7">
+   <source>The export was added successfully</source>
+   <target>Der Export wurde erfolgreich hinzugefügt</target>
+</trans-unit>
+<trans-unit id="8">
+   <source>The export was not added</source>
+   <target>Der Export wurde nicht aufgenommen</target>
+</trans-unit>
+<trans-unit id="9">
+   <source>Export</source>
+   <target>Export</target>
+</trans-unit>
+<trans-unit id="10">
+   <source>Access the page to export the data</source>
+   <target>Rufen Sie die Seite, um den Export der Daten</target>
+</trans-unit>
+<trans-unit id="11">
+   <source><![CDATA[This record is modified by <b>]]></source>
+   <target/>
+</trans-unit>
+<trans-unit id="12">
+   <source><![CDATA[Name]]></source>
+   <target/>
+</trans-unit>
+<trans-unit id="13">
+   <source><![CDATA[Description]]></source>
+   <target/>
+</trans-unit>
+<trans-unit id="14">
+   <source><![CDATA[Select one item]]></source>
+   <target/>
+</trans-unit>
+<trans-unit id="15">
+   <source>{n} export was deleted</source>
+   <target>(N) export wurde gelöscht</target>
+</trans-unit>
+<trans-unit id="16">
+   <source>Export the data</source>
+   <target>Export der Daten</target>
+</trans-unit>
+<trans-unit id="17">
+   <source>Export format file</source>
+   <target>Export-Datei-Format</target>
+</trans-unit>
+<trans-unit id="18">
+   <source>Data Export</source>
+   <target>Data Export</target>
+</trans-unit>
+<trans-unit id="19">
+   <source>Modify an export</source>
+   <target>Ändern einer Ausfuhrgenehmigung</target>
+</trans-unit>
+<trans-unit id="20">
+   <source>The export was modified successfully</source>
+   <target>Der Export wurde erfolgreich geändert</target>
+</trans-unit>
+<trans-unit id="21">
+   <source>The export was not modified</source>
+   <target>Der Export wurde nicht geändert</target>
+</trans-unit>
+</body>
+</file>
+</xliff>

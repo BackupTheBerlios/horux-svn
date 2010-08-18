@@ -1,0 +1,124 @@
+<com:TContent ID="Main">
+
+    <%include Application.common.template.headerContent %>
+    <com:TToolbarBox
+        ID="tbb"
+        Title="<%[Export]%>"
+        IconAsset="<%~ ./assets/icon-48-export.png %>"
+        HelpVisible="true"
+        AddVisible="true"
+        AddUrl="components.export.add"
+        EditVisible="true"
+        DelVisible="true"
+
+        />
+    <%include Application.common.template.headerBoxContent %>
+
+    <div id="list">
+        <com:TDataGrid
+            ID="DataGrid"
+            DataKeyField="id"
+            AutoGenerateColumns="false"
+            CssClass="adminlist"
+            AllowPaging="true"
+            PageSize="15"
+
+            ItemStyle.CssClass = "row0"
+            AlternatingItemStyle.CssClass="row1"
+
+            PagerStyle.Mode="Numeric"
+            PagerStyle.HorizontalAlign="Center"
+            OnPageIndexChanged="changePage"
+            OnPagerCreated="pagerCreated"
+            OnEditCommand="onEdit"
+            >
+
+            <com:TBoundColumn
+                HeaderText="ID"
+                DataField="id"
+                HeaderStyle.Width = "20px"
+                />
+
+            <com:TTemplateColumn
+                HeaderText=""
+                HeaderStyle.Width = "20px"
+                >
+                <prop:HeaderTemplate>
+                    <com:TActiveCheckBox
+                        ID="headerCB"
+                        AutoPostBack="true"
+                        OnCallback="Page.checkboxAllCallback"
+                        InputAttributes.value="0"
+                        />
+                </prop:HeaderTemplate>
+                <prop:ItemTemplate>
+                    <com:TConditional Condition="!$this->Page->isRecordBlock('hr_export', $this->NamingContainer->DataItem['id'])">
+                        <prop:TrueTemplate>
+                            <com:TActiveCheckBox
+                                ID="item"
+                                InputAttributes.value="<%#$this->NamingContainer->DataItem['id']%>"
+                                />
+                        </prop:TrueTemplate>
+                        <prop:FalseTemplate>
+                            <span onmouseover="Tip('<%= Prado::localize('This record is modified by <b>',array(),'messages')%><%= $this->Page->getUserName($this->NamingContainer->DataItem['locked']) %></b> ', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)">
+                                <com:TImage ID="noAccess" ImageUrl="./themes/letux/images/menu/icon-16-access.png" />
+                            </span>
+                        </prop:FalseTemplate>
+                    </com:TConditional>
+                </prop:ItemTemplate>
+
+            </com:TTemplateColumn>
+
+            <com:TTemplateColumn
+                HeaderText=""
+                >
+                <prop:HeaderTemplate>
+                    <com:TLabel
+                        Text="<%= Prado::localize('Name',array(),'messages') %>"
+                        />
+                </prop:HeaderTemplate>
+
+
+                <prop:ItemTemplate>
+                    <com:TConditional Condition="!$this->Page->isRecordBlock('hr_export', $this->NamingContainer->DataItem['id'])">
+                        <prop:TrueTemplate>
+                            <com:THyperLink
+                                NavigateUrl="<%= $this->Service->constructUrl('components.export.mod',array('id'=>$this->NamingContainer->DataItem['id'])) %>"
+                                Text="<%#$this->NamingContainer->DataItem['name']%>"
+                                />
+                        </prop:TrueTemplate>
+                        <prop:FalseTemplate>
+                            <com:TLabel
+                                Text="<%#$this->NamingContainer->DataItem['name']%>"
+                                />
+                        </prop:FalseTemplate>
+                    </com:TConditional>
+                </prop:ItemTemplate>
+            </com:TTemplateColumn>
+
+            <com:TBoundColumn
+                HeaderText="<%= Prado::localize('Description',array(),'messages') %>"
+                DataField="description"
+                />
+
+
+        <com:TTemplateColumn HeaderStyle.Width = "20px">
+            <prop:HeaderTemplate><%[Export]%></prop:HeaderTemplate>
+            <prop:ItemTemplate>
+                <span onmouseover="Tip('<%[Access the page to export the data]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)">
+                <com:TImageButton
+                    Text="<%#$this->NamingContainer->DataItem['id']%>"
+                    ImageUrl="<%~ ./assets/icon-16-export-action.png %>"
+                    OnClick="Page.onExport"
+                    Style="border:0px"
+                    />
+            </prop:ItemTemplate>
+            </span>
+        </com:TTemplateColumn>
+
+
+        </com:TDataGrid>
+    </div>
+
+    <%include Application.common.template.footerContent %>
+</com:TContent>
