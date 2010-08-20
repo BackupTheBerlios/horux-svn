@@ -35,6 +35,8 @@ CGantnerTimeTerminal::CGantnerTimeTerminal(QObject *parent) : QObject(parent)
     udpServer=true;
     checkBooking = 10 * 1000; //every 10 minutes
 
+    autoBooking = false;
+
     action = WAITING;
 
     timerCheckBooking = 0;
@@ -44,6 +46,8 @@ CGantnerTimeTerminal::CGantnerTimeTerminal(QObject *parent) : QObject(parent)
     timerSyncTime = 0;
 
     idCheckBooking = 0;
+
+
 
     readFile = "";
 
@@ -87,6 +91,7 @@ CDeviceInterface *CGantnerTimeTerminal::createInstance (QMap<QString, QVariant> 
   p->setParameter("brightness",config["brightness"]);
   p->setParameter("udpServer",config["udpServer"]);
   p->setParameter("checkBooking",config["checkBooking"]);
+  p->setParameter("autoBooking",config["autoBooking"]);
 
   return p;
 }
@@ -151,6 +156,8 @@ QVariant CGantnerTimeTerminal::getParameter(QString paramName)
     return udpServer;
   if(paramName == "checkBooking")
     return checkBooking;
+  if(paramName == "autoBooking")
+    return autoBooking;
 
   return "undefined";
 }
@@ -184,6 +191,8 @@ void CGantnerTimeTerminal::setParameter(QString paramName, QVariant value)
     udpServer = value.toBool();
    if(paramName == "checkBooking")
     checkBooking = value.toInt() * 60000;
+   if(paramName == "autoBooking")
+     autoBooking = value.toBool();
 }
 
 QString CGantnerTimeTerminal::getScript()
@@ -803,7 +812,7 @@ void CGantnerTimeTerminal::dispatchMessage(QByteArray bookings)
 
 void CGantnerTimeTerminal::reinit()
 {
-    //qDebug("REINIT");
+    qDebug("REINIT");
 
     QSettings settings(QCoreApplication::instance()->applicationDirPath() +"/horux.ini", QSettings::IniFormat);
     settings.beginGroup("GantnerTimeTerminal");
@@ -854,7 +863,7 @@ void CGantnerTimeTerminal::reinit()
 
     // set the booking timer configuration
     QSqlQuery query("SELECT hoursBlockMorning1, hoursBlockMorning2, hoursBlockMorning3, hoursBlockMorning4, hoursBlockAfternoon1,hoursBlockAfternoon2,hoursBlockAfternoon3,hoursBlockAfternoon4 FROM hr_timux_config");
-    if(query.next())
+    if(autoBooking && query.next())
     {
         args.clear();
         args << QScriptValue(&engine,1);
@@ -896,9 +905,10 @@ void CGantnerTimeTerminal::reinit()
 
         result = engine.evaluate("getBookingTimer");
         config += result.call(QScriptValue(), args).toString() + "\n";
+    } else {
+        result = engine.evaluate("resetBookingTimer");
+        config += result.call().toString() + "\n";
     }
-    else
-        qDebug() << "No config in hr_timux_config";
 
     //remove all fixed keys
     result = engine.evaluate("removeAllFixedKey");
@@ -980,7 +990,7 @@ void CGantnerTimeTerminal::reinit()
     //Remove all absent reason
     result = engine.evaluate("removeAllAbsentReason");
     config += result.call().toString() + "\n";
-
+qDebug() << config;
     ftp->put(config.toLatin1(), "config.dat");
 
     QMap<QString, QVariant> p;
@@ -1098,7 +1108,7 @@ void CGantnerTimeTerminal::timerEvent ( QTimerEvent * event )
                 numberOfSendCommand++;
 
             }
-            //qDebug() << sendFile;
+            qDebug() << sendFile;
             action = SEND_DOWN;
             readFile = "";
             connectionToFtp();

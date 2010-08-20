@@ -45,8 +45,8 @@ class CGantnerTimeTerminal : public QObject, CDeviceInterface
   Q_OBJECT
   Q_INTERFACES ( CDeviceInterface )
   Q_CLASSINFO ( "Author", "Jean-Luc Gyger" );
-  Q_CLASSINFO ( "Copyright", "Letux - 2009" );
-  Q_CLASSINFO ( "Version", "0.0.1" );
+  Q_CLASSINFO ( "Copyright", "Letux - 2010" );
+  Q_CLASSINFO ( "Version", "0.0.2" );
   Q_CLASSINFO ( "PluginName", "gantner_TimeTerminal" );
   Q_CLASSINFO ( "PluginType", "device" );
   Q_CLASSINFO ( "PluginDescription", "Handle a Gantner Time Terminal GAT p.time ST x80/ ST x81/ ST x90" );
@@ -164,6 +164,7 @@ protected:
     bool udpServer;
     QString udpClient;
     int checkBooking;
+    bool autoBooking;
 
     ACTIONS action;
     int idConnectHost;      // ftp id of the host connection

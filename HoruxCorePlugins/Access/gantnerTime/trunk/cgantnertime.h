@@ -37,8 +37,8 @@ class CGantnerTime : public QObject, CAccessInterface
     Q_OBJECT
     Q_INTERFACES(CAccessInterface)
     Q_CLASSINFO ( "Author", "Jean-Luc Gyger" );
-    Q_CLASSINFO ( "Copyright", "Letux - 2008" );
-    Q_CLASSINFO ( "Version", "0.0.1" );
+    Q_CLASSINFO ( "Copyright", "Letux - 2010" );
+    Q_CLASSINFO ( "Version", "0.0.2" );
     Q_CLASSINFO ( "PluginName", "gantnertime" );
     Q_CLASSINFO ( "PluginType", "access" );
     Q_CLASSINFO ( "PluginDescription", "Handle the Gantner time unit GAT p.time ST X80 / ST X81 / ST X90" );
