@@ -28,7 +28,6 @@ class install extends TPage
         $this->pdo->Text = extension_loaded('pdo') ? Prado::localize('Yes'):'<span style="color:red">'.Prado::localize('No').'<span>';
         $this->pdo_mysql->Text = extension_loaded('pdo_mysql') ? Prado::localize('Yes'):'<span style="color:red">'.Prado::localize('No').'<span>';
         $this->application_xml->Text = is_writable('./protected/application_p.xml') ? Prado::localize('Yes'):'<span style="color:red">'.Prado::localize('No').'<span>';
-        $this->curl->Text = extension_loaded('curl') ? Prado::localize('Yes'):'<span style="color:red">'.Prado::localize('No').'<span>';
 
         $memory_limit = substr(ini_get("memory_limit"),0, strlen(ini_get("memory_limit"))-1);
         $this->memory_limit->Text = $memory_limit>=128 ? Prado::localize('Yes'):'<span style="color:red">'.Prado::localize('No').'<span>';
@@ -36,9 +35,9 @@ class install extends TPage
 
         spl_autoload_unregister(array('Prado','autoload'));
 
-        @include('XML/RPC2/Client.php');
+        @include('XML/RPC.php');
 
-        $this->pear_xmlrpc->Text = class_exists('XML_RPC2_Client') ? Prado::localize('Yes'):'<span style="color:red">'.Prado::localize('No').'<span>';
+        $this->pear_xmlrpc->Text = class_exists('XML_RPC_Client') ? Prado::localize('Yes'):'<span style="color:red">'.Prado::localize('No').'<span>';
 
         if(
             !version_compare(PHP_VERSION, '5.1.0', '>=') ||
@@ -48,7 +47,7 @@ class install extends TPage
             !extension_loaded('zip') ||
             !extension_loaded('pdo') ||
             !extension_loaded('pdo_mysql') ||
-            !class_exists('XML_RPC2_Client') ||
+            !class_exists('XML_RPC_Client') ||
             !is_writable('./protected/application_p.xml')
         )
         {
