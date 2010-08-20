@@ -29,6 +29,9 @@ class install extends TPage
         $this->pdo_mysql->Text = extension_loaded('pdo_mysql') ? Prado::localize('Yes'):'<span style="color:red">'.Prado::localize('No').'<span>';
         $this->application_xml->Text = is_writable('./protected/application_p.xml') ? Prado::localize('Yes'):'<span style="color:red">'.Prado::localize('No').'<span>';
 
+
+        $this->pear_xmlrpc->Text = is_file('XML/RPC.php') ? Prado::localize('Yes'):'<span style="color:red">'.Prado::localize('No').'<span>';
+
         if(
             !version_compare(PHP_VERSION, '5.1.0', '>=') ||
             !extension_loaded('xml') ||
