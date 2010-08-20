@@ -112,6 +112,19 @@
 
                     <tr>
                         <td class="item" valign="top">
+                            - <%[curl support]%>
+                        </td>
+                        <td align= valign="top">
+
+                            <com:TLabel CssClass="Yes" ID="curl" text="<%[Yes]%>" />
+                            <span class="small">
+                                &nbsp;
+                            </span>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="item" valign="top">
                             - <%[PEAR XML/RPC2 support]%>
                         </td>
                         <td align= valign="top">
