@@ -29,7 +29,13 @@ class install extends TPage
         $this->pdo_mysql->Text = extension_loaded('pdo_mysql') ? Prado::localize('Yes'):'<span style="color:red">'.Prado::localize('No').'<span>';
         $this->application_xml->Text = is_writable('./protected/application_p.xml') ? Prado::localize('Yes'):'<span style="color:red">'.Prado::localize('No').'<span>';
 
+        spl_autoload_unregister(array('Prado','autoload'));
+
         @include('XML/RPC.php');
+
+        spl_autoload_register(array('Prado','autoload'));
+
+
         $this->pear_xmlrpc->Text = class_exists('XML_RPC_Client') ? Prado::localize('Yes'):'<span style="color:red">'.Prado::localize('No').'<span>';
 
         if(
