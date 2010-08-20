@@ -33,9 +33,6 @@ class install extends TPage
 
         @include('XML/RPC.php');
 
-        spl_autoload_register(array('Prado','autoload'));
-
-
         $this->pear_xmlrpc->Text = class_exists('XML_RPC_Client') ? Prado::localize('Yes'):'<span style="color:red">'.Prado::localize('No').'<span>';
 
         if(
@@ -54,6 +51,8 @@ class install extends TPage
 
         }
 
+        spl_autoload_register(array('Prado','autoload'));
+        
         $this->safe_mode->Text = ini_get('safe_mode')? Prado::localize('On'):Prado::localize('Off');
         $this->errors->Text = ini_get('display_errors')? Prado::localize('On'):Prado::localize('Off');
         $this->file_transfert->Text = ini_get('file_uploads')? Prado::localize('On'):Prado::localize('Off');
