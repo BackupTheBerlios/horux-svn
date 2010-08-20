@@ -31,7 +31,7 @@ class install extends TPage
 
 
         $memory_limit = substr(ini_get("memory_limit"),0, strlen(ini_get("memory_limit"))-1);
-        $this->memory_limit->Text = $memory_limit<128 ? Prado::localize('Yes'):'<span style="color:red">'.Prado::localize('No').'<span>';
+        $this->memory_limit->Text = $memory_limit>=128 ? Prado::localize('Yes'):'<span style="color:red">'.Prado::localize('No').'<span>';
 
 
         spl_autoload_unregister(array('Prado','autoload'));
