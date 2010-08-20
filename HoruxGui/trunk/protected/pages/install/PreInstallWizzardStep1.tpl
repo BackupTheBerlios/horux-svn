@@ -112,7 +112,7 @@
 
                     <tr>
                         <td class="item" valign="top">
-                            - <%[PEAR XML/RPC support]%>
+                            - <%[PEAR XML/RPC2 support]%>
                         </td>
                         <td align= valign="top">
 

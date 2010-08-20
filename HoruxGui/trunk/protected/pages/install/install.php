@@ -36,9 +36,9 @@ class install extends TPage
 
         spl_autoload_unregister(array('Prado','autoload'));
 
-        @include('XML/RPC.php');
+        @include('XML/RPC2/Client.php');
 
-        $this->pear_xmlrpc->Text = class_exists('XML_RPC_Client') ? Prado::localize('Yes'):'<span style="color:red">'.Prado::localize('No').'<span>';
+        $this->pear_xmlrpc->Text = class_exists('XML_RPC2_Client') ? Prado::localize('Yes'):'<span style="color:red">'.Prado::localize('No').'<span>';
 
         if(
             !version_compare(PHP_VERSION, '5.1.0', '>=') ||
@@ -48,7 +48,7 @@ class install extends TPage
             !extension_loaded('zip') ||
             !extension_loaded('pdo') ||
             !extension_loaded('pdo_mysql') ||
-            !class_exists('XML_RPC_Client') || 
+            !class_exists('XML_RPC2_Client') ||
             !is_writable('./protected/application_p.xml')
         )
         {
