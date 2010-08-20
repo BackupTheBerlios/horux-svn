@@ -86,6 +86,32 @@
 
                     <tr>
                         <td class="item" valign="top">
+                            - <%[PDO support]%>
+                        </td>
+                        <td align= valign="top">
+
+                            <com:TLabel CssClass="Yes" ID="pdo" text="<%[Yes]%>" />
+                            <span class="small">
+                                &nbsp;
+                            </span>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="item" valign="top">
+                            - <%[PDO-MYSQL support]%>
+                        </td>
+                        <td align= valign="top">
+
+                            <com:TLabel CssClass="Yes" ID="pdo_mysql" text="<%[Yes]%>" />
+                            <span class="small">
+                                &nbsp;
+                            </span>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="item" valign="top">
                             - <%[Sqlite support (optional)]%>
                         </td>
                         <td align= valign="top">

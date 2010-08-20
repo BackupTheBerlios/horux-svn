@@ -25,6 +25,8 @@ class install extends TPage
         $this->sqlite->Text = extension_loaded('sqlite') ? Prado::localize('Yes'):'<span style="color:red">'.Prado::localize('No').'<span>';
         //$this->postgre->Text = extension_loaded('pgsql') ? Prado::localize('Yes'):'<span style="color:red">'.Prado::localize('No').'<span>';
         $this->zip->Text = extension_loaded('zip') ? Prado::localize('Yes'):'<span style="color:red">'.Prado::localize('No').'<span>';
+        $this->pdo->Text = extension_loaded('pdo') ? Prado::localize('Yes'):'<span style="color:red">'.Prado::localize('No').'<span>';
+        $this->pdo_mysql->Text = extension_loaded('pdo_mysql') ? Prado::localize('Yes'):'<span style="color:red">'.Prado::localize('No').'<span>';
         $this->application_xml->Text = is_writable('./protected/application_p.xml') ? Prado::localize('Yes'):'<span style="color:red">'.Prado::localize('No').'<span>';
 
         if(
