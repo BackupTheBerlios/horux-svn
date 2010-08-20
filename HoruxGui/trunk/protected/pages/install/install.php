@@ -29,8 +29,8 @@ class install extends TPage
         $this->pdo_mysql->Text = extension_loaded('pdo_mysql') ? Prado::localize('Yes'):'<span style="color:red">'.Prado::localize('No').'<span>';
         $this->application_xml->Text = is_writable('./protected/application_p.xml') ? Prado::localize('Yes'):'<span style="color:red">'.Prado::localize('No').'<span>';
 
-
-        $this->pear_xmlrpc->Text = is_file('XML/RPC.php') ? Prado::localize('Yes'):'<span style="color:red">'.Prado::localize('No').'<span>';
+        @include('XML/RPC.php');
+        $this->pear_xmlrpc->Text = class_exists('XML_RPC_Client') ? Prado::localize('Yes'):'<span style="color:red">'.Prado::localize('No').'<span>';
 
         if(
             !version_compare(PHP_VERSION, '5.1.0', '>=') ||
@@ -40,6 +40,7 @@ class install extends TPage
             !extension_loaded('zip') ||
             !extension_loaded('pdo') ||
             !extension_loaded('pdo_mysql') ||
+            !class_exists('XML_RPC_Client') || 
             !is_writable('./protected/application_p.xml')
         )
         {
