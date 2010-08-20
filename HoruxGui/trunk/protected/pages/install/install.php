@@ -30,7 +30,7 @@ class install extends TPage
         $this->application_xml->Text = is_writable('./protected/application_p.xml') ? Prado::localize('Yes'):'<span style="color:red">'.Prado::localize('No').'<span>';
 
 
-        $memory_limit = substr(ini_get("memory_limit"),0, strlen()-1);
+        $memory_limit = substr(ini_get("memory_limit"),0, strlen(ini_get("memory_limit"))-1);
         $this->memory_limit->Text = $memory_limit<128 ? Prado::localize('Yes'):'<span style="color:red">'.Prado::localize('No').'<span>';
 
 
