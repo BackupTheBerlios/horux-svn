@@ -123,6 +123,19 @@
                         </td>
                     </tr>
 
+                    <tr>
+                        <td class="item" valign="top">
+                            - <%[Memory limit]%> (128M)
+                        </td>
+                        <td align= valign="top">
+
+                            <com:TLabel CssClass="Yes" ID="memory_limit" text="<%[Yes]%>" />
+                            <span class="small">
+                                &nbsp;
+                            </span>
+                        </td>
+                    </tr>
+
 
                     <tr>
                         <td class="item" valign="top">
