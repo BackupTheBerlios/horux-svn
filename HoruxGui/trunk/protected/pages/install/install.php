@@ -38,6 +38,8 @@ class install extends TPage
             !extension_loaded('mysql') ||
             //!extension_loaded('sqlite') ||
             !extension_loaded('zip') ||
+            !extension_loaded('pdo') ||
+            !extension_loaded('pdo_mysql') ||
             !is_writable('./protected/application_p.xml')
         )
         {
