@@ -697,7 +697,7 @@ bool CGantnerAccessTerminal::open()
           emit deviceEvent(xml);
           return false;
       }
-
+qDebug() << "OPEN";
 
         tcp = new QTcpSocket(this);
         connect(tcp, SIGNAL(readyRead()), this, SLOT(readAccessTerminal()));
@@ -965,8 +965,6 @@ void CGantnerAccessTerminal::msgTimeout()
         emit deviceEvent(xml);
 
         close();
-
-        QTimer::singleShot(5000, this, SLOT(reopen()));
 
         return;        
     }
@@ -1893,7 +1891,10 @@ void CGantnerAccessTerminal::checkOutBookings(QByteArray message )
                     }
                     break;
                 case 'L':   //peripherical device defect
-
+                    {
+                        QString xml = CXmlFactory::deviceEvent(QString::number(id), "1017",QString(__FUNCTION__) + ": peripherical device defect");
+                        emit deviceEvent(xml);
+                    }
                     break;
                 case 'M':   //door-open-too-long-alarm
                     {
