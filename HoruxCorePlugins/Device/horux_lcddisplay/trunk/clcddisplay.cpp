@@ -277,7 +277,6 @@ void CLCDDisplay::displayMessage(QString message)
 
     for(int i=0, j=0; i<message.toLatin1().length(); i++)
     {
-
         switch((unsigned char)message.at(i).toLatin1())
         {
             case 0xC3:

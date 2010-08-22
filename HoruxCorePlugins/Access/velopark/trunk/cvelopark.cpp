@@ -95,8 +95,20 @@ void CVeloPark::deviceEvent(QString xml)
         QSqlQuery queryUser(sqlUser);
 
         //if not return
-        if(!queryUser.next())
+        if(!queryUser.next()) {
+            QSqlQuery queryMessage("SELECT * FROM hr_vp_parking");
+            while(queryMessage.next())
+            {
+                QString ids = queryMessage.value(7).toString();
+                QStringList idsList= ids.split(',');
+
+                if(idsList.contains(params["deviceId"].toString()))
+                {
+                    displayMessage(params, queryMessage.value(3).toString());
+                }
+            }
             return;
+        }
 
         QString isAccessStr = "";
         if(isAccess(params, false, false))
@@ -358,7 +370,7 @@ bool CVeloPark::checkAccess(QMap<QString, QVariant> params, bool emitAction)
                                 if(idsList.contains(params["deviceId"].toString()))
                                 {
                                     QString message = queryMessage.value(8).toString();
-                                    message.replace("{credit}", querySub.value(5).toString());
+                                    message.replace("{credit}", querySub.value(5).toString().rightJustified(2, ' '));
                                     displayMessage(params, message);
                                 }
                             }
@@ -462,7 +474,7 @@ bool CVeloPark::checkAccess(QMap<QString, QVariant> params, bool emitAction)
                                             if(idsList.contains(params["deviceId"].toString()))
                                             {
                                                 QString message = queryMessage.value(8).toString();
-                                                message.replace("{credit}", QString::number(querySub.value(5).toInt()-1));
+                                                message.replace("{credit}", QString::number(querySub.value(5).toInt()-1).rightJustified(2, ' '));
                                                 displayMessage(params, message);
                                             }
                                         }
@@ -605,7 +617,7 @@ bool CVeloPark::checkAccess(QMap<QString, QVariant> params, bool emitAction)
                                     if(idsList.contains(params["deviceId"].toString()))
                                     {
                                         QString message = queryMessage.value(8).toString();
-                                        message.replace("{credit}", QString::number(querySub2.value(5).toInt()-1));
+                                        message.replace("{credit}", QString::number(querySub2.value(5).toInt()-1).rightJustified(2, ' '));
                                         displayMessage(params, message);
                                     }
                                 }
