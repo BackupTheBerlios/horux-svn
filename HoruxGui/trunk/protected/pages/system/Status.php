@@ -95,7 +95,7 @@ class Status extends Page
                 {
                     $p = array();
                     $p['id'] = (string)$device['id'];
-                    $p['name'] = (String)$device->name;
+                    $p['name'] = utf8_decode(utf8_decode((String)$device->name));
                     $p['serialNumber'] = (String)$device->serialNumber;
                     $p['isConnected'] = (String)$device->isConnected;
                     $p['firmwareVersion'] = (String)$device->firmwareVersion;
