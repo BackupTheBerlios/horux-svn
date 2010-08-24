@@ -51,7 +51,7 @@ class modconfig extends Page {
             $this->name->Text = $data['name'];
             $this->area->Text = $data['area'];
             $this->filling->Text = $data['filling'];
-            $this->access_ok_msg->Text = $data['access_ok_msg'];
+            $this->access_unknown_msg->Text = $data['access_unknown_msg'];
             $this->access_ko_msg->Text = $data['access_ko_msg'];
             $this->access_credit_warning_msg->Text = $data['access_credit_warning_msg'];
             $this->access_warning_msg->Text = $data['access_warning_msg'];
@@ -110,7 +110,7 @@ class modconfig extends Page {
                                             `name` = :name,
                                             `area` = :area,
                                             `filling` = :filling,
-                                            `access_ok_msg`=:access_ok_msg,
+                                            `access_unknown_msg`=:access_unknown_msg,
                                             `access_ko_msg`=:access_ko_msg,
                                             `device_ids`=:device_ids,
                                             `access_credit_warning_msg`=:access_credit_warning_msg,
@@ -121,7 +121,7 @@ class modconfig extends Page {
         $cmd->bindValue(":area",$this->area->SafeText,PDO::PARAM_STR);
         $cmd->bindValue(":filling",$this->filling->SafeText,PDO::PARAM_STR);
         $cmd->bindValue(":id",$this->id->Value, PDO::PARAM_STR);
-        $cmd->bindValue(":access_ok_msg",$this->access_ok_msg->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":access_unknown_msg",$this->access_unknown_msg->SafeText,PDO::PARAM_STR);
         $cmd->bindValue(":access_ko_msg",$this->access_ko_msg->SafeText,PDO::PARAM_STR);
         $cmd->bindValue(":access_credit_warning_msg",$this->access_credit_warning_msg->SafeText,PDO::PARAM_STR);
         $cmd->bindValue(":access_warning_msg",$this->access_warning_msg->SafeText,PDO::PARAM_STR);

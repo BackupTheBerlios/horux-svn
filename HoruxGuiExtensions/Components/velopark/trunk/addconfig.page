@@ -125,12 +125,12 @@
 
                           <tr>
                             <td valign="top" class="key">
-                              <span onmouseover="Tip('<%[Enter the text displayed when the user has the access]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"> <%[Access text]%></span>
+                              <span onmouseover="Tip('<%[Enter the text displayed when the user key is unknown]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"> <%[Unknown key]%></span>
                             </td>
                             <td>
                               <com:TTextBox
                                 CssClass="text_area"
-                                ID="access_ok_msg"
+                                ID="access_unknown_msg"
                                 Width="450px" /> {nl}
                             </td>
                           </tr>

@@ -60,11 +60,11 @@ class addconfig extends Page {
 
 
     protected function saveData() {
-        $cmd = $this->db->createCommand( "INSERT INTO `hr_vp_parking` (`name` ,`area` ,`access_ok_msg`,`access_ko_msg`,`device_ids`,`access_credit_warning_msg`,`access_warning_msg` ) VALUES (:name, :area, :access_ok_msg,:access_ko_msg,:device_ids,:access_credit_warning_msg, :access_warning_msg)" );
+        $cmd = $this->db->createCommand( "INSERT INTO `hr_vp_parking` (`name` ,`area` ,`access_unknown_msg`,`access_ko_msg`,`device_ids`,`access_credit_warning_msg`,`access_warning_msg` ) VALUES (:name, :area, :access_unknown_msg,:access_ko_msg,:device_ids,:access_credit_warning_msg, :access_warning_msg)" );
 
         $cmd->bindValue(":name",$this->name->SafeText,PDO::PARAM_STR);
         $cmd->bindValue(":area",$this->area->SafeText,PDO::PARAM_STR);
-        $cmd->bindValue(":access_ok_msg",$this->access_ok_msg->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":access_unknown_msg",$this->access_unknown_msg->SafeText,PDO::PARAM_STR);
         $cmd->bindValue(":access_ko_msg",$this->access_ko_msg->SafeText,PDO::PARAM_STR);
         $cmd->bindValue(":access_credit_warning_msg",$this->access_credit_warning_msg->SafeText,PDO::PARAM_STR);
         $cmd->bindValue(":access_warning_msg",$this->access_warning_msg->SafeText,PDO::PARAM_STR);
