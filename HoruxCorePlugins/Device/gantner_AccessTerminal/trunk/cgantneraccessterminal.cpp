@@ -156,6 +156,7 @@ void CGantnerAccessTerminal::deviceAction(QString xml)
         foreach(CDeviceInterface *d, childDevice)
         {
             xml.replace("<deviceAction id=\"" + QString::number(id)  + "\">", "<deviceAction id=\"" + d->getParameter("id").toString() + "\">");
+            xml.replace("<deviceAction id=\"" + QString::number(id)  + "\" >", "<deviceAction id=\"" + d->getParameter("id").toString() + "\">");
             d->deviceAction(xml);
         }
 
