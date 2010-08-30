@@ -7,7 +7,6 @@
         }
     </script>
 
-
     <%include Application.common.template.headerContent %>
 
     <com:TToolbarBox
@@ -30,9 +29,9 @@
 
     <br/>
     <%[Export format file]%>:
-    CSV <com:TRadioButton ID="csvExport" GroupName="exporFile" />
-    Excel 2007 <com:TRadioButton ID="excelExport" GroupName="exporFile" />
-    PDF <com:TRadioButton ID="pdfExport" GroupName="exporFile" Checked="true" />
+    CSV <com:TRadioButton ID="csvExport" GroupName="exporFile" OnCheckedChanged="onRadioChange" AutoPostBack="true" />
+    Excel 2007 <com:TRadioButton ID="excelExport" GroupName="exporFile" OnCheckedChanged="onRadioChange" AutoPostBack="true" />
+    PDF <com:TRadioButton ID="pdfExport" GroupName="exporFile" Checked="true" OnCheckedChanged="onRadioChange" AutoPostBack="true" />
 
     <div id="list">
         <com:TDataGrid
@@ -55,6 +54,18 @@
         </com:TDataGrid>
     </div>
 
+    <br />
+    <com:TLabel ID="lbl_csv_terminated" Style="display:none;"><%=Prado::localize('Fields terminated by',array(),'messages')%> </com:TLabel>
+    <com:TTextBox ID="csv_terminated" Text="," Style="width:20px;display:none;" OnTextChanged="onOptSet" AutoPostBack="true" />
+
+    <com:TLabel ID="lbl_csv_enclosed" Style="display:none;"><br /><%=Prado::localize('Fields enclosed by',array(),'messages')%> </com:TLabel>
+    <com:TTextBox ID="csv_enclosed" Text="&quot;" Style="width:20px;display:none;" OnTextChanged="onOptSet" AutoPostBack="true" />
+
+    <com:TLabel ID="lbl_csv_escaped" Style="display:none;"><br /><%=Prado::localize('Fields escaped by',array(),'messages')%> </com:TLabel>
+    <com:TTextBox ID="csv_escaped" Text="\" Style="width:20px;display:none;" OnTextChanged="onOptSet" AutoPostBack="true" />
+
 
     <%include Application.common.template.footerContent %>
 </com:TContent>
+
+

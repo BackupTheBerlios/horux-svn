@@ -9,13 +9,17 @@
   <authorUrl>http://www.letux.ch</authorUrl>
   <copyright>Letux</copyright>
   <license>GNU/GPL</license>
-  <description>Export componenet</description>
+  <description>Import / Export component</description>
 
   <sqlinstall>install.sql</sqlinstall>
   <sqluninstall>uninstall.sql</sqluninstall>
 
   <mainmenu>
-    <menu iconmenu="icon-16-export.png" url="components.export.export" name="Data Export"></menu>
+    <menu iconmenu="icon-16-export.png" url="components.export.export" name="Data Export">
+      <submenus>
+        <submenu iconmenu="icon-16-export.png" url="components.export.import" name="Data Import"></submenu>
+      </submenus>
+    </menu>
   </mainmenu>
 
   <permissions>
@@ -23,6 +27,8 @@
     <permission id="2" parent="1">components.export.add</permission>
     <permission id="3" parent="1">components.export.mod</permission>
     <permission id="4" parent="1">components.export.exportData</permission>
+    <permission id="5" parent="0">components.export.import</permission>
+    <permission id="6" parent="5">components.export.importData</permission>
   </permissions>
 
 </install>

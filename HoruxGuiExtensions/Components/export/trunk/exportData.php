@@ -12,7 +12,6 @@
  * See COPYRIGHT.php for copyright notices and details.
  */
 
-
 Prado::using('horux.pages.components.export.sql');
 
 spl_autoload_unregister(array('Prado','autoload'));
@@ -172,7 +171,6 @@ class exportData extends PageList {
     }
 
     protected function onPrint() {
-
         $cmd=$this->db->createCommand(SQL::SQL_GET_EXPORT);
         $cmd->bindValue(":id", $this->Request['id']);
         $data = $cmd->query();
@@ -257,6 +255,11 @@ class exportData extends PageList {
             header('Cache-Control: max-age=0');
 
             $objWriter = new PHPExcel_Writer_CSV($objPHPExcel);
+            $session = Prado::getApplication()->getSession();
+            //$objWriter->setLineEnding($session['csv_escaped']);
+            $objWriter->setEnclosure($session['csv_enclosed']);
+            $objWriter->setDelimiter($session['csv_terminated']);
+
             $objWriter->save('php://output');
             exit;
 
@@ -329,6 +332,33 @@ class exportData extends PageList {
 
         $this->pdf->render();
         
+    }
+
+    public function onRadioChange($sender,$param)
+    {
+        if ($sender->ID == "csvExport") {
+            $this->csv_terminated->SetStyle("width:20px;display:inline;");
+            $this->csv_enclosed->SetStyle("width:20px;display:inline;");
+            $this->csv_escaped->SetStyle("width:20px;display:inline;");
+            $this->lbl_csv_terminated->SetStyle("display:inline;");
+            $this->lbl_csv_enclosed->SetStyle("display:inline;");
+            $this->lbl_csv_escaped->SetStyle("display:inline;");
+        }
+        else {
+            $this->csv_terminated->SetStyle("display:none;");
+            $this->csv_enclosed->SetStyle("display:none;");
+            $this->csv_escaped->SetStyle("display:none;");
+            $this->lbl_csv_terminated->SetStyle("display:none;");
+            $this->lbl_csv_enclosed->SetStyle("display:none;");
+            $this->lbl_csv_escaped->SetStyle("display:none;");
+        }
+    }
+
+    public function onOptSet($sender, $param) {
+        $session = Prado::getApplication()->getSession();
+        $session['csv_terminated'] = $this->csv_terminated->SafeText;
+        $session['csv_enclosed'] = $this->csv_enclosed->SafeText;
+        $session['csv_escaped'] = $this->csv_escaped->SafeText;
     }
 }
 ?>

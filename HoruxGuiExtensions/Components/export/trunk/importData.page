@@ -1,0 +1,39 @@
+<com:TContent ID="Main">
+    <%include Application.common.template.headerContent %>
+
+    <com:TToolbarBox
+        ID="tbb"
+        Title="<%[Imported data]%>"
+        IconAsset="<%~ ./assets/icon-48-export.png %>"
+        SaveVisible="true"
+        CancelVisible="true"
+        />
+
+
+    <%include Application.common.template.headerBoxContent %>
+
+    <fieldset><legend><%=Prado::localize('Imported file\'s content',array(),'messages')%></legend>
+    <div id="list">
+        <com:TDataGrid
+            ID="DataGrid"
+            DataKeyField="id"
+            AutoGenerateColumns="true"
+            CssClass="adminlist"
+            AllowPaging="true"
+            PageSize="15"
+
+            ItemStyle.CssClass = "row0"
+            AlternatingItemStyle.CssClass="row1"
+
+            PagerStyle.Mode="Numeric"
+            PagerStyle.HorizontalAlign="Center"
+
+            >
+
+        </com:TDataGrid>
+    </div>
+    </fieldset>
+
+
+    <%include Application.common.template.footerContent %>
+</com:TContent>

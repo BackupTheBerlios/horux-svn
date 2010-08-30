@@ -52,8 +52,6 @@
                     </td>
                 </tr>
 
-
-
                 <tr>
                     <td valign="top" class="key">
                         <span onmouseover="Tip('<%[You could insert a description for this export]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><com:TTranslate Catalogue="messages">Description</com:TTranslate></span>
@@ -65,7 +63,7 @@
                             Width="400px" />
                     </td>
                 </tr>
-
+                
             </tbody>
         </table>
     </fieldset>

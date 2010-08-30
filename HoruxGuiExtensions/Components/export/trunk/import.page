@@ -1,0 +1,48 @@
+<com:TContent ID="Main">
+    <%include Application.common.template.headerContent %>
+    <com:TToolbarBox
+        ID="tbb"
+        Title="<%[Import]%>"
+        IconAsset="<%~ ./assets/icon-48-export.png %>"
+        ImportVisible="true"
+        AddUrl="components.export.add"
+        />
+    <%include Application.common.template.headerBoxContent %>
+
+    <fieldset>
+        <legend><%=Prado::localize('Format of imported file',array(),'messages')%></legend>
+        <com:TRadioButton ID="format" Checked="true" Value="csv" />
+        <com:TLabel><%=Prado::localize('CSV',array(),'messages')%> </com:TLabel>
+        <br />
+    </fieldset>
+
+    <fieldset><legend><%=Prado::localize('Options',array(),'messages')%></legend>
+        <com:TLabel><%=Prado::localize('Fields terminated by',array(),'messages')%> </com:TLabel>
+        <com:TTextBox ID="csv_terminated" Text="," Style="width:20px;" />
+        <br />
+        <com:TLabel><%=Prado::localize('Fields enclosed by',array(),'messages')%> </com:TLabel>
+        <com:TTextBox ID="csv_enclosed" Text="&quot;" Style="width:20px;" />
+        <br />
+        <com:TLabel><%=Prado::localize('Fields escaped by',array(),'messages')%> </com:TLabel>
+        <com:TTextBox ID="csv_escaped" Text="\" Style="width:20px;" />
+        <br />
+        <!---<com:TLabel><%=Prado::localize('Lines terminated by',array(),'messages')%> </com:TLabel>
+        <com:TTextBox ID="csv_new_line" Text="auto" Style="width:30px;" />
+        <br />--->
+        <!---<com:TLabel><%=Prado::localize('Column names in first row',array(),'messages')%> </com:TLabel>
+        <com:TCheckBox ID="csv_col_names" Checked="true" />--->
+        <br />
+    </fieldset>
+
+    <fieldset><legend><%=Prado::localize('Database',array(),'messages')%></legend>
+        <com:TLabel><%=Prado::localize('Database\'s table where import the file',array(),'messages')%> </com:TLabel>
+        <com:TTextBox ID="tbl_name" Text="hr_" Style="width:100px;" />
+    </fieldset>
+
+    <fieldset><legend><%=Prado::localize('Imported file',array(),'messages')%></legend>
+        <com:TLabel><%=Prado::localize('File',array(),'messages')%> </com:TLabel>
+        <com:TFileUpload ID="file" />
+    </fieldset>
+
+    <%include Application.common.template.footerContent %>
+</com:TContent>

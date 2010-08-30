@@ -39,6 +39,136 @@ class SQL {
 
 
 
+
+    const SQL_ADD_IMPORT = "INSERT INTO hr_user (
+                           `name`,
+                            `firstname`,
+                            `street`,
+                            `city`,
+                            `country`,
+                            `zip`,
+                            `phone1`,
+                            `phone2`,
+                            `email1`,
+                            `email2`,
+                            `language`,
+                            `sex`,
+                            `department`,
+                            `firme`,
+                            `street_pr`,
+                            `npa_pr`,
+                            `city_pr`,
+                            `country_pr`,
+                            `picture`,
+                            `pin_code`,
+                            `password`,
+                            `fax`,
+                            `avs`,
+                            `masterAuthorization`,
+                            `validity_date`
+                        )
+                        VALUES (
+                            :name,
+                            :firstname,
+                            :street,
+                            :city,
+                            :country,
+                            :zip,
+                            :phone1,
+                            :phone2,
+                            :email1,
+                            :email2,
+                            :language,
+                            :sex,
+                            :department,
+                            :firme,
+                            :street_pr,
+                            :npa_pr,
+                            :city_pr,
+                            :country_pr,
+                            :picture,
+                            :pin_code,
+                            :password,
+                            :fax,
+                            :avs,
+                            :masterAuthorization,
+                            :validity_date
+                        )";
+
+    const SQL_ADD_IMPORT2 = "INSERT INTO hr_user (
+                           `name`,
+                            `firstname`,
+                            `street`,
+                            `city`,
+                            `country`,
+                            `zip`,
+                            `phone1`,
+                            `phone2`,
+                            `email1`,
+                            `email2`,
+                            `language`,
+                            `sex`,
+                            `department`,
+                            `firme`,
+                            `street_pr`,
+                            `npa_pr`,
+                            `city_pr`,
+                            `country_pr`,
+                            `picture`,
+                            `pin_code`,
+                            `password`,
+                            `fax`,
+                            `avs`,
+                            `masterAuthorization`,
+                            `validity_date`,
+                            `isBlocked`,
+                            `locked`
+                        )
+                        VALUES (
+                            :name,
+                            :firstname,
+                            :street,
+                            :city,
+                            :country,
+                            :zip,
+                            :phone1,
+                            :phone2,
+                            :email1,
+                            :email2,
+                            :language,
+                            :sex,
+                            :department,
+                            :firme,
+                            :street_pr,
+                            :npa_pr,
+                            :city_pr,
+                            :country_pr,
+                            :picture,
+                            :pin_code,
+                            :password,
+                            :fax,
+                            :avs,
+                            :masterAuthorization,
+                            :validity_date,
+                            :isBlocked,
+                            :locked
+                        )";
+
+    const SQL_ADD_IMPORT3 = "INSERT INTO hr_user (
+                           `name`,
+                            `firstname`,
+                            `validity_date`,
+                            `isBlocked`,
+                            `locked`
+                        )
+                        VALUES (
+                            :name,
+                            :firstname,
+                            :validity_date,
+                            :isBlocked,
+                            :locked
+                        )";
+
 }
 
 ?>

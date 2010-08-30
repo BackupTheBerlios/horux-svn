@@ -91,6 +91,11 @@
 <source>Data Export</source>
 <target>Exportation de données</target>
 </trans-unit>
+
+<trans-unit id="22">
+<source>Data Import</source>
+<target>Importation de données</target>
+</trans-unit>
 </body>
 </file>
 </xliff>
