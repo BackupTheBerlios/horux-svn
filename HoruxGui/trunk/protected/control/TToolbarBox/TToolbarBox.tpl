@@ -216,16 +216,6 @@
                         </prop:TrueTemplate>
                     </com:TConditional>
 
-                    <com:TConditional Condition="$this->getViewState('ImportVisible','false') == 'true'">
-                        <prop:TrueTemplate>
-                            <td class="button" id="toolbar-import">
-                                <com:TLinkButton ID="Import" CssClass="toolbar" OnClick="Page.onImport" ValidationGroup="Group1">
-                                  <span class="icon-32-import" title="<com:TTranslate Catalogue='messages' Text='Import' />"></span><com:TTranslate Catalogue="messages" Text="Import" />
-                                </com:TLinkButton>
-                            </td>
-                        </prop:TrueTemplate>
-                    </com:TConditional>
-
                 </tr>
             </table>
         </div><!-- end class toolbar -->

@@ -243,14 +243,5 @@ class TToolbarBox extends TTemplateControl
 	{
 		return $this->getViewState('UserWizardVisible',false);
 	}
-	//! button import
-	public function setImportVisible($flag)
-	{
-		$this->setViewState('ImportVisible',$flag,false);
-	}
-	public function getImportVisible()
-	{
-		return $this->getViewState('ImportVisible',false);
-	}
 }
 ?>
