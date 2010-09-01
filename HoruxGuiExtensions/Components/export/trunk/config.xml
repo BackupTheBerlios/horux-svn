@@ -4,4 +4,7 @@
 			<translation  type="XLIFF" source="horux.messages" catalogue="export"  marker="" cache="false" />
         </module>
     </modules>
+  <paths>
+    <using namespace="Application.pages.components.export.control.TToolbarExport.*" />
+  </paths>
 </configuration>

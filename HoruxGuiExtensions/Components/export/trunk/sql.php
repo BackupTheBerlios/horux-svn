@@ -36,139 +36,38 @@ class SQL {
                         `sql`=:sql,
                         `description`=:description WHERE id=:id";
 
+    const SQL_GET_ALL_IMPORT = "SELECT * FROM hr_import";
 
+    const SQL_GET_IMPORT = "SELECT * FROM hr_import WHERE id=:id";
 
+    const SQL_DELETE_IMPORT = "DELETE FROM hr_import WHERE id=:id";
 
+    const SQL_ADD_IMPORT = "INSERT INTO hr_import (
+                        `name` ,
+                        `tb_name`,
+                        `cols`,
+                        `terminated_by`,
+                        `enclosed_by`,
+                        `escaped_by`,
+                        `description`
+                  )
+                  VALUES (
+                        :name,
+                        :tb_name,
+                        :cols,
+                        :terminated_by,
+                        :enclosed_by,
+                        :escaped_by,
+                        :description
+                  )";
 
-    const SQL_ADD_IMPORT = "INSERT INTO hr_user (
-                           `name`,
-                            `firstname`,
-                            `street`,
-                            `city`,
-                            `country`,
-                            `zip`,
-                            `phone1`,
-                            `phone2`,
-                            `email1`,
-                            `email2`,
-                            `language`,
-                            `sex`,
-                            `department`,
-                            `firme`,
-                            `street_pr`,
-                            `npa_pr`,
-                            `city_pr`,
-                            `country_pr`,
-                            `picture`,
-                            `pin_code`,
-                            `password`,
-                            `fax`,
-                            `avs`,
-                            `masterAuthorization`,
-                            `validity_date`
-                        )
-                        VALUES (
-                            :name,
-                            :firstname,
-                            :street,
-                            :city,
-                            :country,
-                            :zip,
-                            :phone1,
-                            :phone2,
-                            :email1,
-                            :email2,
-                            :language,
-                            :sex,
-                            :department,
-                            :firme,
-                            :street_pr,
-                            :npa_pr,
-                            :city_pr,
-                            :country_pr,
-                            :picture,
-                            :pin_code,
-                            :password,
-                            :fax,
-                            :avs,
-                            :masterAuthorization,
-                            :validity_date
-                        )";
-
-    const SQL_ADD_IMPORT2 = "INSERT INTO hr_user (
-                           `name`,
-                            `firstname`,
-                            `street`,
-                            `city`,
-                            `country`,
-                            `zip`,
-                            `phone1`,
-                            `phone2`,
-                            `email1`,
-                            `email2`,
-                            `language`,
-                            `sex`,
-                            `department`,
-                            `firme`,
-                            `street_pr`,
-                            `npa_pr`,
-                            `city_pr`,
-                            `country_pr`,
-                            `picture`,
-                            `pin_code`,
-                            `password`,
-                            `fax`,
-                            `avs`,
-                            `masterAuthorization`,
-                            `validity_date`,
-                            `isBlocked`,
-                            `locked`
-                        )
-                        VALUES (
-                            :name,
-                            :firstname,
-                            :street,
-                            :city,
-                            :country,
-                            :zip,
-                            :phone1,
-                            :phone2,
-                            :email1,
-                            :email2,
-                            :language,
-                            :sex,
-                            :department,
-                            :firme,
-                            :street_pr,
-                            :npa_pr,
-                            :city_pr,
-                            :country_pr,
-                            :picture,
-                            :pin_code,
-                            :password,
-                            :fax,
-                            :avs,
-                            :masterAuthorization,
-                            :validity_date,
-                            :isBlocked,
-                            :locked
-                        )";
-
-    const SQL_ADD_IMPORT3 = "INSERT INTO hr_user (
-                           `name`,
-                            `firstname`,
-                            `validity_date`,
-                            `isBlocked`,
-                            `locked`
-                        )
-                        VALUES (
-                            :name,
-                            :firstname,
-                            :validity_date,
-                            :isBlocked,
-                            :locked
-                        )";
-
+    const SQL_UPDATE_IMPORT = "UPDATE hr_import SET
+                        `name`=:name ,
+                        `tb_name`=:tb_name,
+                        `cols`=:cols,
+                        `terminated_by`=:terminated_by,
+                        `enclosed_by`=:enclosed_by,
+                        `escaped_by`=:escaped_by,
+                        `description`=:description WHERE id=:id";
 }
-
 ?>

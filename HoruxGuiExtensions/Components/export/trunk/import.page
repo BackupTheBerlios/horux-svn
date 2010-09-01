@@ -1,11 +1,14 @@
 <com:TContent ID="Main">
     <%include Application.common.template.headerContent %>
-    <com:TToolbarBox
+
+    <com:TToolbarExport
         ID="tbb"
         Title="<%[Import]%>"
         IconAsset="<%~ ./assets/icon-48-export.png %>"
+        DelConfVisible="true"
+        AddConfVisible="true"
+        AddConfUrl="components.export.modImport"
         ImportVisible="true"
-        AddUrl="components.export.add"
         />
     <%include Application.common.template.headerBoxContent %>
 
@@ -17,32 +20,109 @@
     </fieldset>
 
     <fieldset><legend><%=Prado::localize('Options',array(),'messages')%></legend>
-        <com:TLabel><%=Prado::localize('Fields terminated by',array(),'messages')%> </com:TLabel>
-        <com:TTextBox ID="csv_terminated" Text="," Style="width:20px;" />
-        <br />
-        <com:TLabel><%=Prado::localize('Fields enclosed by',array(),'messages')%> </com:TLabel>
-        <com:TTextBox ID="csv_enclosed" Text="&quot;" Style="width:20px;" />
-        <br />
-        <com:TLabel><%=Prado::localize('Fields escaped by',array(),'messages')%> </com:TLabel>
-        <com:TTextBox ID="csv_escaped" Text="\" Style="width:20px;" />
-        <br />
-        <!---<com:TLabel><%=Prado::localize('Lines terminated by',array(),'messages')%> </com:TLabel>
-        <com:TTextBox ID="csv_new_line" Text="auto" Style="width:30px;" />
-        <br />--->
-        <!---<com:TLabel><%=Prado::localize('Column names in first row',array(),'messages')%> </com:TLabel>
-        <com:TCheckBox ID="csv_col_names" Checked="true" />--->
+        <i><com:TLabel><%=Prado::localize('Default values (term enc esc colsName)',array(),'messages')%> = ( , " \ .csv )</com:TLabel></i>
+        <br /><br />
+        <com:TLabel><%=Prado::localize('Custom configuration',array(),'messages')%> : </com:TLabel>
+        <com:TCheckBox ID="custom_config" OnCheckedChanged="onCheckChange" AutoPostBack="true" Checked="true" /><br />
+        <com:TDataGrid
+            ID="DataGrid"
+            DataKeyField="id"
+            AutoGenerateColumns="false"
+            CssClass="adminlist"
+            ItemStyle.CssClass = "row0"
+            AlternatingItemStyle.CssClass="row1"
+            Style="display:inline;"
+            >
+
+            <com:TBoundColumn
+                HeaderText="ID"
+                DataField="id"
+                HeaderStyle.Width = "20px"
+                />
+
+            <com:TTemplateColumn
+                HeaderText=""
+                HeaderStyle.Width = "20px"
+                >
+
+                <prop:HeaderTemplate>
+                    <com:TLabel
+                        Text="<%= Prado::localize('Selected',array(),'messages') %>"
+                        />
+                </prop:HeaderTemplate>
+                <prop:ItemTemplate>
+                    <com:TActiveCheckBox
+                    ID="item"
+                    Value="<%#$this->NamingContainer->DataItem['id']%>"
+                    OnCallback="Page.onRadioChange"
+                        />
+                </prop:ItemTemplate>
+            </com:TTemplateColumn>
+
+            <com:TTemplateColumn
+                HeaderText=""
+                >
+                <prop:HeaderTemplate>
+                    <com:TLabel
+                        Text="<%= Prado::localize('Name',array(),'messages') %>"
+                        />
+                </prop:HeaderTemplate>
+
+                <prop:ItemTemplate>
+                    <com:THyperLink
+                        NavigateUrl="<%# $this->Service->constructUrl('components.export.modImport',array('id'=>$this->NamingContainer->DataItem['id'])) %>"
+                        Text="<%#$this->NamingContainer->DataItem['name']%>"
+                        />
+                </prop:ItemTemplate>
+            </com:TTemplateColumn>
+
+            <com:TBoundColumn
+                HeaderText="<%= Prado::localize('Table name',array(),'messages') %>"
+                DataField="tb_name"
+                />
+
+            <com:TBoundColumn
+                HeaderText="<%= Prado::localize('Column names',array(),'messages') %>"
+                DataField="cols"
+                />
+
+            <com:TBoundColumn
+                HeaderText="<%= Prado::localize('Terminated by',array(),'messages') %>"
+                DataField="terminated_by"
+                />
+
+            <com:TBoundColumn
+                HeaderText="<%= Prado::localize('Enclosed by',array(),'messages') %>"
+                DataField="enclosed_by"
+                />
+
+            <com:TBoundColumn
+                HeaderText="<%= Prado::localize('Escaped by',array(),'messages') %>"
+                DataField="escaped_by"
+                />
+
+            <com:TBoundColumn
+                HeaderText="<%= Prado::localize('Description',array(),'messages') %>"
+                DataField="description"
+                />
+        </com:TDataGrid>
         <br />
     </fieldset>
 
     <fieldset><legend><%=Prado::localize('Database',array(),'messages')%></legend>
         <com:TLabel><%=Prado::localize('Database\'s table where import the file',array(),'messages')%> </com:TLabel>
         <com:TTextBox ID="tbl_name" Text="hr_" Style="width:100px;" />
+        <i><com:TLabel><%= Prado::localize('(If "hr_" the custom configuration\'s value will be used)',array(),'messages') %></com:TLabel></i>
     </fieldset>
 
     <fieldset><legend><%=Prado::localize('Imported file',array(),'messages')%></legend>
         <com:TLabel><%=Prado::localize('File',array(),'messages')%> </com:TLabel>
         <com:TFileUpload ID="file" />
     </fieldset>
+
+
+
+
 
     <%include Application.common.template.footerContent %>
 </com:TContent>

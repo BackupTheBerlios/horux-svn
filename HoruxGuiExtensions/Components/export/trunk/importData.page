@@ -1,7 +1,7 @@
 <com:TContent ID="Main">
     <%include Application.common.template.headerContent %>
 
-    <com:TToolbarBox
+    <com:TToolbarExport
         ID="tbb"
         Title="<%[Imported data]%>"
         IconAsset="<%~ ./assets/icon-48-export.png %>"

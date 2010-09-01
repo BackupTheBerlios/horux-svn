@@ -1,0 +1,115 @@
+<com:TContent ID="Main">
+
+    <%include Application.common.template.headerContent %>
+
+    <com:TToolbarBox
+        ID="tbb"
+        Title="<%[Modify an import configuration]%>"
+        IconAsset="<%~ ./assets/icon-48-export.png %>"
+        ApplyVisible="true"
+        SaveVisible="true"
+        CancelVisible="true"
+        HelpVisible="true"
+        />
+
+    <%include Application.common.template.headerBoxContent %>
+
+    <com:THiddenField ID="id" value="" />
+    <fieldset class="adminform">
+        <legend><com:TTranslate Catalogue="messages">Parameters</com:TTranslate></legend>
+        <table class="admintable" cellspacing="1">
+            <tbody>
+                <tr>
+                    <td valign="top" class="key">
+                        <span onmouseover="Tip('<%[Enter a name for this export]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)">* <com:TTranslate Catalogue="messages">Name</com:TTranslate></span>
+                    </td>
+                    <td>
+                        <com:TTextBox
+                            CssClass="text_area"
+                            ID="name"
+                            Width="50" />
+                        <com:TRequiredFieldValidator
+                            ValidationGroup="Group1"
+                            ControlToValidate="name"
+                            Text="<%= Prado::localize('This field is required',array(), 'messages')%>"
+                            Display="Dynamic"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td valign="top" class="key">
+                        <span onmouseover="Tip('<%[You could specify the table name]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><com:TTranslate Catalogue="messages">Table name</com:TTranslate></span>
+                    </td>
+                    <td>
+                        <com:TTextBox
+                            CssClass="text_area"
+                            ID="tb_name"
+                            Width="80px" />
+                        <i><com:TTranslate Catalogue="messages">(Has to be specified during the import process if left null)</com:TTranslate></i>
+                    </td>
+                </tr>
+                <tr>
+                    <td valign="top" class="key">
+                        <span onmouseover="Tip('<%[You could specify the column names]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><com:TTranslate Catalogue="messages">Column names</com:TTranslate></span>
+                    </td>
+                    <td>
+                        <com:TTextBox
+                            CssClass="text_area"
+                            ID="cols"
+                            Width="400px" />
+                        <i><com:TTranslate Catalogue="messages">(Has to be specified inside the .csv file if left null)</com:TTranslate></i>
+                    </td>
+                </tr>
+                <tr>
+                    <td valign="top" class="key">
+                        <span onmouseover="Tip('<%[You could specify the termination character]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><com:TTranslate Catalogue="messages">Terminated by</com:TTranslate></span>
+                    </td>
+                    <td>
+                        <com:TTextBox
+                            CssClass="text_area"
+                            ID="terminated_by"
+                            Width="20px" />
+                        <i><com:TTranslate Catalogue="messages">(The default value , will be used if left null)</com:TTranslate></i>
+                    </td>
+                </tr>
+                <tr>
+                    <td valign="top" class="key">
+                        <span onmouseover="Tip('<%[You could specify the enclosure character]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><com:TTranslate Catalogue="messages">Enclosed by</com:TTranslate></span>
+                    </td>
+                    <td>
+                        <com:TTextBox
+                            CssClass="text_area"
+                            ID="enclosed_by"
+                            Width="20px" />
+                        <i><com:TTranslate Catalogue="messages">(The default value " will be used if left null)</com:TTranslate></i>
+                    </td>
+                </tr>
+                <tr>
+                    <td valign="top" class="key">
+                        <span onmouseover="Tip('<%[You could specify the escape character]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><com:TTranslate Catalogue="messages">Escaped by</com:TTranslate></span>
+                    </td>
+                    <td>
+                        <com:TTextBox
+                            CssClass="text_area"
+                            ID="escaped_by"
+                            Width="20px" />
+                        <i><com:TTranslate Catalogue="messages">(The default value \ will be used if left null)</com:TTranslate></i>
+                    </td>
+                </tr>
+                <tr>
+                    <td valign="top" class="key">
+                        <span onmouseover="Tip('<%[You could insert a description for this export]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><com:TTranslate Catalogue="messages">Description</com:TTranslate></span>
+                    </td>
+                    <td>
+                        <com:TTextBox
+                            CssClass="text_area"
+                            ID="description"
+                            Width="400px" />
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </fieldset>
+
+
+    <%include Application.common.template.footerContent %>
+</com:TContent>

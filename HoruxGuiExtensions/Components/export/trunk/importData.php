@@ -33,29 +33,56 @@ class importData extends PageList {
         parent::onLoad($param);
 
         $session = Prado::getApplication()->getSession();
-        $test = $session['format']." | ".$session['csv_terminated']." | ".$session['csv_enclosed']." | ".$session['csv_escaped']." | ".$session['csv_new_line']." | ".$session['csv_col_names']."<br />";
+
+        $selected_conf = $session['selected_conf'];
+        if ($selected_conf != "") {
+            $cmd = $this->db->createCommand( SQL::SQL_GET_IMPORT );
+            $cmd->bindValue(":id",$selected_conf, PDO::PARAM_INT);
+            $query = $cmd->query();
+            if($query) {
+                $data = $query->read();
+                $csv_terminated = $data['terminated_by'];
+                $csv_enclosed = $data['enclosed_by'];
+                $csv_escaped = $data['escaped_by'];
+                $tb_name = $data['tb_name'];
+                $cols = $data['cols'];
+            }
+        }
+
+        // default values (TODO: should perhaps be declare as const...)
+        if ($csv_terminated == "" || $csv_enclosed == "" || $csv_escaped == "") {
+            $csv_terminated = ',';
+            $csv_enclosed = '"';
+            $csv_escaped = '\\';
+        }
+        if ($tb_name == "")
+            $tb_name = $session['tbl_name'];
+        if ($cols != "")
+            $colNames = str_getcsv($cols);
 
         $idRow = -1;
         $fname = "./tmp/".$session['upfile'];
-        if(is_file($fname) && $session['tbl_name'] != "hr_") {
+        if(is_file($fname) && $tb_name != "hr_") {
             $handle = fopen ($fname,"r");
 
             $data = array();
             $colNames;
 
-            while ($row = fgetcsv($handle, 1000, $session['csv_terminated'], $session['csv_enclosed'], $session['csv_escaped']))
+            while ($row = fgetcsv($handle, 1000, $csv_terminated, $csv_enclosed, $csv_escaped))
             {
-                if ($idRow >= 0) {
+                if ($idRow >= 0 || $cols != "") {
                     $idCol = 0;
                     foreach ($colNames as $col) {
-                        if ($row[0] != "")
-                            $data[$idRow][$col] = $row[$idCol++];
+                        if ($row[0] != "") {
+                            if ($col == "")
+                                $idCol++;
+                            else
+                                $data[$idRow][$col] = $row[$idCol++];
+                        }
                     }
                 }
                 else
                     $colNames = $row;
-
-            //mysql_query("INSERT INTO matable(`id`, `marque`, `cartouche`, `Descriptif`, `Imprimante`, `fournisseur`, `url`) VALUES('".$row."', '".$data[0]."', '".$data[1]."', '".$data[2]."', '".$data[3]."', '".$data[4]."', '".$data[5]."')");
 
               $idRow++;
             }
@@ -67,10 +94,10 @@ class importData extends PageList {
             $this->fname = $fname;
             $this->data = $data;
             $this->colNames = $colNames;
-            $this->tblName = $session['tbl_name'];
+            $this->tblName = $tb_name;
         }
         else {
-            $msg = array('koMsg'=>Prado::localize('Can\'t import the file!'));
+            $msg = array('koMsg'=>Prado::localize('Can\'t import the file!').$session['selected_conf']);
             $this->Response->redirect($this->Service->constructUrl('components.export.import',$msg));
         }
 
@@ -91,14 +118,16 @@ class importData extends PageList {
         $cmdP2 = "VALUES (";
         $firstCol = 1;
         foreach ($this->colNames as $col) {
-            if (!$firstCol) {
-                $cmdP1 .= ", ";
-                $cmdP2 .= ", ";
+            if ($col != "") {
+                if (!$firstCol) {
+                    $cmdP1 .= ", ";
+                    $cmdP2 .= ", ";
+                }
+                else
+                    $firstCol = 0;
+                $cmdP1 .= "`".$col."`";
+                $cmdP2 .= ":".$col;
             }
-            else
-                $firstCol = 0;
-            $cmdP1 .= "`".$col."`";
-            $cmdP2 .= ":".$col;
         }
         $cmdP1 .= ") ";
         $cmdP2 .= ")";
@@ -108,7 +137,8 @@ class importData extends PageList {
         foreach ($this->data as $row) {
             $cmd=$this->db->createCommand($cmdP1.$cmdP2);
             foreach ($this->colNames as $col) {
-                $cmd->bindValue(":".$col,$row[$col],PDO::PARAM_STR);
+                if ($col != "")
+                    $cmd->bindValue(":".$col,$row[$col],PDO::PARAM_STR);
             }
             try {
                 if(!$cmd->execute())
