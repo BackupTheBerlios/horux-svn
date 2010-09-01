@@ -14,10 +14,6 @@
 
 Prado::using('horux.pages.components.export.sql');
 
-spl_autoload_unregister(array('Prado','autoload'));
-
-spl_autoload_register(array('Prado','autoload'));
-
 class importData extends PageList {
 
     protected $fname = '';

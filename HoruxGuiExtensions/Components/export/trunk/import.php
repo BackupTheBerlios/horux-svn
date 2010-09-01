@@ -16,7 +16,11 @@ Prado::using('horux.pages.components.export.sql');
 
 class import extends PageList {
     public function onLoad($param) {
-        $this->getClientScript()->registerStyleSheetFile('treeCss','./protected/pages/components/export/assets/icon.css');
+
+        $url=$this->publishAsset('./assets/icon.css');
+        $this->publishAsset('./assets/icon-32-import.png');
+        $this->getClientScript()->registerStyleSheetFile('treeCss',$url);
+        //$this->getClientScript()->registerStyleSheetFile('treeCss','./protected/pages/components/export/assets/icon.css');
 
         parent::onLoad($param);
 
