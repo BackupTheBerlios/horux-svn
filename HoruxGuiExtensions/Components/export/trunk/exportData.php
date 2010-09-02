@@ -210,6 +210,8 @@ class exportData extends PageList {
             {
                 $column = 'A';
                 foreach($d as $field) {
+                    $field = addslashes($field);
+
                     $sheet->setCellValue($column.$line,$field);
                     if($fill && $this->Request['pdf'] == 'true') {
                         $objPHPExcel->getActiveSheet()->getStyle($column.$line)->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID);
@@ -256,7 +258,7 @@ class exportData extends PageList {
 
             $objWriter = new PHPExcel_Writer_CSV($objPHPExcel);
             $session = Prado::getApplication()->getSession();
-            //$objWriter->setLineEnding($session['csv_escaped']);
+            //$objWriter->set???($session['csv_escaped']);
             $objWriter->setEnclosure($session['csv_enclosed']);
             $objWriter->setDelimiter($session['csv_terminated']);
 

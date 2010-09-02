@@ -21,4 +21,4 @@ CREATE TABLE IF NOT EXISTS `hr_import` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 INSERT INTO `hr_import` (`name`, `locked`, `tb_name`, `cols`, `terminated_by`, `enclosed_by`, `escaped_by`, `description`) VALUES
-('exemple1', 0, 'hr_import', '"", "name", "", "", "", "", "", "", "description"', '#', '&', '\\\\', '...');
+('exemple1', 0, 'hr_import', '"", "name", "", "", "", "", "", "", "description"', '#', '&', '\\', '...');
