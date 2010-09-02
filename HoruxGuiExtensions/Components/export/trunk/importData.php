@@ -72,8 +72,10 @@ class importData extends PageList {
                         if ($row[0] != "") {
                             if ($col == "")
                                 $idCol++;
-                            else
+                            else {
+                                $row[$idCol] = stripcslashes($row[$idCol]);
                                 $data[$idRow][$col] = $row[$idCol++];
+                            }
                         }
                     }
                 }
