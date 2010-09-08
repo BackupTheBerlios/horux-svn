@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff version="1.0">
-<file source-language="en" target-language="fr" datatype="plaintext" original="messages" date="2010-05-12T09:51:56Z" product-name="messages">
+<file source-language="en" target-language="fr" datatype="plaintext" original="messages" date="2010-09-08T16:04:01Z" product-name="messages">
 <body>
 <trans-unit id="1">
    <source>Configuration</source>
@@ -22,525 +22,659 @@
    <source>Please select a number</source>
    <target>Veuillez entrer un nombre</target>
 </trans-unit>
+
+
 <trans-unit id="6">
-   <source>Enter the breaks minimum at noon</source>
-   <target>Entrez la durée minimum pour la pause de midi</target>
-</trans-unit>
-<trans-unit id="7">
-   <source>Breaks minimum at noon (minutes)</source>
-   <target>Durée de la pause de midi(minutes)</target>
-</trans-unit>
-<trans-unit id="8">
    <source>Enter the rounding of the bookings</source>
    <target>Entrez l\'arrondissement des pointages</target>
 </trans-unit>
-<trans-unit id="9">
+<trans-unit id="7">
    <source>Rounding of the bookings (minutes)</source>
    <target>Arrondissement des pointages</target>
 </trans-unit>
-<trans-unit id="10">
+<trans-unit id="8">
    <source>Enter the number of hours worked per week by default</source>
    <target>Entrez le nombre d\'heures travaillées par semaine. &lt;br/&gt;Valeur utilisée par défaut.</target>
 </trans-unit>
-<trans-unit id="11">
+<trans-unit id="9">
    <source>Hours worked per week by default (hour)</source>
    <target>Heures travaillées par semaine (heures)</target>
 </trans-unit>
-<trans-unit id="12">
+<trans-unit id="10">
    <source>Enter the number of holidays per year by default</source>
    <target>Entrez le nombre de jours de vacances par années.&lt;br/&gt;Valeur utilisée par défaut.</target>
 </trans-unit>
-<trans-unit id="13">
+<trans-unit id="11">
    <source>Holidays per year by default (day)</source>
    <target>Nombre de jours de vacances pas année</target>
 </trans-unit>
-<trans-unit id="14">
+<trans-unit id="12">
    <source>Booking In/out</source>
    <target>Pointage Entré/Sortie</target>
 </trans-unit>
-<trans-unit id="15">
+<trans-unit id="13">
    <source>Enter the hours blocks at the morning</source>
    <target>Entrez les heures de pointage du matin</target>
 </trans-unit>
-<trans-unit id="16">
+<trans-unit id="14">
    <source>Morning hours blocks&lt;br/&gt; (Format: 6:30)</source>
    <target>Heures de pointage du matin (Format: 6:30)</target>
 </trans-unit>
-<trans-unit id="17">
+<trans-unit id="15">
    <source>to</source>
    <target>jusqu'à</target>
 </trans-unit>
-<trans-unit id="18">
+<trans-unit id="16">
    <source>Enter the hours blocks at the afternoon</source>
    <target>Entrez les heures de pointage de l\'après-midi</target>
 </trans-unit>
-<trans-unit id="19">
+<trans-unit id="17">
    <source>Afternoon hours blocks&lt;br/&gt; (Format: 12:30)</source>
    <target>Heures de pointage de l'après-midi(Format: 12:30)</target>
 </trans-unit>
-<trans-unit id="20">
+<trans-unit id="18">
    <source>The config was modified successfully</source>
    <target>La configuration a été modifié avec succès</target>
 </trans-unit>
 
 
-<trans-unit id="21">
+<trans-unit id="19">
    <source>Timux Admin</source>
    <target>Timux Admin</target>
 </trans-unit>
 
-<trans-unit id="22">
+<trans-unit id="20">
    <source>Time Code</source>
    <target>Code de temps</target>
 </trans-unit>
-<trans-unit id="23">
+<trans-unit id="21">
    <source>Workflow</source>
    <target>Flux d'information</target>
 </trans-unit>
-<trans-unit id="24">
+<trans-unit id="22">
    <source>Time code</source>
    <target>Code de temps</target>
 </trans-unit>
-<trans-unit id="25">
+<trans-unit id="23">
    <source>Time classes</source>
    <target>Classes des heures</target>
 </trans-unit>
-<trans-unit id="26">
+<trans-unit id="24">
    <source>Welcome to Timux Admin</source>
    <target>Bienvenue dans Timux Admin</target>
 </trans-unit>
-<trans-unit id="27">
+<trans-unit id="25">
    <source>Welcome on Timux Administrator, the time human ressource administration for Timux.</source>
    <target>Bienvenue dans l'administration de Timux, la gestion du temps pour les ressources humaine.</target>
 </trans-unit>
-<trans-unit id="28">
+<trans-unit id="26">
    <source>We hope you have much fun and success with Timux.</source>
    <target>Nous espérons que vous aurez du succès avec Timux.</target>
 </trans-unit>
-<trans-unit id="29">
+<trans-unit id="27">
    <source>Add a time class</source>
    <target>Ajouter une classe de temps</target>
 </trans-unit>
-<trans-unit id="30">
+<trans-unit id="28">
    <source>Enter a name for this time class</source>
    <target>Entrez un nom pour cette classe de temps</target>
 </trans-unit>
-<trans-unit id="31">
+<trans-unit id="29">
    <source>Name</source>
    <target>Nom</target>
 </trans-unit>
-<trans-unit id="32">
+<trans-unit id="30">
    <source>Enter a multiplier for this time class</source>
    <target>Entrez un multiplicateur pour cette classe de temps</target>
 </trans-unit>
-<trans-unit id="33">
+<trans-unit id="31">
    <source>Multiplier</source>
    <target>Multiplicateur</target>
 </trans-unit>
-<trans-unit id="34">
+<trans-unit id="32">
    <source>Enter the hour when start this time class</source>
    <target>Entrez l\'heure de début pour cette classe de temps</target>
 </trans-unit>
-<trans-unit id="35">
+<trans-unit id="33">
    <source>From</source>
    <target>Depuis</target>
 </trans-unit>
-<trans-unit id="36">
+<trans-unit id="34">
    <source>Enter the hour when finished this time class</source>
    <target>Entrez l\'heure de fin pour cette classe de temps</target>
 </trans-unit>
-<trans-unit id="37">
+<trans-unit id="35">
    <source>To</source>
    <target>Jusqu'à</target>
 </trans-unit>
-<trans-unit id="38">
+<trans-unit id="36">
    <source>The time class was added successfully</source>
    <target>La classe de temps a été ajouté avec succès</target>
 </trans-unit>
-<trans-unit id="39">
+<trans-unit id="37">
    <source>The time class was not added</source>
    <target>La classe de temps n'a pas été ajouté</target>
 </trans-unit>
-<trans-unit id="40">
+<trans-unit id="38">
    <source>Modify the time class</source>
    <target>Modifier la classe de temps</target>
 </trans-unit>
-<trans-unit id="41">
+<trans-unit id="39">
    <source>The time class was modified successfully</source>
    <target>La classe de temps a été modifié avec succès</target>
 </trans-unit>
-<trans-unit id="42">
+<trans-unit id="40">
    <source>The time class was not modified</source>
    <target>La classe de temps n'a pas été modifié</target>
 </trans-unit>
-<trans-unit id="43">
+<trans-unit id="41">
    <source>This record is modified by &lt;b&gt;</source>
    <target>Ce champs est modifié par &lt;b&gt;</target>
 </trans-unit>
-<trans-unit id="44">
+<trans-unit id="42">
    <source>Select one item</source>
    <target>Sélectionnez un enregistrement</target>
 </trans-unit>
-<trans-unit id="45">
+<trans-unit id="43">
    <source>{n} time classes was deleted</source>
    <target>{n} classes de temps ont été supprimées</target>
 </trans-unit>
-<trans-unit id="46">
+<trans-unit id="44">
    <source>Add a time code</source>
    <target>Ajouter un code de temps</target>
 </trans-unit>
-<trans-unit id="47">
+<trans-unit id="45">
    <source>Enter a name for this time code</source>
    <target>Entrez un nom pour ce code de temps</target>
 </trans-unit>
-<trans-unit id="48">
+<trans-unit id="46">
    <source>Enter a abbreviation for this time code</source>
    <target>Entrez une abréviation pour ce code de temps</target>
 </trans-unit>
-<trans-unit id="49">
+<trans-unit id="47">
    <source>Abbreviation</source>
    <target>Abréviation</target>
 </trans-unit>
-<trans-unit id="50">
+<trans-unit id="48">
    <source>Select the type for this time code</source>
    <target>Sélectionnez le type du code de temps</target>
 </trans-unit>
-<trans-unit id="51">
+<trans-unit id="49">
    <source>Type</source>
    <target>Type</target>
 </trans-unit>
-<trans-unit id="52">
+<trans-unit id="50">
    <source>Leave</source>
    <target>Congé</target>
 </trans-unit>
-<trans-unit id="53">
+<trans-unit id="51">
    <source>Absence</source>
    <target>Absence</target>
 </trans-unit>
-<trans-unit id="54">
+<trans-unit id="52">
    <source>Overtime</source>
    <target>Heures supplémentaires</target>
 </trans-unit>
-<trans-unit id="55">
+<trans-unit id="53">
    <source>Load</source>
    <target>Charge</target>
 </trans-unit>
-<trans-unit id="56">
+<trans-unit id="54">
    <source>Default time code for the standard holidays</source>
    <target>Code de temps par défaut pour les vacances</target>
 </trans-unit>
-<trans-unit id="57">
+<trans-unit id="55">
    <source>Default holiday time code</source>
    <target>Code de temps par défaut pour les vacances</target>
 </trans-unit>
-<trans-unit id="58">
+<trans-unit id="56">
    <source>Default time code for the standard overtime</source>
    <target>Code de temps par défaut pour les heures supplémentaires</target>
 </trans-unit>
-<trans-unit id="59">
+<trans-unit id="57">
    <source>Default overtime time code</source>
    <target>Code de temps par défaut pour les heures supplémentaires</target>
 </trans-unit>
-<trans-unit id="60">
+<trans-unit id="58">
    <source>Select the time code format</source>
    <target>Sélectionnez le format d\'affichage du code de temps</target>
 </trans-unit>
-<trans-unit id="61">
+<trans-unit id="59">
    <source>Format</source>
    <target>Format</target>
 </trans-unit>
-<trans-unit id="62">
+<trans-unit id="60">
    <source>Select the sign type</source>
    <target>Sélectionnez le type de pointage possible&lt;br/&gt;avec ce code de temps</target>
 </trans-unit>
-<trans-unit id="63">
+<trans-unit id="61">
    <source>Sign type</source>
    <target>Type de pointage</target>
 </trans-unit>
-<trans-unit id="64">
+<trans-unit id="62">
    <source>None</source>
    <target>Aucun</target>
 </trans-unit>
-<trans-unit id="65">
+<trans-unit id="63">
    <source>Out</source>
    <target>Partir</target>
 </trans-unit>
-<trans-unit id="66">
+<trans-unit id="64">
    <source>In</source>
    <target>Arrivé</target>
 </trans-unit>
-<trans-unit id="67">
+<trans-unit id="65">
    <source>In/Out</source>
    <target>Arrivé/Partir</target>
 </trans-unit>
-<trans-unit id="68">
+<trans-unit id="66">
    <source>Check it when this time code must be count as time worked</source>
    <target>Cochez quand le code de temps doit être utilisé comme un temps compensé</target>
 </trans-unit>
-<trans-unit id="69">
+<trans-unit id="67">
    <source>Time worked</source>
    <target>Temps compensé</target>
 </trans-unit>
-<trans-unit id="70">
+<trans-unit id="68">
    <source>Overtime counter parameters</source>
    <target>Paramètres des compteurs d'heures supplémentaires</target>
 </trans-unit>
-<trans-unit id="71">
+<trans-unit id="69">
    <source>Check it to use the min/max.&lt;br/&gt; These values are used to inform when the time is too hight or too low</source>
    <target>Cocher si vous voulez fixer un min/max.&lt;br/&gt;Ces valeurs seront utilisées pour informer d\'un dépassement.</target>
 </trans-unit>
-<trans-unit id="72">
+<trans-unit id="70">
    <source>Use min/max</source>
    <target>Utiliser min/max</target>
 </trans-unit>
-<trans-unit id="73">
+<trans-unit id="71">
    <source>Enter the minimum</source>
    <target>Entrez le minimum</target>
 </trans-unit>
-<trans-unit id="74">
+<trans-unit id="72">
    <source>Minimum</source>
    <target>Minimum</target>
 </trans-unit>
-<trans-unit id="75">
+<trans-unit id="73">
    <source>Enter the maximum</source>
    <target>Entrez le maximum</target>
 </trans-unit>
-<trans-unit id="76">
+<trans-unit id="74">
    <source>Maximum</source>
    <target>Maximum</target>
 </trans-unit>
-<trans-unit id="77">
+<trans-unit id="75">
    <source>The time code was added successfully</source>
    <target>Le code temps a été ajouté avec succès</target>
 </trans-unit>
-<trans-unit id="78">
+<trans-unit id="76">
    <source>The time code was not added</source>
    <target>Le code temps n'a pas été ajouté</target>
 </trans-unit>
-<trans-unit id="79">
+<trans-unit id="77">
    <source>Modify a time code</source>
    <target>Modifier un code de temps</target>
 </trans-unit>
-<trans-unit id="80">
+<trans-unit id="78">
    <source>The time code was modified successfully</source>
    <target>Le code temps a été modifié avec succès</target>
 </trans-unit>
-<trans-unit id="81">
+<trans-unit id="79">
    <source>The time code was not modified</source>
    <target>Le code temps n'a pas été modifié</target>
 </trans-unit>
 
-<trans-unit id="82">
+<trans-unit id="80">
    <source>Sign</source>
    <target>Pointage</target>
 </trans-unit>
-<trans-unit id="83">
+<trans-unit id="81">
    <source>Default</source>
    <target>Défaut</target>
 </trans-unit>
-<trans-unit id="84">
+<trans-unit id="82">
    <source>Yes</source>
    <target>Oui</target>
 </trans-unit>
-<trans-unit id="85">
+<trans-unit id="83">
    <source>No</source>
    <target>Non</target>
 </trans-unit>
-<trans-unit id="86">
+<trans-unit id="84">
    <source>{n} time code was deleted</source>
    <target>{n} codes de temps ont été supprimés</target>
 </trans-unit>
-<trans-unit id="87">
+<trans-unit id="85">
    <source>No signing</source>
    <target>Pas de pointage</target>
 </trans-unit>
-<trans-unit id="88">
+<trans-unit id="86">
    <source>Signing in only</source>
    <target>Pointage d'arrivé uniquement</target>
 </trans-unit>
-<trans-unit id="89">
+<trans-unit id="87">
    <source>Signing out only</source>
    <target>Pointage de départ uniquement</target>
 </trans-unit>
-<trans-unit id="90">
+<trans-unit id="88">
    <source>Signing in/out</source>
    <target>Pointage de départ et d'arrivé</target>
 </trans-unit>
-<trans-unit id="91">
+<trans-unit id="89">
    <source>Add a workflow</source>
    <target>Ajouter un flux d'information</target>
 </trans-unit>
-<trans-unit id="92">
+<trans-unit id="90">
    <source>Parameters</source>
    <target>Paramètres</target>
 </trans-unit>
-<trans-unit id="93">
+<trans-unit id="91">
    <source>Enter a name for this workflow</source>
    <target>Entrez un nom pour ce flux d\'information</target>
 </trans-unit>
-<trans-unit id="94">
+<trans-unit id="92">
    <source>Select the type of the workflow.</source>
    <target>Sélectionnez le type du flux d\'information</target>
 </trans-unit>
-<trans-unit id="95">
+<trans-unit id="93">
    <source>Select the department</source>
    <target>Sélectionnez le département</target>
 </trans-unit>
-<trans-unit id="96">
+<trans-unit id="94">
    <source>Department</source>
    <target>Département</target>
 </trans-unit>
-<trans-unit id="97">
+<trans-unit id="95">
    <source>Select the first validator</source>
    <target>Sélectionnez le premier validateur</target>
 </trans-unit>
-<trans-unit id="98">
+<trans-unit id="96">
    <source>Validator 1</source>
    <target>Validateur 1</target>
 </trans-unit>
-<trans-unit id="99">
+<trans-unit id="97">
    <source>or</source>
    <target>ou</target>
 </trans-unit>
-<trans-unit id="100">
+<trans-unit id="98">
    <source>Select the second validator</source>
    <target>Sélectionnez le second validateur</target>
 </trans-unit>
-<trans-unit id="101">
+<trans-unit id="99">
    <source>Validator 2</source>
    <target>Validateur 2</target>
 </trans-unit>
-<trans-unit id="102">
+<trans-unit id="100">
    <source>Select the third validator</source>
    <target>Sélectionnez le troisième validateur</target>
 </trans-unit>
-<trans-unit id="103">
+<trans-unit id="101">
    <source>Validator 3</source>
    <target>Validateur 3</target>
 </trans-unit>
-<trans-unit id="104">
+<trans-unit id="102">
    <source>You could insert a description for this workflow.</source>
    <target>Insérez au besoin une description pour ce flux d\'information</target>
 </trans-unit>
-<trans-unit id="105">
+<trans-unit id="103">
    <source>Description</source>
    <target>Description</target>
 </trans-unit>
-<trans-unit id="106">
+<trans-unit id="104">
    <source>---- Apply to all ----</source>
    <target>---- Appliquez à tous ----</target>
 </trans-unit>
-<trans-unit id="107">
+<trans-unit id="105">
    <source>The workflow was added successfully</source>
    <target>Le flux d'information a été ajouté avec succès</target>
 </trans-unit>
-<trans-unit id="108">
+<trans-unit id="106">
    <source>The workflow was not added</source>
    <target>Le flux d'information n'a pas été ajouté</target>
 </trans-unit>
-<trans-unit id="109">
+<trans-unit id="107">
    <source>Modify the workflow</source>
    <target>Modifier le flux d'information</target>
 </trans-unit>
-<trans-unit id="110">
+<trans-unit id="108">
    <source>The workflow was modified successfully</source>
    <target>Le flux d'information a été modifié avec succès</target>
 </trans-unit>
-<trans-unit id="111">
+<trans-unit id="109">
    <source>The workflow was not modified</source>
    <target>Le flux d'information n'a été modifié</target>
 </trans-unit>
-<trans-unit id="112">
+<trans-unit id="110">
    <source>{n} workflow was deleted</source>
    <target>{n} flux d'information ont été supprimés</target>
 </trans-unit>
-<trans-unit id="113">
+<trans-unit id="111">
    <source>Leave request</source>
    <target>Demande de congé</target>
 </trans-unit>
-<trans-unit id="114">
+<trans-unit id="112">
    <source>Sign in/Sign out</source>
    <target>Pointage d'arrivé/Pointage de départ</target>
 </trans-unit>
 
-<trans-unit id="115">
+<trans-unit id="113">
 <source>The config was not modified</source>
 <target>La configuration a été modifié</target>
 </trans-unit>
 
-<trans-unit id="116">
+<trans-unit id="114">
 <source>The time code was modified</source>
 <target>La configuration n'a pas été modifié</target>
 </trans-unit>
 
-<trans-unit id="117">
+<trans-unit id="115">
 <source>Input must be between 1 and 7</source>
 <target>La valeur doit être comprise entre 1 et 7</target>
 </trans-unit>
 
-<trans-unit id="118">
+<trans-unit id="116">
 <source>Hour</source>
 <target>Heure</target>
 </trans-unit>
 
-<trans-unit id="119">
+<trans-unit id="117">
 <source>Day</source>
 <target>Jour</target>
 </trans-unit>
 
-<trans-unit id="120">
+<trans-unit id="118">
 <source>Enter the text display on the time unit</source>
 <target>Entrez le nom affiché sur l\'unité de timbrage</target>
 </trans-unit>
 
-<trans-unit id="121">
+<trans-unit id="119">
 <source>Time unit display</source>
 <target>Nom affiché sur le périphérique</target>
 </trans-unit>
 
-<trans-unit id="122">
+<trans-unit id="120">
 <source>Enter the username for this super user</source>
 <target>Entrez le nom pour ce super utilisateur</target>
 </trans-unit>
 
-<trans-unit id="123">
+<trans-unit id="121">
 <source>Username</source>
 <target>Nom d'utilisateur</target>
 </trans-unit>
 
-<trans-unit id="124">
+<trans-unit id="122">
 <source>Enter the password for this super user</source>
 <target>Entrez le mot de passe pour ce super utilisateur</target>
 </trans-unit>
 
-<trans-unit id="125">
+<trans-unit id="123">
 <source>Password</source>
 <target>Mot de passe</target>
 </trans-unit>
 
-<trans-unit id="126">
+<trans-unit id="124">
 <source>Select super user group</source>
 <target>Sélectionnez le groupe du super utilisateur </target>
 </trans-unit>
 
-<trans-unit id="127">
+<trans-unit id="125">
 <source>Group</source>
 <target>Groupe</target>
 </trans-unit>
 
-<trans-unit id="128">
+<trans-unit id="126">
 <source>Super user</source>
 <target>Super utilisateur</target>
 </trans-unit>
 
+<trans-unit id="127">
+<source>Minimum breaks according to the laws</source>
+<target>Pause minimum selon la loi</target>
+</trans-unit>
+
+<trans-unit id="128">
+<source>Minimum breaks</source>
+<target>Pause minimum</target>
+</trans-unit>
+
 <trans-unit id="129">
-<source>Choose a color for this timecode</source>
-<target>Choisir une couleur pour ce code de temps</target>
+<source>Input 1</source>
+<target>Entrée 1</target>
 </trans-unit>
 
 <trans-unit id="130">
+<source>Input 2</source>
+<target>Entrée 2</target>
+</trans-unit>
+
+<trans-unit id="131">
+<source>Input 3</source>
+<target>Entrée 3</target>
+</trans-unit>
+
+<trans-unit id="132">
+<source>Input 4</source>
+<target>Entrée 4</target>
+</trans-unit>
+
+<trans-unit id="133">
+<source>Input 5</source>
+<target>Entrée 5</target>
+</trans-unit>
+
+<trans-unit id="134">
+<source>Input 6</source>
+<target>Entrée 6</target>
+</trans-unit>
+
+<trans-unit id="135">
+<source>Input 7</source>
+<target>Entrée 7</target>
+</trans-unit>
+
+<trans-unit id="136">
+<source>Input 8</source>
+<target>Entrée 8</target>
+</trans-unit>
+
+<trans-unit id="137">
+<source>Input 9</source>
+<target>Entrée 9</target>
+</trans-unit>
+
+<trans-unit id="138">
+<source>Input 10</source>
+<target>Entrée 10</target>
+</trans-unit>
+
+<trans-unit id="139">
+<source>Input 11</source>
+<target>Entrée 11</target>
+</trans-unit>
+
+<trans-unit id="140">
+<source>Input 12</source>
+<target>Entrée 12</target>
+</trans-unit>
+
+<trans-unit id="141">
+<source>Input 13</source>
+<target>Entrée 13</target>
+</trans-unit>
+
+<trans-unit id="142">
+<source>Input 14</source>
+<target>Entrée 14</target>
+</trans-unit>
+
+<trans-unit id="143">
+<source>Input 15</source>
+<target>Entrée 15</target>
+</trans-unit>
+
+<trans-unit id="144">
+<source>Input 16</source>
+<target>Entrée 16</target>
+</trans-unit>
+
+<trans-unit id="145">
+<source>Input 17</source>
+<target>Entrée 17</target>
+</trans-unit>
+
+<trans-unit id="146">
+<source>Input 18</source>
+<target>Entrée 18</target>
+</trans-unit>
+
+<trans-unit id="147">
+<source>Input 19</source>
+<target>Entrée 19</target>
+</trans-unit>
+
+<trans-unit id="148">
+<source>Input 20</source>
+<target>Entrée 20</target>
+</trans-unit>
+
+<trans-unit id="149">
+<source>Choose a color for this timecode</source>
+<target>Choisir la couleur pour ce code de temps</target>
+</trans-unit>
+
+<trans-unit id="150">
 <source>Color</source>
 <target>Couleur</target>
+</trans-unit>
+
+<trans-unit id="151">
+<source>Bar code representation fo the abbreviation</source>
+<target>Représentation de l\'abréviation sous forme de code barre</target>
+</trans-unit>
+
+<trans-unit id="152">
+<source>Bar code</source>
+<target>Code barre</target>
+</trans-unit>
+
+<trans-unit id="153">
+<source>Filter</source>
+<target>Filtre</target>
+</trans-unit>
+
+<trans-unit id="154">
+<source>--- All ---</source>
+<target>--- Tous ---</target>
+</trans-unit>
+
+<trans-unit id="155">
+<source>The directory ./tmp must be writeable to install an extension</source>
+<target>Le répertoire ./tmp doit être en écriture</target>
+</trans-unit>
+
+<trans-unit id="156">
+<source>List of time code</source>
+<target>Liste des codes de temps</target>
 </trans-unit>
 </body>
 </file>
