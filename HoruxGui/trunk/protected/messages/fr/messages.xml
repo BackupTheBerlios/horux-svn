@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <xliff version="1.0">
- <file source-language="FR" target-language="fr" datatype="plaintext" original="messages" date="2010-05-12T09:43:57Z" product-name="messages">
+ <file source-language="FR" target-language="fr" datatype="plaintext" original="messages" date="2010-09-08T15:54:27Z" product-name="messages">
   <body>
   
 <trans-unit id="1" lock="1">
@@ -235,18 +235,18 @@
 
 <trans-unit id="45" lock="1">
 <source>Congratulations on choosing Horux as your access control system. We hope you are able to manage your access with our program and maybe you will be able to give something back to the community later.</source>
-<target>Félicitation pour avoir choisi Horux pour votre contrôle d'accès. Nous espérons que Horux vous permettra de gérer votre système d'accès et que peut-être vous serez à même de donner votre sentiment à la communauté du libre.</target>
+<target>F&#xE9;licitation pour avoir choisi Horux pour votre contr&#xF4;le d'acc&#xE8;s. Nous esp&#xE9;rons que Horux vous permettra de g&#xE9;rer votre syst&#xE8;me d'acc&#xE8;s et que peut-&#xEA;tre vous serez &#xE0; m&#xEA;me de donner votre sentiment &#xE0; la communaut&#xE9; du libre.</target>
 </trans-unit>
 
 
 <trans-unit id="46" lock="1">
 <source>If you still have questions then take a look on our &lt;a href="http://forum.horux.ch" target="_blank"&gt;forum&lt;/a&gt; which is most likely the biggest resource on Horux there is and you will find almost every question answered at least once, so please try using the search function before asking your question.</source>
-<target>Si vous avez encore des questions, vous pouvez aller sur notre &lt;a href="http://forum.horux.ch" target="_blank"&gt;forum&lt;/a&gt; lequel est la plus grande ressource sur Horux. Vous y trouverez la plupart du temps la réponse à votre question, donc tentez d'utiliser la recherche avant de poser votre question.</target>
+<target>Si vous avez encore des questions, vous pouvez aller sur notre &lt;a href="http://forum.horux.ch" target="_blank"&gt;forum&lt;/a&gt; lequel est la plus grande ressource sur Horux. Vous y trouverez la plupart du temps la r&#xE9;ponse &#xE0; votre question, donc tentez d'utiliser la recherche avant de poser votre question.</target>
 </trans-unit>
 
 <trans-unit id="47" lock="1">
 <source>We hope you have much fun and success with Horux and hope to see you in the forum.</source>
-<target>Nous espérons que vous aurez du succès avec Horux et de vous voire prochainement sur notre forum.</target>
+<target>Nous esp&#xE9;rons que vous aurez du succ&#xE8;s avec Horux et de vous voire prochainement sur notre forum.</target>
 </trans-unit>
 
 <trans-unit id="48" lock="1">
@@ -1731,7 +1731,7 @@
 
 <trans-unit id="325" lock="1">
 <source>For your most common questions the best place to start looking for answers is the &lt;a href="http://forum.horux.ch" target="_blank"&gt;Frequently Asked Questions (FAQ)&lt;/a&gt; area.  If you are stuck on a particular screen in the Administration area of Horux (which is where you are now), then try clicking on the Help toolbar button which you will find on almost all screens.</source>
-<target>Pour la plupart de vos questions, le meilleur endroit pour débuter est de regarder les réponses dans la &lt;a href="http://forum.horux.ch" target="_blank"&gt;FAQ&lt;/a&gt;. Si vous avez besoin d'aide sur un écran spécial dans l'administration de Horux, là où vous vous trouvez actuellement, cliquez sur le bouton d'aide, lequel se trouve sur la plus part des écrans. Cela vous donnera une page d'aide concernant l'écran courant depuis le site d'aide.</target>
+<target>Pour la plupart de vos questions, le meilleur endroit pour d&#xE9;buter est de regarder les r&#xE9;ponses dans la &lt;a href="http://forum.horux.ch" target="_blank"&gt;FAQ&lt;/a&gt;. Si vous avez besoin d'aide sur un &#xE9;cran sp&#xE9;cial dans l'administration de Horux, l&#xE0; o&#xF9; vous vous trouvez actuellement, cliquez sur le bouton d'aide, lequel se trouve sur la plus part des &#xE9;crans. Cela vous donnera une page d'aide concernant l'&#xE9;cran courant depuis le site d'aide.</target>
 </trans-unit>
 
 <trans-unit id="326" lock="1">
@@ -3925,6 +3925,26 @@
 <trans-unit id="742">
 <source>Last connection</source>
 <target>Derni&#xE8;re connexion</target>
+</trans-unit>
+
+<trans-unit id="743">
+<source>PDO support</source>
+<target>Support de PDO</target>
+</trans-unit>
+
+<trans-unit id="744">
+<source>PDO-MYSQL support</source>
+<target>Support de PDO-MYSQL</target>
+</trans-unit>
+
+<trans-unit id="745">
+<source>PEAR XML/RPC support</source>
+<target>Support de PEAR XML/RPC</target>
+</trans-unit>
+
+<trans-unit id="746">
+<source>Memory limit</source>
+<target>Limitation de m&#xE9;moire</target>
 </trans-unit>
 </body>
 </file>
