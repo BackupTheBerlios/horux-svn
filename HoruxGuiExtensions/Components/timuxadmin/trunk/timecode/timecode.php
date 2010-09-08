@@ -155,16 +155,16 @@ class timecode extends PageList
             switch($item->DataItem['type'])
             {
                 case 'leave':
-                    $item->ttype->type->Text = $item->DataItem['type'] = Prado::localize('Leave');
+                    $item->ttype->type->Text = Prado::localize('Leave');
                     break;
                 case 'absence':
-                    $item->ttype->type->Text = $item->DataItem['type'] = Prado::localize('Absence');
+                    $item->ttype->type->Text = Prado::localize('Absence');
                     break;
                 case 'overtime':
-                    $item->ttype->type->Text = $item->DataItem['type'] = Prado::localize('Overtime');
+                    $item->ttype->type->Text = Prado::localize('Overtime');
                     break;
                 case 'load':
-                    $item->ttype->type->Text = $item->DataItem['type'] = Prado::localize('Load');
+                    $item->ttype->type->Text = Prado::localize('Load');
                     break;
             }
 

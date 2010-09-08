@@ -269,3 +269,5 @@ INSERT INTO `hr_user_action` (`name`, `page`, `icon`, `tip`, `catalog`, `type`) 
 ('Super user', 'protected/pages/components/timuxadmin/wizard.tpl', '', '', 'timuxadmin', 'userWizardTpl'),
 ('TimuxModule', 'components.timuxadmin.TimuxModule', '', '', 'timuxadmin', 'module');
 
+INSERT INTO `hr_timux_config` (`id`, `daysByWeek`, `minimumBreaks`, `bookingRounding`, `hoursByWeek`, `holidayByYear`, `hoursBlockMorning1`, `hoursBlockMorning2`, `hoursBlockMorning3`, `hoursBlockMorning4`, `hoursBlockAfternoon1`, `hoursBlockAfternoon2`, `hoursBlockAfternoon3`, `hoursBlockAfternoon4`) VALUES
+(1, 5, 0, 0, 40, 25, '', '', '', '', '', '', '', '');
