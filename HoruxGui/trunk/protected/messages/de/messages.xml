@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <xliff version="1.0">
- <file source-language="FR" target-language="fr" datatype="plaintext" original="messages" date="2010-07-26T14:18:21Z" product-name="messages">
+ <file source-language="FR" target-language="fr" datatype="plaintext" original="messages" date="2010-09-08T15:56:14Z" product-name="messages">
   <body>
   
 <trans-unit id="1" lock="1">
@@ -3925,6 +3925,26 @@
 <trans-unit id="742">
 <source>Last connection</source>
 <target>Letzter Anschluss</target>
+</trans-unit>
+
+<trans-unit id="743">
+<source>PDO support</source>
+<target>PDO-Unterst&#xFC;tzung</target>
+</trans-unit>
+
+<trans-unit id="744">
+<source>PDO-MYSQL support</source>
+<target>PDO-MySQL-Unterst&#xFC;tzung</target>
+</trans-unit>
+
+<trans-unit id="745">
+<source>PEAR XML/RPC support</source>
+<target>PEAR XML / RPC-Unterst&#xFC;tzung</target>
+</trans-unit>
+
+<trans-unit id="746">
+<source>Memory limit</source>
+<target>Memory Limit</target>
 </trans-unit>
 </body>
 </file>
