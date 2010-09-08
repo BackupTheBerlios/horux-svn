@@ -32,8 +32,6 @@ class add extends Page
             $this->readerRepeater->DataSource=$recordSet2;
             $this->readerRepeater->dataBind();
 
-            $this->id->Value = $this->Request['id'];
-
             $this->Session['listBoxAccessTime'] = $this->listBox;
         }
 
