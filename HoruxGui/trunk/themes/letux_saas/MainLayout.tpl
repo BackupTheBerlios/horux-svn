@@ -48,8 +48,15 @@
 
 <com:TForm ID="adminForm">
   <com:TClientScript ScriptUrl="./js/modalbox/modalbox.js" />
-  <!-- Add the main menu -->
-  <com:Application.portlets.HeaderBox ID="mainMenu"/>
+
+  <!-- Add the header box if we are not in the installation process-->
+  <com:TConditional Condition="file_exists('./protected/runtime/.installed')">
+    <prop:TrueTemplate>
+        <com:Application.portlets.HeaderBox ID="mainMenu"/>
+    </prop:TrueTemplate>
+    <prop:FalseTemplate>
+    </prop:FalseTemplate>
+  </com:TConditional>
 
   <!-- main content -->
   <com:TContentPlaceHolder ID="Main" />

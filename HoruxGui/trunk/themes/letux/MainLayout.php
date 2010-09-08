@@ -15,10 +15,7 @@
 class MainLayout extends TTemplateControl
 {
 	public function onLoad($param)
-	{
-          $db = $this->Application->getModule('horuxDb')->DbConnection;
-          $db->Active=true;
-          
+	{          
           $p = $this->getService()->getRequestedPagePath();
 
           if($p == 'install.install')
@@ -27,16 +24,19 @@ class MainLayout extends TTemplateControl
           }
           else
           {
-                  $cmd = $db->createCommand( "SELECT name FROM hr_site WHERE id=1" );
-                  $query = $cmd->query();
-                  if($query)
-                  {
-                          $data = $query->read();
-                          if($this->Application->Request['page'] == "controlPanel.ControlPanel")
-                            $this->site->Text = $data['name'].' - ';
-                          else
-                            $this->site->Text = $data['name'].' - ';
-                  }
+              $db = $this->Application->getModule('horuxDb')->DbConnection;
+              $db->Active=true;
+
+              $cmd = $db->createCommand( "SELECT name FROM hr_site WHERE id=1" );
+              $query = $cmd->query();
+              if($query)
+              {
+                      $data = $query->read();
+                      if($this->Application->Request['page'] == "controlPanel.ControlPanel")
+                        $this->site->Text = $data['name'].' - ';
+                      else
+                        $this->site->Text = $data['name'].' - ';
+              }
           }
 	}
 }

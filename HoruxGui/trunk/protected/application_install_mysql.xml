@@ -15,6 +15,7 @@
     <using namespace="System.Util.*" />
     <using namespace="Application.control.XWeekPlanner2.*" />
     <using namespace="Application.control.TToolbarBox.*" />
+    <using namespace="Application.control.PWCWindow.*" />
   </paths>
 
   <!-- configurations for modules -->
