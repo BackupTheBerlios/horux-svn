@@ -152,12 +152,22 @@
              </tr>
 
 
+              <tr>
+                <td valign="top" class="key">
+                  <span onmouseover="Tip('<%[Make an auto booking if time area are defined]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Automatic booking]%></span>
+                </td>
+                <td>
+                    <com:TCheckBox Text="" ID="autoBooking" Checked="false" />
+                </td>
+             </tr>
+
 
 
               <tr>
                 <td valign="top" class="key"><span onmouseover="Tip('<%[Allow to activate/deactivate the UDP server<br/>used for time synchronization]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Active UDP Server]%></span></td>
                 <td>
                     <com:TCheckBox Text="" ID="udpServer" Checked="true" />
+                </td>
               </tr>
 
               <tr>
@@ -170,6 +180,18 @@
             </tbody>
           </table>
       </fieldset>
+
+     <com:TCallback ID="inputOption" OnCallback="inputOption_Requested" />
+
+     <script type="text/javascript">
+         function inputOption_Requested(control) {
+             var request = <%= $this->inputOption->ActiveControl->Javascript %>;
+             request.setCallbackParameter({
+                   TControl:control
+                 });
+             request.dispatch();
+         }
+     </script>
 
      <fieldset class="adminform">
      <legend><%[Languages]%></legend>
@@ -206,7 +228,7 @@
                     ID="leftFixed"
                     Width="400px"
                      />
-                  <com:TDropDownList ID="leftFixedDlg">
+                  <com:TActiveDropDownList ID="leftFixedDlg" OnCallback="buttonOptionChange" >
                     <com:TListItem Text="<%[Not set]%>" Value=""  />
 
                     <com:TListItem Text="<%[All employees]%>" Value="<dlg_Attendance_View,0>" Attributes.Group="<%[Attendance view]%>" />
@@ -231,8 +253,21 @@
 
                     <com:TListItem Text="<%[Switch language]%>" Value="<Language>" Attributes.Group="<%[Language]%>"  />
 
+                    <com:TListItem Text="<%[Input]%>" Value="<dlg_InputData,150>" Attributes.Group="<%[Operational data by person]%>"  />
+                    <com:TListItem Text="<%[Input as arrive]%>" Value="<dlg_InputData,155>" Attributes.Group="<%[Operational data by person]%>"  />
 
-                  </com:TDropDownList>
+                  </com:TActiveDropDownList>
+
+                  <com:TActiveHyperLink
+                      ID="leftFixedDlgLink"
+                      NavigateUrl="javascript:inputOption_Requested('leftFixedDlg');Windows.showCenter('<%=$this->leftFixedDlgPWC->ClientID%>')"
+                      Display="None"
+                      Text="Options"
+                      ImageUrl="<%~ ./assets/icon-16-options.png %>"
+                      />
+
+                  <com:PWCWindow ID="leftFixedDlgPWC" Title="<%[Options]%>" Theme="mac_os_x" Width="300" Height="450" Mode="Existing" Content="dlg_InputData" />
+
                 </td>
               </tr>
               <tr>
@@ -243,7 +278,7 @@
                     ID="leftMiddleFixed"
                     Width="400px"
                      />
-                  <com:TDropDownList ID="leftMiddleFixedDlg">
+                  <com:TActiveDropDownList ID="leftMiddleFixedDlg" OnCallback="buttonOptionChange" >
                     <com:TListItem Text="<%[Not set]%>" Value=""  />
 
                     <com:TListItem Text="<%[All employees]%>" Value="<dlg_Attendance_View,0>" Attributes.Group="<%[Attendance view]%>" />
@@ -268,8 +303,24 @@
 
                     <com:TListItem Text="<%[Switch language]%>" Value="<Language>" Attributes.Group="<%[Language]%>"  />
 
-                  </com:TDropDownList>
-                </td>
+                    <com:TListItem Text="<%[Input]%>" Value="<dlg_InputData,150>" Attributes.Group="<%[Operational data by person]%>"  />
+                    <com:TListItem Text="<%[Input as arrive]%>" Value="<dlg_InputData,155>" Attributes.Group="<%[Operational data by person]%>"  />
+
+                  </com:TActiveDropDownList>
+
+
+
+                  <com:TActiveHyperLink
+                      ID="leftMiddleFixedDlgLink"
+                      NavigateUrl="javascript:inputOption_Requested('leftMiddleFixedDlg');Windows.showCenter('<%=$this->leftFixedDlgPWC->ClientID%>')"
+                      Display="None"
+                      Text="Options"
+                      ImageUrl="<%~ ./assets/icon-16-options.png %>"
+                      />
+
+                  <com:PWCWindow ID="leftMiddleFixedDlgPWC" Title="<%[Options]%>" Theme="mac_os_x" Width="300" Height="450" Mode="Existing" Content="dlg_InputData" />
+
+                 </td>
               </tr>
               <tr>
                 <td valign="top" class="key"><span onmouseover="Tip('<%[Allow to configure the right middle fixed button]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Right middle button]%></span></td>
@@ -279,7 +330,7 @@
                     ID="rightMiddleFixed"
                     Width="400px"
                      />
-                  <com:TDropDownList ID="rightMiddleFixedDlg">
+                  <com:TActiveDropDownList ID="rightMiddleFixedDlg" OnCallback="buttonOptionChange" >
                     <com:TListItem Text="<%[Not set]%>" Value=""  />
 
                     <com:TListItem Text="<%[All employees]%>" Value="<dlg_Attendance_View,0>" Attributes.Group="<%[Attendance view]%>" />
@@ -304,7 +355,20 @@
 
                     <com:TListItem Text="<%[Switch language]%>" Value="<Language>" Attributes.Group="<%[Language]%>"  />
 
-                  </com:TDropDownList>
+                    <com:TListItem Text="<%[Input]%>" Value="<dlg_InputData,150>" Attributes.Group="<%[Operational data by person]%>"  />
+                    <com:TListItem Text="<%[Input as arrive]%>" Value="<dlg_InputData,155>" Attributes.Group="<%[Operational data by person]%>"  />
+                  </com:TActiveDropDownList>
+
+                  <com:TActiveHyperLink
+                      ID="rightMiddleFixedDlgLink"
+                      NavigateUrl="javascript:inputOption_Requested('rightMiddleFixedDlg');Windows.showCenter('<%=$this->leftFixedDlgPWC->ClientID%>')"
+                      Display="None"
+                      Text="Options"
+                      ImageUrl="<%~ ./assets/icon-16-options.png %>"
+                      />
+
+                  <com:PWCWindow ID="rightMiddleFixedDlgPWC" Title="<%[Options]%>" Theme="mac_os_x" Width="300" Height="450" Mode="Existing" Content="dlg_InputData" />
+
                 </td>
               </tr>
               <tr>
@@ -315,7 +379,7 @@
                     ID="rightFixed"
                     Width="400px"
                      />
-                  <com:TDropDownList ID="rightFixedDlg">
+                  <com:TActiveDropDownList ID="rightFixedDlg" OnCallback="buttonOptionChange" >
                     <com:TListItem Text="<%[Not set]%>" Value=""  />
 
                     <com:TListItem Text="<%[All employees]%>" Value="<dlg_Attendance_View,0>" Attributes.Group="<%[Attendance view]%>" />
@@ -340,7 +404,21 @@
 
                     <com:TListItem Text="<%[Switch language]%>" Value="<Language>" Attributes.Group="<%[Language]%>"  />
 
-                  </com:TDropDownList>
+                    <com:TListItem Text="<%[Input]%>" Value="<dlg_InputData,150>" Attributes.Group="<%[Operational data by person]%>"  />
+                    <com:TListItem Text="<%[Input as arrive]%>" Value="<dlg_InputData,155>" Attributes.Group="<%[Operational data by person]%>"  />
+
+                  </com:TActiveDropDownList>
+
+                  <com:TActiveHyperLink
+                      ID="rightFixedDlgLink"
+                      NavigateUrl="javascript:inputOption_Requested('rightFixedDlg');Windows.showCenter('<%=$this->leftFixedDlgPWC->ClientID%>')"
+                      Display="None"
+                      Text="Options"
+                      ImageUrl="<%~ ./assets/icon-16-options.png %>"
+                      />
+
+                  <com:PWCWindow ID="rightFixedDlgPWC" Title="<%[Options]%>" Theme="mac_os_x" Width="300" Height="450" Mode="Existing" Content="dlg_InputData" />
+
                 </td>
               </tr>
             </tbody>
@@ -359,7 +437,7 @@
                     ID="leftTopSoft"
                     Width="400px"
                      />
-                  <com:TDropDownList ID="leftTopSoftDlg">
+                  <com:TActiveDropDownList ID="leftTopSoftDlg" OnCallback="buttonOptionChange" >
                     <com:TListItem Text="<%[Not set]%>" Value=""  />
 
                     <com:TListItem Text="<%[All employees]%>" Value="<dlg_Attendance_View,0>" Attributes.Group="<%[Attendance view]%>" />
@@ -384,7 +462,22 @@
 
                     <com:TListItem Text="<%[Switch language]%>" Value="<Language>" Attributes.Group="<%[Language]%>"  />
 
-                  </com:TDropDownList>
+                    <com:TListItem Text="<%[Input]%>" Value="<dlg_InputData,150>" Attributes.Group="<%[Operational data by person]%>"  />
+                    <com:TListItem Text="<%[Input as arrive]%>" Value="<dlg_InputData,155>" Attributes.Group="<%[Operational data by person]%>"  />
+
+                  </com:TActiveDropDownList>
+
+                  <com:TActiveHyperLink
+                      ID="leftTopSoftDlgLink"
+                      NavigateUrl="javascript:inputOption_Requested('leftTopSoftDlg');Windows.showCenter('<%=$this->leftFixedDlgPWC->ClientID%>')"
+                      Display="None"
+                      Text="Options"
+                      ImageUrl="<%~ ./assets/icon-16-options.png %>"
+                      />
+
+                  <com:PWCWindow ID="leftTopSoftDlgPWC" Title="<%[Options]%>" Theme="mac_os_x" Width="300" Height="450" Mode="Existing" Content="dlg_InputData" />
+
+
                 </td>
               </tr>
               <tr>
@@ -395,7 +488,7 @@
                     ID="leftMiddleSoft"
                     Width="400px"
                      />
-                  <com:TDropDownList ID="leftMiddleSoftDlg">
+                  <com:TActiveDropDownList ID="leftMiddleSoftDlg" OnCallback="buttonOptionChange" >
                     <com:TListItem Text="<%[Not set]%>" Value=""  />
 
                     <com:TListItem Text="<%[All employees]%>" Value="<dlg_Attendance_View,0>" Attributes.Group="<%[Attendance view]%>" />
@@ -420,7 +513,21 @@
 
                     <com:TListItem Text="<%[Switch language]%>" Value="<Language>" Attributes.Group="<%[Language]%>"  />
 
-                  </com:TDropDownList>
+                    <com:TListItem Text="<%[Input]%>" Value="<dlg_InputData,150>" Attributes.Group="<%[Operational data by person]%>"  />
+                    <com:TListItem Text="<%[Input as arrive]%>" Value="<dlg_InputData,155>" Attributes.Group="<%[Operational data by person]%>"  />
+
+                  </com:TActiveDropDownList>
+
+                  <com:TActiveHyperLink
+                      ID="leftMiddleSoftDlgLink"
+                      NavigateUrl="javascript:inputOption_Requested('leftMiddleSoftDlg');Windows.showCenter('<%=$this->leftFixedDlgPWC->ClientID%>')"
+                      Display="None"
+                      Text="Options"
+                      ImageUrl="<%~ ./assets/icon-16-options.png %>"
+                      />
+
+                  <com:PWCWindow ID="leftMiddleSoftDlgPWC" Title="<%[Options]%>" Theme="mac_os_x" Width="300" Height="450" Mode="Existing" Content="dlg_InputData" />
+
                 </td>
               </tr>
               <tr>
@@ -431,7 +538,7 @@
                     ID="leftBottomSoft"
                     Width="400px"
                      />
-                  <com:TDropDownList ID="leftBottomSoftDlg">
+                  <com:TActiveDropDownList ID="leftBottomSoftDlg" OnCallback="buttonOptionChange" >
                     <com:TListItem Text="<%[Not set]%>" Value=""  />
 
                     <com:TListItem Text="<%[All employees]%>" Value="<dlg_Attendance_View,0>" Attributes.Group="<%[Attendance view]%>" />
@@ -456,7 +563,21 @@
 
                     <com:TListItem Text="<%[Switch language]%>" Value="<Language>" Attributes.Group="<%[Language]%>"  />
 
-                  </com:TDropDownList>
+                    <com:TListItem Text="<%[Input]%>" Value="<dlg_InputData,150>" Attributes.Group="<%[Operational data by person]%>"  />
+                    <com:TListItem Text="<%[Input as arrive]%>" Value="<dlg_InputData,155>" Attributes.Group="<%[Operational data by person]%>"  />
+
+                  </com:TActiveDropDownList>
+                  <com:TActiveHyperLink
+                      ID="leftBottomSoftDlgLink"
+                      NavigateUrl="javascript:inputOption_Requested('leftBottomSoftDlg');Windows.showCenter('<%=$this->leftFixedDlgPWC->ClientID%>')"
+                      Display="None"
+                      Text="Options"
+                      ImageUrl="<%~ ./assets/icon-16-options.png %>"
+                      />
+
+                  <com:PWCWindow ID="leftBottomSoftDlgPWC" Title="<%[Options]%>" Theme="mac_os_x" Width="300" Height="450" Mode="Existing" Content="dlg_InputData" />
+
+
                 </td>
               </tr>
               <tr>
@@ -467,7 +588,7 @@
                     ID="rightTopSoft"
                     Width="400px"
                      />
-                  <com:TDropDownList ID="rightTopSoftDlg">
+                  <com:TActiveDropDownList ID="rightTopSoftDlg" OnCallback="buttonOptionChange" >
                     <com:TListItem Text="<%[Not set]%>" Value=""  />
 
                     <com:TListItem Text="<%[All employees]%>" Value="<dlg_Attendance_View,0>" Attributes.Group="<%[Attendance view]%>" />
@@ -492,7 +613,20 @@
 
                     <com:TListItem Text="<%[Switch language]%>" Value="<Language>" Attributes.Group="<%[Language]%>"  />
 
-                  </com:TDropDownList>
+                    <com:TListItem Text="<%[Input]%>" Value="<dlg_InputData,150>" Attributes.Group="<%[Operational data by person]%>"  />
+                    <com:TListItem Text="<%[Input as arrive]%>" Value="<dlg_InputData,155>" Attributes.Group="<%[Operational data by person]%>"  />
+
+                  </com:TActiveDropDownList>
+                  <com:TActiveHyperLink
+                      ID="rightTopSoftDlgLink"
+                      NavigateUrl="javascript:inputOption_Requested('rightTopSoftDlg');Windows.showCenter('<%=$this->leftFixedDlgPWC->ClientID%>')"
+                      Display="None"
+                      Text="Options"
+                      ImageUrl="<%~ ./assets/icon-16-options.png %>"
+                      />
+
+                  <com:PWCWindow ID="rightTopSoftDlgPWC" Title="<%[Options]%>" Theme="mac_os_x" Width="300" Height="450" Mode="Existing" Content="dlg_InputData" />
+
                 </td>
               </tr>
               <tr>
@@ -503,7 +637,7 @@
                     ID="rightMiddleSoft"
                     Width="400px"
                      />
-                  <com:TDropDownList ID="rightMiddleSoftDlg">
+                  <com:TActiveDropDownList ID="rightMiddleSoftDlg" OnCallback="buttonOptionChange" >
                     <com:TListItem Text="<%[Not set]%>" Value=""  />
 
                     <com:TListItem Text="<%[All employees]%>" Value="<dlg_Attendance_View,0>" Attributes.Group="<%[Attendance view]%>" />
@@ -528,7 +662,20 @@
 
                     <com:TListItem Text="<%[Switch language]%>" Value="<Language>" Attributes.Group="<%[Language]%>"  />
 
-                  </com:TDropDownList>
+                    <com:TListItem Text="<%[Input]%>" Value="<dlg_InputData,150>" Attributes.Group="<%[Operational data by person]%>"  />
+                    <com:TListItem Text="<%[Input as arrive]%>" Value="<dlg_InputData,155>" Attributes.Group="<%[Operational data by person]%>"  />
+
+                  </com:TActiveDropDownList>
+                  <com:TActiveHyperLink
+                      ID="rightMiddleSoftDlgLink"
+                      NavigateUrl="javascript:inputOption_Requested('rightMiddleSoftDlg');Windows.showCenter('<%=$this->leftFixedDlgPWC->ClientID%>')"
+                      Display="None"
+                      Text="Options"
+                      ImageUrl="<%~ ./assets/icon-16-options.png %>"
+                      />
+
+                  <com:PWCWindow ID="rightMiddleSoftDlgPWC" Title="<%[Options]%>" Theme="mac_os_x" Width="300" Height="450" Mode="Existing" Content="dlg_InputData" />
+
                 </td>
               </tr>
               <tr>
@@ -539,7 +686,7 @@
                     ID="rightBottomSoft"
                     Width="400px"
                      />
-                  <com:TDropDownList ID="rightBottomSoftDlg">
+                  <com:TActiveDropDownList ID="rightBottomSoftDlg" OnCallback="buttonOptionChange" >
                     <com:TListItem Text="<%[Not set]%>" Value=""  />
 
                     <com:TListItem Text="<%[All employees]%>" Value="<dlg_Attendance_View,0>" Attributes.Group="<%[Attendance view]%>" />
@@ -564,13 +711,772 @@
 
                     <com:TListItem Text="<%[Switch language]%>" Value="<Language>" Attributes.Group="<%[Language]%>"  />
 
-                  </com:TDropDownList>
+                    <com:TListItem Text="<%[Input]%>" Value="<dlg_InputData,150>" Attributes.Group="<%[Operational data by person]%>"  />
+                    <com:TListItem Text="<%[Input as arrive]%>" Value="<dlg_InputData,155>" Attributes.Group="<%[Operational data by person]%>"  />
+
+                  </com:TActiveDropDownList>
+                  <com:TActiveHyperLink
+                      ID="rightBottomSoftDlgLink"
+                      NavigateUrl="javascript:inputOption_Requested('rightBottomSoftDlg');Windows.showCenter('<%=$this->leftFixedDlgPWC->ClientID%>')"
+                      Display="None"
+                      Text="Options"
+                      ImageUrl="<%~ ./assets/icon-16-options.png %>"
+                      />
+
+                  <com:PWCWindow ID="rightBottomSoftDlgPWC" Title="<%[Options]%>" Theme="mac_os_x" Width="300" Height="450" Mode="Existing" Content="dlg_InputData" />
+
                 </td>
               </tr>
 
             </tbody>
           </table>
       </fieldset>
+
+    <fieldset class="adminform">
+        <legend><%[Operating data recording definition]%></legend>
+        <table class="admintable" cellspacing="1">
+            <tbody>
+
+                <tr>
+                    <td valign="top" class="key">
+                        <span onmouseover="Tip('<%[Enter the definition of the date recording]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Data recording definition 1]%></span>
+                    </td>
+                    <td>
+                        <com:TTextBox
+                            CssClass="text_area"
+                            ID="inputDBEText1"
+                            Text=""
+                            />
+                    </td>
+                    <td valign="top" class="key">
+                        <span onmouseover="Tip('<%[Check if the input musst be checked according to the master data]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Check the input]%></span>
+                    </td>
+                    <td>
+                        <com:TCheckBox
+                            ID="inputDBECheck1"
+                            />
+                    </td>
+                    <td valign="top" class="key">
+                        <span onmouseover="Tip('<%[How to display the BDE value and master data. %N=>recorded value, %B=>master data]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Display input]%></span>
+                    </td>
+                    <td>
+                        <com:TTextBox
+                            CssClass="text_area"
+                            ID="inputDBEDisplay1"
+                            Text="%B %N"
+                            />
+                    </td>
+
+
+                </tr>
+
+                <tr>
+                    <td valign="top" class="key">
+                        <span onmouseover="Tip('<%[Enter the definition of the date recording]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Data recording definition 2]%></span>
+                    </td>
+                    <td>
+                        <com:TTextBox
+                            CssClass="text_area"
+                            ID="inputDBEText2"
+                            Text=""
+                            />
+                    </td>
+                    <td valign="top" class="key">
+                        <span onmouseover="Tip('<%[Check if the input musst be checked according to the master data]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Check the input]%></span>
+                    </td>
+                    <td>
+                        <com:TCheckBox
+                            ID="inputDBECheck2"
+                            />
+                    </td>
+                    <td valign="top" class="key">
+                        <span onmouseover="Tip('<%[How to display the BDE value and master data. %N=>recorded value, %B=>master data]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Display input]%></span>
+                    </td>
+                    <td>
+                        <com:TTextBox
+                            CssClass="text_area"
+                            ID="inputDBEDisplay2"
+                            Text="%B %N"
+                            />
+                    </td>
+                        </tr>
+                <tr>
+                    <td valign="top" class="key">
+                        <span onmouseover="Tip('<%[Enter the definition of the date recording]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Data recording definition 3]%></span>
+                    </td>
+                    <td>
+                        <com:TTextBox
+                            CssClass="text_area"
+                            ID="inputDBEText3"
+                            Text=""
+                            />
+                    </td>
+                    <td valign="top" class="key">
+                        <span onmouseover="Tip('<%[Check if the input musst be checked according to the master data]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Check the input]%></span>
+                    </td>
+                    <td>
+                        <com:TCheckBox
+                            ID="inputDBECheck3"
+                            />
+                    </td>
+                    <td valign="top" class="key">
+                        <span onmouseover="Tip('<%[How to display the BDE value and master data. %N=>recorded value, %B=>master data]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Display input]%></span>
+                    </td>
+                    <td>
+                        <com:TTextBox
+                            CssClass="text_area"
+                            ID="inputDBEDisplay3"
+                            Text="%B %N"
+                            />
+                    </td>
+                        </tr>
+                <tr>
+                    <td valign="top" class="key">
+                        <span onmouseover="Tip('<%[Enter the definition of the date recording]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Data recording definition 4]%></span>
+                    </td>
+                    <td>
+                        <com:TTextBox
+                            CssClass="text_area"
+                            ID="inputDBEText4"
+                            Text=""
+                            />
+                    </td>
+                    <td valign="top" class="key">
+                        <span onmouseover="Tip('<%[Check if the input musst be checked according to the master data]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Check the input]%></span>
+                    </td>
+                    <td>
+                        <com:TCheckBox
+                            ID="inputDBECheck4"
+                            />
+                    </td>
+                    <td valign="top" class="key">
+                        <span onmouseover="Tip('<%[How to display the BDE value and master data. %N=>recorded value, %B=>master data]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Display input]%></span>
+                    </td>
+                    <td>
+                        <com:TTextBox
+                            CssClass="text_area"
+                            ID="inputDBEDisplay4"
+                            Text="%B %N"
+                            />
+                    </td>
+                        </tr>
+                <tr>
+                    <td valign="top" class="key">
+                        <span onmouseover="Tip('<%[Enter the definition of the date recording]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Data recording definition 5]%></span>
+                    </td>
+                    <td>
+                        <com:TTextBox
+                            CssClass="text_area"
+                            ID="inputDBEText5"
+                            Text=""
+                            />
+                    </td>
+                    <td valign="top" class="key">
+                        <span onmouseover="Tip('<%[Check if the input musst be checked according to the master data]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Check the input]%></span>
+                    </td>
+                    <td>
+                        <com:TCheckBox
+                            ID="inputDBECheck5"
+                            />
+                    </td>
+                    <td valign="top" class="key">
+                        <span onmouseover="Tip('<%[How to display the BDE value and master data. %N=>recorded value, %B=>master data]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Display input]%></span>
+                    </td>
+                    <td>
+                        <com:TTextBox
+                            CssClass="text_area"
+                            ID="inputDBEDisplay5"
+                            Text="%B %N"
+                            />
+                    </td>
+                        </tr>
+                <tr>
+                    <td valign="top" class="key">
+                        <span onmouseover="Tip('<%[Enter the definition of the date recording]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Data recording definition 6]%></span>
+                    </td>
+                    <td>
+                        <com:TTextBox
+                            CssClass="text_area"
+                            ID="inputDBEText6"
+                            Text=""
+                            />
+                    </td>
+                    <td valign="top" class="key">
+                        <span onmouseover="Tip('<%[Check if the input musst be checked according to the master data]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Check the input]%></span>
+                    </td>
+                    <td>
+                        <com:TCheckBox
+                            ID="inputDBECheck6"
+                            />
+                    </td>
+                    <td valign="top" class="key">
+                        <span onmouseover="Tip('<%[How to display the BDE value and master data. %N=>recorded value, %B=>master data]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Display input]%></span>
+                    </td>
+                    <td>
+                        <com:TTextBox
+                            CssClass="text_area"
+                            ID="inputDBEDisplay6"
+                            Text="%B %N"
+                            />
+                    </td>
+                        </tr>
+                <tr>
+                    <td valign="top" class="key">
+                        <span onmouseover="Tip('<%[Enter the definition of the date recording]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Data recording definition 7]%></span>
+                    </td>
+                    <td>
+                        <com:TTextBox
+                            CssClass="text_area"
+                            ID="inputDBEText7"
+                            Text=""
+                            />
+                    </td>
+                    <td valign="top" class="key">
+                        <span onmouseover="Tip('<%[Check if the input musst be checked according to the master data]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Check the input]%></span>
+                    </td>
+                    <td>
+                        <com:TCheckBox
+                            ID="inputDBECheck7"
+                            />
+                    </td>
+                    <td valign="top" class="key">
+                        <span onmouseover="Tip('<%[How to display the BDE value and master data. %N=>recorded value, %B=>master data]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Display input]%></span>
+                    </td>
+                    <td>
+                        <com:TTextBox
+                            CssClass="text_area"
+                            ID="inputDBEDisplay7"
+                            Text="%B %N"
+                            />
+                    </td>
+                        </tr>
+                <tr>
+                    <td valign="top" class="key">
+                        <span onmouseover="Tip('<%[Enter the definition of the date recording]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Data recording definition 8]%></span>
+                    </td>
+                    <td>
+                        <com:TTextBox
+                            CssClass="text_area"
+                            ID="inputDBEText8"
+                            Text=""
+                            />
+                    </td>
+                    <td valign="top" class="key">
+                        <span onmouseover="Tip('<%[Check if the input musst be checked according to the master data]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Check the input]%></span>
+                    </td>
+                    <td>
+                        <com:TCheckBox
+                            ID="inputDBECheck8"
+                            />
+                    </td>
+                    <td valign="top" class="key">
+                        <span onmouseover="Tip('<%[How to display the BDE value and master data. %N=>recorded value, %B=>master data]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Display input]%></span>
+                    </td>
+                    <td>
+                        <com:TTextBox
+                            CssClass="text_area"
+                            ID="inputDBEDisplay8"
+                            Text="%B %N"
+                            />
+                    </td>
+                        </tr>
+                <tr>
+                    <td valign="top" class="key">
+                        <span onmouseover="Tip('<%[Enter the definition of the date recording]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Data recording definition 9]%></span>
+                    </td>
+                    <td>
+                        <com:TTextBox
+                            CssClass="text_area"
+                            ID="inputDBEText9"
+                            Text=""
+                            />
+                    </td>
+                    <td valign="top" class="key">
+                        <span onmouseover="Tip('<%[Check if the input musst be checked according to the master data]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Check the input]%></span>
+                    </td>
+                    <td>
+                        <com:TCheckBox
+                            ID="inputDBECheck9"
+                            />
+                    </td>
+                    <td valign="top" class="key">
+                        <span onmouseover="Tip('<%[How to display the BDE value and master data. %N=>recorded value, %B=>master data]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Display input]%></span>
+                    </td>
+                    <td>
+                        <com:TTextBox
+                            CssClass="text_area"
+                            ID="inputDBEDisplay9"
+                            Text="%B %N"
+                            />
+                    </td>
+                        </tr>
+                <tr>
+                    <td valign="top" class="key">
+                        <span onmouseover="Tip('<%[Enter the definition of the date recording]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Data recording definition 10]%></span>
+                    </td>
+                    <td>
+                        <com:TTextBox
+                            CssClass="text_area"
+                            ID="inputDBEText10"
+                            Text=""
+                            />
+                    </td>
+                    <td valign="top" class="key">
+                        <span onmouseover="Tip('<%[Check if the input musst be checked according to the master data]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Check the input]%></span>
+                    </td>
+                    <td>
+                        <com:TCheckBox
+                            ID="inputDBECheck10"
+                            />
+                    </td>
+                    <td valign="top" class="key">
+                        <span onmouseover="Tip('<%[How to display the BDE value and master data. %N=>recorded value, %B=>master data]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Display input]%></span>
+                    </td>
+                    <td>
+                        <com:TTextBox
+                            CssClass="text_area"
+                            ID="inputDBEDisplay10"
+                            Text="%B %N"
+                            />
+                    </td>
+                        </tr>
+                <tr>
+                    <td valign="top" class="key">
+                        <span onmouseover="Tip('<%[Enter the definition of the date recording]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Data recording definition 11]%></span>
+                    </td>
+                    <td>
+                        <com:TTextBox
+                            CssClass="text_area"
+                            ID="inputDBEText11"
+                            Text=""
+                            />
+                    </td>
+                    <td valign="top" class="key">
+                        <span onmouseover="Tip('<%[Check if the input musst be checked according to the master data]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Check the input]%></span>
+                    </td>
+                    <td>
+                        <com:TCheckBox
+                            ID="inputDBECheck11"
+                            />
+                    </td>
+                    <td valign="top" class="key">
+                        <span onmouseover="Tip('<%[How to display the BDE value and master data. %N=>recorded value, %B=>master data]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Display input]%></span>
+                    </td>
+                    <td>
+                        <com:TTextBox
+                            CssClass="text_area"
+                            ID="inputDBEDisplay11"
+                            Text="%B %N"
+                            />
+                    </td>
+                        </tr>
+                <tr>
+                    <td valign="top" class="key">
+                        <span onmouseover="Tip('<%[Enter the definition of the date recording]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Data recording definition 12]%></span>
+                    </td>
+                    <td>
+                        <com:TTextBox
+                            CssClass="text_area"
+                            ID="inputDBEText12"
+                            Text=""
+                            />
+                    </td>
+                    <td valign="top" class="key">
+                        <span onmouseover="Tip('<%[Check if the input musst be checked according to the master data]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Check the input]%></span>
+                    </td>
+                    <td>
+                        <com:TCheckBox
+                            ID="inputDBECheck12"
+                            />
+                    </td>
+                    <td valign="top" class="key">
+                        <span onmouseover="Tip('<%[How to display the BDE value and master data. %N=>recorded value, %B=>master data]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Display input]%></span>
+                    </td>
+                    <td>
+                        <com:TTextBox
+                            CssClass="text_area"
+                            ID="inputDBEDisplay12"
+                            Text="%B %N"
+                            />
+                    </td>
+                        </tr>
+                <tr>
+                    <td valign="top" class="key">
+                        <span onmouseover="Tip('<%[Enter the definition of the date recording]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Data recording definition 13]%></span>
+                    </td>
+                    <td>
+                        <com:TTextBox
+                            CssClass="text_area"
+                            ID="inputDBEText13"
+                            Text=""
+                            />
+                    </td>
+                    <td valign="top" class="key">
+                        <span onmouseover="Tip('<%[Check if the input musst be checked according to the master data]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Check the input]%></span>
+                    </td>
+                    <td>
+                        <com:TCheckBox
+                            ID="inputDBECheck13"
+                            />
+                    </td>
+                    <td valign="top" class="key">
+                        <span onmouseover="Tip('<%[How to display the BDE value and master data. %N=>recorded value, %B=>master data]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Display input]%></span>
+                    </td>
+                    <td>
+                        <com:TTextBox
+                            CssClass="text_area"
+                            ID="inputDBEDisplay13"
+                            Text="%B %N"
+                            />
+                    </td>
+                        </tr>
+                <tr>
+                    <td valign="top" class="key">
+                        <span onmouseover="Tip('<%[Enter the definition of the date recording]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Data recording definition 14]%></span>
+                    </td>
+                    <td>
+                        <com:TTextBox
+                            CssClass="text_area"
+                            ID="inputDBEText14"
+                            Text=""
+                            />
+                    </td>
+                    <td valign="top" class="key">
+                        <span onmouseover="Tip('<%[Check if the input musst be checked according to the master data]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Check the input]%></span>
+                    </td>
+                    <td>
+                        <com:TCheckBox
+                            ID="inputDBECheck14"
+                            />
+                    </td>
+                    <td valign="top" class="key">
+                        <span onmouseover="Tip('<%[How to display the BDE value and master data. %N=>recorded value, %B=>master data]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Display input]%></span>
+                    </td>
+                    <td>
+                        <com:TTextBox
+                            CssClass="text_area"
+                            ID="inputDBEDisplay14"
+                            Text="%B %N"
+                            />
+                    </td>
+                        </tr>
+                <tr>
+                    <td valign="top" class="key">
+                        <span onmouseover="Tip('<%[Enter the definition of the date recording]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Data recording definition 15]%></span>
+                    </td>
+                    <td>
+                        <com:TTextBox
+                            CssClass="text_area"
+                            ID="inputDBEText15"
+                            Text=""
+                            />
+                    </td>
+                    <td valign="top" class="key">
+                        <span onmouseover="Tip('<%[Check if the input musst be checked according to the master data]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Check the input]%></span>
+                    </td>
+                    <td>
+                        <com:TCheckBox
+                            ID="inputDBECheck15"
+                            />
+                    </td>
+                    <td valign="top" class="key">
+                        <span onmouseover="Tip('<%[How to display the BDE value and master data. %N=>recorded value, %B=>master data]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Display input]%></span>
+                    </td>
+                    <td>
+                        <com:TTextBox
+                            CssClass="text_area"
+                            ID="inputDBEDisplay15"
+                            Text="%B %N"
+                            />
+                    </td>
+                        </tr>
+                <tr>
+                    <td valign="top" class="key">
+                        <span onmouseover="Tip('<%[Enter the definition of the date recording]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Data recording definition 16]%></span>
+                    </td>
+                    <td>
+                        <com:TTextBox
+                            CssClass="text_area"
+                            ID="inputDBEText16"
+                            Text=""
+                            />
+                    </td>
+                    <td valign="top" class="key">
+                        <span onmouseover="Tip('<%[Check if the input musst be checked according to the master data]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Check the input]%></span>
+                    </td>
+                    <td>
+                        <com:TCheckBox
+                            ID="inputDBECheck16"
+                            />
+                    </td>
+                    <td valign="top" class="key">
+                        <span onmouseover="Tip('<%[How to display the BDE value and master data. %N=>recorded value, %B=>master data]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Display input]%></span>
+                    </td>
+                    <td>
+                        <com:TTextBox
+                            CssClass="text_area"
+                            ID="inputDBEDisplay16"
+                            Text="%B %N"
+                            />
+                    </td>
+                        </tr>
+                <tr>
+                    <td valign="top" class="key">
+                        <span onmouseover="Tip('<%[Enter the definition of the date recording]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Data recording definition 17]%></span>
+                    </td>
+                    <td>
+                        <com:TTextBox
+                            CssClass="text_area"
+                            ID="inputDBEText17"
+                            Text=""
+                            />
+                    </td>
+                    <td valign="top" class="key">
+                        <span onmouseover="Tip('<%[Check if the input musst be checked according to the master data]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Check the input]%></span>
+                    </td>
+                    <td>
+                        <com:TCheckBox
+                            ID="inputDBECheck17"
+                            />
+                    </td>
+                    <td valign="top" class="key">
+                        <span onmouseover="Tip('<%[How to display the BDE value and master data. %N=>recorded value, %B=>master data]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Display input]%></span>
+                    </td>
+                    <td>
+                        <com:TTextBox
+                            CssClass="text_area"
+                            ID="inputDBEDisplay17"
+                            Text="%B %N"
+                            />
+                    </td>
+                        </tr>
+                <tr>
+                    <td valign="top" class="key">
+                        <span onmouseover="Tip('<%[Enter the definition of the date recording]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Data recording definition 18]%></span>
+                    </td>
+                    <td>
+                        <com:TTextBox
+                            CssClass="text_area"
+                            ID="inputDBEText18"
+                            Text=""
+                            />
+                    </td>
+                    <td valign="top" class="key">
+                        <span onmouseover="Tip('<%[Check if the input musst be checked according to the master data]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Check the input]%></span>
+                    </td>
+                    <td>
+                        <com:TCheckBox
+                            ID="inputDBECheck18"
+                            />
+                    </td>
+                    <td valign="top" class="key">
+                        <span onmouseover="Tip('<%[How to display the BDE value and master data. %N=>recorded value, %B=>master data]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Display input]%></span>
+                    </td>
+                    <td>
+                        <com:TTextBox
+                            CssClass="text_area"
+                            ID="inputDBEDisplay18"
+                            Text="%B %N"
+                            />
+                    </td>
+                        </tr>
+                <tr>
+                    <td valign="top" class="key">
+                        <span onmouseover="Tip('<%[Enter the definition of the date recording]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Data recording definition 19]%></span>
+                    </td>
+                    <td>
+                        <com:TTextBox
+                            CssClass="text_area"
+                            ID="inputDBEText19"
+                            Text=""
+                            />
+                    </td>
+                    <td valign="top" class="key">
+                        <span onmouseover="Tip('<%[Check if the input musst be checked according to the master data]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Check the input]%></span>
+                    </td>
+                    <td>
+                        <com:TCheckBox
+                            ID="inputDBECheck19"
+                            />
+                    </td>
+                    <td valign="top" class="key">
+                        <span onmouseover="Tip('<%[How to display the BDE value and master data. %N=>recorded value, %B=>master data]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Display input]%></span>
+                    </td>
+                    <td>
+                        <com:TTextBox
+                            CssClass="text_area"
+                            ID="inputDBEDisplay19"
+                            Text="%B %N"
+                            />
+                    </td>
+                        </tr>
+                <tr>
+                    <td valign="top" class="key">
+                        <span onmouseover="Tip('<%[Enter the definition of the date recording]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Data recording definition 20]%></span>
+                    </td>
+                    <td>
+                        <com:TTextBox
+                            CssClass="text_area"
+                            ID="inputDBEText20"
+                            Text=""
+                            />
+                    </td>
+                    <td valign="top" class="key">
+                        <span onmouseover="Tip('<%[Check if the input musst be checked according to the master data]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Check the input]%></span>
+                    </td>
+                    <td>
+                        <com:TCheckBox
+                            ID="inputDBECheck20"
+                            />
+                    </td>
+                    <td valign="top" class="key">
+                        <span onmouseover="Tip('<%[How to display the BDE value and master data. %N=>recorded value, %B=>master data]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Display input]%></span>
+                    </td>
+                    <td>
+                        <com:TTextBox
+                            CssClass="text_area"
+                            ID="inputDBEDisplay20"
+                            Text="%B %N"
+                            />
+                    </td>
+                        </tr>
+
+
+            </tbody>
+        </table>
+    </fieldset>
+
+
+    <div id="dlg_InputData" style="display:none;">
+     <fieldset class="adminform">
+     <legend><%[Select which BDE value must be recorded]%></legend>
+         <table class="admintable" cellspacing="1">
+            <tbody>
+                <tr>
+                    <td valign="top" class="key"><span onmouseover="Tip('<%[Activate the BDE value]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Input 1]%></span></td>
+                    <td>
+                        <com:TActiveCheckBox ID="cb1" Text="" Value="1" OnCallback="checkBoxChange" />
+                    </td>
+                 </tr>
+                <tr>
+                    <td valign="top" class="key"><span onmouseover="Tip('<%[Activate the BDE value]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Input 2]%></span></td>
+                    <td>
+                        <com:TActiveCheckBox ID="cb2" Text="" Value="2" OnCallback="checkBoxChange" />
+                    </td>
+                 </tr>
+                <tr>
+                    <td valign="top" class="key"><span onmouseover="Tip('<%[Activate the BDE value]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Input 3]%></span></td>
+                    <td>
+                        <com:TActiveCheckBox ID="cb3" Text="" Value="3" OnCallback="checkBoxChange" />
+                    </td>
+                 </tr>
+                <tr>
+                    <td valign="top" class="key"><span onmouseover="Tip('<%[Activate the BDE value]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Input 4]%></span></td>
+                    <td>
+                        <com:TActiveCheckBox ID="cb4" Text="" Value="4" OnCallback="checkBoxChange" />
+                    </td>
+                 </tr>
+                <tr>
+                    <td valign="top" class="key"><span onmouseover="Tip('<%[Activate the BDE value]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Input 5]%></span></td>
+                    <td>
+                        <com:TActiveCheckBox ID="cb5" Text="" Value="5" OnCallback="checkBoxChange" />
+                    </td>
+                 </tr>
+                <tr>
+                    <td valign="top" class="key"><span onmouseover="Tip('<%[Activate the BDE value]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Input 6]%></span></td>
+                    <td>
+                        <com:TActiveCheckBox ID="cb6" Text="" Value="6" OnCallback="checkBoxChange" />
+                    </td>
+                 </tr>
+                <tr>
+                    <td valign="top" class="key"><span onmouseover="Tip('<%[Activate the BDE value]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Input 7]%></span></td>
+                    <td>
+                        <com:TActiveCheckBox ID="cb7" Text="" Value="7" OnCallback="checkBoxChange" />
+                    </td>
+                 </tr>
+                <tr>
+                    <td valign="top" class="key"><span onmouseover="Tip('<%[Activate the BDE value]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Input 8]%></span></td>
+                    <td>
+                        <com:TActiveCheckBox ID="cb8" Text="" Value="8" OnCallback="checkBoxChange" />
+                    </td>
+                 </tr>
+                <tr>
+                    <td valign="top" class="key"><span onmouseover="Tip('<%[Activate the BDE value]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Input 9]%></span></td>
+                    <td>
+                        <com:TActiveCheckBox ID="cb9" Text="" Value="9" OnCallback="checkBoxChange" />
+                    </td>
+                 </tr>
+                <tr>
+                    <td valign="top" class="key"><span onmouseover="Tip('<%[Activate the BDE value]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Input 10]%></span></td>
+                    <td>
+                        <com:TActiveCheckBox ID="cb10" Text="" Value="10" OnCallback="checkBoxChange" />
+                    </td>
+                 </tr>
+                <tr>
+                    <td valign="top" class="key"><span onmouseover="Tip('<%[Activate the BDE value]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Input 11]%></span></td>
+                    <td>
+                        <com:TActiveCheckBox ID="cb11" Text="" Value="11" OnCallback="checkBoxChange" />
+                    </td>
+                 </tr>
+                <tr>
+                    <td valign="top" class="key"><span onmouseover="Tip('<%[Activate the BDE value]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Input 12]%></span></td>
+                    <td>
+                        <com:TActiveCheckBox ID="cb12" Text="" Value="12" OnCallback="checkBoxChange" />
+                    </td>
+                 </tr>
+                <tr>
+                    <td valign="top" class="key"><span onmouseover="Tip('<%[Activate the BDE value]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Input 13]%></span></td>
+                    <td>
+                        <com:TActiveCheckBox ID="cb13" Text="" Value="13" OnCallback="checkBoxChange" />
+                    </td>
+                 </tr>
+                <tr>
+                    <td valign="top" class="key"><span onmouseover="Tip('<%[Activate the BDE value]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Input 14]%></span></td>
+                    <td>
+                        <com:TActiveCheckBox ID="cb14" Text="" Value="14" OnCallback="checkBoxChange" />
+                    </td>
+                 </tr>
+                <tr>
+                    <td valign="top" class="key"><span onmouseover="Tip('<%[Activate the BDE value]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Input 15]%></span></td>
+                    <td>
+                        <com:TActiveCheckBox ID="cb15" Text="" Value="15" OnCallback="checkBoxChange" />
+                    </td>
+                 </tr>
+                <tr>
+                    <td valign="top" class="key"><span onmouseover="Tip('<%[Activate the BDE value]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Input 16]%></span></td>
+                    <td>
+                        <com:TActiveCheckBox ID="cb16" Text="" Value="16" OnCallback="checkBoxChange" />
+                    </td>
+                 </tr>
+                <tr>
+                    <td valign="top" class="key"><span onmouseover="Tip('<%[Activate the BDE value]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Input 17]%></span></td>
+                    <td>
+                        <com:TActiveCheckBox ID="cb17" Text="" Value="17" OnCallback="checkBoxChange" />
+                    </td>
+                 </tr>
+                <tr>
+                    <td valign="top" class="key"><span onmouseover="Tip('<%[Activate the BDE value]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Input 18]%></span></td>
+                    <td>
+                        <com:TActiveCheckBox ID="cb18" Text="" Value="18" OnCallback="checkBoxChange" />
+                    </td>
+                 </tr>
+                <tr>
+                    <td valign="top" class="key"><span onmouseover="Tip('<%[Activate the BDE value]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Input 19]%></span></td>
+                    <td>
+                        <com:TActiveCheckBox ID="cb19" Text="" Value="19" OnCallback="checkBoxChange" />
+                    </td>
+                 </tr>
+                <tr>
+                    <td valign="top" class="key"><span onmouseover="Tip('<%[Activate the BDE value]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Input 20]%></span></td>
+                    <td>
+                        <com:TActiveCheckBox ID="cb20" Text="" Value="20" OnCallback="checkBoxChange" />
+                    </td>
+                 </tr>
+            </tbody>
+        </table>
+      </fieldset>
+
+    </div>
 
     <%include Application.common.template.footerContent %>
 </com:TContent>

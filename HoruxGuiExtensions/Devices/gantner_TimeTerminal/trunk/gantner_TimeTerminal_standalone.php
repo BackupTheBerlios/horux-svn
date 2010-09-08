@@ -124,8 +124,8 @@ class gantner_TimeTerminal_standalone extends TDeviceStandalone
             $data2 = $cmd->query();
             $data2 = $data2->readAll();
 
-            $hoursText = Prado::localize("hours");
-            $daysText = Prado::localize("days");
+            $hoursText = Prado::localize("H");
+            $daysText = Prado::localize("D");
 
             $balances = "";
             foreach($data2 as $d)
