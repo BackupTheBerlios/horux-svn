@@ -81,7 +81,7 @@ class mod extends Page
     protected function setData()
     {
         $cmd = $this->db->createCommand( "SELECT * FROM hr_timux_workflow WHERE id=:id");
-        $cmd->bindParameter(":id",$this->id->Value, PDO::PARAM_INT);
+        $cmd->bindValue(":id",$this->id->Value, PDO::PARAM_INT);
         $query = $cmd->query();
 
         if($query)
@@ -187,20 +187,20 @@ class mod extends Page
                                            WHERE id=:id
                                           " );
 
-        $cmd->bindParameter(":name",$this->name->SafeText,PDO::PARAM_STR);
-        $cmd->bindParameter(":description",$this->comment->SafeText,PDO::PARAM_STR);
-        //$cmd->bindParameter(":type",$this->type->getSelectedValue(),PDO::PARAM_STR);
-        $cmd->bindParameter(":departmentId",$this->departmentId->getSelectedValue(),PDO::PARAM_STR);
-        $cmd->bindParameter(":validator1",$this->validator1->getSelectedValue(),PDO::PARAM_STR);
-        $cmd->bindParameter(":validator11",$this->validator11->getSelectedValue(),PDO::PARAM_STR);
-        $cmd->bindParameter(":validator12",$this->validator12->getSelectedValue(),PDO::PARAM_STR);
-        $cmd->bindParameter(":validator2",$this->validator2->getSelectedValue(),PDO::PARAM_STR);
-        $cmd->bindParameter(":validator21",$this->validator21->getSelectedValue(),PDO::PARAM_STR);
-        $cmd->bindParameter(":validator22",$this->validator22->getSelectedValue(),PDO::PARAM_STR);
-        $cmd->bindParameter(":validator3",$this->validator3->getSelectedValue(),PDO::PARAM_STR);
-        $cmd->bindParameter(":validator31",$this->validator31->getSelectedValue(),PDO::PARAM_STR);
-        $cmd->bindParameter(":validator32",$this->validator32->getSelectedValue(),PDO::PARAM_STR);
-        $cmd->bindParameter(":id",$this->id->Value,PDO::PARAM_STR);
+        $cmd->bindValue(":name",$this->name->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":description",$this->comment->SafeText,PDO::PARAM_STR);
+        //$cmd->bindValue(":type",$this->type->getSelectedValue(),PDO::PARAM_STR);
+        $cmd->bindValue(":departmentId",$this->departmentId->getSelectedValue(),PDO::PARAM_STR);
+        $cmd->bindValue(":validator1",$this->validator1->getSelectedValue(),PDO::PARAM_STR);
+        $cmd->bindValue(":validator11",$this->validator11->getSelectedValue(),PDO::PARAM_STR);
+        $cmd->bindValue(":validator12",$this->validator12->getSelectedValue(),PDO::PARAM_STR);
+        $cmd->bindValue(":validator2",$this->validator2->getSelectedValue(),PDO::PARAM_STR);
+        $cmd->bindValue(":validator21",$this->validator21->getSelectedValue(),PDO::PARAM_STR);
+        $cmd->bindValue(":validator22",$this->validator22->getSelectedValue(),PDO::PARAM_STR);
+        $cmd->bindValue(":validator3",$this->validator3->getSelectedValue(),PDO::PARAM_STR);
+        $cmd->bindValue(":validator31",$this->validator31->getSelectedValue(),PDO::PARAM_STR);
+        $cmd->bindValue(":validator32",$this->validator32->getSelectedValue(),PDO::PARAM_STR);
+        $cmd->bindValue(":id",$this->id->Value,PDO::PARAM_STR);
 
         if(!$cmd->execute()) return false;
 

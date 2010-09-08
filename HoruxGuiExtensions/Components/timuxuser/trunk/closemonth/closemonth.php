@@ -12,7 +12,12 @@
 * See COPYRIGHT.php for copyright notices and details.
 */
 
-Prado::using('horux.pages.components.timuxuser.employee');
+$param = Prado::getApplication()->getParameters();
+$computation = $param['computation'];
+
+
+Prado::using('horux.pages.components.timuxuser.'.$computation);
+
 
 class closemonth extends PageList
 {
@@ -150,6 +155,7 @@ class closemonth extends PageList
         $date = $year."-".$month."-".date('t', mktime(0,0,0,$month,1,$year));
 
         $cmd=$this->db->createCommand("SELECT w.user_id FROM hr_timux_workingtime AS w LEFT JOIN hr_user AS u ON u.id=w.user_id WHERE w.endOfActivity=0 AND w.startDate<='$date' $department GROUP BY w.user_id ORDER BY u.name,u.firstname");
+
         $data = $cmd->query();
         $data = $data->readAll();
 
@@ -166,12 +172,15 @@ class closemonth extends PageList
             }
             else
             {
-                $cmd=$this->db->createCommand("SELECT* FROM hr_timux_closed_month WHERE user_id=".$d['user_id']." AND year=$year AND month=$month");
-                $data2 = $cmd->query();
-                $data2 = $data2->readAll();
+                $cmd=$this->db->createCommand("SELECT* FROM hr_timux_activity_counter WHERE user_id=".$d['user_id']." AND year=$year AND month=$month");
+                $data = $cmd->query();
+                $data = $data->readAll();
 
-                if(count($data2)==0)
-                {
+                // if we have data, this means that the month is already closed
+                if(count($data)>0) {
+                    $count = -2;
+                } else {
+                    //check if the last month is closed
                     $m = $month;
                     $y = $year;
 
@@ -186,56 +195,26 @@ class closemonth extends PageList
                         $m--;
                     }
 
-                    $cmd=$this->db->createCommand("SELECT* FROM hr_timux_closed_month WHERE user_id=".$d['user_id']." AND year=$y AND month=$m");
-                    $data2 = $cmd->query();
-                    $data2 = $data2->readAll();
+                    $cmd=$this->db->createCommand("SELECT* FROM hr_timux_activity_counter WHERE user_id=".$d['user_id']." AND year=$y AND month=$m");
+                    $data = $cmd->query();
+                    $data = $data->readAll();
 
-                    if(count($data2)==0)
-                    {
-
-                        $wt = $employee->getWorkingTime($y, $m);
-                        if($wt)
-                        {
-                            if($this->FilterYear->getItems()->count() >= 1)
-                            {
-                                $item = $this->FilterYear->getItems()->itemAt(0);
-
-                                $startDate = explode("-",$wt);
-
-                                if($y != $year )
-                                {
-                                    $isError = $employee->getError($this->FilterYear->getSelectedValue(),$this->FilterMonth->getSelectedValue());
-                                    $count = count($isError);
-                                }
-                                else
-                                {
-                                    $count = -3;
-                                }
-                            }
-                            else
-                                $count = -2;
-                        }
-                        else
-                        {
-                            $count = -2;
-                        }
-                    }
-                    else
-                    {
-                        $isError = $employee->getError($this->FilterYear->getSelectedValue(),$this->FilterMonth->getSelectedValue());
+                    if(count($data)>0) {
+                        $isError = $employee->getError( $this->FilterYear->getSelectedValue(),$this->FilterMonth->getSelectedValue());
                         $count = count($isError);
+                    } else {
+                        $count = -3;
                     }
-                }
-                else
-                    $count = -2;
-
+                }                
             }
 
-            $result[] = array(
-                            'user_id' => $d['user_id'],
-                            'employee'=> $employee->getFullName(),
-                            'canBeClosed' => $count
-                           );
+            if($count != -4) {
+                $result[] = array(
+                                'user_id' => $d['user_id'],
+                                'employee'=> $employee->getFullName(),
+                                'canBeClosed' => $count
+                               );
+            }
         }
 
         return $result;
@@ -252,16 +231,21 @@ class closemonth extends PageList
 
         if($item->ItemType==='Item' || $item->ItemType==='AlternatingItem' )
         {
-           if($item->DataItem['canBeClosed']>0)
+           if($item->DataItem['canBeClosed']>0) {
+            $item->ccb->item->setDisplay('None');
             $item->cclose->close->Text = Prado::localize("No ( number of error {n} )", array('n'=>$item->DataItem['canBeClosed']));
-           elseif($item->DataItem['canBeClosed']==-1)
+           } elseif($item->DataItem['canBeClosed']==-1) {
+            $item->ccb->item->setDisplay('None');
             $item->cclose->close->Text = Prado::localize("Cannot close the current and the next months");
-           elseif($item->DataItem['canBeClosed']==-2)
+           } elseif($item->DataItem['canBeClosed']==-2) {
+            $item->ccb->item->setDisplay('None');
             $item->cclose->close->Text = Prado::localize("This month is already closed");
-           elseif($item->DataItem['canBeClosed']==-3)
+           } elseif($item->DataItem['canBeClosed']==-3) {
+            $item->ccb->item->setDisplay('None');
             $item->cclose->close->Text = Prado::localize("This last month must be closed");
-           else
+           } else {
             $item->cclose->close->Text = Prado::localize("Yes");
+           }
 
            $item->mmonth->month->Text = $this->FilterMonth->getSelectedItem()->getText();
         }
@@ -302,13 +286,17 @@ class closemonth extends PageList
 
         foreach($cbs as $cb)
         {
-            $cb->setChecked($isChecked);
+            if($cb->getDisplay() == 'Dynamic')
+                $cb->setChecked($isChecked);
+            else
+                $cb->setChecked(false);
         }
 
     }
 
     public function onCloseMonth($sender, $param)
     {
+
 
         if(count($this->DataGrid->DataKeys) === 0)
         {
@@ -326,14 +314,28 @@ class closemonth extends PageList
                 if( (bool)$cb->getChecked() && $cb->Value != "0")
                 {
                     $employee = new employee( $cb->Value );
-                    
-                    $employee->closeMonth($this->FilterYear->getSelectedValue(),$this->FilterMonth->getSelectedValue());
 
-                    unset($employee);
+                    $employee->closeMonth($this->FilterMonth->getSelectedValue(),$this->FilterYear->getSelectedValue());
+
+                    $param = Prado::getApplication()->getParameters();
+                    $computation2 = $param['computation2'];
+
+                    if($computation2 != '') {
+                        Prado::using('horux.pages.components.timuxuser.'.$computation2);
+
+                        if(class_exists($computation2)) {
+                            $extendCloseMonth = new $computation2();
+
+                            if($extendCloseMonth)
+                                $extendCloseMonth->closeMonth($this->FilterMonth->getSelectedValue(),$this->FilterYear->getSelectedValue(), $employee);
+                        }
+                    }
+
                 }
             }
 
-            $this->onRefresh($sender, $param);
+            $pBack = array('okMsg'=>Prado::localize('The month was closed'));
+            $this->Response->redirect($this->Service->constructUrl('components.timuxuser.closemonth.closemonth',$pBack));
 
         }
         else

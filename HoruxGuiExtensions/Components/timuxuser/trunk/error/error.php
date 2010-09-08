@@ -12,7 +12,10 @@
 * See COPYRIGHT.php for copyright notices and details.
 */
 
-Prado::using('horux.pages.components.timuxuser.employee');
+$param = Prado::getApplication()->getParameters();
+$computation = $param['computation'];
+
+Prado::using('horux.pages.components.timuxuser.'.$computation);
 
 class error extends PageList
 {
@@ -160,6 +163,7 @@ class error extends PageList
 
     public function getData()
     {
+        $this->employee = new employee($this->FilterEmployee->getSelectedValue() );
 
         return $this->employee->getError($this->FilterYear->getSelectedValue(),$this->FilterMonth->getSelectedValue());
     }

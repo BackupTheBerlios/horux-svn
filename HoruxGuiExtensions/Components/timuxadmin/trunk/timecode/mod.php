@@ -12,23 +12,50 @@
 * See COPYRIGHT.php for copyright notices and details.
 */
 
+
+Prado::using('horux.pages.components.timuxadmin.pi_barcode');
+
 class mod extends Page
 {
     public function onLoad($param)
     {
         parent::onLoad($param);
+
         if(!$this->isPostBack)
         {
             $this->id->Value = $this->Request['id'];
             $this->setData();
-            $this->onTypeChanged(NULL,NULL);
+            $this->onTypeChanged(NULL,NULL);             
+        } 
+
+        if(isset($this->Request['barcode'])) {
+            $objCode = new pi_barcode() ;
+
+            $objCode->setSize(50);
+            $objCode->hideCodeType();
+            $objCode->setColors('#000000');
+            $objCode->setSize(80);
+
+            $param = Prado::getApplication()->getParameters();
+
+            $objCode -> setType($param['barcodetype']) ;
+            $objCode -> setCode($this->Request['code']) ;
+
+            $objCode -> setFiletype ('PNG');
+            $objCode -> showBarcodeImage();
+
+            exit;
         }
+    }
+
+    protected function genBarCode($sender, $param) {
+        $this->barcode->ImageUrl = 'index.php?page='.$this->getApplication()->getService()->getRequestedPagePath().'&barcode=1&code='.$sender->SafeText;
     }
 
     protected function setData()
     {
         $cmd = $this->db->createCommand( "SELECT * FROM hr_timux_timecode WHERE id=:id");
-        $cmd->bindParameter(":id",$this->id->Value, PDO::PARAM_INT);
+        $cmd->bindValue(":id",$this->id->Value, PDO::PARAM_INT);
         $query = $cmd->query();
 
         if($query)
@@ -62,9 +89,13 @@ class mod extends Page
             if($data['defaultOvertime'] == 1)
                 $this->defaultOvertime->setChecked(true);
 
-
-
             $this->signtype->setSelectedValue($data['signtype']);
+
+            if($data['type'] == 'load') {
+                $this->inputBDE->setSelectedValue($data['inputDBE']);
+            }
+
+            $this->barcode->ImageUrl = 'index.php?page='.$this->getApplication()->getService()->getRequestedPagePath().'&barcode=1&code='.$data['abbreviation'];
         }
     }
 
@@ -115,16 +146,23 @@ class mod extends Page
                                             `signtype`=:signtype,
                                             `timeworked`=:timeworked,
                                             `deviceDisplay`=:deviceDisplay,
-                                            `color`=:color
+                                            `color`=:color,
+                                            `inputDBE`=:inputDBE
                                             WHERE id=:id
                                             ;" );
 
 
-        $cmd->bindParameter(":type",$this->type->getSelectedValue(),PDO::PARAM_STR);
-        $cmd->bindParameter(":name",$this->name->SafeText, PDO::PARAM_STR);
-        $cmd->bindParameter(":deviceDisplay",$this->deviceDisplay->SafeText, PDO::PARAM_STR);
-        $cmd->bindParameter(":abbreviation",$this->abbreviation->SafeText, PDO::PARAM_STR);
-        $cmd->bindParameter(":color",$this->color->SafeText, PDO::PARAM_STR);
+        $cmd->bindValue(":type",$this->type->getSelectedValue(),PDO::PARAM_STR);
+        $cmd->bindValue(":name",$this->name->SafeText, PDO::PARAM_STR);
+        $cmd->bindValue(":deviceDisplay",$this->deviceDisplay->SafeText, PDO::PARAM_STR);
+        $cmd->bindValue(":abbreviation",$this->abbreviation->SafeText, PDO::PARAM_STR);
+        $cmd->bindValue(":color",$this->color->SafeText, PDO::PARAM_STR);
+
+        if($this->type->getSelectedValue() == 'load') {
+            $cmd->bindValue(":inputDBE",$this->inputBDE->getSelectedValue(), PDO::PARAM_STR);
+        } else {
+            $cmd->bindValue(":inputDBE",0, PDO::PARAM_STR);
+        }
 
         $useMinMax = false;
         if($this->useMinMax->getChecked())
@@ -139,25 +177,25 @@ class mod extends Page
         if($this->timeworked->getChecked())
             $timeworked = true;
 
-        $cmd->bindParameter(":timeworked",$timeworked, PDO::PARAM_STR);
+        $cmd->bindValue(":timeworked",$timeworked, PDO::PARAM_STR);
 
-        $cmd->bindParameter(":useMinMax",$useMinMax, PDO::PARAM_STR);
-        $cmd->bindParameter(":minHour",$this->minHour->SafeText, PDO::PARAM_STR);
-        $cmd->bindParameter(":maxHour",$this->maxHour->SafeText, PDO::PARAM_STR);
+        $cmd->bindValue(":useMinMax",$useMinMax, PDO::PARAM_STR);
+        $cmd->bindValue(":minHour",$this->minHour->SafeText, PDO::PARAM_STR);
+        $cmd->bindValue(":maxHour",$this->maxHour->SafeText, PDO::PARAM_STR);
        
-        $cmd->bindParameter(":id",$this->id->Value,PDO::PARAM_STR);
+        $cmd->bindValue(":id",$this->id->Value,PDO::PARAM_STR);
 
 
         $checkO = 0;
         if($this->defaultOvertime->getChecked())
             $checkO = 1;
 
-        $cmd->bindParameter(":defaultOvertime",$checkO, PDO::PARAM_STR);
+        $cmd->bindValue(":defaultOvertime",$checkO, PDO::PARAM_STR);
 
         $checkH = 0;
         if($this->defaultHoliday->getChecked())
             $checkH = 1;
-        $cmd->bindParameter(":defaultHoliday",$checkH, PDO::PARAM_STR);
+        $cmd->bindValue(":defaultHoliday",$checkH, PDO::PARAM_STR);
 
 
         $format = "hour";
@@ -168,7 +206,7 @@ class mod extends Page
         if($this->formatDay->getChecked())
             $format = 2;
 
-        $cmd->bindParameter(":formatDisplay",$format, PDO::PARAM_STR);
+        $cmd->bindValue(":formatDisplay",$format, PDO::PARAM_STR);
 
         if($checkO == 1)
         {
@@ -188,7 +226,7 @@ class mod extends Page
 
         }
 
-        $cmd->bindParameter(":signtype",$this->signtype->getSelectedValue(), PDO::PARAM_STR);
+        $cmd->bindValue(":signtype",$this->signtype->getSelectedValue(), PDO::PARAM_STR);
 
         $res = $cmd->execute();
 
@@ -211,6 +249,7 @@ class mod extends Page
 
     public function onTypeChanged($sender, $param)
     {
+        $this->inputBDE->setDisplay('None');
         if($this->type->getSelectedValue() == 'overtime')
         {
             $this->useMinMax->setEnabled(true);
@@ -226,6 +265,11 @@ class mod extends Page
             $this->useMinMax->setChecked(false);
             $this->minHour->Text = "";
             $this->maxHour->Text = "";
+
+            if($this->type->getSelectedValue() == 'load') {
+                $this->inputBDE->setDisplay('Dynamic');
+            }
+
         }
     }
 

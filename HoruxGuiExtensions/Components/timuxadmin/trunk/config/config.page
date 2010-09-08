@@ -46,27 +46,12 @@
 
                 <tr>
                     <td valign="top" class="key">
-                        <span onmouseover="Tip('<%[Enter the breaks minimum at noon]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)">* <%[Breaks minimum at noon (minutes)]%></span>
+                        <span onmouseover="Tip('<%[Minimum breaks according to the laws]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)">* <%[Minimum breaks]%></span>
                     </td>
                     <td>
-                        <com:TTextBox
-                            CssClass="text_area"
+                        <com:TCheckBox
                             ID="breakMinimum"
-                            Width="50"
-                            Text="0"
                             />
-                        <com:TRequiredFieldValidator
-                            ValidationGroup="Group1"
-                            ControlToValidate="breakMinimum"
-                            Text="<%[This field is required]%>"
-                            Display="Dynamic"/>
-                        <com:TDataTypeValidator
-                            ValidationGroup="Group1"
-                            EnableClientScript="true"
-                            ControlToValidate="breakMinimum"
-                            DataType="Integer"
-                            Text="<%[Please select a number]%>"
-                            Display="Dynamic"/>
                     </td>
                 </tr>
 
@@ -203,7 +188,7 @@
                             Text="The time format is not correct (ex: 12:00)"
                             Display="Dynamic" />
                     </td>
-                </tr
+                        </tr>
                 <tr>
                     <td valign="top" class="key">
                         <span onmouseover="Tip('<%[Enter the hours blocks at the afternoon]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Afternoon hours blocks<br/> (Format: 12:30)]%></span>
@@ -261,10 +246,11 @@
                             Text="The time format is not correct (ex: 12:00)"
                             Display="Dynamic" />
                     </td>
-                </tr
+                        </tr>
             </tbody>
         </table>
     </fieldset>
+
 
     <%include Application.common.template.footerContent %>
 </com:TContent>

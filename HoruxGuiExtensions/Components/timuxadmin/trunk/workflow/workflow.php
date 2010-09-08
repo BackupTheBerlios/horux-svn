@@ -86,7 +86,7 @@ class workflow extends PageList
                 {
 
                     $cmd=$this->db->createCommand("DELETE FROM hr_timux_workflow WHERE id=:id");
-                    $cmd->bindParameter(":id",$cb->Value);
+                    $cmd->bindValue(":id",$cb->Value);
                     if($cmd->execute())
                         $nDelete++;
 

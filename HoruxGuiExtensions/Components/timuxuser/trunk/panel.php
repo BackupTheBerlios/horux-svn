@@ -12,7 +12,10 @@
 * See COPYRIGHT.php for copyright notices and details.
 */
 
-Prado::using('horux.pages.components.timuxuser.employee');
+$param = Prado::getApplication()->getParameters();
+$computation = $param['computation'];
+
+Prado::using('horux.pages.components.timuxuser.'.$computation);
 
 class panel extends Page
 {
@@ -50,27 +53,48 @@ class panel extends Page
         
 
         $defOv = $this->employee->getDefaultOvertimeCounter();
+        $defH = $this->employee->getDefaultHolidaysCounter();
         
         for($i=0; $i<count($data);$i++)
         {
             if($data[$i]['timecodeId'] == $defOv)
             {
-                $overtime = $this->employee->getOvertimeMonth(date('Y'), date('n'));
+                $overTimeLastMonth = $this->employee->getOvertimeLastMonth(date('n'), date('Y'));
 
-                $computeBookings = $this->employee->getComputeBookings(date('Y'), date('n'), date('j'));
-
-                if($computeBookings)
-                {
-                    foreach($computeBookings as $b)
-                    {
-                        $overtime = bcadd($overtime,$b['overtime'],2);
-                    }
+                $overTimeMonth = 0;
+                for($day=1; $day<date('j');$day++) {
+                    $todo = $this->employee->getDayTodo($day,date('n'), date('Y'));
+                    $done = $this->employee->getDayDone($day,date('n'), date('Y'));
+                    $overTimeMonth = bcadd($overTimeMonth, bcsub($done['done'], $todo ,4),4 );
                 }
 
+                $overtime = bcadd($overTimeLastMonth,$overTimeMonth,4);
+
+                $data[$i]['nbre'] = $overTimeLastMonth ;
                 $data[$i]['nbre2'] = $overtime ;
             }
-            else
-            {
+            elseif ($data[$i]['timecodeId'] == $defH) {
+
+                $lastYear = $this->employee->geHolidaystMonth(date('Y')-1,12);
+
+                $nvy = $this->employee->geHolidaystMonth(date('Y'), date('n'));
+                for($month=1; $month<date('n');$month++)
+                {
+                    $nv = $this->employee->getRequest(date('Y'), $month, $this->employee->getDefaultHolidaysCounter());
+                    $nvy -= $nv['nbre'];
+                }
+                $nvy = bcsub($nvy, $lastYear,4);
+
+                $holidays = $this->employee->getRequest(date('Y'),date('n'),$defH);
+
+                $holidaysLastMonth = $nvy + $lastYear;
+
+                $holidaysCurrentMonth = bcsub($holidaysLastMonth, $holidays['nbre'],2);
+
+                $data[$i]['nbre'] = $holidaysLastMonth;
+                
+                $data[$i]['nbre2'] = $holidaysCurrentMonth;
+            } else {
                 $request = $this->employee->getRequest(date('Y'), date('n'),$data[$i]['timecodeId']);
 
                 if($data[$i]['type'] == 'leave')

@@ -12,8 +12,10 @@
 * See COPYRIGHT.php for copyright notices and details.
 */
 
-Prado::using('horux.pages.components.timuxuser.employee');
+$param = Prado::getApplication()->getParameters();
+$computation = $param['computation'];
 
+Prado::using('horux.pages.components.timuxuser.'.$computation);
 class leaverequest extends PageList
 {
     protected $userId = 0;
@@ -109,21 +111,21 @@ class leaverequest extends PageList
                 {
 
                     $cmd=$this->db->createCommand("SELECT * FROM hr_timux_request WHERE id =:id");
-                    $cmd->bindParameter(":id",$cb->Value);
+                    $cmd->bindValue(":id",$cb->Value);
                     $query = $cmd->query();
                     $data = $query->read();
 
                     if($data['state'] == 'draft')
                     {
                         $cmd=$this->db->createCommand("DELETE FROM hr_timux_request WHERE id =:id");
-                        $cmd->bindParameter(":id",$cb->Value);
+                        $cmd->bindValue(":id",$cb->Value);
                         if($cmd->execute())
                         {
                             $nDelete++;
                         }
 
                         $cmd=$this->db->createCommand("DELETE FROM hr_timux_request_leave WHERE request_id =:id");
-                        $cmd->bindParameter(":id",$cb->Value);
+                        $cmd->bindValue(":id",$cb->Value);
                         $cmd->execute();
                     }
                     else
@@ -131,13 +133,13 @@ class leaverequest extends PageList
                         if($data['state'] != 'refused')
                         {
                             $cmd=$this->db->createCommand("UPDATE hr_timux_request SET state='canceled' WHERE id =:id");
-                            $cmd->bindParameter(":id",$cb->Value);
+                            $cmd->bindValue(":id",$cb->Value);
                             if($cmd->execute())
                             {
                                 $nDelete++;
 
                                 $cmd=$this->db->createCommand("SELECT * FROM hr_timux_request_workflow WHERE request_id=:id");
-                                $cmd->bindParameter(":id",$cb->Value);
+                                $cmd->bindValue(":id",$cb->Value);
                                 $query = $cmd->query();
                                 $data = $query->readAll();
 
@@ -147,7 +149,7 @@ class leaverequest extends PageList
                                     $user_id = $d['user_id'];
 
                                     $cmd=$this->db->createCommand("SELECT u.email1, u.email2, su.email AS email3 FROM hr_user AS u LEFT JOIN hr_superusers AS su ON su.user_id=u.id WHERE u.id=:id");
-                                    $cmd->bindParameter(":id",$user_id);
+                                    $cmd->bindValue(":id",$user_id);
                                     $query = $cmd->query();
                                     $data2 = $query->read();
 
@@ -176,7 +178,7 @@ class leaverequest extends PageList
 
 
                                 $cmd=$this->db->createCommand("DELETE FROM hr_timux_request_workflow WHERE request_id =:id");
-                                $cmd->bindParameter(":id",$cb->Value);
+                                $cmd->bindValue(":id",$cb->Value);
                                 $cmd->execute();
  
 

@@ -1,3 +1,5 @@
+-- --------------------------------------------------------
+
 --
 -- Structure de la table `hr_timux_activity_counter`
 --
@@ -11,7 +13,6 @@ CREATE TABLE IF NOT EXISTS `hr_timux_activity_counter` (
   `month` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
-
 -- --------------------------------------------------------
 
 --
@@ -31,20 +32,41 @@ CREATE TABLE IF NOT EXISTS `hr_timux_booking` (
 -- --------------------------------------------------------
 
 --
--- Structure de la table `hr_timux_closed_month`
+-- Structure de la table `hr_timux_booking_bde`
 --
 
-CREATE TABLE IF NOT EXISTS `hr_timux_closed_month` (
+CREATE TABLE IF NOT EXISTS `hr_timux_booking_bde` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `tracking_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `year` int(11) NOT NULL,
-  `month` int(11) NOT NULL,
-  `hours` float NOT NULL,
-  `absences` float NOT NULL,
-  `hoursByMonth` float NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  `device_id` int(11) NOT NULL,
+  `date` date NOT NULL,
+  `time` time NOT NULL,
+  `code` int(11) NOT NULL,
+  `BDE1` varchar(100) NOT NULL,
+  `BDE2` varchar(100) NOT NULL,
+  `BDE3` varchar(100) NOT NULL,
+  `BDE4` varchar(100) NOT NULL,
+  `BDE5` varchar(100) NOT NULL,
+  `BDE6` varchar(100) NOT NULL,
+  `BDE7` varchar(100) NOT NULL,
+  `BDE8` varchar(100) NOT NULL,
+  `BDE9` varchar(100) NOT NULL,
+  `BDE10` varchar(100) NOT NULL,
+  `BDE11` varchar(100) NOT NULL,
+  `BDE12` varchar(100) NOT NULL,
+  `BDE13` varchar(100) NOT NULL,
+  `BDE14` varchar(100) NOT NULL,
+  `BDE15` varchar(100) NOT NULL,
+  `BDE16` varchar(100) NOT NULL,
+  `BDE17` varchar(100) NOT NULL,
+  `BDE18` varchar(100) NOT NULL,
+  `BDE19` varchar(100) NOT NULL,
+  `BDE20` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
-
 --
 -- Structure de la table `hr_timux_config`
 --
@@ -70,6 +92,19 @@ CREATE TABLE IF NOT EXISTS `hr_timux_config` (
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `hr_timux_hourly`
+--
+
+CREATE TABLE IF NOT EXISTS `hr_timux_hourly` (
+  `user_id` int(11) NOT NULL,
+  `month` int(11) NOT NULL,
+  `year` int(11) NOT NULL,
+  `hourly` float NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `hr_timux_request`
 --
 
@@ -85,7 +120,6 @@ CREATE TABLE IF NOT EXISTS `hr_timux_request` (
   `remark` text NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
-
 -- --------------------------------------------------------
 
 --
@@ -106,6 +140,7 @@ CREATE TABLE IF NOT EXISTS `hr_timux_request_leave` (
 -- Structure de la table `hr_timux_request_workflow`
 --
 
+
 CREATE TABLE IF NOT EXISTS `hr_timux_request_workflow` (
   `request_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
@@ -118,6 +153,7 @@ CREATE TABLE IF NOT EXISTS `hr_timux_request_workflow` (
 -- Structure de la table `hr_timux_timeclass`
 --
 
+
 CREATE TABLE IF NOT EXISTS `hr_timux_timeclass` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
@@ -127,6 +163,7 @@ CREATE TABLE IF NOT EXISTS `hr_timux_timeclass` (
   `locked` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
 
 -- --------------------------------------------------------
 
@@ -150,6 +187,7 @@ CREATE TABLE IF NOT EXISTS `hr_timux_timecode` (
   `timeworked` smallint(1) unsigned NOT NULL DEFAULT '0',
   `deviceDisplay` varchar(255) NOT NULL,
   `color` varchar(7) NOT NULL DEFAULT '#36c',
+  `inputDBE` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `abbreviation` (`abbreviation`),
   KEY `type` (`type`)
@@ -164,6 +202,7 @@ CREATE TABLE IF NOT EXISTS `hr_timux_timecode` (
 CREATE TABLE IF NOT EXISTS `hr_timux_timeunit` (
   `device_id` int(11) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
 
 -- --------------------------------------------------------
 
@@ -189,6 +228,7 @@ CREATE TABLE IF NOT EXISTS `hr_timux_workflow` (
   `validator32` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
 
 -- --------------------------------------------------------
 
@@ -223,6 +263,7 @@ CREATE TABLE IF NOT EXISTS `hr_timux_workingtime` (
   `role` set('employee','manager','rh') NOT NULL DEFAULT 'employee',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
 
 INSERT INTO `hr_user_action` (`name`, `page`, `icon`, `tip`, `catalog`, `type`) VALUES
 ('Super user', 'protected/pages/components/timuxadmin/wizard.tpl', '', '', 'timuxadmin', 'userWizardTpl'),

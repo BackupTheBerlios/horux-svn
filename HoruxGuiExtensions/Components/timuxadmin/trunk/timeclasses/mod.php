@@ -28,7 +28,7 @@ class mod extends Page
     protected function setData()
     {
         $cmd = $this->db->createCommand( "SELECT * FROM hr_timux_timeclass WHERE id=:id");
-        $cmd->bindParameter(":id",$this->id->Value, PDO::PARAM_INT);
+        $cmd->bindValue(":id",$this->id->Value, PDO::PARAM_INT);
         $query = $cmd->query();
 
         if($query)
@@ -87,11 +87,11 @@ class mod extends Page
                                             WHERE id=:id
                                             ;" );
 
-        $cmd->bindParameter(":name",$this->name->SafeText, PDO::PARAM_STR);
-        $cmd->bindParameter(":multiplier",$this->multiplier->SafeText, PDO::PARAM_STR);
-        $cmd->bindParameter(":fromHour",$this->fromHour->SafeText, PDO::PARAM_STR);
-        $cmd->bindParameter(":toHour",$this->toHour->SafeText, PDO::PARAM_STR);
-        $cmd->bindParameter(":id",$this->id->Value,PDO::PARAM_STR);
+        $cmd->bindValue(":name",$this->name->SafeText, PDO::PARAM_STR);
+        $cmd->bindValue(":multiplier",$this->multiplier->SafeText, PDO::PARAM_STR);
+        $cmd->bindValue(":fromHour",$this->fromHour->SafeText, PDO::PARAM_STR);
+        $cmd->bindValue(":toHour",$this->toHour->SafeText, PDO::PARAM_STR);
+        $cmd->bindValue(":id",$this->id->Value,PDO::PARAM_STR);
 
         return $cmd->execute();
     }

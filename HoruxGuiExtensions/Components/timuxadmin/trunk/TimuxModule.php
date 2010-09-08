@@ -18,48 +18,43 @@ class TimuxModule extends TComponentModule
     {
         $sql = "DELETE FROM hr_timux_activity_counter WHERE user_id=:id";
 		$cmd = $db->createCommand($sql);
-        $cmd->bindParameter(":id",$userId);
-        $cmd->execute();
-
-        $sql = "DELETE FROM hr_timux_closed_month WHERE user_id=:id";
-		$cmd = $db->createCommand($sql);
-        $cmd->bindParameter(":id",$userId);
+        $cmd->bindValue(":id",$userId);
         $cmd->execute();
 
         $sql = "DELETE FROM hr_timux_request_leave WHERE request_id IN (SELECT id FROM hr_timux_request WHERE userId=:id )";
 		$cmd = $db->createCommand($sql);
-        $cmd->bindParameter(":id",$userId);
+        $cmd->bindValue(":id",$userId);
         $cmd->execute();
 
 
         $sql = "DELETE FROM hr_timux_request WHERE userId=:id";
 		$cmd = $db->createCommand($sql);
-        $cmd->bindParameter(":id",$userId);
+        $cmd->bindValue(":id",$userId);
         $cmd->execute();
 
         $sql = "DELETE FROM hr_timux_request_workflow WHERE user_id=:id";
 		$cmd = $db->createCommand($sql);
-        $cmd->bindParameter(":id",$userId);
+        $cmd->bindValue(":id",$userId);
         $cmd->execute();
 
         $sql = "DELETE FROM hr_timux_workingtime WHERE user_id=:id";
 		$cmd = $db->createCommand($sql);
-        $cmd->bindParameter(":id",$userId);
+        $cmd->bindValue(":id",$userId);
         $cmd->execute();
 
         $sql = "DELETE FROM hr_timux_booking WHERE tracking_id IN (SELECT id FROM hr_tracking WHERE id_user=:id )";
 		$cmd = $db->createCommand($sql);
-        $cmd->bindParameter(":id",$userId);
+        $cmd->bindValue(":id",$userId);
         $cmd->execute();
 
         $sql = "DELETE FROM hr_tracking WHERE id_user=:id";
 		$cmd = $db->createCommand($sql);
-        $cmd->bindParameter(":id",$userId);
+        $cmd->bindValue(":id",$userId);
         $cmd->execute();
 
         $sql = "DELETE FROM hr_superusers WHERE user_id=:id";
 		$cmd = $db->createCommand($sql);
-        $cmd->bindParameter(":id",$userId);
+        $cmd->bindValue(":id",$userId);
         $cmd->execute();
 
 
@@ -89,10 +84,10 @@ class TimuxModule extends TComponentModule
                         0
                   )");
         
-        $cmd->bindParameter(":name",$name[0]->SafeText,PDO::PARAM_STR);
-        $cmd->bindParameter(":password",sha1($password[0]->SafeText),PDO::PARAM_STR);
-        $cmd->bindParameter(":group_id",$group_id[0]->getSelectedValue(),PDO::PARAM_INT);
-        $cmd->bindParameter(":user_id",$userId,PDO::PARAM_INT);
+        $cmd->bindValue(":name",$name[0]->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":password",sha1($password[0]->SafeText),PDO::PARAM_STR);
+        $cmd->bindValue(":group_id",$group_id[0]->getSelectedValue(),PDO::PARAM_INT);
+        $cmd->bindValue(":user_id",$userId,PDO::PARAM_INT);
 
 
         $cmd->execute();

@@ -12,7 +12,10 @@
 * See COPYRIGHT.php for copyright notices and details.
 */
 
-Prado::using('horux.pages.components.timuxuser.employee');
+$param = Prado::getApplication()->getParameters();
+$computation = $param['computation'];
+
+Prado::using('horux.pages.components.timuxuser.'.$computation);
 
 class calendar extends Page
 {

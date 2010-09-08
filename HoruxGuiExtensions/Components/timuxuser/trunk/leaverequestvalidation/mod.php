@@ -12,7 +12,10 @@
 * See COPYRIGHT.php for copyright notices and details.
 */
 
-Prado::using('horux.pages.components.timuxuser.employee');
+$param = Prado::getApplication()->getParameters();
+$computation = $param['computation'];
+
+Prado::using('horux.pages.components.timuxuser.'.$computation);
 
 class mod extends Page
 {
@@ -48,7 +51,7 @@ class mod extends Page
     protected function setData()
     {
         $cmd = $this->db->createCommand( "SELECT tr.*, CONCAT(u.name, ' ', u.firstname ) AS employee, rl.* FROM hr_timux_request AS tr LEFT JOIN hr_timux_request_leave AS rl ON rl.request_id=tr.id LEFT JOIN hr_user AS u ON u.id=tr.userId WHERE tr.id=:id");
-        $cmd->bindParameter(":id",$this->id->Value, PDO::PARAM_INT);
+        $cmd->bindValue(":id",$this->id->Value, PDO::PARAM_INT);
         $query = $cmd->query();
 
         if($query)
@@ -144,13 +147,13 @@ class mod extends Page
                                           WHERE id=:id
                                           ;" );
 
-        $cmd->bindParameter(":modifyUserId",$this->userId,PDO::PARAM_STR);
+        $cmd->bindValue(":modifyUserId",$this->userId,PDO::PARAM_STR);
 
         $remark = $this->remark->Text;
         $remark .= "<hr>";
         $remark .= $this->myremark->Text;
 
-        $cmd->bindParameter(":remark",$remark,PDO::PARAM_STR);
+        $cmd->bindValue(":remark",$remark,PDO::PARAM_STR);
 
         $validation = '';
 
@@ -161,13 +164,13 @@ class mod extends Page
         {
 
             $cmd2 = $this->db->createCommand( "SELECT * FROM hr_timux_request_workflow WHERE request_id =:id");
-            $cmd2->bindParameter(":id",$this->id->Value, PDO::PARAM_INT);
+            $cmd2->bindValue(":id",$this->id->Value, PDO::PARAM_INT);
             $query = $cmd2->query();
             $data = $query->read();
             $validatorLevel = $data['validatorLevel'];
 
             $cmd2 = $this->db->createCommand( "SELECT u.id, u.department, CONCAT(u.name, ' ', u.firstname) AS employee FROM hr_timux_request AS tr LEFT JOIN hr_timux_request_leave AS rl ON rl.request_id=tr.id LEFT JOIN hr_user AS u ON u.id=tr.userId WHERE tr.id=:id");
-            $cmd2->bindParameter(":id",$this->id->Value, PDO::PARAM_INT);
+            $cmd2->bindValue(":id",$this->id->Value, PDO::PARAM_INT);
             $query = $cmd2->query();
             $data = $query->read();
             $department = $data['department'];
@@ -175,7 +178,7 @@ class mod extends Page
             $employeeId = $data['id'];
 
             $cmd2 = $this->db->createCommand( "SELECT * FROM hr_timux_workflow WHERE departmentId=:id OR departmentId=0");
-            $cmd2->bindParameter(":id",$department, PDO::PARAM_INT);
+            $cmd2->bindValue(":id",$department, PDO::PARAM_INT);
             $query = $cmd2->query();
             $data = $query->read();
 
@@ -214,7 +217,7 @@ class mod extends Page
 
 
                 $cmd2=$this->db->createCommand("DELETE FROM hr_timux_request_workflow WHERE request_id =:id");
-                $cmd2->bindParameter(":id",$this->id->Value);
+                $cmd2->bindValue(":id",$this->id->Value);
                 $cmd2->execute();
 
                 foreach($v as $s)
@@ -227,9 +230,9 @@ class mod extends Page
                                                             validatorLevel=:validatorLevel
                                                           ;" );
 
-                        $cmd2->bindParameter(":request_id",$this->id->Value,PDO::PARAM_STR);
-                        $cmd2->bindParameter(":user_id",$s,PDO::PARAM_STR);
-                        $cmd2->bindParameter(":validatorLevel",$level,PDO::PARAM_STR);
+                        $cmd2->bindValue(":request_id",$this->id->Value,PDO::PARAM_STR);
+                        $cmd2->bindValue(":user_id",$s,PDO::PARAM_STR);
+                        $cmd2->bindValue(":validatorLevel",$level,PDO::PARAM_STR);
                         $cmd2->execute();
 
                         
@@ -237,7 +240,7 @@ class mod extends Page
                 }
 
                 $cmd2=$this->db->createCommand("SELECT * FROM hr_timux_request_workflow WHERE request_id=:id");
-                $cmd2->bindParameter(":id",$this->id->Value);
+                $cmd2->bindValue(":id",$this->id->Value);
                 $query = $cmd2->query();
                 $data = $query->readAll();
 
@@ -247,7 +250,7 @@ class mod extends Page
                     $user_id = $d['user_id'];
 
                     $cmd2=$this->db->createCommand("SELECT u.email1, u.email2, su.email AS email3 FROM hr_user AS u LEFT JOIN hr_superusers AS su ON su.user_id=u.id WHERE u.id=:id");
-                    $cmd2->bindParameter(":id",$user_id);
+                    $cmd2->bindValue(":id",$user_id);
                     $query = $cmd2->query();
                     $data2 = $query->read();
 
@@ -283,7 +286,7 @@ class mod extends Page
                 $mailer = new TMailer();
 
                 $cmd2=$this->db->createCommand("SELECT u.email1, u.email2, su.email AS email3 FROM hr_user AS u LEFT JOIN hr_superusers AS su ON su.user_id=u.id WHERE u.id=:id");
-                $cmd2->bindParameter(":id",$employeeId);
+                $cmd2->bindValue(":id",$employeeId);
                 $query = $cmd2->query();
                 $data2 = $query->read();
 
@@ -312,17 +315,17 @@ class mod extends Page
                 $mailer->sendHtmlMail();
 
                 $cmd2=$this->db->createCommand("DELETE FROM hr_timux_request_workflow WHERE request_id =:id");
-                $cmd2->bindParameter(":id",$this->id->Value);
+                $cmd2->bindValue(":id",$this->id->Value);
                 $cmd2->execute();
                 $validation = 'validate';
             }
 
         }
 
-        $cmd->bindParameter(":state",$validation,PDO::PARAM_STR);
+        $cmd->bindValue(":state",$validation,PDO::PARAM_STR);
 
 
-        $cmd->bindParameter(":id",$this->id->Value,PDO::PARAM_STR);
+        $cmd->bindValue(":id",$this->id->Value,PDO::PARAM_STR);
 
         $res1 = $cmd->execute();
 
@@ -330,11 +333,11 @@ class mod extends Page
         if($validation == 'refused')
         {
             $cmd=$this->db->createCommand("DELETE FROM hr_timux_request_workflow WHERE request_id =:id");
-            $cmd->bindParameter(":id",$this->id->Value);
+            $cmd->bindValue(":id",$this->id->Value);
             $cmd->execute();
 
             $cmd2 = $this->db->createCommand( "SELECT u.id, u.department, CONCAT(u.name, ' ', u.firstname) AS employee FROM hr_timux_request AS tr LEFT JOIN hr_timux_request_leave AS rl ON rl.request_id=tr.id LEFT JOIN hr_user AS u ON u.id=tr.userId WHERE tr.id=:id");
-            $cmd2->bindParameter(":id",$this->id->Value, PDO::PARAM_INT);
+            $cmd2->bindValue(":id",$this->id->Value, PDO::PARAM_INT);
             $query = $cmd2->query();
             $data = $query->read();
             $department = $data['department'];
@@ -344,7 +347,7 @@ class mod extends Page
             $mailer = new TMailer();
 
             $cmd2=$this->db->createCommand("SELECT u.email1, u.email2, su.email AS email3 FROM hr_user AS u LEFT JOIN hr_superusers AS su ON su.user_id=u.id WHERE u.id=:id");
-            $cmd2->bindParameter(":id",$employeeId);
+            $cmd2->bindValue(":id",$employeeId);
             $query = $cmd2->query();
             $data2 = $query->read();
 

@@ -190,6 +190,19 @@
 									</prop:TrueTemplate>
 									</com:TConditional>
 
+									<com:TConditional Condition="$this->isAccess('components.timuxuser.load.load')">
+									<prop:TrueTemplate>
+									<div style="float:left;">
+										<div class="icon">
+											<a href="<%= $this->Service->constructUrl('components.timuxuser.load.load') %>">
+												<img src="<%~ ./assets/load.png %>" alt="<%[Load]%>"  />
+												<span><%[Load]%></span>
+											</a>
+										</div>
+									</div>
+									</prop:TrueTemplate>
+									</com:TConditional>
+
 								</div>
 							</td>
 							<td width="45%" valign="top">

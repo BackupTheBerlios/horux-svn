@@ -69,14 +69,7 @@
 
 
     <br/><br/>
-    <com:TActiveButton OnClick="onCloseMonth" Text="<%[Close the month]%>" >
-        <prop:ClientSide
-                OnLoading="Effect.Appear(document.getElementById('loading'), {duration:0, from:0.3, to:0.3})"
-                OnComplete="Effect.Fade(document.getElementById('loading'), {duration:0})"
-             />
-    </com:TActiveButton>
-
-
+    <com:TActiveButton OnClick="onCloseMonth" Text="<%[Close the month]%>" />
     <br/>
 
     <div id="list">
@@ -101,10 +94,12 @@
             <com:TTemplateColumn
                 HeaderText=""
                 HeaderStyle.Width = "20px"
+                ID="ccb"
                 >
                 <prop:HeaderTemplate>
                     <com:TActiveCheckBox
                         ID="headerCB"
+                        Display="Dynamic"
                         AutoPostBack="true"
                         OnCallback="Page.checkboxAllCallback"
                         InputAttributes.value="0"
@@ -113,6 +108,7 @@
                 <prop:ItemTemplate>
                     <com:TActiveCheckBox
                         ID="item"
+                        Display="Dynamic"
                         InputAttributes.value="<%#$this->NamingContainer->DataItem['user_id']%>"
                         />
                 </prop:ItemTemplate>

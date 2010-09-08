@@ -1,0 +1,183 @@
+<com:TContent ID="Main">
+    <%include Application.common.template.headerContent %>
+
+    <com:TClientScript PradoScripts="effects" />
+
+    <div id="loading" class="loading"></div>
+    <script type="text/javascript">
+
+        function onPrintRedirect()
+        {
+            var f1 = document.getElementById( '<%= $this->FilterDepartment->getClientID() %>' );
+            var f2 = document.getElementById( '<%= $this->FilterEmployee->getClientID() %>' );
+            var f3 = document.getElementById( '<%= $this->FilterYear->getClientID() %>' );
+            var f4 = document.getElementById( '<%= $this->FilterMonth->getClientID() %>' );
+
+            var param = "&f1=" + f1.value + "&f2=" + f2.value + "&f3=" + f3.value + "&f4=" + f4.value;
+            window.open( "<%= $this->Service->constructUrl($this->getApplication()->getService()->getRequestedPagePath()) %>&action=print" + param, target="_blank" ) ;
+        }
+
+        Effect.Fade(document.getElementById('loading'), {duration:0});
+
+    </script>
+
+    <com:TToolbarBox
+        ID="tbb"
+        Title="<%[Load]%>"
+        IconAsset="<%~ ../assets/load.png %>"
+        HelpVisible="true"
+        CancelVisible="true"
+        PrintVisible="true"
+        JsClickPrint="onPrintRedirect()"
+        />
+
+    <%include Application.common.template.headerBoxContent %>
+
+    <%[Show personnal]%>
+    <com:TActiveCheckBox ID="showUser" OnCallback="onRefresh" >
+        <prop:ClientSide
+            OnLoading="Effect.Appear(document.getElementById('loading'), {duration:0, from:0.3, to:0.3})"
+            OnComplete="Effect.Fade(document.getElementById('loading'), {duration:0})"
+         />
+    </com:TActiveCheckBox>
+
+    <%[Time code]%>
+    <com:TActiveDropDownList
+        ID="FilterLoad"
+        OnSelectedIndexChanged="selectionChangedLoad"
+        CssClass="inputbox"
+        DataTextField="Text"
+        DataValueField="Value" >
+        <prop:ClientSide
+            OnLoading="Effect.Appear(document.getElementById('loading'), {duration:0, from:0.3, to:0.3})"
+            OnComplete="Effect.Fade(document.getElementById('loading'), {duration:0})"
+         />
+
+    </com:TActiveDropDownList>
+
+    <%[Department]%>
+    <com:TActiveDropDownList
+        ID="FilterDepartment"
+        OnSelectedIndexChanged="selectionChangedDepartment"
+        CssClass="inputbox"
+        DataTextField="Text"
+        DataValueField="Value" >
+        <prop:ClientSide
+            OnLoading="Effect.Appear(document.getElementById('loading'), {duration:0, from:0.3, to:0.3})"
+            OnComplete="Effect.Fade(document.getElementById('loading'), {duration:0})"
+         />
+
+    </com:TActiveDropDownList>
+    <%[Employee]%>
+    <com:TActiveDropDownList
+        ID="FilterEmployee"
+        OnSelectedIndexChanged="selectionChangedEmployee"
+        CssClass="inputbox"
+        DataTextField="Text"
+        DataValueField="Value">
+        <prop:ClientSide
+            OnLoading="Effect.Appear(document.getElementById('loading'), {duration:0, from:0.3, to:0.3})"
+            OnComplete="Effect.Fade(document.getElementById('loading'), {duration:0})"
+         />
+
+    </com:TActiveDropDownList>
+
+    <%[Year]%>
+    <com:TActiveDropDownList
+        ID="FilterYear"
+        OnSelectedIndexChanged="selectionChangedYear"
+        CssClass="inputbox"
+        DataTextField="Text"
+        DataValueField="Value">
+        <prop:ClientSide
+            OnLoading="Effect.Appear(document.getElementById('loading'), {duration:0, from:0.3, to:0.3})"
+            OnComplete="Effect.Fade(document.getElementById('loading'), {duration:0})"
+         />
+
+    </com:TActiveDropDownList>
+    <%[Month]%>
+    <com:TActiveDropDownList
+        ID="FilterMonth"
+        OnSelectedIndexChanged="selectionChangedMonth"
+        CssClass="inputbox" >
+        <com:TListItem Value="1" Text="<%[January]%>"/>
+        <com:TListItem Value="2" Text="<%[February]%>"/>
+        <com:TListItem Value="3" Text="<%[March]%>"/>
+        <com:TListItem Value="4" Text="<%[April]%>"/>
+        <com:TListItem Value="5" Text="<%[May]%>"/>
+        <com:TListItem Value="6" Text="<%[June]%>"/>
+        <com:TListItem Value="7" Text="<%[July]%>"/>
+        <com:TListItem Value="8" Text="<%[August]%>"/>
+        <com:TListItem Value="9" Text="<%[September]%>"/>
+        <com:TListItem Value="10" Text="<%[October]%>"/>
+        <com:TListItem Value="11" Text="<%[November]%>"/>
+        <com:TListItem Value="12" Text="<%[December]%>"/>
+        <prop:ClientSide
+            OnLoading="Effect.Appear(document.getElementById('loading'), {duration:0, from:0.3, to:0.3})"
+            OnComplete="Effect.Fade(document.getElementById('loading'), {duration:0})"
+         />
+
+    </com:TActiveDropDownList>
+
+    <div id="list">
+        <com:TDataGrid
+            ID="DataGrid"
+            DataKeyField="id"
+            AutoGenerateColumns="false"
+            CssClass="adminlist"
+            AllowPaging="false"
+
+            ItemStyle.CssClass = "row0"
+            AlternatingItemStyle.CssClass="row1"
+
+            OnItemCreated="itemCreated"
+            OnEditCommand="editItem"
+            OnUpdateCommand="saveItem"
+            OnCancelCommand="cancelItem"
+            >
+
+
+            <com:TBoundColumn
+                HeaderText="<%[Time code]%>"
+                DataField="timecode"
+                ReadOnly="true"
+                />
+
+            <com:TBoundColumn
+                HeaderText="<%[Hourly]%>"
+                DataField="hourly"
+                ID="hourly"
+                ItemStyle.HorizontalAlign="Right"
+                />
+
+            <com:TBoundColumn
+                HeaderText="<%[Hours done]%>"
+                DataField="hoursdone"
+                ItemStyle.HorizontalAlign="Right"
+                ReadOnly="true"
+                />
+
+            <com:TBoundColumn
+                HeaderText="<%[Cost]%>"
+                DataField="cost"
+                ItemStyle.HorizontalAlign="Right"
+                ReadOnly="true"
+                />
+
+            <com:TEditCommandColumn
+                    ID="edit"
+                    HeaderText="<%[Edit]%>"
+                    HeaderStyle.Width="150px"
+                    UpdateText="<%[Save]%>"
+                    EditText="<%[Edit hourly]%>"
+                    CancelText="<%[Cancel]%>"
+                    ItemStyle.HorizontalAlign="Center"
+                    ItemStyle.Font.Italic="false"
+                    />
+
+
+        </com:TDataGrid>
+    </div>
+
+    <%include Application.common.template.footerContent %>
+</com:TContent>    

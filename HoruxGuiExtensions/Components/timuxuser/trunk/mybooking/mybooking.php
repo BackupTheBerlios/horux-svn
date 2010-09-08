@@ -12,7 +12,10 @@
 * See COPYRIGHT.php for copyright notices and details.
 */
 
-Prado::using('horux.pages.components.timuxuser.employee');
+$param = Prado::getApplication()->getParameters();
+$computation = $param['computation'];
+
+Prado::using('horux.pages.components.timuxuser.'.$computation);
 
 class mybooking extends PageList
 {
@@ -238,7 +241,7 @@ class mybooking extends PageList
                 if( (bool)$cb->getChecked() && $cb->Value != "0")
                 {
                     $cmd=$this->db->createCommand("SELECT * FROM hr_timux_booking WHERE tracking_id =:id");
-                    $cmd->bindParameter(":id",$cb->Value);
+                    $cmd->bindValue(":id",$cb->Value);
                     $query = $cmd->query();
                     $data = $query->read();
 
@@ -246,14 +249,14 @@ class mybooking extends PageList
                     {
 
                         $cmd=$this->db->createCommand("DELETE FROM hr_timux_booking WHERE tracking_id =:id");
-                        $cmd->bindParameter(":id",$cb->Value);
+                        $cmd->bindValue(":id",$cb->Value);
                         if($cmd->execute())
                         {
                             $nDelete++;
                         }
                         
                         $cmd=$this->db->createCommand("DELETE FROM hr_tracking WHERE id =:id");
-                        $cmd->bindParameter(":id",$cb->Value);
+                        $cmd->bindValue(":id",$cb->Value);
                         $cmd->execute();
                     }
                     //$this->log("Delete the key: ".$data['serialNumber']);

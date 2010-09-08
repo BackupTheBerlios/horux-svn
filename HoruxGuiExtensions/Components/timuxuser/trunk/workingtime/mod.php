@@ -44,7 +44,7 @@ class mod extends Page
     protected function setData()
     {
         $cmd = $this->db->createCommand( "SELECT * FROM hr_timux_workingtime WHERE id=:id");
-        $cmd->bindParameter(":id",$this->id->Value, PDO::PARAM_INT);
+        $cmd->bindValue(":id",$this->id->Value, PDO::PARAM_INT);
         $query = $cmd->query();
         
         if($query)
@@ -165,33 +165,33 @@ class mod extends Page
                                             `role`=:role
                                             WHERE id=:id" );
 
-        $cmd->bindParameter(":id",$this->id->Value,PDO::PARAM_STR);
-        $cmd->bindParameter(":user_id",$this->employee->getSelectedValue(),PDO::PARAM_STR);
-        $cmd->bindParameter(":workingPercent",$this->workingPercent->SafeText, PDO::PARAM_STR);
-        $cmd->bindParameter(":hoursByWeek",$this->hoursByWeek->SafeText, PDO::PARAM_STR);
-        $cmd->bindParameter(":mondayTime_m",$this->monday_m->SafeText, PDO::PARAM_STR);
-        $cmd->bindParameter(":tuesdayTime_m",$this->tuesday_m->SafeText, PDO::PARAM_STR);
-        $cmd->bindParameter(":wednesdayTime_m",$this->wednesday_m->SafeText, PDO::PARAM_STR);
-        $cmd->bindParameter(":thursdayTime_m",$this->thursday_m->SafeText, PDO::PARAM_STR);
-        $cmd->bindParameter(":fridayTime_m",$this->friday_m->SafeText, PDO::PARAM_STR);
-        $cmd->bindParameter(":saturdayTime_m",$this->saturday_m->SafeText, PDO::PARAM_STR);
-        $cmd->bindParameter(":sundayTime_m",$this->sunday_m->SafeText, PDO::PARAM_STR);
-        $cmd->bindParameter(":mondayTime_a",$this->monday_a->SafeText, PDO::PARAM_STR);
-        $cmd->bindParameter(":tuesdayTime_a",$this->tuesday_a->SafeText, PDO::PARAM_STR);
-        $cmd->bindParameter(":wednesdayTime_a",$this->wednesday_a->SafeText, PDO::PARAM_STR);
-        $cmd->bindParameter(":thursdayTime_a",$this->thursday_a->SafeText, PDO::PARAM_STR);
-        $cmd->bindParameter(":fridayTime_a",$this->friday_a->SafeText, PDO::PARAM_STR);
-        $cmd->bindParameter(":saturdayTime_a",$this->saturday_a->SafeText, PDO::PARAM_STR);
-        $cmd->bindParameter(":sundayTime_a",$this->sunday_a->SafeText, PDO::PARAM_STR);
-        $cmd->bindParameter(":startDate",$this->dateToSql($this->from->SafeText), PDO::PARAM_STR);
-        $cmd->bindParameter(":remark",$this->remark->SafeText, PDO::PARAM_STR);
-        $cmd->bindParameter(":holidaysByYear",$this->holidaysByYear->SafeText, PDO::PARAM_STR);
+        $cmd->bindValue(":id",$this->id->Value,PDO::PARAM_STR);
+        $cmd->bindValue(":user_id",$this->employee->getSelectedValue(),PDO::PARAM_STR);
+        $cmd->bindValue(":workingPercent",$this->workingPercent->SafeText, PDO::PARAM_STR);
+        $cmd->bindValue(":hoursByWeek",$this->hoursByWeek->SafeText, PDO::PARAM_STR);
+        $cmd->bindValue(":mondayTime_m",$this->monday_m->SafeText, PDO::PARAM_STR);
+        $cmd->bindValue(":tuesdayTime_m",$this->tuesday_m->SafeText, PDO::PARAM_STR);
+        $cmd->bindValue(":wednesdayTime_m",$this->wednesday_m->SafeText, PDO::PARAM_STR);
+        $cmd->bindValue(":thursdayTime_m",$this->thursday_m->SafeText, PDO::PARAM_STR);
+        $cmd->bindValue(":fridayTime_m",$this->friday_m->SafeText, PDO::PARAM_STR);
+        $cmd->bindValue(":saturdayTime_m",$this->saturday_m->SafeText, PDO::PARAM_STR);
+        $cmd->bindValue(":sundayTime_m",$this->sunday_m->SafeText, PDO::PARAM_STR);
+        $cmd->bindValue(":mondayTime_a",$this->monday_a->SafeText, PDO::PARAM_STR);
+        $cmd->bindValue(":tuesdayTime_a",$this->tuesday_a->SafeText, PDO::PARAM_STR);
+        $cmd->bindValue(":wednesdayTime_a",$this->wednesday_a->SafeText, PDO::PARAM_STR);
+        $cmd->bindValue(":thursdayTime_a",$this->thursday_a->SafeText, PDO::PARAM_STR);
+        $cmd->bindValue(":fridayTime_a",$this->friday_a->SafeText, PDO::PARAM_STR);
+        $cmd->bindValue(":saturdayTime_a",$this->saturday_a->SafeText, PDO::PARAM_STR);
+        $cmd->bindValue(":sundayTime_a",$this->sunday_a->SafeText, PDO::PARAM_STR);
+        $cmd->bindValue(":startDate",$this->dateToSql($this->from->SafeText), PDO::PARAM_STR);
+        $cmd->bindValue(":remark",$this->remark->SafeText, PDO::PARAM_STR);
+        $cmd->bindValue(":holidaysByYear",$this->holidaysByYear->SafeText, PDO::PARAM_STR);
 
         $endActivity = false;
         if($this->endActivity->getChecked())
             $endActivity = true;
 
-        $cmd->bindParameter(":endOfActivity",$endActivity, PDO::PARAM_STR);
+        $cmd->bindValue(":endOfActivity",$endActivity, PDO::PARAM_STR);
 
         $role = 'employee';
 
@@ -202,7 +202,7 @@ class mod extends Page
         if($this->r_rh->getChecked())
             $role = 'rh';
 
-        $cmd->bindParameter(":role",$role, PDO::PARAM_STR);
+        $cmd->bindValue(":role",$role, PDO::PARAM_STR);
 
         $res1 = $cmd->execute();
 

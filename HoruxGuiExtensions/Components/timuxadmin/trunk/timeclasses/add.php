@@ -67,10 +67,10 @@ class add extends Page
                                             :toHour
                                             );" );
 
-        $cmd->bindParameter(":name",$this->name->SafeText, PDO::PARAM_STR);
-        $cmd->bindParameter(":multiplier",$this->multiplier->SafeText, PDO::PARAM_STR);
-        $cmd->bindParameter(":fromHour",$this->fromHour->SafeText, PDO::PARAM_STR);
-        $cmd->bindParameter(":toHour",$this->toHour->SafeText, PDO::PARAM_STR);
+        $cmd->bindValue(":name",$this->name->SafeText, PDO::PARAM_STR);
+        $cmd->bindValue(":multiplier",$this->multiplier->SafeText, PDO::PARAM_STR);
+        $cmd->bindValue(":fromHour",$this->fromHour->SafeText, PDO::PARAM_STR);
+        $cmd->bindValue(":toHour",$this->toHour->SafeText, PDO::PARAM_STR);
 
         $res1 = $cmd->execute();
         $lastId = $this->db->LastInsertID;

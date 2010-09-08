@@ -1,13 +1,16 @@
 <?php
 
- Prado::using('horux.pages.components.timuxuser.employee');
+$param = Prado::getApplication()->getParameters();
+$computation = $param['computation'];
+
+Prado::using('horux.pages.components.timuxuser.'.$computation);
 
 class timuxAdminDevice
 {
 
     public function syncStandalone($ids)
     {
-		$app = Prado::getApplication();
+	$app = Prado::getApplication();
       	$db = $app->getModule('horuxDb')->DbConnection;
         $db->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY,true);
         $db->Active=true;
@@ -43,18 +46,14 @@ class timuxAdminDevice
     }
 
 
-    public function syncBalances($id)
+    public function syncBalances()
     {
-		$app = Prado::getApplication();
+	$app = Prado::getApplication();
       	$db = $app->getModule('horuxDb')->DbConnection;
         $db->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY,true);
         $db->Active=true;
 
-        if($id == "0")
-            $sql = "SELECT id FROM hr_user WHERE name!='??' AND firstname!='??' AND isBlocked=0";
-        else
-            $sql = "SELECT id FROM hr_user WHERE id=$id";
-
+        $sql = "SELECT id FROM hr_user WHERE name!='??' AND firstname!='??' AND isBlocked=0";
         $cmd= $db->createCommand($sql);
         $data = $cmd->query();
         $data = $data->readAll();
@@ -63,95 +62,42 @@ class timuxAdminDevice
 
         foreach($data as $data)
         {
+            $val .= $data['id']."/";
             $employee = new employee($data['id']);
 
-            $wt = $employee->getWorkingTime(date('Y'), date('n'));
+            $overTimeLastMonth = $employee->getOvertimeLastMonth(date('n'), date('Y'));
 
-            if($wt)
-            {
-                //Balance of holiday fot the last year
-                $lastYear = $employee->geHolidaystMonth(date('Y')-1,12);
-
-
-                //Nbre of holiday that the employee has for the year
-                $nvy = $employee->geHolidaystForTheYear(date('Y'), date('n'));
-
-                for($i=1; $i<date('n');$i++)
-                {
-                    $nv = $employee->getRequest(date('Y'), $i, $employee->getDefaultHolidaysCounter());
-                    $nvy -= $nv['nbre'];
-                }
-
-
-                $holidayForTheYear = $nvy;
-
-                // compute the holdiday for the last month
-                $holidaysLastMonth = $holidayForTheYear + $lastYear;
-
-                // get the holiday for this month
-                $defaultHolidayTimeCode = $employee->getDefaultHolidaysCounter();
-                $holidays = $employee->getRequest(date('Y'), date('n'),$defaultHolidayTimeCode);
-
-                // balance of the last month and the current month
-                $holidaysTotal = bcsub($holidaysLastMonth, $holidays['nbre'],4);
-
-                if($holidaysTotal>0)
-                    $holidaysTotal = sprintf("+%.02f",$holidaysTotal);
-                elseif($holidaysTotal<0 || $holidaysTotal==0)
-                    $holidaysTotal = sprintf("%.02f",$holidaysTotal);
-
-                $val .= $data['id']."/";
-
-                // get the overtime from the last month
-                $lastOvertime = $employee->getOvertimeLastMonth(date('Y'), date('n'));
-
-                $timeWorked = $employee->getMonthTimeWorked(date('Y'), date('n'));
-
-                $todo = $employee->getTimeHoursDayTodo(date('Y'), date('n'));
-
-
-                $timeWorked['done'] = bcadd($timeWorked['done'], bcmul($holidays['nbre'],$todo,4), 4);
-
-                $untilLastDay = 0;
-
-                for($i=1; $i<=date('d');$i++)
-                {
-                    if($employee->isWorking(date('Y'), date('n'), $i))
-                    {
-                        $nwd = $employee->getNonWorkingDay(date('Y'), date('n'), $i);
-
-                        $untilLastDay++;
-
-                        if($nwd>0)
-                        {
-                            $untilLastDay = $untilLastDay-$nwd;
-                        }
-                            
-                    }
-                }
-
-                $untilLastDay = bcmul( $untilLastDay, $todo, 4);
-
-
-                $overtime = bcsub($timeWorked['done'],$untilLastDay,4);
-                $overtime = bcadd($overtime,$lastOvertime,4);
-
-                // display the value
-                if($overtime>0)
-                    $overtime = sprintf("+%.02f",$overtime);
-                elseif($overtime<0 || $overtime==0)
-                    $overtime = sprintf("%.02f",$overtime);
-
-
-                $val .=  $overtime."/";
-
-
-
-
-                $val .= $holidaysTotal;
-
-                $val .= ";";
+            $overTimeMonth = 0;
+            for($day=1; $day<date('j');$day++) {
+                $todo = $employee->getDayTodo($day,date('n'), date('Y'));
+                $done = $employee->getDayDone($day,date('n'), date('Y'));
+                $overTimeMonth = bcadd($overTimeMonth, bcsub($done['done'], $todo ,4),4 );
             }
+
+            $overtime = bcadd($overTimeLastMonth,$overTimeMonth,4);
+
+            $val .= sprintf("%.02f",$overtime)."/";
+
+
+            $lastYear = $employee->geHolidaystMonth(date('Y')-1,12);
+
+            $nvy = $employee->geHolidaystMonth(date('Y'), date('n'));
+            for($month=1; $month<date('n');$month++)
+            {
+                $nv = $employee->getRequest(date('Y'), $month, $employee->getDefaultHolidaysCounter());
+                $nvy -= $nv['nbre'];
+            }
+            $nvy = bcsub($nvy, $lastYear,4);
+
+            $holidays = $employee->getRequest(date('Y'),date('n'),$defH);
+
+            $holidaysLastMonth = $nvy + $lastYear;
+
+            $holidaysCurrentMonth = bcsub($holidaysLastMonth, $holidays['nbre'],2);
+
+            $val .= sprintf("%.02f",$holidaysCurrentMonth);
+
+            $val .= ";";
         }
 
         return $val;

@@ -12,7 +12,10 @@
 * See COPYRIGHT.php for copyright notices and details.
 */
 
-Prado::using('horux.pages.components.timuxuser.employee');
+$param = Prado::getApplication()->getParameters();
+$computation = $param['computation'];
+
+Prado::using('horux.pages.components.timuxuser.'.$computation);
 
 class add extends Page
 {
@@ -128,10 +131,10 @@ class add extends Page
                                               timecodeId=:timecodeId
                                               ;" );
 
-            $cmd->bindParameter(":userId",$this->user->getSelectedValue(),PDO::PARAM_STR);
-            $cmd->bindParameter(":modifyUserId",$this->userId,PDO::PARAM_STR);
-            $cmd->bindParameter(":remark",$this->remark->Text,PDO::PARAM_STR);
-            $cmd->bindParameter(":timecodeId",$this->timecode->getSelectedValue(),PDO::PARAM_STR);
+            $cmd->bindValue(":userId",$this->user->getSelectedValue(),PDO::PARAM_STR);
+            $cmd->bindValue(":modifyUserId",$this->userId,PDO::PARAM_STR);
+            $cmd->bindValue(":remark",$this->remark->Text,PDO::PARAM_STR);
+            $cmd->bindValue(":timecodeId",$this->timecode->getSelectedValue(),PDO::PARAM_STR);
             $res1 = $cmd->execute();
             $lastId = $this->db->LastInsertID;
 
@@ -142,11 +145,11 @@ class add extends Page
                                               period=:period
                                               ;" );
 
-            $cmd->bindParameter(":request_id",$lastId,PDO::PARAM_STR);
-            $cmd->bindParameter(":datefrom",$dateFrom,PDO::PARAM_STR);
+            $cmd->bindValue(":request_id",$lastId,PDO::PARAM_STR);
+            $cmd->bindValue(":datefrom",$dateFrom,PDO::PARAM_STR);
 
 
-            $cmd->bindParameter(":dateto",$dateto,PDO::PARAM_STR);
+            $cmd->bindValue(":dateto",$dateto,PDO::PARAM_STR);
 
             $period = "";
 
@@ -157,7 +160,7 @@ class add extends Page
             if($this->afternoon->getChecked())
                 $period = 'afternoon';
 
-            $cmd->bindParameter(":period",$period,PDO::PARAM_STR);
+            $cmd->bindValue(":period",$period,PDO::PARAM_STR);
             $res2 = $cmd->execute();
 
             return $lastId;
@@ -206,10 +209,10 @@ class add extends Page
                                                       timecodeId=:timecodeId
                                                       ;" );
 
-                    $cmd->bindParameter(":userId",$this->user->getSelectedValue(),PDO::PARAM_STR);
-                    $cmd->bindParameter(":modifyUserId",$this->userId,PDO::PARAM_STR);
-                    $cmd->bindParameter(":remark",$this->remark->Text,PDO::PARAM_STR);
-                    $cmd->bindParameter(":timecodeId",$this->timecode->getSelectedValue(),PDO::PARAM_STR);
+                    $cmd->bindValue(":userId",$this->user->getSelectedValue(),PDO::PARAM_STR);
+                    $cmd->bindValue(":modifyUserId",$this->userId,PDO::PARAM_STR);
+                    $cmd->bindValue(":remark",$this->remark->Text,PDO::PARAM_STR);
+                    $cmd->bindValue(":timecodeId",$this->timecode->getSelectedValue(),PDO::PARAM_STR);
                     $res1 = $cmd->execute();
                     $lastId = $this->db->LastInsertID;
 
@@ -220,11 +223,11 @@ class add extends Page
                                                       period=:period
                                                       ;" );
 
-                    $cmd->bindParameter(":request_id",$lastId,PDO::PARAM_STR);
-                    $cmd->bindParameter(":datefrom",$dateFrom,PDO::PARAM_STR);
+                    $cmd->bindValue(":request_id",$lastId,PDO::PARAM_STR);
+                    $cmd->bindValue(":datefrom",$dateFrom,PDO::PARAM_STR);
 
 
-                    $cmd->bindParameter(":dateto",$dateFrom,PDO::PARAM_STR);
+                    $cmd->bindValue(":dateto",$dateFrom,PDO::PARAM_STR);
 
                     $period = "";
 
@@ -235,7 +238,7 @@ class add extends Page
                     if($this->afternoon->getChecked())
                         $period = 'afternoon';
 
-                    $cmd->bindParameter(":period",$period,PDO::PARAM_STR);
+                    $cmd->bindValue(":period",$period,PDO::PARAM_STR);
                     $res2 = $cmd->execute();
 
                     if(!$res2)

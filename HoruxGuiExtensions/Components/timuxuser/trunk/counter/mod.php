@@ -12,7 +12,10 @@
 * See COPYRIGHT.php for copyright notices and details.
 */
 
-Prado::using('horux.pages.components.timuxuser.employee');
+$param = Prado::getApplication()->getParameters();
+$computation = $param['computation'];
+
+Prado::using('horux.pages.components.timuxuser.'.$computation);
 
 class mod extends Page
 {
@@ -34,7 +37,7 @@ class mod extends Page
     protected function setData()
     {
         $cmd = $this->db->createCommand( "SELECT ac.nbre, ac.id, CONCAT('[',tt.abbreviation,'] - ', tt.name) AS timecode, ac.user_id FROM hr_timux_activity_counter AS ac LEFT JOIN hr_timux_timecode AS tt ON tt.id=ac.timecode_id WHERE ac.id=:id");
-        $cmd->bindParameter(":id",$this->id->Value, PDO::PARAM_INT);
+        $cmd->bindValue(":id",$this->id->Value, PDO::PARAM_INT);
         $query = $cmd->query();
 
         if($query)
@@ -94,8 +97,8 @@ class mod extends Page
                                             WHERE id=:id AND year=0 AND month=0
                                             ;" );
 
-        $cmd->bindParameter(":nbre",$this->nbre->SafeText, PDO::PARAM_STR);
-        $cmd->bindParameter(":id",$this->id->Value,PDO::PARAM_STR);
+        $cmd->bindValue(":nbre",$this->nbre->SafeText, PDO::PARAM_STR);
+        $cmd->bindValue(":id",$this->id->Value,PDO::PARAM_STR);
 
         $res1 = $cmd->execute();
 

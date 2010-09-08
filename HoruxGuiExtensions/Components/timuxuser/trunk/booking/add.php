@@ -184,9 +184,9 @@ class add extends Page
                                             '1'
                                             );" );
 
-        $cmd->bindParameter(":id_user",$this->employee->getSelectedValue(),PDO::PARAM_STR);
-        $cmd->bindParameter(":time",$this->time->SafeText, PDO::PARAM_STR);
-        $cmd->bindParameter(":date",$this->dateToSql( $this->date->SafeText ), PDO::PARAM_STR);
+        $cmd->bindValue(":id_user",$this->employee->getSelectedValue(),PDO::PARAM_STR);
+        $cmd->bindValue(":time",$this->time->SafeText, PDO::PARAM_STR);
+        $cmd->bindValue(":date",$this->dateToSql( $this->date->SafeText ), PDO::PARAM_STR);
 
         $res1 = $cmd->execute();
         $lastId = $this->db->LastInsertID;
@@ -206,12 +206,12 @@ class add extends Page
                                             1
                                             );" );
 
-        $cmd->bindParameter(":tracking_id",$lastId,PDO::PARAM_STR);
+        $cmd->bindValue(":tracking_id",$lastId,PDO::PARAM_STR);
         $action = $this->sign->getSelectedValue();
         if($this->sign->getSelectedValue() == '_IN' || $this->sign->getSelectedValue() == '_OUT')
         {
             $action = 100;
-            $cmd->bindParameter(":action",$action, PDO::PARAM_STR);
+            $cmd->bindValue(":action",$action, PDO::PARAM_STR);
 
             $cmd2=$this->db->createCommand("SELECT *  FROM hr_timux_timecode WHERE id=".$this->timecode->getSelectedValue());
 
@@ -226,18 +226,18 @@ class add extends Page
             {
                 $actionReason = $this->timecode->getSelectedValue();
             }
-            $cmd->bindParameter(":actionReason",$actionReason, PDO::PARAM_STR);
+            $cmd->bindValue(":actionReason",$actionReason, PDO::PARAM_STR);
         }
         else
         {
             $actionReason = 0;
-            $cmd->bindParameter(":action",$action, PDO::PARAM_STR);
-            $cmd->bindParameter(":actionReason",$actionReason, PDO::PARAM_STR);
+            $cmd->bindValue(":action",$action, PDO::PARAM_STR);
+            $cmd->bindValue(":actionReason",$actionReason, PDO::PARAM_STR);
 
         }
 
 
-        $cmd->bindParameter(":roundBooking",$this->time->SafeText, PDO::PARAM_STR);
+        $cmd->bindValue(":roundBooking",$this->time->SafeText, PDO::PARAM_STR);
 
         $res1 = $cmd->execute();
 
@@ -249,10 +249,10 @@ class add extends Page
     {
         $date = explode("-",$this->date->SafeText);
 
-        $cmd = $this->db->createCommand( "SELECT * FROM hr_timux_closed_month WHERE user_id=:id AND year=:year AND month=:month");
-        $cmd->bindParameter(":id",$this->employee->getSelectedValue(), PDO::PARAM_INT);
-        $cmd->bindParameter(":year",$date[2], PDO::PARAM_INT);
-        $cmd->bindParameter(":month",$date[1], PDO::PARAM_INT);
+        $cmd = $this->db->createCommand( "SELECT * FROM hr_timux_activity_counter WHERE user_id=:id AND year=:year AND month=:month");
+        $cmd->bindValue(":id",$this->employee->getSelectedValue(), PDO::PARAM_INT);
+        $cmd->bindValue(":year",$date[2], PDO::PARAM_INT);
+        $cmd->bindValue(":month",$date[1], PDO::PARAM_INT);
         $query = $cmd->query();
         $query = $query->read();
 

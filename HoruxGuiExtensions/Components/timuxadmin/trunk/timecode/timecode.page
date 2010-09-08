@@ -1,6 +1,11 @@
 <com:TContent ID="Main">
     <%include Application.common.template.headerContent %>
-
+    <script language="Javascript">
+        function onPrintRedirect()
+        {
+            window.open( "<%= $this->Service->constructUrl($this->getApplication()->getService()->getRequestedPagePath()) %>&action=print", target="_blank" ) ;
+        }
+    </script>
     <com:TToolbarBox
         ID="tbb"
         Title="<%[Time code]%>"
@@ -11,11 +16,32 @@
         DelVisible="true"
         HelpVisible="true"
         CancelVisible="true"
+        PrintVisible="true"
+        JsClickPrint="onPrintRedirect()"
         />
 
 
     <%include Application.common.template.headerBoxContent %>
 
+    <%[Filter]%>:
+
+    <%[Type]%>
+    <com:TActiveDropDownList
+        ID="filterType"
+        DataTextField="Text"
+        DataValueField="Value"
+        AutoPostBack="true"
+        OnSelectedIndexChanged="onTypeChanged"
+        >
+        <com:TListItem Text="<%[--- All ---]%>" Value="0"  />
+        <com:TListItem Text="<%[Leave]%>" Value="leave"  />
+        <com:TListItem Text="<%[Absence]%>" Value="absence"  />
+        <com:TListItem Text="<%[Overtime]%>" Value="overtime"  />
+        <com:TListItem Text="<%[Load]%>" Value="load"  />
+
+    </com:TActiveDropDownList>
+
+    <div id="list">
     <com:TDataGrid
         ID="DataGrid"
         DataKeyField="id"
@@ -148,5 +174,6 @@
         </com:TTemplateColumn>
 
     </com:TDataGrid>
+    </div>
     <%include Application.common.template.footerContent %>
 </com:TContent>

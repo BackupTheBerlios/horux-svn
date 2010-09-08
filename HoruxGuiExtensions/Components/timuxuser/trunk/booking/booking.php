@@ -12,7 +12,10 @@
 * See COPYRIGHT.php for copyright notices and details.
 */
 
-Prado::using('horux.pages.components.timuxuser.employee');
+$param = Prado::getApplication()->getParameters();
+$computation = $param['computation'];
+
+Prado::using('horux.pages.components.timuxuser.'.$computation);
 
 class booking extends PageList
 {
@@ -403,19 +406,19 @@ class booking extends PageList
                 {
 
                     $cmd=$this->db->createCommand("SELECT * FROM hr_timux_booking WHERE tracking_id =:id");
-                    $cmd->bindParameter(":id",$cb->Value);
+                    $cmd->bindValue(":id",$cb->Value);
                     $query = $cmd->query();
                     $data = $query->read();
 
                     if($data['closed'] == '0')
                     {
                         $cmd=$this->db->createCommand("DELETE FROM hr_tracking WHERE id =:id");
-                        $cmd->bindParameter(":id",$cb->Value);
+                        $cmd->bindValue(":id",$cb->Value);
                         $cmd->execute();
 
 
                         $cmd=$this->db->createCommand("DELETE FROM hr_timux_booking WHERE tracking_id =:id");
-                        $cmd->bindParameter(":id",$cb->Value);
+                        $cmd->bindValue(":id",$cb->Value);
                         if($cmd->execute())
                         {
                             $nDelete++;

@@ -43,7 +43,7 @@ class config extends Page
         {
             $data = $query->read();
             $this->daysByWeek->Text = $data['daysByWeek'];
-            $this->breakMinimum->Text = $data['minimumBreaks'];
+            $this->breakMinimum->setChecked( $data['minimumBreaks'] );
             $this->rounding->setSelectedValue($data['bookingRounding']);
             $this->defaultHourByWeek->Text = $data['hoursByWeek'];
             $this->defaultHolidayByYear->Text = $data['holidayByYear'];
@@ -57,7 +57,6 @@ class config extends Page
             $this->hoursBlockAfternoon2->Text = $data['hoursBlockAfternoon2'];
             $this->hoursBlockAfternoon3->Text = $data['hoursBlockAfternoon3'];
             $this->hoursBlockAfternoon4->Text = $data['hoursBlockAfternoon4'];
-
         }
     }
 
@@ -96,23 +95,44 @@ class config extends Page
                                             hoursBlockAfternoon1=:hoursBlockAfternoon1,
                                             hoursBlockAfternoon2=:hoursBlockAfternoon2,
                                             hoursBlockAfternoon3=:hoursBlockAfternoon3,
-                                            hoursBlockAfternoon4=:hoursBlockAfternoon4
+                                            hoursBlockAfternoon4=:hoursBlockAfternoon4,
+                                            inputDBEText1=:inputDBEText1,
+                                            inputDBEText2=:inputDBEText2,
+                                            inputDBEText3=:inputDBEText3,
+                                            inputDBEText4=:inputDBEText4,
+                                            inputDBEText5=:inputDBEText5,
+                                            inputDBEText6=:inputDBEText6,
+                                            inputDBEText7=:inputDBEText7,
+                                            inputDBEText8=:inputDBEText8,
+                                            inputDBEText9=:inputDBEText9,
+                                            inputDBEText10=:inputDBEText10,
+                                            inputDBEText11=:inputDBEText11,
+                                            inputDBEText12=:inputDBEText12,
+                                            inputDBEText13=:inputDBEText13,
+                                            inputDBEText14=:inputDBEText14,
+                                            inputDBEText15=:inputDBEText15,
+                                            inputDBEText16=:inputDBEText16,
+                                            inputDBEText17=:inputDBEText17,
+                                            inputDBEText18=:inputDBEText18,
+                                            inputDBEText19=:inputDBEText19,
+                                            inputDBEText20=:inputDBEText20
                                             WHERE id=1
                                             " );
 
-        $cmd->bindParameter(":daysByWeek",$this->daysByWeek->SafeText,PDO::PARAM_STR);
-        $cmd->bindParameter(":minimumBreaks",$this->breakMinimum->SafeText,PDO::PARAM_STR);
-        $cmd->bindParameter(":bookingRounding",$this->rounding->getSelectedValue(),PDO::PARAM_STR);
-        $cmd->bindParameter(":hoursByWeek",$this->defaultHourByWeek->SafeText,PDO::PARAM_STR);
-        $cmd->bindParameter(":holidayByYear",$this->defaultHolidayByYear->SafeText,PDO::PARAM_STR);
-        $cmd->bindParameter(":hoursBlockMorning1",$this->hoursBlockMorning1->SafeText,PDO::PARAM_STR);
-        $cmd->bindParameter(":hoursBlockMorning2",$this->hoursBlockMorning2->SafeText,PDO::PARAM_STR);
-        $cmd->bindParameter(":hoursBlockMorning3",$this->hoursBlockMorning3->SafeText,PDO::PARAM_STR);
-        $cmd->bindParameter(":hoursBlockMorning4",$this->hoursBlockMorning4->SafeText,PDO::PARAM_STR);
-        $cmd->bindParameter(":hoursBlockAfternoon1",$this->hoursBlockAfternoon1->SafeText,PDO::PARAM_STR);
-        $cmd->bindParameter(":hoursBlockAfternoon2",$this->hoursBlockAfternoon2->SafeText,PDO::PARAM_STR);
-        $cmd->bindParameter(":hoursBlockAfternoon3",$this->hoursBlockAfternoon3->SafeText,PDO::PARAM_STR);
-        $cmd->bindParameter(":hoursBlockAfternoon4",$this->hoursBlockAfternoon4->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":daysByWeek",$this->daysByWeek->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":minimumBreaks",$this->breakMinimum->getChecked(),PDO::PARAM_STR);
+        $cmd->bindValue(":bookingRounding",$this->rounding->getSelectedValue(),PDO::PARAM_STR);
+        $cmd->bindValue(":hoursByWeek",$this->defaultHourByWeek->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":holidayByYear",$this->defaultHolidayByYear->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":hoursBlockMorning1",$this->hoursBlockMorning1->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":hoursBlockMorning2",$this->hoursBlockMorning2->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":hoursBlockMorning3",$this->hoursBlockMorning3->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":hoursBlockMorning4",$this->hoursBlockMorning4->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":hoursBlockAfternoon1",$this->hoursBlockAfternoon1->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":hoursBlockAfternoon2",$this->hoursBlockAfternoon2->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":hoursBlockAfternoon3",$this->hoursBlockAfternoon3->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":hoursBlockAfternoon4",$this->hoursBlockAfternoon4->SafeText,PDO::PARAM_STR);
+
 
         $cmd->execute();
 

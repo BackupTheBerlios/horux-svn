@@ -12,7 +12,10 @@
 * See COPYRIGHT.php for copyright notices and details.
 */
 
-Prado::using('horux.pages.components.timuxuser.employee');
+$param = Prado::getApplication()->getParameters();
+$computation = $param['computation'];
+
+Prado::using('horux.pages.components.timuxuser.'.$computation);
 
 class mod extends Page
 {
@@ -43,8 +46,8 @@ class mod extends Page
 
             // Secure the id to be sure that the id correspond to the employee
             $cmd=$this->db->createCommand("SELECT * FROM hr_timux_request WHERE id=:id AND userId=:userId");
-            $cmd->bindParameter(":id",$this->id->Value,PDO::PARAM_STR);
-            $cmd->bindParameter(":userId",$this->userId,PDO::PARAM_STR);
+            $cmd->bindValue(":id",$this->id->Value,PDO::PARAM_STR);
+            $cmd->bindValue(":userId",$this->userId,PDO::PARAM_STR);
             $data = $cmd->query();
             $data = $data->readAll();
             if(count($data)==0)
@@ -60,7 +63,7 @@ class mod extends Page
     protected function setData()
     {
         $cmd = $this->db->createCommand( "SELECT * FROM hr_timux_request AS tr LEFT JOIN hr_timux_request_leave AS rl ON rl.request_id=tr.id WHERE tr.id=:id");
-        $cmd->bindParameter(":id",$this->id->Value, PDO::PARAM_INT);
+        $cmd->bindValue(":id",$this->id->Value, PDO::PARAM_INT);
         $query = $cmd->query();
 
         if($query)
@@ -204,10 +207,10 @@ class mod extends Page
                                           WHERE id=:id
                                           ;" );
 
-        $cmd->bindParameter(":state",$this->status->getSelectedValue(),PDO::PARAM_STR);
-        $cmd->bindParameter(":timecode",$this->timecode->getSelectedValue(),PDO::PARAM_STR);
-        $cmd->bindParameter(":remark",$this->remark->Text,PDO::PARAM_STR);
-        $cmd->bindParameter(":id",$this->id->Value,PDO::PARAM_STR);
+        $cmd->bindValue(":state",$this->status->getSelectedValue(),PDO::PARAM_STR);
+        $cmd->bindValue(":timecode",$this->timecode->getSelectedValue(),PDO::PARAM_STR);
+        $cmd->bindValue(":remark",$this->remark->Text,PDO::PARAM_STR);
+        $cmd->bindValue(":id",$this->id->Value,PDO::PARAM_STR);
 
         $res1 = $cmd->execute();
 
@@ -218,12 +221,12 @@ class mod extends Page
                                           WHERE request_id=:request_id
                                           ;" );
 
-        $cmd->bindParameter(":request_id",$this->id->Value,PDO::PARAM_STR);
-        $cmd->bindParameter(":datefrom",$this->dateToSql($this->from->SafeText),PDO::PARAM_STR);
+        $cmd->bindValue(":request_id",$this->id->Value,PDO::PARAM_STR);
+        $cmd->bindValue(":datefrom",$this->dateToSql($this->from->SafeText),PDO::PARAM_STR);
 
         $dateto = $this->dateToSql($this->to->SafeText) == '' ? $this->dateToSql($this->from->SafeText) : $this->dateToSql($this->to->SafeText);
 
-        $cmd->bindParameter(":dateto",$dateto,PDO::PARAM_STR);
+        $cmd->bindValue(":dateto",$dateto,PDO::PARAM_STR);
 
         $period = "";
 
@@ -234,7 +237,7 @@ class mod extends Page
         if($this->afternoon->getChecked())
             $period = 'afternoon';
 
-        $cmd->bindParameter(":period",$period,PDO::PARAM_STR);
+        $cmd->bindValue(":period",$period,PDO::PARAM_STR);
 
 
         $res2 = $cmd->execute();
@@ -244,7 +247,7 @@ class mod extends Page
             $department = $this->employee->getDepartmentId();
 
             $cmd = $this->db->createCommand( "SELECT * FROM hr_timux_workflow WHERE departmentId=:id OR departmentId=0");
-            $cmd->bindParameter(":id",$department, PDO::PARAM_INT);
+            $cmd->bindValue(":id",$department, PDO::PARAM_INT);
             $query = $cmd->query();
             $data = $query->read();
 
@@ -295,9 +298,9 @@ class mod extends Page
                                                       validatorLevel=:validatorLevel
                                                       ;" );
 
-                    $cmd->bindParameter(":request_id",$this->id->Value,PDO::PARAM_STR);
-                    $cmd->bindParameter(":user_id",$s,PDO::PARAM_STR);
-                    $cmd->bindParameter(":validatorLevel",$level,PDO::PARAM_STR);
+                    $cmd->bindValue(":request_id",$this->id->Value,PDO::PARAM_STR);
+                    $cmd->bindValue(":user_id",$s,PDO::PARAM_STR);
+                    $cmd->bindValue(":validatorLevel",$level,PDO::PARAM_STR);
                     $cmd->execute();
 
                 }
@@ -321,7 +324,7 @@ class mod extends Page
 
 
             $cmd=$this->db->createCommand("DELETE FROM hr_timux_request_workflow WHERE request_id =:id");
-            $cmd->bindParameter(":id",$this->id->Value);
+            $cmd->bindValue(":id",$this->id->Value);
             $cmd->execute();
         }
 
@@ -332,7 +335,7 @@ class mod extends Page
     protected function sendEmail($requestId, $object, $body)
     {
         $cmd=$this->db->createCommand("SELECT * FROM hr_timux_request_workflow WHERE request_id=:id");
-        $cmd->bindParameter(":id",$requestId);
+        $cmd->bindValue(":id",$requestId);
         $query = $cmd->query();
         $data = $query->readAll();
 
@@ -342,7 +345,7 @@ class mod extends Page
             $user_id = $d['user_id'];
 
             $cmd=$this->db->createCommand("SELECT u.email1, u.email2, su.email AS email3 FROM hr_user AS u LEFT JOIN hr_superusers AS su ON su.user_id=u.id WHERE u.id=:id");
-            $cmd->bindParameter(":id",$user_id);
+            $cmd->bindValue(":id",$user_id);
             $query = $cmd->query();
             $data2 = $query->read();
 

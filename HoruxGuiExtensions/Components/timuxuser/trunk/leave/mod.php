@@ -12,7 +12,10 @@
 * See COPYRIGHT.php for copyright notices and details.
 */
 
-Prado::using('horux.pages.components.timuxuser.employee');
+$param = Prado::getApplication()->getParameters();
+$computation = $param['computation'];
+
+Prado::using('horux.pages.components.timuxuser.'.$computation);
 
 class mod extends Page
 {
@@ -48,7 +51,7 @@ class mod extends Page
     protected function setData()
     {
         $cmd = $this->db->createCommand( "SELECT tr.*, CONCAT(u.name, ' ', u.firstname ) AS employee, rl.* FROM hr_timux_request AS tr LEFT JOIN hr_timux_request_leave AS rl ON rl.request_id=tr.id LEFT JOIN hr_user AS u ON u.id=tr.userId WHERE tr.id=:id");
-        $cmd->bindParameter(":id",$this->id->Value, PDO::PARAM_INT);
+        $cmd->bindValue(":id",$this->id->Value, PDO::PARAM_INT);
         $query = $cmd->query();
 
         if($query)
@@ -106,16 +109,16 @@ class mod extends Page
     public function onDelete($sender, $param)
     {
         $cmd=$this->db->createCommand("DELETE FROM hr_timux_request WHERE id =:id");
-        $cmd->bindParameter(":id",$this->id->Value);
+        $cmd->bindValue(":id",$this->id->Value);
         if($cmd->execute())
         {
             $nDelete++;
         }
         $cmd=$this->db->createCommand("DELETE FROM hr_timux_request_leave WHERE request_id =:id");
-        $cmd->bindParameter(":id",$this->id->Value);
+        $cmd->bindValue(":id",$this->id->Value);
         $cmd->execute();
         $cmd=$this->db->createCommand("DELETE FROM hr_timux_request_workflow WHERE request_id =:id");
-        $cmd->bindParameter(":id",$this->id->Value);
+        $cmd->bindValue(":id",$this->id->Value);
 
         $pBack = array('okMsg'=>Prado::localize('{n} leave was deleted',array('n'=>$nDelete)));
 
@@ -181,7 +184,7 @@ class mod extends Page
                                           WHERE id=:id
                                           ;" );
 
-        $cmd->bindParameter(":modifyUserId",$this->userId,PDO::PARAM_STR);
+        $cmd->bindValue(":modifyUserId",$this->userId,PDO::PARAM_STR);
 
         if($this->myremark->Text != "")
         {
@@ -192,10 +195,10 @@ class mod extends Page
         else
             $remark = $this->remark->Text;
         
-        $cmd->bindParameter(":remark",$remark,PDO::PARAM_STR);
-        $cmd->bindParameter(":state",$this->status->getSelectedValue(),PDO::PARAM_STR);
-        $cmd->bindParameter(":timecodeId",$this->timecode->getSelectedValue(),PDO::PARAM_STR);
-        $cmd->bindParameter(":id",$this->id->Value,PDO::PARAM_STR);
+        $cmd->bindValue(":remark",$remark,PDO::PARAM_STR);
+        $cmd->bindValue(":state",$this->status->getSelectedValue(),PDO::PARAM_STR);
+        $cmd->bindValue(":timecodeId",$this->timecode->getSelectedValue(),PDO::PARAM_STR);
+        $cmd->bindValue(":id",$this->id->Value,PDO::PARAM_STR);
         $res1 = $cmd->execute();
 
         $cmd = $this->db->createCommand( "UPDATE `hr_timux_request_leave` SET
@@ -205,12 +208,12 @@ class mod extends Page
                                           WHERE request_id=:request_id
                                           ;" );
 
-        $cmd->bindParameter(":request_id",$this->id->Value,PDO::PARAM_STR);
-        $cmd->bindParameter(":datefrom",$this->dateToSql($this->from->SafeText),PDO::PARAM_STR);
+        $cmd->bindValue(":request_id",$this->id->Value,PDO::PARAM_STR);
+        $cmd->bindValue(":datefrom",$this->dateToSql($this->from->SafeText),PDO::PARAM_STR);
 
         $dateto = $this->dateToSql($this->to->SafeText) == '' ? $this->dateToSql($this->from->SafeText) : $this->dateToSql($this->to->SafeText);
 
-        $cmd->bindParameter(":dateto",$dateto,PDO::PARAM_STR);
+        $cmd->bindValue(":dateto",$dateto,PDO::PARAM_STR);
 
         $period = "";
 
@@ -221,7 +224,7 @@ class mod extends Page
         if($this->afternoon->getChecked())
             $period = 'afternoon';
 
-        $cmd->bindParameter(":period",$period,PDO::PARAM_STR);
+        $cmd->bindValue(":period",$period,PDO::PARAM_STR);
         $res2 = $cmd->execute();
 
         return $res1 || $res2;

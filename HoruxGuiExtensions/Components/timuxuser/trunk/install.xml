@@ -2,7 +2,7 @@
   <install type="component">
   <installName>timuxuser</installName>
   <name>Timux User</name>
-  <version>1.0.0</version>
+  <version>1.0.1</version>
   <creationDate>09/11/09</creationDate>
   <author>Jean-Luc Gyger / Letux</author>
   <authorEmail>info@letux.ch</authorEmail>
@@ -28,6 +28,7 @@
             <submenu iconmenu="icon-16-closemonth.png" url="components.timuxuser.closemonth.closemonth" name="Close Month" ></submenu>
             <submenu iconmenu="icon-16-balances.png" url="components.timuxuser.balances.balances" name="Balances" ></submenu>
             <submenu iconmenu="icon-16-calendar.png" url="components.timuxuser.calendar.calendar" name="Calendar" ></submenu>
+            <submenu iconmenu="icon-16-load.png" url="components.timuxuser.load.load" name="Load" ></submenu>
         </submenus>       
     </menu>
   </mainmenu>
@@ -58,6 +59,7 @@
     <permission id="23" parent="0">components.timuxuser.balances.balances</permission>
     <permission id="24" parent="23">components.timuxuser.balances.year</permission>
     <permission id="25" parent="0">components.timuxuser.calendar.calendar</permission>
+    <permission id="26" parent="0">components.timuxuser.load.load</permission>
   </permissions>
 
 </install>

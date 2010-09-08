@@ -95,7 +95,7 @@ class timeclasses extends PageList
                 if( (bool)$cb->getChecked() && $cb->Value != "0")
                 {
                     $cmd=$this->db->createCommand("DELETE FROM hr_timux_timeclass WHERE id=:id");
-                    $cmd->bindParameter(":id",$cb->Value);
+                    $cmd->bindValue(":id",$cb->Value);
                     if($cmd->execute())
                     {
                         $nDelete++;

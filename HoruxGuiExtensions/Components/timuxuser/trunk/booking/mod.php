@@ -33,7 +33,7 @@ class mod extends Page
     protected function setData()
     {
         $cmd = $this->db->createCommand( "SELECT * FROM hr_tracking AS t LEFT JOIN hr_timux_booking AS tb ON t.id=tb.tracking_id WHERE t.id=:id");
-        $cmd->bindParameter(":id",$this->id->Value, PDO::PARAM_INT);
+        $cmd->bindValue(":id",$this->id->Value, PDO::PARAM_INT);
         $query = $cmd->query();
 
         if($query)
@@ -51,10 +51,7 @@ class mod extends Page
             {
                 $pBack = array('koMsg'=>Prado::localize('Cannot modified a closed signing'));
 
-                if(isset($this->Request['back']))
-                    $this->Response->redirect($this->Service->constructUrl($this->Request['back'],$pBack));
-                else
-                    $this->Response->redirect($this->Service->constructUrl('components.timuxuser.booking.booking',$pBack));
+                $this->Response->redirect($this->Service->constructUrl('components.timuxuser.booking.booking',$pBack));
             }
 
 
@@ -209,9 +206,9 @@ class mod extends Page
                                             `date` = :date
                                             WHERE id=:id" );
 
-        $cmd->bindParameter(":time",$this->time->SafeText, PDO::PARAM_STR);
-        $cmd->bindParameter(":date",$this->dateToSql( $this->date->SafeText ), PDO::PARAM_STR);
-        $cmd->bindParameter(":id",$this->id->Value,PDO::PARAM_STR);
+        $cmd->bindValue(":time",$this->time->SafeText, PDO::PARAM_STR);
+        $cmd->bindValue(":date",$this->dateToSql( $this->date->SafeText ), PDO::PARAM_STR);
+        $cmd->bindValue(":id",$this->id->Value,PDO::PARAM_STR);
 
         $res1 = $cmd->execute();
 
@@ -222,12 +219,12 @@ class mod extends Page
                                             `internet`=1
                                             WHERE tracking_id=:id" );
 
-        $cmd->bindParameter(":id",$this->id->Value,PDO::PARAM_STR);
+        $cmd->bindValue(":id",$this->id->Value,PDO::PARAM_STR);
         $action = $this->sign->getSelectedValue();
         if($this->sign->getSelectedValue() == '_IN' || $this->sign->getSelectedValue() == '_OUT')
         {
             $action = 100;
-            $cmd->bindParameter(":action",$action, PDO::PARAM_STR);
+            $cmd->bindValue(":action",$action, PDO::PARAM_STR);
             
             $cmd2=$this->db->createCommand("SELECT *  FROM hr_timux_timecode WHERE id=".$this->timecode->getSelectedValue());
 
@@ -242,17 +239,17 @@ class mod extends Page
             {
                 $actionReason = $this->timecode->getSelectedValue();
             }
-            $cmd->bindParameter(":actionReason",$actionReason, PDO::PARAM_STR);
+            $cmd->bindValue(":actionReason",$actionReason, PDO::PARAM_STR);
         }
         else
         {
             $actionReason = 0;
-            $cmd->bindParameter(":action",$action, PDO::PARAM_STR);
-            $cmd->bindParameter(":actionReason",$actionReason, PDO::PARAM_STR);
+            $cmd->bindValue(":action",$action, PDO::PARAM_STR);
+            $cmd->bindValue(":actionReason",$actionReason, PDO::PARAM_STR);
 
         }
 
-        $cmd->bindParameter(":roundBooking",$this->time->SafeText, PDO::PARAM_STR);
+        $cmd->bindValue(":roundBooking",$this->time->SafeText, PDO::PARAM_STR);
 
         $res2 = $cmd->execute();
 
@@ -263,19 +260,19 @@ class mod extends Page
     public function onDelete($sender,$param)
     {
         $cmd=$this->db->createCommand("SELECT * FROM hr_timux_booking WHERE tracking_id =:id");
-        $cmd->bindParameter(":id",$this->id->Value);
+        $cmd->bindValue(":id",$this->id->Value);
         $query = $cmd->query();
         $data = $query->read();
 
         if($data['closed'] == '0')
         {
             $cmd=$this->db->createCommand("DELETE FROM hr_tracking WHERE id =:id");
-            $cmd->bindParameter(":id",$this->id->Value);
+            $cmd->bindValue(":id",$this->id->Value);
             $cmd->execute();
 
 
             $cmd=$this->db->createCommand("DELETE FROM hr_timux_booking WHERE tracking_id =:id");
-            $cmd->bindParameter(":id",$this->id->Value);
+            $cmd->bindValue(":id",$this->id->Value);
             $cmd->execute();
         }
 

@@ -12,7 +12,10 @@
 * See COPYRIGHT.php for copyright notices and details.
 */
 
-Prado::using('horux.pages.components.timuxuser.employee');
+$param = Prado::getApplication()->getParameters();
+$computation = $param['computation'];
+
+Prado::using('horux.pages.components.timuxuser.'.$computation);
 
 class counter extends PageList
 {
@@ -40,7 +43,7 @@ class counter extends PageList
             {
                 $cmd=$this->db->createCommand("SELECT CONCAT(name, ' ' , firstname) AS employee FROM hr_user  WHERE id=:id");
                 $id = $this->Request['id'];
-                $cmd->bindParameter(":id",$id,PDO::PARAM_STR);
+                $cmd->bindValue(":id",$id,PDO::PARAM_STR);
 
                 $data = $cmd->query();
                 $data = $data->read();

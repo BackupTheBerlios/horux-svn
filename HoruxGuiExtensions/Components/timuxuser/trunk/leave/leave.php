@@ -12,7 +12,10 @@
 * See COPYRIGHT.php for copyright notices and details.
 */
 
-Prado::using('horux.pages.components.timuxuser.employee');
+$param = Prado::getApplication()->getParameters();
+$computation = $param['computation'];
+
+Prado::using('horux.pages.components.timuxuser.'.$computation);
 
 class leave extends PageList
 {
@@ -168,28 +171,28 @@ class leave extends PageList
             $this->from->Text = "1-".$date['mon']."-".$date['year'];
             $this->until->Text = date("t")."-".$date['mon']."-".$date['year'];
 
-            $date = " tr.createDate>='$from' AND tr.createDate<='$until' AND ";
+            $date = " rl.datefrom>='$from' AND rl.datefrom<='$until' AND ";
         }
         else
         {
             if($from != "" && $until != "")
             {
-                $date = " tr.createDate>='$from' AND tr.createDate<='$until' AND ";
+                $date = " rl.datefrom>='$from' AND rl.datefrom<='$until' AND ";
             }
             if($from != "" && $until == "")
             {
-                $date = " tr.createDate>='$from' AND ";
+                $date = " rl.datefrom>='$from' AND ";
             }
             if($from == "" && $until != "")
             {
-                $date = " tr.createDate<='$until' AND ";
+                $date = " rl.datefrom<='$until' AND ";
             }
 
         }
 
 
         $cmd = $this->db->createCommand( "SELECT tr.*, CONCAT(u2.name, ' ', u2.firstname ) AS employee, CONCAT(u.name, ' ', u.firstname ) AS modUser, tt.name AS timcodeName, rl.* FROM hr_timux_request AS tr LEFT JOIN hr_user AS u ON u.id=tr.modifyUserId LEFT JOIN hr_user AS u2 ON u2.id=tr.userId  LEFT JOIN hr_timux_timecode AS tt ON tt.id=tr.timecodeId LEFT JOIN hr_timux_request_leave AS rl ON rl.request_id=tr.id WHERE $employee $state $timecode $date 1=1 ORDER BY tr.createDate DESC" );
-        $cmd->bindParameter(":id",$this->userId,PDO::PARAM_STR);
+        $cmd->bindValue(":id",$this->userId,PDO::PARAM_STR);
         $query = $cmd->query();
         if($query)
         {
@@ -353,16 +356,16 @@ class leave extends PageList
                 {
 
                     $cmd=$this->db->createCommand("DELETE FROM hr_timux_request WHERE id =:id");
-                    $cmd->bindParameter(":id",$cb->Value);
+                    $cmd->bindValue(":id",$cb->Value);
                     if($cmd->execute())
                     {
                         $nDelete++;
                     }
                     $cmd=$this->db->createCommand("DELETE FROM hr_timux_request_leave WHERE request_id =:id");
-                    $cmd->bindParameter(":id",$cb->Value);
+                    $cmd->bindValue(":id",$cb->Value);
                     $cmd->execute();
                     $cmd=$this->db->createCommand("DELETE FROM hr_timux_request_workflow WHERE request_id =:id");
-                    $cmd->bindParameter(":id",$cb->Value);
+                    $cmd->bindValue(":id",$cb->Value);
 
 
 

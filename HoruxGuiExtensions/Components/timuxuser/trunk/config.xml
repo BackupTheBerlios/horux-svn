@@ -1,7 +1,12 @@
+<?xml version="1.0"?>
 <configuration>
     <modules>
-        <module id="globalization_logviewer" class="TGlobalization" >
-			<translation  type="XLIFF" source="horux.messages" catalogue="timuxuser"  marker="" cache="false" />
+        <module id="globalization_timuxuser" class="TGlobalization">
+            <translation type="XLIFF" source="horux.messages" catalogue="timuxuser" marker="" cache="false" />
         </module>
     </modules>
+    <parameters>
+        <parameter id="computation" value="employee" Name="Employee classe" RightText=".php" />
+        <parameter id="computation2" value="digger" Name="Additional employee class" RightText=".php" />
+    </parameters>
 </configuration>

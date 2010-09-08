@@ -47,9 +47,11 @@
                 <tr>
                     <td valign="top" class="key"><span onmouseover="Tip('<%[Enter a abbreviation for this time code]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)">* <%[Abbreviation]%></span></td>
                     <td>
-                        <com:TTextBox
+                        <com:TActiveTextBox
                             CssClass="text_area"
                             ID="abbreviation"
+                            AutoPostBack="true"
+                            OnCallback="genBarCode"
                             />
                         <com:TRequiredFieldValidator
                             ValidationGroup="Group1"
@@ -76,6 +78,33 @@
                             <com:TListItem Text="<%[Load]%>" Value="load"  />
 
                         </com:TDropDownList>
+                        <com:TDropDownList
+                            ID="inputBDE"
+                            DataTextField="Text"
+                            DataValueField="Value"
+                            Display="None">
+                            <com:TListItem Text="<%[Input 1]%>" Value="1"  />
+                            <com:TListItem Text="<%[Input 2]%>" Value="2"  />
+                            <com:TListItem Text="<%[Input 3]%>" Value="3"  />
+                            <com:TListItem Text="<%[Input 4]%>" Value="4"  />
+                            <com:TListItem Text="<%[Input 5]%>" Value="5"  />
+                            <com:TListItem Text="<%[Input 6]%>" Value="6"  />
+                            <com:TListItem Text="<%[Input 7]%>" Value="7"  />
+                            <com:TListItem Text="<%[Input 8]%>" Value="8"  />
+                            <com:TListItem Text="<%[Input 9]%>" Value="9"  />
+                            <com:TListItem Text="<%[Input 10]%>" Value="10"  />
+                            <com:TListItem Text="<%[Input 11]%>" Value="11"  />
+                            <com:TListItem Text="<%[Input 12]%>" Value="12"  />
+                            <com:TListItem Text="<%[Input 13]%>" Value="13"  />
+                            <com:TListItem Text="<%[Input 14]%>" Value="14"  />
+                            <com:TListItem Text="<%[Input 15]%>" Value="15"  />
+                            <com:TListItem Text="<%[Input 16]%>" Value="16"  />
+                            <com:TListItem Text="<%[Input 17]%>" Value="17"  />
+                            <com:TListItem Text="<%[Input 18]%>" Value="18"  />
+                            <com:TListItem Text="<%[Input 19]%>" Value="19"  />
+                            <com:TListItem Text="<%[Input 20]%>" Value="20"  />
+                        </com:TDropDownList>
+
                     </td>
                 </tr>
 
@@ -150,6 +179,15 @@
                     </td>
                     <td>
                         <com:TColorPicker Text= "#36c" ID="color" />
+                    </td>
+                </tr>
+
+                <tr>
+                    <td valign="top" class="key">
+                        <span onmouseover="Tip('<%[Bar code representation fo the abbreviation]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Bar code]%></span>
+                    </td>
+                    <td>
+                        <com:TActiveImage ImageUrl="" ID="barcode" />
                     </td>
                 </tr>
 
