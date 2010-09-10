@@ -118,6 +118,8 @@ class error extends PageList
         $employee = new employee($this->userId);
 
         $role = $employee->getRole();
+
+        $id = '';
         if($role == 'employee')
         {
             $id = 'id='.$this->userId.' AND ';

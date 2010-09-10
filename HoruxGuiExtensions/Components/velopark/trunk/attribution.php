@@ -14,6 +14,9 @@
 
 
 class attribution extends PageList {
+
+    public $fullname = '';
+
     public function onLoad($param) {
         parent::onLoad($param);
 
@@ -36,6 +39,13 @@ class attribution extends PageList {
 
             $this->userId->Value = $this->Request['id'];
 
+            $sql = "SELECT CONCAT(name, ' ', firstname) AS fullname FROM hr_user WHERE id = ". $this->Request['id'];
+
+            $cmd=$this->db->createCommand($sql);
+            $data = $cmd->query();
+            $data = $data->read();
+
+            $this->fullname = $data['fullname'];
         }
 
         if(isset($this->Request['okMsg'])) {
