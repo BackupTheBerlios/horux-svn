@@ -53,6 +53,13 @@ class Login extends Page
             $this->lang->DataValueField='param';
             $this->lang->DataSource=$this->Data;
             $this->lang->dataBind();
+
+            $cmd=$this->db->createCommand("SELECT * FROM hr_install WHERE type='language' AND `default`=1");
+            $data = $cmd->query();
+            $data = $data->read();
+
+            $this->lang->setSelectedValue($data['param']);
+
         }
 
     }
