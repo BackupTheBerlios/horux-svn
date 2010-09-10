@@ -42,7 +42,7 @@
 	<module id="Users" class="MTUserManager"
 		DBHandler="horuxDb" UserTable="hr_superusers" GroupTable="hr_superuser_group" />    
     
-        <module class="THttpSession" UseTransparentSessionID="false"  />
+        <module class="THttpSession" UseTransparentSessionID="false"  TimeOut="3600" />
     
         <module id="Mailer" class="TMailer" />
         <module id="GuiLog" class="TGuiLog" />
