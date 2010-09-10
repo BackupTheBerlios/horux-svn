@@ -67,6 +67,10 @@ CGantnerTimeTerminal::CGantnerTimeTerminal(QObject *parent) : QObject(parent)
 
     addFunction("reinit", CGantnerTimeTerminal::s_reinit);
 
+    addFunction("removeBDEData", CGantnerTimeTerminal::s_removeBDEData);
+    addFunction("addBDEData", CGantnerTimeTerminal::s_addBDEData);
+
+
     bookingError = false;
 
     udp = NULL;
@@ -190,7 +194,7 @@ void CGantnerTimeTerminal::setParameter(QString paramName, QVariant value)
   if(paramName == "udpServer")
     udpServer = value.toBool();
    if(paramName == "checkBooking")
-    checkBooking = value.toInt() * 60000;
+    checkBooking = 5000;//value.toInt() * 60000;
    if(paramName == "autoBooking")
      autoBooking = value.toBool();
 }
@@ -780,10 +784,36 @@ void CGantnerTimeTerminal::dispatchMessage(QByteArray bookings)
             QStringList data = line.split(";");
 
             QString dateTime = data.at(BK_DATETIME);
+            QString bookingType = data.at(BK_BOOKINGTYPE);
             QString userId = data.at(BK_USERID);
+            QString cardType = data.at(BK_CARDTYPE);
             QString key = data.at(BK_KEY);
+            QString personalNo = data.at(BK_PERSONALNO);
             QString bookingCode = data.at(BK_BOOKINGCODE);
-            QString bookingReason = data.at(BK_BOKKINGREASON);
+            QString bookingReason = data.at(BK_BOOKINGREASON);
+            QString fiuinfo = data.at(BK_FIUINFO);
+            QString fiuMatchingScore = data.at(BK_FIUMATCHINGSCORE);
+            QString preBooking = data.size() > BK_PREBOOKING ? data.at(BK_PREBOOKING) : "";
+            QString BDEValue1 = data.size() > BK_BDEVALUE1 ? data.at(BK_BDEVALUE1) : "";
+            QString BDEValue2 = data.size() > BK_BDEVALUE2 ? data.at(BK_BDEVALUE2) : "";
+            QString BDEValue3 = data.size() > BK_BDEVALUE3 ? data.at(BK_BDEVALUE3) : "";
+            QString BDEValue4 = data.size() > BK_BDEVALUE4 ? data.at(BK_BDEVALUE4) : "";
+            QString BDEValue5 = data.size() > BK_BDEVALUE5 ? data.at(BK_BDEVALUE5) : "";
+            QString BDEValue6 = data.size() > BK_BDEVALUE6 ? data.at(BK_BDEVALUE6) : "";
+            QString BDEValue7 = data.size() > BK_BDEVALUE7 ? data.at(BK_BDEVALUE7) : "";
+            QString BDEValue8 = data.size() > BK_BDEVALUE8 ? data.at(BK_BDEVALUE8) : "";
+            QString BDEValue9 = data.size() > BK_BDEVALUE9 ? data.at(BK_BDEVALUE9) : "";
+            QString BDEValue10 = data.size() > BK_BDEVALUE10 ? data.at(BK_BDEVALUE10) : "";
+            QString BDEValue11 = data.size() > BK_BDEVALUE11 ? data.at(BK_BDEVALUE11) : "";
+            QString BDEValue12 = data.size() > BK_BDEVALUE12 ? data.at(BK_BDEVALUE12) : "";
+            QString BDEValue13 = data.size() > BK_BDEVALUE13 ? data.at(BK_BDEVALUE13) : "";
+            QString BDEValue14 = data.size() > BK_BDEVALUE14 ? data.at(BK_BDEVALUE14) : "";
+            QString BDEValue15 = data.size() > BK_BDEVALUE15 ? data.at(BK_BDEVALUE15) : "";
+            QString BDEValue16 = data.size() > BK_BDEVALUE16 ? data.at(BK_BDEVALUE16) : "";
+            QString BDEValue17 = data.size() > BK_BDEVALUE17 ? data.at(BK_BDEVALUE17) : "";
+            QString BDEValue18 = data.size() > BK_BDEVALUE18 ? data.at(BK_BDEVALUE18) : "";
+            QString BDEValue19 = data.size() > BK_BDEVALUE19 ? data.at(BK_BDEVALUE19) : "";
+            QString BDEValue20 = data.size() > BK_BDEVALUE20 ? data.at(BK_BDEVALUE20) : "";
 
             QStringList dt = dateTime.split(".");
             QString date = dt.at(0) + "-" + dt.at(1) + "-" + dt.at(2);
@@ -792,19 +822,40 @@ void CGantnerTimeTerminal::dispatchMessage(QByteArray bookings)
             QMap<QString, QString> params;
             params["date"] = date;
             params["time"] = time;
+            params["bookingType"] = bookingType;
             params["userId"] = userId;
+            params["cardType"] = cardType;
             params["key"] = key;
+            params["personalNo"] = personalNo;
             params["code"] = bookingCode;
             params["reason"] = bookingReason;
+            params["fiuinfo"] = fiuinfo;
+            params["fiuMatchingScore"] = fiuMatchingScore;
+            params["preBooking"] = preBooking;
+            params["BDEValue1"] = BDEValue1;
+            params["BDEValue2"] = BDEValue2;
+            params["BDEValue3"] = BDEValue3;
+            params["BDEValue4"] = BDEValue4;
+            params["BDEValue5"] = BDEValue5;
+            params["BDEValue6"] = BDEValue6;
+            params["BDEValue7"] = BDEValue7;
+            params["BDEValue8"] = BDEValue8;
+            params["BDEValue9"] = BDEValue9;
+            params["BDEValue10"] = BDEValue10;
+            params["BDEValue11"] = BDEValue11;
+            params["BDEValue12"] = BDEValue12;
+            params["BDEValue13"] = BDEValue13;
+            params["BDEValue14"] = BDEValue14;
+            params["BDEValue15"] = BDEValue15;
+            params["BDEValue16"] = BDEValue16;
+            params["BDEValue17"] = BDEValue17;
+            params["BDEValue18"] = BDEValue18;
+            params["BDEValue19"] = BDEValue19;
+            params["BDEValue20"] = BDEValue20;
 
             //! unknown user/card
-            if( userId != "0" )
-            {
-                QString xml = CXmlFactory::deviceEvent(QString::number(id), "bookingDetected", params);
-                emit deviceEvent(xml);
-            }
-
-
+            QString xml = CXmlFactory::deviceEvent(QString::number(id), "bookingDetected", params);
+            emit deviceEvent(xml);
         }
     }
     while (!line.isNull());
@@ -919,6 +970,9 @@ void CGantnerTimeTerminal::reinit()
     config += result.call().toString() + "\n";
 
     QSqlQuery queryButton("SELECT * FROM hr_gantner_TimeTerminal_key WHERE device_id=" + QString::number(id));
+
+    bool isInputData = false;
+
     while(queryButton.next())
     {
         if(queryButton.value(1).toString() == "fixed")
@@ -926,7 +980,19 @@ void CGantnerTimeTerminal::reinit()
             args.clear();
             args << QScriptValue(&engine,queryButton.value(2).toString());
             args << QScriptValue(&engine,QString(queryButton.value(3).toString() ));
-            args << QScriptValue(&engine,queryButton.value(4).toString());
+
+            if(!queryButton.value(4).toString().contains("dlg_InputData") ) {
+                args << QScriptValue(&engine,queryButton.value(4).toString());
+            }
+            else {
+                QString inputData;
+                if(queryButton.value(4).toString() =="<dlg_InputData,150>")
+                      inputData = "<dlg_InputData,150,," + queryButton.value(5).toString() + ">";
+                else
+                    inputData = "<dlg_InputData,155,," + queryButton.value(5).toString() + ">";
+                args << QScriptValue(&engine,inputData);
+                isInputData = true;
+            }
 
             result = engine.evaluate("setFixedKey");
             config += result.call(QScriptValue(), args).toString() + "\n";
@@ -937,7 +1003,15 @@ void CGantnerTimeTerminal::reinit()
             args.clear();
             args << QScriptValue(&engine,queryButton.value(2).toString());
             args << QScriptValue(&engine,QString(queryButton.value(3).toString() ));
-            args << QScriptValue(&engine,queryButton.value(4).toString());
+
+            if(queryButton.value(4).toString() != "<dlg_InputData>") {
+                args << QScriptValue(&engine,queryButton.value(4).toString());
+            }
+            else {
+                QString inputData = "<dlg_InputData,150,," + queryButton.value(5).toString() + ">";
+                args << QScriptValue(&engine,inputData);
+                isInputData = true;
+            }
 
             QString img = "";
             if(queryButton.value(4).toString() == "<dlg_Attendance_View,0>")
@@ -987,9 +1061,46 @@ void CGantnerTimeTerminal::reinit()
     }
 
 
+    if(isInputData) {
+        QSqlQuery queryTimuxConfig("SELECT * FROM hr_gantner_TimeTerminal WHERE id_device=" + QString::number(id));
+        queryTimuxConfig.next();
+
+        for(int i=1; i<=20; i++) {
+
+            QString text = queryTimuxConfig.value(i+11).toString();
+            int check = queryTimuxConfig.value(i+31).toInt();
+            QString format = queryTimuxConfig.value(i+51).toString();
+
+            if(text != "") {
+                args.clear();
+                args << QScriptValue(&engine,i);
+                args << QScriptValue(&engine,text);
+                result = engine.evaluate("setDBETextDefinition");
+                config += result.call(QScriptValue(), args).toString() + "\n";
+
+                args.clear();
+                args << QScriptValue(&engine,i);
+                args << QScriptValue(&engine,format);
+
+                result = engine.evaluate("setDisplayDefinitionBDE");
+                config += result.call(QScriptValue(), args).toString() + "\n";
+
+                args.clear();
+                args << QScriptValue(&engine,i);
+                args << QScriptValue(&engine,check);
+
+                result = engine.evaluate("checkBDEInput");
+                config += result.call(QScriptValue(), args).toString() + "\n";
+
+            }
+        }
+
+    }
+
     //Remove all absent reason
     result = engine.evaluate("removeAllAbsentReason");
     config += result.call().toString() + "\n";
+
 qDebug() << config;
     ftp->put(config.toLatin1(), "config.dat");
 
@@ -1399,5 +1510,37 @@ void CGantnerTimeTerminal::s_reinit(QObject *p, QMap<QString, QVariant>)
     pThis->action = REINIT;
     pThis->connectionToFtp();
 }
+
+void CGantnerTimeTerminal::s_removeBDEData(QObject *p, QMap<QString, QVariant>params)
+{
+    CGantnerTimeTerminal *pThis = qobject_cast<CGantnerTimeTerminal *>(p);
+
+    QScriptValue result;
+
+    result= pThis->engine.evaluate("removeBDEData");
+    QScriptValueList args;
+    args << QScriptValue(&(pThis->engine),params["BDEfieldNo"].toString());
+    args << QScriptValue(&(pThis->engine),QString(params["value"].toString().toUtf8()));
+
+    pThis->sendFileList.append(result.call(QScriptValue(), args).toString());
+
+}
+
+void CGantnerTimeTerminal::s_addBDEData(QObject *p, QMap<QString, QVariant>params)
+{
+    CGantnerTimeTerminal *pThis = qobject_cast<CGantnerTimeTerminal *>(p);
+
+    QScriptValue result;
+
+    result= pThis->engine.evaluate("addBDEData");
+    QScriptValueList args;
+    args << QScriptValue(&(pThis->engine),params["BDEfieldNo"].toString());
+    args << QScriptValue(&(pThis->engine),QString(params["value"].toString().toUtf8()));
+    args << QScriptValue(&(pThis->engine),QString(params["valueText"].toString().toUtf8()));
+
+    pThis->sendFileList.append(result.call(QScriptValue(), args).toString());
+
+}
+
 
 Q_EXPORT_PLUGIN2(gantnertimeterminal, CGantnerTimeTerminal);

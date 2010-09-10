@@ -56,10 +56,36 @@ class CGantnerTimeTerminal : public QObject, CDeviceInterface
   enum BOOKING_FIEDS
     {
       BK_DATETIME = 2,
+      BK_BOOKINGTYPE = 3,
       BK_USERID = 4,
+      BK_CARDTYPE = 5,
       BK_KEY = 6,
+      BK_PERSONALNO = 7,
       BK_BOOKINGCODE = 8,
-      BK_BOKKINGREASON = 9
+      BK_BOOKINGREASON = 9,
+      BK_FIUINFO = 10,
+      BK_FIUMATCHINGSCORE = 11,
+      BK_PREBOOKING = 12,
+      BK_BDEVALUE1 = 13,
+      BK_BDEVALUE2 = 14,
+      BK_BDEVALUE3 = 15,
+      BK_BDEVALUE4 = 16,
+      BK_BDEVALUE5 = 17,
+      BK_BDEVALUE6 = 18,
+      BK_BDEVALUE7 = 19,
+      BK_BDEVALUE8 = 20,
+      BK_BDEVALUE9 = 21,
+      BK_BDEVALUE10 = 22,
+      BK_BDEVALUE11 = 23,
+      BK_BDEVALUE12 = 24,
+      BK_BDEVALUE13 = 25,
+      BK_BDEVALUE14 = 26,
+      BK_BDEVALUE15 = 27,
+      BK_BDEVALUE16 = 28,
+      BK_BDEVALUE17 = 29,
+      BK_BDEVALUE18 = 30,
+      BK_BDEVALUE19 = 31,
+      BK_BDEVALUE20 = 32
     };
 
 public:
@@ -113,6 +139,10 @@ protected:
     static void s_setBalanceText(QObject *, QMap<QString, QVariant>);
 
     static void s_reinit(QObject *, QMap<QString, QVariant>);
+
+    static void s_removeBDEData(QObject *, QMap<QString, QVariant>);
+    static void s_addBDEData(QObject *, QMap<QString, QVariant>);
+
 
 protected:
     //! This function uncrypt the script
