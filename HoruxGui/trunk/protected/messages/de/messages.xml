@@ -541,7 +541,7 @@
 
 <trans-unit id="106" lock="1">
 <source>{type} technology</source>
-<target>Technologie {Typ}</target>
+<target>Technologie {type}</target>
 </trans-unit>
 
 <trans-unit id="107" lock="1">
@@ -2334,7 +2334,7 @@
 
 <trans-unit id="431" lock="1">
 	<source>Cannot delete the group {name}, it contains one or more person</source>
-	<target>Kann {name}nicht l&#xF6;schen, er enth&#xE4;lt eine oder mehrere Personen.</target>
+	<target>Kann {name} nicht l&#xF6;schen, er enth&#xE4;lt eine oder mehrere Personen.</target>
 </trans-unit>
 
 
@@ -3388,7 +3388,7 @@
 
 <trans-unit id="636" lock="1">
 <source>Horux notification: Device connection not opened on {device}</source>
-<target>Horux-Benachrichtigung: Verbindungsfehler des Peripherieger&#xE4;ts</target>
+<target>Horux-Benachrichtigung: Verbindungsfehler des Peripherieger&#xE4;ts {device}</target>
 </trans-unit>
 
 <trans-unit id="637" lock="1">
