@@ -442,4 +442,119 @@ class Mod extends Page
                 }
             }
         }
+
+        protected function onPrint()
+        {
+            parent::onPrint();
+            $cmd = $this->db->createCommand( SQL::SQL_GET_PERSON );
+            $cmd->bindValue(":id",$this->Request['id'], PDO::PARAM_INT);
+            $query = $cmd->query();
+            $data = $query->read();
+
+            $this->pdf->AddPage();
+
+            $this->pdf->Ln(10);
+
+            $this->pdf->SetFont('Arial','B',11);
+            $this->pdf->Cell(80 ,0,utf8_decode(Prado::localize('Global')));
+            $this->pdf->Ln(6);
+
+
+            $this->pdf->setDefaultFont();
+            if($data['sex'] == 'F')
+                $this->pdf->Cell(80 ,0,Prado::localize('Mrs.'));
+            else
+                $this->pdf->Cell(80 ,0,Prado::localize('Mr.'));
+            $this->pdf->Ln(6);
+
+            $this->pdf->Cell(40 ,0,utf8_decode(Prado::localize('Name')). ' :');
+            $this->pdf->Cell(80 ,0,utf8_decode($data['name']));
+            $this->pdf->Ln(6);
+
+            $this->pdf->Cell(40 ,0,utf8_decode(Prado::localize('Firstname')). ' :');
+            $this->pdf->Cell(80 ,0,utf8_decode($data['firstname']));
+            $this->pdf->Ln(10);
+
+            $this->pdf->SetFont('Arial','B',11);
+            $this->pdf->Cell(40 ,0,utf8_decode(Prado::localize('Personal information')));
+            $this->pdf->Ln(6);
+            $this->pdf->setDefaultFont();
+
+            $this->pdf->Cell(40 ,0,utf8_decode(Prado::localize('AVS')). ' :');
+            $this->pdf->Cell(80 ,0,utf8_decode($data['avs']));
+            $this->pdf->Ln(6);
+
+            $this->pdf->Cell(40 ,0,utf8_decode(Prado::localize('Street')). ' :');
+            $this->pdf->Cell(80 ,0,utf8_decode($data['street']));
+            $this->pdf->Ln(6);
+
+            $this->pdf->Cell(40 ,0,utf8_decode(Prado::localize('ZIP')). ' :');
+            $this->pdf->Cell(80 ,0,utf8_decode($data['zip']));
+            $this->pdf->Ln(6);
+
+            $this->pdf->Cell(40 ,0,utf8_decode(Prado::localize('City')). ' :');
+            $this->pdf->Cell(80 ,0,utf8_decode($data['city']));
+            $this->pdf->Ln(6);
+
+            $this->pdf->Cell(40 ,0,utf8_decode(Prado::localize('Country')). ' :');
+            $this->pdf->Cell(80 ,0,utf8_decode($data['country']));
+            $this->pdf->Ln(6);
+
+            $this->pdf->Cell(40 ,0,utf8_decode(Prado::localize('Phone')). ' :');
+            $this->pdf->Cell(80 ,0,utf8_decode($data['phone1']));
+            $this->pdf->Ln(6);
+
+            $this->pdf->Cell(40 ,0,utf8_decode(Prado::localize('Email')). ' :');
+            $this->pdf->Cell(80 ,0,utf8_decode($data['email1']));
+            $this->pdf->Ln(10);
+
+            $this->pdf->SetFont('Arial','B',11);
+            $this->pdf->Cell(80 ,0,utf8_decode(Prado::localize('Professional information')));
+            $this->pdf->Ln(6);
+            $this->pdf->setDefaultFont();
+
+            $this->pdf->Cell(40 ,0,utf8_decode(Prado::localize('Firme')). ' :');
+            $this->pdf->Cell(80 ,0,utf8_decode($data['firme']));
+            $this->pdf->Ln(6);
+
+            $cmd = $this->db->createCommand( "SELECT * FROM hr_department WHERE id=:id" );
+            $cmd->bindValue(":id",$data['department'], PDO::PARAM_INT);
+            $query = $cmd->query();
+            $data2 = $query->read();
+
+
+            $this->pdf->Cell(40 ,0,utf8_decode(Prado::localize('Department')). ' :');
+            $this->pdf->Cell(80 ,0,utf8_decode($data2['name']));
+            $this->pdf->Ln(6);
+
+            $this->pdf->Cell(40 ,0,utf8_decode(Prado::localize('Street')). ' :');
+            $this->pdf->Cell(80 ,0,utf8_decode($data['street_pr']));
+            $this->pdf->Ln(6);
+
+            $this->pdf->Cell(40 ,0,utf8_decode(Prado::localize('ZIP')). ' :');
+            $this->pdf->Cell(80 ,0,utf8_decode($data['npa_pr']));
+            $this->pdf->Ln(6);
+
+            $this->pdf->Cell(40 ,0,utf8_decode(Prado::localize('City')). ' :');
+            $this->pdf->Cell(80 ,0,utf8_decode($data['city_pr']));
+            $this->pdf->Ln(6);
+
+            $this->pdf->Cell(40 ,0,utf8_decode(Prado::localize('Country')). ' :');
+            $this->pdf->Cell(80 ,0,utf8_decode($data['country_pr']));
+            $this->pdf->Ln(6);
+
+            $this->pdf->Cell(40 ,0,utf8_decode(Prado::localize('Phone')). ' :');
+            $this->pdf->Cell(80 ,0,utf8_decode($data['phone2']));
+            $this->pdf->Ln(6);
+
+            $this->pdf->Cell(40 ,0,utf8_decode(Prado::localize('Fax')). ' :');
+            $this->pdf->Cell(80 ,0,utf8_decode($data['fax']));
+            $this->pdf->Ln(6);
+
+            $this->pdf->Cell(40 ,0,utf8_decode(Prado::localize('Email')). ' :');
+            $this->pdf->Cell(80 ,0,utf8_decode($data['email2']));
+            $this->pdf->Ln(6);
+
+            $this->pdf->render();
+        }
     }

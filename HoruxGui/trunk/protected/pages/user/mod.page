@@ -65,6 +65,13 @@
             document.getElementById( '<%= $this->pin_code->getClientID() %>' ).value = Math.floor(Math.random() * Math.pow( 10 , pin_length ) );
         }
 
+        function onPrintRedirect()
+        {
+            var id = document.getElementById( '<%= $this->id->getClientID() %>' );
+            var param = "&id=" + id.value;
+            window.open( "<%= $this->Service->constructUrl($this->getApplication()->getService()->getRequestedPagePath()) %>&action=print" + param, target="_blank" ) ;
+        }
+
         -->
     </script>
 
@@ -78,6 +85,8 @@
         SaveVisible="true"
         CancelVisible="true"
         HelpVisible="true"
+        PrintVisible="true"
+        JsClickPrint="onPrintRedirect()"
         />
 
     <div id="submenu-box">
