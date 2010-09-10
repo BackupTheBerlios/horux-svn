@@ -608,7 +608,7 @@
 
 <trans-unit id="119" lock="1">
 <source>Default</source>
-<target>Fehler</target>
+<target>Standard</target>
 </trans-unit>
 
 <trans-unit id="120" lock="1">
@@ -1725,7 +1725,7 @@
 
 <trans-unit id="324" lock="1">
 <source>default</source>
-<target>Fehler</target>
+<target>Standard</target>
 </trans-unit>
 
 

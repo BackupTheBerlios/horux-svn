@@ -151,35 +151,15 @@
     DataField="firstname"
     />
 
-<com:TTemplateColumn
-    HeaderText=""
-    >
-    <prop:HeaderTemplate>
-        <com:TLabel
-            Text="<%[Private email]%>"
-            />
-    </prop:HeaderTemplate>
+<com:TBoundColumn
+    HeaderText="<%[ZIP]%>"
+    DataField="zip"
+    />
 
-
-    <prop:ItemTemplate>
-        <a href="mailto:<%#$this->NamingContainer->DataItem['email1']%>"><%#$this->NamingContainer->DataItem['email1']%></a>
-    </prop:ItemTemplate>
-</com:TTemplateColumn>
-
-<com:TTemplateColumn
-    HeaderText=""
-    >
-    <prop:HeaderTemplate>
-        <com:TLabel
-            Text="<%[Professional email]%>"
-            />
-    </prop:HeaderTemplate>
-
-
-    <prop:ItemTemplate>
-        <a href="mailto:<%#$this->NamingContainer->DataItem['email2']%>"><%#$this->NamingContainer->DataItem['email2']%></a>
-    </prop:ItemTemplate>
-</com:TTemplateColumn>
+<com:TBoundColumn
+    HeaderText="<%[City]%>"
+    DataField="city"
+    />
 
 <com:TBoundColumn
     HeaderText="<%[Access groups]%>"
