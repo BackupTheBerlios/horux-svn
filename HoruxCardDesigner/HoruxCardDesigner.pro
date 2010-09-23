@@ -35,7 +35,8 @@ FORMS += horuxdesigner.ui \
     pixmapsetting.ui \
     horuxdialog.ui \
     horuxfields.ui \
-    databaseconnection.ui
+    databaseconnection.ui \
+    printcounter.ui
 RESOURCES += ressource.qrc
 win32:RC_FILE = myapp.rc
 TRANSLATIONS = horuxcarddesigner_fr.ts

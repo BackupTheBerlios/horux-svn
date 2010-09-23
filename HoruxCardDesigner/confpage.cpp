@@ -43,7 +43,9 @@ TextPage::TextPage(QWidget *parent)
 
     connect(fontButton, SIGNAL(clicked()), this, SLOT(setFont()));
     connect(colorButton, SIGNAL(clicked()), this, SLOT(setColor()));
+    connect(dataSource, SIGNAL(clicked()), this, SLOT(setDataSource()));
 
+    dataSource->hide();
 
     color = QColor(Qt::black);
     source->setCurrentIndex(0);
@@ -70,21 +72,46 @@ void TextPage::setFont()
     }
 }
 
+void TextPage::setDataSource() {
+    int indexSource = source->currentIndex();
+
+    switch(indexSource) {
+        case 1: // database
+            {
+                HoruxFields dlg;
+
+                if(dlg.exec() == QDialog::Accepted)
+                {
+                    name->setText(dlg.getDatasource());
+                    name->setReadOnly(true);
+                }
+            }
+            break;
+        case 2: // print counter
+            break;
+        case 3: // date and time
+            break;
+    }
+}
+
 void TextPage::setSource(int s)
 {
     // database source
-    if(s == 1)
+    if(s == 1 || s == 2 || s == 3)
     {
-        HoruxFields dlg;
+        dataSource->show();
+
+        /*HoruxFields dlg;
 
         if(dlg.exec() == QDialog::Accepted)
         {
             name->setText(dlg.getDatasource());
             name->setReadOnly(true);
-        }
+        }*/
     }
     else
     {
+        dataSource->hide();
         name->setReadOnly(false);
     }
 }

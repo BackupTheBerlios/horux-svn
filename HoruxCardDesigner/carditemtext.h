@@ -52,6 +52,7 @@ public slots:
     void sourceChanged(const int &);
     void alignmentChanged(int);
 
+
 public:
     double rotation;
     QString name;

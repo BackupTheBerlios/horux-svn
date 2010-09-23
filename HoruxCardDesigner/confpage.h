@@ -41,6 +41,7 @@ private slots:
     void setColor();
     void setFont();
     void setSource(int s);
+    void setDataSource();
 
 signals:
     void changeFont(const QFont &);

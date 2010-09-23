@@ -61,7 +61,7 @@ void DatabaseConnection::changeEvent(QEvent *e)
 void DatabaseConnection::setEngine(const QString engine)
 {
     int index = m_ui->engine->findData(engine);
-qDebug() << engine;
+
     m_ui->engine->setCurrentIndex(index);
 
     m_ui->database->setEnabled(false);
@@ -109,7 +109,6 @@ qDebug() << engine;
                     m_ui->database->setEnabled(true);
                     m_ui->password->setEnabled(true);
                     m_ui->username->setEnabled(true);
-                    m_ui->path->setEnabled(true);
                     m_ui->host->setEnabled(true);
                     m_ui->testButton->setEnabled(true);
                 }
@@ -188,6 +187,10 @@ QString DatabaseConnection::getFile()
 
 void DatabaseConnection::onTest()
 {
+    if(dbase.isOpen()) {
+        dbase.close();
+    }
+
     QString engine = m_ui->engine->itemData(m_ui->engine->currentIndex()).toString();
 
     if(engine == "HORUX")
@@ -219,7 +222,8 @@ void DatabaseConnection::onTest()
         {
             if(engine != "NOT_USED")
             {
-                dbase = QSqlDatabase::addDatabase(engine);
+                if(!QSqlDatabase::contains("test") )
+                    dbase = QSqlDatabase::addDatabase(engine, "test");
                 if(engine == "QSQLITE")
                 {
                     dbase.setDatabaseName(m_ui->file->text());

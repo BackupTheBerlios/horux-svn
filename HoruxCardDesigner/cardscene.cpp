@@ -72,6 +72,8 @@ void CardScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
         textItem->setPos( textItem->mapFromScene(mouseEvent->scenePos()) );
 
+        textItem->setPlainText("Text");
+
         emit textInserted(textItem);
         break;
     case InsertPicture:

@@ -112,6 +112,7 @@ private:
     QAction *recentFileActs[MaxRecentFiles];
 
     QLabel *isSecure;
+    QLabel *dbInformation;
 
     QHttp pictureHttp;
     QBuffer pictureBuffer;

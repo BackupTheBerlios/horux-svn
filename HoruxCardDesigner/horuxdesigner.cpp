@@ -23,6 +23,14 @@ HoruxDesigner::HoruxDesigner(QWidget *parent)
     pixmapPage = NULL;
     userCombo = NULL;
 
+    dbInformation = new QLabel("");
+    statusBar()->addPermanentWidget(dbInformation);
+
+    isSecure = new QLabel();
+    statusBar()->addPermanentWidget(isSecure);
+    isSecure->setToolTip(tr("The communication is not safe"));
+    isSecure->setPixmap(QPixmap(":/images/decrypted.png"));
+
     printer = new QPrinter(QPrinter::HighResolution);
 
     currenFile.setFileName("");
@@ -50,48 +58,62 @@ void HoruxDesigner::loadData(QSplashScreen *sc)
     QString password = settings.value("password", "").toString();
     QString path = settings.value("path", "").toString();
     QString database = settings.value("database", "").toString();
-    int engine = settings.value("engine", 0).toInt();
+    QString engine = settings.value("engine", 'HORUX').toString();
 
-    switch(engine)
-    {
-        case 0:
-            loadHoruxSoap(sc);
-            break;
-        case 1:
-            dbase = QSqlDatabase::addDatabase("QMYSQL");
-            dbase.setHostName(host);
-            dbase.setDatabaseName(database);
-            dbase.setUserName(username);
-            dbase.setPassword(password);
-            break;
-        case 2:
-            dbase = QSqlDatabase::addDatabase("QSQLITE");
-            dbase.setDatabaseName(database);
-            break;
-        case 3:
-            dbase = QSqlDatabase::addDatabase("QPSQL");
-            dbase.setHostName(host);
-            dbase.setDatabaseName(database);
-            dbase.setUserName(username);
-            dbase.setPassword(password);
-            break;
-        case 4:
-            dbase = QSqlDatabase::addDatabase("QODBC");
-            dbase.setHostName(host);
-            dbase.setDatabaseName(database);
-            dbase.setUserName(username);
-            dbase.setPassword(password);
-            break;
-        case 5:
-            dbase = QSqlDatabase::addDatabase("QOCI");
-            dbase.setHostName(host);
-            dbase.setDatabaseName(database);
-            dbase.setUserName(username);
-            dbase.setPassword(password);
-            break;
+    bool isDbType = false;
+
+    if(engine == "NOT_USED") {
+        dbInformation->setText(tr("No database used"));
+    } else if(engine == "HORUX") {
+        dbInformation->setText(tr("Connection to Horux database"));
+        loadHoruxSoap(sc);
+    } else if(engine == "CSV") {
+        dbInformation->setText(tr("Connection to CSV file: ") + path);
+    } else if(engine == "QMYSQL") {
+        if(!QSqlDatabase::contains("horux"))
+            dbase = QSqlDatabase::addDatabase("QMYSQL","horux");
+        dbase.setHostName(host);
+        dbase.setDatabaseName(database);
+        dbase.setUserName(username);
+        dbase.setPassword(password);
+        isDbType = true;
+        dbInformation->setText(tr("Connection to MySql database: ") + database);
+    } else if(engine == "QSQLITE") {
+        if(!QSqlDatabase::contains("horux"))
+            dbase = QSqlDatabase::addDatabase("QSQLITE","horux");
+        dbase.setDatabaseName(database);
+        isDbType = true;
+        dbInformation->setText(tr("Connection to SQlite database: ") + database );
+    } else if(engine == "QPSQL") {
+        if(!QSqlDatabase::contains("horux"))
+            dbase = QSqlDatabase::addDatabase("QPSQL","horux");
+        dbase.setHostName(host);
+        dbase.setDatabaseName(database);
+        dbase.setUserName(username);
+        dbase.setPassword(password);
+        isDbType = true;
+        dbInformation->setText(tr("Connection to PSQL database: ") + database);
+    } else if(engine == "QODBC") {
+        if(!QSqlDatabase::contains("horux"))
+            dbase = QSqlDatabase::addDatabase("QODBC","horux");
+        dbase.setHostName(host);
+        dbase.setDatabaseName(database);
+        dbase.setUserName(username);
+        dbase.setPassword(password);
+        isDbType = true;
+        dbInformation->setText(tr("Connection to ODBC database: ") + database);
+    } else if(engine == "QOCI") {
+        if(!QSqlDatabase::contains("horux"))
+            dbase = QSqlDatabase::addDatabase("QOCI","horux");
+        dbase.setHostName(host);
+        dbase.setDatabaseName(database);
+        dbase.setUserName(username);
+        dbase.setPassword(password);        
+        isDbType = true;
+        dbInformation->setText(tr("Connection to Oracle database: ") + database);
     }
 
-    if(engine > 0)
+    if(isDbType)
     {
         if(dbase.open())
         {
@@ -114,11 +136,11 @@ void HoruxDesigner::loadHoruxSoap(QSplashScreen *sc)
         QApplication::processEvents();
     }
 
-    connect(&transport, SIGNAL(responseReady()),this, SLOT(readSoapResponse()));
+    connect(&transport, SIGNAL(responseReady()),this, SLOT(readSoapResponse()), Qt::UniqueConnection);
 
     pictureBuffer.open(QBuffer::ReadWrite);
 
-    connect(&pictureHttp, SIGNAL(done(bool)), this, SLOT(httpRequestDone(bool)));
+    connect(&pictureHttp, SIGNAL(done(bool)), this, SLOT(httpRequestDone(bool)), Qt::UniqueConnection);
 
     QSettings settings("Letux", "HoruxCardDesigner", this);
 
@@ -131,24 +153,19 @@ void HoruxDesigner::loadHoruxSoap(QSplashScreen *sc)
     QtSoapMessage message;
     message.setMethod("getAllUser");
 
-    if(sc != NULL)
-        isSecure = new QLabel();
+
     if(ssl)
     {
         isSecure->setToolTip(tr("The communication is safe by SSL"));
         isSecure->setPixmap(QPixmap(":/images/encrypted.png"));
-        if(sc != NULL)
-            statusBar()->addPermanentWidget(isSecure);
         transport.setHost(host, true);
         connect(transport.networkAccessManager(),SIGNAL(sslErrors( QNetworkReply *, const QList<QSslError> & )),
-                this, SLOT(sslErrors(QNetworkReply*,QList<QSslError>)));
+                this, SLOT(sslErrors(QNetworkReply*,QList<QSslError>)), Qt::UniqueConnection);
     }
     else
     {
         isSecure->setToolTip(tr("The communication is not safe"));
         isSecure->setPixmap(QPixmap(":/images/decrypted.png"));
-        if(sc != NULL)
-            statusBar()->addPermanentWidget(isSecure);
         transport.setHost(host);
     }
 
@@ -546,6 +563,8 @@ void HoruxDesigner::setDatabase()
 {
     DatabaseConnection dlg(this);
 
+
+
     QSettings settings("Letux", "HoruxCardDesigner", this);
     QString host = settings.value("host", "localhost").toString();
     QString username = settings.value("username", "root").toString();
@@ -567,6 +586,9 @@ void HoruxDesigner::setDatabase()
 
     if(dlg.exec() == QDialog::Accepted)
     {
+        isSecure->setToolTip(tr("The communication is not safe"));
+        isSecure->setPixmap(QPixmap(":/images/decrypted.png"));
+
         settings.setValue("host",dlg.getHost());
         settings.setValue("username",dlg.getUsername());
         settings.setValue("password",dlg.getPassword());
@@ -576,46 +598,67 @@ void HoruxDesigner::setDatabase()
         settings.setValue("engine",dlg.getEngine());
         settings.setValue("file",dlg.getFile());
 
-        if(dlg.getSSL())
-        {
-            isSecure->setToolTip(tr("The communication is safe by SSL"));
-            isSecure->setPixmap(QPixmap(":/images/encrypted.png"));
-        }
-        else
-        {
-            isSecure->setToolTip(tr("The communication is not safe"));
-            isSecure->setPixmap(QPixmap(":/images/decrypted.png"));
-        }
+        host = dlg.getHost();
+        username = dlg.getUsername();
+        password = dlg.getPassword();
+        path = dlg.getPath();
+        database = dlg.getDatabase();
+        ssl = dlg.getSSL();
+        file = dlg.getFile();
+        engine = dlg.getEngine();
 
         if(engine == "HORUX")
         {
+            if(dlg.getSSL())
+            {
+                isSecure->setToolTip(tr("The communication is safe by SSL"));
+                isSecure->setPixmap(QPixmap(":/images/encrypted.png"));
+            }
+            else
+            {
+                isSecure->setToolTip(tr("The communication is not safe"));
+                isSecure->setPixmap(QPixmap(":/images/decrypted.png"));
+            }
+
             loadHoruxSoap(NULL);
+
+            dbInformation->setText(tr("Connection to Horux database"));
         }
         else
         {
             if(engine == "CSV")
             {
-
+                dbInformation->setText(tr("Connection to CSV file: ") + path);
             }
             else
             {
                 if(engine != "NOT_USED")
                 {
-                    dbase = QSqlDatabase::addDatabase(engine);
+                    if(dbase.isOpen())
+                        dbase.close();
+
+                    if(!QSqlDatabase::contains("horux"))
+                        dbase = QSqlDatabase::addDatabase(engine,"horux");
                     if(engine == "QSQLITE")
                     {
                         dbase.setDatabaseName(file);
+                        dbInformation->setText(tr("Connection to Sqlite database: ") + database);
                     }
                     else
                     {
+                        dbInformation->setText(tr("Connection to %1 database: ").arg(engine) + database);
                         dbase.setHostName(host);
                         dbase.setDatabaseName(database);
                         dbase.setUserName(username);
                         dbase.setPassword(password);
                     }
 
-                    if(!dbase.open())
+                    if(!dbase.open()) {
                         QMessageBox::warning(this,tr("Database connection error"),tr("Not able to connect to the database"));
+                        dbInformation->setText("Not able to connect to the database");
+                    } else {
+
+                    }
                 }
             }
         }
@@ -920,7 +963,6 @@ void HoruxDesigner::setParamView(QGraphicsItem *item)
                     connect(textPage->left, SIGNAL(valueChanged(QString)), textItem, SLOT(leftChanged(const QString &)));
                     connect(textPage->alignment, SIGNAL(currentIndexChanged ( int )), textItem, SLOT(alignmentChanged(int)));
 
-
                     textPage->name->setText(textItem->name);
 
                     textPage->font = textItem->font();
@@ -931,6 +973,9 @@ void HoruxDesigner::setParamView(QGraphicsItem *item)
                         textPage->colorText->setText(textItem->defaultTextColor().name());
                         textPage->colorText->setStyleSheet("background-color: " + textItem->defaultTextColor().name() + ";");
                     }
+
+                    textPage->widthRect->setText(QString::number(textItem->boundingRect().width()));
+                    textPage->heightRect->setText(QString::number(textItem->boundingRect().height()));
 
                     textPage->rotation->setValue(textItem->rotation);
                     textPage->top->setValue(textItem->pos().y());
