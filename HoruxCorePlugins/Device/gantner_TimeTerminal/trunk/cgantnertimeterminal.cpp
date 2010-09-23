@@ -85,7 +85,7 @@ CDeviceInterface *CGantnerTimeTerminal::createInstance (QMap<QString, QVariant> 
   p->setParameter("name",config["name"]);
   p->setParameter("_isLog",config["isLog"]);
   p->setParameter("accessPlugin",config["accessPlugin"]);
-  p->setParameter("id",config["id_device"]);  
+  p->setParameter("id",config["id_device"]);
 
   p->setParameter("ipOrDhcp",config["ipOrDhcp"]);
   p->setParameter("isAutoRestart",config["isAutoRestart"]);
@@ -229,6 +229,7 @@ QString CGantnerTimeTerminal::getScript()
         memset(uncryptedFile, 0, 8192);
         if(!decrypt((unsigned char*)cryptedFile.data(),cryptedFile.length(),uncryptedFile,&clear_len))
             return false;
+
         QByteArray ba((const char*)uncryptedFile,clear_len);
         QString script (ba);
         file.close();
@@ -407,7 +408,7 @@ void CGantnerTimeTerminal::commandFinished(  int id, bool error)
     if(id == idReadReplace)
     {
         if(!error)
-        {            
+        {
             //qDebug("YES reload.txt");
             // no error, this mean that the device was replace and must be ialized
             idRemoveReplace = ftp->remove("reload.txt");
@@ -852,7 +853,7 @@ void CGantnerTimeTerminal::dispatchMessage(QByteArray bookings)
             params["BDEValue18"] = BDEValue18;
             params["BDEValue19"] = BDEValue19;
             params["BDEValue20"] = BDEValue20;
-
+qDebug() << params;
             //! unknown user/card
             QString xml = CXmlFactory::deviceEvent(QString::number(id), "bookingDetected", params);
             emit deviceEvent(xml);
@@ -1168,7 +1169,7 @@ void CGantnerTimeTerminal::close()
   udp = NULL;
 
   bookingError = false;
-  action = WAITING;  
+  action = WAITING;
 
   if(  _isConnected )
     emit deviceConnection(id, false);
@@ -1314,7 +1315,7 @@ void CGantnerTimeTerminal::logComm(uchar *ba, bool isReceive, int len)
    return;
 
   QString s = "",s1;
-  
+
   for(int i=0;i<len; i++)
     s += s1.sprintf("%02X ",ba[i]);
 

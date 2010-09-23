@@ -301,12 +301,30 @@ bool CGantnerTime::isAccess(QMap<QString, QVariant> params, bool, bool )
 
             // be sure the last booking was an exit. Wo have to check this. If not the case, we have to insert an exit booking with the same time than
             // this booking
-
-            QSqlQuery lastBooking("SELECT tb.action FROM hr_tracking AS t LEFT JOIN hr_timux_booking AS tb ON tb.tracking_id=t.id WHERE id_user=" + userId + " ORDER BY date DESC, time DESC LIMIT 0,1");
+            QSqlQuery lastBooking("SELECT tb.action FROM  hr_timux_booking AS tb LEFT JOIN hr_tracking AS t ON tb.tracking_id=t.id WHERE t.id_user=" + userId + " ORDER BY t.date DESC, t.time DESC, tb.tracking_id DESC LIMIT 0,1");
             if(lastBooking.next()) {
                 if(lastBooking.value(0) == "255") { // last booking was an already an entry, we have to insert an exit
-                    QSqlQuery query("INSERT INTO `hr_tracking` ( `id` , `id_user` , `id_key` , `time` , `date` , `id_entry` , `is_access` , `id_comment`, `key`, `extData` ) VALUES (" +
-                                (QString::number(last.toInt() +1)) + ", '" +
+                   qDebug () <<"aaaaa"<< last << "254";
+                    QSqlQuery bookquery("INSERT INTO `hr_timux_booking` ( `tracking_id` , `action` , `actionReason`, `roundBooking` ) VALUES (" +
+                                last +
+                                "," +
+                                "254" +
+                                ",'" +
+                                reason +
+                                "','" +
+                                roundBooking.toString("hh:mm:ss") +
+                                "')"
+                                );
+
+
+
+
+
+
+
+
+
+                    query = "INSERT INTO `hr_tracking` ( `id` , `id_user` , `id_key` , `time` , `date` , `id_entry` , `is_access` , `id_comment`, `key`, `extData` ) VALUES ('', '" +
                                 userId +
                                 "','" +
                                 querykey.value(0).toString() +
@@ -320,24 +338,15 @@ bool CGantnerTime::isAccess(QMap<QString, QVariant> params, bool, bool )
                                 key +
                                 "', '" +
                                 "hr_timux_booking"
-                                "')"
-                                );
+                                "')";
 
-                    QSqlQuery bookquery("INSERT INTO `hr_timux_booking` ( `tracking_id` , `action` , `actionReason`, `roundBooking` ) VALUES (" +
-                                (QString::number(last.toInt() +1)) +
-                                "," +
-                                "254" +
-                                ",'" +
-                                reason +
-                                "','" +
-                                roundBooking.toString("hh:mm:ss") +
-                                "')"
-                                );
+                    lastTracking = "SELECT id FROM `hr_tracking` WHERE id_entry=" + deviceId + " ORDER BY id DESC LIMIT 0,1";
+                    lastTracking.next();
+                    last = lastTracking.value(0).toString();
                 }
             }
-
         }
-
+qDebug () <<"kkkkkkkkkkkkkk"<< last << code;
         QSqlQuery bookquery("INSERT INTO `hr_timux_booking` ( `tracking_id` , `action` , `actionReason`, `roundBooking` ) VALUES (" +
                     last +
                     "," +
@@ -697,7 +706,7 @@ void CGantnerTime::checkDb()
             {
                 QtSoapMessage message;
                 message.setMethod("callServiceComponent");
-    
+
                 QtSoapArray *array = new QtSoapArray(QtSoapQName("params"));
 
                 array->insert(0, new QtSoapSimpleType(QtSoapQName("component"),"timuxadmin"));
@@ -707,7 +716,7 @@ void CGantnerTime::checkDb()
 
                 message.addMethodArgument(array);
 
-                soapClient.submitRequest(message, saas_path+"/index.php?soap=soapComponent&password=" + saas_password + "&username=" + saas_username);                                               
+                soapClient.submitRequest(message, saas_path+"/index.php?soap=soapComponent&password=" + saas_password + "&username=" + saas_username);
             }
             else
             {
@@ -833,7 +842,7 @@ void CGantnerTime::readSoapBalancesResponse()
     QStringList balances = response.returnValue().toString().split(";");
 
     foreach( QString balance, balances)
-    {        
+    {
         QStringList param = balance.split("/");
 
         if(param.count() != 3) continue;
