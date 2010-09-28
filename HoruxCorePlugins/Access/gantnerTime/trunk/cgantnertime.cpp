@@ -191,7 +191,6 @@ bool CGantnerTime::isAccess(QMap<QString, QVariant> params, bool, bool )
                     int m = noRoundBooking.minute();
                     while(m % round != 0)
                     {
-                        qDebug() << (m % round);
                         if(code == "255" || reason.right(3) == "_IN" || code == "155") // arrive
                         {
                             m++;
@@ -304,7 +303,6 @@ bool CGantnerTime::isAccess(QMap<QString, QVariant> params, bool, bool )
             QSqlQuery lastBooking("SELECT tb.action FROM  hr_timux_booking AS tb LEFT JOIN hr_tracking AS t ON tb.tracking_id=t.id WHERE t.id_user=" + userId + " ORDER BY t.date DESC, t.time DESC, tb.tracking_id DESC LIMIT 0,1");
             if(lastBooking.next()) {
                 if(lastBooking.value(0) == "255") { // last booking was an already an entry, we have to insert an exit
-                   qDebug () <<"aaaaa"<< last << "254";
                     QSqlQuery bookquery("INSERT INTO `hr_timux_booking` ( `tracking_id` , `action` , `actionReason`, `roundBooking` ) VALUES (" +
                                 last +
                                 "," +
@@ -346,7 +344,6 @@ bool CGantnerTime::isAccess(QMap<QString, QVariant> params, bool, bool )
                 }
             }
         }
-qDebug () <<"kkkkkkkkkkkkkk"<< last << code;
         QSqlQuery bookquery("INSERT INTO `hr_timux_booking` ( `tracking_id` , `action` , `actionReason`, `roundBooking` ) VALUES (" +
                     last +
                     "," +
@@ -575,7 +572,6 @@ void CGantnerTime::checkDb()
         if(i.value())
         {
             QSqlQuery query("SELECT * FROM hr_gantner_standalone_action WHERE deviceId=" + QString::number(i.key()) + " ORDER BY id" );
-
             while(query.next())
             {
                 QString id = query.value(0).toString();

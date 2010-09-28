@@ -853,7 +853,6 @@ void CGantnerTimeTerminal::dispatchMessage(QByteArray bookings)
             params["BDEValue18"] = BDEValue18;
             params["BDEValue19"] = BDEValue19;
             params["BDEValue20"] = BDEValue20;
-qDebug() << params;
             //! unknown user/card
             QString xml = CXmlFactory::deviceEvent(QString::number(id), "bookingDetected", params);
             emit deviceEvent(xml);
