@@ -631,3 +631,13 @@ CREATE TABLE `hr_trigger_change` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `hr_superuser_shortcut`
+--
+
+CREATE TABLE IF NOT EXISTS `hr_superuser_shortcut` (
+  `superuser_id` int(11) NOT NULL,
+  `shortcut` varchar(100) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

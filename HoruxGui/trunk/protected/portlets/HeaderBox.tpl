@@ -8,6 +8,12 @@
 
         <com:TLinkButton  ID="homeIcon" OnClick="onHome"><span class="homeIcon">&nbsp;</span></com:TLinkButton>
 
+        <com:TRepeater ID="shortcut">
+            <prop:ItemTemplate>
+                <com:THyperLink NavigateUrl="<%# $this->Service->constructUrl($this->Data['shortcut']) %>"><img class="shortcut" src="<%# $this->Data['icon'] %>" /> </com:THyperLink>
+            </prop:ItemTemplate>
+        </com:TRepeater>
+
         <com:TPanel CssClass="accesslink" ID="accessLink" Visible="false">
           <span class="accesslink">&nbsp;</span>
         </com:TPanel>

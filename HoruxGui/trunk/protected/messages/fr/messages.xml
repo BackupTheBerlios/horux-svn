@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <xliff version="1.0">
- <file source-language="FR" target-language="fr" datatype="plaintext" original="messages" date="2010-09-08T15:54:27Z" product-name="messages">
+ <file source-language="FR" target-language="fr" datatype="plaintext" original="messages" date="2010-10-07T10:26:18Z" product-name="messages">
   <body>
   
 <trans-unit id="1" lock="1">
@@ -3902,49 +3902,58 @@
 <target>L\'utilisateur est valide d&#xE8;s la date entr&#xE9;e</target>
 </trans-unit>
 
+
+
+
+
 <trans-unit id="738">
-<source>Private email</source>
-<target>Email priv&#xE9;e</target>
-</trans-unit>
-
-<trans-unit id="739">
-<source>Professional email</source>
-<target>Email professionnelle</target>
-</trans-unit>
-
-<trans-unit id="740">
 <source>Access groups</source>
 <target>Groupes d'acc&#xE8;s</target>
 </trans-unit>
 
-<trans-unit id="741">
+<trans-unit id="739">
 <source>Horux notification: Device communicaiton error on {device}</source>
 <target>Notification Horux: Erreur de communication sur {device}</target>
 </trans-unit>
 
-<trans-unit id="742">
+<trans-unit id="740">
 <source>Last connection</source>
 <target>Derni&#xE8;re connexion</target>
 </trans-unit>
 
-<trans-unit id="743">
+<trans-unit id="741">
 <source>PDO support</source>
 <target>Support de PDO</target>
 </trans-unit>
 
-<trans-unit id="744">
+<trans-unit id="742">
 <source>PDO-MYSQL support</source>
 <target>Support de PDO-MYSQL</target>
 </trans-unit>
 
-<trans-unit id="745">
+<trans-unit id="743">
 <source>PEAR XML/RPC support</source>
 <target>Support de PEAR XML/RPC</target>
 </trans-unit>
 
-<trans-unit id="746">
+<trans-unit id="744">
 <source>Memory limit</source>
 <target>Limitation de m&#xE9;moire</target>
+</trans-unit>
+
+<trans-unit id="745">
+<source>Select the shortcut</source>
+<target>S&#xE9;lectionner un raccourci</target>
+</trans-unit>
+
+<trans-unit id="746">
+<source>Shortcut</source>
+<target>Raccourci</target>
+</trans-unit>
+
+<trans-unit id="747">
+<source>-- Select a shortcut --</source>
+<target>-- S&#xE9;lectionner un raccourci --</target>
 </trans-unit>
 </body>
 </file>

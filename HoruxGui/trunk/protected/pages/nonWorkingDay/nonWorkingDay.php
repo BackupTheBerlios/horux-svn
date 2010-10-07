@@ -109,7 +109,7 @@ class nonWorkingDay extends Page
         echo '
             <table border="0" style="border:1px solid #666666;height:150px">
                 <tbody>
-                    <tr style="height=25px;background-color:#fff8d7"><th colspan="7" align="center">'.$monName.'</th></tr>
+                    <tr style="height:25px;background-color:#fff8d7"><th colspan="7" align="center">'.$monName.'</th></tr>
                     <tr style="background-color:#eee">
                         <td>'.Prado::localize('Mon').'</td>
                         <td>'.Prado::localize('Tue').'</td>

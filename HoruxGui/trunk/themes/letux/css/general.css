@@ -130,6 +130,7 @@ textarea:focus { background-color: #ffd }
 #module-status .loggedin-users     { background: url(../images/menu/icon-16-user.png) 3px 3px no-repeat; }
 #module-status .logout             { background: url(../images/menu/icon-16-logout.png) 3px 3px no-repeat; }
 #module-status .homeIcon             { background: url(../images/menu/icon-16-controlPanel.png) 3px 3px no-repeat; }
+#module-status .shortcut             { float: left;padding-top:4px;padding-right:10px; }
 
 /* -- various styles -- */
 span.note {

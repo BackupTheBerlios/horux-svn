@@ -124,6 +124,52 @@
                     </td> 
                 </tr>
 
+            <tr>
+                <td valign="top" class="key">
+                    <span onmouseover="Tip('<%[Select the shortcut]%> 1', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Shortcut]%> 1</span>
+                </td>
+                <td>
+                    <com:TDropDownList ID="shortcut1">
+                    </com:TDropDownList>
+                </td>
+            </tr>
+            <tr>
+                <td valign="top" class="key">
+                    <span onmouseover="Tip('<%[Select the shortcut]%> 2', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Shortcut]%> 2</span>
+                </td>
+                <td>
+                    <com:TDropDownList ID="shortcut2">
+                    </com:TDropDownList>
+                </td>
+            </tr>
+            <tr>
+                <td valign="top" class="key">
+                    <span onmouseover="Tip('<%[Select the shortcut]%> 3', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Shortcut]%> 3</span>
+                </td>
+                <td>
+                    <com:TDropDownList ID="shortcut3">
+                    </com:TDropDownList>
+                </td>
+            </tr>
+            <tr>
+                <td valign="top" class="key">
+                    <span onmouseover="Tip('<%[Select the shortcut]%> 4', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Shortcut]%> 4</span>
+                </td>
+                <td>
+                    <com:TDropDownList ID="shortcut4">
+                    </com:TDropDownList>
+                </td>
+            </tr>
+            <tr>
+                <td valign="top" class="key">
+                    <span onmouseover="Tip('<%[Select the shortcut]%> 5', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Shortcut]%> 5</span>
+                </td>
+                <td>
+                    <com:TDropDownList ID="shortcut5">
+                    </com:TDropDownList>
+                </td>
+            </tr>
+
             </tbody>
         </table>
     </fieldset>
