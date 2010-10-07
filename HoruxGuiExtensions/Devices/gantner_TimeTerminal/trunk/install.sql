@@ -48,7 +48,7 @@ CREATE TABLE IF NOT EXISTS `hr_gantner_TimeTerminal` (
   `inputDBEText10` varchar(255) DEFAULT NULL,
   `inputDBEText11` varchar(255) DEFAULT NULL,
   `inputDBEText12` varchar(255) DEFAULT NULL,
-  `inputDBEText13` varchar(255) NOT NULL,
+  `inputDBEText13` varchar(255) DEFAULT NULL,
   `inputDBEText14` varchar(255) DEFAULT NULL,
   `inputDBEText15` varchar(255) DEFAULT NULL,
   `inputDBEText16` varchar(255) DEFAULT NULL,
