@@ -344,6 +344,7 @@ bool CGantnerTime::isAccess(QMap<QString, QVariant> params, bool, bool )
                 }
             }
         }
+
         QSqlQuery bookquery("INSERT INTO `hr_timux_booking` ( `tracking_id` , `action` , `actionReason`, `roundBooking` ) VALUES (" +
                     last +
                     "," +
