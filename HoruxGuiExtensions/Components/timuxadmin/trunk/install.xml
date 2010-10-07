@@ -20,7 +20,7 @@
             <submenu iconmenu="icon-16-config.png" url="components.timuxadmin.config.config" name="Configuration" ></submenu>
             <submenu iconmenu="icon-16-workflow.png" url="components.timuxadmin.workflow.workflow" name="Workflow" ></submenu>
             <submenu iconmenu="icon-16-timcode.png" url="components.timuxadmin.timecode.timecode" name="Time Code" ></submenu>
-            <submenu iconmenu="icon-16-panel.png" url="components.timuxadmin.timeclasses.timeclasses" name="Time classes" ></submenu>
+            <submenu iconmenu="icon-16-timeclasses.png" url="components.timuxadmin.timeclasses.timeclasses" name="Time classes" ></submenu>
         </submenus>       
     </menu>
   </mainmenu>

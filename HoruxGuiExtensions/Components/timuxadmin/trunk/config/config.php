@@ -95,27 +95,7 @@ class config extends Page
                                             hoursBlockAfternoon1=:hoursBlockAfternoon1,
                                             hoursBlockAfternoon2=:hoursBlockAfternoon2,
                                             hoursBlockAfternoon3=:hoursBlockAfternoon3,
-                                            hoursBlockAfternoon4=:hoursBlockAfternoon4,
-                                            inputDBEText1=:inputDBEText1,
-                                            inputDBEText2=:inputDBEText2,
-                                            inputDBEText3=:inputDBEText3,
-                                            inputDBEText4=:inputDBEText4,
-                                            inputDBEText5=:inputDBEText5,
-                                            inputDBEText6=:inputDBEText6,
-                                            inputDBEText7=:inputDBEText7,
-                                            inputDBEText8=:inputDBEText8,
-                                            inputDBEText9=:inputDBEText9,
-                                            inputDBEText10=:inputDBEText10,
-                                            inputDBEText11=:inputDBEText11,
-                                            inputDBEText12=:inputDBEText12,
-                                            inputDBEText13=:inputDBEText13,
-                                            inputDBEText14=:inputDBEText14,
-                                            inputDBEText15=:inputDBEText15,
-                                            inputDBEText16=:inputDBEText16,
-                                            inputDBEText17=:inputDBEText17,
-                                            inputDBEText18=:inputDBEText18,
-                                            inputDBEText19=:inputDBEText19,
-                                            inputDBEText20=:inputDBEText20
+                                            hoursBlockAfternoon4=:hoursBlockAfternoon4
                                             WHERE id=1
                                             " );
 
