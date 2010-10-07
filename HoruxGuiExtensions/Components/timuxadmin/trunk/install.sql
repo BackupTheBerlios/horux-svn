@@ -174,7 +174,7 @@ CREATE TABLE IF NOT EXISTS `hr_timux_timeclass` (
 CREATE TABLE IF NOT EXISTS `hr_timux_timecode` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
-  `abbreviation` varchar(10) NOT NULL,
+  `abbreviation` varchar(50) NOT NULL,
   `type` set('leave','absence','overtime','load') NOT NULL,
   `locked` int(11) NOT NULL,
   `useMinMax` int(1) NOT NULL,
