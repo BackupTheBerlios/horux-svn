@@ -1,0 +1,82 @@
+<com:TContent ID="Main">
+    <%include Application.common.template.headerContent %>
+
+
+    <com:TToolbarBox
+        ID="tbb"
+        Title="<%[Report]%>"
+        IconAsset="<%~ ../assets/report.png %>"
+        HelpVisible="true"
+        CancelVisible="true"
+        />
+
+    <%include Application.common.template.headerBoxContent %>
+
+ <%[Year]%>
+    <com:TActiveDropDownList
+        ID="FilterYear"
+        OnSelectedIndexChanged="selectionChangedYear"
+        CssClass="inputbox"
+        DataTextField="Text"
+        DataValueField="Value">
+
+    </com:TActiveDropDownList>
+
+    <div id="list">
+        <table class = "adminlist" >
+            <thead>
+                <tr>
+                    <th width="7%"><com:TLabel Text="<%[Report]%>" /></th>
+                    <th width="7%"><com:TLabel Text="<%[January]%>" /></th>
+                    <th width="7%"><com:TLabel Text="<%[February]%>" /></th>
+                    <th width="7%"><com:TLabel Text="<%[March]%>" /></th>
+                    <th width="7%"><com:TLabel Text="<%[April]%>" /></th>
+                    <th width="7%"><com:TLabel Text="<%[May]%>" /></th>
+                    <th width="7%"><com:TLabel Text="<%[June]%>" /></th>
+                    <th width="7%"><com:TLabel Text="<%[July]%>" /></th>
+                    <th width="7%"><com:TLabel Text="<%[August]%>" /></th>
+                    <th width="7%"><com:TLabel Text="<%[September]%>" /></th>
+                    <th width="7%"><com:TLabel Text="<%[October]%>" /></th>
+                    <th width="7%"><com:TLabel Text="<%[November]%>" /></th>
+                    <th width="7%"><com:TLabel Text="<%[December]%>" /></th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td><%[Balance report]%></td>
+                    <td><com:TLinkButton ID="monthBalance_1"  OnClick="printReport" ><img src="<%~ ../assets/pdf-document.png %>" alt="pdf" /></com:TLinkButton></td>
+                    <td><com:TLinkButton ID="monthBalance_2"  OnClick="printReport" ><img src="<%~ ../assets/pdf-document.png %>" alt="pdf" /></com:TLinkButton></td>
+                    <td><com:TLinkButton ID="monthBalance_3"  OnClick="printReport" ><img src="<%~ ../assets/pdf-document.png %>" alt="pdf" /></com:TLinkButton></td>
+                    <td><com:TLinkButton ID="monthBalance_4"  OnClick="printReport" ><img src="<%~ ../assets/pdf-document.png %>" alt="pdf" /></com:TLinkButton></td>
+                    <td><com:TLinkButton ID="monthBalance_5"  OnClick="printReport" ><img src="<%~ ../assets/pdf-document.png %>" alt="pdf" /></com:TLinkButton></td>
+                    <td><com:TLinkButton ID="monthBalance_6"  OnClick="printReport" ><img src="<%~ ../assets/pdf-document.png %>" alt="pdf" /></com:TLinkButton></td>
+                    <td><com:TLinkButton ID="monthBalance_7"  OnClick="printReport" ><img src="<%~ ../assets/pdf-document.png %>" alt="pdf" /></com:TLinkButton></td>
+                    <td><com:TLinkButton ID="monthBalance_8"  OnClick="printReport" ><img src="<%~ ../assets/pdf-document.png %>" alt="pdf" /></com:TLinkButton></td>
+                    <td><com:TLinkButton ID="monthBalance_9"  OnClick="printReport" ><img src="<%~ ../assets/pdf-document.png %>" alt="pdf" /></com:TLinkButton></td>
+                    <td><com:TLinkButton ID="monthBalance_10" OnClick="printReport" ><img src="<%~ ../assets/pdf-document.png %>" alt="pdf" /></com:TLinkButton></td>
+                    <td><com:TLinkButton ID="monthBalance_11"  OnClick="printReport" ><img src="<%~ ../assets/pdf-document.png %>" alt="pdf" /></com:TLinkButton></td>
+                    <td><com:TLinkButton ID="monthBalance_12"  OnClick="printReport" ><img src="<%~ ../assets/pdf-document.png %>" alt="pdf" /></com:TLinkButton></td>
+               <!-- <tr>
+                    <td><%[Load report]%></td>
+                    <td><com:TLinkButton ID="monthLoad_1" OnClick="printReport" ><img src="<%~ ../assets/pdf-document.png %>" alt="pdf" /></com:TLinkButton></td>
+                    <td><com:TLinkButton ID="monthLoad_2" OnClick="printReport" ><img src="<%~ ../assets/pdf-document.png %>" alt="pdf" /></com:TLinkButton></td>
+                    <td><com:TLinkButton ID="monthLoad_3" OnClick="printReport" ><img src="<%~ ../assets/pdf-document.png %>" alt="pdf" /></com:TLinkButton></td>
+                    <td><com:TLinkButton ID="monthLoad_4" OnClick="printReport" ><img src="<%~ ../assets/pdf-document.png %>" alt="pdf" /></com:TLinkButton></td>
+                    <td><com:TLinkButton ID="monthLoad_5" OnClick="printReport" ><img src="<%~ ../assets/pdf-document.png %>" alt="pdf" /></com:TLinkButton></td>
+                    <td><com:TLinkButton ID="monthLoad_6" OnClick="printReport" ><img src="<%~ ../assets/pdf-document.png %>" alt="pdf" /></com:TLinkButton></td>
+                    <td><com:TLinkButton ID="monthLoad_7" OnClick="printReport" ><img src="<%~ ../assets/pdf-document.png %>" alt="pdf" /></com:TLinkButton></td>
+                    <td><com:TLinkButton ID="monthLoad_8" OnClick="printReport" ><img src="<%~ ../assets/pdf-document.png %>" alt="pdf" /></com:TLinkButton></td>
+                    <td><com:TLinkButton ID="monthLoad_9" OnClick="printReport" ><img src="<%~ ../assets/pdf-document.png %>" alt="pdf" /></com:TLinkButton></td>
+                    <td><com:TLinkButton ID="monthLoad_10" OnClick="printReport" ><img src="<%~ ../assets/pdf-document.png %>" alt="pdf" /></com:TLinkButton></td>
+                    <td><com:TLinkButton ID="monthLoad_11" OnClick="printReport" ><img src="<%~ ../assets/pdf-document.png %>" alt="pdf" /></com:TLinkButton></td>
+                    <td><com:TLinkButton ID="monthLoad_12" OnClick="printReport" ><img src="<%~ ../assets/pdf-document.png %>" alt="pdf" /></com:TLinkButton></td>
+                </tr>-->
+            </tbody>
+
+            <tfoot></tfoot>
+        </table>
+    </div>
+
+    <%include Application.common.template.footerContent %>
+</com:TContent>
