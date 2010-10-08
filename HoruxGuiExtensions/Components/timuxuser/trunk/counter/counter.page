@@ -3,11 +3,14 @@
 
     <com:TToolbarBox
         ID="tbb"
-        Title="<%[Leave counter]%>"
+        Title="<%[Activity counter]%>"
         IconAsset="<%~ ../assets/counter.png %>"
         HelpVisible="true"
         CancelVisible="true"
         EditVisible="true"
+        AddVisible="true"
+        AddUrl="components.timuxuser.counter.add"
+        DelVisible ="true"
         />
 
     <%include Application.common.template.headerBoxContent %>
@@ -83,13 +86,19 @@
                 />
 
 
-            <com:TTemplateColumn HeaderText="<%[Hours/Days - Last month]%>" ID="nnbre">
+            <com:TTemplateColumn HeaderText="<%[Hours/Days]%>" ID="nnbre">
                 <prop:ItemTemplate>
                     <com:TLabel
                         ID="nbre"
                         />
                 </prop:ItemTemplate>
             </com:TTemplateColumn>
+
+
+            <com:TBoundColumn
+                HeaderText="<%[Remark]%>"
+                DataField="remark"
+                />
 
         </com:TDataGrid>
     </div>

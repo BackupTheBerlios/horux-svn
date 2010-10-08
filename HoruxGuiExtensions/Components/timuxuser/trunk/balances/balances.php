@@ -227,7 +227,6 @@ class balances extends PageList
         $this->pdf->SetFont('Arial','',9);
         $this->pdf->Cell(0,10,utf8_decode(Prado::localize('Sign in/out')),0,0,'L');
         $this->pdf->Ln(10);
-        //$this->pdf->setDefaultFont();
 
         $this->pdf->Cell(30,5,utf8_decode(Prado::localize('Employee'))." :",0,0,'L');
         $this->pdf->Cell(0,5,utf8_decode($this->employee->getFullName()),0,1,'L');
@@ -349,7 +348,7 @@ class balances extends PageList
         if($this->overTimeMonth>0)
         {
             $this->pdf->Cell(30,3,utf8_decode(str_replace("<br/>"," ",Prado::localize('Balance for the month')))." :",0,0,'L');
-            $this->pdf->Cell(20,3,sprintf("+ %.02f",$this->overTimeMonth),0,0,'R');
+            $this->pdf->Cell(20,3,sprintf("+%.02f",$this->overTimeMonth),0,0,'R');
         }
         elseif($this->overTimeMonth<0 || $this->overTimeMonth==0)
         {
@@ -369,7 +368,7 @@ class balances extends PageList
         if($this->overTimeLastMonth>0)
         {
             $this->pdf->Cell(30,3,utf8_decode(str_replace("<br/>"," ",Prado::localize('Last month')))." :",0,0,'L');
-            $this->pdf->Cell(20,3,sprintf("+ %.02f",$this->overTimeLastMonth),0,0,'R');
+            $this->pdf->Cell(20,3,sprintf("+%.02f",$this->overTimeLastMonth),0,0,'R');
         }
         elseif($this->overTimeLastMonth<0 || $this->overTimeLastMonth==0)
         {
@@ -388,15 +387,28 @@ class balances extends PageList
 
         $balances = bcadd($this->overTimeMonth , $this->overTimeLastMonth, 4);
 
+        $overtTimeActivityCounter = $this->employee->getActivityCounter($year, $this->Request['f4'], $this->employee->getDefaultOvertimeCounter() );
+
+        if($overtTimeActivityCounter != 0) {
+            $balances = bcadd($balances, $overtTimeActivityCounter, 4);
+        }
+
+
         if($balances>0)
         {
             $this->pdf->Cell(30,3,utf8_decode(Prado::localize('Balances'))." :",0,0,'L');
-            $this->pdf->Cell(20,3,sprintf("+%.02f",$balances),0,0,'R');
+            if($overtTimeActivityCounter)
+                $this->pdf->Cell(20,3,sprintf("* +%.02f",$balances),0,0,'R');
+            else
+                $this->pdf->Cell(20,3,sprintf("+%.02f",$balances),0,0,'R');
         }
         elseif($balances<0 || $balances==0)
         {
             $this->pdf->Cell(30,3,utf8_decode(Prado::localize('Balances'))." :",0,0,'L');
-            $this->pdf->Cell(20,3,sprintf(" %.02f",$balances),0,0,'R');
+            if($overtTimeActivityCounter)
+                $this->pdf->Cell(20,3,sprintf("* %.02f",$balances),0,0,'R');
+            else
+                $this->pdf->Cell(20,3,sprintf(" %.02f",$balances),0,0,'R');
         }
 
         $this->pdf->Cell(10,3,"",0,0,'R');
@@ -408,7 +420,7 @@ class balances extends PageList
         if($holidays['nbre']>0)
         {
             $this->pdf->Cell(55,3,utf8_decode(Prado::localize('Holidays for this month'))." :",0,0,'L');
-            $this->pdf->Cell(20,3,sprintf("- %.02f",$holidays['nbre']),0,1,'R');
+            $this->pdf->Cell(20,3,sprintf("-%.02f",$holidays['nbre']),0,1,'R');
         }
         elseif($holidays['nbre']==0)
         {
@@ -423,17 +435,24 @@ class balances extends PageList
         $this->pdf->Cell(20,3,"",0,0,'R');
         $this->pdf->Cell(10,3,"",0,0,'R');
 
+        $holidayActivityCounter = $this->employee->getActivityCounter($year, $this->Request['f4'], $this->employee->getDefaultHolidaysCounter() );
 
         $holidaysTotal = bcsub($this->holidaysLastMonth->Text, $holidays['nbre'],4);
         if($holidaysTotal>0)
         {
             $this->pdf->Cell(55,3,utf8_decode(Prado::localize('Total'))." :",0,0,'L');
-            $this->pdf->Cell(20,3,sprintf("+ %.02f",$holidaysTotal),0,1,'R');
+            if($holidayActivityCounter)
+                $this->pdf->Cell(20,3,sprintf("* +%.02f",$holidaysTotal),0,1,'R');
+            else
+                $this->pdf->Cell(20,3,sprintf("+%.02f",$holidaysTotal),0,1,'R');
         }
         elseif($holidaysTotal<0 || $holidaysTotal==0)
         {
             $this->pdf->Cell(55,3,utf8_decode(Prado::localize('Total'))." :",0,0,'L');
-            $this->pdf->Cell(20,3,sprintf("%.02f",$holidaysTotal),0,1,'R');
+            if($holidayActivityCounter)
+                $this->pdf->Cell(20,3,sprintf("* %.02f",$holidaysTotal),0,1,'R');
+            else
+                $this->pdf->Cell(20,3,sprintf("%.02f",$holidaysTotal),0,1,'R');
         }
 
 
@@ -464,7 +483,7 @@ class balances extends PageList
         foreach($this->TimeCode->DataSource as $v)
         {
             $this->pdf->Cell(50,3,utf8_decode($v['name'])." :",0,0,'L');
-            $this->pdf->Cell(20,3,$v['value'],0,1,'R');
+            $this->pdf->Cell(80,3,utf8_decode($v['value']),0,1,'R');
 
         }
 
@@ -743,6 +762,8 @@ class balances extends PageList
             $this->signed->Text = sprintf("%.02f",$doneMonth);
 
         $this->overTimeMonth = $overTimeMonth;
+
+
         if($overTimeMonth>0)
             $this->balanceForTheMonth->Text = sprintf("+%.02f",$overTimeMonth);
         elseif($overTimeMonth<0 || $overTimeMonth==0)
@@ -757,10 +778,24 @@ class balances extends PageList
 
         $solde = bcadd($overTimeLastMonth,$overTimeMonth,4);
 
-        if($solde>0)
-            $this->balances->Text = sprintf("+%.02f",$solde);
-        elseif($solde<0 || $solde==0)
-            $this->balances->Text = sprintf("%.02f",$solde);
+        $overtTimeActivityCounter = $this->employee->getActivityCounter($year, $month, $this->employee->getDefaultOvertimeCounter() );
+
+        if($overtTimeActivityCounter != 0) {
+            $solde = bcadd($solde, $overtTimeActivityCounter, 4);
+        }
+
+        if($solde>0) {
+            if($overtTimeActivityCounter != 0)
+                $this->balances->Text = sprintf("* +%.02f",$solde);
+            else
+                $this->balances->Text = sprintf("+%.02f",$solde);
+        }
+        elseif($solde<0 || $solde==0) {
+            if($overtTimeActivityCounter != 0)
+                $this->balances->Text = sprintf("* %.02f",$solde);
+            else
+                $this->balances->Text = sprintf("%.02f",$solde);
+        }
 
 
         //------------------------------- RESUME HOLIDAYS -----------------------------------------------------------------------------------------
@@ -772,10 +807,22 @@ class balances extends PageList
 
 
         $holidaysTotal = $this->employee->geHolidaystMonth($year,$month);
-        if($holidaysTotal>0)
-            $this->holidaysTotal->Text = sprintf("+%.02f",$holidaysTotal);
-        elseif($holidaysTotal<0 || $holidaysTotal==0)
-            $this->holidaysTotal->Text = sprintf("%.02f",$holidaysTotal);
+
+        $holidayActivityCounter = $this->employee->getActivityCounter($year, $month, $this->employee->getDefaultHolidaysCounter() );
+
+
+        if($holidaysTotal>0) {
+            if($holidayActivityCounter)
+                $this->holidaysTotal->Text = sprintf("* +%.02f",$holidaysTotal);
+            else
+                $this->holidaysTotal->Text = sprintf("+%.02f",$holidaysTotal);
+        }
+        elseif($holidaysTotal<0 || $holidaysTotal==0) {
+            if($holidayActivityCounter)
+                $this->holidaysTotal->Text = sprintf("* %.02f",$holidaysTotal);
+            else
+                $this->holidaysTotal->Text = sprintf("%.02f",$holidaysTotal);
+        }
 
         // get the holiday for this month
         $defaultHolidayTimeCode = $this->employee->getDefaultHolidaysCounter();
@@ -795,7 +842,9 @@ class balances extends PageList
         elseif($holidaysLastMonth<0 || $holidaysLastMonth==0)
             $this->holidaysLastMonth->Text = sprintf("%.02f",$holidaysLastMonth);
 
+
         $this->holidayForTheYear->Text = sprintf("%.02f",$this->holidaysLastMonth->Text - $balanceHolidaysLastYear);
+
 
 
        
@@ -840,6 +889,15 @@ class balances extends PageList
             if($v['nbre']>0) {
                 $tc[] = array('name'=>$v['name'], 'value'=>sprintf("%.02f $disp",$v['nbre']) );
             }
+        }
+
+
+        $ac = $this->employee->getAllActivityCounter($year,$month);
+
+        foreach($ac as $v) {
+            $disp = $v['formatDisplay'] == 'day' ? Prado::localize('days') : Prado::localize('hours');
+            $remark = $v['remark'];
+            $tc[] = array('name'=>$v['name'], 'value'=>sprintf("%.02f $disp / $remark",$v['nbre']) );
         }
 
         $this->TimeCode->DataSource=$tc;

@@ -7,6 +7,6 @@
     </modules>
     <parameters>
         <parameter id="computation" value="employee" Name="Employee classe" RightText=".php" />
-        <parameter id="computation2" value="digger" Name="Additional employee class" RightText=".php" />
+        <parameter id="computation2" value="" Name="Additional employee class" RightText=".php" />
     </parameters>
 </configuration>

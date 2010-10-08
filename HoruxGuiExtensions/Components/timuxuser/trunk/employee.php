@@ -512,10 +512,10 @@ class employee
 
             $res['done'] = bcadd ( $res['done'], bcmul($addRequest, 3600, 4), 4);
 
-            if( bcdiv($res['done'],3600,4) > $this->getDayTodo($day, $month, $year)) {
+            /*if( bcdiv($res['done'],3600,4) > $this->getDayTodo($day, $month, $year)) {
                 $res['done'] = $this->getDayTodo($day, $month, $year);
                 return $res;
-            }
+            }*/
         }
 
 
@@ -684,7 +684,7 @@ class employee
         if($timeCode)
         {
 
-            $cmd = $this->db->createCommand( "SELECT * FROM hr_timux_activity_counter WHERE year=$lastYear AND month=$lastMonth AND timecode_id=$timeCode AND user_id=".$this->employeeId );
+            $cmd = $this->db->createCommand( "SELECT * FROM hr_timux_activity_counter WHERE isClosedMonth=1 AND year=$lastYear AND month=$lastMonth AND timecode_id=$timeCode AND user_id=".$this->employeeId );
             $query = $cmd->query();
             $data = $query->read();
 
@@ -703,11 +703,28 @@ class employee
 
                 $lastOvertime = bcadd($lastOvertime, $overtime, 4);
 
+                $lastOvertime = bcadd($lastOvertime, $this->getActivityCounter($lastYear, $lastMonth, $timeCode), 4);
+
                 return $this->getOvertimeLastMonth($lastMonth, $lastYear, $lastOvertime);
             }
         }
 
         return 0;
+    }
+
+    public function getActivityCounter($year, $month, $timecode) {
+        $cmd = $this->db->createCommand( "SELECT ROUND(SUM(nbre), 4) AS n FROM hr_timux_activity_counter WHERE timecode_id=$timecode AND year=$year AND month=$month AND user_id={$this->employeeId}") ;
+        $query = $cmd->query();
+        $data = $query->read();
+
+        return $data['n'];
+    }
+
+
+    public function getAllActivityCounter($year, $month) {
+        $cmd = $this->db->createCommand( "SELECT ac.*, tc.formatDisplay, tc.name FROM hr_timux_activity_counter AS ac LEFT JOIN hr_timux_timecode AS tc ON tc.id=ac.timecode_id WHERE year=$year AND month=$month AND user_id={$this->employeeId}") ;
+        $query = $cmd->query();
+        return  $query->readAll();
     }
 
     /**
@@ -1084,12 +1101,12 @@ class employee
 
         if(!$timeCode ) return 0;
 
-        $cmd = $this->db->createCommand( "SELECT * FROM hr_timux_activity_counter WHERE year=$year AND month=$month AND timecode_id=$timeCode AND user_id=".$this->employeeId );
+        $cmd = $this->db->createCommand( "SELECT * FROM hr_timux_activity_counter WHERE isClosedMonth=1 AND year=$year AND month=$month AND timecode_id=$timeCode AND user_id=".$this->employeeId );
         $query = $cmd->query();
         $data = $query->read();
 
-        if($data) { // ok, the month is closed         
-            return $data['nbre'];
+        if($data) { // ok, the month is closed            
+            return $data['nbre'] ;
         } else {
 
             $cmd = $this->db->createCommand( "SELECT * FROM hr_timux_activity_counter WHERE year=0 AND month=0 AND timecode_id=$timeCode AND user_id=".$this->employeeId );
@@ -1098,7 +1115,7 @@ class employee
 
             $currentNbre = $data['nbre'];
 
-            $cmd = $this->db->createCommand( "SELECT month, year FROM hr_timux_activity_counter WHERE  timecode_id=$timeCode AND user_id=".$this->employeeId." ORDER BY year DESC, month DESC LIMIT 0,1" );
+            $cmd = $this->db->createCommand( "SELECT month, year FROM hr_timux_activity_counter WHERE isClosedMonth=1 AND  timecode_id=$timeCode AND user_id=".$this->employeeId." ORDER BY year DESC, month DESC LIMIT 0,1" );
             $query = $cmd->query();
             $data = $query->read();
             $lastCloseMonth = $data['month'];
@@ -1113,6 +1130,11 @@ class employee
                 for($i=$lastCloseMonth; $i<=$month; $i++) {
                     $nv = $this->getRequest($year, $i, $timeCode);
                     $nvt += $nv['nbre'];
+
+                    $holidayActivityCounter = $this->getActivityCounter($year, $i, $timeCode );
+
+                    $nvt -= $holidayActivityCounter;
+
                 }
 
                 return $currentNbre - $nvt;
@@ -1127,54 +1149,15 @@ class employee
                 for($i=$lastCloseMonth; $i<=$month; $i++) {
                     $nv = $this->getRequest($year, $i, $timeCode);
                     $nvt += $nv['nbre'];
+
+                    $holidayActivityCounter = $this->getActivityCounter($year, $i, $timeCode );
+
+                    $nvt -= $holidayActivityCounter;
                 }
 
                 return $currentNbre - $nvt;
             }
         }
-
-
-        /*if($oldM == 0 && $oldY == 0) {
-            $oldM = $month;
-            $oldY = $year;
-        }
-
-        //if it is existing in the activity counter take it, otherwise take the current.
-        $cmd = $this->db->createCommand( "SELECT * FROM hr_timux_activity_counter WHERE year=$year AND month=$month AND timecode_id=$timeCode AND user_id=".$this->employeeId );
-        $query = $cmd->query();
-        $data = $query->read();
-        if($data) {
-            if(!$lastYear) {
-                $lastYear = $this->geHolidaystMonth($year-1, 12, $oldM, $oldY, true);
-                return $data['nbre']-$lastYear;
-            } else {
-                return $data['nbre'];
-            }
-        } else {
-
-            $lastMonth = $month == 1 ? 12 : $month-1;
-            $lastYear = $month == 1 ? $year-1 : $year;
-
-            $isLastYear = $lastYear == $oldY-1 && $lastMonth == 12;
-
-            $nbre = $this->geHolidaystMonth($lastYear, $lastMonth, $oldM, $oldY,$isLastYear);
-
-            if($oldM != $month || $oldY != $year) {
-                $nv = $this->getRequest($year, $month, $this->getDefaultHolidaysCounter());
-                $nbre = $nbre + $nv['nbre'];
-            } else {
-                $cmd = $this->db->createCommand( "SELECT * FROM hr_timux_activity_counter WHERE year=0 AND month=0 AND timecode_id=$timeCode AND user_id=".$this->employeeId );
-                $query = $cmd->query();
-                $data = $query->read();
-                $nv = $data['nbre'];
-                $nbre = $nv - $nbre;
-
-            }
-            
-
-            return $nbre;
-        }*/
-
     }
 
     public function geHolidaystForTheYear($year, $month)
@@ -1391,6 +1374,9 @@ class employee
     public function getError($year=0, $month=0) {
         $result = array();
 
+        if($this->employeeId == '' || $this->employeeId == '')
+                return $result;
+
         $nbreOfDay = 0;
         // Get the current month
         if($year == 0 && $month == 0)
@@ -1557,7 +1543,7 @@ class employee
 
                         $holidaysCurrentMonth = bcsub($nvy, $holidays['nbre'],2);
 
-                        $cmd=$this->db->createCommand("INSERT hr_timux_activity_counter SET nbre=".$holidaysCurrentMonth.", year=$year, month=$month, user_id=".$this->employeeId.", timecode_id=".$tc['id']);
+                        $cmd=$this->db->createCommand("INSERT hr_timux_activity_counter SET  isClosedMonth=1, nbre=".$holidaysCurrentMonth.", year=$year, month=$month, user_id=".$this->employeeId.", timecode_id=".$tc['id']);
                         $cmd->execute();
 
                         // add the holidays for the new year
@@ -1590,7 +1576,7 @@ class employee
 
                         $overtime = bcadd($overTimeLastMonth,$overTimeMonth,4);
 
-                        $cmd=$this->db->createCommand("INSERT hr_timux_activity_counter SET nbre=".$overtime.", year=$year, month=$month, user_id=".$this->employeeId.", timecode_id=".$tc['id']);                        
+                        $cmd=$this->db->createCommand("INSERT hr_timux_activity_counter SET isClosedMonth=1, nbre=".$overtime.", year=$year, month=$month, user_id=".$this->employeeId.", timecode_id=".$tc['id']);
                         $cmd->execute();
 
                         $cmd=$this->db->createCommand("UPDATE hr_timux_activity_counter SET nbre=".$overtime." WHERE year=0 AND month=0 AND user_id=".$this->employeeId." AND timecode_id=".$tc['id']);

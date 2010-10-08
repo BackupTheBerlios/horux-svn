@@ -251,6 +251,7 @@
                     <com:TActiveLabel ID="lastMonth" />
                 </td>
             </tr>
+
             <tr>
                 <td valign="top" class="key">
                     <com:TLabel Text="<%[Balances]%>" />

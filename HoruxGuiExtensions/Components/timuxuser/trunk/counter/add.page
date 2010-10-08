@@ -2,7 +2,7 @@
     <%include Application.common.template.headerContent %>
     <com:TToolbarBox
         ID="tbb"
-        Title="<%[Modify an activity counter]%>"
+        Title="<%[Add an activity counter]%>"
         IconAsset="<%~ ../assets/counter.png %>"
         ApplyVisible="true"
         SaveVisible="true"
@@ -47,7 +47,7 @@
                             ValidationGroup="Group1"
                             ControlToValidate="date"
                             Text="<%[This field is required]%>"
-                            Display="Dynamic"/>
+                            Display="Dynamic"/>                        
                     </td>
                 </tr>
 

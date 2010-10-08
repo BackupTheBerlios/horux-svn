@@ -167,7 +167,7 @@ class counter extends PageList
         else
             $department = '';
 
-        $cmd=$this->db->createCommand("SELECT CONCAT(u.name, ' ' , u.firstname) AS employee, ac.nbre, CONCAT('[',tt.abbreviation,'] - ', tt.name) AS timecode, tt.formatDisplay,ac.id, d.name AS department, tt.useMinMax, tt.minHour, tt.maxHour FROM hr_timux_activity_counter AS ac LEFT JOIN hr_user AS u ON u.id=ac.user_id LEFT JOIN hr_timux_timecode AS tt ON tt.id=ac.timecode_id LEFT JOIN hr_department AS d ON d.id=u.department WHERE $employee $timecode $department  ac.year=0 AND ac.month=0 ORDER BY u.name,u.firstname,tt.abbreviation");
+        $cmd=$this->db->createCommand("SELECT CONCAT(u.name, ' ' , u.firstname) AS employee, ac.nbre, CONCAT('[',tt.abbreviation,'] - ', tt.name) AS timecode, tt.formatDisplay,ac.id, d.name AS department, tt.useMinMax, tt.minHour, tt.maxHour, ac.remark FROM hr_timux_activity_counter AS ac LEFT JOIN hr_user AS u ON u.id=ac.user_id LEFT JOIN hr_timux_timecode AS tt ON tt.id=ac.timecode_id LEFT JOIN hr_department AS d ON d.id=u.department WHERE $employee $timecode $department  ac.year>0 AND ac.month>0 AND isClosedMonth=0 ORDER BY u.name,u.firstname,tt.abbreviation");
 
         $data = $cmd->query();
         $data = $data->readAll();
@@ -305,6 +305,49 @@ class counter extends PageList
         }
 
         $pBack = array('koMsg'=>Prado::localize('Select one item'));
+        $this->Response->redirect($this->Service->constructUrl('components.timuxuser.counter.counter',$pBack));
+    }
+
+ public function onDelete($sender,$param)
+    {
+        $cbs = $this->findControlsByType("TActiveCheckBox");
+        $nDelete = 0;
+        $koMsg = '';
+        $cbChecked = 0;
+
+        foreach($cbs as $cb)
+        {
+            if( (bool)$cb->getChecked() && $cb->Value != "0")
+            $cbChecked++;
+        }
+
+        if($cbChecked==0)
+        {
+            $koMsg = Prado::localize('Select one item');
+        }
+        else
+        {
+            foreach($cbs as $cb)
+            {
+                if( (bool)$cb->getChecked() && $cb->Value != "0")
+                {
+                    $cmd=$this->db->createCommand("DELETE FROM hr_timux_activity_counter WHERE id =:id");
+                    $cmd->bindValue(":id",$cb->Value);
+                    if($cmd->execute())
+                    {
+                        $nDelete++;
+                    }
+                    //$this->log("Delete the key: ".$data['serialNumber']);
+
+                }
+            }
+        }
+
+        if($koMsg !== '')
+            $pBack = array('koMsg'=>$koMsg);
+        else
+            $pBack = array('okMsg'=>Prado::localize('{n} activity counter was deleted',array('n'=>$nDelete)));
+
         $this->Response->redirect($this->Service->constructUrl('components.timuxuser.counter.counter',$pBack));
     }
 }

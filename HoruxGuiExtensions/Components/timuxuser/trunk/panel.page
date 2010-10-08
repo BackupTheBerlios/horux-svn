@@ -65,8 +65,8 @@
 									<div style="float:left;">
 										<div class="icon">
 											<a href="<%= $this->Service->constructUrl('components.timuxuser.counter.counter') %>">
-												<img src="<%~ ./assets/counter.png %>" alt="<%[Leave counter]%>"  />
-												<span><%[Leave counter]%></span>
+												<img src="<%~ ./assets/counter.png %>" alt="<%[Activity counter]%>"  />
+												<span><%[Activity counter]%></span>
 											</a>
 										</div>
 									</div>
@@ -197,6 +197,19 @@
 											<a href="<%= $this->Service->constructUrl('components.timuxuser.load.load') %>">
 												<img src="<%~ ./assets/load.png %>" alt="<%[Load]%>"  />
 												<span><%[Load]%></span>
+											</a>
+										</div>
+									</div>
+									</prop:TrueTemplate>
+									</com:TConditional>
+
+									<com:TConditional Condition="$this->isAccess('components.timuxuser.report.report')">
+									<prop:TrueTemplate>
+									<div style="float:left;">
+										<div class="icon">
+											<a href="<%= $this->Service->constructUrl('components.timuxuser.report.report') %>">
+												<img src="<%~ ./assets/report.png %>" alt="<%[Report]%>"  />
+												<span><%[Report]%></span>
 											</a>
 										</div>
 									</div>
