@@ -11,8 +11,12 @@ CREATE TABLE IF NOT EXISTS `hr_timux_activity_counter` (
   `nbre` float NOT NULL,
   `year` int(11) NOT NULL DEFAULT '0',
   `month` int(11) NOT NULL DEFAULT '0',
+  `day` int(11) NOT NULL,
+  `isClosedMonth` smallint(1) NOT NULL,
+  `remark` varchar(100) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
 -- --------------------------------------------------------
 
 --
