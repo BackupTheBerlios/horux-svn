@@ -51,8 +51,8 @@ class SQL {
 
     const SQL_REMOVE_TAG_ATTRIBUTION = "DELETE FROM hr_keys_attribution WHERE id_key=:id";
 
-    const SQL_GET_PERSON = "SELECT id AS Value, CONCAT(name, ' ', firstname) AS Text FROM hr_user WHERE name<>'??'";
-    const SQL_GET_PERSON_SQLITE = "SELECT id AS Value, name || ' ' || firstname AS Text FROM hr_user WHERE name<>'??'";
+    const SQL_GET_PERSON = "SELECT id AS Value, CONCAT(name, ' ', firstname) AS Text FROM hr_user WHERE name<>'??' ORDER BY Text";
+    const SQL_GET_PERSON_SQLITE = "SELECT id AS Value, name || ' ' || firstname AS Text FROM hr_user WHERE name<>'??' ORDER BY Text";
 
     const SQL_GET_ATTRIBUTION = "SELECT pe.id FROM hr_user AS pe LEFT JOIN hr_keys_attribution AS ta ON ta.id_user=pe.id WHERE ta.id_key=:id";
 

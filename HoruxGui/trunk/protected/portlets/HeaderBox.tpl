@@ -6,7 +6,7 @@
             </prop:TrueTemplate>
         </com:TConditional>
 
-        <com:TLinkButton  ID="homeIcon" OnClick="onHome"><span class="homeIcon">&nbsp;</span></com:TLinkButton>
+        <com:THyperLink NavigateUrl="<%= $this->Service->constructUrl('controlPanel.ControlPanel') %>"><img class="shortcut" src="themes/letux/images/menu/icon-16-controlPanel.png" /> </com:THyperLink>
 
         <com:TRepeater ID="shortcut">
             <prop:ItemTemplate>
@@ -20,8 +20,8 @@
 
         <com:TConditional Condition="$this->isAccess('system.Alarms')">
             <prop:TrueTemplate>
-            <com:TActiveLinkButton ID="alarmLabelButton" CssClass="alarm" OnClick="onCheckAlaram" >
-                <com:TActiveLabel ID="alarmLabel"  Text="<%= $this->getAlarm() %>" />
+            <com:TActiveLinkButton Display="None" ID="alarmLabelButton" CssClass="alarm" OnClick="onCheckAlaram" >
+                <com:TActiveLabel ID="alarmLabel" Display="None"   Text="<%= $this->getAlarm() %>" />
             </com:TActiveLinkButton>
             </prop:TrueTemplate>
         </com:TConditional>

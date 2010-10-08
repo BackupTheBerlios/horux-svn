@@ -127,6 +127,7 @@ class HeaderBox extends Portlet {
             if( $user->getIsGuest() || $p == 'install.install' || $p == 'login.login' ) {
                 $this->setVisible(false);
             } else {
+                $this->onDispAlarm(null, null);
                 $this->generateShortcut($user->getUserId());
             }
         }
@@ -160,10 +161,6 @@ class HeaderBox extends Portlet {
         $this->shortcut->DataSource=$data;
         $this->shortcut->dataBind();
 
-    }
-
-    public function onHome($sender, $param) {
-        $this->Response->redirect($this->Service->constructUrl('controlPanel.ControlPanel'));
     }
 
     public function generateMenuDisabled() {
@@ -565,11 +562,6 @@ class HeaderBox extends Portlet {
         $data = $cmd->query();
         $data = $data->read();
 
-        /*if($data['n'] == 0)
-            $this->alarmLabelButton->setVisible(false);
-        else
-            $this->alarmLabelButton->setVisible(true);*/
-
         return $data['n'];
     }
 
@@ -584,12 +576,11 @@ class HeaderBox extends Portlet {
         $data = $cmd->query();
         $data = $data->read();
 
-        if($data['n'] == 0)
-            $this->alarmLabelButton->setVisible(false);
-        else
-            $this->alarmLabelButton->setVisible(true);
-
-        $this->alarmLabel->Text = $data['n'];
+        if($data['n']>0) {
+            $this->alarmLabel->Text = $data['n'];
+            $this->alarmLabelButton->setDisplay(TDisplayStyle::Dynamic);
+            $this->alarmLabel->setDisplay(TDisplayStyle::Dynamic);
+        }
     }
 
     public function onCheckAlaram($sender, $param) {
