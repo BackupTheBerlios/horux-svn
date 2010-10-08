@@ -65,6 +65,7 @@ private slots:
     void printPreview();
     void printSetup();
     void print();
+    void printAll();
     void exit();
     void save();
     void saveAs();
@@ -80,10 +81,12 @@ private slots:
     void sslErrors ( QNetworkReply * reply, const QList<QSslError> & errors );
     void sslErrors ( const QList<QSslError> & errors );
 
+    void nextRecord();
+    void backRecord();
 
 protected:
     void resizeEvent ( QResizeEvent * even);
-
+    void updatePrintPreview();
 
 private:
     Ui::HoruxDesigner *ui;
@@ -119,6 +122,8 @@ private:
     QMap<QString, QString> userValue;
 
     QSqlDatabase dbase;
+
+    QGraphicsScene *scenePreview;
 };
 
 #endif // HORUXDESIGNER_H

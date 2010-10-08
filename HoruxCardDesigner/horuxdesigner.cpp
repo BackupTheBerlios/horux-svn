@@ -22,6 +22,7 @@ HoruxDesigner::HoruxDesigner(QWidget *parent)
     textPage = NULL;
     pixmapPage = NULL;
     userCombo = NULL;
+    scenePreview = NULL;
 
     dbInformation = new QLabel("");
     statusBar()->addPermanentWidget(dbInformation);
@@ -42,6 +43,8 @@ HoruxDesigner::HoruxDesigner(QWidget *parent)
     createAction();
     createToolBar();
 
+    connect(ui->next, SIGNAL(clicked()), this, SLOT(nextRecord()));
+    connect(ui->back, SIGNAL(clicked()), this, SLOT(backRecord()));
 }
 
 HoruxDesigner::~HoruxDesigner()
@@ -117,7 +120,6 @@ void HoruxDesigner::loadData(QSplashScreen *sc)
     {
         if(dbase.open())
         {
-
 
         }
         else
@@ -260,6 +262,9 @@ void HoruxDesigner::createAction()
     connect(ui->actionPrint_setup, SIGNAL(triggered()),
             this, SLOT(printSetup()));
 
+    connect(ui->actionPrint_all_card, SIGNAL(triggered()),
+            this, SLOT(printAll()));
+
     connect(ui->actionExit, SIGNAL(triggered()),
             this, SLOT(exit()));
 
@@ -363,6 +368,8 @@ void HoruxDesigner::readSoapResponse()
 
     }
 
+    ui->step->setText("1/" + QString::number(userCombo->count()));
+
     if(isNew)
         ui->toolBar->addSeparator();
     ui->toolBar->addWidget(userCombo);
@@ -399,6 +406,8 @@ void HoruxDesigner::userChanged(int index)
         statusBar()->showMessage("The data are loading from Horux Gui...");
 
         transport.submitRequest(message, path+"/index.php?soap=horux&password=" + password + "&username=" + username);
+
+
     }
 }
 
@@ -419,6 +428,12 @@ void HoruxDesigner::readSoapResponseUser()
         const QtSoapType &field =  value[i];
         userValue[field[0].toString()] = field[1].toString();
     }
+
+    if(value.count() > 0 && userCombo && userCombo->count() > userCombo->currentIndex()+1 ) {
+        ui->next->setEnabled(true);
+    }    
+
+    userValue["__countIndex"] = QString::number(userCombo->currentIndex());
 
     QString name =  userValue["picture"];
 
@@ -452,6 +467,7 @@ void HoruxDesigner::readSoapResponseUser()
         pictureBuffer.open(QBuffer::ReadWrite);
     }
 
+    updatePrintPreview();
 }
 
 void HoruxDesigner::httpRequestDone ( bool error )
@@ -461,6 +477,9 @@ void HoruxDesigner::httpRequestDone ( bool error )
     {
 
         QMessageBox::information(this, tr("Picture error"),tr("Not able to load the user picture"));
+    }
+    else {
+        updatePrintPreview();
     }
 
 }
@@ -528,7 +547,7 @@ void HoruxDesigner::openRecentFile()
         currenFile.close();
         selectionChanged();
         setWindowTitle("Horux Card Designer - " + currenFile.fileName());
-
+        updatePrintPreview();
     }
 }
 
@@ -556,6 +575,8 @@ void HoruxDesigner::open()
         currenFile.close();
         selectionChanged();
         setWindowTitle("Horux Card Designer - " + currenFile.fileName());
+
+        updatePrintPreview();
     }
 }
 
@@ -800,6 +821,22 @@ void HoruxDesigner::print()
     }
 }
 
+void HoruxDesigner::printAll() {
+    scene->clearSelection ();
+
+    printer->setOrientation(( QPrinter::Orientation)scene->getCardItem()->getFormat());
+
+    printer->setPaperSize(scene->getCardItem()->getSizeMm(),QPrinter::Millimeter);
+    printer->setPageMargins(0,0,0,0,QPrinter::Millimeter);
+
+    QPointF cardPos = scene->getCardItem()->pos();
+
+    if (QPrintDialog(printer).exec() == QDialog::Accepted)
+    {
+
+    }
+
+}
 
 void HoruxDesigner::newCard()
 {
@@ -962,6 +999,7 @@ void HoruxDesigner::setParamView(QGraphicsItem *item)
                     connect(textPage->top, SIGNAL(valueChanged(QString)), textItem, SLOT(topChanged(const QString &)));
                     connect(textPage->left, SIGNAL(valueChanged(QString)), textItem, SLOT(leftChanged(const QString &)));
                     connect(textPage->alignment, SIGNAL(currentIndexChanged ( int )), textItem, SLOT(alignmentChanged(int)));
+                    connect(textPage, SIGNAL(changePrintCounter(int,int,int)), textItem, SLOT(setPrintCounter(int,int,int)));
 
                     textPage->name->setText(textItem->name);
 
@@ -983,8 +1021,10 @@ void HoruxDesigner::setParamView(QGraphicsItem *item)
                     textPage->alignment->setCurrentIndex(textItem->alignment);
 
                     textPage->source->setCurrentIndex( textItem->source );
-                    textPage->connectDataSource();
+                    textPage->setSource(textItem->source);
 
+                    textPage->connectDataSource();
+                    textPage->setPrintCounter(textItem->initialValue, textItem->increment, textItem->digits);
                 }
 
                 if(cardPage)
@@ -1136,6 +1176,8 @@ void HoruxDesigner::textInserted(QGraphicsTextItem *)
 {
     buttonGroup->button(InsertTextButton)->setChecked(false);
     scene->setMode(CardScene::MoveItem);
+
+
 }
 
 void HoruxDesigner::itemSelected(QGraphicsItem *)
@@ -1153,6 +1195,7 @@ void HoruxDesigner::selectionChanged()
         return;
     }
     setParamView(scene->selectedItems().at(0));
+
 
 }
 
@@ -1176,5 +1219,65 @@ void HoruxDesigner::itemMoved(QGraphicsItem *item)
                 pixmapPage->left->setValue(item->pos().x());
             }
         }
+    }
+
+    updatePrintPreview();
+}
+
+void HoruxDesigner::updatePrintPreview()
+{
+    QPointF cardPos = scene->getCardItem()->pos();
+
+    scene->getCardItem()->setPrintingMode(true, pictureBuffer, userValue);
+    scene->getCardItem()->setPos(0,0);
+    sceneScaleChanged("100%");
+    QRectF cardRect = scene->getCardItem()->boundingRect();
+
+    QPixmap pixmap(cardRect.size().toSize());
+    pixmap.fill( Qt::white );
+    QPainter painter(&pixmap);
+    painter.setRenderHint(QPainter::Antialiasing);
+    ui->graphicsView->render(&painter, QRectF(0,0,pixmap.size().width(),pixmap.size().height()), cardRect.toRect(), Qt::KeepAspectRatio );
+    painter.end();
+
+    if(scenePreview == NULL) {
+        scenePreview = new QGraphicsScene(this);
+        scenePreview->clear();
+        scenePreview->setBackgroundBrush(Qt::gray);
+        ui->graphicViewPreview->setScene(scenePreview);
+    }
+
+    scenePreview->addPixmap (pixmap);
+
+
+    scene->getCardItem()->setPrintingMode( false, pictureBuffer, userValue );
+    scene->getCardItem()->setPos(cardPos);
+    sceneScaleChanged(sceneScaleCombo->currentText());
+}
+
+void HoruxDesigner::nextRecord() {
+    int index = userCombo->currentIndex();
+
+    if(userCombo->count() > index+1) {
+        userCombo->setCurrentIndex(index+1);
+        ui->back->setEnabled(true);
+
+        if(index+2 == userCombo->count())
+           ui->next->setEnabled(false);
+
+        ui->step->setText(QString::number(userCombo->currentIndex()+1) + "/" + QString::number(userCombo->count()));
+    }
+
+}
+
+void HoruxDesigner::backRecord() {
+    int index = userCombo->currentIndex();
+
+    if(index-1 >= 0) {
+        userCombo->setCurrentIndex(index-1);
+
+        if(index-1 == 0)
+            ui->back->setEnabled(false);
+        ui->step->setText(QString::number(userCombo->currentIndex()+1) + "/" + QString::number(userCombo->count()));
     }
 }

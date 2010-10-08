@@ -234,20 +234,20 @@ void CardItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
 
     switch(cardSize)
     {
-    case CR80:
-        ratio = 85.6/53.98;
-        width = 195;
-        break;
-    case CR90:
-        ratio = 92.07/60.33;
-        width = 210;
-        break;
-    case CR79:
-        ratio = 83.90/52.10;
-        width = 191;
-        break;
-    default:
-        break;
+        case CR80:
+            ratio = 85.6/53.98;
+            width = 195;
+            break;
+        case CR90:
+            ratio = 92.07/60.33;
+            width = 210;
+            break;
+        case CR79:
+            ratio = 83.90/52.10;
+            width = 191;
+            break;
+        default:
+            break;
     }
 
     if(cardFormat == P)

@@ -51,7 +51,7 @@ public slots:
     void leftChanged(const QString &);
     void sourceChanged(const int &);
     void alignmentChanged(int);
-
+    void setPrintCounter(int, int, int);
 
 public:
     double rotation;
@@ -62,6 +62,10 @@ public:
     bool isPrinting;
     QString text;
 
+    // print counter
+    int initialValue;
+    int increment;
+    int digits;
 };
 
 #endif

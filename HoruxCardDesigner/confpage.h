@@ -37,20 +37,25 @@ public:
     TextPage(QWidget *parent = 0);
     void connectDataSource();
 
+public slots:
+    void setSource(int s);
+    void setPrintCounter(int, int, int);
 private slots:
     void setColor();
     void setFont();
-    void setSource(int s);
     void setDataSource();
 
 signals:
     void changeFont(const QFont &);
     void changeColor(const QColor &);
-
+    void changePrintCounter(int , int , int);
 
 public:
     QColor color;
     QFont font;
+    int initialValue;
+    int increment;
+    int digits;
 };
 
 #include "ui_pixmapsetting.h"

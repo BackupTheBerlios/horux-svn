@@ -127,6 +127,18 @@ void CardTextItem::setPrintingMode(bool printing, QMap<QString, QString>userData
         }
     }
 
+    if(source == 2 && isPrinting) {
+        text = toPlainText();
+
+        int counterValue = initialValue + (userData["__countIndex"].toInt() * increment);
+
+        setPlainText(QString::number(counterValue).rightJustified(digits,'0',false));
+    }
+
+    if(source == 2 && !isPrinting) {
+        setPlainText(text);
+    }
+
     if(source == 1 && !isPrinting)
     {
         setPlainText(text);
@@ -161,6 +173,18 @@ void CardTextItem::loadText(QDomElement text )
         if(node.toElement().tagName() == "source")
         {
             source = node.toElement().text().toInt();
+        }
+        if(node.toElement().tagName() == "initialValue")
+        {
+            initialValue = node.toElement().text().toInt();
+        }
+        if(node.toElement().tagName() == "increment")
+        {
+            increment = node.toElement().text().toInt();
+        }
+        if(node.toElement().tagName() == "digits")
+        {
+            digits = node.toElement().text().toInt();
         }
         if(node.toElement().tagName() == "color")
         {
@@ -237,6 +261,21 @@ QDomElement CardTextItem::getXmlItem(QDomDocument xml )
 
     newElement = xml.createElement( "source");
     text =  xml.createTextNode(QString::number(source));
+    newElement.appendChild(text);
+    textItem.appendChild(newElement);
+
+    newElement = xml.createElement( "initialValue");
+    text =  xml.createTextNode(QString::number(initialValue));
+    newElement.appendChild(text);
+    textItem.appendChild(newElement);
+
+    newElement = xml.createElement( "increment");
+    text =  xml.createTextNode(QString::number(increment));
+    newElement.appendChild(text);
+    textItem.appendChild(newElement);
+
+    newElement = xml.createElement( "digits");
+    text =  xml.createTextNode(QString::number(digits));
     newElement.appendChild(text);
     textItem.appendChild(newElement);
 
@@ -446,4 +485,10 @@ void CardTextItem::alignmentChanged(int align)
 
     doc->setDefaultTextOption(option);
     setDocument(doc);
+}
+
+void CardTextItem::setPrintCounter(int iv, int inc, int di) {
+    initialValue = iv;
+    increment = inc;
+    digits = di;
 }

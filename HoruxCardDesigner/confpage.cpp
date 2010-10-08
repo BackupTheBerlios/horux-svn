@@ -1,5 +1,6 @@
 #include <QtGui>
 #include "horuxfields.h"
+#include "printcounter.h"
 #include "confpage.h"
 
 CardPage::CardPage(QWidget *parent)
@@ -78,7 +79,7 @@ void TextPage::setDataSource() {
     switch(indexSource) {
         case 1: // database
             {
-                HoruxFields dlg;
+                HoruxFields dlg(this);
 
                 if(dlg.exec() == QDialog::Accepted)
                 {
@@ -88,6 +89,17 @@ void TextPage::setDataSource() {
             }
             break;
         case 2: // print counter
+            {
+                PrintCounter dlg(this);
+                dlg.setValues(initialValue,increment,digits);
+                if(dlg.exec() == QDialog::Accepted)
+                {
+                    initialValue = dlg.getInitialValue();
+                    increment =  dlg.getIncrement();
+                    digits = dlg.getDigits();
+                    emit changePrintCounter(dlg.getInitialValue(), dlg.getIncrement(), dlg.getDigits());
+                }
+            }
             break;
         case 3: // date and time
             break;
@@ -100,14 +112,6 @@ void TextPage::setSource(int s)
     if(s == 1 || s == 2 || s == 3)
     {
         dataSource->show();
-
-        /*HoruxFields dlg;
-
-        if(dlg.exec() == QDialog::Accepted)
-        {
-            name->setText(dlg.getDatasource());
-            name->setReadOnly(true);
-        }*/
     }
     else
     {
@@ -119,6 +123,12 @@ void TextPage::setSource(int s)
 void TextPage::connectDataSource()
 {
     connect(source, SIGNAL(currentIndexChanged ( int )), this, SLOT(setSource(int)));
+}
+
+void TextPage::setPrintCounter(int iv, int inc, int d) {
+    initialValue = iv;
+    increment = inc;
+    digits = d;
 }
 
 /*****************************************************************************************************************/

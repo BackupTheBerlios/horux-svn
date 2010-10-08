@@ -14,7 +14,7 @@
    <string>Horux Card Designer</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <layout class="QGridLayout" name="gridLayout_2">
+   <layout class="QGridLayout" name="gridLayout">
     <item row="0" column="0">
      <widget class="QToolBox" name="toolbox">
       <property name="minimumSize">
@@ -86,14 +86,108 @@ background-image: url(:/images/filigrane.png);</string>
      </widget>
     </item>
     <item row="0" column="2">
-     <widget class="QWidget" name="widget" native="true">
-      <property name="minimumSize">
-       <size>
-        <width>400</width>
-        <height>0</height>
-       </size>
-      </property>
-     </widget>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <widget class="QWidget" name="widget" native="true">
+        <property name="minimumSize">
+         <size>
+          <width>400</width>
+          <height>0</height>
+         </size>
+        </property>
+        <widget class="QWidget" name="widgetPreview" native="true">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>430</y>
+           <width>400</width>
+           <height>280</height>
+          </rect>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>280</height>
+          </size>
+         </property>
+         <widget class="QLabel" name="label">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>10</y>
+            <width>81</width>
+            <height>16</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Print preview</string>
+          </property>
+         </widget>
+         <widget class="QGraphicsView" name="graphicViewPreview">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>30</y>
+            <width>381</width>
+            <height>211</height>
+           </rect>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::NoFrame</enum>
+          </property>
+          <property name="verticalScrollBarPolicy">
+           <enum>Qt::ScrollBarAlwaysOff</enum>
+          </property>
+          <property name="horizontalScrollBarPolicy">
+           <enum>Qt::ScrollBarAlwaysOff</enum>
+          </property>
+         </widget>
+         <widget class="QWidget" name="layoutWidget">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>250</y>
+            <width>142</width>
+            <height>26</height>
+           </rect>
+          </property>
+          <layout class="QHBoxLayout" name="horizontalLayout">
+           <item>
+            <widget class="QToolButton" name="back">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="text">
+              <string>&lt;&lt;</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="step">
+             <property name="text">
+              <string>0/0</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QToolButton" name="next">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="text">
+              <string>&gt;&gt;</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </widget>
+       </widget>
+      </item>
+     </layout>
     </item>
    </layout>
   </widget>
@@ -154,6 +248,7 @@ background-image: url(:/images/filigrane.png);</string>
     <addaction name="actionPrint_setup"/>
     <addaction name="actionPrint_preview"/>
     <addaction name="actionPrint"/>
+    <addaction name="actionPrint_all_card"/>
     <addaction name="separator"/>
     <addaction name="actionExit"/>
    </widget>
@@ -252,7 +347,7 @@ background-image: url(:/images/filigrane.png);</string>
      <normaloff>:/images/agt_print.png</normaloff>:/images/agt_print.png</iconset>
    </property>
    <property name="text">
-    <string>Print...</string>
+    <string>Print current...</string>
    </property>
   </action>
   <action name="actionExit">
@@ -395,6 +490,11 @@ background-image: url(:/images/filigrane.png);</string>
   <action name="actionDassa">
    <property name="text">
     <string>dassa</string>
+   </property>
+  </action>
+  <action name="actionPrint_all_card">
+   <property name="text">
+    <string>Print all cards...</string>
    </property>
   </action>
  </widget>

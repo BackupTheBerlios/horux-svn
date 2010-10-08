@@ -17,7 +17,8 @@ SOURCES += main.cpp \
     pixmapitem.cpp \
     horuxdialog.cpp \
     horuxfields.cpp \
-    databaseconnection.cpp
+    databaseconnection.cpp \
+    printcounter.cpp
 HEADERS += horuxdesigner.h \
     cardscene.h \
     carditemtext.h \
@@ -27,7 +28,8 @@ HEADERS += horuxdesigner.h \
     pixmapitem.h \
     horuxdialog.h \
     horuxfields.h \
-    databaseconnection.h
+    databaseconnection.h \
+    printcounter.h
 FORMS += horuxdesigner.ui \
     textsetting.ui \
     cardsetting.ui \
