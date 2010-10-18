@@ -411,17 +411,62 @@ void CGAT6000::run()
     {
         QString t =  gat->dynamicCall("GetUniqueNumber()").toString();
 
-        if(t!= keyTmp)
-        {
-            unsigned long long sn = t.toLongLong();
-            key = QString::number(sn,16);
-            key = key.rightJustified(14, '0');
-            key = key.left(8);
-            key = QString::number(key.toLong(&ok,16));
-            keyTmp = t;
-            if(t!="")
-                handleMsg();
+        t = QString::number( t.toULongLong(&ok), 16 ).rightJustified(14, '0');
+
+        QByteArray msg;
+
+        for(int i=0; i<t.length(); i++) {
+            QString b = t.mid(i,2);
+
+            msg += b.toShort(&ok,16);
+
+            i++;
         }
+        if(t!= keyTmp && t!="00000000000000" && t!="")
+        {
+            qDebug() << keyTmp << " / " << t;
+            QString s1 = "";
+            QString s = "";
+
+            if(snFormat.contains("D") || snFormat.contains("X")) {
+                for(int i=0; i<=6; i++) {
+                 if(snFormat.at(i) != '_') // ignore
+                     s += s1.sprintf("%02X", (unsigned char)msg.at(i));
+                }
+            }
+
+            if(snFormat.contains("d") || snFormat.contains("x")) {
+                for(int i=6; i>=0; i--) {
+                 if(snFormat.at(i) != '_') // ignore
+                     s += s1.sprintf("%02X", (unsigned char)msg.at(i));
+                }
+            }
+
+            unsigned long long sn = 0;
+
+            sn = s.toULongLong(&ok,16);
+
+            if(snFormat.contains("d") || snFormat.contains("D")) {
+                if(key != QString::number(sn))
+                {
+                     key = QString::number(sn);
+                     keyTmp = t;
+                     handleKey();
+                }
+            } else {
+                if(key != QString::number(sn,16).toUpper())
+                {
+                    key = QString::number(sn, 16).toUpper();
+                    keyTmp = t;
+                    handleKey();
+                }
+
+            }
+        } else {
+            keyTmp = t;
+            key = "";
+        }
+
 
         QThread::msleep(100);
     }

@@ -29,8 +29,8 @@ FORMS += settings.ui
 LIBS += ../qextserialport/build/libqextserialport.a
 LIBS += -lhid
 win32:LIBS += -lsetupapi
-CONFIG += debug
-CONFIG -= release
+CONFIG -= debug
+CONFIG += release
 QT += xml \
     network
 win32:CONFIG += qaxcontainer
