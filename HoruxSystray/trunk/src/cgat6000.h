@@ -42,6 +42,7 @@ public:
      void close(bool isError=false);
      void setFID(QString _fid);
      void isBeep(bool flag);
+     void setSNFormat(QString format);
 
 protected:
     virtual void handleMsg();
@@ -77,6 +78,7 @@ private:
     QString fid;
     bool isStarted;
     bool beep;
+    QString snFormat;
 };
 
 #endif // CGAT5250B_H

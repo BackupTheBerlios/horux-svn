@@ -70,6 +70,7 @@ CHoruxGui::CHoruxGui(QWidget *parent)
     techComboBox->setCurrentIndex(settings.value("tech", 0).toInt());
     fid->setText( settings.value("fid", "").toString());
     isBeep->setChecked( settings.value("beep", true).toBool());
+    snFormat->setText(settings.value("snFormat", "").toString());
 
     al_usb_reader = NULL;
     al_serial_reader = NULL;
@@ -120,6 +121,7 @@ void CHoruxGui::openCom()
   int techno = settings.value("tech", 0).toInt();
   QString fid = settings.value("fid", "9999").toString();
   bool beep = settings.value("beep", true).toBool();
+  QString snFormat = settings.value("snFormat", "").toString();
 
   switch( techno )
   {
@@ -147,6 +149,7 @@ void CHoruxGui::openCom()
           connect(gat6000_serial_reader, SIGNAL(keyDetected(QByteArray)), this, SLOT(keyDetected(QByteArray)));
           gat6000_serial_reader->setFID(fid);
           gat6000_serial_reader->open();
+          gat6000_serial_reader->setSNFormat(snFormat);
 
           #if defined(Q_OS_WIN)
           gat6000_serial_reader->start();
@@ -182,6 +185,7 @@ void CHoruxGui::on_apply_clicked()
   settings.setValue ( "tech", techComboBox->currentIndex() );
   settings.setValue ( "fid", fid->text() );
   settings.setValue ( "beep", isBeep->isChecked() );
+  settings.setValue ( "snFormat", snFormat->text() );
 
   if(gat6000_serial_reader)
   {
@@ -222,6 +226,7 @@ void CHoruxGui::on_save_clicked()
   settings.setValue ( "tech", techComboBox->currentText() );
   settings.setValue ( "fid", fid->text() );
   settings.setValue ( "beep", isBeep->isChecked() );
+  settings.setValue ( "snFormat", snFormat->text() );
 
   if(gat6000_serial_reader)
   {
@@ -329,7 +334,7 @@ void CHoruxGui::sendKey(QString key)
 		QString program = "xvkbd";
 		QStringList arguments;
 	
-		//! add extra char to be detected ba javascript
+                //! add extra char to be detected by javascript
 		QString keyToSend = key;
 	
 		arguments << "-text" << ("##" + keyToSend + "##");
@@ -353,7 +358,7 @@ void CHoruxGui::currentIndexChanged ( int index )
         fid->setEnabled(false);
     }
 
-    if(index == 2 || index == 0 || index == 1)
+    if(index == 2 || index == 0 || index == 1 || index == 3)
     {
         customPort->setEnabled(true);
     }

@@ -256,16 +256,42 @@ void CGAT6000::handleMsg()
                    {
 
                        bool ok;
-                       QString s1;
-                       QString s = s1.sprintf("%02X%02X%02X%02X", (unsigned char)msg.at(6), (unsigned char)msg.at(5), (unsigned char)msg.at(4), (unsigned char)msg.at(3));
+                       QString s1 = "";
+                       QString s = "";
 
-                       unsigned long long sn = s1.toLongLong(&ok,16);
 
-                       if(key != QString::number(sn))
-                       {
-                            key = QString::number(sn);
+                       if(snFormat.contains("D") || snFormat.contains("X")) {
+                           for(int i=3; i<=9; i++) {
+                            if(snFormat.at(i-3) != '_') // ignore
+                                s += s1.sprintf("%02X", (unsigned char)msg.at(i));
+                           }
+                       }
 
-                            handleKey();
+                       if(snFormat.contains("d") || snFormat.contains("x")) {
+                           for(int i=9; i>=3; i--) {
+                            if(snFormat.at(i-3) != '_') // ignore
+                                s += s1.sprintf("%02X", (unsigned char)msg.at(i));
+                           }
+                       }
+
+                       unsigned long long sn = 0;
+
+                       sn = s.toULongLong(&ok,16);
+
+                       if(snFormat.contains("d") || snFormat.contains("D")) {
+                           if(key != QString::number(sn))
+                           {
+                                key = QString::number(sn);
+                                handleKey();
+                           }
+                       } else {
+                           if(key != QString::number(sn,16).toUpper())
+                           {
+                               key = QString::number(sn, 16).toUpper();
+
+                                handleKey();
+                           }
+
                        }
                    }
                    else
@@ -415,3 +441,13 @@ void CGAT6000::close(bool )
 
 }
 
+/**
+  format X => hexa
+  format x => hexa inverted
+  format D => decimal
+  format d => decimal inverted
+*/
+void CGAT6000::setSNFormat(QString format)
+{
+    snFormat = format.rightJustified(7, '_');
+}

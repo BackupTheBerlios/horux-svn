@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>258</height>
+    <height>290</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -40,6 +40,13 @@
          <widget class="QLabel" name="label_4">
           <property name="text">
            <string>FID</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_6">
+          <property name="text">
+           <string>SN Format</string>
           </property>
          </widget>
         </item>
@@ -89,6 +96,9 @@
          <widget class="QLineEdit" name="fid"/>
         </item>
         <item>
+         <widget class="QLineEdit" name="snFormat"/>
+        </item>
+        <item>
          <widget class="QCheckBox" name="isBeep">
           <property name="text">
            <string/>
@@ -105,15 +115,15 @@
      <property name="title">
       <string>Test</string>
      </property>
-     <layout class="QHBoxLayout">
-      <item>
+     <layout class="QGridLayout" name="gridLayout">
+      <item row="0" column="0">
        <widget class="QLabel" name="label_3">
         <property name="text">
          <string>SerialNumber</string>
         </property>
        </widget>
       </item>
-      <item>
+      <item row="0" column="1">
        <widget class="QLineEdit" name="lineEdit"/>
       </item>
      </layout>
