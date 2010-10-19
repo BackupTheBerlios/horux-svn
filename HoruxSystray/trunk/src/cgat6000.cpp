@@ -63,8 +63,10 @@ void CGAT6000::open()
         gat->dynamicCall("LEDGreen(int)",1000);
         gat->dynamicCall("LEDRed(int)",1000);
     }
-    else
+    else {
         qDebug() << "Not ready";
+        emit deviceError();
+    }
 
 #elif defined(Q_WS_X11)
     QSettings settings ( "Horux", "HoruxGuiSys" );
