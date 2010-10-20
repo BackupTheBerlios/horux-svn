@@ -568,18 +568,20 @@ class HeaderBox extends Portlet {
     function onDispAlarm($sender, $param) {
         if(get_class($this->page) == 'install') return true;
 
-        $app = $this->getApplication();
-        $db = $app->getModule('horuxDb')->DbConnection;
+        if($this->isAccess('system.Alarms')) {
+            $app = $this->getApplication();
+            $db = $app->getModule('horuxDb')->DbConnection;
 
-        $sql = "SELECT COUNT(*) AS n FROM hr_alarms WHERE checked=0";
-        $cmd=$db->createCommand($sql);
-        $data = $cmd->query();
-        $data = $data->read();
+            $sql = "SELECT COUNT(*) AS n FROM hr_alarms WHERE checked=0";
+            $cmd=$db->createCommand($sql);
+            $data = $cmd->query();
+            $data = $data->read();
 
-        if($data['n']>0) {
-            $this->alarmLabel->Text = $data['n'];
-            $this->alarmLabelButton->setDisplay(TDisplayStyle::Dynamic);
-            $this->alarmLabel->setDisplay(TDisplayStyle::Dynamic);
+            if($data['n']>0) {
+                $this->alarmLabel->Text = $data['n'];
+                $this->alarmLabelButton->setDisplay(TDisplayStyle::Dynamic);
+                $this->alarmLabel->setDisplay(TDisplayStyle::Dynamic);
+            }
         }
     }
 
