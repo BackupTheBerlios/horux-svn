@@ -30,6 +30,8 @@ class employee
     // id of the employee
     protected $employeeId = NULL;
 
+    protected $cache = array();
+
     function __construct($userId) {
         $this->db = Prado::getApplication()->getModule('horuxDb')->DbConnection;
         $this->db->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY,true);
@@ -166,11 +168,20 @@ class employee
      */
     public function getWorkingTime($day, $month, $year)
     {
-        $date = $year."-".$month."-".date('t', mktime(0,0,0,$month,$day,$year));
+        $date = $year."-".sprintf("%02d",$month)."-".date('t', mktime(0,0,0,$month,$day,$year));
+
+        if(isset($this->cache['workingTime'][$date])) {
+            return $this->cache['workingTime'][$date];
+        }
+
         $cmd = $this->db->createCommand( "SELECT * FROM hr_timux_workingtime WHERE user_id=".$this->employeeId." AND startDate<='".$date."' ORDER BY startDate DESC" );
         $query = $cmd->query();
-        if($query)
-            return $query->read();
+
+
+        if($query) {
+            $this->cache['workingTime'][$date] =  $query->read();
+            return $this->cache['workingTime'][$date];
+        }
         else
             return false;
 
@@ -340,9 +351,10 @@ class employee
     /*
      * Get the occupancy of the employee
      */
-    public function getPercentage($day, $mont, $year)
+    public function getPercentage($day, $month, $year)
     {
         $wt = $this->getWorkingTime($day, $month, $year);
+
         if($wt)
             return $wt['workingPercent'];
         else
