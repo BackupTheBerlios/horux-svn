@@ -167,7 +167,7 @@
                     <span onmouseover="Tip('<%[Change the time counter]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)">
                         <com:THyperLink
                             NavigateUrl="<%= $this->Service->constructUrl('components.timuxuser.counter.counter',array('id'=>$this->NamingContainer->DataItem['user_id'])) %>"
-                            ImageUrl="<%~ ../assets/icon-16-panel.png %>"
+                            ImageUrl="<%~ ../assets/icon-16-counter.png %>"
                             Style="border:0px"
                             Text="<%[Change the time counter]%>"
                             />
