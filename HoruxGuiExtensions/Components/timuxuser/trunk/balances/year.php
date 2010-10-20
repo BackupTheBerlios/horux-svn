@@ -404,7 +404,10 @@ class year extends PageList
 
 
             if($HoursMonth>0) {
-                $months[$month]['hours100'] = sprintf("%.02f",bcdiv(bcmul($HoursMonth, 100.0,4),$months[$month]['occupancy'],4),4);
+                if($months[$month]['occupancy']>0)
+                    $months[$month]['hours100'] = sprintf("%.02f",bcdiv(bcmul($HoursMonth, 100.0,4),$months[$month]['occupancy'],4),4);
+                else
+                    $months[$month]['hours100'] = sprintf("%.02f", 0);
                 
                 $totalYearHours100 = bcadd($months[$month]['hours100'], $totalYearHours100,2);
             }
