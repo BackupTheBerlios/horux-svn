@@ -75,25 +75,17 @@ class panel extends Page
             }
             elseif ($data[$i]['timecodeId'] == $defH) {
 
-                $lastYear = $this->employee->geHolidaystMonth(date('Y')-1,12);
+                if(date('n') == 1)
+                    $hLastMonth = $this->employee->geHolidaystMonth(date('Y')-1, 12);
+                else
+                    $hLastMonth = $this->employee->geHolidaystMonth(date('Y'), date('n')-1);
 
-                $nvy = $this->employee->geHolidaystMonth(date('Y'), date('n'));
-                for($month=1; $month<date('n');$month++)
-                {
-                    $nv = $this->employee->getRequest(date('Y'), $month, $this->employee->getDefaultHolidaysCounter());
-                    $nvy -= $nv['nbre'];
-                }
-                $nvy = bcsub($nvy, $lastYear,4);
+                $hcurrentMonth = $this->employee->geHolidaystMonth(date('Y'), date('n'));
 
-                $holidays = $this->employee->getRequest(date('Y'),date('n'),$defH);
 
-                $holidaysLastMonth = $nvy + $lastYear;
-
-                $holidaysCurrentMonth = bcsub($holidaysLastMonth, $holidays['nbre'],2);
-
-                $data[$i]['nbre'] = $holidaysLastMonth;
+                $data[$i]['nbre'] = $hLastMonth;
                 
-                $data[$i]['nbre2'] = $holidaysCurrentMonth;
+                $data[$i]['nbre2'] = $hcurrentMonth;
             } else {
                 $request = $this->employee->getRequest(date('Y'), date('n'),$data[$i]['timecodeId']);
 
