@@ -369,10 +369,10 @@ bool CVeloPark::checkAccess(QMap<QString, QVariant> params, bool emitAction)
 
                                 if(idsList.contains(params["deviceId"].toString()))
                                 {
-                                    QSqlQuery querySubType("SELECT * FROM hr_vp_subscription WHERE id=" + querySub.value(2).toString());
-                                    querySubType.next();
+                                    /*QSqlQuery querySubType("SELECT * FROM hr_vp_subscription WHERE id=" + querySub.value(2).toString());
+                                    querySubType.next();*/
 
-                                    int solde = querySubType.value(4).toInt() - querySub.value(5).toInt();
+                                    int solde = /*querySubType.value(4).toInt() -*/ querySub.value(5).toInt();
                                     QString soldeStr = QString::number(solde);
 
                                     QString message = queryMessage.value(8).toString();
@@ -479,10 +479,10 @@ bool CVeloPark::checkAccess(QMap<QString, QVariant> params, bool emitAction)
 
                                             if(idsList.contains(params["deviceId"].toString()))
                                             {
-                                                QSqlQuery querySubType("SELECT * FROM hr_vp_subscription WHERE id=" + querySub.value(2).toString());
-                                                querySubType.next();
+                                               /* QSqlQuery querySubType("SELECT * FROM hr_vp_subscription WHERE id=" + querySub.value(2).toString());
+                                                querySubType.next();*/
             
-                                                int solde = querySubType.value(4).toInt() - querySub.value(5).toInt();
+                                                int solde = /*querySubType.value(4).toInt() -*/ querySub.value(5).toInt();
                                                 QString soldeStr = QString::number(solde);
                                                 
                                                 QString message = queryMessage.value(8).toString();
@@ -628,10 +628,10 @@ bool CVeloPark::checkAccess(QMap<QString, QVariant> params, bool emitAction)
 
                                     if(idsList.contains(params["deviceId"].toString()))
                                     {
-                                        QSqlQuery querySubType("SELECT * FROM hr_vp_subscription WHERE id=" + querySub2.value(2).toString());
-                                        querySubType.next();
+                                        /*QSqlQuery querySubType("SELECT * FROM hr_vp_subscription WHERE id=" + querySub2.value(2).toString());
+                                        querySubType.next();*/
 
-                                        int solde = querySubType.value(4).toInt() - querySub2.value(5).toInt();
+                                        int solde = /*querySubType.value(4).toInt() -*/ querySub2.value(5).toInt();
                                         QString soldeStr = QString::number(solde);
 
                                         QString message = queryMessage.value(8).toString();
@@ -868,7 +868,7 @@ void CVeloPark::displayMessage(QString type, QString deviceId)
       }
 
       QString xml = CXmlFactory::deviceAction( query.value(2).toString(), "displayMessage", param);
-  
+
       emit accessAction(xml);
     }
   }
