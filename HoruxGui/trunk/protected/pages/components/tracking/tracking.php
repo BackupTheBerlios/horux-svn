@@ -171,7 +171,7 @@ class tracking extends PageList
 
             }
 
-            $cmd=$this->db->createCommand("SELECT t.id, u.name, u.firstName, t.date, t.time, d.name AS device, t.id_comment, k.identificator, t.is_access FROM hr_tracking AS t LEFT JOIN hr_user AS u ON u.id = t.id_user LEFT JOIN hr_device AS d ON d.id=t.id_entry LEFT JOIN hr_keys AS k ON k.serialNumber=t.key WHERE $date $entry $status $user d.name!='' ORDER BY t.date DESC, t.time DESC LIMIT 0,1000");
+            $cmd=$this->db->createCommand("SELECT t.id, u.name, u.firstName, t.date, t.time, d.name AS device, t.id_comment, k.identificator, t.is_access, t.key FROM hr_tracking AS t LEFT JOIN hr_user AS u ON u.id = t.id_user LEFT JOIN hr_device AS d ON d.id=t.id_entry LEFT JOIN hr_keys AS k ON k.serialNumber=t.key WHERE $date $entry $status $user d.name!='' ORDER BY t.date DESC, t.time DESC LIMIT 0,1000");
             $data = $cmd->query();
             $data = $data->readAll();
 
@@ -343,9 +343,15 @@ class tracking extends PageList
                 $item->CComment->Comment->Text = $accessMessage[$i];
 
                 if($item->DataItem['is_access'] == 1)
-                $item->CComment->Comment->ForeColor = "green";
+                    $item->CComment->Comment->ForeColor = "green";
                 else
-                $item->CComment->Comment->ForeColor = "red";
+                    $item->CComment->Comment->ForeColor = "red";
+
+                if($item->DataItem['identicator'] == '') {
+                    $item->KKey->Key->Text = $item->DataItem['key'];
+                } else {
+                    $item->KKey->Key->Text = $item->DataItem['identicator'];
+                }
             }
         }
 

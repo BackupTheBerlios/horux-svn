@@ -109,7 +109,7 @@
                 DataField="device"
                 />
 
-            <com:TTemplateColumn HeaderText="Comment" ID="CComment">
+            <com:TTemplateColumn HeaderText="<%[Comment]%>" ID="CComment">
                 <prop:ItemTemplate>
                     <com:TLabel
                         ForeColor = "red"
@@ -118,10 +118,13 @@
                 </prop:ItemTemplate>
             </com:TTemplateColumn>
 
-            <com:TBoundColumn
-                HeaderText="<%[Key]%>"
-                DataField="identificator"
-                />
+            <com:TTemplateColumn HeaderText="<%[Key]%>" ID="KKey">
+                <prop:ItemTemplate>
+                    <com:TLabel
+                        ID="Key"
+                        />
+                </prop:ItemTemplate>
+            </com:TTemplateColumn>
 
 
         </com:TDataGrid>
