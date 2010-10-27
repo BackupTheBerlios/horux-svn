@@ -44,18 +44,22 @@ void PixmapItem::setPrintingMode(bool printing, QBuffer &picture)
 
     if(source == 1 && !printing)
     {
-        QSettings settings("Letux", "HoruxCardDesigner", this);
+        if(!pictureBufferUnknown.isOpen()) {
+            QSettings settings("Letux", "HoruxCardDesigner", this);
 
-        QString host = settings.value("horux", "localhost").toString();
-        QString path = settings.value("path", "").toString();
-        bool ssl = settings.value("ssl", "").toBool();
-        pictureBuffer.reset();
-        pictureHttp.setHost(host, ssl ? QHttp::ConnectionModeHttps : QHttp::ConnectionModeHttp );
-        if(ssl)
-        {
-            connect(&pictureHttp,SIGNAL(sslErrors( const QList<QSslError> & )), this, SLOT(sslErrors(QList<QSslError>)));
+            QString host = settings.value("horux", "localhost").toString();
+            QString path = settings.value("path", "").toString();
+            bool ssl = settings.value("ssl", "").toBool();
+            pictureBuffer.reset();
+            pictureHttp.setHost(host, ssl ? QHttp::ConnectionModeHttps : QHttp::ConnectionModeHttp );
+            if(ssl)
+            {
+                connect(&pictureHttp,SIGNAL(sslErrors( const QList<QSslError> & )), this, SLOT(sslErrors(QList<QSslError>)));
+            }
+            pictureHttp.get(path + "/pictures/unknown.jpg", &pictureBufferUnknown);
+        } else {
+            setHoruxPixmap(pictureBufferUnknown.data());
         }
-        pictureHttp.get(path + "/pictures/unknown.jpg", &pictureBuffer);
     }
 }
 
@@ -158,6 +162,11 @@ QDomElement PixmapItem::getXmlItem(QDomDocument xml )
     newElement.appendChild(text);
     textItem.appendChild(newElement);
 
+    newElement = xml.createElement( "zValue");
+    text =  xml.createTextNode(QString::number( zValue() ));
+    newElement.appendChild(text);
+    textItem.appendChild(newElement);
+
     newElement = xml.createElement( "width");
     text =  xml.createTextNode(QString::number(boundingRect().width()));
     newElement.appendChild(text);
@@ -177,12 +186,12 @@ void PixmapItem::setHoruxPixmap(QByteArray pict)
     if(pict.size() > 0)
     {
         pHorux.loadFromData(pict);
-        pHorux = pHorux.scaledToHeight(size.height(),Qt::SmoothTransformation);
+        pHorux = pHorux.scaledToWidth(size.width(),Qt::SmoothTransformation);
 
     }
     else
     {
-        pHorux = pHorux.scaledToHeight(0,Qt::SmoothTransformation);
+        pHorux = pHorux.scaledToWidth(0,Qt::SmoothTransformation);
     }
 
     setPixmap(pHorux);
@@ -218,6 +227,7 @@ void PixmapItem::loadPixmap(QDomElement text )
 
     qreal posX = 0;
     qreal posY = 0;
+    qreal zValue = 0;
 
     while(!node.isNull())
     {
@@ -241,6 +251,10 @@ void PixmapItem::loadPixmap(QDomElement text )
         {
             posY = node.toElement().text().toInt();
         }
+        if(node.toElement().tagName() == "zValue")
+        {
+            zValue = node.toElement().text().toFloat();
+        }
 
         if(node.toElement().tagName() == "width")
         {
@@ -254,6 +268,9 @@ void PixmapItem::loadPixmap(QDomElement text )
 
         node = node.nextSibling();
     }
+
+    setZValue(zValue);
+
     if(source==0)
     {
         QPixmap p(file);
@@ -286,7 +303,7 @@ void PixmapItem::loadPixmap(QDomElement text )
             connect(&pictureHttp,SIGNAL(sslErrors( const QList<QSslError> & )), this, SLOT(sslErrors(QList<QSslError>)));
         }
 
-        pictureHttp.get(path + "/pictures/unknown.jpg", &pictureBuffer);
+        pictureHttp.get(path + "/pictures/unknown.jpg", &pictureBufferUnknown);
 
     }
 }
@@ -359,5 +376,5 @@ void PixmapItem::httpRequestDone ( bool  )
     if(spinner)
         spinner->deleteLater();
     spinner = 0;
-    setHoruxPixmap(pictureBuffer.data());
+    setHoruxPixmap(pictureBufferUnknown.data());
 }

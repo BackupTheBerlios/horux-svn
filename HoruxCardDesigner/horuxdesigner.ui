@@ -215,18 +215,18 @@ background-image: url(:/images/filigrane.png);</string>
     <addaction name="actionPaste"/>
     <addaction name="actionDelete"/>
    </widget>
-   <widget class="QMenu" name="menuFormat">
-    <property name="title">
-     <string>Format</string>
-    </property>
-    <addaction name="actionBring_to_front"/>
-    <addaction name="actionSend_to_back"/>
-   </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
      <string>Help</string>
     </property>
     <addaction name="actionAbout"/>
+   </widget>
+   <widget class="QMenu" name="menuFormat">
+    <property name="title">
+     <string>Item</string>
+    </property>
+    <addaction name="actionBring_to_front"/>
+    <addaction name="actionSend_to_back"/>
    </widget>
    <widget class="QMenu" name="menuFile">
     <property name="title">
@@ -307,6 +307,9 @@ background-image: url(:/images/filigrane.png);</string>
    </property>
   </action>
   <action name="actionSave">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="icon">
     <iconset resource="ressource.qrc">
      <normaloff>:/images/filesave.png</normaloff>:/images/filesave.png</iconset>

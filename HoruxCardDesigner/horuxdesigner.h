@@ -84,9 +84,12 @@ private slots:
     void nextRecord();
     void backRecord();
 
+    void mouseRelease();
+
 protected:
     void resizeEvent ( QResizeEvent * even);
     void updatePrintPreview();
+    void fileChange();
 
 private:
     Ui::HoruxDesigner *ui;
@@ -94,6 +97,7 @@ private:
     QButtonGroup *buttonGroup;
 
     CardScene *scene;
+    CardScene *cardScenePreview;
 
     QComboBox *sceneScaleCombo;
     QComboBox *textColorCombo;

@@ -55,6 +55,7 @@ public:
 private:
     QHttp pictureHttp;
     QBuffer pictureBuffer;
+    QBuffer pictureBufferUnknown;
 };
 
 #endif // PIXMAPITEM_H

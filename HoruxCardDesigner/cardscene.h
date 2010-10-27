@@ -35,6 +35,7 @@ signals:
     void textInserted(QGraphicsTextItem *item);
     void itemSelected(QGraphicsItem *item);
     void itemMoved(QGraphicsItem *item);
+    void mouseRelease();
 
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent);

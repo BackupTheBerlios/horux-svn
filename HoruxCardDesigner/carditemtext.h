@@ -31,6 +31,7 @@ public:
 
     void setPrintingMode(bool printing, QMap<QString, QString>userData);
 
+
 signals:
     void lostFocus(CardTextItem *item);
     void selectedChange(QGraphicsItem *item);

@@ -19,112 +19,132 @@ CardTextItem::CardTextItem(QGraphicsItem *parent, QGraphicsScene *scene)
     alignment = 0;
 
     isPrinting = false;
+
+    setTextWidth(-1);
+    document()->setTextWidth(-1);
 }
 
 void CardTextItem::setPrintingMode(bool printing, QMap<QString, QString>userData)
 {       
     isPrinting = printing;
 
-
     // From Horux
     if(source == 1 && isPrinting)
     {
         text = toPlainText();
 
-        if(name == "Name")
+        QString text_tmp = name;
+
+        QMapIterator<QString, QString> i(userData);
+         while (i.hasNext()) {
+             i.next();
+
+             text_tmp.replace("%" + i.key() + "%", i.value());
+
+         }
+
+        /*if(name.contains("Name"))
         {
-            setPlainText(userData["name"]);
+            text_tmp.replace("Name", userData["name"]);
         }
 
-        if(name == "Firstname")
+        if(name.contains("Firstname"))
         {
-            setPlainText(userData["firstname"]);
+            text_tmp.replace("Firstname", userData["firstname"]);
         }
 
-        if(name == "Validity date")
+        if(name.contains("Validity date"))
         {
-            setPlainText(userData["validity_date"]);
+            text_tmp.replace("Validity date", userData["validity_date"]);
         }
 
-        if(name == "Department")
+        if(name.contains("Department"))
         {
-            setPlainText(userData["department"]);
+            text_tmp.replace("Department", userData["department"]);
         }
 
-        if(name == "Pin code")
+        if(name.contains("Gender"))
         {
-            setPlainText(userData["pin_code"]);
+            text_tmp.replace("Gender", userData["gender"]);
         }
 
-        if(name == "Street (private)")
+        if(name.contains("Street (private)"))
         {
-            setPlainText(userData["street_private"]);
+            text_tmp.replace("Street (private)", userData["street_private"]);
         }
 
-        if(name == "City (private)")
+        if(name.contains("City (private)"))
         {
-            setPlainText(userData["city_private"]);
+            text_tmp.replace("City (private)", userData["city_private"]);
         }
 
-        if(name == "Zip (private)")
+        if(name.contains("Zip (private)"))
         {
-            setPlainText(userData["zip_private"]);
+            text_tmp.replace("Zip (private)", userData["zip_private"]);
         }
 
-        if(name == "Country (private)")
+        if(name.contains("Country (private)"))
         {
-            setPlainText(userData["country_private"]);
+            text_tmp.replace("Country (private)", userData["country_private"]);
         }
 
-        if(name == "Phone (private)")
+        if(name.contains("Phone (private)"))
         {
-            setPlainText(userData["phone_private"]);
+            text_tmp.replace("Phone (private)", userData["phone_private"]);
         }
 
-        if(name == "Email (private)")
+        if(name.contains( "Email (private)"))
         {
-            setPlainText(userData["email_private"]);
+            text_tmp.replace("Email (private)", userData["email_private"]);
         }
 
-        if(name == "Firme")
+        if(name.contains("Firme"))
         {
-            setPlainText(userData["firme"]);
+            text_tmp.replace("Firme", userData["firme"]);
         }
 
-        if(name == "Street (Professional)")
+        if(name.contains("Street (Professional)"))
         {
-            setPlainText(userData["street_professional"]);
+            text_tmp.replace("Street (Professional)", userData["street_professional"]);
         }
 
-        if(name == "City (Professional)")
+        if(name.contains("City (Professional)"))
         {
-            setPlainText(userData["city_professional"]);
+            text_tmp.replace("City (Professional)", userData["city_professional"]);
         }
 
-        if(name == "Zip  (Professional)")
+        if(name.contains("Zip (Professional)"))
         {
-            setPlainText(userData["zip_professional"]);
+            text_tmp.replace("Zip (Professional)", userData["zip_professional"]);
         }
 
-        if(name == "Country  (Professional)")
+        if(name.contains("Country (Professional)"))
         {
-            setPlainText(userData["country_professional"]);
+            text_tmp.replace("Country (Professional)", userData["country_professional"]);
         }
 
-        if(name == "Email (Professional)")
+        if(name.contains("Email (Professional)"))
         {
-            setPlainText(userData["email_professional"]);
+            text_tmp.replace("Email (Professional)", userData["email_professional"]);
         }
 
-        if(name == "Phone (Professional)")
+        if(name.contains("Phone (Professional)"))
         {
-            setPlainText(userData["phone_professional"]);
+            text_tmp.replace("Phone (Professional)", userData["phone_professional"]);
         }
 
-        if(name == "Fax (Professional)")
+        if(name.contains("Fax (Professional)"))
         {
-            setPlainText(userData["fax_professional"]);
-        }
+            text_tmp.replace("Fax (Professional)", userData["fax_professional"]);
+        }*/
+
+        setPlainText(text_tmp);
+
+
+        setTextWidth(-1);
+        document()->setTextWidth(-1);
+
+        qreal width = textWidth();
     }
 
     if(source == 2 && isPrinting) {
@@ -133,18 +153,25 @@ void CardTextItem::setPrintingMode(bool printing, QMap<QString, QString>userData
         int counterValue = initialValue + (userData["__countIndex"].toInt() * increment);
 
         setPlainText(QString::number(counterValue).rightJustified(digits,'0',false));
+
+        setTextWidth(-1);
+        document()->setTextWidth(-1);
     }
 
     if(source == 2 && !isPrinting) {
         setPlainText(text);
+        setTextWidth(-1);
+        document()->setTextWidth(-1);
     }
 
     if(source == 1 && !isPrinting)
     {
         setPlainText(text);
+        setTextWidth(-1);
+        document()->setTextWidth(-1);
     }
 
-    adjustSize();
+
 }
 
 
@@ -159,10 +186,15 @@ void CardTextItem::loadText(QDomElement text )
     bool fontBold;
     bool fontItalic;
     bool fontUnderline;
+    qreal zValue = 0;
 
     while(!node.isNull())
     {
         if(node.toElement().tagName() == "rotation")
+        {
+            zValue = node.toElement().text().toFloat();
+        }
+        if(node.toElement().tagName() == "zvalue")
         {
             rotation = node.toElement().text().toInt();
         }
@@ -227,6 +259,7 @@ void CardTextItem::loadText(QDomElement text )
             fontUnderline = node.toElement().text().toInt();
         }
 
+
         node = node.nextSibling();
     }
 
@@ -237,12 +270,17 @@ void CardTextItem::loadText(QDomElement text )
     font.setPointSize(fontPoint);
     font.setItalic(fontItalic);
     font.setUnderline(fontUnderline);
+    setZValue(zValue);
 
     alignmentChanged(alignment);
 
     setFont(font);
 
-    adjustSize();
+  //  adjustSize();
+    setTextWidth(-1);
+    document()->setTextWidth(-1);
+
+
 }
 
 QDomElement CardTextItem::getXmlItem(QDomDocument xml )
@@ -305,6 +343,11 @@ QDomElement CardTextItem::getXmlItem(QDomDocument xml )
     newElement.appendChild(text);
     textItem.appendChild(newElement);
 
+    newElement = xml.createElement( "zValue");
+    text =  xml.createTextNode(QString::number( zValue()));
+    newElement.appendChild(text);
+    textItem.appendChild(newElement);
+
     newElement = xml.createElement( "font-family");
     text =  xml.createTextNode(font().family());
     newElement.appendChild(text);
@@ -350,7 +393,10 @@ void CardTextItem::fontChanged(const QFont &font)
 {
     setFont(font);
     scene()->update();
-    adjustSize();
+   // adjustSize();
+    setTextWidth(-1);
+    document()->setTextWidth(-1);
+
 }
 
 void CardTextItem::colorChanged(const QColor &color)
@@ -451,7 +497,10 @@ void CardTextItem::focusOutEvent(QFocusEvent *event)
 {
     setTextInteractionFlags(Qt::NoTextInteraction);
     emit lostFocus(this);
-    adjustSize();
+//    adjustSize();
+    setTextWidth(-1);
+    document()->setTextWidth(-1);
+
     QGraphicsTextItem::focusOutEvent(event);
 }
 
@@ -492,3 +541,4 @@ void CardTextItem::setPrintCounter(int iv, int inc, int di) {
     increment = inc;
     digits = di;
 }
+

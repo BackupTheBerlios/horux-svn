@@ -2,6 +2,7 @@
 #define HORUXFIELDS_H
 
 #include <QtGui/QDialog>
+#include <QtSoapHttpTransport>
 
 namespace Ui {
     class HoruxFields;
@@ -16,12 +17,19 @@ public:
     virtual ~HoruxFields();
 
     QString getDatasource();
+    void setDatasource(QString source);
 
 protected:
     virtual void changeEvent(QEvent *e);
 
+protected slots:
+    void itemSelectionChanged ();
+    void sslErrors ( QNetworkReply * reply, const QList<QSslError> & errors );
+    void readSoapResponse();
+
 private:
     Ui::HoruxFields *m_ui;
+    QtSoapHttpTransport transport;
 };
 
 #endif // HORUXFIELDS_H

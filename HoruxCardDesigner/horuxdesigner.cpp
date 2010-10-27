@@ -61,7 +61,7 @@ void HoruxDesigner::loadData(QSplashScreen *sc)
     QString password = settings.value("password", "").toString();
     QString path = settings.value("path", "").toString();
     QString database = settings.value("database", "").toString();
-    QString engine = settings.value("engine", 'HORUX').toString();
+    QString engine = settings.value("engine", "HORUX").toString();
 
     bool isDbType = false;
 
@@ -318,6 +318,8 @@ void HoruxDesigner::initScene()
     connect(scene, SIGNAL( itemMoved(QGraphicsItem *)),
             this, SLOT(itemMoved(QGraphicsItem *)));
 
+    connect(scene, SIGNAL( mouseRelease() ),
+            this, SLOT( mouseRelease() ));
 
     ui->graphicsView->setScene(scene);
     ui->graphicsView->setRenderHint(QPainter::Antialiasing);
@@ -730,6 +732,8 @@ void HoruxDesigner::save()
     currenFile.close();
 
     setWindowTitle("Horux Card Designer - " + currenFile.fileName());
+
+    ui->actionSave->setEnabled(false);
 }
 
 void HoruxDesigner::saveAs()
@@ -854,7 +858,15 @@ void HoruxDesigner::deleteItem()
 {
     foreach (QGraphicsItem *item, scene->selectedItems()) {
         if (item->type() !=  QGraphicsItem::UserType+1) {
-            scene->removeItem(item);
+
+            if(item->type() == QGraphicsItem::UserType + 3  && qgraphicsitem_cast<CardTextItem *>(item)->textInteractionFlags() == Qt::TextEditorInteraction) // text
+            {
+                // do nothing
+            }
+            else {
+                scene->removeItem(item);
+                fileChange();
+            }
         }
     }
 }
@@ -868,8 +880,9 @@ void HoruxDesigner::bringToFront()
     QList<QGraphicsItem *> overlapItems = selectedItem->collidingItems();
 
     qreal zValue = selectedItem->zValue();
+
     foreach (QGraphicsItem *item, overlapItems) {
-        if (item->zValue() >= zValue)
+        if (item->zValue() >= zValue )
         {
             zValue = item->zValue() + 0.1;
         }
@@ -1188,20 +1201,21 @@ void HoruxDesigner::itemSelected(QGraphicsItem *)
 
 void HoruxDesigner::selectionChanged()
 {
-
     if (scene->selectedItems().isEmpty() || scene->selectedItems().count() > 1 )
     {
         setParamView(scene->getCardItem());
+
         return;
     }
-    setParamView(scene->selectedItems().at(0));
 
+
+    setParamView(scene->selectedItems().at(0));
 
 }
 
 void HoruxDesigner::itemMoved(QGraphicsItem *item)
 {
-    if(item)
+    if(item && scene->selectedItems().count() > 0)
     {
         if(item->type() == QGraphicsItem::UserType + 3)
         {
@@ -1219,13 +1233,18 @@ void HoruxDesigner::itemMoved(QGraphicsItem *item)
                 pixmapPage->left->setValue(item->pos().x());
             }
         }
-    }
 
-    updatePrintPreview();
+
+    }
 }
 
 void HoruxDesigner::updatePrintPreview()
 {
+
+    QList<QGraphicsItem *> listSelectedItems = scene->selectedItems();
+
+    scene->clearSelection ();
+
     QPointF cardPos = scene->getCardItem()->pos();
 
     scene->getCardItem()->setPrintingMode(true, pictureBuffer, userValue);
@@ -1236,6 +1255,9 @@ void HoruxDesigner::updatePrintPreview()
     QPixmap pixmap(cardRect.size().toSize());
     pixmap.fill( Qt::white );
     QPainter painter(&pixmap);
+
+    if(!painter.isActive()) return;
+
     painter.setRenderHint(QPainter::Antialiasing);
     ui->graphicsView->render(&painter, QRectF(0,0,pixmap.size().width(),pixmap.size().height()), cardRect.toRect(), Qt::KeepAspectRatio );
     painter.end();
@@ -1249,10 +1271,13 @@ void HoruxDesigner::updatePrintPreview()
 
     scenePreview->addPixmap (pixmap);
 
-
     scene->getCardItem()->setPrintingMode( false, pictureBuffer, userValue );
     scene->getCardItem()->setPos(cardPos);
     sceneScaleChanged(sceneScaleCombo->currentText());
+
+    foreach(QGraphicsItem *item, listSelectedItems) {
+        item->setSelected(true);
+    }
 }
 
 void HoruxDesigner::nextRecord() {
@@ -1280,4 +1305,14 @@ void HoruxDesigner::backRecord() {
             ui->back->setEnabled(false);
         ui->step->setText(QString::number(userCombo->currentIndex()+1) + "/" + QString::number(userCombo->count()));
     }
+}
+
+void HoruxDesigner::mouseRelease() {
+    updatePrintPreview();
+    fileChange();
+}
+
+void HoruxDesigner::fileChange() {
+    setWindowTitle("Horux Card Designer - " + currenFile.fileName() + " *");
+    ui->actionSave->setEnabled(true);
 }

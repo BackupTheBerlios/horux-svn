@@ -80,6 +80,7 @@ void TextPage::setDataSource() {
         case 1: // database
             {
                 HoruxFields dlg(this);
+                dlg.setDatasource(name->text());
 
                 if(dlg.exec() == QDialog::Accepted)
                 {

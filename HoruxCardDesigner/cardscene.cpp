@@ -115,9 +115,11 @@ void CardScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
         QGraphicsItem *item = selectedItems().at(0);
         if(item->type() > QGraphicsItem::UserType + 1)
         {
-            emit itemMoved(item);
+            emit itemMoved(item);                        
         }
     }
+
+    emit mouseRelease();
 
     QGraphicsScene::mouseReleaseEvent(mouseEvent);
 
