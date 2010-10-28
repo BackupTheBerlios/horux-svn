@@ -43,7 +43,7 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>190</width>
+         <width>198</width>
          <height>681</height>
         </rect>
        </property>
@@ -197,7 +197,7 @@ background-image: url(:/images/filigrane.png);</string>
      <x>0</x>
      <y>0</y>
      <width>1200</width>
-     <height>21</height>
+     <height>20</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFormat">
@@ -234,9 +234,9 @@ background-image: url(:/images/filigrane.png);</string>
     <addaction name="actionPrint_setup"/>
     <addaction name="actionPrint_preview"/>
     <addaction name="actionPrint"/>
+    <addaction name="actionPrint_selection"/>
     <addaction name="separator"/>
     <addaction name="actionExit"/>
-    <addaction name="actionPrint_selection"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuFormat"/>
