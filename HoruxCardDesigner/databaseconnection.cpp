@@ -77,6 +77,10 @@ void DatabaseConnection::setEngine(const QString engine)
     m_ui->testButton->setEnabled(false);
     m_ui->search->setEnabled(false);
     m_ui->file->setEnabled(false);
+    m_ui->primaryKey->setEnabled(false);
+    m_ui->column1->setEnabled(false);
+    m_ui->column2->setEnabled(false);
+    m_ui->pictureColumn->setEnabled(false);
 
     QString engineData = m_ui->engine->itemData(m_ui->engine->currentIndex()).toString();
 
@@ -89,6 +93,7 @@ void DatabaseConnection::setEngine(const QString engine)
         m_ui->path->setEnabled(true);
         m_ui->host->setEnabled(true);
         m_ui->testButton->setEnabled(true);
+
     }
     else
     {
@@ -97,6 +102,10 @@ void DatabaseConnection::setEngine(const QString engine)
             m_ui->search->setEnabled(true);
             m_ui->file->setEnabled(true);
             m_ui->testButton->setEnabled(true);
+            m_ui->primaryKey->setEnabled(true);
+            m_ui->column1->setEnabled(true);
+            m_ui->column2->setEnabled(true);
+            m_ui->pictureColumn->setEnabled(true);
         }
         else
         {
@@ -105,6 +114,10 @@ void DatabaseConnection::setEngine(const QString engine)
                 m_ui->file->setEnabled(true);;
                 m_ui->search->setEnabled(true);
                 m_ui->testButton->setEnabled(true);
+                m_ui->primaryKey->setEnabled(true);
+                m_ui->column1->setEnabled(true);
+                m_ui->column2->setEnabled(true);
+                m_ui->pictureColumn->setEnabled(true);
             }
             else
             {
@@ -115,6 +128,10 @@ void DatabaseConnection::setEngine(const QString engine)
                     m_ui->username->setEnabled(true);
                     m_ui->host->setEnabled(true);
                     m_ui->testButton->setEnabled(true);
+                    m_ui->primaryKey->setEnabled(true);
+                    m_ui->column1->setEnabled(true);
+                    m_ui->column2->setEnabled(true);
+                    m_ui->pictureColumn->setEnabled(true);
                 }
             }
         }
@@ -152,6 +169,43 @@ void DatabaseConnection::setFile(const QString p)
     m_ui->file->setText(p);
 }
 
+void DatabaseConnection::setPrimaryKey(const int p) {
+    m_ui->primaryKey->setValue(p);
+}
+
+void DatabaseConnection::setColumn1(const int p){
+    m_ui->column1->setValue(p);
+
+}
+
+void DatabaseConnection::setColumn2(const int p){
+    m_ui->column2->setValue(p);
+
+}
+
+void DatabaseConnection::setPictureColumn(const int p){
+    m_ui->pictureColumn->setValue(p);
+
+}
+
+int DatabaseConnection::getPrimaryKey(){
+   return m_ui->primaryKey->value();
+}
+
+int DatabaseConnection::getColumn1(){
+    return m_ui->column1->value();
+
+}
+
+int DatabaseConnection::getColumn2(){
+    return m_ui->column2->value();
+
+}
+
+int DatabaseConnection::getPictureColumn(){
+    return m_ui->pictureColumn->value();
+
+}
 
 QString DatabaseConnection::getEngine()
 {

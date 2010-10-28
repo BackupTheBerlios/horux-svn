@@ -25,6 +25,11 @@ public:
     void setPath(const QString p);
     void setDatabase(const QString p);
     void setFile(const QString p);
+    void setPrimaryKey(const int p);
+    void setColumn1(const int p);
+    void setColumn2(const int p);
+    void setPictureColumn(const int p);
+
     QString getHost();
     QString getUsername();
     QString getPassword();
@@ -33,7 +38,10 @@ public:
     QString getEngine();
     QString getDatabase();
     QString getFile();
-
+    int getPrimaryKey();
+    int getColumn1();
+    int getColumn2();
+    int getPictureColumn();
 
 protected:
     void changeEvent(QEvent *e);

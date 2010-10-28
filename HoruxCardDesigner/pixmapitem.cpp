@@ -5,12 +5,13 @@
 #include <QLabel>
 #include <QMovie>
 #include <QSettings>
+#include <QFile>
 
 PixmapItem::PixmapItem(QGraphicsItem *parent) : QGraphicsPixmapItem(parent)
 {
 
     setPixmap(QPixmap(":/images/gadu.png"));
-    setZValue(1000.0);
+    //setZValue(1000.0);
     setFlag(QGraphicsItem::ItemIsMovable);
     setFlag(QGraphicsItem::ItemIsSelectable);
 
@@ -23,11 +24,6 @@ PixmapItem::PixmapItem(QGraphicsItem *parent) : QGraphicsPixmapItem(parent)
     source = 0;
     size.setWidth(QPixmap(":/images/gadu.png").width());
     size.setHeight(QPixmap(":/images/gadu.png").height());
-
-    spinner = NULL;
-
-    pictureBuffer.open(QBuffer::ReadWrite);
-    connect(&pictureHttp, SIGNAL(done(bool)), this, SLOT(httpRequestDone(bool)));
 
     isPrinting = false;
 }
@@ -44,20 +40,10 @@ void PixmapItem::setPrintingMode(bool printing, QBuffer &picture)
 
     if(source == 1 && !printing)
     {
-        if(!pictureBufferUnknown.isOpen()) {
-            QSettings settings("Letux", "HoruxCardDesigner", this);
+        QFile unknown(":/images/unknown.jpg");
 
-            QString host = settings.value("horux", "localhost").toString();
-            QString path = settings.value("path", "").toString();
-            bool ssl = settings.value("ssl", "").toBool();
-            pictureBuffer.reset();
-            pictureHttp.setHost(host, ssl ? QHttp::ConnectionModeHttps : QHttp::ConnectionModeHttp );
-            if(ssl)
-            {
-                connect(&pictureHttp,SIGNAL(sslErrors( const QList<QSslError> & )), this, SLOT(sslErrors(QList<QSslError>)));
-            }
-            pictureHttp.get(path + "/pictures/unknown.jpg", &pictureBufferUnknown);
-        } else {
+        if(unknown.open(QIODevice::ReadOnly)) {
+            pictureBufferUnknown.setData(unknown.readAll());
             setHoruxPixmap(pictureBufferUnknown.data());
         }
     }
@@ -280,44 +266,14 @@ void PixmapItem::loadPixmap(QDomElement text )
     }
     else
     {
-
-        spinner = new QGraphicsProxyWidget(this);
-        QLabel *label = new QLabel;
-        QMovie *movie = new QMovie(":/images/spinner.gif");
-        movie->setBackgroundColor(Qt::white);
-        label->setMovie(movie);
-        movie->start();
-        spinner->setWidget(label);
-        setPixmap(QPixmap());
         setPos(posX, posY);
 
-        QSettings settings("Letux", "HoruxCardDesigner", this);
+        QFile unknown(":/images/unknown.jpg");
 
-        QString host = settings.value("horux", "localhost").toString();
-        QString path = settings.value("path", "").toString();
-        bool ssl = settings.value("ssl", "").toBool();
-        pictureBuffer.reset();
-        pictureHttp.setHost(host, ssl ? QHttp::ConnectionModeHttps : QHttp::ConnectionModeHttp );
-        if(ssl)
-        {
-            connect(&pictureHttp,SIGNAL(sslErrors( const QList<QSslError> & )), this, SLOT(sslErrors(QList<QSslError>)));
+        if(unknown.open(QIODevice::ReadOnly)) {
+            pictureBufferUnknown.setData(unknown.readAll());
+            setHoruxPixmap(pictureBufferUnknown.data());
         }
-
-        pictureHttp.get(path + "/pictures/unknown.jpg", &pictureBufferUnknown);
-
-    }
-}
-
-void PixmapItem::sslErrors ( const QList<QSslError> & errors )
-{
-    foreach(QSslError sslError, errors)
-    {
-        if(sslError.error() == QSslError::SelfSignedCertificate)
-        {
-            pictureHttp.ignoreSslErrors();
-        }
-        else
-            qDebug() << sslError;
     }
 }
 
@@ -371,10 +327,3 @@ void PixmapItem::leftChanged(const QString &left)
     setPos(p);
 }
 
-void PixmapItem::httpRequestDone ( bool  )
-{
-    if(spinner)
-        spinner->deleteLater();
-    spinner = 0;
-    setHoruxPixmap(pictureBufferUnknown.data());
-}

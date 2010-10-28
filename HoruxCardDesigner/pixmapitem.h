@@ -36,10 +36,6 @@ public slots:
     void topChanged(const QString &);
     void leftChanged(const QString &);
 
-private slots:
-    void httpRequestDone ( bool error );
-    void sslErrors ( const QList<QSslError> & errors );
-
 protected:
     QVariant itemChange(GraphicsItemChange change, const QVariant &value);
 
@@ -49,12 +45,9 @@ public:
     int source;
     QPixmap pHorux;
     QSize size;
-    QGraphicsProxyWidget *spinner;
     bool isPrinting;
 
 private:
-    QHttp pictureHttp;
-    QBuffer pictureBuffer;
     QBuffer pictureBufferUnknown;
 };
 

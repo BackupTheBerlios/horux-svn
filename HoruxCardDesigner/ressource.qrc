@@ -22,5 +22,6 @@
         <file>images/splash.png</file>
         <file>images/logo.png</file>
         <file>images/filigrane.png</file>
+        <file>images/unknown.jpg</file>
     </qresource>
 </RCC>

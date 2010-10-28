@@ -58,7 +58,7 @@
         </item>
         <item>
          <property name="text">
-          <string>From Horux...</string>
+          <string>From database</string>
          </property>
         </item>
        </widget>
