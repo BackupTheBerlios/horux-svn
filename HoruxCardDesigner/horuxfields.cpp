@@ -3,6 +3,7 @@
 #include <QMessageBox>
 #include <QSslError>
 #include <QNetworkReply>
+#include <QtSql>
 
 HoruxFields::HoruxFields(QWidget *parent) :
         QDialog(parent),
@@ -21,6 +22,7 @@ HoruxFields::HoruxFields(QWidget *parent) :
     QString database = settings.value("database", "").toString();
     QString engine = settings.value("engine", "HORUX").toString();
     QString file = settings.value("file", "").toString();
+    QString sql = settings.value("sql", "").toString();
     bool ssl = settings.value("ssl", "").toBool();
 
     if(engine == "HORUX") {
@@ -61,6 +63,22 @@ HoruxFields::HoruxFields(QWidget *parent) :
          } else {
              QMessageBox::warning(this,tr("CSV file error"),tr("Not able to open the file"));
 
+         }
+     }
+
+
+     if(engine != "NOT_USED" && engine != "CSV" && engine != "HORUX") {
+         QSqlDatabase dbase = QSqlDatabase::database("horux");
+
+         if(dbase.isOpen()) {
+            QSqlQuery query(sql,dbase);
+            query.next();
+
+            QSqlRecord record = query.record();
+
+            for(int i=0; i<record.count(); i++) {
+               m_ui->fieldsList->addItem(record.fieldName(i));
+            }
          }
      }
 }

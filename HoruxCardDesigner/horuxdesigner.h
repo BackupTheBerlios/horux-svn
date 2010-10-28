@@ -67,7 +67,7 @@ private slots:
     void printPreview();
     void printSetup();
     void print();
-    void printAll();
+    void printSelection();
     void exit();
     void save();
     void saveAs();

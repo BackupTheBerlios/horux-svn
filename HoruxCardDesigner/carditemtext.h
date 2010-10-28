@@ -31,7 +31,7 @@ public:
     { return Type; }
 
     void setPrintingMode(bool printing, QMap<QString, QString>userData);
-
+    void incrementCounter();
 
 signals:
     void lostFocus(CardTextItem *item);

@@ -36,6 +36,7 @@ public:
     int getGridSize(){ return gridSize;}
     void setPrintingMode(bool printing, QBuffer &picture, QMap<QString, QString>userData);
     void reset();
+    void incrementCounter();
 
 public slots:
     void setSize(int size);

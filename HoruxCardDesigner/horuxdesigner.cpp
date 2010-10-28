@@ -397,11 +397,11 @@ void HoruxDesigner::createAction()
     connect(ui->actionPrint, SIGNAL(triggered()),
             this, SLOT(print()));
 
+    connect(ui->actionPrint_selection, SIGNAL(triggered()),
+            this, SLOT(printSelection()));
+
     connect(ui->actionPrint_setup, SIGNAL(triggered()),
             this, SLOT(printSetup()));
-
-    connect(ui->actionPrint_all_card, SIGNAL(triggered()),
-            this, SLOT(printAll()));
 
     connect(ui->actionExit, SIGNAL(triggered()),
             this, SLOT(exit()));
@@ -420,6 +420,8 @@ void HoruxDesigner::createAction()
 
     connect(ui->actionAbout, SIGNAL(triggered()),
             this, SLOT(about()));
+
+    connect(ui->actionAbout_Qt, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
 
     // Recent files
     for (int i = 0; i < MaxRecentFiles; ++i) {
@@ -456,6 +458,8 @@ void HoruxDesigner::initScene()
     connect(scene, SIGNAL( itemMoved(QGraphicsItem *)),
             this, SLOT(itemMoved(QGraphicsItem *)));
 
+
+
     connect(scene, SIGNAL( mouseRelease() ),
             this, SLOT( mouseRelease() ));
 
@@ -467,7 +471,7 @@ void HoruxDesigner::initScene()
 
 void HoruxDesigner::about()
 {
-    QMessageBox::about(this, tr("About Horux Card Designer"),tr("<h1>Horux Card Designer 0.1 Beta</h1>Copyright 2010 Letux S&agrave;rl.<br/>A Free Software released under the GNU/GPL License"));
+    QMessageBox::about(this, tr("About Horux Card Designer"),tr("<h2>Horux Card Designer</h2><h3>Version 0.0.1</h3>Copyright 2010 Letux S&agrave;rl.<br/>A Free Software released under the GNU/GPL License (GPL3)"));
 }
 
 void HoruxDesigner::readSoapResponse()
@@ -530,9 +534,6 @@ void HoruxDesigner::userChanged(int index)
     QString file = settings.value("file", "").toString();
     bool ssl = settings.value("ssl", false).toBool();
     int pictureColumn = settings.value("pictureColumn", -1).toInt();
-    int primaryKeyColumn = settings.value("primaryKeyColumn", 0).toInt();
-    int column1 = settings.value("column1", 1).toInt();
-    int column2 = settings.value("column2", 2).toInt();
 
     if(userCombo)
     {
@@ -595,7 +596,7 @@ void HoruxDesigner::userChanged(int index)
         if(dbase.isOpen()) {
             sqlQuery->first();
 
-            while(sqlQuery->value(primaryKeyColumn).toInt() != userId) {
+            for(int i=0; i<index; i++) {
                 sqlQuery->next();
             }
 
@@ -1054,7 +1055,7 @@ void HoruxDesigner::print()
 
     if (QPrintDialog(printer).exec() == QDialog::Accepted)
     {
-        scene->getCardItem()->setPrintingMode( true, pictureBuffer, userValue );
+        /*scene->getCardItem()->setPrintingMode( true, pictureBuffer, userValue );
         scene->getCardItem()->setPos(0,0);
         sceneScaleChanged("100%");
 
@@ -1067,24 +1068,19 @@ void HoruxDesigner::print()
 
         scene->getCardItem()->setPrintingMode( false, pictureBuffer, userValue );
         scene->getCardItem()->setPos(cardPos);
-        sceneScaleChanged(sceneScaleCombo->currentText());
+        sceneScaleChanged(sceneScaleCombo->currentText());*/
+
+        // increment all counter in the card scene
+        scene->getCardItem()->incrementCounter();
+
+        // save the file
+        save();
+
+        updatePrintPreview();
     }
 }
 
-void HoruxDesigner::printAll() {
-    scene->clearSelection ();
-
-    printer->setOrientation(( QPrinter::Orientation)scene->getCardItem()->getFormat());
-
-    printer->setPaperSize(scene->getCardItem()->getSizeMm(),QPrinter::Millimeter);
-    printer->setPageMargins(0,0,0,0,QPrinter::Millimeter);
-
-    QPointF cardPos = scene->getCardItem()->pos();
-
-    if (QPrintDialog(printer).exec() == QDialog::Accepted)
-    {
-
-    }
+void HoruxDesigner::printSelection() {
 
 }
 

@@ -114,7 +114,7 @@ void CardTextItem::setPrintingMode(bool printing, QMap<QString, QString>userData
     if(source == 2 && isPrinting) {
         text = toPlainText();
 
-        int counterValue = initialValue + (userData["__countIndex"].toInt() * increment);
+        int counterValue = initialValue /* + (userData["__countIndex"].toInt() * increment)*/;
 
         setPlainText(QString::number(counterValue).rightJustified(digits,'0',false));
 
@@ -562,4 +562,9 @@ void CardTextItem::setFormat(int _format, int digit, int decimal, QString date, 
     format_digit = digit;
     format_date = date;
     format_sourceDate = sourceDate;
+}
+
+void CardTextItem::incrementCounter() {
+    if(source == 2)
+        initialValue += increment;
 }

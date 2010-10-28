@@ -24,6 +24,17 @@ CardItem::CardItem( Size size,  Format format, QGraphicsItem * parent) : QGraphi
     this->setCacheMode(QGraphicsItem::ItemCoordinateCache);
 }
 
+void CardItem::incrementCounter() {
+    foreach(QGraphicsItem *item, this->childItems())
+    {
+        if(item->type() == QGraphicsItem::UserType+3) {
+            CardTextItem *textItem = qgraphicsitem_cast<CardTextItem *>(item);
+
+            textItem->incrementCounter();
+        }
+    }
+}
+
 void CardItem::setPrintingMode(bool printing, QBuffer &picture, QMap<QString, QString>userData)
 {
     isPrinting = printing;
