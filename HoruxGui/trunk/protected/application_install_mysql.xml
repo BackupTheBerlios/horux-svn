@@ -27,7 +27,7 @@
    
     <module class="System.Data.TDataSourceConfig" id="horuxDb">
         <database ConnectionString="mysql:host=%host;dbname=%dbname"
-            Username="%username" Password="%password" />
+            Username="%username" Password="%password"  Charset="utf8" />
     </module>
     
     <module class="System.Data.ActiveRecord.TActiveRecordConfig" 
