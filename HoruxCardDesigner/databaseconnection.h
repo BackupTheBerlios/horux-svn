@@ -29,6 +29,7 @@ public:
     void setColumn1(const int p);
     void setColumn2(const int p);
     void setPictureColumn(const int p);
+    void setSqlRequest(const QString p);
 
     QString getHost();
     QString getUsername();
@@ -42,6 +43,7 @@ public:
     int getColumn1();
     int getColumn2();
     int getPictureColumn();
+    QString getSqlRequest();
 
 protected:
     void changeEvent(QEvent *e);

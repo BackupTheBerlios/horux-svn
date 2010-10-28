@@ -139,6 +139,10 @@ void DatabaseConnection::setEngine(const QString engine)
 
 }
 
+void DatabaseConnection::setSqlRequest(const QString p) {
+    m_ui->sqlRequest->setPlainText(p);
+}
+
 void DatabaseConnection::setHost(const QString url)
 {
     m_ui->host->setText(url);
@@ -205,6 +209,10 @@ int DatabaseConnection::getColumn2(){
 int DatabaseConnection::getPictureColumn(){
     return m_ui->pictureColumn->value();
 
+}
+
+QString DatabaseConnection::getSqlRequest() {
+    return m_ui->sqlRequest->toPlainText();
 }
 
 QString DatabaseConnection::getEngine()
@@ -309,7 +317,14 @@ void DatabaseConnection::onTest()
 
                 if(dbase.open())
                 {
-                    QMessageBox::information(this,tr("Database connection"),tr("The configuration is well done"));
+                    QSqlQuery query(m_ui->sqlRequest->toPlainText(), dbase);
+
+                    if(query.next())
+                        QMessageBox::information(this,tr("Database connection"),tr("The configuration is well done"));
+                    else
+                        QMessageBox::information(this,tr("Database sql error"),query.lastError().text());
+
+
                 }
                 else
                     QMessageBox::warning(this,tr("Database connection error"),tr("Not able to connect to the database"));

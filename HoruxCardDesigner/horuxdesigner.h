@@ -35,6 +35,7 @@ public:
     void loadData(QSplashScreen *sc);
     void loadHoruxSoap(QSplashScreen *sc);
     void loadCSVData(QSplashScreen *sc);
+    void loadSQLData(QSplashScreen *sc);
 
 private:
     void createToolBox();
@@ -132,6 +133,8 @@ private:
 
     QMap<int, QStringList>csvData;
     QStringList csvHeader;
+
+    QSqlQuery *sqlQuery;
 };
 
 #endif // HORUXDESIGNER_H

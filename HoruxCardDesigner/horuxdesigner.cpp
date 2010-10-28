@@ -24,6 +24,8 @@ HoruxDesigner::HoruxDesigner(QWidget *parent)
     userCombo = NULL;
     scenePreview = NULL;
 
+    sqlQuery = NULL;
+
     dbInformation = new QLabel("");
     statusBar()->addPermanentWidget(dbInformation);
 
@@ -49,6 +51,8 @@ HoruxDesigner::HoruxDesigner(QWidget *parent)
 
 HoruxDesigner::~HoruxDesigner()
 {
+    if(sqlQuery)
+        delete sqlQuery;
     delete ui;
 }
 
@@ -120,13 +124,11 @@ void HoruxDesigner::loadData(QSplashScreen *sc)
 
     if(isDbType)
     {
-        if(dbase.open())
-        {
-
-        }
-        else
-        {
-
+        if(!dbase.open()) {
+            QMessageBox::warning(this,tr("Database connection error"),tr("Not able to connect to the database"));
+            dbInformation->setText("Not able to connect to the database");
+        } else {
+            loadSQLData(sc);
         }
 
     }
@@ -174,6 +176,66 @@ void HoruxDesigner::loadHoruxSoap(QSplashScreen *sc)
     }
 
     transport.submitRequest(message, path+"/index.php?soap=horux&password=" + password + "&username=" + username);
+}
+
+
+void HoruxDesigner::loadSQLData(QSplashScreen *sc) {
+    if(sc != NULL)
+    {
+        sc->showMessage(tr("The data are loading from the CSV file..."),Qt::AlignLeft, Qt::white);
+        QApplication::processEvents();
+    }
+
+    if(dbase.isOpen()) {
+
+        QSettings settings("Letux", "HoruxCardDesigner", this);
+        QString sql = settings.value("sql", "").toString();
+        int column1 = settings.value("column1", 1).toInt();
+        int column2 = settings.value("column2", 2).toInt();
+        int primaryKey = settings.value("primaryKeyColumn", 0).toInt();
+
+        bool isNew = false;
+
+        if(userCombo == NULL)
+        {
+            isNew = true;
+            userCombo = new QComboBox();
+        }
+        else
+        {
+            userCombo->deleteLater();
+            userCombo = new QComboBox();
+        }
+
+        if(sqlQuery == NULL) {
+            sqlQuery = new QSqlQuery(dbase);
+        }
+
+        sqlQuery->prepare(sql);
+
+        if(!sqlQuery->exec()) {
+            QMessageBox::information(this,tr("Database sql error"),sqlQuery->lastError().text());
+        } else {
+              while(sqlQuery->next()) {
+                if(column2>0)
+                    userCombo->addItem(sqlQuery->value(column1).toString()+ " " + sqlQuery->value(column2).toString (), sqlQuery->value(primaryKey).toInt ());
+                else
+                    userCombo->addItem(sqlQuery->value(column1).toString(), sqlQuery->value(primaryKey).toInt ());
+            }
+        }
+
+
+        ui->step->setText("1/" + QString::number(userCombo->count()));
+
+        if(isNew)
+            ui->toolBar->addSeparator();
+        ui->toolBar->addWidget(userCombo);
+        connect( userCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(userChanged(int)));
+
+        if(userCombo->count()>0)
+            userChanged(0);
+
+    }
 }
 
 void HoruxDesigner::loadCSVData(QSplashScreen *sc) {
@@ -468,6 +530,9 @@ void HoruxDesigner::userChanged(int index)
     QString file = settings.value("file", "").toString();
     bool ssl = settings.value("ssl", false).toBool();
     int pictureColumn = settings.value("pictureColumn", -1).toInt();
+    int primaryKeyColumn = settings.value("primaryKeyColumn", 0).toInt();
+    int column1 = settings.value("column1", 1).toInt();
+    int column2 = settings.value("column2", 2).toInt();
 
     if(userCombo)
     {
@@ -523,6 +588,47 @@ void HoruxDesigner::userChanged(int index)
 
             }
 
+
+            updatePrintPreview();
+        }
+
+        if(dbase.isOpen()) {
+            sqlQuery->first();
+
+            while(sqlQuery->value(primaryKeyColumn).toInt() != userId) {
+                sqlQuery->next();
+            }
+
+            QSqlRecord record = sqlQuery->record();
+
+            for(int i=0; i<record.count(); i++) {
+               userValue[record.fieldName(i)] = record.value(i).toString();
+            }
+
+            if(userCombo && userCombo->count() > userCombo->currentIndex()+1 ) {
+                ui->next->setEnabled(true);
+            }
+
+            userValue["__countIndex"] = QString::number(userCombo->currentIndex());
+
+            if(pictureColumn>=0) {
+                pictureBuffer.close();
+                pictureBuffer.setData(QByteArray());
+
+                QString picturePath = record.value(pictureColumn).toString();
+
+                if(picturePath != "") {
+                    QFile file(picturePath);
+
+                    if(file.open(QIODevice::ReadOnly)) {
+                         pictureBuffer.setData(file.readAll());
+
+                    }
+                }
+
+                pictureBuffer.open(QBuffer::ReadWrite);
+
+            }
 
             updatePrintPreview();
         }
@@ -711,6 +817,7 @@ void HoruxDesigner::setDatabase()
     bool ssl = settings.value("ssl", false).toBool();
     QString engine = settings.value("engine", "HORUX").toString();
     QString file = settings.value("file", "").toString();
+    QString sql = settings.value("sql", "").toString();
 
     int primaryKeyColumn = settings.value("primaryKeyColumn", 0).toInt();
     int column1 = settings.value("column1", 1).toInt();
@@ -730,6 +837,7 @@ void HoruxDesigner::setDatabase()
     dlg.setColumn1(column1);
     dlg.setColumn2(column2);
     dlg.setPictureColumn(pictureColumn);
+    dlg.setSqlRequest(sql);
 
     if(dlg.exec() == QDialog::Accepted)
     {
@@ -744,6 +852,7 @@ void HoruxDesigner::setDatabase()
         settings.setValue("ssl",dlg.getSSL());
         settings.setValue("engine",dlg.getEngine());
         settings.setValue("file",dlg.getFile());
+        settings.setValue("sql",dlg.getSqlRequest());
 
         settings.setValue("primaryKeyColumn",dlg.getPrimaryKey());
         settings.setValue("column1",dlg.getColumn1());
@@ -763,6 +872,7 @@ void HoruxDesigner::setDatabase()
         column1 = dlg.getColumn1();
         column2 = dlg.getColumn2();
         pictureColumn = dlg.getPictureColumn();
+        sql = dlg.getSqlRequest();
 
         if(engine == "HORUX")
         {
@@ -816,7 +926,7 @@ void HoruxDesigner::setDatabase()
                         QMessageBox::warning(this,tr("Database connection error"),tr("Not able to connect to the database"));
                         dbInformation->setText("Not able to connect to the database");
                     } else {
-
+                        loadSQLData(NULL);
                     }
                 }
             }
