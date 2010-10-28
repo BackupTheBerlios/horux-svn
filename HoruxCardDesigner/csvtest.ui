@@ -1,53 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>HoruxFields</class>
- <widget class="QDialog" name="HoruxFields">
+ <class>CsvTest</class>
+ <widget class="QDialog" name="CsvTest">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>423</width>
-    <height>334</height>
+    <width>400</width>
+    <height>300</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Database fields</string>
+   <string>CSV Test</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="1" column="0">
-    <widget class="QListWidget" name="fieldsList">
-     <property name="selectionMode">
-      <enum>QAbstractItemView::MultiSelection</enum>
-     </property>
-     <property name="selectionRectVisible">
-      <bool>false</bool>
+   <item row="0" column="0">
+    <widget class="QTableWidget" name="tableWidget">
+     <property name="editTriggers">
+      <set>QAbstractItemView::NoEditTriggers</set>
      </property>
     </widget>
    </item>
-   <item row="1" column="1">
-    <widget class="QTextEdit" name="textDisplay"/>
-   </item>
-   <item row="2" column="0">
+   <item row="1" column="0">
     <widget class="QDialogButtonBox" name="buttonBox">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
      <property name="standardButtons">
-      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="0">
-    <widget class="QLabel" name="label">
-     <property name="text">
-      <string>Database fields</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="1">
-    <widget class="QLabel" name="label_2">
-     <property name="text">
-      <string>Displayed fields</string>
+      <set>QDialogButtonBox::Ok</set>
      </property>
     </widget>
    </item>
@@ -58,7 +38,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>accepted()</signal>
-   <receiver>HoruxFields</receiver>
+   <receiver>CsvTest</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -74,7 +54,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>rejected()</signal>
-   <receiver>HoruxFields</receiver>
+   <receiver>CsvTest</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">

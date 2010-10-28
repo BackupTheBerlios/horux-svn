@@ -18,7 +18,9 @@ SOURCES += main.cpp \
     horuxdialog.cpp \
     horuxfields.cpp \
     databaseconnection.cpp \
-    printcounter.cpp
+    printcounter.cpp \
+    csvtest.cpp \
+    formattext.cpp
 HEADERS += horuxdesigner.h \
     cardscene.h \
     carditemtext.h \
@@ -29,7 +31,9 @@ HEADERS += horuxdesigner.h \
     horuxdialog.h \
     horuxfields.h \
     databaseconnection.h \
-    printcounter.h
+    printcounter.h \
+    csvtest.h \
+    formattext.h
 FORMS += horuxdesigner.ui \
     textsetting.ui \
     cardsetting.ui \
@@ -38,7 +42,9 @@ FORMS += horuxdesigner.ui \
     horuxdialog.ui \
     horuxfields.ui \
     databaseconnection.ui \
-    printcounter.ui
+    printcounter.ui \
+    csvtest.ui \
+    formattext.ui
 RESOURCES += ressource.qrc
 win32:RC_FILE = myapp.rc
 TRANSLATIONS = horuxcarddesigner_fr.ts

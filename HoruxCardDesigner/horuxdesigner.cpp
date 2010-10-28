@@ -62,6 +62,7 @@ void HoruxDesigner::loadData(QSplashScreen *sc)
     QString path = settings.value("path", "").toString();
     QString database = settings.value("database", "").toString();
     QString engine = settings.value("engine", "HORUX").toString();
+    QString file = settings.value("file", "").toString();
 
     bool isDbType = false;
 
@@ -71,7 +72,8 @@ void HoruxDesigner::loadData(QSplashScreen *sc)
         dbInformation->setText(tr("Connection to Horux database"));
         loadHoruxSoap(sc);
     } else if(engine == "CSV") {
-        dbInformation->setText(tr("Connection to CSV file: ") + path);
+        dbInformation->setText(tr("Connection to CSV file: ") + file);
+        loadCSVData(sc);
     } else if(engine == "QMYSQL") {
         if(!QSqlDatabase::contains("horux"))
             dbase = QSqlDatabase::addDatabase("QMYSQL","horux");
@@ -172,6 +174,73 @@ void HoruxDesigner::loadHoruxSoap(QSplashScreen *sc)
     }
 
     transport.submitRequest(message, path+"/index.php?soap=horux&password=" + password + "&username=" + username);
+}
+
+void HoruxDesigner::loadCSVData(QSplashScreen *sc) {
+    if(sc != NULL)
+    {
+        sc->showMessage(tr("The data are loading from the CSV file..."),Qt::AlignLeft, Qt::white);
+        QApplication::processEvents();
+    }
+
+    QSettings settings("Letux", "HoruxCardDesigner", this);
+
+    QString file = settings.value("file", "").toString();
+
+
+    bool isNew = false;
+
+    if(userCombo == NULL)
+    {
+        isNew = true;
+        userCombo = new QComboBox();
+    }
+    else
+    {
+        userCombo->deleteLater();
+        userCombo = new QComboBox();
+    }
+
+    QFile f(file);
+    if ( f.open(QIODevice::ReadOnly) ) { // file opened successfully
+        QTextStream t( &f ); // use a text stream
+        bool isFirstLine = true;
+        int i=0;
+        while ( !t.atEnd()  ) { // until end of file...
+            QString line = t.readLine(); // line of text excluding '\n'
+
+            if(line != "") {
+                QStringList list = line.split(",");
+                if(isFirstLine) {
+                    isFirstLine = false;
+                    QStringList listSimplified;
+                    for(int i=0; i<list.count(); i++) {
+                       listSimplified.append(list.at(i).simplified());
+                    }
+                    csvHeader = listSimplified;
+                } else {
+                    userCombo->addItem(list.at(1).simplified () + " " + list.at(2).simplified (), list.at(0).simplified ());
+                    csvData[i] = list;
+                    i++;
+                }
+            }            
+        }
+
+    } else {
+        QMessageBox::warning(this,tr("CSV file error"),tr("Not able to open the file"));
+
+    }
+
+    ui->step->setText("1/" + QString::number(userCombo->count()));
+
+    if(isNew)
+        ui->toolBar->addSeparator();
+    ui->toolBar->addWidget(userCombo);
+    connect( userCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(userChanged(int)));
+
+    if(userCombo->count()>0)
+        userChanged(0);
+
 }
 
 void HoruxDesigner::sslErrors ( QNetworkReply * reply, const QList<QSslError> & errors )
@@ -359,15 +428,11 @@ void HoruxDesigner::readSoapResponse()
     {
         const QtSoapType &record =  returnValue[i];
 
-        for(int j=0; j<record.count(); j+=24)
-        {
-            const QtSoapType &field_id =  record[j];
-            const QtSoapType &field_name =  record[j+1];
-            const QtSoapType &field_firstname =  record[j+2];
+        const QtSoapType &field_id =  record[0];
+        const QtSoapType &field_name =  record[1];
+        const QtSoapType &field_firstname =  record[2];
 
-            userCombo->addItem(field_name["value"].toString() + " " + field_firstname["value"].toString(), field_id["value"].toInt());
-        }
-
+        userCombo->addItem(field_name["value"].toString() + " " + field_firstname["value"].toString(), field_id["value"].toInt());
     }
 
     ui->step->setText("1/" + QString::number(userCombo->count()));
@@ -385,31 +450,55 @@ void HoruxDesigner::readSoapResponse()
 
 void HoruxDesigner::userChanged(int index)
 {
+    QSettings settings("Letux", "HoruxCardDesigner", this);
+
+    QString host = settings.value("host", "localhost").toString();
+    QString username = settings.value("username", "root").toString();
+    QString password = settings.value("password", "").toString();
+    QString path = settings.value("path", "").toString();
+    QString database = settings.value("database", "").toString();
+    QString engine = settings.value("engine", "HORUX").toString();
+    QString file = settings.value("file", "").toString();
+    bool ssl = settings.value("ssl", "").toBool();
+
+
     if(userCombo)
     {
         int userId = userCombo->itemData(index).toInt();
-        disconnect(&transport, 0, this, 0);
-        connect(&transport, SIGNAL(responseReady()),this, SLOT(readSoapResponseUser()));
 
-        QSettings settings("Letux", "HoruxCardDesigner", this);
-        QString username = settings.value("username", "root").toString();
-        QString password = settings.value("password", "").toString();
-        QString path = settings.value("path", "").toString();
-        bool ssl = settings.value("ssl", "").toBool();
+        if(engine == "HORUX") {
+            disconnect(&transport, 0, this, 0);
+            connect(&transport, SIGNAL(responseReady()),this, SLOT(readSoapResponseUser()));
 
-        if(ssl)
-            connect(transport.networkAccessManager(),SIGNAL(sslErrors( QNetworkReply *, const QList<QSslError> & )), this, SLOT(sslErrors(QNetworkReply*,QList<QSslError>)));
+            if(ssl)
+                connect(transport.networkAccessManager(),SIGNAL(sslErrors( QNetworkReply *, const QList<QSslError> & )), this, SLOT(sslErrors(QNetworkReply*,QList<QSslError>)));
 
 
-        QtSoapMessage message;
-        message.setMethod("getUserById");
-        message.addMethodArgument("id","",userId);
+            QtSoapMessage message;
+            message.setMethod("getUserById");
+            message.addMethodArgument("id","",userId);
 
-        statusBar()->showMessage("The data are loading from Horux Gui...");
+            statusBar()->showMessage("The data are loading from Horux Gui...");
 
-        transport.submitRequest(message, path+"/index.php?soap=horux&password=" + password + "&username=" + username);
+            transport.submitRequest(message, path+"/index.php?soap=horux&password=" + password + "&username=" + username);
+        }
 
+        if(engine == "CSV") {
 
+            int i = 0;
+            foreach(QString s, csvHeader) {
+               userValue[s] = csvData[index].at(i);
+               i++;
+            }
+
+            if(csvData.count() > 0 && userCombo && userCombo->count() > userCombo->currentIndex()+1 ) {
+                ui->next->setEnabled(true);
+            }
+
+            userValue["__countIndex"] = QString::number(userCombo->currentIndex());
+
+             updatePrintPreview();
+        }
     }
 }
 
@@ -651,7 +740,9 @@ void HoruxDesigner::setDatabase()
         {
             if(engine == "CSV")
             {
-                dbInformation->setText(tr("Connection to CSV file: ") + path);
+                loadCSVData(NULL);
+
+                dbInformation->setText(tr("Connection to CSV file: ") + file);
             }
             else
             {
@@ -1013,6 +1104,10 @@ void HoruxDesigner::setParamView(QGraphicsItem *item)
                     connect(textPage->left, SIGNAL(valueChanged(QString)), textItem, SLOT(leftChanged(const QString &)));
                     connect(textPage->alignment, SIGNAL(currentIndexChanged ( int )), textItem, SLOT(alignmentChanged(int)));
                     connect(textPage, SIGNAL(changePrintCounter(int,int,int)), textItem, SLOT(setPrintCounter(int,int,int)));
+                    connect(textPage, SIGNAL(changeFormat(int,int, int, QString, QString)),  textItem, SLOT(setFormat(int,int,int,QString, QString)));
+
+
+                    textPage->setFormat(textItem->format,textItem->format_digit,textItem->format_decimal,textItem->format_date, textItem->format_sourceDate);
 
                     textPage->name->setText(textItem->name);
 
@@ -1267,6 +1362,8 @@ void HoruxDesigner::updatePrintPreview()
         scenePreview->clear();
         scenePreview->setBackgroundBrush(Qt::gray);
         ui->graphicViewPreview->setScene(scenePreview);
+    } else {
+        scenePreview->clear();
     }
 
     scenePreview->addPixmap (pixmap);

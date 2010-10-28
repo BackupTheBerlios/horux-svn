@@ -43,6 +43,7 @@ private slots:
     void onTest();
     void readResponse();
     void sslErrors ( QNetworkReply * reply, const QList<QSslError> & errors );
+    void openFile();
 
 private:
     Ui::DatabaseConnection *m_ui;

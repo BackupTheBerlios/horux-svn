@@ -19,6 +19,7 @@ class CardTextItem : public QGraphicsTextItem
 
 public:
     enum { Type = UserType + 3 };
+    enum FORMAT { STRING, INTEGER, FLOAT, DATE};
 
     CardTextItem(QGraphicsItem *parent = 0, QGraphicsScene *scene = 0);
 
@@ -53,6 +54,7 @@ public slots:
     void sourceChanged(const int &);
     void alignmentChanged(int);
     void setPrintCounter(int, int, int);
+    void setFormat(int, int, int, QString, QString);
 
 public:
     double rotation;
@@ -67,6 +69,14 @@ public:
     int initialValue;
     int increment;
     int digits;
+
+    FORMAT format;
+    int format_digit;
+    int format_decimal;
+    QString format_date;
+    QString format_sourceDate;
+
+
 };
 
 #endif

@@ -2,6 +2,8 @@
 #include "ui_databaseconnection.h"
 #include <QMessageBox>
 #include <QNetworkRequest>
+#include <QFileDialog>
+#include "csvtest.h"
 
 
 DatabaseConnection::DatabaseConnection(QWidget *parent) :
@@ -20,6 +22,8 @@ DatabaseConnection::DatabaseConnection(QWidget *parent) :
     connect(&transport, SIGNAL(responseReady()), SLOT(readResponse()));
 
     connect(m_ui->engine, SIGNAL(currentIndexChanged(int)), this, SLOT(onEngineCurrentIndexChanged(int)));
+
+    connect(m_ui->search, SIGNAL(clicked()), this, SLOT(openFile()) );
 
     foreach(QString driver, QSqlDatabase::drivers())
     {
@@ -78,7 +82,7 @@ void DatabaseConnection::setEngine(const QString engine)
 
     if(engineData == "HORUX")
     {
-        m_ui->database->setEnabled(true);
+        m_ui->database->setEnabled(false);
         m_ui->password->setEnabled(true);
         m_ui->username->setEnabled(true);
         m_ui->ssl->setEnabled(true);
@@ -216,7 +220,20 @@ void DatabaseConnection::onTest()
     {
         if(engine == "CSV")
         {
+            QFile f(m_ui->file->text());
+            if ( f.open(QIODevice::ReadOnly) ) { // file opened successfully
+                QTextStream t( &f ); // use a text stream
 
+                CsvTest dlg(this);
+
+                dlg.setCSV(t.readAll());
+
+                dlg.exec();
+
+            } else {
+                QMessageBox::warning(this,tr("CSV file error"),tr("Not able to open the file"));
+
+            }
         }
         else
         {
@@ -291,4 +308,31 @@ void DatabaseConnection::onEngineCurrentIndexChanged(int index)
 {
     setEngine(m_ui->engine->itemData(index).toString());
 
+}
+
+void DatabaseConnection::openFile() {
+
+    QString fileName;
+    QString engineData = m_ui->engine->itemData(m_ui->engine->currentIndex()).toString();
+
+
+    if(engineData == "CSV") {
+        fileName = QFileDialog::getOpenFileName(this,
+                                                    tr("Open a CSV file"),
+                                                    "",
+                                                    tr("CSV File (*.csv);;All files (*.*)"));
+    }
+
+    if(engineData == "QSQLITE") {
+        fileName = QFileDialog::getOpenFileName(this,
+                                                    tr("Open an SQLite file"),
+                                                    "",
+                                                    tr("All files (*.*)"));
+
+    }
+
+    if (!fileName.isEmpty())
+    {
+        m_ui->file->setText(fileName);
+    }
 }

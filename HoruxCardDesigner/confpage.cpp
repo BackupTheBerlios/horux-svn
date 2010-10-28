@@ -2,6 +2,7 @@
 #include "horuxfields.h"
 #include "printcounter.h"
 #include "confpage.h"
+#include "formattext.h"
 
 CardPage::CardPage(QWidget *parent)
     : QWidget(parent)
@@ -45,6 +46,8 @@ TextPage::TextPage(QWidget *parent)
     connect(fontButton, SIGNAL(clicked()), this, SLOT(setFont()));
     connect(colorButton, SIGNAL(clicked()), this, SLOT(setColor()));
     connect(dataSource, SIGNAL(clicked()), this, SLOT(setDataSource()));
+    connect(formatButton, SIGNAL(clicked()), this, SLOT(setFormat()));
+    connect(format, SIGNAL(currentIndexChanged(int)), this, SLOT(formatCBChange(int)));
 
     dataSource->hide();
 
@@ -52,6 +55,32 @@ TextPage::TextPage(QWidget *parent)
     source->setCurrentIndex(0);
 }
 
+void TextPage::formatCBChange ( int index ) {
+    emit changeFormat(index,format_digit, format_decimal, format_date, format_sourceDate);
+}
+
+void TextPage::setFormat() {
+    FormatText dlg(this);
+
+    dlg.setFormat(format->currentIndex(), format_digit, format_decimal, format_date, format_sourceDate);
+
+    if(dlg.exec() == QDialog::Accepted) {
+        format_digit = dlg.digit();
+        format_decimal = dlg.decimal();
+        format_date = dlg.date();
+        format_sourceDate = dlg.sourceDate();
+
+        emit changeFormat(format->currentIndex(),format_digit, format_decimal, format_date, format_sourceDate);
+    }
+}
+
+void TextPage::setFormat(int f, int digit, int decimal, QString date, QString sourceDate) {
+    format_digit = digit;
+    format_decimal = decimal;
+    format_date = date;
+    format_sourceDate = sourceDate;
+    format->setCurrentIndex(f);
+}
 
 void TextPage::setColor()
 {

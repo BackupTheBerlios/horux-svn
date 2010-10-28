@@ -11,7 +11,6 @@ HoruxFields::HoruxFields(QWidget *parent) :
     m_ui->setupUi(this);
     connect(m_ui->fieldsList, SIGNAL(itemSelectionChanged()), this, SLOT(itemSelectionChanged()));
 
-    connect(&transport, SIGNAL(responseReady()),this, SLOT(readSoapResponse()), Qt::UniqueConnection);
 
     QSettings settings("Letux", "HoruxCardDesigner", this);
 
@@ -19,25 +18,51 @@ HoruxFields::HoruxFields(QWidget *parent) :
     QString username = settings.value("username", "root").toString();
     QString password = settings.value("password", "").toString();
     QString path = settings.value("path", "").toString();
+    QString database = settings.value("database", "").toString();
+    QString engine = settings.value("engine", "HORUX").toString();
+    QString file = settings.value("file", "").toString();
     bool ssl = settings.value("ssl", "").toBool();
 
-    QtSoapMessage message;
-    message.setMethod("getUserFields");
+    if(engine == "HORUX") {
+        connect(&transport, SIGNAL(responseReady()),this, SLOT(readSoapResponse()), Qt::UniqueConnection);
 
 
-    if(ssl)
-    {
-        transport.setHost(host, true);
-        connect(transport.networkAccessManager(),SIGNAL(sslErrors( QNetworkReply *, const QList<QSslError> & )),
-                this, SLOT(sslErrors(QNetworkReply*,QList<QSslError>)), Qt::UniqueConnection);
+        QtSoapMessage message;
+        message.setMethod("getUserFields");
+
+
+        if(ssl)
+        {
+            transport.setHost(host, true);
+            connect(transport.networkAccessManager(),SIGNAL(sslErrors( QNetworkReply *, const QList<QSslError> & )),
+                    this, SLOT(sslErrors(QNetworkReply*,QList<QSslError>)), Qt::UniqueConnection);
+        }
+        else
+        {
+            transport.setHost(host);
+        }
+
+        transport.submitRequest(message, path+"/index.php?soap=horux&password=" + password + "&username=" + username);
     }
-    else
-    {
-        transport.setHost(host);
-    }
 
-    transport.submitRequest(message, path+"/index.php?soap=horux&password=" + password + "&username=" + username);
+     if(engine == "CSV") {
 
+         QFile f(file);
+         if ( f.open(QIODevice::ReadOnly) ) { // file opened successfully
+             QTextStream t( &f ); // use a text stream
+             QString line = t.readLine(); // line of text excluding '\n'
+             QStringList list = line.split(",");
+
+             for(int i=0; i<list.count(); i++ )
+             {
+                 m_ui->fieldsList->addItem(list.at(i).simplified ());
+             }
+
+         } else {
+             QMessageBox::warning(this,tr("CSV file error"),tr("Not able to open the file"));
+
+         }
+     }
 }
 
 HoruxFields::~HoruxFields()

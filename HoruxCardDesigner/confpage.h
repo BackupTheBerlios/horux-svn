@@ -36,6 +36,7 @@ class TextPage : public QWidget, public Ui::textSetting
 public:
     TextPage(QWidget *parent = 0);
     void connectDataSource();
+    void setFormat(int, int, int, QString, QString);
 
 public slots:
     void setSource(int s);
@@ -44,11 +45,14 @@ private slots:
     void setColor();
     void setFont();
     void setDataSource();
+    void setFormat();
+    void formatCBChange ( int index );
 
 signals:
     void changeFont(const QFont &);
     void changeColor(const QColor &);
     void changePrintCounter(int , int , int);
+    void changeFormat(int, int, int , QString, QString);
 
 public:
     QColor color;
@@ -56,6 +60,11 @@ public:
     int initialValue;
     int increment;
     int digits;
+
+    int format_digit;
+    int format_decimal;
+    QString format_date;
+    QString format_sourceDate;
 };
 
 #include "ui_pixmapsetting.h"

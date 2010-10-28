@@ -18,6 +18,11 @@ CardTextItem::CardTextItem(QGraphicsItem *parent, QGraphicsScene *scene)
     source = 0;
     alignment = 0;
 
+    format = STRING;
+    format_digit = 0;
+    format_decimal = 0;
+    format_date = "";
+
     isPrinting = false;
 
     setTextWidth(-1);
@@ -39,112 +44,71 @@ void CardTextItem::setPrintingMode(bool printing, QMap<QString, QString>userData
          while (i.hasNext()) {
              i.next();
 
-             text_tmp.replace("%" + i.key() + "%", i.value());
+             if(text_tmp.contains("%" + i.key() + "%")) {
+                 text_tmp = text_tmp.replace("%" + i.key() + "%", i.value().simplified());
+
+                 switch(format) {
+                     case 1: // integer
+                         text_tmp = text_tmp.rightJustified(format_digit,'0');
+                         break;
+                     case 2: // float
+                         {
+                             QStringList formatted = text_tmp.split(".");
+
+                             if(formatted.count() == 2) { // with the point
+                                text_tmp = formatted.at(0) + "." + formatted.at(1).leftJustified(format_decimal,'0');
+                             } else {
+                                 text_tmp = formatted.at(0) + "." + QString("").leftJustified(format_decimal,'0');
+                             }
+
+                         }
+                         break;
+                     case 3: // date
+                         QDateTime dateTime = QDateTime::fromString(text_tmp, format_sourceDate);
+                         text_tmp = dateTime.toString(format_date);
+                         break;
+                 }
+             }
 
          }
 
-        /*if(name.contains("Name"))
-        {
-            text_tmp.replace("Name", userData["name"]);
-        }
-
-        if(name.contains("Firstname"))
-        {
-            text_tmp.replace("Firstname", userData["firstname"]);
-        }
-
-        if(name.contains("Validity date"))
-        {
-            text_tmp.replace("Validity date", userData["validity_date"]);
-        }
-
-        if(name.contains("Department"))
-        {
-            text_tmp.replace("Department", userData["department"]);
-        }
-
-        if(name.contains("Gender"))
-        {
-            text_tmp.replace("Gender", userData["gender"]);
-        }
-
-        if(name.contains("Street (private)"))
-        {
-            text_tmp.replace("Street (private)", userData["street_private"]);
-        }
-
-        if(name.contains("City (private)"))
-        {
-            text_tmp.replace("City (private)", userData["city_private"]);
-        }
-
-        if(name.contains("Zip (private)"))
-        {
-            text_tmp.replace("Zip (private)", userData["zip_private"]);
-        }
-
-        if(name.contains("Country (private)"))
-        {
-            text_tmp.replace("Country (private)", userData["country_private"]);
-        }
-
-        if(name.contains("Phone (private)"))
-        {
-            text_tmp.replace("Phone (private)", userData["phone_private"]);
-        }
-
-        if(name.contains( "Email (private)"))
-        {
-            text_tmp.replace("Email (private)", userData["email_private"]);
-        }
-
-        if(name.contains("Firme"))
-        {
-            text_tmp.replace("Firme", userData["firme"]);
-        }
-
-        if(name.contains("Street (Professional)"))
-        {
-            text_tmp.replace("Street (Professional)", userData["street_professional"]);
-        }
-
-        if(name.contains("City (Professional)"))
-        {
-            text_tmp.replace("City (Professional)", userData["city_professional"]);
-        }
-
-        if(name.contains("Zip (Professional)"))
-        {
-            text_tmp.replace("Zip (Professional)", userData["zip_professional"]);
-        }
-
-        if(name.contains("Country (Professional)"))
-        {
-            text_tmp.replace("Country (Professional)", userData["country_professional"]);
-        }
-
-        if(name.contains("Email (Professional)"))
-        {
-            text_tmp.replace("Email (Professional)", userData["email_professional"]);
-        }
-
-        if(name.contains("Phone (Professional)"))
-        {
-            text_tmp.replace("Phone (Professional)", userData["phone_professional"]);
-        }
-
-        if(name.contains("Fax (Professional)"))
-        {
-            text_tmp.replace("Fax (Professional)", userData["fax_professional"]);
-        }*/
-
         setPlainText(text_tmp);
-
 
         setTextWidth(-1);
         document()->setTextWidth(-1);
 
-        qreal width = textWidth();
+    }
+
+    if(source == 0 && isPrinting) {
+        text = toPlainText();
+        QString text_tmp = text;
+
+        switch(format) {
+            case 1: // integer
+                text_tmp = text_tmp.rightJustified(format_digit,'0');
+                break;
+            case 2: // float
+                {
+                    QStringList formatted = text_tmp.split(".");
+
+                    if(formatted.count() == 2) { // with the point
+                       text_tmp = formatted.at(0) + "." + formatted.at(1).leftJustified(format_decimal,'0');
+                    } else {
+                        text_tmp = formatted.at(0) + "." + QString("").leftJustified(format_decimal,'0');
+                    }
+
+                }
+                break;
+            case 3: // date
+                QDateTime dateTime = QDateTime::fromString(text_tmp, format_sourceDate);
+                text_tmp = dateTime.toString(format_date);
+                break;
+        }
+
+        setPlainText(text_tmp);
+
+        setTextWidth(-1);
+        document()->setTextWidth(-1);
     }
 
     if(source == 2 && isPrinting) {
@@ -259,10 +223,34 @@ void CardTextItem::loadText(QDomElement text )
             fontUnderline = node.toElement().text().toInt();
         }
 
+        if(node.toElement().tagName() == "format")
+        {
+            format = (FORMAT)node.toElement().text().toInt();
+        }
+
+        if(node.toElement().tagName() == "format_decimal")
+        {
+            format_decimal = node.toElement().text().toInt();
+        }
+
+        if(node.toElement().tagName() == "format_digit")
+        {
+            format_digit = node.toElement().text().toInt();
+        }
+
+        if(node.toElement().tagName() == "format_date")
+        {
+            format_date = node.toElement().text();
+        }
+
+        if(node.toElement().tagName() == "format_sourceDate")
+        {
+            format_sourceDate = node.toElement().text();
+        }
+
 
         node = node.nextSibling();
     }
-
     setPos(posX, posY);
     QFont font;
     font.setBold(fontBold);
@@ -370,6 +358,32 @@ QDomElement CardTextItem::getXmlItem(QDomDocument xml )
 
     newElement = xml.createElement( "font-underline");
     text =  xml.createTextNode(QString::number(font().underline()));
+    newElement.appendChild(text);
+    textItem.appendChild(newElement);
+
+    newElement = xml.createElement( "format");
+    text =  xml.createTextNode(QString::number(format));
+    newElement.appendChild(text);
+    textItem.appendChild(newElement);
+
+    newElement = xml.createElement( "format_date");
+    text =  xml.createTextNode(format_date);
+    newElement.appendChild(text);
+    textItem.appendChild(newElement);
+
+    newElement = xml.createElement( "format_sourceDate");
+    text =  xml.createTextNode(format_sourceDate);
+    newElement.appendChild(text);
+    textItem.appendChild(newElement);
+
+
+    newElement = xml.createElement( "format_decimal");
+    text =  xml.createTextNode(QString::number(format_decimal));
+    newElement.appendChild(text);
+    textItem.appendChild(newElement);
+
+    newElement = xml.createElement( "format_digit");
+    text =  xml.createTextNode(QString::number(format_digit));
     newElement.appendChild(text);
     textItem.appendChild(newElement);
 
@@ -542,3 +556,10 @@ void CardTextItem::setPrintCounter(int iv, int inc, int di) {
     digits = di;
 }
 
+void CardTextItem::setFormat(int _format, int digit, int decimal, QString date, QString sourceDate) {
+    format = (FORMAT)_format;
+    format_decimal = decimal;
+    format_digit = digit;
+    format_date = date;
+    format_sourceDate = sourceDate;
+}
