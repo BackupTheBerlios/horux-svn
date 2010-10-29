@@ -255,13 +255,13 @@ void HoruxDesigner::loadCSVData() {
                     for(int i=0; i<list.count(); i++) {
                        listSimplified.append(list.at(i).simplified());
                     }
-                    csvHeader = listSimplified;
+                    header = listSimplified;
                 } else {
                     if(column2>0)
                         userCombo->addItem(list.at(column1).simplified () + " " + list.at(column2).simplified (), list.at(primaryKeyColumn).simplified ());
                     else
                         userCombo->addItem(list.at(column1).simplified (), list.at(primaryKeyColumn).simplified());
-                    csvData[list.at(primaryKeyColumn).simplified().toInt()] = list;
+                    userData[list.at(primaryKeyColumn).simplified().toInt()] = list;
 
                     i++;
                 }
@@ -480,14 +480,17 @@ void HoruxDesigner::readSoapResponse()
 
         userCombo->addItem(field_name["value"].toString() + " " + field_firstname["value"].toString(), field_id["value"].toInt());
 
-        QStringList userData;
+        QStringList data;
 
         for(int j=0; j<record.count(); j++) {
             const QtSoapType &field = record[j];
-            userData.append(field["value"].toString());
+            data.append(field["value"].toString());
+
+            if(!header.contains(field["key"].toString()))
+                header.append(field["key"].toString());
         }
 
-        horuxData[field_id["value"].toInt()] = userData;
+        userData[field_id["value"].toInt()] = data;
     }
 
     ui->step->setText("1/" + QString::number(userCombo->count()));
@@ -511,7 +514,22 @@ void HoruxDesigner::userChanged(int index)
         int userId = userCombo->itemData(index).toInt();
 
         if(engine == "HORUX") {
-            disconnect(&transport, 0, this, 0);
+
+            int i = 0;
+            foreach(QString s, header) {
+               userValue[s] = userData[userId].at(i);
+               i++;
+            }
+
+            if(userData.count() > 0 && userCombo && userCombo->count() > userCombo->currentIndex()+1 ) {
+                ui->next->setEnabled(true);
+            }
+
+            userValue["__countIndex"] = QString::number(userCombo->currentIndex());
+
+            updatePrintPreview();
+
+            /*disconnect(&transport, 0, this, 0);
             connect(&transport, SIGNAL(responseReady()),this, SLOT(readSoapResponseUser()));
 
             if(ssl)
@@ -524,18 +542,18 @@ void HoruxDesigner::userChanged(int index)
 
             statusBar()->showMessage("The data are loading from Horux Gui...");
 
-            transport.submitRequest(message, path+"/index.php?soap=horux&password=" + password + "&username=" + username);
+            transport.submitRequest(message, path+"/index.php?soap=horux&password=" + password + "&username=" + username);*/
         }
 
         if(engine == "CSV") {
 
             int i = 0;
-            foreach(QString s, csvHeader) {
-               userValue[s] = csvData[userId].at(i);
+            foreach(QString s, header) {
+               userValue[s] = userData[userId].at(i);
                i++;
             }
 
-            if(csvData.count() > 0 && userCombo && userCombo->count() > userCombo->currentIndex()+1 ) {
+            if(userData.count() > 0 && userCombo && userCombo->count() > userCombo->currentIndex()+1 ) {
                 ui->next->setEnabled(true);
             }
 
@@ -545,7 +563,7 @@ void HoruxDesigner::userChanged(int index)
                 pictureBuffer.close();
                 pictureBuffer.setData(QByteArray());
 
-                QString picturePath = csvData[userId].at(pictureColumn).simplified();
+                QString picturePath = userData[userId].at(pictureColumn).simplified();
 
                 if(picturePath != "") {
                     QFile file(picturePath);
@@ -622,7 +640,7 @@ void HoruxDesigner::userChanged(int index)
 
 void HoruxDesigner::readSoapResponseUser()
 {
-qDebug() << "readSoapResponseUser";
+
     const QtSoapMessage &response = transport.getResponse();
     if (response.isFault()) {
         statusBar()->clearMessage();
@@ -637,7 +655,7 @@ qDebug() << "readSoapResponseUser";
         const QtSoapType &field =  value[i];
         userValue[field[0].toString()] = field[1].toString();
 
-        horuxHeader.append(field[0].toString());
+        header.append(field[0].toString());
 
     }
 
@@ -743,6 +761,8 @@ void HoruxDesigner::openRecentFile()
     QAction *action = qobject_cast<QAction *>(sender());
     if (action)
     {
+        userData.clear();
+        header.clear();
 
         newCard();
         currenFile.setFileName(action->data().toString());
@@ -840,6 +860,9 @@ void HoruxDesigner::open()
                                                     tr("Horux Card Designer (*.xml)"));
     if (!fileName.isEmpty())
     {
+
+        userData.clear();
+        header.clear();
 
         setCurrentFile(fileName);
 
@@ -1234,10 +1257,10 @@ void HoruxDesigner::printSelection() {
     dlg.setPrintedUser(printedUser);
 
     if(engine == "CSV")
-        dlg.setCSVData(csvHeader,csvData);
+        dlg.setCSVData(header,userData);
     else
         if(engine == "HORUX")
-            dlg.setHoruxData(horuxHeader, horuxData);
+            dlg.setHoruxData(header, userData);
         else
             if(engine != "NOT_USED")
                 dlg.setSQLData(sqlQuery, primaryKeyColumn);
@@ -1276,7 +1299,6 @@ void HoruxDesigner::printSelection() {
                 QPainter painter(printer);
                 painter.setRenderHint(QPainter::Antialiasing);
 
-                qDebug() << "PRINT CARD";
                 ui->graphicsView->render(&painter, printer->pageRect(), cardRect.toRect(), Qt::KeepAspectRatio );
 
                 scene->getCardItem()->setPrintingMode( false, pictureBuffer, userValue );

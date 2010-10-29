@@ -50,6 +50,7 @@ public:
     static int getColumn1() { return pThis->column1; }
     static int getColumn2() { return pThis->column2; }
     static int getPictureColumn() { return pThis->pictureColumn; }
+    static QStringList getHeader() { return pThis->header; }
 
 private:
     void createToolBox();
@@ -147,13 +148,10 @@ private:
 
     QGraphicsScene *scenePreview;
 
-    QMap<int, QStringList>csvData;
-    QStringList csvHeader;
+    QMap<int, QStringList>userData;
+    QStringList header;
 
     QSqlQuery *sqlQuery;
-
-    QMap<int, QStringList>horuxData;
-    QStringList horuxHeader;
 
     QStringList printedUser;
 

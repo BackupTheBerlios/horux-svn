@@ -24,12 +24,9 @@ protected:
 
 protected slots:
     void itemSelectionChanged ();
-    void sslErrors ( QNetworkReply * reply, const QList<QSslError> & errors );
-    void readSoapResponse();
 
 private:
     Ui::HoruxFields *m_ui;
-    QtSoapHttpTransport transport;
 };
 
 #endif // HORUXFIELDS_H

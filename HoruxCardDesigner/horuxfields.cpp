@@ -13,54 +13,16 @@ HoruxFields::HoruxFields(QWidget *parent) :
     m_ui->setupUi(this);
     connect(m_ui->fieldsList, SIGNAL(itemSelectionChanged()), this, SLOT(itemSelectionChanged()));
 
-
-    QString host = HoruxDesigner::getHost();
-    QString username = HoruxDesigner::getUsername();
-    QString password = HoruxDesigner::getPassword();
-    QString path = HoruxDesigner::getPath();
     QString engine = HoruxDesigner::getEngine();
-    QString file = HoruxDesigner::getFile();
     QString sql = HoruxDesigner::getSql();
-    bool ssl = HoruxDesigner::getSsl();
 
-    if(engine == "HORUX") {
-        connect(&transport, SIGNAL(responseReady()),this, SLOT(readSoapResponse()), Qt::UniqueConnection);
+     if(engine == "CSV" || engine == "HORUX") {
 
+         QStringList list = HoruxDesigner::getHeader();
 
-        QtSoapMessage message;
-        message.setMethod("getUserFields");
-
-
-        if(ssl)
-        {
-            transport.setHost(host, true);
-            connect(transport.networkAccessManager(),SIGNAL(sslErrors( QNetworkReply *, const QList<QSslError> & )),
-                    this, SLOT(sslErrors(QNetworkReply*,QList<QSslError>)), Qt::UniqueConnection);
-        }
-        else
-        {
-            transport.setHost(host);
-        }
-
-        transport.submitRequest(message, path+"/index.php?soap=horux&password=" + password + "&username=" + username);
-    }
-
-     if(engine == "CSV") {
-
-         QFile f(file);
-         if ( f.open(QIODevice::ReadOnly) ) { // file opened successfully
-             QTextStream t( &f ); // use a text stream
-             QString line = t.readLine(); // line of text excluding '\n'
-             QStringList list = line.split(",");
-
-             for(int i=0; i<list.count(); i++ )
-             {
-                 m_ui->fieldsList->addItem(list.at(i).simplified ());
-             }
-
-         } else {
-             QMessageBox::warning(this,tr("CSV file error"),tr("Not able to open the file"));
-
+         for(int i=0; i<list.count(); i++ )
+         {
+             m_ui->fieldsList->addItem(list.at(i).simplified ());
          }
      }
 
@@ -85,38 +47,6 @@ HoruxFields::~HoruxFields()
 {
     delete m_ui;
 }
-
-void HoruxFields::readSoapResponse()
-{
-
-    const QtSoapMessage &response = transport.getResponse();
-    if (response.isFault()) {
-        QMessageBox::warning(this,tr("Horux webservice error"),tr("Not able to call the Horux GUI web service."));
-        return;
-    }
-
-    const QtSoapType &value = response.returnValue();
-
-    for(int i=0; i<value.count(); i++ )
-    {
-        const QtSoapType &record =  value[i];
-
-        m_ui->fieldsList->addItem(record.toString());
-    }
-
-}
-
-void HoruxFields::sslErrors ( QNetworkReply * reply, const QList<QSslError> & errors )
-{
-    foreach(QSslError sslError, errors)
-    {
-        if(sslError.error() == QSslError::SelfSignedCertificate)
-        {
-            reply->ignoreSslErrors();
-        }
-    }
-}
-
 
 
 void HoruxFields::changeEvent(QEvent *e)
