@@ -32,10 +32,24 @@ public:
     HoruxDesigner(QWidget *parent = 0);
     ~HoruxDesigner();
 
-    void loadData(QSplashScreen *sc);
-    void loadHoruxSoap(QSplashScreen *sc);
-    void loadCSVData(QSplashScreen *sc);
-    void loadSQLData(QSplashScreen *sc);
+    void loadData();
+    void loadHoruxSoap();
+    void loadCSVData();
+    void loadSQLData();
+
+    static QString getHost() { return pThis->host; }
+    static QString getUsername() { return pThis->username; }
+    static QString getPassword() { return pThis->password; }
+    static QString getPath() { return pThis->path; }
+    static QString getDatabaseName() { return pThis->databaseName; }
+    static bool getSsl() { return pThis->ssl; }
+    static QString getEngine() { return pThis->engine; }
+    static QString getFile() { return pThis->file; }
+    static QString getSql() { return pThis->sql; }
+    static int getPrimaryKeyColumn() { return pThis->primaryKeyColumn; }
+    static int getColumn1() { return pThis->column1; }
+    static int getColumn2() { return pThis->column2; }
+    static int getPictureColumn() { return pThis->pictureColumn; }
 
 private:
     void createToolBox();
@@ -95,6 +109,8 @@ protected:
 
 private:
     Ui::HoruxDesigner *ui;
+    static HoruxDesigner *pThis;
+
 
     QButtonGroup *buttonGroup;
 
@@ -135,6 +151,27 @@ private:
     QStringList csvHeader;
 
     QSqlQuery *sqlQuery;
+
+    QMap<int, QStringList>horuxData;
+    QStringList horuxHeader;
+
+    QStringList printedUser;
+
+    //db connection
+    QString host;
+    QString username;
+    QString password;
+    QString path;
+    QString databaseName;
+    bool ssl;
+    QString engine;
+    QString file;
+    QString sql;
+    int primaryKeyColumn;
+    int column1;
+    int column2;
+    int pictureColumn;
+
 };
 
 #endif // HORUXDESIGNER_H

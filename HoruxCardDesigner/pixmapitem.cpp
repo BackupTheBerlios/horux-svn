@@ -4,7 +4,6 @@
 #include <QGraphicsWidget>
 #include <QLabel>
 #include <QMovie>
-#include <QSettings>
 #include <QFile>
 
 PixmapItem::PixmapItem(QGraphicsItem *parent) : QGraphicsPixmapItem(parent)

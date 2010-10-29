@@ -9,14 +9,34 @@
 #include "printpreview.h"
 #include "horuxdialog.h"
 #include "databaseconnection.h"
+#include "printselection.h"
 
 const int InsertTextButton = 10;
 const int InsertImageButton = 11;
 
+HoruxDesigner *HoruxDesigner::pThis = NULL;
+
+
 HoruxDesigner::HoruxDesigner(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::HoruxDesigner)
 {
+    pThis = this;
+
     ui->setupUi(this);
+
+    host = "";
+    username = "";
+    password = "";
+    path = "";
+    databaseName = "";
+    ssl = false;
+    engine = "";
+    file = "";
+    sql = "";
+    primaryKeyColumn = 0;
+    column1 = 1;
+    column2 = 2;
+    pictureColumn = 3;
 
     cardPage = NULL;
     textPage = NULL;
@@ -56,70 +76,60 @@ HoruxDesigner::~HoruxDesigner()
     delete ui;
 }
 
-void HoruxDesigner::loadData(QSplashScreen *sc)
+void HoruxDesigner::loadData()
 {
-    QSettings settings("Letux", "HoruxCardDesigner", this);
-
-    QString host = settings.value("host", "localhost").toString();
-    QString username = settings.value("username", "root").toString();
-    QString password = settings.value("password", "").toString();
-    QString path = settings.value("path", "").toString();
-    QString database = settings.value("database", "").toString();
-    QString engine = settings.value("engine", "HORUX").toString();
-    QString file = settings.value("file", "").toString();
-
     bool isDbType = false;
 
     if(engine == "NOT_USED") {
         dbInformation->setText(tr("No database used"));
     } else if(engine == "HORUX") {
         dbInformation->setText(tr("Connection to Horux database"));
-        loadHoruxSoap(sc);
+        loadHoruxSoap();
     } else if(engine == "CSV") {
         dbInformation->setText(tr("Connection to CSV file: ") + file);
-        loadCSVData(sc);
+        loadCSVData();
     } else if(engine == "QMYSQL") {
         if(!QSqlDatabase::contains("horux"))
             dbase = QSqlDatabase::addDatabase("QMYSQL","horux");
         dbase.setHostName(host);
-        dbase.setDatabaseName(database);
+        dbase.setDatabaseName(databaseName);
         dbase.setUserName(username);
         dbase.setPassword(password);
         isDbType = true;
-        dbInformation->setText(tr("Connection to MySql database: ") + database);
+        dbInformation->setText(tr("Connection to MySql database: ") + databaseName);
     } else if(engine == "QSQLITE") {
         if(!QSqlDatabase::contains("horux"))
             dbase = QSqlDatabase::addDatabase("QSQLITE","horux");
-        dbase.setDatabaseName(database);
+        dbase.setDatabaseName(databaseName);
         isDbType = true;
-        dbInformation->setText(tr("Connection to SQlite database: ") + database );
+        dbInformation->setText(tr("Connection to SQlite database: ") + databaseName );
     } else if(engine == "QPSQL") {
         if(!QSqlDatabase::contains("horux"))
             dbase = QSqlDatabase::addDatabase("QPSQL","horux");
         dbase.setHostName(host);
-        dbase.setDatabaseName(database);
+        dbase.setDatabaseName(databaseName);
         dbase.setUserName(username);
         dbase.setPassword(password);
         isDbType = true;
-        dbInformation->setText(tr("Connection to PSQL database: ") + database);
+        dbInformation->setText(tr("Connection to PSQL database: ") + databaseName);
     } else if(engine == "QODBC") {
         if(!QSqlDatabase::contains("horux"))
             dbase = QSqlDatabase::addDatabase("QODBC","horux");
         dbase.setHostName(host);
-        dbase.setDatabaseName(database);
+        dbase.setDatabaseName(databaseName);
         dbase.setUserName(username);
         dbase.setPassword(password);
         isDbType = true;
-        dbInformation->setText(tr("Connection to ODBC database: ") + database);
+        dbInformation->setText(tr("Connection to ODBC database: ") + databaseName);
     } else if(engine == "QOCI") {
         if(!QSqlDatabase::contains("horux"))
             dbase = QSqlDatabase::addDatabase("QOCI","horux");
         dbase.setHostName(host);
-        dbase.setDatabaseName(database);
+        dbase.setDatabaseName(databaseName);
         dbase.setUserName(username);
         dbase.setPassword(password);        
         isDbType = true;
-        dbInformation->setText(tr("Connection to Oracle database: ") + database);
+        dbInformation->setText(tr("Connection to Oracle database: ") + databaseName);
     }
 
     if(isDbType)
@@ -128,33 +138,19 @@ void HoruxDesigner::loadData(QSplashScreen *sc)
             QMessageBox::warning(this,tr("Database connection error"),tr("Not able to connect to the database"));
             dbInformation->setText("Not able to connect to the database");
         } else {
-            loadSQLData(sc);
+            loadSQLData();
         }
 
     }
 }
 
-void HoruxDesigner::loadHoruxSoap(QSplashScreen *sc)
+void HoruxDesigner::loadHoruxSoap()
 {
-    if(sc != NULL)
-    {
-        sc->showMessage(tr("The data are loading from Horux Gui..."),Qt::AlignLeft, Qt::white);
-        QApplication::processEvents();
-    }
-
     connect(&transport, SIGNAL(responseReady()),this, SLOT(readSoapResponse()), Qt::UniqueConnection);
 
     pictureBuffer.open(QBuffer::ReadWrite);
 
     connect(&pictureHttp, SIGNAL(done(bool)), this, SLOT(httpRequestDone(bool)), Qt::UniqueConnection);
-
-    QSettings settings("Letux", "HoruxCardDesigner", this);
-
-    QString host = settings.value("host", "localhost").toString();
-    QString username = settings.value("username", "root").toString();
-    QString password = settings.value("password", "").toString();
-    QString path = settings.value("path", "").toString();
-    bool ssl = settings.value("ssl", false).toBool();
 
     QtSoapMessage message;
     message.setMethod("getAllUser");
@@ -179,20 +175,10 @@ void HoruxDesigner::loadHoruxSoap(QSplashScreen *sc)
 }
 
 
-void HoruxDesigner::loadSQLData(QSplashScreen *sc) {
-    if(sc != NULL)
-    {
-        sc->showMessage(tr("The data are loading from the CSV file..."),Qt::AlignLeft, Qt::white);
-        QApplication::processEvents();
-    }
+void HoruxDesigner::loadSQLData() {
 
     if(dbase.isOpen()) {
 
-        QSettings settings("Letux", "HoruxCardDesigner", this);
-        QString sql = settings.value("sql", "").toString();
-        int column1 = settings.value("column1", 1).toInt();
-        int column2 = settings.value("column2", 2).toInt();
-        int primaryKey = settings.value("primaryKeyColumn", 0).toInt();
 
         bool isNew = false;
 
@@ -218,9 +204,9 @@ void HoruxDesigner::loadSQLData(QSplashScreen *sc) {
         } else {
               while(sqlQuery->next()) {
                 if(column2>0)
-                    userCombo->addItem(sqlQuery->value(column1).toString()+ " " + sqlQuery->value(column2).toString (), sqlQuery->value(primaryKey).toInt ());
+                    userCombo->addItem(sqlQuery->value(column1).toString()+ " " + sqlQuery->value(column2).toString (), sqlQuery->value(primaryKeyColumn).toInt ());
                 else
-                    userCombo->addItem(sqlQuery->value(column1).toString(), sqlQuery->value(primaryKey).toInt ());
+                    userCombo->addItem(sqlQuery->value(column1).toString(), sqlQuery->value(primaryKeyColumn).toInt ());
             }
         }
 
@@ -238,20 +224,7 @@ void HoruxDesigner::loadSQLData(QSplashScreen *sc) {
     }
 }
 
-void HoruxDesigner::loadCSVData(QSplashScreen *sc) {
-    if(sc != NULL)
-    {
-        sc->showMessage(tr("The data are loading from the CSV file..."),Qt::AlignLeft, Qt::white);
-        QApplication::processEvents();
-    }
-
-    QSettings settings("Letux", "HoruxCardDesigner", this);
-
-    QString file = settings.value("file", "").toString();
-    int column1 = settings.value("column1", 1).toInt();
-    int column2 = settings.value("column2", 2).toInt();
-    int primaryKey = settings.value("primaryKeyColumn", 0).toInt();
-
+void HoruxDesigner::loadCSVData() {
 
     bool isNew = false;
 
@@ -285,10 +258,10 @@ void HoruxDesigner::loadCSVData(QSplashScreen *sc) {
                     csvHeader = listSimplified;
                 } else {
                     if(column2>0)
-                        userCombo->addItem(list.at(column1).simplified () + " " + list.at(column2).simplified (), list.at(primaryKey).simplified ());
+                        userCombo->addItem(list.at(column1).simplified () + " " + list.at(column2).simplified (), list.at(primaryKeyColumn).simplified ());
                     else
-                        userCombo->addItem(list.at(column1).simplified (), list.at(primaryKey).simplified ());
-                    csvData[i] = list;
+                        userCombo->addItem(list.at(column1).simplified (), list.at(primaryKeyColumn).simplified());
+                    csvData[list.at(primaryKeyColumn).simplified().toInt()] = list;
 
                     i++;
                 }
@@ -506,6 +479,15 @@ void HoruxDesigner::readSoapResponse()
         const QtSoapType &field_firstname =  record[2];
 
         userCombo->addItem(field_name["value"].toString() + " " + field_firstname["value"].toString(), field_id["value"].toInt());
+
+        QStringList userData;
+
+        for(int j=0; j<record.count(); j++) {
+            const QtSoapType &field = record[j];
+            userData.append(field["value"].toString());
+        }
+
+        horuxData[field_id["value"].toInt()] = userData;
     }
 
     ui->step->setText("1/" + QString::number(userCombo->count()));
@@ -523,17 +505,6 @@ void HoruxDesigner::readSoapResponse()
 
 void HoruxDesigner::userChanged(int index)
 {
-    QSettings settings("Letux", "HoruxCardDesigner", this);
-
-    QString host = settings.value("host", "localhost").toString();
-    QString username = settings.value("username", "root").toString();
-    QString password = settings.value("password", "").toString();
-    QString path = settings.value("path", "").toString();
-    QString database = settings.value("database", "").toString();
-    QString engine = settings.value("engine", "HORUX").toString();
-    QString file = settings.value("file", "").toString();
-    bool ssl = settings.value("ssl", false).toBool();
-    int pictureColumn = settings.value("pictureColumn", -1).toInt();
 
     if(userCombo)
     {
@@ -560,7 +531,7 @@ void HoruxDesigner::userChanged(int index)
 
             int i = 0;
             foreach(QString s, csvHeader) {
-               userValue[s] = csvData[index].at(i);
+               userValue[s] = csvData[userId].at(i);
                i++;
             }
 
@@ -574,7 +545,7 @@ void HoruxDesigner::userChanged(int index)
                 pictureBuffer.close();
                 pictureBuffer.setData(QByteArray());
 
-                QString picturePath = csvData[index].at(pictureColumn).simplified();
+                QString picturePath = csvData[userId].at(pictureColumn).simplified();
 
                 if(picturePath != "") {
                     QFile file(picturePath);
@@ -634,11 +605,24 @@ void HoruxDesigner::userChanged(int index)
             updatePrintPreview();
         }
     }
+
+    ui->step->setText(QString::number(index+1) + "/" + QString::number(userCombo->count()));
+
+
+    if(index == 0)
+        ui->back->setEnabled(false);
+    else
+        ui->back->setEnabled(true);
+
+    if(index+1 == userCombo->count())
+        ui->next->setEnabled(false);
+    else
+        ui->next->setEnabled(true);
 }
 
 void HoruxDesigner::readSoapResponseUser()
 {
-
+qDebug() << "readSoapResponseUser";
     const QtSoapMessage &response = transport.getResponse();
     if (response.isFault()) {
         statusBar()->clearMessage();
@@ -652,6 +636,9 @@ void HoruxDesigner::readSoapResponseUser()
     {
         const QtSoapType &field =  value[i];
         userValue[field[0].toString()] = field[1].toString();
+
+        horuxHeader.append(field[0].toString());
+
     }
 
     if(value.count() > 0 && userCombo && userCombo->count() > userCombo->currentIndex()+1 ) {
@@ -664,13 +651,6 @@ void HoruxDesigner::readSoapResponseUser()
 
     if(name != "")
     {
-
-        QSettings settings("Letux", "HoruxCardDesigner", this);
-
-        QString host = settings.value("horux", "localhost").toString();
-        QString path = settings.value("path", "").toString();
-        bool ssl = settings.value("ssl", false).toBool();
-
         pictureBuffer.close();
         pictureBuffer.setData(QByteArray());
         pictureBuffer.open(QBuffer::ReadWrite);
@@ -697,6 +677,7 @@ void HoruxDesigner::readSoapResponseUser()
 
 void HoruxDesigner::httpRequestDone ( bool error )
 {
+
     statusBar()->clearMessage();
     if(error)
     {
@@ -762,12 +743,87 @@ void HoruxDesigner::openRecentFile()
     QAction *action = qobject_cast<QAction *>(sender());
     if (action)
     {
+
         newCard();
         currenFile.setFileName(action->data().toString());
 
         QString xml;
         currenFile.open(QIODevice::ReadOnly);
         xml = currenFile.readAll();
+
+
+        QDomDocument doc;
+        doc.setContent(xml, false);
+        QDomElement root = doc.documentElement();
+
+        if( root.tagName() != "HoruxCardDesigner")
+        {
+            return;
+        }
+
+        QDomNode node = root.firstChild();
+
+        while(!node.isNull())
+        {
+            if(node.toElement().tagName() == "PrintedUser")
+            {
+               QString pu = node.toElement().text();
+               printedUser = pu.split(",");
+            }
+
+            if(node.toElement().tagName() == "Database") {
+                QDomNode database = node.firstChild();
+
+                while(!database.isNull()) {
+                    if(database.toElement().tagName() == "host") {
+                        host = database.toElement().text();
+                    }
+                    if(database.toElement().tagName() == "username") {
+                        username = database.toElement().text();
+                    }
+                    if(database.toElement().tagName() == "password") {
+                        password = database.toElement().text();
+                    }
+                    if(database.toElement().tagName() == "path") {
+                        path = database.toElement().text();
+                    }
+                    if(database.toElement().tagName() == "databaseName") {
+                        databaseName = database.toElement().text();
+                    }
+                    if(database.toElement().tagName() == "ssl") {
+                        ssl = database.toElement().text().toInt();
+                    }
+                    if(database.toElement().tagName() == "engine") {
+                        engine = database.toElement().text();
+                    }
+                    if(database.toElement().tagName() == "file") {
+                        file = database.toElement().text();
+                    }
+                    if(database.toElement().tagName() == "sql") {
+                        sql = database.toElement().text();
+                    }
+                    if(database.toElement().tagName() == "primaryKeyColumn") {
+                        primaryKeyColumn = database.toElement().text().toInt();
+                    }
+                    if(database.toElement().tagName() == "column1") {
+                        column1 = database.toElement().text().toInt();
+                    }
+                    if(database.toElement().tagName() == "column2") {
+                        column2 = database.toElement().text().toInt();
+                    }
+                    if(database.toElement().tagName() == "pictureColumn") {
+                        pictureColumn = database.toElement().text().toInt();
+                    }
+
+                    database = database.nextSibling();
+                }
+            }
+
+            node = node.nextSibling();
+        }
+
+        loadData();
+
         scene->loadScene(xml);
         currenFile.close();
         selectionChanged();
@@ -778,13 +834,13 @@ void HoruxDesigner::openRecentFile()
 
 void HoruxDesigner::open()
 {
-    QString selectedFilter;
     QString fileName = QFileDialog::getOpenFileName(this,
                                                     tr("Open an Horux Card Designer file"),
                                                     "",
                                                     tr("Horux Card Designer (*.xml)"));
     if (!fileName.isEmpty())
     {
+
         setCurrentFile(fileName);
 
         newCard();
@@ -796,6 +852,80 @@ void HoruxDesigner::open()
         QTextStream data(&currenFile);
         data.setCodec("ISO 8859-1");
         xml = data.readAll();
+
+        QDomDocument doc;
+        doc.setContent(xml, false);
+        QDomElement root = doc.documentElement();
+
+        if( root.tagName() != "HoruxCardDesigner")
+        {
+            return;
+        }
+
+        QDomNode node = root.firstChild();
+
+        while(!node.isNull())
+        {
+            if(node.toElement().tagName() == "PrintedUser")
+            {
+               QString pu = node.toElement().text();
+               printedUser = pu.split(",");
+            }
+
+            if(node.toElement().tagName() == "Database") {
+                QDomNode database = node.firstChild();
+
+                while(!database.isNull()) {
+                    if(database.toElement().tagName() == "host") {
+                        host = database.toElement().text();
+                    }
+                    if(database.toElement().tagName() == "username") {
+                        username = database.toElement().text();
+                    }
+                    if(database.toElement().tagName() == "password") {
+                        password = database.toElement().text();
+                    }
+                    if(database.toElement().tagName() == "path") {
+                        path = database.toElement().text();
+                    }
+                    if(database.toElement().tagName() == "databaseName") {
+                        databaseName = database.toElement().text();
+                    }
+                    if(database.toElement().tagName() == "ssl") {
+                        ssl = database.toElement().text().toInt();
+                    }
+                    if(database.toElement().tagName() == "engine") {
+                        engine = database.toElement().text();
+                    }
+                    if(database.toElement().tagName() == "file") {
+                        file = database.toElement().text();
+                    }
+                    if(database.toElement().tagName() == "sql") {
+                        sql = database.toElement().text();
+                    }
+                    if(database.toElement().tagName() == "primaryKeyColumn") {
+                        primaryKeyColumn = database.toElement().text().toInt();
+                    }
+                    if(database.toElement().tagName() == "column1") {
+                        column1 = database.toElement().text().toInt();
+                    }
+                    if(database.toElement().tagName() == "column2") {
+                        column2 = database.toElement().text().toInt();
+                    }
+                    if(database.toElement().tagName() == "pictureColumn") {
+                        pictureColumn = database.toElement().text().toInt();
+                    }
+
+                    database = database.nextSibling();
+                }
+            }
+
+
+            node = node.nextSibling();
+        }
+
+        loadData();
+
         scene->loadScene(xml);
         currenFile.close();
         selectionChanged();
@@ -809,28 +939,12 @@ void HoruxDesigner::setDatabase()
 {
     DatabaseConnection dlg(this);
 
-    QSettings settings("Letux", "HoruxCardDesigner", this);
-    QString host = settings.value("host", "localhost").toString();
-    QString username = settings.value("username", "root").toString();
-    QString password = settings.value("password", "").toString();
-    QString path = settings.value("path", "").toString();
-    QString database = settings.value("database", "").toString();
-    bool ssl = settings.value("ssl", false).toBool();
-    QString engine = settings.value("engine", "HORUX").toString();
-    QString file = settings.value("file", "").toString();
-    QString sql = settings.value("sql", "").toString();
-
-    int primaryKeyColumn = settings.value("primaryKeyColumn", 0).toInt();
-    int column1 = settings.value("column1", 1).toInt();
-    int column2 = settings.value("column2", 2).toInt();
-    int pictureColumn = settings.value("pictureColumn", -1).toInt();
-
 
     dlg.setHost(host);
     dlg.setUsername(username);
     dlg.setPassword(password);
     dlg.setPath(path);
-    dlg.setDatabase(database);
+    dlg.setDatabase(databaseName);
     dlg.setSSL(ssl);
     dlg.setEngine(engine);
     dlg.setFile(file);
@@ -845,27 +959,29 @@ void HoruxDesigner::setDatabase()
         isSecure->setToolTip(tr("The communication is not safe"));
         isSecure->setPixmap(QPixmap(":/images/decrypted.png"));
 
-        settings.setValue("host",dlg.getHost());
-        settings.setValue("username",dlg.getUsername());
-        settings.setValue("password",dlg.getPassword());
-        settings.setValue("path",dlg.getPath());
-        settings.setValue("database",dlg.getDatabase());
-        settings.setValue("ssl",dlg.getSSL());
-        settings.setValue("engine",dlg.getEngine());
-        settings.setValue("file",dlg.getFile());
-        settings.setValue("sql",dlg.getSqlRequest());
-
-        settings.setValue("primaryKeyColumn",dlg.getPrimaryKey());
-        settings.setValue("column1",dlg.getColumn1());
-        settings.setValue("column2",dlg.getColumn2());
-        settings.setValue("pictureColumn",dlg.getPictureColumn());
-
+        if( host != dlg.getHost() ||
+            username != dlg.getUsername() ||
+            password != dlg.getPassword() ||
+            path != dlg.getPath() ||
+            databaseName != dlg.getDatabase() ||
+            ssl != dlg.getSSL() ||
+            file != dlg.getFile() ||
+            engine != dlg.getEngine() ||
+            primaryKeyColumn != dlg.getPrimaryKey() ||
+            column1 != dlg.getColumn1() ||
+            column2 != dlg.getColumn2() ||
+            pictureColumn != dlg.getPictureColumn() ||
+            sql != dlg.getSqlRequest()
+            )
+        {
+            fileChange();
+        }
 
         host = dlg.getHost();
         username = dlg.getUsername();
         password = dlg.getPassword();
         path = dlg.getPath();
-        database = dlg.getDatabase();
+        databaseName = dlg.getDatabase();
         ssl = dlg.getSSL();
         file = dlg.getFile();
         engine = dlg.getEngine();
@@ -875,63 +991,7 @@ void HoruxDesigner::setDatabase()
         pictureColumn = dlg.getPictureColumn();
         sql = dlg.getSqlRequest();
 
-        if(engine == "HORUX")
-        {
-            if(dlg.getSSL())
-            {
-                isSecure->setToolTip(tr("The communication is safe by SSL"));
-                isSecure->setPixmap(QPixmap(":/images/encrypted.png"));
-            }
-            else
-            {
-                isSecure->setToolTip(tr("The communication is not safe"));
-                isSecure->setPixmap(QPixmap(":/images/decrypted.png"));
-            }
-
-            loadHoruxSoap(NULL);
-
-            dbInformation->setText(tr("Connection to Horux database"));
-        }
-        else
-        {
-            if(engine == "CSV")
-            {
-                loadCSVData(NULL);
-
-                dbInformation->setText(tr("Connection to CSV file: ") + file);
-            }
-            else
-            {
-                if(engine != "NOT_USED")
-                {
-                    if(dbase.isOpen())
-                        dbase.close();
-
-                    if(!QSqlDatabase::contains("horux"))
-                        dbase = QSqlDatabase::addDatabase(engine,"horux");
-                    if(engine == "QSQLITE")
-                    {
-                        dbase.setDatabaseName(file);
-                        dbInformation->setText(tr("Connection to Sqlite database: ") + database);
-                    }
-                    else
-                    {
-                        dbInformation->setText(tr("Connection to %1 database: ").arg(engine) + database);
-                        dbase.setHostName(host);
-                        dbase.setDatabaseName(database);
-                        dbase.setUserName(username);
-                        dbase.setPassword(password);
-                    }
-
-                    if(!dbase.open()) {
-                        QMessageBox::warning(this,tr("Database connection error"),tr("Not able to connect to the database"));
-                        dbInformation->setText("Not able to connect to the database");
-                    } else {
-                        loadSQLData(NULL);
-                    }
-                }
-            }
-        }
+        loadData();
     }
 }
 
@@ -943,13 +1003,95 @@ void HoruxDesigner::save()
         return;
     }
 
-
     currenFile.open(QIODevice::WriteOnly);
     QTextStream data(&currenFile);
     data.setCodec("ISO 8859-1");
 
     QDomDocument xml;
     QDomElement root = xml.createElement ( "HoruxCardDesigner" );
+
+    // Save the printed card
+    QDomElement newElement = xml.createElement( "PrintedUser");
+    QDomText text =  xml.createTextNode( printedUser.join(",") );
+    newElement.appendChild(text);
+    root.appendChild(newElement);
+
+    //save the db connection
+    QDomElement database = xml.createElement( "Database");
+
+    newElement = xml.createElement( "host");
+    text =  xml.createTextNode( host );
+    newElement.appendChild(text);
+    database.appendChild(newElement);
+
+    newElement = xml.createElement( "username");
+    text =  xml.createTextNode( username );
+    newElement.appendChild(text);
+    database.appendChild(newElement);
+
+    newElement = xml.createElement( "password");
+    text =  xml.createTextNode( password );
+    newElement.appendChild(text);
+    database.appendChild(newElement);
+
+    newElement = xml.createElement( "path");
+    text =  xml.createTextNode( path );
+    newElement.appendChild(text);
+    database.appendChild(newElement);
+
+    newElement = xml.createElement( "databaseName");
+    text =  xml.createTextNode( databaseName );
+    newElement.appendChild(text);
+    database.appendChild(newElement);
+
+    newElement = xml.createElement( "ssl");
+    text =  xml.createTextNode( QString::number(ssl) );
+    newElement.appendChild(text);
+    database.appendChild(newElement);
+
+    newElement = xml.createElement( "engine");
+    text =  xml.createTextNode( engine );
+    newElement.appendChild(text);
+    database.appendChild(newElement);
+
+    newElement = xml.createElement( "file");
+    text =  xml.createTextNode( file );
+    newElement.appendChild(text);
+    database.appendChild(newElement);
+
+    newElement = xml.createElement( "sql");
+    text =  xml.createTextNode( sql );
+    newElement.appendChild(text);
+    database.appendChild(newElement);
+
+    newElement = xml.createElement( "primaryKeyColumn");
+    text =  xml.createTextNode( QString::number(primaryKeyColumn) );
+    newElement.appendChild(text);
+    database.appendChild(newElement);
+
+    newElement = xml.createElement( "column1");
+    text =  xml.createTextNode( QString::number(column1) );
+    newElement.appendChild(text);
+    database.appendChild(newElement);
+
+    newElement = xml.createElement( "column2");
+    text =  xml.createTextNode( QString::number(column2) );
+    newElement.appendChild(text);
+    database.appendChild(newElement);
+
+    newElement = xml.createElement( "pictureColumn");
+    text =  xml.createTextNode( QString::number(pictureColumn) );
+    newElement.appendChild(text);
+    database.appendChild(newElement);
+
+
+    database.appendChild(newElement);
+
+    root.appendChild(database);
+
+
+
+    //save the scene
     QDomElement card = qgraphicsitem_cast<CardItem*>(scene->getCardItem())->getXmlItem(xml);
 
     root.appendChild ( card );
@@ -1051,11 +1193,11 @@ void HoruxDesigner::print()
     printer->setPaperSize(scene->getCardItem()->getSizeMm(),QPrinter::Millimeter);
     printer->setPageMargins(0,0,0,0,QPrinter::Millimeter);
 
-    QPointF cardPos = scene->getCardItem()->pos();
-
     if (QPrintDialog(printer).exec() == QDialog::Accepted)
     {
-        /*scene->getCardItem()->setPrintingMode( true, pictureBuffer, userValue );
+        QPointF cardPos = scene->getCardItem()->pos();
+
+        scene->getCardItem()->setPrintingMode( true, pictureBuffer, userValue );
         scene->getCardItem()->setPos(0,0);
         sceneScaleChanged("100%");
 
@@ -1068,13 +1210,18 @@ void HoruxDesigner::print()
 
         scene->getCardItem()->setPrintingMode( false, pictureBuffer, userValue );
         scene->getCardItem()->setPos(cardPos);
-        sceneScaleChanged(sceneScaleCombo->currentText());*/
+        sceneScaleChanged(sceneScaleCombo->currentText());
 
         // increment all counter in the card scene
         scene->getCardItem()->incrementCounter();
 
-        // save the file
-        save();
+        int userId = userCombo->itemData(userCombo->currentIndex()).toInt();
+
+        if(!printedUser.contains(QString::number(userId)))
+            printedUser.append(QString::number(userId));
+
+        fileChange();
+
 
         updatePrintPreview();
     }
@@ -1082,6 +1229,71 @@ void HoruxDesigner::print()
 
 void HoruxDesigner::printSelection() {
 
+    PrintSelection dlg;
+
+    dlg.setPrintedUser(printedUser);
+
+    if(engine == "CSV")
+        dlg.setCSVData(csvHeader,csvData);
+    else
+        if(engine == "HORUX")
+            dlg.setHoruxData(horuxHeader, horuxData);
+        else
+            if(engine != "NOT_USED")
+                dlg.setSQLData(sqlQuery, primaryKeyColumn);
+
+    if(dlg.exec() == QDialog::Accepted) {
+
+        QStringList printCardFor = dlg.getCheckedUser(primaryKeyColumn);
+
+        scene->clearSelection ();
+
+        printer->setOrientation(( QPrinter::Orientation)scene->getCardItem()->getFormat());
+
+        printer->setPaperSize(scene->getCardItem()->getSizeMm(),QPrinter::Millimeter);
+        printer->setPageMargins(0,0,0,0,QPrinter::Millimeter);
+
+        if( printCardFor.count() >> 0 &&  QPrintDialog(printer).exec() == QDialog::Accepted)
+        {
+            foreach(QString userID, printCardFor) {
+
+                int index = userCombo->findData(userID.toInt());
+
+                userCombo->setCurrentIndex(index);
+
+                QApplication::processEvents();
+                QApplication::flush();
+
+                QPointF cardPos = scene->getCardItem()->pos();
+
+                scene->getCardItem()->setPrintingMode( true, pictureBuffer, userValue );
+                scene->getCardItem()->setPos(0,0);
+                sceneScaleChanged("100%");
+
+                QRectF cardRect = scene->getCardItem()->boundingRect();
+
+
+                QPainter painter(printer);
+                painter.setRenderHint(QPainter::Antialiasing);
+
+                qDebug() << "PRINT CARD";
+                ui->graphicsView->render(&painter, printer->pageRect(), cardRect.toRect(), Qt::KeepAspectRatio );
+
+                scene->getCardItem()->setPrintingMode( false, pictureBuffer, userValue );
+                scene->getCardItem()->setPos(cardPos);
+                sceneScaleChanged(sceneScaleCombo->currentText());
+
+                // increment all counter in the card scene
+                scene->getCardItem()->incrementCounter();
+
+                // add the user as a printed user
+                if(!printedUser.contains(userID))
+                    printedUser.append(userID);
+
+                fileChange();
+            }
+        }
+    }
 }
 
 void HoruxDesigner::newCard()

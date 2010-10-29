@@ -3,6 +3,7 @@
 #include "printcounter.h"
 #include "confpage.h"
 #include "formattext.h"
+#include "horuxdesigner.h"
 
 CardPage::CardPage(QWidget *parent)
     : QWidget(parent)
@@ -192,11 +193,9 @@ void PixmapPage::setSource(int s)
     {
         //pictureBuffer.reset();
 
-        QSettings settings("Letux", "HoruxCardDesigner", this);
-
-        QString host = settings.value("horux", "localhost").toString();
-        QString path = settings.value("path", "").toString();
-        bool ssl = settings.value("ssl", "").toBool();
+        QString host = HoruxDesigner::getHost();
+        QString path = HoruxDesigner::getPath();
+        bool ssl = HoruxDesigner::getSsl();
 
         pictureBuffer.close();
         pictureBuffer.setData(QByteArray());

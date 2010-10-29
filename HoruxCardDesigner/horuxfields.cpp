@@ -4,6 +4,7 @@
 #include <QSslError>
 #include <QNetworkReply>
 #include <QtSql>
+#include "horuxdesigner.h"
 
 HoruxFields::HoruxFields(QWidget *parent) :
         QDialog(parent),
@@ -13,17 +14,14 @@ HoruxFields::HoruxFields(QWidget *parent) :
     connect(m_ui->fieldsList, SIGNAL(itemSelectionChanged()), this, SLOT(itemSelectionChanged()));
 
 
-    QSettings settings("Letux", "HoruxCardDesigner", this);
-
-    QString host = settings.value("host", "localhost").toString();
-    QString username = settings.value("username", "root").toString();
-    QString password = settings.value("password", "").toString();
-    QString path = settings.value("path", "").toString();
-    QString database = settings.value("database", "").toString();
-    QString engine = settings.value("engine", "HORUX").toString();
-    QString file = settings.value("file", "").toString();
-    QString sql = settings.value("sql", "").toString();
-    bool ssl = settings.value("ssl", "").toBool();
+    QString host = HoruxDesigner::getHost();
+    QString username = HoruxDesigner::getUsername();
+    QString password = HoruxDesigner::getPassword();
+    QString path = HoruxDesigner::getPath();
+    QString engine = HoruxDesigner::getEngine();
+    QString file = HoruxDesigner::getFile();
+    QString sql = HoruxDesigner::getSql();
+    bool ssl = HoruxDesigner::getSsl();
 
     if(engine == "HORUX") {
         connect(&transport, SIGNAL(responseReady()),this, SLOT(readSoapResponse()), Qt::UniqueConnection);

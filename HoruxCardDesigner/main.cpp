@@ -33,7 +33,7 @@ int main(int argc, char *argv[])
 #endif
 
     HoruxDesigner w;
-    w.loadData(&splash);
+    //w.loadData(&splash);
     splash.hide();
     w.show();
     return a.exec();
