@@ -373,12 +373,15 @@ void HoruxDesigner::createAction()
 
     connect(ui->actionPrint_preview, SIGNAL(triggered()),
             this, SLOT(printPreview()));
+    ui->actionPrint_preview->setEnabled(false);
 
     connect(ui->actionPrint, SIGNAL(triggered()),
             this, SLOT(print()));
+    ui->actionPrint->setEnabled(false);
 
     connect(ui->actionPrint_selection, SIGNAL(triggered()),
             this, SLOT(printSelection()));
+    ui->actionPrint_selection->setEnabled(false);
 
     connect(ui->actionPrint_setup, SIGNAL(triggered()),
             this, SLOT(printSetup()));
@@ -766,6 +769,10 @@ void HoruxDesigner::openRecentFile()
         userPicture.clear();
         userPictureReply.clear();
 
+        ui->actionPrint_selection->setEnabled(true);
+        ui->actionPrint_preview->setEnabled(true);
+        ui->actionPrint->setEnabled(true);
+
         newCard();
         currenFile.setFileName(action->data().toString());
 
@@ -869,6 +876,11 @@ void HoruxDesigner::open()
         header.clear();
         userPicture.clear();
         userPictureReply.clear();
+
+        ui->actionPrint_selection->setEnabled(true);
+        ui->actionPrint_preview->setEnabled(true);
+        ui->actionPrint->setEnabled(true);
+
 
         setCurrentFile(fileName);
 
@@ -1215,6 +1227,8 @@ void HoruxDesigner::printPreview()
 
 void HoruxDesigner::print()
 {
+    if(engine == "") return;
+
     scene->clearSelection ();
 
     printer->setOrientation(( QPrinter::Orientation)scene->getCardItem()->getFormat());
@@ -1260,10 +1274,13 @@ void HoruxDesigner::printSelection() {
 
     PrintSelection dlg;
 
+    if(engine == "") return;
+
     dlg.setPrintedUser(printedUser);
 
-    if(engine == "CSV")
+    if(engine == "CSV") {
         dlg.setCSVData(header,userData);
+    }
     else
         if(engine == "HORUX")
             dlg.setHoruxData(header, userData);
