@@ -258,7 +258,7 @@ void CardItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
 {
     QPainterPath path;
 
-    float ratio;
+    float ratio = 0;
     int width = 0;
 
     if(isPrinting)

@@ -152,10 +152,10 @@ void CardTextItem::loadText(QDomElement text )
     qreal posX = 0;
     qreal posY = 0;
     QString fontFamily;
-    int fontPoint;
-    bool fontBold;
-    bool fontItalic;
-    bool fontUnderline;
+    int fontPoint = 0;
+    bool fontBold = false;
+    bool fontItalic = false;
+    bool fontUnderline = false;
     qreal zValue = 0;
 
     while(!node.isNull())
