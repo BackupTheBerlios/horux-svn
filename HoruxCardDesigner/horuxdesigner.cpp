@@ -47,6 +47,8 @@ HoruxDesigner::HoruxDesigner(QWidget *parent)
 
     sqlQuery = NULL;
 
+    fileChanged = false;
+
     dbInformation = new QLabel("");
     statusBar()->addPermanentWidget(dbInformation);
 
@@ -68,6 +70,9 @@ HoruxDesigner::HoruxDesigner(QWidget *parent)
 
     connect(ui->next, SIGNAL(clicked()), this, SLOT(nextRecord()));
     connect(ui->back, SIGNAL(clicked()), this, SLOT(backRecord()));
+
+
+
 }
 
 HoruxDesigner::~HoruxDesigner()
@@ -441,7 +446,7 @@ void HoruxDesigner::initScene()
     connect(scene, SIGNAL( itemMoved(QGraphicsItem *, QPointF)),
             this, SLOT(itemMoved(QGraphicsItem *, QPointF)));
 
-
+    connect(scene, SIGNAL(itemChange()), this, SLOT(fileChange()));
 
     connect(scene, SIGNAL( mouseRelease() ),
             this, SLOT( mouseRelease() ));
@@ -1044,6 +1049,8 @@ void HoruxDesigner::save()
         return;
     }
 
+    fileChanged = false;
+
     currenFile.open(QIODevice::WriteOnly);
     QTextStream data(&currenFile);
     data.setCodec("ISO 8859-1");
@@ -1180,6 +1187,14 @@ void HoruxDesigner::saveAs()
 
 void HoruxDesigner::exit()
 {
+    if(fileChanged) {
+        if(QMessageBox::information(this,tr("File changed"),tr("The file was modified, do you want to save it before to close Horux Card Designer?"),QMessageBox::Save,QMessageBox::No) == QMessageBox::Save) {
+            save();            
+        }
+    }
+
+    fileChanged = false;
+
     close ();
 }
 
@@ -1558,6 +1573,8 @@ void HoruxDesigner::setParamView(QGraphicsItem *item)
                     textPage->alignment->setCurrentIndex(textItem->alignment);
 
                     textPage->locked->setChecked(textItem->isLocked);
+                    ui->actionDelete->setEnabled(!textItem->isLocked);
+
 
                     textPage->source->setCurrentIndex( textItem->source );
                     textPage->setSource(textItem->source);
@@ -1614,6 +1631,7 @@ void HoruxDesigner::setParamView(QGraphicsItem *item)
                     pixmapPage->left->setValue(pixmapItem->pos().x());
 
                     pixmapPage->locked->setChecked(pixmapItem->isLocked);
+                    ui->actionDelete->setEnabled(!pixmapItem->isLocked);
 
                     pixmapPage->source->setCurrentIndex( pixmapItem->source );
                     pixmapPage->connectDataSource();
@@ -1857,4 +1875,17 @@ void HoruxDesigner::mouseRelease() {
 void HoruxDesigner::fileChange() {
     setWindowTitle("Horux Card Designer - " + currenFile.fileName() + " *");
     ui->actionSave->setEnabled(true);
+    fileChanged = true;
+}
+
+void HoruxDesigner::closeEvent ( QCloseEvent * event ) {
+    if(fileChanged) {
+        if(QMessageBox::information(this,tr("File changed"),tr("The file was modified, do you want to save it before to close Horux Card Designer?"),QMessageBox::Save,QMessageBox::No) == QMessageBox::Save) {
+            save();
+        }
+    }
+
+    fileChanged = false;
+
+    QMainWindow::closeEvent(event);
 }

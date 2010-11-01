@@ -342,7 +342,7 @@
     </message>
     <message>
         <location filename="horuxdesigner.ui" line="51"/>
-        <location filename="horuxdesigner.cpp" line="1677"/>
+        <location filename="horuxdesigner.cpp" line="1708"/>
         <source>Object</source>
         <translation type="unfinished">Objet</translation>
     </message>
@@ -568,190 +568,202 @@
         <translation type="unfinished">Imprimer la sélection</translation>
     </message>
     <message>
-        <location filename="horuxdesigner.cpp" line="55"/>
-        <location filename="horuxdesigner.cpp" line="170"/>
-        <location filename="horuxdesigner.cpp" line="988"/>
+        <location filename="horuxdesigner.cpp" line="57"/>
+        <location filename="horuxdesigner.cpp" line="175"/>
+        <location filename="horuxdesigner.cpp" line="1005"/>
         <source>The communication is not safe</source>
         <translation type="unfinished">La communication n&apos;est pas sûre</translation>
     </message>
     <message>
-        <location filename="horuxdesigner.cpp" line="85"/>
+        <location filename="horuxdesigner.cpp" line="90"/>
         <source>No database used</source>
         <translation type="unfinished">Aucune base de données utilisée</translation>
     </message>
     <message>
-        <location filename="horuxdesigner.cpp" line="87"/>
+        <location filename="horuxdesigner.cpp" line="92"/>
         <source>Connection to Horux database</source>
         <translation type="unfinished">Connexion à la base de données Horux</translation>
     </message>
     <message>
-        <location filename="horuxdesigner.cpp" line="90"/>
+        <location filename="horuxdesigner.cpp" line="95"/>
         <source>Connection to CSV file: </source>
         <translation type="unfinished">Connexion au fichier CSV: </translation>
     </message>
     <message>
-        <location filename="horuxdesigner.cpp" line="100"/>
+        <location filename="horuxdesigner.cpp" line="105"/>
         <source>Connection to MySql database: </source>
         <translation type="unfinished">Connexion à la base de données MySql: </translation>
     </message>
     <message>
-        <location filename="horuxdesigner.cpp" line="106"/>
+        <location filename="horuxdesigner.cpp" line="111"/>
         <source>Connection to SQlite database: </source>
         <translation type="unfinished">Connexion à la base de données SQlite: </translation>
     </message>
     <message>
-        <location filename="horuxdesigner.cpp" line="115"/>
+        <location filename="horuxdesigner.cpp" line="120"/>
         <source>Connection to PSQL database: </source>
         <translation type="unfinished">Connexion à la base de données PSQL: </translation>
     </message>
     <message>
-        <location filename="horuxdesigner.cpp" line="124"/>
+        <location filename="horuxdesigner.cpp" line="129"/>
         <source>Connection to ODBC database: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="horuxdesigner.cpp" line="133"/>
+        <location filename="horuxdesigner.cpp" line="138"/>
         <source>Connection to Oracle database: </source>
         <translation type="unfinished">Connexion à la base de données ODBC: </translation>
     </message>
     <message>
-        <location filename="horuxdesigner.cpp" line="139"/>
+        <location filename="horuxdesigner.cpp" line="144"/>
         <source>Database connection error</source>
         <translation type="unfinished">Erreur de la connexion à la base de données</translation>
     </message>
     <message>
-        <location filename="horuxdesigner.cpp" line="139"/>
+        <location filename="horuxdesigner.cpp" line="144"/>
         <source>Not able to connect to the database</source>
         <translation type="unfinished">Impossible de se connecter à la base de données</translation>
     </message>
     <message>
-        <location filename="horuxdesigner.cpp" line="162"/>
+        <location filename="horuxdesigner.cpp" line="167"/>
         <source>The communication is safe by SSL</source>
         <translation type="unfinished">La communication n&apos;est sécurisée par SSL</translation>
     </message>
     <message>
-        <location filename="horuxdesigner.cpp" line="206"/>
+        <location filename="horuxdesigner.cpp" line="211"/>
         <source>Database sql error</source>
         <translation type="unfinished">Erreur de base de données</translation>
     </message>
     <message>
-        <location filename="horuxdesigner.cpp" line="277"/>
+        <location filename="horuxdesigner.cpp" line="282"/>
         <source>CSV file error</source>
         <translation type="unfinished">Erreur du fichier CSV</translation>
     </message>
     <message>
-        <location filename="horuxdesigner.cpp" line="277"/>
+        <location filename="horuxdesigner.cpp" line="282"/>
         <source>Not able to open the file</source>
         <translation type="unfinished">Impossible d&apos;ouvrir le fichier</translation>
     </message>
     <message>
-        <location filename="horuxdesigner.cpp" line="338"/>
+        <location filename="horuxdesigner.cpp" line="343"/>
         <source>50%</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="horuxdesigner.cpp" line="338"/>
+        <location filename="horuxdesigner.cpp" line="343"/>
         <source>75%</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="horuxdesigner.cpp" line="338"/>
+        <location filename="horuxdesigner.cpp" line="343"/>
         <source>100%</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="horuxdesigner.cpp" line="338"/>
+        <location filename="horuxdesigner.cpp" line="343"/>
         <source>125%</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="horuxdesigner.cpp" line="338"/>
+        <location filename="horuxdesigner.cpp" line="343"/>
         <source>150%</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="horuxdesigner.cpp" line="338"/>
+        <location filename="horuxdesigner.cpp" line="343"/>
         <source>200%</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="horuxdesigner.cpp" line="338"/>
+        <location filename="horuxdesigner.cpp" line="343"/>
         <source>250%</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="horuxdesigner.cpp" line="454"/>
+        <location filename="horuxdesigner.cpp" line="462"/>
         <source>About Horux Card Designer</source>
         <translation type="unfinished">A propos de Horux Card Designer</translation>
     </message>
     <message>
-        <location filename="horuxdesigner.cpp" line="454"/>
+        <location filename="horuxdesigner.cpp" line="462"/>
         <source>&lt;h2&gt;Horux Card Designer&lt;/h2&gt;&lt;h3&gt;Version 0.0.1&lt;/h3&gt;Copyright 2010 Letux S&amp;agrave;rl.&lt;br/&gt;A Free Software released under the GNU/GPL License (GPL3)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="horuxdesigner.cpp" line="462"/>
+        <location filename="horuxdesigner.cpp" line="470"/>
         <source>Horux webservice error</source>
         <translation type="unfinished">Erreur du service web de Horux</translation>
     </message>
     <message>
-        <location filename="horuxdesigner.cpp" line="462"/>
+        <location filename="horuxdesigner.cpp" line="470"/>
         <source>Not able to call the Horux GUI web service.</source>
         <translation type="unfinished">Impossible de faire appel au service web de Horux.</translation>
     </message>
     <message>
-        <location filename="horuxdesigner.cpp" line="693"/>
+        <location filename="horuxdesigner.cpp" line="701"/>
         <source>Picture error</source>
         <translation type="unfinished">Erreur d&apos;image</translation>
     </message>
     <message>
-        <location filename="horuxdesigner.cpp" line="693"/>
+        <location filename="horuxdesigner.cpp" line="701"/>
         <source>Not able to load the user picture</source>
         <translation type="unfinished">Impossible de charger l&apos;image</translation>
     </message>
     <message>
-        <location filename="horuxdesigner.cpp" line="712"/>
+        <location filename="horuxdesigner.cpp" line="720"/>
         <source>Horux Card Designer - new card</source>
         <translation type="unfinished">Horux Card Designer - nouvelle carte</translation>
     </message>
     <message>
-        <location filename="horuxdesigner.cpp" line="714"/>
+        <location filename="horuxdesigner.cpp" line="722"/>
         <source>Horux Card Designer - %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="horuxdesigner.cpp" line="740"/>
+        <location filename="horuxdesigner.cpp" line="748"/>
         <source>&amp;%1 %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="horuxdesigner.cpp" line="860"/>
+        <location filename="horuxdesigner.cpp" line="872"/>
         <source>Open an Horux Card Designer file</source>
         <translation type="unfinished">Ouvrir un fichier Horux Card Designer</translation>
     </message>
     <message>
-        <location filename="horuxdesigner.cpp" line="862"/>
-        <location filename="horuxdesigner.cpp" line="1159"/>
+        <location filename="horuxdesigner.cpp" line="874"/>
+        <location filename="horuxdesigner.cpp" line="1176"/>
         <source>Horux Card Designer (*.xml)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="horuxdesigner.cpp" line="1159"/>
+        <location filename="horuxdesigner.cpp" line="1176"/>
         <source>Save the card</source>
         <translation type="unfinished">Sauver la carte</translation>
     </message>
     <message>
-        <location filename="horuxdesigner.cpp" line="1434"/>
+        <location filename="horuxdesigner.cpp" line="1189"/>
+        <location filename="horuxdesigner.cpp" line="1879"/>
+        <source>File changed</source>
+        <translation type="unfinished">Le fichier a été modifié</translation>
+    </message>
+    <message>
+        <location filename="horuxdesigner.cpp" line="1189"/>
+        <location filename="horuxdesigner.cpp" line="1879"/>
+        <source>The file was modified, do you want to save it before to close Horux Card Designer?</source>
+        <translation type="unfinished">Le fichier a été modifié, voulez-vous le sauver avant de fermer Horux Card Designer?</translation>
+    </message>
+    <message>
+        <location filename="horuxdesigner.cpp" line="1462"/>
         <source>%</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="horuxdesigner.cpp" line="1646"/>
+        <location filename="horuxdesigner.cpp" line="1677"/>
         <source>Text</source>
         <translation type="unfinished">Texte</translation>
     </message>
     <message>
-        <location filename="horuxdesigner.cpp" line="1661"/>
+        <location filename="horuxdesigner.cpp" line="1692"/>
         <source>Picture</source>
         <translation type="unfinished">Image</translation>
     </message>
@@ -871,7 +883,7 @@
     <message>
         <location filename="printpreview.ui" line="14"/>
         <source>Print preview</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Aperçu avant impression</translation>
     </message>
     <message>
         <location filename="printpreview.ui" line="17"/>
@@ -912,7 +924,7 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="main.cpp" line="26"/>
+        <location filename="main.cpp" line="35"/>
         <source>Loading...</source>
         <translation type="unfinished">Chargement...</translation>
     </message>
@@ -1018,7 +1030,7 @@
     <message>
         <location filename="pixmapsetting.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">De</translation>
     </message>
     <message>
         <location filename="pixmapsetting.ui" line="20"/>
@@ -1081,7 +1093,7 @@
     <message>
         <location filename="textsetting.ui" line="20"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">De</translation>
     </message>
     <message>
         <location filename="textsetting.ui" line="26"/>

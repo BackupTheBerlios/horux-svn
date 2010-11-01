@@ -36,6 +36,7 @@ signals:
     void itemSelected(QGraphicsItem *item);
     void itemMoved(QGraphicsItem *item, QPointF pos);
     void mouseRelease();
+    void itemChange();
 
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent);

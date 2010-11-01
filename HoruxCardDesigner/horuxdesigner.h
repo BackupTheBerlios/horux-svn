@@ -108,7 +108,7 @@ protected:
     void resizeEvent ( QResizeEvent * even);
     void updatePrintPreview();
 
-
+    virtual void closeEvent ( QCloseEvent * event );
 private:
     Ui::HoruxDesigner *ui;
     static HoruxDesigner *pThis;
@@ -174,6 +174,8 @@ private:
     int column1;
     int column2;
     int pictureColumn;
+
+    bool fileChanged;
 
 };
 

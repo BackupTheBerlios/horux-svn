@@ -79,6 +79,7 @@ void CardScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
         textItem->setPlainText("Text");
 
         emit textInserted(textItem);
+        emit itemChange();
         break;
     case InsertPicture:
         {
@@ -86,6 +87,7 @@ void CardScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
             pixmapItem->setPos( pixmapItem->mapFromScene(mouseEvent->scenePos()) );
 
             emit itemInserted(pixmapItem);
+            emit itemChange();
         }
         break;
     default:
