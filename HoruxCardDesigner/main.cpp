@@ -31,6 +31,12 @@ int main(int argc, char *argv[])
 
     QPixmap pixmap(":/images/splash.png");
     QSplashScreen splash(pixmap);
+
+    QLabel version(&splash);
+    version.setText(QObject::tr("Version 1.0.0"));
+    version.setStyleSheet("color:#ffffff");
+    version.move(QPoint(180, 200));
+
     splash.show();
     splash.showMessage(QObject::tr("Loading..."),Qt::AlignLeft, Qt::white);
     QApplication::processEvents();
