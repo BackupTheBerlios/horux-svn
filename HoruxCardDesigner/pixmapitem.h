@@ -35,6 +35,10 @@ public slots:
     void setHeight(const QString &);
     void topChanged(const QString &);
     void leftChanged(const QString &);
+    void setLocked(int flag);
+
+signals:
+    void itemChange();
 
 protected:
     QVariant itemChange(GraphicsItemChange change, const QVariant &value);
@@ -46,6 +50,7 @@ public:
     QPixmap pHorux;
     QSize size;
     bool isPrinting;
+    bool isLocked;
 
 private:
     QBuffer pictureBufferUnknown;

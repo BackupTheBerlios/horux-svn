@@ -81,6 +81,7 @@ void DatabaseConnection::setEngine(const QString engine)
     m_ui->column1->setEnabled(false);
     m_ui->column2->setEnabled(false);
     m_ui->pictureColumn->setEnabled(false);
+    m_ui->sqlRequest->setEnabled(false);
 
     QString engineData = m_ui->engine->itemData(m_ui->engine->currentIndex()).toString();
 
@@ -118,6 +119,7 @@ void DatabaseConnection::setEngine(const QString engine)
                 m_ui->column1->setEnabled(true);
                 m_ui->column2->setEnabled(true);
                 m_ui->pictureColumn->setEnabled(true);
+                m_ui->sqlRequest->setEnabled(true);
             }
             else
             {
@@ -132,6 +134,7 @@ void DatabaseConnection::setEngine(const QString engine)
                     m_ui->column1->setEnabled(true);
                     m_ui->column2->setEnabled(true);
                     m_ui->pictureColumn->setEnabled(true);
+                    m_ui->sqlRequest->setEnabled(true);
                 }
             }
         }

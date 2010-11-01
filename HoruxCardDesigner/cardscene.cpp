@@ -14,6 +14,8 @@ CardScene::CardScene(QObject *parent)  : QGraphicsScene(parent)
 
     card->setPos(100,100);
 
+    currentSelectedPos.setX(0);
+    currentSelectedPos.setY(0);
 }
 
 CardItem *CardScene::getCardItem()
@@ -54,6 +56,8 @@ void CardScene::loadScene(QString xml)
 
 void CardScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
+    QGraphicsScene::mousePressEvent(mouseEvent);
+
     switch (myMode)
     {
     case InsertText:
@@ -85,43 +89,50 @@ void CardScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
         }
         break;
     default:
-        ;
+        if(selectedItems().count()>0) {
+            currentSelectedPos = selectedItems().at(0)->pos();
+        }
     }
 
-    QGraphicsScene::mousePressEvent(mouseEvent);
+
 }
 
 void CardScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
     if (myMode == MoveItem)
     {
+        QGraphicsScene::mouseMoveEvent(mouseEvent);
+
         if( selectedItems().size() > 0)
         {
             QGraphicsItem *item = selectedItems().at(0);
             if(item->type() > QGraphicsItem::UserType + 1)
             {
-                emit itemMoved(item);
+                emit itemMoved(item, currentSelectedPos);
             }
         }
 
-        QGraphicsScene::mouseMoveEvent(mouseEvent);
+
     }
 }
 
 void CardScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
-{
+{    
+    QGraphicsScene::mouseReleaseEvent(mouseEvent);
+
     if( selectedItems().size() > 0)
     {
         QGraphicsItem *item = selectedItems().at(0);
         if(item->type() > QGraphicsItem::UserType + 1)
         {
-            emit itemMoved(item);                        
+            currentSelectedPos.setX(0);
+            currentSelectedPos.setY(0);
+
+            emit itemMoved(item, currentSelectedPos);
         }
     }
 
     emit mouseRelease();
-
-    QGraphicsScene::mouseReleaseEvent(mouseEvent);
 
 }
 

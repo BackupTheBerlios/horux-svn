@@ -99,6 +99,7 @@ void TextPage::setFont()
     if(ok)
     {
         font = newFont;
+        fontText->setText(font.family());
         emit changeFont(newFont);
     }
 }

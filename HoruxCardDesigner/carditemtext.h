@@ -37,6 +37,7 @@ signals:
     void lostFocus(CardTextItem *item);
     void selectedChange(QGraphicsItem *item);
     void textChanged(const QString &);
+    void itemChange();
 
 protected:
     QVariant itemChange(GraphicsItemChange change, const QVariant &value);
@@ -55,6 +56,7 @@ public slots:
     void alignmentChanged(int);
     void setPrintCounter(int, int, int);
     void setFormat(int, int, int, QString, QString);
+    void setLocked(int flag);
 
 public:
     double rotation;
@@ -75,6 +77,8 @@ public:
     int format_decimal;
     QString format_date;
     QString format_sourceDate;
+
+    bool isLocked;
 
 
 };

@@ -69,7 +69,7 @@ private slots:
     void itemInserted(QGraphicsItem *item);
     void textInserted(QGraphicsTextItem *item);
     void itemSelected(QGraphicsItem *item);
-    void itemMoved(QGraphicsItem *);
+    void itemMoved(QGraphicsItem *, QPointF pos);
     void selectionChanged();
     void sceneScaleChanged(const QString &scale);
     void currentFontChanged(const QFont &font);
@@ -92,9 +92,8 @@ private slots:
     void about();
 
     void readSoapResponse();
-    void readSoapResponseUser();
     void userChanged(int);
-    void httpRequestDone ( bool error );
+    void httpRequestDone ( QNetworkReply* );
     void sslErrors ( QNetworkReply * reply, const QList<QSslError> & errors );
     void sslErrors ( const QList<QSslError> & errors );
 
@@ -103,10 +102,12 @@ private slots:
 
     void mouseRelease();
 
+    void fileChange();
+
 protected:
     void resizeEvent ( QResizeEvent * even);
     void updatePrintPreview();
-    void fileChange();
+
 
 private:
     Ui::HoruxDesigner *ui;
@@ -140,7 +141,7 @@ private:
     QLabel *isSecure;
     QLabel *dbInformation;
 
-    QHttp pictureHttp;
+    QNetworkAccessManager pictureHttp;
     QBuffer pictureBuffer;
     QMap<QString, QString> userValue;
 
@@ -148,8 +149,12 @@ private:
 
     QGraphicsScene *scenePreview;
 
+    QMap<QNetworkReply *, int>userPictureReply;
+    QMap<int, QBuffer*>userPicture;
     QMap<int, QStringList>userData;
     QStringList header;
+
+    int currentUser;
 
     QSqlQuery *sqlQuery;
 

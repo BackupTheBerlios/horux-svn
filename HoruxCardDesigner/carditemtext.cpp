@@ -25,6 +25,8 @@ CardTextItem::CardTextItem(QGraphicsItem *parent, QGraphicsScene *scene)
 
     isPrinting = false;
 
+    isLocked = false;
+
     setTextWidth(-1);
     document()->setTextWidth(-1);
 }
@@ -248,6 +250,15 @@ void CardTextItem::loadText(QDomElement text )
             format_sourceDate = node.toElement().text();
         }
 
+        if(node.toElement().tagName() == "isLocked")
+        {
+            isLocked = node.toElement().text().toInt();
+
+            if(isLocked) {
+                setFlag(QGraphicsItem::ItemIsMovable, false);
+            }
+
+        }
 
         node = node.nextSibling();
     }
@@ -387,6 +398,10 @@ QDomElement CardTextItem::getXmlItem(QDomDocument xml )
     newElement.appendChild(text);
     textItem.appendChild(newElement);
 
+    newElement = xml.createElement( "isLocked");
+    text =  xml.createTextNode(QString::number(isLocked));
+    newElement.appendChild(text);
+    textItem.appendChild(newElement);
 
     return textItem;
 }
@@ -394,18 +409,26 @@ QDomElement CardTextItem::getXmlItem(QDomDocument xml )
 
 void CardTextItem::sourceChanged(const int &s)
 {
+    if(s != source)
+        emit itemChange();
+
     source = s;
 }
 
 
 void  CardTextItem::setName(const QString &n)
 {
+    if(n != name)
+        emit itemChange();
     name = n;
 }
 
-void CardTextItem::fontChanged(const QFont &font)
+void CardTextItem::fontChanged(const QFont &f)
 {
-    setFont(font);
+    if(f != font())
+        emit itemChange();
+
+    setFont(f);
     scene()->update();
    // adjustSize();
     setTextWidth(-1);
@@ -413,14 +436,21 @@ void CardTextItem::fontChanged(const QFont &font)
 
 }
 
-void CardTextItem::colorChanged(const QColor &color)
+void CardTextItem::colorChanged(const QColor &c)
 {
-    setDefaultTextColor(color);
+    if(c != defaultTextColor() )
+        emit itemChange();
+
+    setDefaultTextColor(c);
     scene()->update();
 }
 
 void CardTextItem::rotationChanged(const QString &text)
 {
+    if(text.toDouble() != rotation )
+        emit itemChange();
+
+
     rotate(rotation*-1);
     rotation = text.toDouble();
     rotate(rotation);    
@@ -428,6 +458,9 @@ void CardTextItem::rotationChanged(const QString &text)
 
 void CardTextItem::topChanged(const QString &top)
 {
+    if(top.toInt() != pos().y() )
+        emit itemChange();
+
     QPointF p = pos();
     p.setY(top.toInt());
     setPos(p);
@@ -435,6 +468,10 @@ void CardTextItem::topChanged(const QString &top)
 
 void CardTextItem::leftChanged(const QString &left)
 {
+    if(left.toInt() != pos().x() )
+        emit itemChange();
+
+
     QPointF p = pos();
     p.setX(left.toInt());
     setPos(p);
@@ -527,6 +564,10 @@ void CardTextItem::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
 
 void CardTextItem::alignmentChanged(int align)
 {
+    if(align!= alignment )
+        emit itemChange();
+
+
     alignment = align;
 
     QTextDocument *doc = document();
@@ -551,12 +592,38 @@ void CardTextItem::alignmentChanged(int align)
 }
 
 void CardTextItem::setPrintCounter(int iv, int inc, int di) {
+    if(initialValue!= iv )
+        emit itemChange();
+
+    if(increment!= inc )
+        emit itemChange();
+
+    if(digits!= di )
+        emit itemChange();
+
     initialValue = iv;
     increment = inc;
     digits = di;
 }
 
 void CardTextItem::setFormat(int _format, int digit, int decimal, QString date, QString sourceDate) {
+    if(format!= (FORMAT)_format )
+        emit itemChange();
+
+    if(format_decimal!= decimal )
+        emit itemChange();
+
+    if(format_digit!= digit )
+        emit itemChange();
+
+    if(format_date!= date )
+        emit itemChange();
+
+    if(format_sourceDate!= sourceDate )
+        emit itemChange();
+
+
+
     format = (FORMAT)_format;
     format_decimal = decimal;
     format_digit = digit;
@@ -567,4 +634,17 @@ void CardTextItem::setFormat(int _format, int digit, int decimal, QString date, 
 void CardTextItem::incrementCounter() {
     if(source == 2)
         initialValue += increment;
+}
+
+void CardTextItem::setLocked(int flag) {
+    if(isLocked!= (bool)flag )
+        emit itemChange();
+
+    isLocked = (bool)flag;
+
+    if(isLocked) {
+        setFlag(QGraphicsItem::ItemIsMovable, false);
+    } else {
+        setFlag(QGraphicsItem::ItemIsMovable, true);
+    }
 }

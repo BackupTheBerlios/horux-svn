@@ -25,6 +25,8 @@ PixmapItem::PixmapItem(QGraphicsItem *parent) : QGraphicsPixmapItem(parent)
     size.setHeight(QPixmap(":/images/gadu.png").height());
 
     isPrinting = false;
+
+    isLocked = false;
 }
 
 void PixmapItem::setPrintingMode(bool printing, QBuffer &picture)
@@ -111,17 +113,17 @@ QVariant PixmapItem::itemChange(GraphicsItemChange change,
 
 QDomElement PixmapItem::getXmlItem(QDomDocument xml )
 {
-    QDomElement textItem = xml.createElement( "CardPixmapItem");
+    QDomElement pictureItem = xml.createElement( "CardPixmapItem");
 
     QDomElement newElement = xml.createElement( "name");
     QDomText text =  xml.createTextNode(name);
     newElement.appendChild(text);
-    textItem.appendChild(newElement);
+    pictureItem.appendChild(newElement);
 
     newElement = xml.createElement( "source");
     text =  xml.createTextNode(QString::number(source));
     newElement.appendChild(text);
-    textItem.appendChild(newElement);
+    pictureItem.appendChild(newElement);
 
     newElement = xml.createElement( "file");
     if(file != "" && source == 0)
@@ -134,40 +136,47 @@ QDomElement PixmapItem::getXmlItem(QDomDocument xml )
             text = xml.createTextNode("");
     }
     newElement.appendChild(text);
-    textItem.appendChild(newElement);
+    pictureItem.appendChild(newElement);
 
 
     newElement = xml.createElement( "posX");
     text =  xml.createTextNode(QString::number(pos().x()));
     newElement.appendChild(text);
-    textItem.appendChild(newElement);
+    pictureItem.appendChild(newElement);
 
     newElement = xml.createElement( "posY");
     text =  xml.createTextNode(QString::number(pos().y()));
     newElement.appendChild(text);
-    textItem.appendChild(newElement);
+    pictureItem.appendChild(newElement);
 
     newElement = xml.createElement( "zValue");
     text =  xml.createTextNode(QString::number( zValue() ));
     newElement.appendChild(text);
-    textItem.appendChild(newElement);
+    pictureItem.appendChild(newElement);
 
     newElement = xml.createElement( "width");
     text =  xml.createTextNode(QString::number(boundingRect().width()));
     newElement.appendChild(text);
-    textItem.appendChild(newElement);
+    pictureItem.appendChild(newElement);
 
     newElement = xml.createElement( "height");
     text =  xml.createTextNode(QString::number(boundingRect().height()));
     newElement.appendChild(text);
-    textItem.appendChild(newElement);
+    pictureItem.appendChild(newElement);
 
-    return textItem;
+
+    newElement = xml.createElement( "isLocked");
+    text =  xml.createTextNode(QString::number(isLocked));
+    newElement.appendChild(text);
+    pictureItem.appendChild(newElement);
+
+    return pictureItem;
 }
 
 
 void PixmapItem::setHoruxPixmap(QByteArray pict)
 {
+
     if(pict.size() > 0)
     {
         pHorux.loadFromData(pict);
@@ -181,11 +190,17 @@ void PixmapItem::setHoruxPixmap(QByteArray pict)
 
     setPixmap(pHorux);
     update();
+
+
 }
 
 void PixmapItem::setPixmapFile(QString pixmapFile)
 {
     if(source==1) return;
+
+    if(pixmapFile != file)
+        emit itemChange();
+
 
     file = pixmapFile;
     setPixmap(QPixmap(file));
@@ -198,12 +213,19 @@ void PixmapItem::setPixmapFile(QString pixmapFile)
 
 void PixmapItem::setName(const QString &n)
 {
+    if(n != name)
+        emit itemChange();
+
     name = n;
 }
 
 void PixmapItem::sourceChanged(const int &s)
 {
+    if(s!=source)
+        emit itemChange();
+
     source = s;
+
 }
 
 void PixmapItem::loadPixmap(QDomElement text )
@@ -250,6 +272,15 @@ void PixmapItem::loadPixmap(QDomElement text )
             size.setHeight(node.toElement().text().toInt());
         }
 
+        if(node.toElement().tagName() == "isLocked")
+        {
+            isLocked = node.toElement().text().toInt();
+
+            if(isLocked) {
+                setFlag(QGraphicsItem::ItemIsMovable, false);
+            }
+
+        }
 
         node = node.nextSibling();
     }
@@ -278,6 +309,10 @@ void PixmapItem::loadPixmap(QDomElement text )
 
 void PixmapItem::setWidth(const QString &w)
 {
+    if(w.toInt() != size.width())
+        emit itemChange();
+
+
     QString f = file == "" ? ":/images/gadu.png" : file;
     QPixmap p(f);
 
@@ -292,10 +327,14 @@ void PixmapItem::setWidth(const QString &w)
 
     size.setHeight(boundingRect().height());
 
+
 }
 
 void PixmapItem::setHeight(const QString &h)
 {
+    if(h.toInt() != size.height())
+        emit itemChange();
+
     QString f = file == "" ? ":/images/gadu.png" : file;
     QPixmap p(f);
 
@@ -310,19 +349,43 @@ void PixmapItem::setHeight(const QString &h)
     update();
 
     size.setWidth(boundingRect().width());
+
 }
 
 void PixmapItem::topChanged(const QString &top)
 {
+    if(top.toInt() != pos().y())
+        emit itemChange();
+
     QPointF p = pos();
     p.setY(top.toInt());
     setPos(p);
+
 }
 
 void PixmapItem::leftChanged(const QString &left)
 {
+    if(left.toInt() != pos().x())
+        emit itemChange();
+
     QPointF p = pos();
     p.setX(left.toInt());
     setPos(p);
+
 }
 
+void PixmapItem::setLocked(int flag) {
+
+    if((bool)flag != isLocked)
+        emit itemChange();
+
+    isLocked = (bool)flag;
+
+    if(isLocked) {
+        setFlag(QGraphicsItem::ItemIsMovable, false);
+    } else {
+        setFlag(QGraphicsItem::ItemIsMovable, true);
+    }
+
+
+}

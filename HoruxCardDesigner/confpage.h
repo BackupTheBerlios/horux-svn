@@ -53,6 +53,7 @@ signals:
     void changeColor(const QColor &);
     void changePrintCounter(int , int , int);
     void changeFormat(int, int, int , QString, QString);
+    void changeLocked(bool);
 
 public:
     QColor color;

@@ -46,6 +46,7 @@ public slots:
     void viewGrid(int flag);
     void alignGrid(int flag);
     void setGridSize(int size);
+    void setLocked(int flag);
 
 
 private:
@@ -62,6 +63,10 @@ public:
     int gridSize;
     bool isGridAlign;
     bool isPrinting;
+    bool isLocked;
+
+signals:
+    void itemChange();
 
 };
 

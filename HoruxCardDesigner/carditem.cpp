@@ -15,6 +15,8 @@ CardItem::CardItem( Size size,  Format format, QGraphicsItem * parent) : QGraphi
     isGrid = false;
     isGridAlign = false;
 
+    isLocked = false;
+
     setFlag(QGraphicsItem::ItemIsMovable, true);
     setFlag(QGraphicsItem::ItemIsSelectable, true);
     setFlag(QGraphicsItem::ItemClipsChildrenToShape, true);
@@ -129,6 +131,16 @@ void CardItem::loadCard(QDomElement card )
                    scene (), SIGNAL(itemSelected(QGraphicsItem *)));*/
         }
 
+        if(node.toElement().tagName() == "isLocked")
+        {
+            isLocked = node.toElement().text().toInt();
+
+            if(isLocked) {
+                setFlag(QGraphicsItem::ItemIsMovable, false);
+            }
+
+        }
+
         node = node.nextSibling();
     }
 
@@ -183,6 +195,11 @@ QDomElement CardItem::getXmlItem(QDomDocument xml )
 
     newElement = xml.createElement( "bkgFile");
     text =  xml.createTextNode(bkgFile);
+    newElement.appendChild(text);
+    card.appendChild(newElement);
+
+    newElement = xml.createElement( "isLocked");
+    text =  xml.createTextNode(QString::number(isLocked));
     newElement.appendChild(text);
     card.appendChild(newElement);
 
@@ -328,24 +345,37 @@ void CardItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
 
 void CardItem::setSize(int size)
 {
+    if((Size)size != cardSize)
+        emit itemChange();
+
     cardSize = (Size)size;
     update();
 }
 
 void CardItem::setFormat(int format)
 {
+    if((Format)format != cardFormat)
+        emit itemChange();
+
+
     cardFormat = (Format)format;
     update();
 }
 
 void CardItem::setBkgColor(const QString &color)
 {
+    if(color!= bkgColor.name())
+        emit itemChange();
+
     bkgColor.setNamedColor(color);;
     update();
 }
 
 void CardItem::setBkgPixmap(QString file)
 {
+    if(bkgFile!= file)
+        emit itemChange();
+
     bkgFile = file;
     pix.load(file);
     update();
@@ -353,18 +383,40 @@ void CardItem::setBkgPixmap(QString file)
 
 void CardItem::viewGrid(int flag)
 {
+    if((bool)flag!= isGrid)
+        emit itemChange();
+
     isGrid = (bool)flag;
     update();
 }
 
 void CardItem::alignGrid(int flag)
 {
+    if((bool)flag!= isGridAlign)
+        emit itemChange();
+
     isGridAlign = (bool)flag;
     update();
 }
 
 void CardItem::setGridSize(int size)
 {
+    if(size!= gridSize)
+        emit itemChange();
+
     gridSize = size;
     update();
+}
+
+void CardItem::setLocked(int flag) {
+    if((bool)flag!= isLocked)
+        emit itemChange();
+
+    isLocked = (bool)flag;
+
+    if(isLocked) {
+        setFlag(QGraphicsItem::ItemIsMovable, false);
+    } else {
+        setFlag(QGraphicsItem::ItemIsMovable, true);
+    }
 }

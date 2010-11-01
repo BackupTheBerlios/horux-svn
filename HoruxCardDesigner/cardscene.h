@@ -34,7 +34,7 @@ signals:
     void itemInserted(QGraphicsItem *item);
     void textInserted(QGraphicsTextItem *item);
     void itemSelected(QGraphicsItem *item);
-    void itemMoved(QGraphicsItem *item);
+    void itemMoved(QGraphicsItem *item, QPointF pos);
     void mouseRelease();
 
 protected:
@@ -52,6 +52,7 @@ private:
     CardItem *card;
     QFont defaultFont;
     QColor myTextColor;
+    QPointF currentSelectedPos;
 };
 
 #endif // CARDSCENE_H

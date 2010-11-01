@@ -24,6 +24,7 @@ HoruxDesigner::HoruxDesigner(QWidget *parent)
 
     ui->setupUi(this);
 
+    currentUser = 0;
     host = "";
     username = "";
     password = "";
@@ -146,11 +147,11 @@ void HoruxDesigner::loadData()
 
 void HoruxDesigner::loadHoruxSoap()
 {
+
+
     connect(&transport, SIGNAL(responseReady()),this, SLOT(readSoapResponse()), Qt::UniqueConnection);
 
     pictureBuffer.open(QBuffer::ReadWrite);
-
-    connect(&pictureHttp, SIGNAL(done(bool)), this, SLOT(httpRequestDone(bool)), Qt::UniqueConnection);
 
     QtSoapMessage message;
     message.setMethod("getAllUser");
@@ -172,6 +173,8 @@ void HoruxDesigner::loadHoruxSoap()
     }
 
     transport.submitRequest(message, path+"/index.php?soap=horux&password=" + password + "&username=" + username);
+    QApplication::processEvents();
+
 }
 
 
@@ -257,13 +260,15 @@ void HoruxDesigner::loadCSVData() {
                     }
                     header = listSimplified;
                 } else {
-                    if(column2>0)
-                        userCombo->addItem(list.at(column1).simplified () + " " + list.at(column2).simplified (), list.at(primaryKeyColumn).simplified ());
-                    else
-                        userCombo->addItem(list.at(column1).simplified (), list.at(primaryKeyColumn).simplified());
-                    userData[list.at(primaryKeyColumn).simplified().toInt()] = list;
+                    if(column2 < header.count() && column1 < header.count() && primaryKeyColumn<header.count()) {
+                        if(column2>0)
+                            userCombo->addItem(list.at(column1).simplified () + " " + list.at(column2).simplified (), list.at(primaryKeyColumn).simplified ());
+                        else
+                            userCombo->addItem(list.at(column1).simplified (), list.at(primaryKeyColumn).simplified());
+                        userData[list.at(primaryKeyColumn).simplified().toInt()] = list;
 
-                    i++;
+                        i++;
+                    }
                 }
             }            
         }
@@ -298,11 +303,13 @@ void HoruxDesigner::sslErrors ( QNetworkReply * reply, const QList<QSslError> & 
 
 void HoruxDesigner::sslErrors ( const QList<QSslError> & errors )
 {
+    QNetworkReply *reply = qobject_cast<QNetworkReply *>(sender());
+
     foreach(QSslError sslError, errors)
     {
         if(sslError.error() == QSslError::SelfSignedCertificate)
         {
-            pictureHttp.ignoreSslErrors();
+            reply->ignoreSslErrors();
         }
         else
             qDebug() << sslError;
@@ -428,8 +435,8 @@ void HoruxDesigner::initScene()
     connect(scene, SIGNAL( selectionChanged()),
             this, SLOT(selectionChanged()));
 
-    connect(scene, SIGNAL( itemMoved(QGraphicsItem *)),
-            this, SLOT(itemMoved(QGraphicsItem *)));
+    connect(scene, SIGNAL( itemMoved(QGraphicsItem *, QPointF)),
+            this, SLOT(itemMoved(QGraphicsItem *, QPointF)));
 
 
 
@@ -449,6 +456,7 @@ void HoruxDesigner::about()
 
 void HoruxDesigner::readSoapResponse()
 {
+
     const QtSoapMessage &response = transport.getResponse();
     if (response.isFault()) {
         QMessageBox::warning(this,tr("Horux webservice error"),tr("Not able to call the Horux GUI web service."));
@@ -470,6 +478,8 @@ void HoruxDesigner::readSoapResponse()
 
     const QtSoapType &returnValue = response.returnValue();
 
+
+
     for(int i=0; i<returnValue.count(); i++ )
     {
         const QtSoapType &record =  returnValue[i];
@@ -477,6 +487,7 @@ void HoruxDesigner::readSoapResponse()
         const QtSoapType &field_id =  record[0];
         const QtSoapType &field_name =  record[1];
         const QtSoapType &field_firstname =  record[2];
+        const QtSoapType &field_picture =  record[3];
 
         userCombo->addItem(field_name["value"].toString() + " " + field_firstname["value"].toString(), field_id["value"].toInt());
 
@@ -491,6 +502,33 @@ void HoruxDesigner::readSoapResponse()
         }
 
         userData[field_id["value"].toInt()] = data;
+
+        connect(&pictureHttp, SIGNAL(finished(QNetworkReply*)), this, SLOT(httpRequestDone(QNetworkReply*)));
+
+        if(ssl)
+        {
+            connect( &pictureHttp, SIGNAL( sslErrors( QNetworkReply *, const QList<QSslError> & ) ), this, SLOT( sslErrors(QNetworkReply *, const QList<QSslError> &)) ,Qt::UniqueConnection);
+        }
+
+        if(field_picture["value"].toString() != "") {
+
+            if( !userPicture.contains( field_id["value"].toInt() ) ) {
+
+
+                userPicture[field_id["value"].toInt()] = new QBuffer;
+
+                QNetworkRequest request;
+                request.setUrl(QUrl( "http://" +  host + path + "/pictures/" + field_picture["value"].toString()));
+                request.setRawHeader("User-Agent", "Horux Card Designer");
+                QNetworkReply *reply = pictureHttp.get(request);
+                userPictureReply[reply] = field_id["value"].toInt();
+
+                connect(reply , SIGNAL(sslErrors(QList<QSslError>)),
+                        this, SLOT(sslErrors(QList<QSslError>)));
+
+            }
+        }
+
     }
 
     ui->step->setText("1/" + QString::number(userCombo->count()));
@@ -507,11 +545,13 @@ void HoruxDesigner::readSoapResponse()
 }
 
 void HoruxDesigner::userChanged(int index)
-{
+{    
 
     if(userCombo)
     {
         int userId = userCombo->itemData(index).toInt();
+
+        currentUser = userId;
 
         if(engine == "HORUX") {
 
@@ -527,22 +567,27 @@ void HoruxDesigner::userChanged(int index)
 
             userValue["__countIndex"] = QString::number(userCombo->currentIndex());
 
-            updatePrintPreview();
 
-            /*disconnect(&transport, 0, this, 0);
-            connect(&transport, SIGNAL(responseReady()),this, SLOT(readSoapResponseUser()));
+            if(userValue["picture"] != "")
+            {
+                pictureBuffer.close();
+                pictureBuffer.setData(QByteArray());
 
-            if(ssl)
-                connect(transport.networkAccessManager(),SIGNAL(sslErrors( QNetworkReply *, const QList<QSslError> & )), this, SLOT(sslErrors(QNetworkReply*,QList<QSslError>)));
+                if(userPicture.contains(userId))
+                    pictureBuffer.setData(userPicture[userId]->buffer());
 
+                updatePrintPreview();
 
-            QtSoapMessage message;
-            message.setMethod("getUserById");
-            message.addMethodArgument("id","",userId);
+            }
+            else
+            {
+                statusBar()->clearMessage();
+                pictureBuffer.close();
+                pictureBuffer.setData(QByteArray());
+                pictureBuffer.open(QBuffer::ReadWrite);
+                updatePrintPreview();
+            }
 
-            statusBar()->showMessage("The data are loading from Horux Gui...");
-
-            transport.submitRequest(message, path+"/index.php?soap=horux&password=" + password + "&username=" + username);*/
         }
 
         if(engine == "CSV") {
@@ -570,7 +615,6 @@ void HoruxDesigner::userChanged(int index)
 
                     if(file.open(QIODevice::ReadOnly)) {
                          pictureBuffer.setData(file.readAll());
-
                     }
                 }
 
@@ -638,74 +682,27 @@ void HoruxDesigner::userChanged(int index)
         ui->next->setEnabled(true);
 }
 
-void HoruxDesigner::readSoapResponseUser()
+
+void HoruxDesigner::httpRequestDone ( QNetworkReply* reply )
 {
-
-    const QtSoapMessage &response = transport.getResponse();
-    if (response.isFault()) {
-        statusBar()->clearMessage();
-        QMessageBox::warning(this,tr("Horux webservice error"),tr("Not able to call the Horux GUI web service."));
-        return;
-    }
-
-    const QtSoapType &value = response.returnValue();
-
-    for(int i=0; i<value.count(); i++)
-    {
-        const QtSoapType &field =  value[i];
-        userValue[field[0].toString()] = field[1].toString();
-
-        header.append(field[0].toString());
-
-    }
-
-    if(value.count() > 0 && userCombo && userCombo->count() > userCombo->currentIndex()+1 ) {
-        ui->next->setEnabled(true);
-    }    
-
-    userValue["__countIndex"] = QString::number(userCombo->currentIndex());
-
-    QString name =  userValue["picture"];
-
-    if(name != "")
-    {
-        pictureBuffer.close();
-        pictureBuffer.setData(QByteArray());
-        pictureBuffer.open(QBuffer::ReadWrite);
-
-        pictureHttp.setHost(host, ssl ? QHttp::ConnectionModeHttps : QHttp::ConnectionModeHttp );
-
-        if(ssl)
-        {
-            connect(&pictureHttp,SIGNAL(sslErrors( const QList<QSslError> & )), this, SLOT(sslErrors(QList<QSslError>)));
-        }
-
-        pictureHttp.get(path + "/pictures/" + name, &pictureBuffer);
-    }
-    else
-    {
-        statusBar()->clearMessage();
-        pictureBuffer.close();
-        pictureBuffer.setData(QByteArray());
-        pictureBuffer.open(QBuffer::ReadWrite);
-    }
-
-    updatePrintPreview();
-}
-
-void HoruxDesigner::httpRequestDone ( bool error )
-{
-
     statusBar()->clearMessage();
-    if(error)
-    {
 
+
+    if(reply->error() != QNetworkReply::NoError)
+    {
         QMessageBox::information(this, tr("Picture error"),tr("Not able to load the user picture"));
     }
     else {
+        QByteArray b = reply->readAll();
+        if(b.size() > 0 ) {
+            int userId = userPictureReply[reply];
+            userPicture[userId]->setData(b);
+        }
+
         updatePrintPreview();
     }
 
+    reply->deleteLater();
 }
 
 void HoruxDesigner::setCurrentFile(const QString &fileName)
@@ -761,8 +758,13 @@ void HoruxDesigner::openRecentFile()
     QAction *action = qobject_cast<QAction *>(sender());
     if (action)
     {
+        if(dbase.isOpen())
+            dbase.close();
+
         userData.clear();
         header.clear();
+        userPicture.clear();
+        userPictureReply.clear();
 
         newCard();
         currenFile.setFileName(action->data().toString());
@@ -861,8 +863,12 @@ void HoruxDesigner::open()
     if (!fileName.isEmpty())
     {
 
+        if(dbase.isOpen())
+            dbase.close();
         userData.clear();
         header.clear();
+        userPicture.clear();
+        userPictureReply.clear();
 
         setCurrentFile(fileName);
 
@@ -1320,6 +1326,20 @@ void HoruxDesigner::printSelection() {
 
 void HoruxDesigner::newCard()
 {
+    host = "";
+    username = "";
+    password = "";
+    path = "";
+    databaseName = "";
+    ssl = false;
+    engine = "";
+    file = "";
+    sql = "";
+    primaryKeyColumn = 0;
+    column1 = 1;
+    column2 = 2;
+    pictureColumn = 3;
+
     foreach (QGraphicsItem *item, scene->items()) {
         if (item->type() !=  QGraphicsItem::UserType+1) {
             scene->removeItem(item);
@@ -1438,6 +1458,9 @@ void HoruxDesigner::setParamView(QGraphicsItem *item)
                     connect(cardPage->gridDraw, SIGNAL(currentIndexChanged ( int )), card, SLOT(viewGrid(int)));
                     connect(cardPage->gridSize, SIGNAL(valueChanged  ( int )), card, SLOT(setGridSize(int)));
                     connect(cardPage->gridAlign, SIGNAL(currentIndexChanged ( int )), card, SLOT(alignGrid(int)));
+                    connect(cardPage->locked, SIGNAL(stateChanged(int)),  card, SLOT(setLocked(int)) );
+
+                    connect(card, SIGNAL(itemChange()), this, SLOT(fileChange()));
                 }
 
                 cardPage->sizeCb->setCurrentIndex(card->getSize());
@@ -1448,6 +1471,8 @@ void HoruxDesigner::setParamView(QGraphicsItem *item)
                     cardPage->bkgColor->setText(card->bkgColor.name());
                     cardPage->bkgColor->setStyleSheet("background-color: " + card->bkgColor.name() + ";");
                 }
+
+                cardPage->locked->setChecked(card->isLocked);
 
                 cardPage->bkgPicture->setText(card->bkgFile);
                 cardPage->gridAlign->setCurrentIndex((int)card->isGridAlign);
@@ -1490,7 +1515,9 @@ void HoruxDesigner::setParamView(QGraphicsItem *item)
                     connect(textPage->alignment, SIGNAL(currentIndexChanged ( int )), textItem, SLOT(alignmentChanged(int)));
                     connect(textPage, SIGNAL(changePrintCounter(int,int,int)), textItem, SLOT(setPrintCounter(int,int,int)));
                     connect(textPage, SIGNAL(changeFormat(int,int, int, QString, QString)),  textItem, SLOT(setFormat(int,int,int,QString, QString)));
+                    connect(textPage->locked, SIGNAL(stateChanged(int)),  textItem, SLOT(setLocked(int)) );
 
+                    connect(textItem, SIGNAL(itemChange()), this, SLOT(fileChange()));
 
                     textPage->setFormat(textItem->format,textItem->format_digit,textItem->format_decimal,textItem->format_date, textItem->format_sourceDate);
 
@@ -1512,6 +1539,8 @@ void HoruxDesigner::setParamView(QGraphicsItem *item)
                     textPage->top->setValue(textItem->pos().y());
                     textPage->left->setValue(textItem->pos().x());
                     textPage->alignment->setCurrentIndex(textItem->alignment);
+
+                    textPage->locked->setChecked(textItem->isLocked);
 
                     textPage->source->setCurrentIndex( textItem->source );
                     textPage->setSource(textItem->source);
@@ -1560,9 +1589,14 @@ void HoruxDesigner::setParamView(QGraphicsItem *item)
                     connect(pixmapPage->top, SIGNAL(valueChanged(QString)), pixmapItem, SLOT(topChanged(const QString &)));
                     connect(pixmapPage->left, SIGNAL(valueChanged(QString)), pixmapItem, SLOT(leftChanged(const QString &)));
 
+                    connect(pixmapPage->locked, SIGNAL(stateChanged(int)),  pixmapItem, SLOT(setLocked(int)) );
+
+                    connect(pixmapItem, SIGNAL(itemChange()), this, SLOT(fileChange()));
+
                     pixmapPage->top->setValue(pixmapItem->pos().y());
                     pixmapPage->left->setValue(pixmapItem->pos().x());
 
+                    pixmapPage->locked->setChecked(pixmapItem->isLocked);
 
                     pixmapPage->source->setCurrentIndex( pixmapItem->source );
                     pixmapPage->connectDataSource();
@@ -1693,7 +1727,7 @@ void HoruxDesigner::selectionChanged()
 
 }
 
-void HoruxDesigner::itemMoved(QGraphicsItem *item)
+void HoruxDesigner::itemMoved(QGraphicsItem *item, QPointF pos)
 {
     if(item && scene->selectedItems().count() > 0)
     {
@@ -1714,8 +1748,12 @@ void HoruxDesigner::itemMoved(QGraphicsItem *item)
             }
         }
 
-
+        if(pos.y() != 0 && pos.x() != 0) {
+            if(item->pos() != pos)
+                fileChange();
+        }
     }
+
 }
 
 void HoruxDesigner::updatePrintPreview()
@@ -1726,6 +1764,10 @@ void HoruxDesigner::updatePrintPreview()
     scene->clearSelection ();
 
     QPointF cardPos = scene->getCardItem()->pos();
+
+    if(userPicture.contains(currentUser)) {
+        pictureBuffer.setData(userPicture[currentUser]->buffer());
+    }
 
     scene->getCardItem()->setPrintingMode(true, pictureBuffer, userValue);
     scene->getCardItem()->setPos(0,0);
@@ -1791,7 +1833,8 @@ void HoruxDesigner::backRecord() {
 
 void HoruxDesigner::mouseRelease() {
     updatePrintPreview();
-    fileChange();
+
+
 }
 
 void HoruxDesigner::fileChange() {
