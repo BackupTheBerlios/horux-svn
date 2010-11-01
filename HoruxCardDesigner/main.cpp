@@ -20,6 +20,15 @@ int main(int argc, char *argv[])
     myappTranslator.load(a.applicationDirPath() +  "/horuxcarddesigner_" + lang +".qm");
     a.installTranslator(&myappTranslator);
 
+
+    QTranslator qtTranslator;
+    qtTranslator.load("qt_" + QLocale::system().name(),
+         QLibraryInfo::location(QLibraryInfo::TranslationsPath));
+    a.installTranslator(&qtTranslator);
+
+
+
+
     QPixmap pixmap(":/images/splash.png");
     QSplashScreen splash(pixmap);
     splash.show();

@@ -5,7 +5,7 @@
 #include "carditemtext.h"
 #include "pixmapitem.h"
 
-CardItem::CardItem( Size size,  Format format, QGraphicsItem * parent) : QGraphicsPathItem (parent)
+CardItem::CardItem( Size size,  Format format, int f, QGraphicsItem * parent) : QGraphicsPathItem (parent)
 {
     bkgColor = QColor(Qt::white);
 
@@ -17,9 +17,11 @@ CardItem::CardItem( Size size,  Format format, QGraphicsItem * parent) : QGraphi
 
     isLocked = false;
 
+    face = f;
+
     setFlag(QGraphicsItem::ItemIsMovable, true);
     setFlag(QGraphicsItem::ItemIsSelectable, true);
-    setFlag(QGraphicsItem::ItemClipsChildrenToShape, true);
+  //  setFlag(QGraphicsItem::ItemClipsChildrenToShape, true);
 
     isPrinting = false;
 
@@ -72,6 +74,11 @@ void CardItem::loadCard(QDomElement card )
 
     while(!node.isNull())
     {
+        if(node.toElement().tagName() == "face")
+        {
+            face = node.toElement().text().toInt();
+        }
+
         if(node.toElement().tagName() == "cardSize")
         {
             cardSize = (Size)node.toElement().text().toInt();
@@ -203,6 +210,11 @@ QDomElement CardItem::getXmlItem(QDomDocument xml )
     newElement.appendChild(text);
     card.appendChild(newElement);
 
+    newElement = xml.createElement( "face");
+    text =  xml.createTextNode(QString::number(face));
+    newElement.appendChild(text);
+    card.appendChild(newElement);
+
     return card;
 }
 
@@ -258,6 +270,15 @@ void CardItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
         QPen pen;  // creates a default pen
         pen.setWidthF(1);
         painter->setPen(pen);
+
+        /*if(face == 1) {
+            QGraphicsTextItem *faceItem = new QGraphicsTextItem(tr("Front card"), this);
+            faceItem->setPos(10,-30);
+            faceItem->setDefaultTextColor(Qt::white);
+        } else {
+            QGraphicsTextItem *faceItem = new QGraphicsTextItem(tr("Back card"), this);
+            faceItem->setPos(10,-30);
+        }*/
     }
 
     switch(cardSize)

@@ -18,7 +18,7 @@ CardPage::CardPage(QWidget *parent)
 
 void CardPage::setColor()
 {
-    color = QColorDialog::getColor(color, this);
+    color = QColorDialog::getColor(color, this, "", QColorDialog::DontUseNativeDialog);
     if (color.isValid()) {
         bkgColor->setText(color.name());
         bkgColor->setStyleSheet("background-color: " + color.name() + ";");
@@ -85,7 +85,7 @@ void TextPage::setFormat(int f, int digit, int decimal, QString date, QString so
 
 void TextPage::setColor()
 {
-    color = QColorDialog::getColor(color, this);
+    color = QColorDialog::getColor(color, this, "", QColorDialog::DontUseNativeDialog);
     if (color.isValid()) {
         emit changeColor(color);
     }

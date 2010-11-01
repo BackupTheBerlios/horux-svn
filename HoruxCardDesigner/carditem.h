@@ -17,7 +17,7 @@ public:
     enum Size { CR80, CR90, CR79 };
     enum Format { P, L };
 
-    CardItem( Size size = CR80, Format format = L, QGraphicsItem * parent = 0);
+    CardItem( Size size = CR80, Format format = L, int f = 1, QGraphicsItem * parent = 0);
 
     QDomElement getXmlItem(QDomDocument xml );
     void loadCard(QDomElement card );
@@ -64,6 +64,7 @@ public:
     bool isGridAlign;
     bool isPrinting;
     bool isLocked;
+    int face;
 
 signals:
     void itemChange();
