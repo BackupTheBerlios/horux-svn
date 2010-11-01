@@ -33,7 +33,7 @@ int main(int argc, char *argv[])
     QSplashScreen splash(pixmap);
 
     QLabel version(&splash);
-    version.setText(QObject::tr("Version 1.0.0"));
+    version.setText(HoruxDesigner::getVersion());
     version.setStyleSheet("color:#ffffff");
     version.move(QPoint(180, 200));
 

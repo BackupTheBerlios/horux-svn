@@ -459,7 +459,7 @@ void HoruxDesigner::initScene()
 
 void HoruxDesigner::about()
 {
-    QMessageBox::about(this, tr("About Horux Card Designer"),tr("<h2>Horux Card Designer</h2><h3>Version 0.0.1</h3>Copyright 2010 Letux S&agrave;rl.<br/>A Free Software released under the GNU/GPL License (GPL3)"));
+    QMessageBox::about(this, tr("About Horux Card Designer"),tr("<h2>Horux Card Designer</h2><h3>") + HoruxDesigner::getVersion() + tr("</h3>Copyright 2010 Letux S&agrave;rl<br/>A Free Software released under the GNU/GPL License (GPL3)"));
 }
 
 void HoruxDesigner::readSoapResponse()

@@ -51,6 +51,7 @@ public:
     static int getColumn2() { return pThis->column2; }
     static int getPictureColumn() { return pThis->pictureColumn; }
     static QStringList getHeader() { return pThis->header; }
+    static QString getVersion() { return tr("Version 0.0.1"); }
 
 private:
     void createToolBox();
