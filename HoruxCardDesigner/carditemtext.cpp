@@ -50,6 +50,8 @@ void CardTextItem::setPrintingMode(bool printing, QMap<QString, QString>userData
                  text_tmp = text_tmp.replace("%" + i.key() + "%", i.value().simplified());
 
                  switch(format) {
+                     case 0:
+                        break;
                      case 1: // integer
                          text_tmp = text_tmp.rightJustified(format_digit,'0');
                          break;
@@ -86,6 +88,8 @@ void CardTextItem::setPrintingMode(bool printing, QMap<QString, QString>userData
         QString text_tmp = text;
 
         switch(format) {
+            case 0:
+               break;
             case 1: // integer
                 text_tmp = text_tmp.rightJustified(format_digit,'0');
                 break;
