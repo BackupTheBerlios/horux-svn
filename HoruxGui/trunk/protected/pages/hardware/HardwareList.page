@@ -120,6 +120,21 @@
     </span>
 </com:TTemplateColumn>					
 
+
+<com:TTemplateColumn HeaderStyle.Width = "20px">
+    <prop:HeaderTemplate><%[Enabled]%></prop:HeaderTemplate>
+    <prop:ItemTemplate>
+        <span onmouseover="Tip('<%[Click here to enable or<br/> disable the device]%> <i><%# $this->NamingContainer->DataItem['name']%></i>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)">
+        <com:TActiveImageButton
+            Text="<%#$this->NamingContainer->DataItem['id']%>"
+            ImageUrl="<%# !$this->NamingContainer->DataItem['isActive'] ? './themes/letux/images/menu/icon-16-cross.png' : './themes/letux/images/menu/icon-16-checkin.png'%>"
+            OnClick="Page.setActive"
+            Style="border:0px"
+            />
+    </prop:ItemTemplate>
+    </span>
+</com:TTemplateColumn>
+
 </com:TDataGrid>
 </div>
 <%include Application.common.template.footerContent %>

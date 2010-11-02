@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <xliff version="1.0">
- <file source-language="FR" target-language="fr" datatype="plaintext" original="messages" date="2010-09-08T15:56:14Z" product-name="messages">
+ <file source-language="FR" target-language="fr" datatype="plaintext" original="messages" date="2010-11-02T17:26:54Z" product-name="messages">
   <body>
   
 <trans-unit id="1" lock="1">
@@ -3945,6 +3945,31 @@
 <trans-unit id="746">
 <source>Memory limit</source>
 <target>Memory Limit</target>
+</trans-unit>
+
+<trans-unit id="747">
+<source>Enabled</source>
+<target>Aktiviert</target>
+</trans-unit>
+
+<trans-unit id="748">
+<source>Click here to enable or&lt;br/&gt; disable the device</source>
+<target>Klicken Sie hier zu aktivieren oder &lt;br&gt; deaktivieren Sie das Periperie </target>
+</trans-unit>
+
+<trans-unit id="749">
+<source>Select the shortcut</source>
+<target>W&#xE4;hlen Sie im Kontextmen&#xFC;</target>
+</trans-unit>
+
+<trans-unit id="750">
+<source>Shortcut</source>
+<target>Verkn&#xFC;pfung</target>
+</trans-unit>
+
+<trans-unit id="751">
+<source>-- Select a shortcut --</source>
+<target>-- W&#xE4;hlen Sie eine Verkn&#xFC;pfung --</target>
 </trans-unit>
 </body>
 </file>

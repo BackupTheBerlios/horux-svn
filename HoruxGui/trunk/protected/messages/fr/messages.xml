@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <xliff version="1.0">
- <file source-language="FR" target-language="fr" datatype="plaintext" original="messages" date="2010-10-07T10:26:18Z" product-name="messages">
+ <file source-language="FR" target-language="fr" datatype="plaintext" original="messages" date="2010-11-02T17:24:01Z" product-name="messages">
   <body>
   
 <trans-unit id="1" lock="1">
@@ -3954,6 +3954,16 @@
 <trans-unit id="747">
 <source>-- Select a shortcut --</source>
 <target>-- S&#xE9;lectionner un raccourci --</target>
+</trans-unit>
+
+<trans-unit id="748">
+<source>Enabled</source>
+<target>Activ&#xE9;</target>
+</trans-unit>
+
+<trans-unit id="749">
+<source>Click here to enable or&lt;br/&gt; disable the device</source>
+<target>Cliquez ici pour activ&#xE9; ou&lt;br/&gt;d&#xE9;sactiv&#xE9; le p&#xE9;riph&#xE9;rique</target>
 </trans-unit>
 </body>
 </file>

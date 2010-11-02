@@ -281,6 +281,52 @@ class HardwareList extends PageList
         $pBack = array( 'id'=>$sender->Text );
         $this->Response->redirect($this->Service->constructUrl('openTime.attribute',$pBack));
     }
+
+    
+    public function setActive($sender,$param)
+    {
+        $id = $sender->Text;
+        $cmd=$this->db->createCommand("UPDATE hr_device SET isActive=:flag WHERE id=:id");
+        $cmd->bindValue(":id",$id);
+
+        if($sender->ImageUrl == "./themes/letux/images/menu/icon-16-checkin.png")
+        {
+            $this->log("Enable the device ".$data2['name']);
+
+            $flag = 0;
+            $sender->ImageUrl = "./themes/letux/images/menu/icon-16-checkin.png";
+            $cmd->bindValue(":flag",$flag);
+
+            $cmd2=$this->db->createCommand("SELECT * FROM hr_device WHERE id=:id");
+            $cmd2->bindValue(":id",$id);
+            $cmd2 = $cmd2->query();
+            $data2 = $cmd2->read();
+
+            $this->log("Disable the device ".$data2['name']);
+
+        }
+        else
+        {
+            $flag = 1;
+            $sender->ImageUrl = "./themes/letux/images/menu/icon-16-cross.png";
+            $cmd->bindValue(":flag",$flag);
+
+            $cmd2=$this->db->createCommand("SELECT * FROM hr_device WHERE id=:id");
+            $cmd2->bindValue(":id",$id);
+            $cmd2 = $cmd2->query();
+            $data2 = $cmd2->read();
+
+        }
+        $cmd->execute();
+
+        $horuxService = new THoruxService();
+        $horuxService->onStop();
+        $horuxService->onStart();
+
+        $this->DataGrid->DataSource=$this->Data;
+        $this->DataGrid->dataBind();
+        $this->Page->CallbackClient->update('list', $this->DataGrid);
+    }
 }
 
 ?>
