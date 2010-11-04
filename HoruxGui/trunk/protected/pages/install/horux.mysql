@@ -168,6 +168,7 @@ CREATE TABLE IF NOT EXISTS `hr_device` (
   `description` varchar(150) NOT NULL,
   `accessPlugin` varchar(30) NOT NULL,
   `isActive` smallint(1) NOT NULL DEFAULT '1',
+  `horuxControllerId` int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY  (`id`)
 ) TYPE=MyISAM CHARACTER SET `utf8`;
 
@@ -642,3 +643,20 @@ CREATE TABLE IF NOT EXISTS `hr_superuser_shortcut` (
   `superuser_id` int(11) NOT NULL,
   `shortcut` varchar(100) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `hr_horux_controller`
+--
+
+CREATE TABLE IF NOT EXISTS `hr_horux_controller` (
+`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+`name` VARCHAR( 50 ) NOT NULL ,
+`ip` VARCHAR( 100 ) NOT NULL ,
+`type` SET( 'master', 'slave' ) NOT NULL ,
+`comment` VARCHAR( 255 ) NOT NULL
+) ENGINE = MYISAM DEFAULT CHARSET=utf8 ;
+
+INSERT INTO `hr_horux_controller` (`id`, `name`, `ip`, `type`, `comment`) VALUES
+(1, 'Master Horux Controller', 'localhost', 'master', 'Master Horux Controller');
