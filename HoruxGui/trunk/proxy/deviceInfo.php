@@ -99,41 +99,42 @@
     	if($result != "")
     	{
     		$xml = simplexml_load_string($result);
+                    foreach($xml->controller as $controller) {
+                            foreach ($controller->devices as $devices)
+                            {
 
-   			foreach ($xml->devices as $devices) 
-   			{
-  				
-	   			foreach ($devices as $device) 
-	   			{
-	   				if((string)$device['id'] == $id) 
-	   				{
-	   					
-	   					$html = '<table class="adminlist" >';
-						$html .= '<thead><tr><th>Parameter</th><th>Value</th></tr></thead>';
-    					$html .= '<tfoot><tr><th colspan="6">&nbsp;</th></tr></tfoot><tbody>';							   					
-	   					foreach($device as $p)
-	   					{
-	   					
-	   					$html .= '<tr>';
-	   					$html .= '<th>';
-	   					$html .= $p->getName();
-	   					$html .= '</th>';
-	   					$html .= '<td>';
-	   					if(($p == '1' or $p=='0') && $p->getName() != 'address')
-	   						$html .= $p=='1' ?'true':'false';
-	   					else
-	   						$html .= $p;
-	   					$html .= '</td>';
-	   					$html .= '</tr>';
-	   					
-	   					}
-	   					
-	   					$html .= '</tbody></table>';
-	   					
-	   					echo $html;
-	   					return;
-	   				}
-	   			}   				
+                                    foreach ($devices as $device)
+                                    {
+                                            if((string)$device['id'] == $id)
+                                            {
+
+                                                    $html = '<table class="adminlist" >';
+                                                    $html .= '<thead><tr><th>Parameter</th><th>Value</th></tr></thead>';
+                                            $html .= '<tfoot><tr><th colspan="6">&nbsp;</th></tr></tfoot><tbody>';
+                                                    foreach($device as $p)
+                                                    {
+
+                                                    $html .= '<tr>';
+                                                    $html .= '<th>';
+                                                    $html .= $p->getName();
+                                                    $html .= '</th>';
+                                                    $html .= '<td>';
+                                                    if(($p == '1' or $p=='0') && $p->getName() != 'address')
+                                                            $html .= $p=='1' ?'true':'false';
+                                                    else
+                                                            $html .= utf8_decode($p);
+                                                    $html .= '</td>';
+                                                    $html .= '</tr>';
+
+                                                    }
+
+                                                    $html .= '</tbody></table>';
+
+                                                    echo $html;
+                                                    return;
+                                            }
+                                    }
+                            }
    			}
 				
     		echo "";

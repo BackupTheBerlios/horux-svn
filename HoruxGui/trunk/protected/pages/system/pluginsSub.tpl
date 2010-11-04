@@ -22,11 +22,14 @@
                 <th>
                     <%[Copyright]%>
                 </th>
+                <th>
+                    <%[Horux Controller]%>
+                </th>
             </tr>
         </thead>
         <tfoot>
             <tr>
-                <th colspan="6">
+                <th colspan="7">
                     &nbsp;
                 </th>
             </tr>
@@ -43,12 +46,12 @@
                         <td><%#$this->Data['version']%></td>
                         <td><%#$this->Data['author']%></td>
                         <td><%#$this->Data['copyright']%></td>
+                        <td><%#$this->Data['horuxController']%></td>
                     </tr>
                 </prop:ItemTemplate>
 
             </com:TRepeater>
         </tbody>
     </table>
-
 
 </fieldset>

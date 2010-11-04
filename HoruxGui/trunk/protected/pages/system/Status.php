@@ -45,74 +45,94 @@ class Status extends Page
     {
         $xml = simplexml_load_string($xmlresp);
 
+        $horuxRepeaterData = array();
+        $this->plugins = array();
+
+        $this->devices = array();
+
         if($xml != "")
         {
-
             $param = $this->Application->getParameters();
-
-            $this->horuxVersion->Text = (String)$xml->appVersion;
-
-            if($param['appMode'] === 'saas')
-            {
-                $this->lastUpdate->Text = (String)$xml->lastUpdate;
-            }
-            else
-            {
-                $this->lastUpdate->Text = '-';
-            }
             
-            $this->horuxTimeLive->Text = (String)$xml->serverLive;
-
-
-            $this->plugins = array();
-
-            foreach ($xml->plugins as $plugins)
+            foreach ($xml->controller as $controller)
             {
+                $sql = "SELECT * FROM hr_horux_controller WHERE id=".(int)$controller->controllerID;
+                $command=$this->db->createCommand($sql);
+                $dataObj=$command->query();
+                $dataObj = $dataObj->read();
 
-                foreach ($plugins as $plugin)
+                $horuxRepeaterData[(int)$controller->controllerID]["name"] = $dataObj['name'];
+
+                $horuxRepeaterData[(int)$controller->controllerID]["horuxVersion"] = (String)$controller->appVersion;
+                //$this->horuxVersion->Text = (String)$controller->appVersion;
+
+                if($param['appMode'] === 'saas')
                 {
-                    $p = array();
-                    $p['name'] = (String)$plugin->name;
-                    $p['description'] = (String)$plugin->description;
-                    $p['version'] = (String)$plugin->version;
-                    $p['author'] = (String)$plugin->author;
-                    $p['copyright'] = (String)$plugin->copyright;
-                    $p['type'] = (string)$plugins['type'];
-                    $this->plugins[] = $p;
+                    $horuxRepeaterData[(int)$controller->controllerID]["lastUpdate"] = (String)$controller->lastUpdate;
+                    //$this->lastUpdate->Text = (String)$controller->lastUpdate;
+
                 }
+                else
+                {
+                    $horuxRepeaterData[(int)$controller->controllerID]["lastUpdate"] = "-";
+                    //$this->lastUpdate->Text = '-';
+                }
+
+                $horuxRepeaterData[(int)$controller->controllerID]["horuxTimeLive"] = (String)$controller->serverLive;
+                //$this->horuxTimeLive->Text = (String)$controller->serverLive;
+
+
+                
+
+                foreach ($controller->plugins as $plugins)
+                {
+
+                    foreach ($plugins as $plugin)
+                    {
+                        $p = array();
+                        $p['name'] = (String)$plugin->name;
+                        $p['description'] = (String)$plugin->description;
+                        $p['version'] = (String)$plugin->version;
+                        $p['author'] = (String)$plugin->author;
+                        $p['copyright'] = (String)$plugin->copyright;
+                        $p['type'] = (string)$plugins['type'];
+                        $p['horuxController'] = $dataObj['name'];
+                        $this->plugins[] = $p;
+                    }
+                }
+
+                $this->PluginsR->DataSource=$this->plugins;
+                $this->PluginsR->dataBind();
+
+                foreach ($controller->devices as $devices)
+                {
+
+                    foreach ($devices as $device)
+                    {
+                        $p = array();
+                        $p['id'] = (string)$device['id'];
+                        $p['name'] = utf8_decode((String)$device->name);
+                        $p['serialNumber'] = (String)$device->serialNumber;
+                        $p['isConnected'] = (String)$device->isConnected;
+                        $p['firmwareVersion'] = (String)$device->firmwareVersion;
+                        $p['port'] = (String)$this->port;
+                        $p['host'] = (String)$this->host;
+                        $p['mode'] = (String)$param['appMode'];
+                        $p['saasdbname'] =  md5($this->db->getConnectionString());
+                        $p['horuxController'] = $dataObj['name'];
+                        $this->devices[] = $p;
+                    }
+                }
+
+
             }
 
-            $this->PluginsR->DataSource=$this->plugins;
-            $this->PluginsR->dataBind();
-
-            $this->devices = array();
-
-
-            foreach ($xml->devices as $devices)
-            {
-
-                foreach ($devices as $device)
-                {
-                    $p = array();
-                    $p['id'] = (string)$device['id'];
-                    $p['name'] = utf8_decode(utf8_decode((String)$device->name));
-                    $p['serialNumber'] = (String)$device->serialNumber;
-                    $p['isConnected'] = (String)$device->isConnected;
-                    $p['firmwareVersion'] = (String)$device->firmwareVersion;
-                    $p['port'] = (String)$this->port;
-                    $p['host'] = (String)$this->host;
-                    $p['mode'] = (String)$param['appMode'];
-                    $p['saasdbname'] =  md5($this->db->getConnectionString());
-                    $this->devices[] = $p;
-                }
-            }
+            $this->HoruxRepeater->DataSource = $horuxRepeaterData;
+            $this->HoruxRepeater->dataBind();
 
             $this->DeviceR->DataSource=$this->devices;
             $this->DeviceR->dataBind();
-
         }
-
-
     }
 
     protected function getSystemStatus()

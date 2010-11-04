@@ -1,5 +1,9 @@
+<com:TRepeater ID="HoruxRepeater" EnableViewState="false">
+
+<prop:ItemTemplate>
+    
 <fieldset class="adminform">
-    <legend><%[Horux Core Information]%></legend>
+    <legend><%[Horux Core Information]%> - <%#$this->Data['name']%></legend>
 
     <table class="adminlist">
         <thead>
@@ -26,7 +30,7 @@
                     <%[Horux Core Version]%>:
                 </td>
                 <td>
-                    <com:TLabel id="horuxVersion" />
+                    <com:TLabel id="horuxVersion" Text="<%#$this->Data['horuxVersion']%>" />
                 </td>
             </tr>
 
@@ -35,7 +39,7 @@
                     <%[Horux time live]%>:
                 </td>
                 <td>
-                    <com:TLabel id="horuxTimeLive" />
+                    <com:TLabel id="horuxTimeLive"  Text="<%#$this->Data['horuxTimeLive']%>" />
                 </td>
             </tr>
 
@@ -44,7 +48,7 @@
                     <%[Last status update]%>:
                 </td>
                 <td>
-                    <com:TLabel id="lastUpdate" />
+                    <com:TLabel id="lastUpdate"  Text="<%#$this->Data['lastUpdate']%>" />
                 </td>
             </tr>
 
@@ -52,3 +56,7 @@
     </table>
 
 </fieldset>
+
+</prop:ItemTemplate>
+
+</com:TRepeater>
