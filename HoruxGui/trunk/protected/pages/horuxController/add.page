@@ -1,0 +1,86 @@
+<com:TContent ID="Main">
+    <%include Application.common.template.headerContent %>
+
+    <com:TToolbarBox
+        ID="tbb"
+        Title="<%[Add an Horux Controller]%>"
+        CssIcon="icon-48-horuxcontroller"
+        ApplyVisible="true"
+        SaveVisible="true"
+        CancelVisible="true"
+        HelpVisible="true"
+        />
+
+    <%include Application.common.template.headerBoxContent %>
+
+
+    <fieldset class="adminform">
+        <legend><%[Parameters]%></legend>
+        <table class="admintable" cellspacing="1">
+            <tbody>
+                <tr>
+                    <td valign="top" class="key">
+                        <span onmouseover="Tip('<%[Enter a name for this Horux Controller]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)">* <%[Name]%></span>
+                    </td>
+                    <td>
+                        <com:TTextBox
+                            CssClass="text_area"
+                            ID="name"
+                            Width="50" />
+                        <com:TRequiredFieldValidator
+                            ValidationGroup="Group1"
+                            ControlToValidate="name"
+                            Text="<%[This field is required]%>"
+                            Display="Dynamic"/>
+                     </td>
+                </tr>
+
+                <tr>
+                    <td valign="top" class="key">
+                        <span onmouseover="Tip('<%[Insert the IP address or the dns name]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[IP/DNS]%></span>
+                    </td>
+                    <td>
+                        <com:TTextBox
+                            CssClass="text_area"
+                            ID="ip"
+                            Width="50" />
+                    </td>
+                        <com:TRequiredFieldValidator
+                            ValidationGroup="Group1"
+                            ControlToValidate="ip"
+                            Text="<%[This field is required]%>"
+                            Display="Dynamic"/>
+                </tr>
+
+
+                <tr>
+                    <td valign="top" class="key"><span onmouseover="Tip('<%[Check it if this Horux Controller is a master]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Master]%></span></td>
+                    <td>
+                        <com:TCheckBox
+                            ID="type"
+                            Text=""
+                            InputAttributes.value="1"
+                            />
+                    </td>
+                </tr>
+
+                <tr>
+                    <td valign="top" class="key">
+                        <span onmouseover="Tip('<%[You could insert a description for this open time]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Description]%></span>
+                    </td>
+                    <td>
+                        <com:TTextBox
+                            CssClass="text_area"
+                            ID="comment"
+                            Width="400px" />
+                    </td>
+                </tr>
+
+
+            </tbody>
+        </table>
+    </fieldset>
+
+    
+    <%include Application.common.template.footerContent %>
+</com:TContent>

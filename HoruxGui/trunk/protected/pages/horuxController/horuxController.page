@@ -1,0 +1,96 @@
+<com:TContent ID="Main">
+<%include Application.common.template.headerContent %>
+
+
+<com:TToolbarBox
+    ID="tbb"
+    Title="<%[Horux Controller List]%>"
+    CssIcon="icon-48-horuxcontroller"
+    EditVisible="true"
+    AddVisible="true"
+    AddUrl="horuxController.add"
+    DelVisible="true"
+    HelpVisible="true"
+    />
+
+
+
+<%include Application.common.template.headerBoxContent %>
+
+<div id="list">
+<com:TDataGrid
+    ID="DataGrid"
+    DataKeyField="id"
+    AutoGenerateColumns="false"
+    CssClass="adminlist"
+    ItemStyle.CssClass = "row0"
+    AlternatingItemStyle.CssClass="row1"
+    AllowPaging="true"
+    PageSize="15"
+    PagerStyle.Mode="Numeric"
+    PagerStyle.HorizontalAlign="Center"
+    OnPageIndexChanged="changePage"
+    OnPagerCreated="pagerCreated"
+    OnEditCommand="onEdit"
+    >
+
+<com:TBoundColumn
+    HeaderText="ID"
+    DataField="id"
+    HeaderStyle.Width = "20px"
+    />
+
+<com:TTemplateColumn
+    HeaderText=""
+    HeaderStyle.Width = "20px"
+    >
+    <prop:HeaderTemplate>
+        <com:TActiveCheckBox
+            ID="headerCB"
+            AutoPostBack="true"
+            OnCallback="Page.checkboxAllCallback"
+            InputAttributes.value="0"
+            />
+    </prop:HeaderTemplate>
+
+
+    <prop:ItemTemplate>
+        <com:TConditional Condition="!$this->Page->isRecordBlock('hr_horux_controller', $this->NamingContainer->DataItem['id'])">
+            <prop:TrueTemplate>
+                <com:TActiveCheckBox
+                    ID="item"
+                    InputAttributes.value="<%#$this->NamingContainer->DataItem['id']%>"
+                    />
+            </prop:TrueTemplate>
+            <prop:FalseTemplate>
+                <span onmouseover="Tip('<%[This record is modified by <b>]%><%= $this->Page->getUserName($this->NamingContainer->DataItem['locked']) %></b> ', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)">
+                    <com:TImage ID="noAccess" ImageUrl="./themes/letux/images/menu/icon-16-access.png" />
+                </span>
+            </prop:FalseTemplate>
+        </com:TConditional>
+    </prop:ItemTemplate>
+</com:TTemplateColumn>
+
+<com:TButtonColumn
+    HeaderText="<%[Name]%>"
+    DataTextField="name"
+    HeaderStyle.Width = "30%"
+    CommandName="edit"
+    />
+
+<com:TBoundColumn
+    HeaderText="<%[Type]%>"
+    DataField="type"
+    HeaderStyle.Width = "50px"
+    />
+
+<com:TBoundColumn
+    HeaderText="<%[Description]%>"
+    DataField="comment"
+    />
+
+
+</com:TDataGrid>
+</div>
+<%include Application.common.template.footerContent %>
+</com:TContent>
