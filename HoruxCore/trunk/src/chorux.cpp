@@ -21,6 +21,7 @@
 #include "chorux.h"
 
 #include "maiaXmlRpcServer.h"
+#include "maiaXmlRpcClient.h"
 #include "cxmlfactory.h"
 #include "include.h"
 #include <QFile>
@@ -33,6 +34,7 @@ CHorux::CHorux ( QObject *parent )
 {
     isStarted = false;
     ptr_xmlRpcServer = NULL;
+    ptr_xmlRpcClient = NULL;
     ptr_this = this;
     timerSoapInfo = NULL;
     timerSoapTracking = NULL;
@@ -292,6 +294,7 @@ bool CHorux::startEngine()
             ptr_xmlRpcServer->addMethod ( "horux.isEngine", this, "isEngine" );
             ptr_xmlRpcServer->addMethod ( "horux.stopDevice", this, "stopDevice" );
             ptr_xmlRpcServer->addMethod ( "horux.startDevice", this, "startDevice" );
+            ptr_xmlRpcServer->addMethod ( "horux.setSlaveHoruxControllerInfo", this, "setSlaveHoruxControllerInfo" );
         }
         else
         {
@@ -301,13 +304,13 @@ bool CHorux::startEngine()
 
     }
 
+    isStarted = true;
+
     // if we are in the saas mode, send update Horux gui with the system status
     if(saas)
     {
         getInfo();
     }
-
-    isStarted = true;
 
     return true;
 }
@@ -405,20 +408,28 @@ QString CHorux::getInfo( )
     QDomDocument xml_info;
     QDomElement root = xml_info.createElement ( "infoSystem" );
 
-    QDomElement newElement = xml_info.createElement ( "appVersion" );
-    QDomText text =  xml_info.createTextNode ( APPD_VERSION );
+    QDomElement controller = xml_info.createElement ( "controller" );
+
+    QDomElement newElement = xml_info.createElement ( "controllerID" );
+    QDomText text =  xml_info.createTextNode ( QString::number(CHorux::getHoruxControllerId()) );
     newElement.appendChild ( text );
-    root.appendChild ( newElement );
+    controller.appendChild ( newElement );
+
+    newElement = xml_info.createElement ( "appVersion" );
+    text =  xml_info.createTextNode ( APPD_VERSION );
+    newElement.appendChild ( text );
+    controller.appendChild ( newElement );
 
     newElement = xml_info.createElement ( "serverLive" );
     text =  xml_info.createTextNode ( serverStarted.toString ( "hh:mm:ss / dd.MM.yyyy" ) );
     newElement.appendChild ( text );
-    root.appendChild ( newElement );
+    controller.appendChild ( newElement );
+
 
     newElement = xml_info.createElement ( "lastUpdate" );
     text =  xml_info.createTextNode ( QDateTime::currentDateTime().toString ( "hh:mm:ss / dd.MM.yyyy" ) );
     newElement.appendChild ( text );
-    root.appendChild ( newElement );
+    controller.appendChild ( newElement );
 
     if ( isStarted )
     {
@@ -430,21 +441,33 @@ QString CHorux::getInfo( )
         QDomElement alarmPl =  CFactory::getAlarmHandling()->getInfo ( xml_info );
         QDomElement dbPl =  CFactory::getDbHandling()->getInfo ( xml_info );
 
-        root.appendChild ( dbPl );
-        root.appendChild ( alarmPl );
-        root.appendChild ( accessPl );
-        root.appendChild ( logPl );
-        root.appendChild ( devicesPl );
+        controller.appendChild ( dbPl );
+        controller.appendChild ( alarmPl );
+        controller.appendChild ( accessPl );
+        controller.appendChild ( logPl );
+        controller.appendChild ( devicesPl );
 
-        root.appendChild ( devices );
+        controller.appendChild ( devices );
     }
+
+    root.appendChild ( controller );
+
+    QMapIterator<int, QString> i(horuxControllerInfo);
+     while (i.hasNext()) {
+         i.next();
+
+            QDomDocument controllerInfo;
+            controllerInfo.setContent(i.value());
+
+            root.appendChild( controllerInfo );
+     }
 
     xml_info.appendChild ( root );
 
     QDomNode xmlNode =  xml_info.createProcessingInstruction ( "xml", "version=\"1.0\" encoding=\"ISO-8859-1\"" );
     xml_info.insertBefore ( xmlNode, xml_info.firstChild() );
 
-    if(saas)
+    if(saas && CHorux::isMasterHoruxController())
     {
         QtSoapMessage message;
         message.setMethod("updateSystemStatus");
@@ -454,8 +477,45 @@ QString CHorux::getInfo( )
 
     }
 
+    if(!CHorux::isMasterHoruxController()) {
+        if(ptr_xmlRpcClient == NULL) {
+
+            QSqlQuery query("SELECT * FROM hr_horux_controller WHERE id=1");
+
+            if(query.next()) {
+                qDebug() << "http://" + query.value(2).toString() + ":" + CFactory::getDbHandling()->plugin()->getConfigParam ( "xmlrpc_port" ).toString() + "/RPC2";
+                ptr_xmlRpcClient = new MaiaXmlRpcClient( QUrl("http://" + query.value(2).toString() + ":" + CFactory::getDbHandling()->plugin()->getConfigParam ( "xmlrpc_port" ).toString() + "/RPC2"), this);
+            }
+        } else {
+            QVariantList args;
+
+            QDomDocument controller_info;
+
+            QDomNode xmlNode =  controller_info.createProcessingInstruction ( "", "" );
+            controller_info.insertBefore ( xmlNode, controller_info.firstChild() );
+
+            controller_info.appendChild(controller);
+
+            args << CHorux::getHoruxControllerId();
+            args << controller_info.toString();
+
+            ptr_xmlRpcClient->call("horux.setSlaveHoruxControllerInfo", args,
+            this, SLOT(xmlRpcClientResponse(QVariant &)),
+            this, SLOT(xmlRpcClientFault(int, const QString &)));
+        }
+    }
+
     return  xml_info.toString() ;
 }
+
+void CHorux::xmlRpcClientResponse(QVariant &) {
+
+}
+
+void CHorux::xmlRpcClientFault(int error, const QString &message) {
+    qDebug() << "EEE:" << error << "-" << message;
+}
+
 
 void CHorux::sendNotification(QMap<QString, QVariant> params)
 {
@@ -963,4 +1023,10 @@ bool CHorux::isMasterHoruxController() {
     if ( !settings.contains ( "type" ) ) settings.setValue ( "type", "master" );
 
     return settings.value("type", "master").toString() == "master";
+}
+
+void CHorux::setSlaveHoruxControllerInfo(int controllerId, QString xml) {
+
+    horuxControllerInfo[controllerId] = xml;
+
 }

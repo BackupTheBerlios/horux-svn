@@ -24,6 +24,7 @@
 #include <QObject>
 
 class MaiaXmlRpcServer;
+class MaiaXmlRpcClient;
 
 /**
     Main class of the Horux applications
@@ -112,6 +113,10 @@ class CHorux : public QObject
         */
         void startDevice ( QString username, QString password, QString id );
 
+        /*!
+          This funciton is called by the slave Horux Controller to informe the master about its status
+        */
+        void setSlaveHoruxControllerInfo(int controllerId, QString xml);
 
     private slots:
         /*!
@@ -134,6 +139,11 @@ class CHorux : public QObject
         */
         void syncData();
 
+
+        void xmlRpcClientResponse(QVariant &);
+
+        void xmlRpcClientFault(int, const QString &);
+
     private:
         void initSAASMode();
 
@@ -150,6 +160,7 @@ class CHorux : public QObject
 
         //! xmlrpc server
         MaiaXmlRpcServer *ptr_xmlRpcServer;
+        MaiaXmlRpcClient *ptr_xmlRpcClient;
 
         //! soap client
         QtSoapHttpTransport soapClient;
@@ -169,6 +180,9 @@ class CHorux : public QObject
 
         //! pointer of the instance
         static CHorux *ptr_this;
+
+        //! Horux controller info
+        QMap<int, QString>horuxControllerInfo;
 
     signals:
         /*!
