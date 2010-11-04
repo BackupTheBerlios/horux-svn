@@ -489,7 +489,7 @@ void CHorux::readSoapResponse()
     const QtSoapMessage &response = soapClient.getResponse();
 
     if (response.isFault()) {
-        qDebug() << "Not able to call the Horux GUI web service. (" << response.method().name().name() << ")";
+        qDebug() << "(CHorux) Not able to call the Horux GUI web service. (" << response.faultString().toString() << ":" << response.faultCode () << ")";
         return;
     }
 
@@ -932,4 +932,14 @@ void CHorux::syncData()
     message.setMethod("syncDatabaseData");
 
     soapClient.submitRequest(message, saas_path+"/index.php?soap=horux&password=" + saas_password + "&username=" + saas_username);
+}
+
+QStringList CHorux::getUnloadPlugins() {
+    QSettings settings ( QCoreApplication::instance()->applicationDirPath() +"/horux.ini", QSettings::IniFormat );
+
+    settings.beginGroup ( "Plugins" );
+
+    if ( !settings.contains ( "unload" ) ) settings.setValue ( "unload", "" );
+
+    return settings.value("unload", "").toStringList();
 }

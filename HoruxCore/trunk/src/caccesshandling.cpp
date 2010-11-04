@@ -114,37 +114,41 @@ bool CAccessHandling::loadPlugin()
             {
                 pName = plugin->metaObject()->classInfo ( index ).value();
 
-                connect ( plugin,
-                          SIGNAL ( accessAction ( QString ) ),
-                          this,
-                          SIGNAL ( sendAlarm ( QString ) ) );
+                if(!CHorux::getUnloadPlugins().contains(pName)) {
+                    connect ( plugin,
+                              SIGNAL ( accessAction ( QString ) ),
+                              this,
+                              SIGNAL ( sendAlarm ( QString ) ) );
 
-                connect ( plugin,
-                          SIGNAL ( accessAction ( QString ) ),
-                          this,
-                          SIGNAL ( accessAction ( QString ) ) );
+                    connect ( plugin,
+                              SIGNAL ( accessAction ( QString ) ),
+                              this,
+                              SIGNAL ( accessAction ( QString ) ) );
 
-                connect ( plugin,
-                          SIGNAL ( notification ( QMap<QString, QVariant> ) ),
-                          this,
-                          SLOT ( notification ( QMap<QString, QVariant> ) ) );
+                    connect ( plugin,
+                              SIGNAL ( notification ( QMap<QString, QVariant> ) ),
+                              this,
+                              SLOT ( notification ( QMap<QString, QVariant> ) ) );
 
-                connect ( this,
-                          SIGNAL (deviceEvent(QString ) ),
-                          plugin,
-                          SLOT ( deviceEvent(QString ) ) );
+                    connect ( this,
+                              SIGNAL (deviceEvent(QString ) ),
+                              plugin,
+                              SLOT ( deviceEvent(QString ) ) );
 
-                connect ( this,
-                          SIGNAL ( deviceConnectionMonitor(int,bool) ),
-                          plugin,
-                          SLOT ( deviceConnectionMonitor(int,bool) ) );
+                    connect ( this,
+                              SIGNAL ( deviceConnectionMonitor(int,bool) ),
+                              plugin,
+                              SLOT ( deviceConnectionMonitor(int,bool) ) );
 
-                connect ( this,
-                          SIGNAL ( deviceInputMonitor(int,int,bool) ),
-                          plugin,
-                          SLOT ( deviceInputMonitor(int,int,bool) ) );
+                    connect ( this,
+                              SIGNAL ( deviceInputMonitor(int,int,bool) ),
+                              plugin,
+                              SLOT ( deviceInputMonitor(int,int,bool) ) );
 
-                accessInterfaces[pName] =  qobject_cast<CAccessInterface *> ( plugin );
+                    accessInterfaces[pName] =  qobject_cast<CAccessInterface *> ( plugin );
+                } else {
+                    qDebug() << "Don't load the access plugin " << pName << ". Defined in horux.ini";
+                }
             }
             else
             {

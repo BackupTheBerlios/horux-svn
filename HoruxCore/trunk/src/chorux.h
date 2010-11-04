@@ -59,6 +59,11 @@ class CHorux : public QObject
         */
         static void sendNotification(QMap<QString, QVariant> params);
 
+        /*!
+          Get e list of pluging which should not be load by Horux
+          @return Return a string list of the plugins
+        */
+        static QStringList getUnloadPlugins();
 
     public slots:
         /*!

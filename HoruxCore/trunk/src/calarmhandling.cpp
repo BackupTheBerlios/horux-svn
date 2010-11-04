@@ -110,32 +110,37 @@ bool CAlarmHandling::loadPlugin()
             {
                 pName = plugin->metaObject()->classInfo ( index ).value();
 
-                connect ( plugin,
-                          SIGNAL ( alarmAction ( QString ) ),
-                          this,
-                          SIGNAL ( alarmAction ( QString ) ) );
+                if(!CHorux::getUnloadPlugins().contains(pName)) {
 
-                connect ( plugin,
-                          SIGNAL ( notification ( QMap<QString, QVariant> ) ),
-                          this,
-                          SLOT ( notification ( QMap<QString, QVariant> ) ) );
+                    connect ( plugin,
+                              SIGNAL ( alarmAction ( QString ) ),
+                              this,
+                              SIGNAL ( alarmAction ( QString ) ) );
 
-                connect ( this,
-                          SIGNAL ( alarmMonitor(QString) ),
-                          plugin,
-                          SLOT ( alarmMonitor(QString) ) );
+                    connect ( plugin,
+                              SIGNAL ( notification ( QMap<QString, QVariant> ) ),
+                              this,
+                              SLOT ( notification ( QMap<QString, QVariant> ) ) );
 
-                connect ( this,
-                          SIGNAL ( deviceConnectionMonitor(int,bool) ),
-                          plugin,
-                          SLOT ( deviceConnectionMonitor(int,bool) ) );
+                    connect ( this,
+                              SIGNAL ( alarmMonitor(QString) ),
+                              plugin,
+                              SLOT ( alarmMonitor(QString) ) );
 
-                connect ( this,
-                          SIGNAL ( deviceInputMonitor(int,int,bool) ),
-                          plugin,
-                          SLOT ( deviceInputMonitor(int,int,bool) ) );
+                    connect ( this,
+                              SIGNAL ( deviceConnectionMonitor(int,bool) ),
+                              plugin,
+                              SLOT ( deviceConnectionMonitor(int,bool) ) );
 
-                alarmInterfaces[pName] =  qobject_cast<CAlarmInterface *> ( plugin );
+                    connect ( this,
+                              SIGNAL ( deviceInputMonitor(int,int,bool) ),
+                              plugin,
+                              SLOT ( deviceInputMonitor(int,int,bool) ) );
+
+                    alarmInterfaces[pName] =  qobject_cast<CAlarmInterface *> ( plugin );
+                } else {
+                    qDebug() << "Don't load the alarm plugin " << pName << ". Defined in horux.ini";
+                }
             }
             else
             {

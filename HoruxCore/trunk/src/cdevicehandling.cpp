@@ -21,6 +21,7 @@
 #include "cdevicehandling.h"
 #include "include.h"
 #include "cxmlfactory.h"
+#include "chorux.h"
 
 CDeviceHandling *CDeviceHandling::pThis = NULL;
 
@@ -121,7 +122,11 @@ QMap<QString, CDeviceInterface *> CDeviceHandling::loadPlugin()
                 {
                     pName  =  plugin->metaObject()->classInfo ( index ).value() ;
 
-                    loadedPlugins[pName] =  qobject_cast<CDeviceInterface *> ( plugin );
+                    if(!CHorux::getUnloadPlugins().contains(pName)) {
+                        loadedPlugins[pName] =  qobject_cast<CDeviceInterface *> ( plugin );
+                    } else {
+                        qDebug() << "Don't load the device plugin " << pName << ". Defined in horux.ini";
+                    }
                 }
                 else
                 {
