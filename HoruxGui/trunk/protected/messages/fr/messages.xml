@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <xliff version="1.0">
- <file source-language="FR" target-language="fr" datatype="plaintext" original="messages" date="2010-11-02T17:24:01Z" product-name="messages">
+ <file source-language="FR" target-language="fr" datatype="plaintext" original="messages" date="2010-11-04T10:51:26Z" product-name="messages">
   <body>
   
 <trans-unit id="1" lock="1">
@@ -3964,6 +3964,81 @@
 <trans-unit id="749">
 <source>Click here to enable or&lt;br/&gt; disable the device</source>
 <target>Cliquez ici pour activ&#xE9; ou&lt;br/&gt;d&#xE9;sactiv&#xE9; le p&#xE9;riph&#xE9;rique</target>
+</trans-unit>
+
+<trans-unit id="750">
+<source>Add an Horux Controller</source>
+<target>Ajouter un contr&#xF4;lleur Horux</target>
+</trans-unit>
+
+<trans-unit id="751">
+<source>Enter a name for this Horux Controller</source>
+<target>Entrez un nom pour ce contr&#xF4;lleur Horux</target>
+</trans-unit>
+
+<trans-unit id="752">
+<source>Insert the IP address or the dns name</source>
+<target>Entrez une adresse IP ou un nom dns</target>
+</trans-unit>
+
+<trans-unit id="753">
+<source>IP/DNS</source>
+<target>IP/DNS</target>
+</trans-unit>
+
+<trans-unit id="754">
+<source>Check it if this Horux Controller is a master</source>
+<target>Cochez si ce contr&#xF4;lleur Horux est un contr&#xF4;leur ma&#xEE;tre</target>
+</trans-unit>
+
+<trans-unit id="755">
+<source>Master</source>
+<target>Ma&#xEE;tre</target>
+</trans-unit>
+
+<trans-unit id="756">
+<source>The Horux Controller was added successfully</source>
+<target>Le contr&#xF4;lleur Horux a &#xE9;t&#xE9; ajout&#xE9; avec succ&#xE8;s</target>
+</trans-unit>
+
+<trans-unit id="757">
+<source>The Horux Controller was not added</source>
+<target>Le contr&#xF4;lleur Horux n'a pas &#xE9;t&#xE9; ajout&#xE9;</target>
+</trans-unit>
+
+<trans-unit id="758">
+<source>Horux Controller List</source>
+<target>Liste des contr&#xF4;lleurs Horux</target>
+</trans-unit>
+
+<trans-unit id="759">
+<source>Cannot delete the master Horux Controller</source>
+<target>Ne peut pas supprimer un contr&#xF4;lleur Horux ma&#xEE;tre</target>
+</trans-unit>
+
+<trans-unit id="760">
+<source>{n} Horux Controller was deleted</source>
+<target>{n} contr&#xF4;lleur Horux ont &#xE9;t&#xE9; supprim&#xE9;s</target>
+</trans-unit>
+
+<trans-unit id="761">
+<source>Modify an Horux Controller</source>
+<target>Modifier un contr&#xF4;lleur Horux</target>
+</trans-unit>
+
+<trans-unit id="762">
+<source>The Horux Controller was modified successfully</source>
+<target>Le contr&#xF4;lleur Horux a &#xE9;t&#xE9; modifi&#xE9; avec succ&#xE8;s</target>
+</trans-unit>
+
+<trans-unit id="763">
+<source>The Horux Controller was not modified</source>
+<target>Le contr&#xF4;lleur Horux n'a pas &#xE9;t&#xE9; modifi&#xE9;</target>
+</trans-unit>
+
+<trans-unit id="764">
+<source>Horux Controller</source>
+<target>Contr&#xF4;lleur Horux</target>
 </trans-unit>
 </body>
 </file>

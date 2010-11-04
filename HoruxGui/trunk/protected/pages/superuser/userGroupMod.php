@@ -207,6 +207,7 @@ class userGroupMod extends Page
         
         $data[] = array('Type'=>Prado::localize('System'), 'id'=>'site', 'Text'=>Prado::localize('Site'), 'Text2'=>'', 'access'=>$this->isAccess('site.Site'), 'shortcut'=>$this->isShortcut('site.Site'));
         $data[] = array('Type'=>'', 'id'=>'department', 'Text'=>Prado::localize('Department'), 'Text2'=>'', 'access'=>$this->isAccess('site.department'), 'shortcut'=>$this->isShortcut('site.department'));
+        $data[] = array('Type'=>'', 'id'=>'horuxController', 'Text'=>Prado::localize('Horux Controller'), 'Text2'=>'', 'access'=>$this->isAccess('horuxController.horuxController'), 'shortcut'=>$this->isShortcut('horuxController.horuxController'));
         $data[] = array('Type'=>'', 'id'=>'hardware', 'Text'=>Prado::localize('Hardware'), 'Text2'=>'', 'access'=>$this->isAccess('hardware.HardwareList'), 'shortcut'=>$this->isShortcut('hardware.HardwareList'));
         $data[] = array('Type'=>'', 'id'=>'openTime', 'Text'=>Prado::localize('Opent time'), 'Text2'=>'', 'access'=>$this->isAccess('openTime.openTimeList'), 'shortcut'=>$this->isShortcut('openTime.openTimeList'));
         $data[] = array('Type'=>'', 'id'=>'alarms', 'Text'=>Prado::localize('Alarms'), 'Text2'=>'', 'access'=>$this->isAccess('system.Alarms'), 'shortcut'=>$this->isShortcut('system.Alarms'));
@@ -374,6 +375,12 @@ class userGroupMod extends Page
                     $v['access'] ? $this->updatePermission($lastId, 'openTime.mod') : '';
                     $v['access'] ? $this->updatePermission($lastId, 'openTime.attribute') : '';
                     break;
+                case "horuxController":
+                    $v['access'] ? $this->updatePermission($lastId, 'horuxController.horuxController', $v['shortcut']) : '';
+                    $v['access'] ? $this->updatePermission($lastId, 'horuxController.add') : '';
+                    $v['access'] ? $this->updatePermission($lastId, 'horuxController.mod') : '';
+                    break;
+
                 case "hardware":
                     $v['access'] ? $this->updatePermission($lastId, 'hardware.HardwareList', $v['shortcut']) : '';
                     $v['access'] ? $this->updatePermission($lastId, 'hardware.HardwareAddList') : '';

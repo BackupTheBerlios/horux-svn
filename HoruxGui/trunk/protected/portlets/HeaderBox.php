@@ -245,6 +245,14 @@ class HeaderBox extends Portlet {
 
         $system->addSplit();
 
+        $system->addMenuItem( new MenuItem("'<img src=\"./themes/letux/images/menu/icon-16-horuxcontroller.png\" />'",
+                Prado::localize('Horux Controller',array(), "messages"),
+                $this->Service->constructUrl('horuxController.horuxController'),
+                $this->isAccess('horuxController.horuxController')
+        ));
+        if($this->isAccess('horuxController.horuxController'))
+            $this->systemMenuCount++;
+
 
         $system->addMenuItem( new MenuItem("'<img src=\"./themes/letux/images/menu/icon-16-hardware.png\" />'",
                 Prado::localize('Hardware',array(), "messages"),

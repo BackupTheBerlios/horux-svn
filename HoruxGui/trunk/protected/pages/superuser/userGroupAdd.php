@@ -126,6 +126,7 @@ class userGroupAdd extends Page
 
         $data[] = array('Type'=>Prado::localize('System'), 'id'=>'site', 'Text'=>Prado::localize('Site'), 'Text2'=>'', 'access'=>true, 'shortcut'=>false);
         $data[] = array('Type'=>'', 'id'=>'department', 'Text'=>Prado::localize('Department'), 'Text2'=>'', 'access'=>true, 'shortcut'=>false);
+        $data[] = array('Type'=>'', 'id'=>'horuxController', 'Text'=>Prado::localize('Horux Controller'), 'Text2'=>'', 'access'=>true, 'shortcut'=>false);
         $data[] = array('Type'=>'', 'id'=>'hardware', 'Text'=>Prado::localize('Hardware'), 'Text2'=>'', 'access'=>true, 'shortcut'=>false);
         $data[] = array('Type'=>'', 'id'=>'openTime', 'Text'=>Prado::localize('Opent time'), 'Text2'=>'', 'access'=>true, 'shortcut'=>false);
         $data[] = array('Type'=>'', 'id'=>'alarms', 'Text'=>Prado::localize('Alarms'), 'Text2'=>'', 'access'=>true, 'shortcut'=>false);
@@ -278,6 +279,12 @@ class userGroupAdd extends Page
                     $v['access'] ? $this->insertNewPermission($lastId, 'openTime.mod') : '';
                     $v['access'] ? $this->insertNewPermission($lastId, 'openTime.attribute') : '';
                     break;
+                case "horuxController":
+                    $v['access'] ? $this->insertNewPermission($lastId, 'horuxController.horuxController', $v['shortcut']) : '';
+                    $v['access'] ? $this->insertNewPermission($lastId, 'horuxController.add') : '';
+                    $v['access'] ? $this->insertNewPermission($lastId, 'horuxController.mod') : '';
+                    break;
+
                 case "hardware":
                     $v['access'] ? $this->insertNewPermission($lastId, 'hardware.HardwareList', $v['shortcut']) : '';
                     $v['access'] ? $this->insertNewPermission($lastId, 'hardware.HardwareAddList') : '';
