@@ -65,6 +65,18 @@ class CHorux : public QObject
         */
         static QStringList getUnloadPlugins();
 
+        /*!
+          Get the id for this Horux Controller
+          @return Return the id of this Horux conctroller
+        */
+        static int getHoruxControllerId();
+
+        /*!
+          Get if this Horux Controller is a master/slave controller
+          @return Return true if is is a master else false
+        */
+        static bool isMasterHoruxController();
+
     public slots:
         /*!
           Start the engine. Can be called by XMLRPC

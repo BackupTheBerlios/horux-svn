@@ -163,7 +163,7 @@ QMap<QString, QVariant> DbMysqlPlugin::getDeviceConfiguration(const int deviceId
 {
   QMap<QString, QVariant> values;
 
-  QString sql = "SELECT d.name, d.isLog, d.accessPlugin, d.isActive, dt.* FROM hr_device AS d LEFT JOIN hr_" + type + " AS dt ON d.id = dt.id_device WHERE d.id="+QString::number(deviceId);
+  QString sql = "SELECT d.name, d.isLog, d.accessPlugin, d.isActive, d.horuxControllerId, dt.* FROM hr_device AS d LEFT JOIN hr_" + type + " AS dt ON d.id = dt.id_device WHERE d.id="+QString::number(deviceId);
 
   QSqlQuery query(sql);
   if(!query.next())

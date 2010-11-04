@@ -166,52 +166,57 @@ bool CDeviceHandling::createDevice()
             //! get the device paramter from the database
             config = CFactory::getDbHandling()->plugin()->getDeviceConfiguration ( id, type );
 
-            if(config["isActive"].toBool() == 1) {
+            if(config["isActive"].toBool() == 1 ) {
 
-                CDeviceInterface *device = loadedPlugins[type]->createInstance ( config,this );
+                if(config["horuxControllerId"].toInt() == CHorux::getHoruxControllerId()) {
 
-                devicesInterface[id] = device;
+                    CDeviceInterface *device = loadedPlugins[type]->createInstance ( config,this );
 
-                QString logPath = CFactory::getDbHandling()->plugin()->getConfigParam ( "log_path" ).toString();
+                    devicesInterface[id] = device;
 
-                devicesInterface[id]->setLogPath ( logPath );
+                    QString logPath = CFactory::getDbHandling()->plugin()->getConfigParam ( "log_path" ).toString();
 
-                //! allow to push the device event to other sub system (alarm, access, etc)
-                connect ( device->getMetaObject(),
-                          SIGNAL ( deviceEvent ( QString ) ),
-                          this,
-                          SIGNAL ( deviceEvent ( QString ) )
-                        );
+                    devicesInterface[id]->setLogPath ( logPath );
 
-                //! allow to push the device connection to other sub system (alarm, access, etc)
-                connect ( device->getMetaObject(),
-                          SIGNAL ( deviceConnection ( int, bool ) ),
-                          this,
-                          SIGNAL ( deviceConnection ( int, bool ) )
-                        );
+                    //! allow to push the device event to other sub system (alarm, access, etc)
+                    connect ( device->getMetaObject(),
+                              SIGNAL ( deviceEvent ( QString ) ),
+                              this,
+                              SIGNAL ( deviceEvent ( QString ) )
+                            );
 
-                //! allow to push the device input event to other sub system (alarm, access, etc)
-                connect ( device->getMetaObject(),
-                          SIGNAL ( deviceInputChange ( int, int, bool ) ),
-                          this,
-                          SIGNAL ( deviceInputChange ( int, int, bool ) )
-                        );
+                    //! allow to push the device connection to other sub system (alarm, access, etc)
+                    connect ( device->getMetaObject(),
+                              SIGNAL ( deviceConnection ( int, bool ) ),
+                              this,
+                              SIGNAL ( deviceConnection ( int, bool ) )
+                            );
 
-                //! allow to push device action to all devices. The device must filter the signal
-                connect ( this,
-                          SIGNAL ( deviceAction ( QString ) ),
-                          device->getMetaObject(),
-                          SLOT ( deviceAction ( QString ) )
-                        );
+                    //! allow to push the device input event to other sub system (alarm, access, etc)
+                    connect ( device->getMetaObject(),
+                              SIGNAL ( deviceInputChange ( int, int, bool ) ),
+                              this,
+                              SIGNAL ( deviceInputChange ( int, int, bool ) )
+                            );
 
-                //! each device can be informed when a event happen on an other device
-                connect ( this,
-                          SIGNAL ( deviceEvent ( QString ) ),
-                          device->getMetaObject(),
-                          SLOT ( deviceAction ( QString ) )
-                        );
+                    //! allow to push device action to all devices. The device must filter the signal
+                    connect ( this,
+                              SIGNAL ( deviceAction ( QString ) ),
+                              device->getMetaObject(),
+                              SLOT ( deviceAction ( QString ) )
+                            );
+
+                    //! each device can be informed when a event happen on an other device
+                    connect ( this,
+                              SIGNAL ( deviceEvent ( QString ) ),
+                              device->getMetaObject(),
+                              SLOT ( deviceAction ( QString ) )
+                            );
+                } else {
+                    qDebug() << "The device " << config["name"].toString() << "is not connected to this controller";
+                }
             } else {
-                qDebug() << "The device " << config["name"].toString() << "in unactivated";
+                qDebug() << "The device " << config["name"].toString() << "is unactivated";
             }
         }
         else

@@ -943,3 +943,24 @@ QStringList CHorux::getUnloadPlugins() {
 
     return settings.value("unload", "").toStringList();
 }
+
+int CHorux::getHoruxControllerId() {
+    QSettings settings ( QCoreApplication::instance()->applicationDirPath() +"/horux.ini", QSettings::IniFormat );
+
+    settings.beginGroup ( "HoruxController" );
+
+    if ( !settings.contains ( "id" ) ) settings.setValue ( "id", 1 );
+
+    return settings.value("id", 1).toInt();
+
+}
+
+bool CHorux::isMasterHoruxController() {
+    QSettings settings ( QCoreApplication::instance()->applicationDirPath() +"/horux.ini", QSettings::IniFormat );
+
+    settings.beginGroup ( "HoruxController" );
+
+    if ( !settings.contains ( "type" ) ) settings.setValue ( "type", "master" );
+
+    return settings.value("type", "master").toString() == "master";
+}
