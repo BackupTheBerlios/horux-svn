@@ -190,6 +190,8 @@ class install extends TPage
             return false;
         }
 
+        mysql_set_charset('utf8',@$link);
+
         $selectResult = mysql_select_db( $this->dbname->safeText );
 
         if(!$selectResult)
