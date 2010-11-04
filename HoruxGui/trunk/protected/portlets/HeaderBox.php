@@ -154,7 +154,7 @@ class HeaderBox extends Portlet {
 
 	      $data[$i]['icon'] =$asset->publishFilePath('./protected/pages/components/'.$data2['name'].'/assets/'.$data2['iconmenu']);
 	    } else {
-	      $data[$i]['icon'] = $asset->publishFilePath('./themes/letux/images/menu/icon-16-user.png');
+	      $data[$i]['icon'] = $asset->publishFilePath('./themes/letux/images/menu/icon-16-user2.png');
 	    }
         }
 
