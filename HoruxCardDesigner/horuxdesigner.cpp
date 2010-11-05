@@ -1468,6 +1468,7 @@ void HoruxDesigner::sceneScaleChanged(const QString &scale)
     ui->graphicsView->resetMatrix();
     ui->graphicsView->translate(oldMatrix.dx(), oldMatrix.dy());
     ui->graphicsView->scale(newScale, newScale);
+
 }
 
 void HoruxDesigner::setParamView(QGraphicsItem *item)

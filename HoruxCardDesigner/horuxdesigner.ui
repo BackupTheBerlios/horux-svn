@@ -79,6 +79,9 @@ background-image: url(:/images/filigrane.png);</string>
        <property name="alignment">
         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
        </property>
+       <property name="renderHints">
+        <set>QPainter::Antialiasing|QPainter::TextAntialiasing</set>
+       </property>
        <property name="resizeAnchor">
         <enum>QGraphicsView::NoAnchor</enum>
        </property>

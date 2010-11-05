@@ -56,6 +56,11 @@ private:
     QPixmap pix;
     QBrush bkgBrush;
 
+    QList<QGraphicsLineItem *>gridPoint;
+
+    qreal cardWidth;
+    qreal ratio;
+
 public:
     QColor bkgColor;
     QString bkgFile;
