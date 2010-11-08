@@ -1269,7 +1269,9 @@ void HoruxDesigner::print()
 
 
         QPainter painter(printer);
-        painter.setRenderHint(QPainter::Antialiasing);
+        painter.setRenderHint(QPainter::Antialiasing, true);
+        painter.setRenderHint(QPainter::SmoothPixmapTransform, true);
+
         ui->graphicsView->render(&painter, printer->pageRect(), cardRect.toRect(), Qt::KeepAspectRatio );
 
         scene->getCardItem()->setPrintingMode( false, pictureBuffer, userValue );
