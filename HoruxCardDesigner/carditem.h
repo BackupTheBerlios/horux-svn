@@ -8,6 +8,9 @@
 #include <QBuffer>
 #include <QMap>
 
+#define PRINTER_DPI 300;
+#define SCREEN_DPI 72;
+
 class CardItem : public QObject, public QGraphicsPathItem
 {
     Q_OBJECT

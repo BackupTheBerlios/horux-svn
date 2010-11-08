@@ -124,7 +124,7 @@
          <number>-300</number>
         </property>
         <property name="maximum">
-         <number>300</number>
+         <number>2000</number>
         </property>
         <property name="singleStep">
          <number>5</number>
@@ -137,7 +137,7 @@
          <number>-300</number>
         </property>
         <property name="maximum">
-         <number>300</number>
+         <number>2000</number>
         </property>
         <property name="singleStep">
          <number>5</number>

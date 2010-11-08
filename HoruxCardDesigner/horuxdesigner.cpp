@@ -71,8 +71,6 @@ HoruxDesigner::HoruxDesigner(QWidget *parent)
     connect(ui->next, SIGNAL(clicked()), this, SLOT(nextRecord()));
     connect(ui->back, SIGNAL(clicked()), this, SLOT(backRecord()));
 
-
-
 }
 
 HoruxDesigner::~HoruxDesigner()
@@ -326,8 +324,9 @@ void HoruxDesigner::createToolBar()
     fontCombo = new QFontComboBox();
     fontSizeCombo = new QComboBox();
     fontSizeCombo->setEditable(true);
-    for (int i = 8; i < 30; i = i + 2)
+    for (int i = 8; i < 80; i = i + 2)
         fontSizeCombo->addItem(QString().setNum(i));
+
     QIntValidator *validator = new QIntValidator(2, 64, this);
     fontSizeCombo->setValidator(validator);
     connect(fontSizeCombo, SIGNAL(currentIndexChanged(const QString &)),
@@ -337,12 +336,14 @@ void HoruxDesigner::createToolBar()
     connect(fontCombo, SIGNAL(currentFontChanged(const QFont &)),
             this, SLOT(currentFontChanged(const QFont &)));
 
+    fontSizeCombo->setCurrentIndex(20);
+
 
     sceneScaleCombo = new QComboBox;
     QStringList scales;
-    scales << tr("50%") << tr("75%") << tr("100%") << tr("125%") << tr("150%")<< tr("200%")<< tr("250%");
+    scales << tr("25%") << tr("50%") << tr("75%") << tr("100%") << tr("125%") << tr("150%")<< tr("200%")<< tr("250%");
     sceneScaleCombo->addItems(scales);
-    sceneScaleCombo->setCurrentIndex(2);
+    sceneScaleCombo->setCurrentIndex(0);
     connect(sceneScaleCombo, SIGNAL(currentIndexChanged(const QString &)),
             this, SLOT(sceneScaleChanged(const QString &)));
 
@@ -350,6 +351,8 @@ void HoruxDesigner::createToolBar()
     ui->toolBar->addWidget(fontSizeCombo);
     ui->toolBar->addSeparator();
     ui->toolBar->addWidget(sceneScaleCombo);
+
+    sceneScaleChanged("25%");
 
 }
 
@@ -1214,8 +1217,11 @@ void HoruxDesigner::printPreview()
 
     scene->getCardItem()->setPrintingMode(true, pictureBuffer, userValue);
     scene->getCardItem()->setPos(0,0);
-    sceneScaleChanged("100%");
+    sceneScaleChanged("25%");
     QRectF cardRect = scene->getCardItem()->boundingRect();
+    double newScale =  sceneScaleCombo->currentText().left(sceneScaleCombo->currentText().indexOf(tr("%"))).toDouble() / 100.0;
+    cardRect.setHeight(cardRect.height() * newScale);
+    cardRect.setWidth(cardRect.width() * newScale);
 
     QPixmap pixmap(cardRect.size().toSize());
     pixmap.fill( Qt::white );
@@ -1468,7 +1474,6 @@ void HoruxDesigner::sceneScaleChanged(const QString &scale)
     ui->graphicsView->resetMatrix();
     ui->graphicsView->translate(oldMatrix.dx(), oldMatrix.dy());
     ui->graphicsView->scale(newScale, newScale);
-
 }
 
 void HoruxDesigner::setParamView(QGraphicsItem *item)
@@ -1526,6 +1531,7 @@ void HoruxDesigner::setParamView(QGraphicsItem *item)
     case QGraphicsItem::UserType+3: //text
         {
             CardTextItem *textItem = qgraphicsitem_cast<CardTextItem *>(item);
+
             if(textItem)
             {
                 if(textPage)
@@ -1807,8 +1813,13 @@ void HoruxDesigner::updatePrintPreview()
 
     scene->getCardItem()->setPrintingMode(true, pictureBuffer, userValue);
     scene->getCardItem()->setPos(0,0);
-    sceneScaleChanged("100%");
+    sceneScaleChanged("25%");       
+
     QRectF cardRect = scene->getCardItem()->boundingRect();
+
+    double newScale =  sceneScaleCombo->currentText().left(sceneScaleCombo->currentText().indexOf(tr("%"))).toDouble() / 100.0;
+    cardRect.setHeight(cardRect.height() * newScale);
+    cardRect.setWidth(cardRect.width() * newScale);
 
     QPixmap pixmap(cardRect.size().toSize());
     pixmap.fill( Qt::white );

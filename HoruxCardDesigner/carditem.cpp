@@ -28,6 +28,7 @@ CardItem::CardItem( Size size,  Format format, int f, QGraphicsItem * parent) : 
     setSize(cardSize);
 
     this->setCacheMode(QGraphicsItem::DeviceCoordinateCache);
+
 }
 
 void CardItem::incrementCounter() {
@@ -44,7 +45,8 @@ void CardItem::incrementCounter() {
 void CardItem::setPrintingMode(bool printing, QBuffer &picture, QMap<QString, QString>userData)
 {
     isPrinting = printing;
-    update();
+
+    setSize(cardSize);
 
     foreach(QGraphicsItem *item, this->childItems())
     {
@@ -74,6 +76,8 @@ void CardItem::setPrintingMode(bool printing, QBuffer &picture, QMap<QString, QS
             p->show();
         }
     }
+
+    update();
 }
 
 void CardItem::loadCard(QDomElement card )
@@ -126,7 +130,7 @@ void CardItem::loadCard(QDomElement card )
         if(node.toElement().tagName() == "bkgFile")
         {
             bkgFile = node.toElement().text();
-            pix.load(bkgFile);
+            setBkgPixmap(bkgFile);
         }
         if(node.toElement().tagName() == "CardTextItem")
         {
@@ -253,7 +257,7 @@ QSizeF CardItem::getSizeMm()
     switch(cardSize)
     {
     case CR80:
-        return QSizeF(85.6,53.98);
+        return QSizeF(85.60,53.98);
         break;
     case CR90:
         return QSizeF(92.07,60.33);
@@ -263,7 +267,7 @@ QSizeF CardItem::getSizeMm()
         break;
     }
 
-    return QSizeF(85.6,53.98);
+    return QSizeF(85.60,53.98);
 }
 
 void CardItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
@@ -288,15 +292,15 @@ void CardItem::setSize(int size)
     {
         case CR80:
             ratio = 85.6/53.98;
-            cardWidth = 195;
+            cardWidth = 85.6 / 25.4 * PRINTER_DPI;
             break;
         case CR90:
             ratio = 92.07/60.33;
-            cardWidth = 210;
+            cardWidth = 92.07/ 25.4 * PRINTER_DPI;
             break;
         case CR79:
             ratio = 83.90/52.10;
-            cardWidth = 191;
+            cardWidth = 83.90/ 25.4 * PRINTER_DPI;
             break;
         default:
             break;
@@ -310,6 +314,8 @@ void CardItem::setSize(int size)
         path.addRoundedRect(0,0,cardWidth*ratio,cardWidth,10,10);
 
     setPath(path);
+
+    viewGrid(isGrid);
 }
 
 void CardItem::setFormat(int format)
@@ -350,7 +356,7 @@ void CardItem::setBkgPixmap(QString file)
             bkgBrush.setTextureImage(QImage(file).scaled(cardWidth,cardWidth*ratio, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
         }
         else
-        {            
+        {
             bkgBrush.setTextureImage(QImage(file).scaled(cardWidth*ratio, cardWidth, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
         }
 
@@ -371,6 +377,11 @@ void CardItem::viewGrid(int flag)
 
     isGrid = (bool)flag;
 
+    foreach(QGraphicsLineItem *p, gridPoint) {
+        delete p;
+    }
+    gridPoint.clear();
+
     if(isGrid)
     {
         if( gridSize == 0 ) gridSize = 1;
@@ -378,9 +389,9 @@ void CardItem::viewGrid(int flag)
         if(cardFormat == L)
         {
 
-            for(int x=gridSize*10; x<195*ratio; x+=gridSize*10)
+            for(int x=gridSize*10; x<cardWidth*ratio; x+=gridSize*10)
             {
-                for(int y=gridSize*10; y<195; y+=gridSize*10)
+                for(int y=gridSize*10; y<cardWidth; y+=gridSize*10)
                 {
                     QGraphicsLineItem *p = new QGraphicsLineItem(x,y,x+0.1,y,this);
                     p->setZValue(-1000);
@@ -390,9 +401,9 @@ void CardItem::viewGrid(int flag)
         }
         else
         {
-            for(int x=gridSize*10; x<195; x+=gridSize*10)
+            for(int x=gridSize*10; x<cardWidth; x+=gridSize*10)
             {
-                for(int y=gridSize*10; y<195*ratio; y+=gridSize*10)
+                for(int y=gridSize*10; y<cardWidth*ratio; y+=gridSize*10)
                 {
                     QGraphicsLineItem *p = new QGraphicsLineItem(x,y,x+0.1,y,this);
                     p->setZValue(-1000);
@@ -400,13 +411,7 @@ void CardItem::viewGrid(int flag)
                 }
             }
         }
-    } else {
-        foreach(QGraphicsLineItem *p, gridPoint) {
-            delete p;
-        }
-        gridPoint.clear();
     }
-
 }
 
 void CardItem::alignGrid(int flag)

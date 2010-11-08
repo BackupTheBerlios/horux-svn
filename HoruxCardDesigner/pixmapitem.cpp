@@ -78,8 +78,8 @@ QVariant PixmapItem::itemChange(GraphicsItemChange change,
             if(card->isAlign())
             {
                 int gridSize = card->getGridSize();
-                newX = (newX/(5*gridSize))*(5*gridSize);
-                newY = (newY/(5*gridSize))*(5*gridSize);
+                newX = (newX/(10*gridSize))*(10*gridSize);
+                newY = (newY/(10*gridSize))*(10*gridSize);
             }
 
             newPos.setX(newX);
@@ -94,10 +94,10 @@ QVariant PixmapItem::itemChange(GraphicsItemChange change,
             if(card->isAlign())
             {
                 int gridSize = card->getGridSize();
-                newX = newPos.x()/(5*gridSize);
-                newX = newX * (5*gridSize);
-                newY = newPos.y()/(5*gridSize);
-                newY = newY*(5*gridSize);
+                newX = newPos.x()/(10*gridSize);
+                newX = newX * (10*gridSize);
+                newY = newPos.y()/(10*gridSize);
+                newY = newY*(10*gridSize);
 
             }
 
