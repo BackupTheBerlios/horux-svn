@@ -32,7 +32,6 @@ PixmapItem::PixmapItem(QGraphicsItem *parent) : QGraphicsPixmapItem(parent)
 void PixmapItem::setPrintingMode(bool printing, QBuffer &picture)
 {
     isPrinting = printing;
-
     // From Horux
     if(source == 1 && printing)
     {

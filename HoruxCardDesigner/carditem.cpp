@@ -27,7 +27,7 @@ CardItem::CardItem( Size size,  Format format, int f, QGraphicsItem * parent) : 
 
     setSize(cardSize);
 
-    this->setCacheMode(QGraphicsItem::DeviceCoordinateCache);
+    setCacheMode(QGraphicsItem::DeviceCoordinateCache);
 
 }
 
@@ -277,6 +277,14 @@ void CardItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
     } else {
         setPen(Qt::SolidLine);
     }
+
+    QPointF p = pos();
+    QRectF r = boundingRect();
+
+    r.setWidth( r.width() + p.x() + 50 );
+    r.setHeight( r.height() + p.y() + 50 );
+
+    scene()->setSceneRect(r);
 
     QGraphicsPathItem::paint(painter, option, widget);
 }

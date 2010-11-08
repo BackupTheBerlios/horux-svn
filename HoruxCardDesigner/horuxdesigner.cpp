@@ -1217,16 +1217,17 @@ void HoruxDesigner::printPreview()
 
     scene->getCardItem()->setPrintingMode(true, pictureBuffer, userValue);
     scene->getCardItem()->setPos(0,0);
+
     sceneScaleChanged("25%");
     QRectF cardRect = scene->getCardItem()->boundingRect();
-    double newScale =  sceneScaleCombo->currentText().left(sceneScaleCombo->currentText().indexOf(tr("%"))).toDouble() / 100.0;
-    cardRect.setHeight(cardRect.height() * newScale);
-    cardRect.setWidth(cardRect.width() * newScale);
+    cardRect.setHeight(cardRect.height() * 0.25);
+    cardRect.setWidth(cardRect.width() * 0.25);
 
     QPixmap pixmap(cardRect.size().toSize());
     pixmap.fill( Qt::white );
     QPainter painter(&pixmap);
-    painter.setRenderHint(QPainter::Antialiasing);
+    painter.setRenderHint(QPainter::Antialiasing, true);
+    painter.setRenderHint(QPainter::SmoothPixmapTransform, true);
     ui->graphicsView->render(&painter, QRectF(0,0,pixmap.size().width(),pixmap.size().height()), cardRect.toRect(), Qt::KeepAspectRatio );
     painter.end();
 
@@ -1250,7 +1251,6 @@ void HoruxDesigner::print()
 {
     if(engine == "") return;
 
-    scene->clearSelection ();
 
     printer->setOrientation(( QPrinter::Orientation)scene->getCardItem()->getFormat());
 
@@ -1259,24 +1259,42 @@ void HoruxDesigner::print()
 
     if (QPrintDialog(printer).exec() == QDialog::Accepted)
     {
+        scene->clearSelection ();
+
         QPointF cardPos = scene->getCardItem()->pos();
+
+        if(userPicture.contains(currentUser)) {
+            pictureBuffer.setData(userPicture[currentUser]->buffer());
+        }
+
 
         scene->getCardItem()->setPrintingMode( true, pictureBuffer, userValue );
         scene->getCardItem()->setPos(0,0);
-        sceneScaleChanged("100%");
 
         QRectF cardRect = scene->getCardItem()->boundingRect();
 
+        QPixmap screenshot(printer->pageRect().size());
+        screenshot.fill( Qt::white );
+        QPainter painterPix(&screenshot);
+
+        scene->render(&painterPix, printer->pageRect(), cardRect.toRect(), Qt::KeepAspectRatio);
 
         QPainter painter(printer);
         painter.setRenderHint(QPainter::Antialiasing, true);
         painter.setRenderHint(QPainter::SmoothPixmapTransform, true);
+        painter.begin(printer);
+        painter.drawPixmap(0,0,screenshot);
+        painter.end();
 
-        ui->graphicsView->render(&painter, printer->pageRect(), cardRect.toRect(), Qt::KeepAspectRatio );
+        /*QPainter painter(printer);
+        painter.setRenderHint(QPainter::Antialiasing, true);
+        painter.setRenderHint(QPainter::SmoothPixmapTransform, true);
+        scene->render(&painter, printer->pageRect(), cardRect.toRect(), Qt::KeepAspectRatio);
+
+        QApplication::processEvents();*/
 
         scene->getCardItem()->setPrintingMode( false, pictureBuffer, userValue );
         scene->getCardItem()->setPos(cardPos);
-        sceneScaleChanged(sceneScaleCombo->currentText());
 
         // increment all counter in the card scene
         scene->getCardItem()->incrementCounter();
@@ -1322,6 +1340,8 @@ void HoruxDesigner::printSelection() {
         printer->setPaperSize(scene->getCardItem()->getSizeMm(),QPrinter::Millimeter);
         printer->setPageMargins(0,0,0,0,QPrinter::Millimeter);
 
+        QPointF cardPos = scene->getCardItem()->pos();
+
         if( printCardFor.count() >> 0 &&  QPrintDialog(printer).exec() == QDialog::Accepted)
         {
             foreach(QString userID, printCardFor) {
@@ -1333,23 +1353,28 @@ void HoruxDesigner::printSelection() {
                 QApplication::processEvents();
                 QApplication::flush();
 
-                QPointF cardPos = scene->getCardItem()->pos();
+                if(userPicture.contains(currentUser)) {
+                    pictureBuffer.setData(userPicture[currentUser]->buffer());
+                }
+
 
                 scene->getCardItem()->setPrintingMode( true, pictureBuffer, userValue );
                 scene->getCardItem()->setPos(0,0);
-                sceneScaleChanged("100%");
 
                 QRectF cardRect = scene->getCardItem()->boundingRect();
 
+                QPixmap screenshot(printer->pageRect().size());
+                screenshot.fill( Qt::white );
+                QPainter painterPix(&screenshot);
+
+                scene->render(&painterPix, printer->pageRect(), cardRect.toRect(), Qt::KeepAspectRatio);
 
                 QPainter painter(printer);
-                painter.setRenderHint(QPainter::Antialiasing);
-
-                ui->graphicsView->render(&painter, printer->pageRect(), cardRect.toRect(), Qt::KeepAspectRatio );
-
-                scene->getCardItem()->setPrintingMode( false, pictureBuffer, userValue );
-                scene->getCardItem()->setPos(cardPos);
-                sceneScaleChanged(sceneScaleCombo->currentText());
+                painter.setRenderHint(QPainter::Antialiasing, true);
+                painter.setRenderHint(QPainter::SmoothPixmapTransform, true);
+                painter.begin(printer);
+                painter.drawPixmap(0,0,screenshot);
+                painter.end();
 
                 // increment all counter in the card scene
                 scene->getCardItem()->incrementCounter();
@@ -1360,6 +1385,22 @@ void HoruxDesigner::printSelection() {
 
                 fileChange();
             }
+
+            scene->getCardItem()->setPrintingMode( false, pictureBuffer, userValue );
+            scene->getCardItem()->setPos(cardPos);
+
+            // increment all counter in the card scene
+            scene->getCardItem()->incrementCounter();
+
+            int userId = userCombo->itemData(userCombo->currentIndex()).toInt();
+
+            if(!printedUser.contains(QString::number(userId)))
+                printedUser.append(QString::number(userId));
+
+            fileChange();
+
+
+            updatePrintPreview();
         }
     }
 }
@@ -1476,6 +1517,8 @@ void HoruxDesigner::sceneScaleChanged(const QString &scale)
     ui->graphicsView->resetMatrix();
     ui->graphicsView->translate(oldMatrix.dx(), oldMatrix.dy());
     ui->graphicsView->scale(newScale, newScale);
+
+
 }
 
 void HoruxDesigner::setParamView(QGraphicsItem *item)
@@ -1663,7 +1706,13 @@ void HoruxDesigner::setParamView(QGraphicsItem *item)
 
 void HoruxDesigner::resizeEvent ( QResizeEvent * )
 {
-    scene->setSceneRect(ui->graphicsView->geometry());
+    QPointF p = scene->getCardItem()->pos();
+    QRectF r = scene->getCardItem()->boundingRect();
+
+    r.setWidth( r.width() + p.x() + 50 );
+    r.setHeight( r.height() + p.y() + 50 );
+
+    scene->setSceneRect(r);
 }
 
 void HoruxDesigner::createToolBox()
@@ -1798,6 +1847,7 @@ void HoruxDesigner::itemMoved(QGraphicsItem *item, QPointF pos)
         }
     }
 
+
 }
 
 void HoruxDesigner::updatePrintPreview()
@@ -1819,9 +1869,8 @@ void HoruxDesigner::updatePrintPreview()
 
     QRectF cardRect = scene->getCardItem()->boundingRect();
 
-    double newScale =  sceneScaleCombo->currentText().left(sceneScaleCombo->currentText().indexOf(tr("%"))).toDouble() / 100.0;
-    cardRect.setHeight(cardRect.height() * newScale);
-    cardRect.setWidth(cardRect.width() * newScale);
+    cardRect.setHeight(cardRect.height() *  0.25);
+    cardRect.setWidth(cardRect.width() *  0.25);
 
     QPixmap pixmap(cardRect.size().toSize());
     pixmap.fill( Qt::white );
@@ -1829,7 +1878,9 @@ void HoruxDesigner::updatePrintPreview()
 
     if(!painter.isActive()) return;
 
-    painter.setRenderHint(QPainter::Antialiasing);
+    painter.setRenderHint(QPainter::Antialiasing, true);
+    painter.setRenderHint(QPainter::SmoothPixmapTransform, true);
+
     ui->graphicsView->render(&painter, QRectF(0,0,pixmap.size().width(),pixmap.size().height()), cardRect.toRect(), Qt::KeepAspectRatio );
     painter.end();
 
