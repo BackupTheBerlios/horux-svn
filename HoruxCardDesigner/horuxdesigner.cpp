@@ -1259,6 +1259,7 @@ void HoruxDesigner::print()
 
     if (QPrintDialog(printer).exec() == QDialog::Accepted)
     {
+
         scene->clearSelection ();
 
         QPointF cardPos = scene->getCardItem()->pos();
