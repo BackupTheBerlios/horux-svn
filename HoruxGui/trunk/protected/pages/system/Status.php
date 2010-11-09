@@ -64,24 +64,11 @@ class Status extends Page
                 $horuxRepeaterData[(int)$controller->controllerID]["name"] = $dataObj['name'];
 
                 $horuxRepeaterData[(int)$controller->controllerID]["horuxVersion"] = (String)$controller->appVersion;
-                //$this->horuxVersion->Text = (String)$controller->appVersion;
 
-                if($param['appMode'] === 'saas')
-                {
-                    $horuxRepeaterData[(int)$controller->controllerID]["lastUpdate"] = (String)$controller->lastUpdate;
-                    //$this->lastUpdate->Text = (String)$controller->lastUpdate;
+                $horuxRepeaterData[(int)$controller->controllerID]["lastUpdate"] = (String)$controller->lastUpdate;
 
-                }
-                else
-                {
-                    $horuxRepeaterData[(int)$controller->controllerID]["lastUpdate"] = "-";
-                    //$this->lastUpdate->Text = '-';
-                }
 
                 $horuxRepeaterData[(int)$controller->controllerID]["horuxTimeLive"] = (String)$controller->serverLive;
-                //$this->horuxTimeLive->Text = (String)$controller->serverLive;
-
-
                 
 
                 foreach ($controller->plugins as $plugins)
