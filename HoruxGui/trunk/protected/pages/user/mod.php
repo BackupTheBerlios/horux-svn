@@ -138,6 +138,12 @@ class Mod extends Page
             else
                 $this->validity_date->Text = '';
 
+            if($data['birthday'] != '0000-00-00')
+                $this->birthday->Text = $this->dateFromSql($data['birthday']);
+            else
+                $this->birthday->Text = '';
+
+
             //Personal
             $this->avs->Text = $data['avs'];
             $this->street->Text = $data['street'];
@@ -243,6 +249,7 @@ class Mod extends Page
         $cmd->bindValue(":pin_code",$this->pin_code->SafeText,PDO::PARAM_STR);
         $cmd->bindValue(":password",$this->password->SafeText,PDO::PARAM_STR);
         $cmd->bindValue(":validity_date",$this->dateToSql($this->validity_date->SafeText),PDO::PARAM_STR);
+        $cmd->bindValue(":birthday",$this->dateToSql($this->birthday->SafeText),PDO::PARAM_STR);
 
 
         $f1 = $this->masterAuthorization->getChecked() ? 1 : 0;
@@ -479,6 +486,11 @@ class Mod extends Page
             $this->pdf->Cell(40 ,0,utf8_decode(Prado::localize('Personal information')));
             $this->pdf->Ln(6);
             $this->pdf->setDefaultFont();
+
+            $this->pdf->Cell(40 ,0,utf8_decode(Prado::localize('Birthday')). ' :');
+            $this->pdf->Cell(80 ,0,utf8_decode( $this->dateFromSql($data['birthday']) ));
+            $this->pdf->Ln(6);
+
 
             $this->pdf->Cell(40 ,0,utf8_decode(Prado::localize('AVS')). ' :');
             $this->pdf->Cell(80 ,0,utf8_decode($data['avs']));

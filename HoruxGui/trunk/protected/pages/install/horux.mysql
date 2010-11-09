@@ -511,6 +511,7 @@ CREATE TABLE IF NOT EXISTS `hr_user` (
   `fax` varchar(16) NOT NULL,
   `avs` varchar(50) NOT NULL,
   `masterAuthorization` smallint(1) NOT NULL DEFAULT '0',
+  `birthday` date NOT NULL DEFAULT '0000-00-00',
   PRIMARY KEY (`id`),
   KEY `name` (`name`),
   KEY `firstname` (`firstname`)

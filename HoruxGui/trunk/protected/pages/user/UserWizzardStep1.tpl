@@ -77,6 +77,13 @@
             </tr>
 
             <tr>
+                <td valign="top" class="key"><span onmouseover="Tip('<%[Enter the birsthday of the user]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Birthday]%></span></td>
+                <td>
+                    <com:TDatePicker CssClass="text_area" ID="birthday" Mode="ImageButton"/>
+                </td>
+            </tr>
+
+            <tr>
                 <td valign="top" class="key"><span onmouseover="Tip('<%[Add the picture of the user]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Picture]%></span></td>
                 <td>
                     <com:TFileUpload

@@ -289,7 +289,7 @@ class UserWizzard extends Page {
         $cmd->bindValue(":pin_code",$this->pin_code->SafeText,PDO::PARAM_STR);
         $cmd->bindValue(":password",sha1($this->password->SafeText),PDO::PARAM_STR);
         $cmd->bindValue(":validity_date",$this->dateToSql($this->validity_date->SafeText),PDO::PARAM_STR);
-
+        $cmd->bindValue(":birthday",$this->dateToSql($this->birthday->SafeText),PDO::PARAM_STR);
 
         $f1 = $this->masterAuthorization->getChecked() ? 1 : 0;
         $cmd->bindValue(":masterAuthorization",$f1,PDO::PARAM_STR);
