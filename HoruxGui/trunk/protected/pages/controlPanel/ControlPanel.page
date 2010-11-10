@@ -117,6 +117,19 @@
 									</prop:TrueTemplate>
 									</com:TConditional>
 
+									<com:TConditional Condition="$this->isAccess('site.department')">
+									<prop:TrueTemplate>
+									<div style="float:left;">
+										<div class="icon">
+											<a href="<%= $this->Service->constructUrl('site.department') %>">
+												<img src="./themes/letux/images/header/icon-48-department.png" alt="<%[Department]%>"  />
+												<span><%[Department]%></span>
+											</a>
+										</div>
+									</div>
+									</prop:TrueTemplate>
+									</com:TConditional>
+
 									<com:TConditional Condition="$this->isAccess('hardware.HardwareList')">
 									<prop:TrueTemplate>
 									<div style="float:left;">
@@ -124,6 +137,19 @@
 											<a href="<%= $this->Service->constructUrl('hardware.HardwareList') %>">
 												<img src="./themes/letux/images/header/icon-48-hardware.png" alt="<%[Hardware]%>"  />
 												<span><%[Hardware]%></span>
+											</a>
+										</div>
+									</div>
+									</prop:TrueTemplate>
+									</com:TConditional>
+
+									<com:TConditional Condition="$this->isAccess('horuxController.horuxController')">
+									<prop:TrueTemplate>
+									<div style="float:left;">
+										<div class="icon">
+											<a href="<%= $this->Service->constructUrl('horuxController.horuxController') %>">
+												<img src="./themes/letux/images/header/icon-48-horuxcontroller.png" alt="<%[Horux Controller]%>"  />
+												<span><%[Horux Controller]%></span>
 											</a>
 										</div>
 									</div>
@@ -295,6 +321,19 @@
 											<a href="<%= $this->Service->constructUrl('components.tracking.tracking') %>">
 												<img src="<%~ ../components/tracking/assets/icon-48-tracking.png %>" alt="<%[Tracking]%>"  />
 												<span><%[Tracking]%></span>
+											</a>
+										</div>
+									</div>
+									</prop:TrueTemplate>
+									</com:TConditional>
+
+									<com:TConditional Condition="$this->isAccess('update.Update')">
+									<prop:TrueTemplate>
+									<div style="float:left;">
+										<div class="icon">
+											<a href="<%= $this->Service->constructUrl('update.Update') %>">
+												<img src="./themes/letux/images/header/icon-48-update.png" alt="<%[Horux Update]%>"  />
+												<span><%[Horux Update]%></span>
 											</a>
 										</div>
 									</div>
