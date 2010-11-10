@@ -1,0 +1,65 @@
+<com:TContent ID="Main">
+    <%include Application.common.template.headerContent %>
+
+    <com:TToolbarBox
+        ID="tbb"
+        Title="<%[Update]%>"
+        CssIcon="icon-48-update"
+        HelpVisible="true"
+        />
+    <%include Application.common.template.headerBoxContent %>
+
+<%[Horux Gui files]%>:
+<div id="list">
+<com:TDataGrid
+    ID="DataGrid"
+    DataKeyField="id"
+    AutoGenerateColumns="false"
+    CssClass="adminlist"
+    ItemStyle.CssClass = "row0"
+    AlternatingItemStyle.CssClass="row1"
+    AllowPaging="false"
+    >
+
+<com:TBoundColumn
+    HeaderText="<%[Name]%>"
+    DataField="name"
+    />
+
+<com:TBoundColumn
+    HeaderText="<%[MD5]%>"
+    DataField="md5"
+    />
+
+<com:TTemplateColumn
+    HeaderText=""
+    >
+    <prop:HeaderTemplate>
+        <com:TLabel
+            Text="<%[Diff]%>"
+            />
+    </prop:HeaderTemplate>
+
+
+    <prop:ItemTemplate>
+        <com:TConditional Condition="$this->NamingContainer->DataItem['diff'] == 'content_change'">
+            <prop:TrueTemplate>
+                            <a href="./proxy/showFileDiff.php?file=<%#$this->NamingContainer->DataItem['name']%>" title="<%[Show difference]%>" onClick="Modalbox.show(this.href, {title: this.title, width: 800, height: 600}); return false;" class="toolbar" >
+                                <%[Show changes]%>
+                            </a>
+            </prop:TrueTemplate>
+            <prop:FalseTemplate>
+                <com:TLabel
+                    Text="<%[Missing]%>"
+                    />
+            </prop:FalseTemplate>
+        </com:TConditional>
+    </prop:ItemTemplate>
+</com:TTemplateColumn>
+
+
+</com:TDataGrid>
+</div>
+
+    <%include Application.common.template.footerContent %>
+</com:TContent>

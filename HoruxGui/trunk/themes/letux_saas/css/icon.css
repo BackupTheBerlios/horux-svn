@@ -26,6 +26,8 @@
 .icon-16-key 		{ background-image: url(../images/menu/icon-16-key.png); }
 .icon-16-department		{ background-image: url(../images/menu/icon-16-department.png); }
 .icon-16-horuxcontroller		{ background-image: url(../images/menu/icon-16-horuxcontroller.png); }
+.icon-16-update		{ background-image: url(../images/menu/icon-16-update.png); }
+
 
 /** toolbar icons **/
 .icon-32-help 			{ background-image: url(../images/toolbar/icon-32-help.png); }
@@ -79,6 +81,8 @@
 .icon-48-GuiLog 	{ background-image: url(../images/header/icon-48-guilog.png); }
 .icon-48-department	{ background-image: url(../images/header/icon-48-department.png); }
 .icon-48-horuxcontroller		{ background-image: url(../images/header/icon-48-horuxcontroller.png); }
+.icon-48-update		{ background-image: url(../images/header/icon-48-update.png); }
+
 
 .icon-64-install 	{ margin-left:auto;margin-right:auto;background-image: url(../images/install.png);width:64px;height:64px }
 .icon-sparator 	{ background-image: url(../images/j_divider.png);width:195px;height:2px;margin-bottom:10px;margin-top:10px; }

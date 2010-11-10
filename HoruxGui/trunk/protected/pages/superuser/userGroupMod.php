@@ -241,6 +241,7 @@ class userGroupMod extends Page
         $data[] = array('Type'=>Prado::localize('Tools'), 'id'=>'guilog', 'Text'=>Prado::localize('Horux Gui Log'), 'Text2'=>'', 'access'=>$this->isAccess('tool.GuiLog'), 'shortcut'=>$this->isShortcut('tool.GuiLog'));
         $data[] = array('Type'=>'', 'id'=>'globalCheckin', 'Text'=>Prado::localize('Global Checkin'), 'Text2'=>'', 'access'=>$this->isAccess('tool.GlobalCheckin'), 'shortcut'=>$this->isShortcut('tool.GlobalCheckin'));
         $data[] = array('Type'=>'', 'id'=>'recycling', 'Text'=>Prado::localize('Recycling a Key'), 'Text2'=>'', 'access'=>$this->isAccess('key.recycling'), 'shortcut'=>$this->isShortcut('key.recycling'));
+        $data[] = array('Type'=>'', 'id'=>'update', 'Text'=>Prado::localize('Horux Update'), 'Text2'=>'', 'access'=>$this->isAccess('update.Update'), 'shortcut'=>$this->isShortcut('update.Update'));
 
         $data[] = array('Type'=>Prado::localize('Help'), 'id'=>'systemInfo', 'Text'=>Prado::localize('System Info'), 'Text2'=>'', 'access'=>$this->isAccess('help.SystemInfo'), 'shortcut'=>$this->isShortcut('help.SystemInfo'));
 
@@ -470,6 +471,9 @@ class userGroupMod extends Page
                     break;
                 case "guilog":
                     $v['access'] ? $this->updatePermission($lastId, 'tool.GuiLog', $v['shortcut']) : '';
+                    break;
+                case "update":
+                    $v['access'] ? $this->updatePermission($lastId, 'update.Update', $v['shortcut']) : '';
                     break;
                 case "recycling":
                     $v['access'] ? $this->updatePermission($lastId, 'key.recycling', $v['shortcut']) : '';

@@ -163,6 +163,7 @@ class userGroupAdd extends Page
         $data[] = array('Type'=>Prado::localize('Tools'), 'id'=>'guilog', 'Text'=>Prado::localize('Horux Gui Log'), 'Text2'=>'', 'access'=>true, 'shortcut'=>false);
         $data[] = array('Type'=>'', 'id'=>'globalCheckin', 'Text'=>Prado::localize('Global Checkin'), 'Text2'=>'', 'access'=>true, 'shortcut'=>false);
         $data[] = array('Type'=>'', 'id'=>'recycling', 'Text'=>Prado::localize('Recycling a Key'), 'Text2'=>'', 'access'=>true, 'shortcut'=>false);
+        $data[] = array('Type'=>'', 'id'=>'update', 'Text'=>Prado::localize('Horux Update'), 'Text2'=>'', 'access'=>true, 'shortcut'=>false);
 
         $data[] = array('Type'=>Prado::localize('Help'), 'id'=>'systemInfo', 'Text'=>Prado::localize('System Info'), 'Text2'=>'', 'access'=>true, 'shortcut'=>false);
 
@@ -376,6 +377,9 @@ class userGroupAdd extends Page
                     break;
                 case "guilog":
                     $v['access'] ? $this->insertNewPermission($lastId, 'tool.GuiLog', $v['shortcut']) : '';
+                    break;
+                case "update":
+                    $v['access'] ? $this->insertNewPermission($lastId, 'update.Update', $v['shortcut']) : '';
                     break;
                 case "systemInfo":
                     $v['access'] ? $this->insertNewPermission($lastId, 'help.SystemInfo', $v['shortcut']) : '';

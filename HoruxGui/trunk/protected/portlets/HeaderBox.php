@@ -492,6 +492,13 @@ class HeaderBox extends Portlet {
                 $this->isAccess('tool.GuiLog')
         ));
 
+        $tools->addMenuItem( new MenuItem("'<img src=\"./themes/letux/images/menu/icon-16-update.png\" />'",
+                Prado::localize('Horux Update',array(), "messages"),
+                $this->Service->constructUrl('update.Update'),
+                $this->isAccess('update.Update')
+        ));
+
+
         if($this->isAccess('tool.GuiLog'))
             $this->toolMenuCount++;
 
