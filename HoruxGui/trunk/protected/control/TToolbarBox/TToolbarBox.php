@@ -150,6 +150,17 @@ class TToolbarBox extends TTemplateControl
 	{
 		return $this->getViewState('CancelVisible',false);
 	}
+
+	//! button update
+	public function setUpdateVisible($flag)
+	{
+		$this->setViewState('UpdateVisible',$flag,false);
+	}
+	public function getUpdatelVisible()
+	{
+		return $this->getViewState('UpdateVisible',false);
+	}
+
 	//! button save
 	public function setSaveVisible($flag)
 	{

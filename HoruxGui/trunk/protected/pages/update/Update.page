@@ -5,6 +5,7 @@
         ID="tbb"
         Title="<%[Update]%>"
         CssIcon="icon-48-update"
+        UpdateVisible="true"
         HelpVisible="true"
         />
     <%include Application.common.template.headerBoxContent %>

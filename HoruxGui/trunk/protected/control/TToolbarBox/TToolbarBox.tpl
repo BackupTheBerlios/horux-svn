@@ -205,6 +205,17 @@
                         </prop:TrueTemplate>
                     </com:TConditional>
 
+                    <com:TConditional Condition="$this->getViewState('UpdateVisible','false') == 'true'">
+                        <prop:TrueTemplate>
+
+                            <td class="button" id="toolbar-update">
+                                <com:TLinkButton ID="update" CssClass="toolbar" OnClick="Page.onUpdate">
+                                    <span class="icon-32-update" title="<com:TTranslate Catalogue='messages' Text='Update' />"></span><com:TTranslate Catalogue="messages" Text="Update" />
+                                </com:TLinkButton>
+                            </td>
+
+                        </prop:TrueTemplate>
+                    </com:TConditional>
 
                     <com:TConditional Condition="$this->getViewState('HelpVisible','false') == 'true'">
                         <prop:TrueTemplate>
@@ -215,6 +226,7 @@
                             </td>
                         </prop:TrueTemplate>
                     </com:TConditional>
+
 
                 </tr>
             </table>
