@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <xliff version="1.0">
- <file source-language="FR" target-language="fr" datatype="plaintext" original="messages" date="2010-11-04T10:51:26Z" product-name="messages">
+ <file source-language="FR" target-language="fr" datatype="plaintext" original="messages" date="2010-11-10T10:05:11Z" product-name="messages">
   <body>
   
 <trans-unit id="1" lock="1">
@@ -4039,6 +4039,66 @@
 <trans-unit id="764">
 <source>Horux Controller</source>
 <target>Contr&#xF4;lleur Horux</target>
+</trans-unit>
+
+<trans-unit id="765">
+<source>Update</source>
+<target>Mise &#xE0; jour</target>
+</trans-unit>
+
+<trans-unit id="766">
+<source>Horux Update</source>
+<target>Mise &#xE0; jour de Horux</target>
+</trans-unit>
+
+<trans-unit id="767">
+<source>Horux Gui files</source>
+<target>Fichier de Horux GUI</target>
+</trans-unit>
+
+<trans-unit id="768">
+<source>MD5</source>
+<target>MD5</target>
+</trans-unit>
+
+<trans-unit id="769">
+<source>Diff</source>
+<target>Diff&#xE9;rence</target>
+</trans-unit>
+
+<trans-unit id="770">
+<source>Show difference</source>
+<target>Voir les diff&#xE9;rences</target>
+</trans-unit>
+
+<trans-unit id="771">
+<source>Show changes</source>
+<target>Voir les changements</target>
+</trans-unit>
+
+<trans-unit id="772">
+<source>Missing</source>
+<target>Manquant</target>
+</trans-unit>
+
+<trans-unit id="773">
+<source>Your version is not up to date</source>
+<target>Votre version n'est pas &#xE0; jour</target>
+</trans-unit>
+
+<trans-unit id="774">
+<source>Your version is up to date</source>
+<target>Votre version est &#xE0; jour</target>
+</trans-unit>
+
+<trans-unit id="775">
+<source>Enter the birsthday of the user</source>
+<target>Entrez l\'anniversaire de l'utilisateur</target>
+</trans-unit>
+
+<trans-unit id="776">
+<source>Birthday</source>
+<target>Date d'anniversaire</target>
 </trans-unit>
 </body>
 </file>
