@@ -16,6 +16,7 @@ include('class.update.php');
 
 class Update extends PageList
 {
+
     public function onLoad($param)
     {
         parent::onLoad($param);
@@ -42,6 +43,31 @@ class Update extends PageList
                 $this->displayMessage($res, false);
             }
         }
+    }
+
+    public function onUpdate($sender, $param) {
+
+        $items = $this->DataGrid->getDataSource();
+
+        foreach ($this->DataGrid->items as $item){
+            
+            $fileToUpdate = $item->name->Text;
+
+            $update = new HoruxGuiUpdate();
+
+            $newFile = $update->updateFile($fileToUpdate);
+
+            if($newFile) {
+                if(($handle = fopen($fileToUpdate, "w"))) {
+                    fwrite($handle,$newFile);
+
+                    fclose($handle);
+                }
+            }
+
+        }
+
+        $this->Response->redirect($this->Service->constructUrl('update.Update'));
     }
 }
 

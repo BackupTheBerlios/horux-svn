@@ -42,6 +42,32 @@ class HoruxGuiUpdate {
         }
     }
 
+
+    public function updateFile($file) {
+        $params = array(new XML_RPC_Value($file, 'string'));
+        $msg = new XML_RPC_Message('getFile', $params);
+
+        $cli = new XML_RPC_Client('/update/xml_rpc_update.php', 'http://www.horux.ch');
+        //$cli->setDebug(1);
+        $resp = $cli->send($msg);
+
+        if (!$resp) {
+            return false;
+        }
+
+        if (!$resp->faultCode()) {
+            $val = $resp->value();
+
+            $newFile = $val->scalarval();
+
+            return $newFile;
+
+        } else {
+
+            return false;
+        }
+    }
+
     /**
      * List the Horux Gui File. This function don't check only the Horux Gui
      * files and not the extensions.

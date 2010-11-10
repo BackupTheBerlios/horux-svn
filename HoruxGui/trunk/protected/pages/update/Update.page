@@ -25,6 +25,7 @@
 <com:TBoundColumn
     HeaderText="<%[Name]%>"
     DataField="name"
+    ID="name"
     />
 
 <com:TBoundColumn
