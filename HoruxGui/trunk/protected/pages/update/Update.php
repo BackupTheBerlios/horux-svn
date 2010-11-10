@@ -27,10 +27,16 @@ class Update extends PageList
             $res = $update->compareFiles();
 
             if(is_array($res)) {
-                $this->displayMessage(Prado::localize("Your version is not up to date"), false);
 
-                $this->DataGrid->DataSource=$res;
-                $this->DataGrid->dataBind();
+                if(count($res) > 0 ) {
+                    $this->displayMessage(Prado::localize("Your version is not up to date"), false);
+
+                    $this->DataGrid->DataSource=$res;
+                    $this->DataGrid->dataBind();
+                } else {
+                    $this->displayMessage(Prado::localize("Your version is up to date"), true);
+
+                }
 
             } else {
                 $this->displayMessage($res, false);
