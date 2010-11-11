@@ -1,9 +1,5 @@
 <?php
 
-
-require_once 'XML/RPC.php';
-require_once 'XML/RPC2/Client.php'; 
-
 include("xmlrpc/lib/xmlrpc.inc");
 
 class HoruxGuiUpdate {

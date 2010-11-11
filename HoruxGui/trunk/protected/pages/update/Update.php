@@ -53,18 +53,24 @@ class Update extends PageList
             
             $fileToUpdate = $item->name->Text;
 
-            $update = new HoruxGuiUpdate();
+            if($item->md5->Text != "") {
 
-            $newFile = $update->updateFile($fileToUpdate);
+                $update = new HoruxGuiUpdate();
 
-            if($newFile) {
-                if(($handle = fopen($fileToUpdate, "w"))) {
-                    fwrite($handle,$newFile);
+                $newFile = $update->updateFile($fileToUpdate);
 
-                    fclose($handle);
+                if($newFile) {
+                    if(($handle = fopen($fileToUpdate, "w"))) {
+                        fwrite($handle,$newFile);
+
+                        fclose($handle);
+                    }
                 }
-            }
 
+            } else {
+                if(!file_exists($fileToUpdate))
+                    mkdir($fileToUpdate);
+            }
         }
 
         $this->Response->redirect($this->Service->constructUrl('update.Update'));
