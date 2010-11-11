@@ -137,7 +137,7 @@
                     </tr>
 
 
-                    <tr>
+                    <!--<tr>
                         <td class="item" valign="top">
                             - <%[Sqlite support (optional)]%>
                         </td>
@@ -148,22 +148,7 @@
                                 &nbsp;
                             </span>
                         </td>
-                    </tr>
-
-
-                    <tr>
-                        <td class="item" valign="top">
-                            - /protected/application_p.xml <%[Writeable]%>
-                        </td>
-
-                        <td align= valign="top">
-                            <com:TLabel CssClass="Yes" ID="application_xml" text="<%[Yes]%>" />
-                            <span class="small">
-                                &nbsp;
-                            </span>
-                        </td>
-                    </tr>
-
+                    </tr>-->
 
                     <tr>
                         <td valign="top" class="item">
