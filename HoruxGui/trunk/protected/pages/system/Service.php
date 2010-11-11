@@ -61,11 +61,11 @@ class Service extends Page
         else
         {
 
-            require_once( 'XML/RPC.php' );
-            $client = new XML_RPC_Client("RPC2", $host, $port);
+            include_once("xmlrpc/lib/xmlrpc.inc");
+            $client = new xmlrpc_client("RPC2", $host, $port);
 
-            $msg = new XML_RPC_Message("horux.isEngine");
-            @$response = $client->send($msg);
+            $message = new xmlrpcmsg("horux.isEngine");
+            $response = $client->send($message);
 
             if($response)
             {

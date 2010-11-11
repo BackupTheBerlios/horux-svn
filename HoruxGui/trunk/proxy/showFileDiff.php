@@ -2,16 +2,14 @@
 
 
 <?php
-require_once 'XML/RPC.php';
+include("../xmlrpc/lib/xmlrpc.inc");
 
 if(isset($_GET['file'])) {
     $file_content = file_get_contents("../".$_GET['file']);
 
-    $params = array(new XML_RPC_Value($_GET['file'], 'string'),new XML_RPC_Value($file_content, 'string'));
-    $msg = new XML_RPC_Message('fileDiff', $params);
+   $msg = new xmlrpcmsg("fileDiff", array(new xmlrpcval($_GET['file'], 'string'), new xmlrpcval($file_content, 'string')));
 
-    $cli = new XML_RPC_Client('/update/xml_rpc_update.php', 'http://www.horux.ch');
-   // $cli->setDebug(1);
+    $cli = new xmlrpc_client("http://www.horux.ch/update/xml_rpc_update.php");
     $resp = $cli->send($msg);
 
     if (!$resp) {

@@ -13,13 +13,13 @@
 * See COPYRIGHT.php for copyright notices and details.
 */
 
+include_once("xmlrpc/lib/xmlrpc.inc");
+
 class THoruxService extends TModule
 {
-  private $db = NULL;
-
     public function init($config)
     {
-    parent::init($config);
+        parent::init($config);
     }
 
     public function onStop()
@@ -28,7 +28,7 @@ class THoruxService extends TModule
 
         if($param['appMode'] == 'saas') return;
 
-        require_once( 'XML/RPC.php' );
+
 
         $db = $this->Application->getModule('horuxDb')->DbConnection;
         $db->Active=true;
@@ -42,7 +42,7 @@ class THoruxService extends TModule
 
         $result = "";
         $content_error = "";
-        $client = new XML_RPC_Client("RPC2", $host, $port);
+        $client = new xmlrpc_client("RPC2", $host, $port);
 
         $app = $this->getApplication();
 
@@ -53,11 +53,10 @@ class THoruxService extends TModule
         $dataObj = $dataObj->read();
 
 
-        $params = array(new XML_RPC_Value($dataObj['name'], 'string'), new XML_RPC_Value($dataObj['password'], 'string'));
+        $params = array(new xmlrpcval($dataObj['name'], 'string'), new xmlrpcval($dataObj['password'], 'string'));
 
-
-        $msg = new XML_RPC_Message("horux.stopEngine", $params);
-        @$response = $client->send($msg);
+        $message = new xmlrpcmsg("horux.stopEngine", $params);
+        $resp = $client->send($message);
 
     }
 
@@ -68,8 +67,6 @@ class THoruxService extends TModule
         if($param['appMode'] == 'saas') return;
 
 
-        require_once( 'XML/RPC.php' );
-
         $db = $this->Application->getModule('horuxDb')->DbConnection;
         $db->Active=true;
 
@@ -82,10 +79,10 @@ class THoruxService extends TModule
 
         $result = "";
         $content_error = "";
-        $client = new XML_RPC_Client("RPC2", $host, $port);
 
+        $client = new xmlrpc_client("RPC2", $host, $port);
 
-        $msg = new XML_RPC_Message("horux.startEngine");
+        $msg = new xmlrpcmsg("horux.startEngine");
         @$response = $client->send($msg);
 
     }
@@ -96,8 +93,6 @@ class THoruxService extends TModule
         if($param['appMode'] == 'saas') return;
 
 
-        require_once( 'XML/RPC.php' );
-
         $db = $this->Application->getModule('horuxDb')->DbConnection;
         $db->Active=true;
 
@@ -110,7 +105,7 @@ class THoruxService extends TModule
 
         $result = "";
         $content_error = "";
-        $client = new XML_RPC_Client("RPC2", $host, $port);
+        $client = new xmlrpc_client("RPC2", $host, $port);
 
         $app = $this->getApplication();
 
@@ -121,12 +116,12 @@ class THoruxService extends TModule
         $dataObj = $dataObj->read();
 
 
-        $params = array(    new XML_RPC_Value($dataObj['name'], 'string'),
-                            new XML_RPC_Value($dataObj['password'], 'string'),
-                            new XML_RPC_Value($deviceId, 'string'));
+        $params = array(    new xmlrpcval($dataObj['name'], 'string'),
+                            new xmlrpcval($dataObj['password'], 'string'),
+                            new xmlrpcval($deviceId, 'string'));
 
 
-        $msg = new XML_RPC_Message("horux.stopDevice", $params);
+        $msg = new xmlrpcmsg("horux.stopDevice", $params);
         @$response = $client->send($msg);
 
     }
@@ -137,9 +132,6 @@ class THoruxService extends TModule
         $param = $this->Application->getParameters();
         if($param['appMode'] == 'saas') return;
 
-
-        require_once( 'XML/RPC.php' );
-
         $db = $this->Application->getModule('horuxDb')->DbConnection;
         $db->Active=true;
 
@@ -152,7 +144,7 @@ class THoruxService extends TModule
 
         $result = "";
         $content_error = "";
-        $client = new XML_RPC_Client("RPC2", $host, $port);
+        $client = new xmlrpc_client("RPC2", $host, $port);
 
         $app = $this->getApplication();
 
@@ -163,12 +155,12 @@ class THoruxService extends TModule
         $dataObj = $dataObj->read();
 
 
-        $params = array(    new XML_RPC_Value($dataObj['name'], 'string'),
-                            new XML_RPC_Value($dataObj['password'], 'string'),
-                            new XML_RPC_Value($deviceId, 'string'));
+        $params = array(    new xmlrpcval($dataObj['name'], 'string'),
+                            new xmlrpcval($dataObj['password'], 'string'),
+                            new xmlrpcval($deviceId, 'string'));
 
 
-        $msg = new XML_RPC_Message("horux.startDevice", $params);
+        $msg = new xmlrpcmsg("horux.startDevice", $params);
         @$response = $client->send($msg);
 
     }

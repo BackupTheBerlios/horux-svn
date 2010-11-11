@@ -49,14 +49,13 @@
 	$content_error = "";
 
 	if($app_type == 'production')
-	{
-		
-		require_once( 'XML/RPC.php' );
-		
+	{		
+            include("../xmlrpc/lib/xmlrpc.inc");
+            $xmlrpc_internalencoding = 'UTF-8';
 
-	    $client = new XML_RPC_Client("RPC2", $host, $port);
-	    $msg = new XML_RPC_Message("horux.getSystemInfo");
-	    @$response = $client->send($msg);
+            $client = new xmlrpc_client("RPC2", $host, $port);
+            $msg = new xmlrpcmsg("horux.getSystemInfo");
+	    $response = $client->send($msg);
 	
 	    if($response)
 	    {

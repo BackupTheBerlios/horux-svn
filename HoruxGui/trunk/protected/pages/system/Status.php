@@ -136,13 +136,15 @@ class Status extends Page
 
         if($param['appMode'] === 'production')
         {
-
-            require_once( 'XML/RPC.php' );
+            require_once("xmlrpc/lib/xmlrpc.inc");
+            
             $result = "";
             $content_error = "";
-            $client = new XML_RPC_Client("RPC2", $this->host, $this->port);
-            $msg = new XML_RPC_Message("horux.getSystemInfo");
-            @$response = $client->send($msg);
+
+            $client = new xmlrpc_client( "RPC2", $this->host, $this->port );
+
+            $message = new xmlrpcmsg("horux.getSystemInfo");
+            $response = $client->send($message);
 
             if($response)
             {

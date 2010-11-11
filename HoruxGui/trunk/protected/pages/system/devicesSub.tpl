@@ -41,7 +41,7 @@
                 <prop:ItemTemplate>
                     <tr style="background-color:#BFCFFF">
                         <td><%#$this->Data['id']%></td>
-                        <td><%#$this->Data['name']%></td>
+                        <td><%#utf8_encode($this->Data['name'])%></td>
                         <td><%#$this->Data['serialNumber']%></td>
                         <td><%#$this->Data['isConnected']=='1'?'<span style="color:green">'.Prado::localize('Yes').'</span>':'<span style="color:red">'.Prado::localize('No').'</span>'%></td>
                         <td><%#$this->Data['firmwareVersion']%></td>
