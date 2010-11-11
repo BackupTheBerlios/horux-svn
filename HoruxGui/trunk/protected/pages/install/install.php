@@ -22,12 +22,11 @@ class install extends TPage
         $this->php_Version->Text = version_compare(PHP_VERSION, '5.1.0', '>=') ? Prado::localize('Yes'):'<span style="color:red">'.Prado::localize('No').'<span>';
         $this->xml->Text = extension_loaded('xml') ? Prado::localize('Yes'):'<span style="color:red">'.Prado::localize('No').'<span>';
         $this->mysql->Text = extension_loaded('mysql') ? Prado::localize('Yes'):'<span style="color:red">'.Prado::localize('No').'<span>';
-        $this->sqlite->Text = extension_loaded('sqlite') ? Prado::localize('Yes'):'<span style="color:red">'.Prado::localize('No').'<span>';
+        //$this->sqlite->Text = extension_loaded('sqlite') ? Prado::localize('Yes'):'<span style="color:red">'.Prado::localize('No').'<span>';
         //$this->postgre->Text = extension_loaded('pgsql') ? Prado::localize('Yes'):'<span style="color:red">'.Prado::localize('No').'<span>';
         $this->zip->Text = extension_loaded('zip') ? Prado::localize('Yes'):'<span style="color:red">'.Prado::localize('No').'<span>';
         $this->pdo->Text = extension_loaded('pdo') ? Prado::localize('Yes'):'<span style="color:red">'.Prado::localize('No').'<span>';
         $this->pdo_mysql->Text = extension_loaded('pdo_mysql') ? Prado::localize('Yes'):'<span style="color:red">'.Prado::localize('No').'<span>';
-        $this->application_xml->Text = is_writable('./protected/application_p.xml') ? Prado::localize('Yes'):'<span style="color:red">'.Prado::localize('No').'<span>';
 
         $memory_limit = substr(ini_get("memory_limit"),0, strlen(ini_get("memory_limit"))-1);
         $this->memory_limit->Text = $memory_limit>=128 ? Prado::localize('Yes'):'<span style="color:red">'.Prado::localize('No').'<span>';
@@ -47,8 +46,7 @@ class install extends TPage
             !extension_loaded('zip') ||
             !extension_loaded('pdo') ||
             !extension_loaded('pdo_mysql') ||
-            !class_exists('XML_RPC_Client') ||
-            !is_writable('./protected/application_p.xml')
+            !class_exists('XML_RPC_Client') //||
         )
         {
             $this->isOk->Value="false";
@@ -91,8 +89,7 @@ class install extends TPage
             !extension_loaded('mysql') ||
             //!extension_loaded('sqlite') ||
             //!extension_loaded('pgsql') ||
-            !extension_loaded('zip') ||
-            !is_writable('./protected/application_p.xml')
+            !extension_loaded('zip') //||
         )
         {
             $param->IsValid=false;
@@ -115,7 +112,7 @@ class install extends TPage
         switch($this->dbServer->getSelectedValue())
         {
             case "sqlite":
-                return $this->createSqlite();
+               // return $this->createSqlite();
                 break;
             case "mysql":
                 return $this->createMysql();
@@ -131,7 +128,7 @@ class install extends TPage
 
     protected function createSqlite()
     {
-        if(!is_writable('./protected/sqlitedb'))
+        /*if(!is_writable('./protected/sqlitedb'))
         {
             $this->dberror->Text = Prado::localize("The directory ./protected/sqlitedb must be writeable");
             return false;
@@ -172,7 +169,7 @@ class install extends TPage
             }
         }
 
-        return $this->writeApplication('sqlite');
+        return $this->writeApplication('sqlite');*/
     }
 
     protected function createPgsql()
