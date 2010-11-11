@@ -1,0 +1,7 @@
+<configuration>
+    <modules>
+        <module id="globalization_a3m_lgm" class="TGlobalization" >
+            <translation  type="XLIFF" source="horux.messages" catalogue="a3m_lgm" marker="" />
+        </module>
+    </modules>
+</configuration>
