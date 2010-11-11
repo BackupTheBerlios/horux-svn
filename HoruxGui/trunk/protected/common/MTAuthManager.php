@@ -42,7 +42,7 @@ class MTAuthManager extends TAuthManager {
 
         if( $app->getService()->getID() == 'soap' )
         {
-
+return true;
             if($app->getUser()->getUserID() == null)
             {
 

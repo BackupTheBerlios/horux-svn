@@ -2,6 +2,9 @@
 
 
 require_once 'XML/RPC.php';
+require_once 'XML/RPC2/Client.php'; 
+
+include("xmlrpc/lib/xmlrpc.inc");
 
 class HoruxGuiUpdate {
 
@@ -12,59 +15,36 @@ class HoruxGuiUpdate {
         
         $this->listHoruxGuiFile(".");
 
+        $client = new xmlrpc_client("http://www.horux.ch/update/xml_rpc_update.php");
 
-        $params = array(new XML_RPC_Value(serialize($this->out), 'string'));
-        $msg = new XML_RPC_Message('compareVersion', $params);
+        $message = new xmlrpcmsg("compareVersion", array(new xmlrpcval(serialize($this->out), 'string')));
+        $resp = $client->send($message);
 
-        $cli = new XML_RPC_Client('/update/xml_rpc_update.php', 'http://www.horux.ch');
-        //$cli->setDebug(1);
-        $resp = $cli->send($msg);
-
-        if (!$resp) {
-            return 'Communication error: ' . $cli->errstr;
-        }
-
-        if (!$resp->faultCode()) {
-            $val = $resp->value();
-
-            $diff = unserialize($val->scalarval());
-
-            return $diff;
-
+        if( $resp->faultCode() ) {
+            return 'KO. Error: '.$resp->faultString();
         } else {
-            /*
-             * Display problems that have been gracefully cought and
-             * reported by the xmlrpc.php script.
-             */
-            $error =  'Fault Code: ' . $resp->faultCode() . "<br/>";
-            $error .= 'Fault Reason: ' . $resp->faultString() . "<br/>";
-            return $error;
+
+            $value = $resp->value();
+            return unserialize($value->scalarval());
         }
     }
 
 
     public function updateFile($file) {
-        $params = array(new XML_RPC_Value($file, 'string'));
-        $msg = new XML_RPC_Message('getFile', $params);
 
-        $cli = new XML_RPC_Client('/update/xml_rpc_update.php', 'http://www.horux.ch');
-        //$cli->setDebug(1);
-        $resp = $cli->send($msg);
+        $this->listHoruxGuiFile(".");
 
-        if (!$resp) {
+        $client = new xmlrpc_client("http://www.horux.ch/update/xml_rpc_update.php");
+
+        $message = new xmlrpcmsg("getFile", array(new xmlrpcval($file, 'string')));
+        $resp = $client->send($message);
+
+        if( $resp->faultCode() ) {
             return false;
-        }
-
-        if (!$resp->faultCode()) {
-            $val = $resp->value();
-
-            $newFile = $val->scalarval();
-
-            return $newFile;
-
         } else {
 
-            return false;
+            $value = $resp->value();
+            return $value->scalarval();
         }
     }
 
