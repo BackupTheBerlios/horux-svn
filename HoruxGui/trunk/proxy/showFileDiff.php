@@ -2,7 +2,7 @@
 
 
 <?php
-include("../xmlrpc/lib/xmlrpc.inc");
+include_once("../xmlrpc/lib/xmlrpc.inc");
 
 if(isset($_GET['file'])) {
     $file_content = file_get_contents("../".$_GET['file']);

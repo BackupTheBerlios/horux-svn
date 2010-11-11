@@ -50,7 +50,7 @@
 
 	if($app_type == 'production')
 	{		
-            include("../xmlrpc/lib/xmlrpc.inc");
+            include_once("../xmlrpc/lib/xmlrpc.inc");
             $xmlrpc_internalencoding = 'UTF-8';
 
             $client = new xmlrpc_client("RPC2", $host, $port);

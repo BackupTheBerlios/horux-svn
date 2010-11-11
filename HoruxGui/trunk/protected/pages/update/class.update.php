@@ -1,6 +1,6 @@
 <?php
 
-include("xmlrpc/lib/xmlrpc.inc");
+include_once("xmlrpc/lib/xmlrpc.inc");
 
 class HoruxGuiUpdate {
 
