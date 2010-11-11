@@ -279,11 +279,11 @@ INSERT INTO `hr_gui_permissions` (`page`, `selector`, `value`, `allowed`, `short
 ('openTime.mod', 'group_id', 1, '1',0),
 ('system.Notification', 'group_id', 1, '1',0),
 ('system.NotificationAdd', 'group_id', 1, '1',0),
-('system.NotificationMod', 'group_id', 1, '1',0);
+('system.NotificationMod', 'group_id', 1, '1',0),
 ('horuxController.horuxController', 'group_id', 1, '1',0),
 ('horuxController.add', 'group_id', 1, '1',0),
 ('horuxController.mod', 'group_id', 1, '1',0),
-('update.Update', 'group_id', 1, '1',0),
+('update.Update', 'group_id', 1, '1',0);
 
 # --------------------------------------------------------
 
