@@ -27,6 +27,11 @@ class add extends Page {
             $this->horuxControllerId->dataBind();
             $this->horuxControllerId->setSelectedIndex(0);
 
+            $this->parent->setDataValueField('id');
+            $this->parent->setDataTextField('name');
+            $this->parent->DataSource=$this->Devices;
+            $this->parent->dataBind();
+
             $param = $this->Application->getParameters();
             $superAdmin = $this->Application->getUser()->getSuperAdmin();
             
@@ -37,6 +42,19 @@ class add extends Page {
         }
     }
 
+
+    public function getDevices() {
+        $command=$this->db->createCommand(SQL::SQL_GET_DEVICES);
+        $data = $command->query();
+
+        $d[] = array("id"=>0, 'name'=>Prado::localize("-- None --"));
+
+        foreach($data as $dd) {
+            $d[] = array("id"=>$dd['id'], 'name'=>$dd['name']);
+        }
+
+        return $d;
+    }
 
     public function getController() {
         $command=$this->db->createCommand(SQL::SQL_GET_CONTROLLER);
@@ -86,14 +104,14 @@ class add extends Page {
         $cmd->bindValue(":isLog",$this->isLog->getChecked(),PDO::PARAM_STR);
         $cmd->bindValue(":accessPlugin",$this->accessPlugin->SafeText,PDO::PARAM_STR);
         $cmd->bindValue(":horuxControllerId",$this->horuxControllerId->getSelectedValue(),PDO::PARAM_STR);
+        $cmd->bindValue(":parent_id",$this->parent->getSelectedValue(),PDO::PARAM_STR);
         $cmd->Execute();
 
         $this->lastId = $this->db->getLastInsertID();
 
 
         $cmd = $this->db->createCommand( SQL::SQL_ADD_DEVICE2 );
-        $cmd->bindValue(":ip",$this->ip->SafeText,PDO::PARAM_STR);
-        $cmd->bindValue(":port",$this->port->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":address",$this->address->SafeText,PDO::PARAM_STR);
         $cmd->bindValue(":id_device",$this->lastId,PDO::PARAM_STR);
         $cmd->bindValue(":serialNumberFormat",$this->serialNumberFormat->SafeText,PDO::PARAM_STR);
 
@@ -102,7 +120,6 @@ class add extends Page {
 
         return true;
     }
-
 
 
     public function serverValidateName($sender, $param) {
@@ -115,5 +132,4 @@ class add extends Page {
         else
             $param->IsValid=true;
     }
-
 }

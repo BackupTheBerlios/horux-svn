@@ -15,17 +15,17 @@
 
 class SQL {
 
+        const SQL_GET_DEVICES = "SELECT * FROM hr_device";
+
         const SQL_GET_CONTROLLER = "SELECT * FROM hr_horux_controller";
 
 	const SQL_ADD_DEVICE2 = "INSERT INTO hr_a3m_lgm (
-                        `ip` , 
-                        `port` , 
+                        `address` ,
                         `id_device`,
                         `serialNumberFormat`
                   )
                   VALUES (
-                        :ip,
-                        :port,
+                        :address,
                         :id_device,
                         :serialNumberFormat
                   )";
@@ -48,7 +48,7 @@ class SQL {
                         'a3m_lgm',
                         :isLog,
                         0,
-                        0,
+                        :parent_id,
                         :description,
 			:accessPlugin,
 			:horuxControllerId
@@ -65,13 +65,13 @@ class SQL {
                         `isLog`=:isLog, 
                         `description`=:description, 
                         `accessPlugin`=:accessPlugin,
-			`horuxControllerId`=:horuxControllerId
+			`horuxControllerId`=:horuxControllerId,
+                        `parent_id` = :parent_id
                         WHERE id=:id"
                       ;
                       
 	const SQL_UPDATE_DEVICE =  "UPDATE hr_a3m_lgm SET
-                        `ip`=:ip, 
-                        `port`=:port,
+                        `address`=:address,
                         `serialNumberFormat`=:serialNumberFormat
                         WHERE id_device=:id"
                       ;

@@ -29,6 +29,11 @@ class mod extends Page {
             $this->horuxControllerId->dataBind();
             $this->horuxControllerId->setSelectedIndex(0);
 
+            $this->parent->setDataValueField('id');
+            $this->parent->setDataTextField('name');
+            $this->parent->DataSource=$this->Devices;
+            $this->parent->dataBind();
+
             $param = $this->Application->getParameters();
             $superAdmin = $this->Application->getUser()->getSuperAdmin();
 
@@ -41,6 +46,20 @@ class mod extends Page {
             $this->setData();
 
         }
+    }
+
+
+    public function getDevices() {
+        $command=$this->db->createCommand(SQL::SQL_GET_DEVICES);
+        $data = $command->query();
+
+        $d[] = array("id"=>0, 'name'=>Prado::localize("-- None --"));
+
+        foreach($data as $dd) {
+            $d[] = array("id"=>$dd['id'], 'name'=>$dd['name']);
+        }
+
+        return $d;
     }
 
     public function getController() {
@@ -63,10 +82,10 @@ class mod extends Page {
             $data = $query->read();
             $this->name->Text = $data['name'];
             $this->accessPlugin->Text = $data['accessPlugin'];
-            $this->ip->Text =  $data['ip'];
-            $this->port->Text =  $data['port'];
+            $this->address->Text =  $data['address'];
             $this->serialNumberFormat->Text =  $data['serialNumberFormat'];
 	    $this->horuxControllerId->setSelectedValue( $data['horuxControllerId'] );
+            $this->parent->setSelectedValue( $data['parent_id'] );
 
             $this->comment->Text = $data['description'];
             $this->isLog->setChecked($data['isLog'] );
@@ -113,14 +132,13 @@ class mod extends Page {
         $cmd->bindValue(":id",$this->id->Value,PDO::PARAM_STR);
         $cmd->bindValue(":accessPlugin",$this->accessPlugin->SafeText,PDO::PARAM_STR);
         $cmd->bindValue(":horuxControllerId",$this->horuxControllerId->getSelectedValue(),PDO::PARAM_STR);
-
+        $cmd->bindValue(":parent_id",$this->parent->getSelectedValue(),PDO::PARAM_STR);
         $cmd->Execute();
 
 
 
         $cmd = $this->db->createCommand( SQL::SQL_UPDATE_DEVICE );
-        $cmd->bindValue(":ip",$this->ip->SafeText,PDO::PARAM_STR);
-        $cmd->bindValue(":port",$this->port->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":address",$this->address->SafeText,PDO::PARAM_STR);
         $cmd->bindValue(":serialNumberFormat",$this->serialNumberFormat->SafeText,PDO::PARAM_STR);
         
         $cmd->bindValue(":id",$this->id->Value,PDO::PARAM_STR);
@@ -128,6 +146,8 @@ class mod extends Page {
 
         return true;
     }
+
+
 
     public function serverValidateName($sender, $param) {
         $cmd = $this->db->createCommand( SQL::SQL_IS_READER_NAME_EXIST2);
@@ -140,6 +160,4 @@ class mod extends Page {
         else
             $param->IsValid=true;
     }
-
-
 }

@@ -43,37 +43,31 @@
          </tr>
           <tr>
             <td valign="top" class="key">
-              <span onmouseover="Tip('<%[Enter ip address]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)">* <%[IP address]%></span>
+              <span onmouseover="Tip('<%[Enter the address]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)">* <%[Address]%></span>
             </td>
             <td>
               <com:TTextBox
                 CssClass="text_area"
-                ID="ip"
+                ID="address"
+                Text="0"
                 Width="50" />
               <com:TRequiredFieldValidator
                 ValidationGroup="Group1"
-                ControlToValidate="ip"
+                ControlToValidate="address"
                 Text="<%[This field is required]%>"
                 Display="Dynamic"/>
             </td>
          </tr>
 
-          <tr>
-            <td valign="top" class="key">
-              <span onmouseover="Tip('<%[Enter port number]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)">* <%[Port number]%></span>
-            </td>
+        <tr>
+            <td valign="top" class="key"><span onmouseover="Tip('<%[Set on which device this device<br/>is connected. Set none if the device is not connected to any device]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Parent device]%></span></td>
             <td>
-              <com:TTextBox
-                CssClass="text_area"
-                ID="port"
-                Width="50" />
-              <com:TRequiredFieldValidator
-                ValidationGroup="Group1"
-                ControlToValidate="port"
-                Text="<%[This field is required]%>"
-                Display="Dynamic"/>
+              <com:TDropDownList ID="parent">
+
+              </com:TDropDownList>
             </td>
-         </tr>
+          </tr>
+
 
           <tr>
             <td valign="top" class="key"><span onmouseover="Tip('<%[Insert the key format number used by the reader:<br>X(hexa), x(hexa inverted), D(decimal), d(decimal inverted), _(ignore).<br>Exemple ___XXXX, ignore the third bytes and read the last 4 bytes in hexa]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Serial number format]%></span></td>

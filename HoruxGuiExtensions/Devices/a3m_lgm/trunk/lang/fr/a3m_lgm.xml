@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff version="1.0">
-<file source-language="en" target-language="fr" datatype="plaintext" original="messages" date="2010-11-11T14:27:27Z" product-name="messages">
+<file source-language="en" target-language="fr" datatype="plaintext" original="messages" date="2010-11-15T15:47:57Z" product-name="messages">
 <body>
 <trans-unit id="1">
    <source>Add an A3M LGM Reader</source>
@@ -26,88 +26,101 @@
    <source>This field is required</source>
    <target>Ce champs est requis</target>
 </trans-unit>
+
+
+
+
 <trans-unit id="7">
-   <source>Enter ip address</source>
-   <target>Entrez une adresse IP</target>
-</trans-unit>
-<trans-unit id="8">
-   <source>IP address</source>
-   <target>Adresse IP</target>
-</trans-unit>
-<trans-unit id="9">
-   <source>Enter port number</source>
-   <target>Entrez le numéro de port</target>
-</trans-unit>
-<trans-unit id="10">
-   <source>Port number</source>
-   <target>Numéro du port</target>
-</trans-unit>
-<trans-unit id="11">
    <source>Insert the key format number used by the reader:&lt;br&gt;X(hexa), x(hexa inverted), D(decimal), d(decimal inverted), _(ignore).&lt;br&gt;Exemple ___XXXX, ignore the third bytes and read the last 4 bytes in hexa</source>
    <target>Entrez le format du numéro de la clé utilisé par le lecteur&lt;br&gt;X(hexa), x(hexa inversé), D(decimal), d(decimal inversé), _(ignore).&lt;br&gt;Example ___XXXX, ignore les 3 premiers bytes et lit les 4 derniers en hexa</target>
 </trans-unit>
-<trans-unit id="12">
+<trans-unit id="8">
    <source>Serial number format</source>
    <target>Format du numéro de série</target>
 </trans-unit>
-<trans-unit id="13">
+<trans-unit id="9">
    <source>Allow to log the communication in a log file</source>
    <target>Permet de journaliser la communication avec le lecteur</target>
 </trans-unit>
-<trans-unit id="14">
+<trans-unit id="10">
    <source>Debug</source>
    <target>Journalisation</target>
 </trans-unit>
-<trans-unit id="15">
+<trans-unit id="11">
    <source>Define the access plugin used for the access control.&lt;br/&gt;If empty, all plugins are likely to give the access</source>
    <target>Définit le plugin d\'accès utilisé.&lt;br/&gt;Si vide, tous les plugin d\'accès chargés sont susceptible de donner l\'accès.</target>
 </trans-unit>
-<trans-unit id="16">
+<trans-unit id="12">
    <source>Access Plugin Name</source>
    <target>Nom du plugin d'accès</target>
 </trans-unit>
-<trans-unit id="17">
+<trans-unit id="13">
    <source>You could insert a description for this device.</source>
    <target>Vous pouvez insérer une description</target>
 </trans-unit>
-<trans-unit id="18">
+<trans-unit id="14">
    <source>Description</source>
    <target>Description</target>
 </trans-unit>
-<trans-unit id="19">
+<trans-unit id="15">
    <source>The device was added successfully</source>
    <target>Le périphérique a été ajouté avec succès</target>
 </trans-unit>
-<trans-unit id="20">
+<trans-unit id="16">
    <source>The device was not added</source>
    <target>Le périphérique n'a pas été ajouté</target>
 </trans-unit>
-<trans-unit id="21">
+<trans-unit id="17">
    <source>The device was not saved</source>
    <target>Le périphérique n'a pas été sauvé</target>
 </trans-unit>
-<trans-unit id="22">
+<trans-unit id="18">
    <source>Modify an A3M LGM Reader</source>
    <target>Modifier un lecteur A3M LGM</target>
 </trans-unit>
 
-<trans-unit id="23">
+<trans-unit id="19">
    <source>The device was modified successfully</source>
    <target>Le périphérique a été modifié avec succès</target>
 </trans-unit>
-<trans-unit id="24">
+<trans-unit id="20">
    <source>The device was not modified</source>
    <target>Le périphérique n'a été modifié</target>
 </trans-unit>
 
-<trans-unit id="25">
+<trans-unit id="21">
 <source>Set on which controller the device is connected</source>
 <target>Sélectionnez le controller sur lequel le périphérique est connecté</target>
 </trans-unit>
 
-<trans-unit id="26">
+<trans-unit id="22">
 <source>Horux controller</source>
 <target>Controller Horux</target>
+</trans-unit>
+
+<trans-unit id="23">
+<source>Enter the address</source>
+<target>Entrez son adresse</target>
+</trans-unit>
+
+<trans-unit id="24">
+<source>Address</source>
+<target>Adresse</target>
+</trans-unit>
+
+<trans-unit id="25">
+<source>Set on which device this device&lt;br/&gt;is connected. Set none if the device is not connected to any device</source>
+<target>Sélectionnez le parent si celui-ci est connecté à un parent</target>
+</trans-unit>
+
+<trans-unit id="26">
+<source>Parent device</source>
+<target>Périphérique parent</target>
+</trans-unit>
+
+<trans-unit id="27">
+<source>-- None --</source>
+<target>-- Aucun --</target>
 </trans-unit>
 </body>
 </file>
