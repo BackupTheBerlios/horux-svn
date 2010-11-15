@@ -21,3 +21,5 @@ DESTDIR = ../../../../HoruxCore/trunk/bin/plugins/access
 
 OBJECTS += ../../../../HoruxCore/trunk/src/cxmlfactory.o
 
+
+include(../../../../HoruxCore/trunk/qtsoap-2.7_1-opensource/src/qtsoap.pri)
