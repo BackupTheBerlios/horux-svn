@@ -22,6 +22,7 @@
 
 #include <QObject>
 #include <QtSql>
+#include <QtSoapHttpTransport>
 
 #include "caccessinterface.h"
 #include "cxmlfactory.h"
@@ -37,24 +38,26 @@ class CVeloPark : public QObject, CAccessInterface
     Q_INTERFACES(CAccessInterface)
     Q_CLASSINFO ( "Author", "Jean-Luc Gyger" );
     Q_CLASSINFO ( "Copyright", "Letux - 2010" );
-    Q_CLASSINFO ( "Version", "1.0.2" );
+    Q_CLASSINFO ( "Version", "1.0.3" );
     Q_CLASSINFO ( "PluginName", "velopark" );
     Q_CLASSINFO ( "PluginType", "access" );
     Q_CLASSINFO ( "PluginDescription", "Handle the access for the plugin velopark" );
+    Q_CLASSINFO ( "DbTableUsed", "hr_vp_parking,hr_keys,hr_tracking,hr_keys_attribution,hr_user_group_attribution,hr_user_group,hr_user_group_access,hr_vp_subscription_attribution,hr_gantner_standalone_action,hr_access_level");
+    Q_CLASSINFO ( "DbTrackingTable", "hr_tracking");
 
 public:
     CVeloPark(QObject *parent=NULL);
     bool isAccess( QMap<QString, QVariant> params, bool emitAction, bool emitNotification );
     QObject *getMetaObject() { return this;}
 
-protected:
-    bool checkAccess(QMap<QString, QVariant> params, bool emitAction);
-    bool checkSubDate(QDateTime start, QDateTime end);
-    void acceptAccess(QMap<QString, QVariant> params, bool isOk);
-    void displayMessage(QString type, QString deviceId);
-    void setLightStatus(QString deviceId, QString key);
 
-    void timerEvent(QTimerEvent *e);
+
+protected:
+    bool checkAccessGantner(QMap<QString, QVariant> params);
+    bool checkAccessOnline(QMap<QString, QVariant> params);
+    bool checkSubDate(QDateTime start, QDateTime end);
+    void initSAASMode();
+
 signals:
     void accessAction(QString xml);
     void notification(QMap<QString, QVariant>param);
@@ -64,19 +67,44 @@ public slots:
     void deviceConnectionMonitor(int, bool);
     void deviceInputMonitor ( int , int , bool );
 
+    void test();
+
 protected slots:
     void checkDb();
+
+    /*!
+      Read the soap response from Horux Gui
+    */
+    void readSoapResponse();
+    void readSoapBalancesResponse();
+
+    /*!
+      Read the SSL error when doing a SOAP transaction
+    */
+    void soapSSLErrors ( QNetworkReply * reply, const QList<QSslError> & errors );
 
 protected:
     void checkLastCredit(QMap<QString, QVariant> params);
     void updateUser(QMap<QString, QVariant> params, bool multiticket);
     void displayMessage(QMap<QString, QVariant> params, QString message);
+    void accessAccepted(QMap<QString, QVariant> params, bool isAccepted);
 
 protected:
     QMap<int, int> displayTimeTimer; //! <Timer,displayId>
     QString type;
     QTimer *timerCheckDb;
     QMap<int, bool> devices;
+    QTimer *timerTest;
+
+    QtSoapHttpTransport soapClient;
+
+    //! saas param
+    bool saas;
+    QString saas_host;
+    bool saas_ssl;
+    QString saas_username;
+    QString saas_password;
+    QString saas_path;
 };
 
 #endif
