@@ -561,6 +561,7 @@ void CGantnerTime::deviceInputMonitor ( int , int , bool )
 
 void CGantnerTime::checkDb()
 {
+
     timerCheckDb->stop();
 
     QStringList ids;
@@ -786,6 +787,8 @@ void CGantnerTime::initSAASMode()
 
 void CGantnerTime::checkBalances(int id)
 {
+    if(devices.count() == 0) return;
+
     QtSoapMessage message;
     message.setMethod("callServiceComponent");
 
@@ -818,7 +821,7 @@ void CGantnerTime::readSoapBalancesResponse()
     const QtSoapMessage &response = soapClientBalances.getResponse();
 
     if (response.isFault()) {
-        qDebug() << "Not able to call the Horux GUI web service. (" << response.method().name().name() << ")";
+        qDebug() << "(CGantnerTime) Not able to call the Horux GUI web service. (" << response.faultString().toString() << ":" << response.faultCode () << ")";
         return;
     }
 
@@ -879,7 +882,7 @@ void CGantnerTime::readSoapResponse()
     const QtSoapMessage &response = soapClient.getResponse();
 
     if (response.isFault()) {
-        qDebug() << "Not able to call the Horux GUI web service. (" << response.method().name().name() << ")";
+        qDebug() << "(CGantnerTime) Not able to call the Horux GUI web service. (" << response.faultString().toString() << ":" << response.faultCode () << ")";
         timerCheckDb->start(TIME_DB_CHECKING);
         return;
     }
