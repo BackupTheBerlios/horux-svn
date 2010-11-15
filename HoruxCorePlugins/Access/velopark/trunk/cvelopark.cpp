@@ -21,71 +21,123 @@
 #include <QCoreApplication>
 #include <QtCore>
 #include <QtXml>
+#include <QSslError>
+#include <QNetworkReply>
+
+void CVeloPark::test() {
+    QString xml = "<deviceEvent id=\"6\"><event>keyDetected</event><params><param><name>code</name><value>1</value></param><param><name>date</name><value>10-10-25</value></param><param><name>deviceId</name><value>6</value></param><param><name>entering</name><value>1</value></param><param><name>key</name><value>11111111</value></param><param><name>time</name><value>14:30:57</value></param><param><name>userId</name><value>-1</value></param></params></deviceEvent>";
+    qDebug() << "Teste la fonction";
+    deviceEvent(xml);
+}
+
 
 CVeloPark::CVeloPark(QObject *parent) : QObject(parent)
 {
+    initSAASMode();
+
+    // get the velopark installation type
     QSettings settings ( QCoreApplication::instance()->applicationDirPath() +"/horux.ini", QSettings::IniFormat );
-
     settings.beginGroup ( "Velopark" );
-
     if ( !settings.contains ( "type" ) ) settings.setValue ( "type", "gantner" );
-    type = settings.value ( "saas", "gantner" ).toString();
+    type = settings.value ( "type", "gantner" ).toString();
 
+    // if the installation is a Gantner type, start the checking of the db to see if we new standalone action
     if(type == "gantner")
     {
         timerCheckDb = new QTimer(this);
         connect(timerCheckDb, SIGNAL(timeout()), this, SLOT(checkDb()));
         timerCheckDb->start(TIME_DB_CHECKING);
     }
+
+    // pour les testes
+    /*timerTest = new QTimer(this);
+    connect(timerTest, SIGNAL(timeout()), this, SLOT(test()));
+    timerTest->start(2000);*/
+    // fin code de test
 }
 
+
+
+/*
+    Function deviceEvent
+    This function reveive an device event. This function handle the following event:
+    When type equal "gantner":
+            Gantner_AccessTerminal_accessDetected -> received when the terminal register the booking
+            Gantner_AccessTerminal_accessDetectedBeforeBooking -> received immediatly after a tag presentation
+    When type equal "a3m":
+            keyDetected -> received immediatly after a tag presentation
+
+*/
 void CVeloPark::deviceEvent(QString xml)
 {
     QMap<QString, QVariant>params = CXmlFactory::deviceEvent(xml) ;
 
     QString event = params["event"].toString();
 
+    QString isAccessStr = "";
 
-
-    if(type != "gantner")
+    /*
+      Online system like A3M
+    */
+    if(type == "a3m" /*Maybe other type will comming*/)
     {
-        //! handle only the key detection
+        // handle only the key detection
         if(event != "keyDetected")
             return;
 
-        QString key = params["key"].toString();
-        QString deviceId = params["deviceId"].toString();
-
-        //! get the access plugin name used for the key
-        QString sql = "SELECT accessPlugin FROM hr_keys AS k LEFT JOIN hr_keys_attribution AS ka ON ka.id_key=k.id LEFT JOIN hr_user_group_attribution AS uga ON uga.id_user=ka.id_user LEFT JOIN hr_user_group AS ug ON ug.id=uga.id_group WHERE serialNumber='" + key + "' AND accessPlugin!='NULL' AND accessPlugin!=''";
-
-        QSqlQuery query(sql);
-
-        int index = metaObject()->indexOfClassInfo ( "PluginName" );
-
-        if(query.next() && query.value(0).toString() != metaObject()->classInfo ( index ).value()) return;
-
-
-            //! we check first if the key has access with the standard access control
-            if(accessInterfaces.contains("access_horux"))
+        if(checkAccessOnline(params)) {
+            isAccessStr = "1";
+            accessAccepted(params, true);
+        } else {
+            // display the no access message
+            isAccessStr = "0";
+            accessAccepted(params, false);
+            // display the non access message on the specific device
+            QSqlQuery queryMessage("SELECT * FROM hr_vp_parking");
+            while(queryMessage.next())
             {
-                    if(accessInterfaces["access_horux"]->isAccess(params, false, false))
-                    {
-                            acceptAccess(params, isAccess(params, true, true));
+                QString ids = queryMessage.value(7).toString();
+                QStringList idsList= ids.split(',');
 
-                    }
-            else
-            {
-              acceptAccess(params, false);
+                if(idsList.contains(params["deviceId"].toString()))
+                {
+                    displayMessage(params, queryMessage.value(4).toString());
+                }
             }
-            }
-            else
-                    qDebug("The access plugin velopark depend on the access plugin access_horux");
+        }
+
+        // get the key id
+        QString keyId = "1";
+        QSqlQuery queryKey("SELECT id FROM hr_keys WHERE serialNumber='" + params["key"].toString() + "'");
+
+        if(queryKey.next())
+                keyId = queryKey.value(0).toString();
+
+
+        // insert in the tracking
+        QString query = "INSERT INTO `hr_tracking` (  `id_user` , `id_key` , `time` , `date` , `id_entry` , `is_access` , `id_comment`, `key` ) VALUES ('" +
+                                        params["userId"].toString() +
+                                        "','" +
+                                        keyId +
+                                        "', '" + params["time"].toString()  + "', '" + params["date"].toString() + "', '" +
+                                        params["deviceId"].toString() +
+                                        "', '" +
+                                        isAccessStr +
+                                        "', '" +
+                                        "10" +
+                                        "', '" +
+                                        params["key"].toString() +
+                                        "')";
+        QSqlQuery tracking(query);
 
     }
-    else
+
+    /*
+      Gantner system based on GAT Terminal 3100
+    */
+    if(type == "gantner")
     {
-        //! handle only the key detection
+        // handle only the key detection
         if(event != "Gantner_AccessTerminal_accessDetected" && event != "Gantner_AccessTerminal_accessDetectedBeforeBooking")
             return;
 
@@ -94,7 +146,7 @@ void CVeloPark::deviceEvent(QString xml)
 
         QSqlQuery queryUser(sqlUser);
 
-        //if not return
+        // if not return
         if(!queryUser.next()) {
             QSqlQuery queryMessage("SELECT * FROM hr_vp_parking");
             while(queryMessage.next())
@@ -107,19 +159,23 @@ void CVeloPark::deviceEvent(QString xml)
                     displayMessage(params, queryMessage.value(3).toString());
                 }
             }
+
+            accessAccepted(params, false);
+
             return;
         }
 
-        QString isAccessStr = "";
-        if(isAccess(params, false, false))
+
+        if(checkAccessGantner(params))
         {
             isAccessStr = "1";
+            accessAccepted(params, true);
         }
         else
         {
-            //display the no access message
+            // display the no access message
             isAccessStr = "0";
-
+            accessAccepted(params, false);
             // display the non access message on the specific device
             QSqlQuery queryMessage("SELECT * FROM hr_vp_parking");
             while(queryMessage.next())
@@ -175,7 +231,6 @@ void CVeloPark::deviceEvent(QString xml)
 
 void CVeloPark::displayMessage(QMap<QString, QVariant> params, QString message)
 {
-
     QMap<QString, QString> p;
     p.clear();
     QString f = "displayMessage";
@@ -184,103 +239,311 @@ void CVeloPark::displayMessage(QMap<QString, QVariant> params, QString message)
     emit accessAction(xmlFunc);
 }
 
-bool CVeloPark::isAccess(QMap<QString, QVariant> params, bool emitAction, bool )
+bool CVeloPark::isAccess(QMap<QString, QVariant> , bool , bool )
 {
-  return checkAccess(params, emitAction);
+    qDebug() << "Not implemented";
+
+    return false;
+}
+
+bool CVeloPark::checkAccessOnline(QMap<QString, QVariant> params) {
+
+    // check if the key is blocked
+    QString sqlKey="SELECT * FROM hr_keys WHERE serialNumber='" +  params["key"].toString();
+    QSqlQuery queryKey(sqlKey);
+    if(queryKey.next()) {
+        if(queryKey.value(4).toInt() == 1)
+            return false;
+    }
+
+
+    float creditValue = 0;
+
+    QSqlQuery queryParking("SELECT device_ids, creditValue FROM hr_vp_parking");
+    while(queryParking.next() && creditValue==0)
+    {
+        QString ids = queryParking.value(0).toString();
+        QStringList idsList= ids.split(',');
+
+        if(idsList.contains(params["deviceId"].toString()))
+        {
+            creditValue = queryParking.value(1).toFloat();
+        }
+    }
+
+
+
+    //if userId != -1, this means that the key is attribute to a user
+    if(params["userId"].toString() != "-1") {
+
+        // check if the user has access to the device or if the user is bloqued
+        QSqlQuery queryUser("SELECT u.id, uga.id_group, CONCAT(u.name,' ' ,u.firstname) AS fullname, k.serialNumber, u.pin_code,u.validity_date, u.masterAuthorization FROM hr_user AS u LEFT JOIN hr_keys_attribution AS ka ON ka.id_user=u.id LEFT JOIN hr_keys AS k ON k.id=ka.id_key LEFT JOIN hr_user_group_attribution AS uga ON uga.id_user=u.id  LEFT JOIN hr_user_group AS ug ON ug.id=uga.id_group WHERE ug.accessPlugin='velopark' AND u.name!='??' AND u.isBlocked=0  AND u.id=" + params["userId"].toString() );
+
+        if(queryUser.next())
+        {
+            QString groupId = queryUser.value(1).toString();
+
+            QSqlQuery queryHasAccessDevice("SELECT * FROM hr_user_group_access WHERE id_device=" + params["deviceId"].toString() + " AND id_group=" + groupId);
+
+            if(!queryHasAccessDevice.next()) {
+                return false;
+            }
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    // do we have a subscription with the status "started" for user
+    QString sub = "SELECT * FROM hr_vp_subscription_attribution WHERE status='started' AND user_id="+params["userId"].toString();
+
+    if(params["userId"].toString() == "-1") { // do we have a subscription with the status "started" for a key not attributed
+        sub = "SELECT * FROM hr_vp_subscription_attribution WHERE status='started' AND serialNumber='"+ params["key"].toString()+"'";
+    }
+
+    QSqlQuery querySub(sub);
+
+    if(querySub.next())
+    {
+        // check the validity date if not equal
+        if( querySub.value(6).toDateTime() != querySub.value(7).toDateTime() && checkSubDate( querySub.value(6).toDateTime(), querySub.value(7).toDateTime() ) ) {
+
+            // display the message
+            if(querySub.value(9).toInt() == 1)
+            {
+                //display the message for the multiticket
+                QSqlQuery queryMessage("SELECT * FROM hr_vp_parking");
+                while(queryMessage.next())
+                {
+                    QString ids = queryMessage.value(7).toString();
+                    QStringList idsList= ids.split(',');
+
+                    if(idsList.contains(params["deviceId"].toString()))
+                    {
+                        float solde = querySub.value(5).toFloat()-creditValue;
+                        QString soldeStr = QString::number(solde);
+
+                        QString message = queryMessage.value(8).toString();
+                        message.replace("{credit}", soldeStr.rightJustified(2, ' '));
+                        displayMessage(params, message);
+                    }
+                }
+            }
+            else
+            {
+                QDate date = querySub.value(7).toDate();
+                //display the message for the single
+                QSqlQuery queryMessage("SELECT * FROM hr_vp_parking");
+                while(queryMessage.next())
+                {
+                    QString ids = queryMessage.value(7).toString();
+                    QStringList idsList= ids.split(',');
+
+                    if(idsList.contains(params["deviceId"].toString()))
+                    {
+                        QString message = queryMessage.value(9).toString();
+                        message.replace("{date}", QString(date.toString("dd-MM-yyyy")));
+                        displayMessage(params, message);
+                    }
+                }
+            }
+
+            // access acepted
+            return true;
+        } else {
+
+            // is it a multi ticket
+            if(querySub.value(9).toInt() == 1)
+            {
+                // do we have credit avalaible (multiple ticket)
+                if(querySub.value(5).toFloat() == 0 )
+                {
+                        // set the sub as finished
+                        QSqlQuery update("UPDATE hr_vp_subscription_attribution SET credit=0, status='finished' WHERE id="+querySub.value(0).toString());
+                }
+                else
+                {
+                    // not enough credit ?
+                    if(querySub.value(5).toFloat()<creditValue) {
+                        qDebug() << "not enough credit";
+
+                        //! check if a multicket with the status "not start" or "waiting" is existing
+                        QString sub2 = "SELECT * FROM hr_vp_subscription_attribution WHERE ( status='not_start' OR status='waiting' ) AND multiticket=1 AND user_id="+params["userId"].toString();
+
+                        if(params["userId"].toString() == "-1") { // do we have a subscription with the status "started" for a key not attributed
+                            sub2 = "SELECT * FROM hr_vp_subscription_attribution WHERE ( status='not_start' OR status='waiting' ) AND multiticket=1 AND serialNumber="+ params["key"].toString();
+                        }
+
+                        QSqlQuery querySub2(sub2);
+
+                        if(querySub2.next())
+                        {
+                            QSqlQuery update("UPDATE hr_vp_subscription_attribution SET credit=credit+" + querySub.value(5).toString()  + " WHERE id="+querySub2.value(0).toString());
+                            QSqlQuery update2("UPDATE hr_vp_subscription_attribution SET credit=0, status='finished' WHERE id="+querySub.value(0).toString());
+
+                            return checkAccessOnline(params);
+                        }
+
+                        return false;
+                    }
+
+
+                    QSqlQuery sub("SELECT * FROM hr_vp_subscription WHERE id=" + querySub.value(2).toString());
+                    sub.next();
+
+                    QString validity = sub.value(3).toString();
+                    int year = validity.section(":",0,0).toInt();
+                    int month = validity.section(":",1,1).toInt();
+                    int day = validity.section(":",2,2).toInt();
+                    int hour = validity.section(":",3,3).toInt();
+
+                    QDateTime start = QDateTime::currentDateTime();
+                    QDateTime end = start;
+                    end = end.addYears(year);
+                    end = end.addMonths(month);
+                    end = end.addDays(day);
+                    end = end.addSecs(hour*3600);
+
+                    QString startStr = start.toString("yyyy-MM-dd hh:mm:ss");
+                    QString endStr = end.toString("yyyy-MM-dd hh:mm:ss");
+
+                    //! credit - X and new start/end date
+                    QSqlQuery update("UPDATE hr_vp_subscription_attribution SET credit=credit-" + QString::number(creditValue) + ", start='" + startStr + "', end='" + endStr + "' WHERE id="+querySub.value(0).toString());
+
+                    //display the message for the multiticket
+                    QSqlQuery queryMessage("SELECT * FROM hr_vp_parking");
+                    while(queryMessage.next())
+                    {
+                        QString ids = queryMessage.value(7).toString();
+                        QStringList idsList= ids.split(',');
+
+                        if(idsList.contains(params["deviceId"].toString()))
+                        {
+                            float solde =  querySub.value(5).toFloat()-creditValue;
+                            QString soldeStr = QString::number(solde);
+
+                            QString message = queryMessage.value(8).toString();
+                            message.replace("{credit}", soldeStr.rightJustified(2, ' '));
+                            displayMessage(params, message);
+                        }
+                    }
+
+                    return true;
+                }
+
+                //! try for an other sub if existing
+                return checkAccessOnline(params);
+            }
+            else
+            {
+                //! set the sub as finished
+                QSqlQuery update("UPDATE hr_vp_subscription_attribution SET credit=0, status='finished' WHERE id="+querySub.value(0).toString());
+
+                //! try for an other sub if existing
+                return checkAccessOnline(params);
+            }
+        }
+
+
+    }
+    else
+    {
+        //! check if a subscription "not start" or "waiting" is existing
+        QString sub2 = "SELECT * FROM hr_vp_subscription_attribution WHERE ( status='not_start' OR status='waiting' ) AND user_id="+params["userId"].toString();
+
+        if(params["userId"].toString() == "-1") { // do we have a subscription with the status "started" for a key not attributed
+            sub2 = "SELECT * FROM hr_vp_subscription_attribution WHERE ( status='not_start' OR status='waiting' ) AND serialNumber="+ params["key"].toString();
+        }
+
+        QSqlQuery querySub2(sub2);
+
+        if(querySub2.next())
+        {
+            //! we have one, set it as the new subscription
+            QSqlQuery sub("SELECT * FROM hr_vp_subscription WHERE id=" + querySub2.value(2).toString());
+            sub.next();
+
+            QString validity = sub.value(3).toString();
+            int year = validity.section(":",0,0).toInt();
+            int month = validity.section(":",1,1).toInt();
+            int day = validity.section(":",2,2).toInt();
+            int hour = validity.section(":",3,3).toInt();
+
+            QDateTime start = QDateTime::currentDateTime();
+            QDateTime end = start;
+            end = end.addYears(year);
+            end = end.addMonths(month);
+            end = end.addDays(day);
+            end = end.addSecs(hour*3600);
+
+            QString startStr = start.toString("yyyy-MM-dd hh:mm:ss");
+            QString endStr = end.toString("yyyy-MM-dd hh:mm:ss");
+
+            // is it a multiticket
+            if(querySub2.value(9).toInt() == 1 )
+            {
+                //! credit -1 and new start/end date
+                QSqlQuery update("UPDATE hr_vp_subscription_attribution SET credit=credit-" + QString::number(creditValue) + ", status='started', start='" + startStr + "', end='" + endStr + "' WHERE id="+querySub2.value(0).toString());
+
+            }
+            else
+            {
+                //! new start/end date
+                QSqlQuery update("UPDATE hr_vp_subscription_attribution SET status='started', start='" + startStr + "', end='" + endStr + "' WHERE id="+querySub2.value(0).toString());
+            }
+
+            if(querySub2.value(9).toInt() == 1)
+            {
+                //display the message for the multiticket
+                QSqlQuery queryMessage("SELECT * FROM hr_vp_parking");
+                while(queryMessage.next())
+                {
+                    QString ids = queryMessage.value(7).toString();
+                    QStringList idsList= ids.split(',');
+
+                    if(idsList.contains(params["deviceId"].toString()))
+                    {
+                        int solde = querySub2.value(5).toFloat()-creditValue;
+                        QString soldeStr = QString::number(solde);
+
+                        QString message = queryMessage.value(8).toString();
+                        message.replace("{credit}", soldeStr.rightJustified(2, ' '));
+                        displayMessage(params, message);
+                    }
+                }
+            }
+            else
+            {
+                QDate date = querySub2.value(7).toDate();
+                //display the message for the single
+                QSqlQuery queryMessage("SELECT * FROM hr_vp_parking");
+                while(queryMessage.next())
+                {
+                    QString ids = queryMessage.value(7).toString();
+                    QStringList idsList= ids.split(',');
+
+                    if(idsList.contains(params["deviceId"].toString()))
+                    {
+                        QString message = queryMessage.value(9).toString();
+                        message.replace("{date}", QString(date.toString("dd-MM-yyyy")));
+                        displayMessage(params, message);
+                    }
+                }
+
+            }
+            return true;
+
+        }
+        else
+        {
+            return false;
+        }
+    }
 }
 
 
-void CVeloPark::acceptAccess(QMap<QString, QVariant> params, bool isOk)
-{
-  if(isOk)
-  {
-    QMap<QString, QString> param;
-
-    param["isAccess"] = "1";
-    param["key"] = params["key"].toString();
-
-    int index = metaObject()->indexOfClassInfo ( "PluginName" );
-
-    if ( index != -1 )
-    {
-        param["PluginName"] = metaObject()->classInfo ( index ).value();
-    }
-
-    QString xml = CXmlFactory::deviceAction(params["deviceId"].toString(), "openDoor", param);
-
-    emit accessAction(xml);
-
-    //!display the message in the display
-    displayMessage("ok",params["deviceId"].toString());
-
-   
-    //! Set the new status of the light information
-    setLightStatus(params["deviceId"].toString(), params["key"].toString());
-  }
-  else
-  {
-    QMap<QString, QString> param;
-
-    param["isAccess"] = "0";
-    param["key"] = params["key"].toString();
-
-    int index = metaObject()->indexOfClassInfo ( "PluginName" );
-
-    if ( index != -1 )
-    {
-        param["PluginName"] = metaObject()->classInfo ( index ).value();
-    }
-
-    QString xml = CXmlFactory::deviceAction(params["deviceId"].toString(), "openDoor", param);
-
-    emit accessAction(xml);
-
-    //!display the message in the display
-    displayMessage("ko",params["deviceId"].toString());
-
-  }
-
-  QCoreApplication::processEvents();
-
-  QString isAccessStr;
-  QString keyId = "1";
-  QString userId = "1";
- 
-  if(isOk)
-    isAccessStr = "1";
-  else
-    isAccessStr = "0";
-
-
-    //! try to find the keyId according to the serialNumber
-    QSqlQuery query("SELECT id FROM hr_keys WHERE serialNumber='" + params["key"].toString() + "'");
-
-    if(query.next())
-            keyId = query.value(0).toString();
-
-
-    //! try to find the userId according to the serialNumber
-    query = "SELECT u.id FROM hr_user AS u LEFT JOIN hr_keys_attribution AS ka ON ka.id_user=u.id WHERE ka.id_key=" + keyId;
-
-    if(query.next())
-      userId = query.value(0).toString();
-
-    query = "INSERT INTO `hr_tracking` ( `id_user` , `id_key` , `time` , `date` , `id_entry` , `is_access` , `id_comment`, `key` ) VALUES ( '" +
-                                    userId +
-                                    "','" +
-                                    keyId +
-                                    "', CURTIME(), CURDATE(), '" +
-                                    params["deviceId"].toString() +
-                                    "', '" +
-                                    isAccessStr +
-                                    "', '" +
-                                    "10" +
-                                    "', '" +
-                                    params["key"].toString() +
-                                    "')";
-}
-
-bool CVeloPark::checkAccess(QMap<QString, QVariant> params, bool emitAction)
+bool CVeloPark::checkAccessGantner(QMap<QString, QVariant> params)
 {
     bool userInTerminal = true;
 
@@ -369,10 +632,7 @@ bool CVeloPark::checkAccess(QMap<QString, QVariant> params, bool emitAction)
 
                                 if(idsList.contains(params["deviceId"].toString()))
                                 {
-                                    /*QSqlQuery querySubType("SELECT * FROM hr_vp_subscription WHERE id=" + querySub.value(2).toString());
-                                    querySubType.next();*/
-
-                                    int solde = /*querySubType.value(4).toInt() -*/ querySub.value(5).toInt();
+                                    int solde =  querySub.value(5).toInt();
                                     QString soldeStr = QString::number(solde);
 
                                     QString message = queryMessage.value(8).toString();
@@ -468,45 +728,21 @@ bool CVeloPark::checkAccess(QMap<QString, QVariant> params, bool emitAction)
 
                                 if(params["event"].toString() == "Gantner_AccessTerminal_accessDetectedBeforeBooking")
                                 {
-                                    if(querySub.value(9).toInt() == 1)
+                                    //display the message for the multiticket
+                                    QSqlQuery queryMessage("SELECT * FROM hr_vp_parking");
+                                    while(queryMessage.next())
                                     {
-                                        //display the message for the multiticket
-                                        QSqlQuery queryMessage("SELECT * FROM hr_vp_parking");
-                                        while(queryMessage.next())
-                                        {
-                                            QString ids = queryMessage.value(7).toString();
-                                            QStringList idsList= ids.split(',');
+                                        QString ids = queryMessage.value(7).toString();
+                                        QStringList idsList= ids.split(',');
 
-                                            if(idsList.contains(params["deviceId"].toString()))
-                                            {
-                                               /* QSqlQuery querySubType("SELECT * FROM hr_vp_subscription WHERE id=" + querySub.value(2).toString());
-                                                querySubType.next();*/
-            
-                                                int solde = /*querySubType.value(4).toInt() -*/ querySub.value(5).toInt();
-                                                QString soldeStr = QString::number(solde);
-                                                
-                                                QString message = queryMessage.value(8).toString();
-                                                message.replace("{credit}", soldeStr.rightJustified(2, ' '));
-                                                displayMessage(params, message);
-                                            }
-                                        }
-                                    }
-                                    else
-                                    {
-                                        QDate date = querySub.value(7).toDate();
-                                        //display the message for the single
-                                        QSqlQuery queryMessage("SELECT * FROM hr_vp_parking");
-                                        while(queryMessage.next())
+                                        if(idsList.contains(params["deviceId"].toString()))
                                         {
-                                            QString ids = queryMessage.value(7).toString();
-                                            QStringList idsList= ids.split(',');
+                                            int solde = querySub.value(5).toInt()-1;
+                                            QString soldeStr = QString::number(solde);
 
-                                            if(idsList.contains(params["deviceId"].toString()))
-                                            {
-                                                QString message = queryMessage.value(9).toString();
-                                                message.replace("{date}", QString(date.toString("dd-MM-yyyy")));
-                                                displayMessage(params, message);
-                                            }
+                                            QString message = queryMessage.value(8).toString();
+                                            message.replace("{credit}", soldeStr.rightJustified(2, ' '));
+                                            displayMessage(params, message);
                                         }
                                     }
                                 }
@@ -515,7 +751,7 @@ bool CVeloPark::checkAccess(QMap<QString, QVariant> params, bool emitAction)
                         }
 
                         //! try for an other sub if existing
-                        return checkAccess(params, emitAction);
+                        return checkAccessGantner(params);
                     }
                     else
                     {
@@ -523,7 +759,7 @@ bool CVeloPark::checkAccess(QMap<QString, QVariant> params, bool emitAction)
                         QSqlQuery update("UPDATE hr_vp_subscription_attribution SET credit=0, status='finished' WHERE id="+querySub.value(0).toString());
 
                         //! try for an other sub if existing
-                        return checkAccess(params, emitAction);
+                        return checkAccessGantner(params);
                     }
                 }
         }
@@ -628,10 +864,7 @@ bool CVeloPark::checkAccess(QMap<QString, QVariant> params, bool emitAction)
 
                                     if(idsList.contains(params["deviceId"].toString()))
                                     {
-                                        /*QSqlQuery querySubType("SELECT * FROM hr_vp_subscription WHERE id=" + querySub2.value(2).toString());
-                                        querySubType.next();*/
-
-                                        int solde = /*querySubType.value(4).toInt() -*/ querySub2.value(5).toInt();
+                                        int solde = querySub2.value(5).toInt()-1;
                                         QString soldeStr = QString::number(solde);
 
                                         QString message = queryMessage.value(8).toString();
@@ -839,74 +1072,6 @@ bool CVeloPark::checkSubDate(QDateTime start, QDateTime end)
 	return false;
 }
 
-void CVeloPark::displayMessage(QString type, QString deviceId)
-{
-  QSqlQuery query("SELECT * FROM hr_vp_parking WHERE accesspoint_id=" + deviceId);
-
-  if(query.next())
-  {
-    //! do we have a display device defined
-    if(query.value(2).toInt() > 0 )
-    {
-      QString msg = "";
-      if(type == "default") msg = query.value(3).toString();
-      if(type == "ok") msg = query.value(4).toString();
-      if(type == "ko") msg = query.value(5).toString();
-
-      if(type != "default")
-        displayTimeTimer[startTimer(query.value(6).toInt() * 1000)] = deviceId.toInt();
-
-      QMap<QString, QString> param;
-
-      param["message"] = msg;
-
-      int index = metaObject()->indexOfClassInfo ( "PluginName" );
-
-      if ( index != -1 )
-      {
-          param["PluginName"] = metaObject()->classInfo ( index ).value();
-      }
-
-      QString xml = CXmlFactory::deviceAction( query.value(2).toString(), "displayMessage", param);
-
-      emit accessAction(xml);
-    }
-  }
-}
-
-void CVeloPark::setLightStatus(QString deviceId, QString key)
-{
-  QSqlQuery query("SELECT count(*) FROM `hr_tracking` WHERE `hr_tracking`.key='"+key+"' AND is_access=1 AND `id_entry`="+deviceId);
-
-  query.next();
-
-  if(key != "")
-  {
-    if((query.value(0).toInt() +1) % 2 == 0 )
-    {
-      //exit
-      QSqlQuery query("UPDATE hr_vp_parking SET filling=filling-1 WHERE accesspoint_id=" + deviceId);
-    }
-    else
-    {
-      //entry
-      QSqlQuery query("UPDATE hr_vp_parking SET filling=filling+1 WHERE accesspoint_id=" + deviceId);
-    }
-  }
-
-}
-
-void CVeloPark::timerEvent(QTimerEvent *e)
-{
-  if( displayTimeTimer.contains(e->timerId()) )
-  {
-    int deviceId = displayTimeTimer[e->timerId()];
-    displayTimeTimer.remove(e->timerId());
-    killTimer(e->timerId());
-  
-    displayMessage("default", QString::number(deviceId));
-  }
-}
 
 void CVeloPark::deviceConnectionMonitor(int id, bool status)
 {
@@ -943,11 +1108,6 @@ void CVeloPark::checkDb()
                 QString func = query.value(2).toString();
                 QString deviceId = QString::number(i.key());
                 QString userId = query.value(3).toString();
-                QString keyId = query.value(4).toString();
-                QString param = query.value(6).toString();
-                QString param2 = query.value(7).toString();
-                QString param3 = query.value(8).toString();
-                QString reasonId = query.value(9).toString();
 
                 if(type == "user" || type == "key")
                 {
@@ -963,8 +1123,6 @@ void CVeloPark::checkDb()
                             QString groupId = queryUser.value(1).toString();
                             QString fullName = queryUser.value(2).toString();
                             QString cardNumber = queryUser.value(3).toString();
-                            QString pinCode = queryUser.value(4).toString();
-                            QDate valididyDate = queryUser.value(5).toDate();
 
                             QSqlQuery queryHasAccessDevice("SELECT * FROM hr_user_group_access WHERE id_device=" + deviceId + " AND id_group=" + groupId);
 
@@ -1021,21 +1179,134 @@ void CVeloPark::checkDb()
                                     emit accessAction(xmlFunc);
                                 }
 
-                                QSqlQuery queryDel("DELETE FROM hr_gantner_standalone_action WHERE id=" + id );
+                                ids << id;
                             }
+                        }
+
+
+                        if(saas)
+                        {
+                            if( ids.count()>0 ) {
+                                QtSoapMessage message;
+                                message.setMethod("callServiceComponent");
+
+                                QtSoapArray *array = new QtSoapArray(QtSoapQName("params"));
+
+                                array->insert(0, new QtSoapSimpleType(QtSoapQName("component"),"velopark"));
+                                array->insert(1, new QtSoapSimpleType(QtSoapQName("class"),"velopark"));
+                                array->insert(2, new QtSoapSimpleType(QtSoapQName("function"),"syncStandalone"));
+                                array->insert(3, new QtSoapSimpleType(QtSoapQName("params"),ids.join(",")));
+
+                                message.addMethodArgument(array);
+
+                                soapClient.submitRequest(message, saas_path+"/index.php?soap=soapComponent&password=" + saas_password + "&username=" + saas_username);
+                            } else {
+                                timerCheckDb->start(TIME_DB_CHECKING);
+                            }
+                        }
+                        else
+                        {
+                            if( ids.count()>0 ) {
+                                QSqlQuery queryDel("DELETE FROM hr_gantner_standalone_action WHERE id IN (" + ids.join(",") + ")" );
+                            }
+
+                            timerCheckDb->start(TIME_DB_CHECKING);
                         }
                     }
                 }
-
-
             }
 
-
-            QSqlQuery queryOptimize("OPTIMIZE TABLE hr_gantner_standalone_action");
         }
     }
 
+    if(!saas) {
+        QSqlQuery queryOptimize("OPTIMIZE TABLE hr_gantner_standalone_action");
+    }
+
+}
+
+void CVeloPark::accessAccepted(QMap<QString, QVariant> params, bool isAccepted) {
+    QMap<QString, QString> p;
+    p.clear();
+    QString f = "accessAccepted";
+    p["isAccepted"] = isAccepted;
+    QString xmlFunc = CXmlFactory::deviceAction( params["deviceId"].toString()  ,f, p);
+    emit accessAction(xmlFunc);
+}
+
+
+void CVeloPark::initSAASMode()
+{
+    QSettings settings ( QCoreApplication::instance()->applicationDirPath() +"/horux.ini", QSettings::IniFormat );
+
+    settings.beginGroup ( "Webservice" );
+
+    if ( !settings.contains ( "saas" ) ) settings.setValue ( "saas", false );
+    if ( !settings.contains ( "saas_username" ) ) settings.setValue ( "saas_username", "" );
+    if ( !settings.contains ( "saas_password" ) ) settings.setValue ( "saas_password", "" );
+    if ( !settings.contains ( "saas_path" ) ) settings.setValue ( "saas_path", "" );
+    if ( !settings.contains ( "saas_host" ) ) settings.setValue ( "saas_host", "" );
+    if ( !settings.contains ( "saas_ssl" ) ) settings.setValue ( "saas_ssl", true );
+
+
+    saas = settings.value ( "saas", "false" ).toBool();
+    saas_host = settings.value ( "saas_host", "" ).toString();
+    saas_ssl = settings.value ( "saas_ssl", true ).toBool();
+    saas_username = settings.value ( "saas_username", "" ).toString();
+    saas_password = settings.value ( "saas_password", "" ).toString();
+    saas_path = settings.value ( "saas_path", "" ).toString();
+
+    if(saas)
+    {
+        soapClient.setHost(saas_host,saas_ssl);
+
+        connect(&soapClient, SIGNAL(responseReady()),this, SLOT(readSoapResponse()));
+        connect(soapClient.networkAccessManager(),SIGNAL(sslErrors( QNetworkReply *, const QList<QSslError> & )),
+                this, SLOT(soapSSLErrors(QNetworkReply*,QList<QSslError>)));
+
+    }
+
+}
+
+void CVeloPark::soapSSLErrors ( QNetworkReply * reply, const QList<QSslError> & errors )
+{
+    foreach(QSslError sslError, errors)
+    {
+        if(sslError.error() == QSslError::SelfSignedCertificate)
+        {
+            reply->ignoreSslErrors();
+        }
+    }
+}
+
+void CVeloPark::readSoapResponse()
+{
+    // check if the response from the web service is ok
+    const QtSoapMessage &response = soapClient.getResponse();
+
+    if (response.isFault()) {
+        qDebug() << "(CVeloPark) Not able to call the Horux GUI web service. (" << response.faultString().toString() << ":" << response.faultCode () << ")";
+        timerCheckDb->start(TIME_DB_CHECKING);
+        return;
+    }
+
+    if(response.returnValue().toString().toInt() < 0)
+    {
+        timerCheckDb->start(TIME_DB_CHECKING);
+        return;
+    }
+
+    QStringList ids = response.returnValue().toString().split(",");
+
+    foreach(QString id, ids)
+    {
+        QSqlQuery queryDel("DELETE FROM hr_gantner_standalone_action WHERE id=" + id );
+    }
+
+    QSqlQuery queryOptimize("OPTIMIZE TABLE hr_gantner_standalone_action");
+
     timerCheckDb->start(TIME_DB_CHECKING);
+
 }
 
 //! Q_EXPORT_PLUGIN2(TARGET, CLASSNAME);
