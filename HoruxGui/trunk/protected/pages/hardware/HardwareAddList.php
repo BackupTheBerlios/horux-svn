@@ -33,7 +33,11 @@ class HardwareAddList extends Page
             if($f != '..' && $f != '.' && $f != '.svn' && is_dir($path.$f))
             {
                 $t = explode("_", $f);
-                $types[$t[0]][] = $t[1];
+
+                $type = $t;
+                unset($type[0]);
+
+                $types[$t[0]][] = implode("_", $type);
             }
         }
         $html = '<ul id="menu-item" class="jtree">';
