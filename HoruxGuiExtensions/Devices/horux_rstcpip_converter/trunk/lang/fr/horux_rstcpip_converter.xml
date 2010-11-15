@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.0">
+<file source-language="en" target-language="fr" datatype="plaintext" original="messages" date="2010-11-15T15:11:22Z" product-name="messages">
+<body>
+
+<trans-unit id="1">
+   <source>Parameters</source>
+   <target>Paramètres</target>
+</trans-unit>
+<trans-unit id="2">
+   <source>Enter a &lt;strong&gt;unique&lt;/strong&gt; name for this device</source>
+   <target>Entrez un nom unique pour ce périphérique</target>
+</trans-unit>
+<trans-unit id="3">
+   <source>Name</source>
+   <target>Nom</target>
+</trans-unit>
+<trans-unit id="4">
+   <source>This name is already used</source>
+   <target>Ce nom est déjà utilisé</target>
+</trans-unit>
+<trans-unit id="5">
+   <source>This field is required</source>
+   <target>Ce champs est requis</target>
+</trans-unit>
+<trans-unit id="6">
+   <source>Enter ip address</source>
+   <target>Entrez une adresse IP</target>
+</trans-unit>
+<trans-unit id="7">
+   <source>IP address</source>
+   <target>Adresse IP</target>
+</trans-unit>
+<trans-unit id="8">
+   <source>Enter port number</source>
+   <target>Entrez le numéro de port</target>
+</trans-unit>
+<trans-unit id="9">
+   <source>Port number</source>
+   <target>Numéro du port</target>
+</trans-unit>
+
+
+<trans-unit id="10">
+   <source>Allow to log the communication in a log file</source>
+   <target>Permet de journaliser la communication avec le lecteur</target>
+</trans-unit>
+<trans-unit id="11">
+   <source>Debug</source>
+   <target>Journalisation</target>
+</trans-unit>
+<trans-unit id="12">
+   <source>Define the access plugin used for the access control.&lt;br/&gt;If empty, all plugins are likely to give the access</source>
+   <target>Définit le plugin d\'accès utilisé.&lt;br/&gt;Si vide, tous les plugin d\'accès chargés sont susceptible de donner l\'accès.</target>
+</trans-unit>
+<trans-unit id="13">
+   <source>Access Plugin Name</source>
+   <target>Nom du plugin d'accès</target>
+</trans-unit>
+<trans-unit id="14">
+   <source>You could insert a description for this device.</source>
+   <target>Vous pouvez insérer une description</target>
+</trans-unit>
+<trans-unit id="15">
+   <source>Description</source>
+   <target>Description</target>
+</trans-unit>
+<trans-unit id="16">
+   <source>The device was added successfully</source>
+   <target>Le périphérique a été ajouté avec succès</target>
+</trans-unit>
+<trans-unit id="17">
+   <source>The device was not added</source>
+   <target>Le périphérique n'a pas été ajouté</target>
+</trans-unit>
+<trans-unit id="18">
+   <source>The device was not saved</source>
+   <target>Le périphérique n'a pas été sauvé</target>
+</trans-unit>
+
+
+<trans-unit id="19">
+   <source>The device was modified successfully</source>
+   <target>Le périphérique a été modifié avec succès</target>
+</trans-unit>
+<trans-unit id="20">
+   <source>The device was not modified</source>
+   <target>Le périphérique n'a été modifié</target>
+</trans-unit>
+
+<trans-unit id="21">
+<source>Set on which controller the device is connected</source>
+<target>Sélectionnez le controller sur lequel le périphérique est connecté</target>
+</trans-unit>
+
+<trans-unit id="22">
+<source>Horux controller</source>
+<target>Controller Horux</target>
+</trans-unit>
+
+<trans-unit id="23">
+<source>Add an RS/TCPIP Converter</source>
+<target>Ajouter un convertisseur RS/TCPIP</target>
+</trans-unit>
+
+<trans-unit id="24">
+<source>Modify an RS/TCPIP Converter</source>
+<target>Modifier un convertisseur RS/TCPIP</target>
+</trans-unit>
+</body>
+</file>
+</xliff>

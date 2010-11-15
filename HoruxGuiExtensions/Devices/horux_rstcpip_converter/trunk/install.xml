@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<install type="device">
+	<name>Horux RS(232/422/485)/TCPIP Converter</name>
+        <installName>horux_rstcpip_converter</installName>
+	<version>1.0.0</version>
+	<creationDate>11/11/10</creationDate>
+	<author>Jean-Luc Gyger / Letux</author>
+	<authorEmail>info@letux.ch</authorEmail>
+	<authorUrl>http://www.letux.ch</authorUrl>
+	<copyright>Letux</copyright>
+	<license>GNU/GPL</license>
+	<description>Configure an RS TCPIP converter</description>
+	<sqlinstall>install.sql</sqlinstall>
+	<sqluninstall>uninstall.sql</sqluninstall>
+	
+	<permissions>
+		<permission>hardware.device.horux_rstcpip_converter.add</permission>
+		<permission>hardware.device.horux_rstcpip_converter.mod</permission>
+	</permissions>	
+	
+	
+</install>
