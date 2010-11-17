@@ -256,7 +256,7 @@ QString CXmlFactory::deviceAction(QString id, QString f, QMap<QString, QString>p
 
 }
 
-QMap<QString, MapParam> CXmlFactory::deviceAction(QString xml, int id)
+QMap<QString, MapParam> CXmlFactory::deviceAction(QString xml, int id, int parent_id)
 {
   QMap<QString, MapParam> funcList;
 
@@ -272,7 +272,7 @@ QMap<QString, MapParam> CXmlFactory::deviceAction(QString xml, int id)
     return funcList;
   }
 
-  if(root.attribute("id").toInt() != id)
+  if(root.attribute("id").toInt() != id && root.attribute("id").toInt() != parent_id)
     return funcList;
 
   QDomNode actionNode = root.firstChild();
