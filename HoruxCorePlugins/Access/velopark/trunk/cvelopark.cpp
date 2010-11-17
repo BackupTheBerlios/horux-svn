@@ -25,7 +25,7 @@
 #include <QNetworkReply>
 
 void CVeloPark::test() {
-    QString xml = "<deviceEvent id=\"6\"><event>keyDetected</event><params><param><name>code</name><value>1</value></param><param><name>date</name><value>10-10-25</value></param><param><name>deviceId</name><value>6</value></param><param><name>entering</name><value>1</value></param><param><name>key</name><value>11111111</value></param><param><name>time</name><value>14:30:57</value></param><param><name>userId</name><value>-1</value></param></params></deviceEvent>";
+    QString xml = "<deviceEvent id=\"6\"><event>keyDetected</event><params><param><name>code</name><value>1</value></param><param><name>date</name><value>2010-11-17</value></param><param><name>deviceId</name><value>6</value></param><param><name>entering</name><value>1</value></param><param><name>key</name><value>988775684</value></param><param><name>time</name><value>09:10:57</value></param><param><name>userId</name><value>94</value></param></params></deviceEvent>";
     qDebug() << "Teste la fonction";
     deviceEvent(xml);
 }
@@ -332,7 +332,7 @@ bool CVeloPark::checkAccessOnline(QMap<QString, QVariant> params) {
             }
             else
             {
-                QDate date = querySub.value(7).toDate();
+                QDateTime date = querySub.value(7).toDateTime();
                 //display the message for the single
                 QSqlQuery queryMessage("SELECT * FROM hr_vp_parking");
                 while(queryMessage.next())
@@ -344,6 +344,7 @@ bool CVeloPark::checkAccessOnline(QMap<QString, QVariant> params) {
                     {
                         QString message = queryMessage.value(9).toString();
                         message.replace("{date}", QString(date.toString("dd-MM-yyyy")));
+                        message.replace("{time}", QString(date.toString("hh:mm")));
                         displayMessage(params, message);
                     }
                 }
@@ -469,6 +470,7 @@ bool CVeloPark::checkAccessOnline(QMap<QString, QVariant> params) {
             int month = validity.section(":",1,1).toInt();
             int day = validity.section(":",2,2).toInt();
             int hour = validity.section(":",3,3).toInt();
+            int periodId = validity.section(":",4,4).toInt();
 
             QDateTime start = QDateTime::currentDateTime();
             QDateTime end = start;
@@ -476,6 +478,27 @@ bool CVeloPark::checkAccessOnline(QMap<QString, QVariant> params) {
             end = end.addMonths(month);
             end = end.addDays(day);
             end = end.addSecs(hour*3600);
+
+            // check if the subcription is a period
+            if(periodId  > 0) {
+                QSqlQuery period("SELECT * FROM hr_vp_period WHERE id=" + QString::number(periodId));
+                period.next();
+
+                int hour = 0;
+                int minute = 0;
+
+                hour = period.value(2).toString().section(":",0,0).toInt();
+                minute = period.value(2).toString().section(":",1,1).toInt();
+
+                start.setDate(QDate::currentDate());
+                start.setTime(QTime(hour, minute, 0, 0));
+
+                hour = period.value(3).toString().section(":",0,0).toInt();
+                minute = period.value(3).toString().section(":",1,1).toInt();
+
+                end.setDate(QDate::currentDate());
+                start.setTime(QTime(hour, minute, 0, 0));
+            }
 
             QString startStr = start.toString("yyyy-MM-dd hh:mm:ss");
             QString endStr = end.toString("yyyy-MM-dd hh:mm:ss");
@@ -515,7 +538,7 @@ bool CVeloPark::checkAccessOnline(QMap<QString, QVariant> params) {
             }
             else
             {
-                QDate date = querySub2.value(7).toDate();
+                QDateTime date = querySub2.value(7).toDateTime();
                 //display the message for the single
                 QSqlQuery queryMessage("SELECT * FROM hr_vp_parking");
                 while(queryMessage.next())
@@ -527,6 +550,7 @@ bool CVeloPark::checkAccessOnline(QMap<QString, QVariant> params) {
                     {
                         QString message = queryMessage.value(9).toString();
                         message.replace("{date}", QString(date.toString("dd-MM-yyyy")));
+                        message.replace("{time}", QString(date.toString("hh:mm")));
                         displayMessage(params, message);
                     }
                 }
@@ -1228,8 +1252,12 @@ void CVeloPark::checkDb()
 void CVeloPark::accessAccepted(QMap<QString, QVariant> params, bool isAccepted) {
     QMap<QString, QString> p;
     p.clear();
+
     QString f = "accessAccepted";
-    p["isAccepted"] = isAccepted;
+
+    if(!isAccepted)
+        f = "accessRefused";
+
     QString xmlFunc = CXmlFactory::deviceAction( params["deviceId"].toString()  ,f, p);
     emit accessAction(xmlFunc);
 }
