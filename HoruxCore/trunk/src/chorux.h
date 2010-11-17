@@ -177,6 +177,7 @@ class CHorux : public QObject
         QString saas_path;
         int saas_info_send_timer;
         bool isFullReloaded;
+        QString saas_syncMode;
 
         //! pointer of the instance
         static CHorux *ptr_this;

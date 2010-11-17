@@ -192,7 +192,7 @@ void AccessHoruxPlugin::checkFreeAccess()
             param["PluginName"] = metaObject()->classInfo ( index ).value();
         }
 
-        QString xml = CXmlFactory::deviceAction(entryId, "openDoor", param);
+        QString xml = CXmlFactory::deviceAction(entryId, "accessAccepted", param);
 
         emit accessAction(xml);
       }
@@ -478,7 +478,7 @@ void AccessHoruxPlugin::insertTracking(QString userId, QString keyId, QString en
             param["PluginName"] = metaObject()->classInfo ( index ).value();
         }
 
-        QString xml = CXmlFactory::deviceAction(entryId, "openDoor", param);
+        QString xml = CXmlFactory::deviceAction(entryId, "accessAccepted", param);
 
         emit accessAction(xml);
     }
@@ -499,7 +499,7 @@ void AccessHoruxPlugin::insertTracking(QString userId, QString keyId, QString en
            param["PluginName"] = metaObject()->classInfo ( index ).value();
        }
 
-       QString xml = CXmlFactory::deviceAction(entryId, "openDoor", param);
+       QString xml = CXmlFactory::deviceAction(entryId, "accessRefused", param);
 
        emit accessAction(xml);
     }

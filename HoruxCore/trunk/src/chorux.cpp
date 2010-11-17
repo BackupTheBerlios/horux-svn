@@ -63,7 +63,9 @@ void CHorux::initSAASMode()
     if ( !settings.contains ( "saas_path" ) ) settings.setValue ( "saas_path", "" );
     if ( !settings.contains ( "saas_host" ) ) settings.setValue ( "saas_host", "" );
     if ( !settings.contains ( "saas_ssl" ) ) settings.setValue ( "saas_ssl", true );
-    if ( !settings.contains ( "saas_info_send_timer" ) ) settings.setValue ( "saas_info_send_timer", 5 );
+    if ( !settings.contains ( "saas_info_send_timer" ) ) settings.setValue ( "saas_info_send_timer", 1 );
+    if ( !settings.contains ( "saas_syncMode" ) ) settings.setValue ( "saas_syncMode", "mysql" );
+
 
 
     saas = settings.value ( "saas", "false" ).toBool();
@@ -72,7 +74,8 @@ void CHorux::initSAASMode()
     saas_username = settings.value ( "saas_username", "" ).toString();
     saas_password = settings.value ( "saas_password", "" ).toString();
     saas_path = settings.value ( "saas_path", "" ).toString();
-    saas_info_send_timer = settings.value ( "saas_info_send_timer", 5 ).toInt();
+    saas_info_send_timer = settings.value ( "saas_info_send_timer", 1 ).toInt();
+    saas_syncMode = settings.value ( "saas_syncMode",  "mysql" ).toString();
 
     soapClient.setHost(saas_host,saas_ssl);
 
@@ -88,8 +91,11 @@ void CHorux::initSAASMode()
         timerSoapTracking = new QTimer(this);
         connect(timerSoapTracking, SIGNAL(timeout()), this, SLOT(sendTracking()));
 
-        timerSoapSyncData = new QTimer(this);
-        connect(timerSoapSyncData, SIGNAL(timeout()), this, SLOT(syncData()));
+        // if the sync mode is "mysql", the database synch is done by mysql replication
+        if(saas_syncMode == "horux") {
+            timerSoapSyncData = new QTimer(this);
+            connect(timerSoapSyncData, SIGNAL(timeout()), this, SLOT(syncData()));
+        }
     }
 }
 
@@ -270,15 +276,23 @@ bool CHorux::startEngine()
         return false;
     }
 
+    isStarted = true;
+
     if(saas)
     {
-        timerSoapInfo->start(1000 * 60 * saas_info_send_timer); //send the system info every 5 minutes
-        timerSoapTracking->start(1000 * 60 * saas_info_send_timer); //send the last tracking every 5 minutes
-        timerSoapSyncData->start(1000 * 60 * saas_info_send_timer ); //send the last tracking every 5 minutes
+        timerSoapInfo->start(1000 * 60 * saas_info_send_timer);
+        timerSoapTracking->start(1000 * 60 * saas_info_send_timer);
+
+        if(saas_syncMode == "horux") {
+            timerSoapSyncData->start(1000 * 60 * saas_info_send_timer );
+        }
 
         getInfo();
         sendTracking();
-        syncData();
+
+        if(saas_syncMode == "horux") {
+            syncData();
+        }
 
     }
 
@@ -302,14 +316,6 @@ bool CHorux::startEngine()
             emit sendAlarm(xml);
         }
 
-    }
-
-    isStarted = true;
-
-    // if we are in the saas mode, send update Horux gui with the system status
-    if(saas)
-    {
-        getInfo();
     }
 
     return true;
@@ -483,7 +489,6 @@ QString CHorux::getInfo( )
             QSqlQuery query("SELECT * FROM hr_horux_controller WHERE id=1");
 
             if(query.next()) {
-                qDebug() << "http://" + query.value(2).toString() + ":" + CFactory::getDbHandling()->plugin()->getConfigParam ( "xmlrpc_port" ).toString() + "/RPC2";
                 ptr_xmlRpcClient = new MaiaXmlRpcClient( QUrl("http://" + query.value(2).toString() + ":" + CFactory::getDbHandling()->plugin()->getConfigParam ( "xmlrpc_port" ).toString() + "/RPC2"), this);
             }
         } else {
@@ -730,7 +735,7 @@ qDebug() << "createTrigger";
     {
 
         QStringList ids = response.returnValue().toString().split(",");
-
+qDebug() << ids;
         foreach(QString id, ids)
         {
             QStringList i = id.split(":");
@@ -980,7 +985,7 @@ void CHorux::sendTracking()
 
     QtSoapMessage message;
     message.setMethod("syncTrackingTable");
-
+qDebug() << xml_dump.toString();
     message.addMethodArgument("xml", "", xml_dump.toString());
 
     soapClient.submitRequest(message, saas_path+"/index.php?soap=horux&password=" + saas_password + "&username=" + saas_username);
