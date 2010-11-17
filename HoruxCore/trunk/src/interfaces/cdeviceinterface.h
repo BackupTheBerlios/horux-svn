@@ -50,6 +50,8 @@ class CDeviceInterface
         */
         virtual void connectChild ( CDeviceInterface *device ) = 0;
 
+        virtual void setParent ( CDeviceInterface *device ) { deviceParent = device; }
+
         /*!
           Allow to obtain a custom value ot the device
 
@@ -192,6 +194,8 @@ class CDeviceInterface
 
         //! device who handle an open free access
         bool isFreeAccess;
+
+        CDeviceInterface *deviceParent;
 };
 
 Q_DECLARE_INTERFACE ( CDeviceInterface,

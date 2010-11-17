@@ -23,7 +23,7 @@
 
 AccessHoruxPlugin::AccessHoruxPlugin(QObject *parent) : QObject(parent)
 {
-    
+
    // timerFreeAccess = startTimer(10000);
      timerFreeAccess = 0;
 }
@@ -63,12 +63,12 @@ void AccessHoruxPlugin::checkFreeAccess()
 
   QSqlQuery query("SELECT * FROM hr_openTime_attribution");
 
-  
-  while(query.next()) 
+
+  while(query.next())
   {
       QString isFreeAccess = "1";
-      QString entryId = query.value(1).toString(); 
-      QString otId = query.value(2).toString(); 
+      QString entryId = query.value(1).toString();
+      QString otId = query.value(2).toString();
 
       QSqlQuery query_ot("SELECT * FROM hr_openTime WHERE id=" + otId);
 
@@ -104,7 +104,7 @@ void AccessHoruxPlugin::checkFreeAccess()
             continue;
           }
         }
-        
+
         if(validityDateStart.isValid() && validityDateEnd.isNull())
         {
           if(validityDateStart > now )
@@ -112,7 +112,7 @@ void AccessHoruxPlugin::checkFreeAccess()
             continue;
           }
         }
-        
+
         if(validityDateStart.isNull() && validityDateEnd.isValid())
         {
           if(now > validityDateEnd )
@@ -124,11 +124,11 @@ void AccessHoruxPlugin::checkFreeAccess()
         QTime time = QTime::currentTime();
         QString timeEnMinuteStr = QString::number(time.minute() + time.hour()*60);
         QString todayStr;
-      
+
         //! Monday default means that all days will have the same access as Monday
         if(mondayDefault)
           today = 1;
-      
+
         switch(today)
         {
           case 1: todayStr = "lundi"; break;
@@ -139,7 +139,7 @@ void AccessHoruxPlugin::checkFreeAccess()
           case 6: todayStr = "samedi"; break;
           case 7: todayStr = "dimanche"; break;
         }
-      
+
         QSqlQuery query_t = "SELECT * FROM hr_openTime_time AS ot WHERE ot.day='" +
                         todayStr +
                         "' AND ot.id_openTime=" +
@@ -148,8 +148,8 @@ void AccessHoruxPlugin::checkFreeAccess()
                         timeEnMinuteStr +
                         " AND ot.until>=" +
                         timeEnMinuteStr;
-      
-        if(!query_t.next())     
+
+        if(!query_t.next())
         {
             continue;
         }
@@ -236,7 +236,7 @@ void AccessHoruxPlugin::deviceEvent(QString xml)
 
     //! get the access plugin name used for the key
     QString sql = "SELECT accessPlugin FROM hr_keys AS k LEFT JOIN hr_keys_attribution AS ka ON ka.id_key=k.id LEFT JOIN hr_user_group_attribution AS uga ON uga.id_user=ka.id_user LEFT JOIN hr_user_group AS ug ON ug.id=uga.id_group WHERE serialNumber='" + key + "' AND accessPlugin!='NULL' AND accessPlugin!=''";
-  
+
     QSqlQuery query(sql);
 
     if(query.next() && query.value(0).toString() != metaObject()->classInfo ( index ).value()) return;
@@ -352,7 +352,7 @@ bool AccessHoruxPlugin::checkAccess(QMap<QString, QVariant> params, bool emitAct
             insertTracking(userId, keyId, deviceId, reason, false, key,emitAction,emitNotification);
         }
     }
-	
+
     return false;
 }
 
@@ -360,7 +360,7 @@ bool AccessHoruxPlugin::checkAccessLevel(QString groupId, QString deviceId, QStr
 {
   QSqlQuery query("SELECT id_access_level FROM hr_user_group_access WHERE id_group=" + groupId + " AND id_device=" + deviceId);
 
-  if(!query.next())  
+  if(!query.next())
   {
     *reason = GROUP_HAS_NO_ACCESS_LEVEL;
     return false;
@@ -371,9 +371,9 @@ bool AccessHoruxPlugin::checkAccessLevel(QString groupId, QString deviceId, QStr
 
   query = "SELECT * FROM hr_access_level WHERE id=" + id_access_level;
 
-  if(!query.next()) 
+  if(!query.next())
   {
-    *reason = GROUP_HAS_NO_ACCESS_LEVEL; 
+    *reason = GROUP_HAS_NO_ACCESS_LEVEL;
     return false;
   }
 
@@ -397,7 +397,7 @@ bool AccessHoruxPlugin::checkAccessLevel(QString groupId, QString deviceId, QStr
     query = "SELECT * FROM hr_non_working_day AS nwd WHERE nwd.from<='" + now.toString("yyyy-MM-dd") + "' AND nwd.until>='" + now.toString("yyyy-MM-dd") + "'";
 
     if(query.next())   {
-      *reason = BLOCK_DURING_NON_WORK_DAY; 
+      *reason = BLOCK_DURING_NON_WORK_DAY;
       return false;
     }
   }
@@ -451,7 +451,7 @@ bool AccessHoruxPlugin::checkAccessLevel(QString groupId, QString deviceId, QStr
                   timeEnMinuteStr;
 
   if(!query.next())     {
-      *reason = TIME_BLOCK; 
+      *reason = TIME_BLOCK;
       return false;
   }
 
@@ -537,7 +537,7 @@ void AccessHoruxPlugin::insertTracking(QString userId, QString keyId, QString en
   if(reason == KEY_BLOCKED && userId != "1")
   {
     QString xml = CXmlFactory::accessAlarm( userId, "1100", "The key is currently blocked");
-  
+
     emit accessAction(xml);
   }
 

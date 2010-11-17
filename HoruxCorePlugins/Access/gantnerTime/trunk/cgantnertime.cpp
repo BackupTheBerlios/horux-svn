@@ -314,14 +314,6 @@ bool CGantnerTime::isAccess(QMap<QString, QVariant> params, bool, bool )
                                 "')"
                                 );
 
-
-
-
-
-
-
-
-
                     query = "INSERT INTO `hr_tracking` ( `id` , `id_user` , `id_key` , `time` , `date` , `id_entry` , `is_access` , `id_comment`, `key`, `extData` ) VALUES ('', '" +
                                 userId +
                                 "','" +

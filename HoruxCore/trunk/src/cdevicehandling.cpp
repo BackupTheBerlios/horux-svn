@@ -254,8 +254,10 @@ bool CDeviceHandling::connectChild2Parent()
 
         if ( parentId >0 )
         {
-            if ( devicesInterface[parentId] )
+            if ( devicesInterface[parentId] ) {
+                i.value()->setParent( devicesInterface[parentId] );
                 devicesInterface[parentId]->connectChild ( i.value() );
+             }
             else
                 qWarning ( "The child %u cannot be connected to %u", i.key(),  parentId );
         }
