@@ -3,7 +3,7 @@
     <div class="border">
         <div class="padding">
             <div id="toolbar-box">
-                
+
                 <div class="t">
                     <div class="t">
                         <div class="t"></div>
@@ -12,8 +12,7 @@
                 <div class="m" >
                     <div class="toolbar" id="toolbar">
                         <table class="toolbar">
-                            <tr>   
-
+                            <tr>
                                 <td class="button" id="toolbar-edit">
                                   <com:TLinkButton CssClass="toolbar" ID="edit" OnClick="onEdit">
                                     <span class="icon-32-edit" title="Edit"></span><com:TTranslate Catalogue="messages">Edit</com:TTranslate>
@@ -21,7 +20,7 @@
                                 </td>
 
                                 <td class="button" id="toolbar-new">
-                                    <a href="<%= $this->Service->constructUrl('components.velopark.addconfig') %>" class="toolbar">
+                                    <a href="<%= $this->Service->constructUrl('components.velopark.addperiod') %>" class="toolbar">
                                         <span class="icon-32-new" title="New"></span><com:TTranslate Catalogue="messages">New</com:TTranslate>
                                     </a>
                                 </td>
@@ -43,7 +42,7 @@
                         </table>
                     </div><!-- end class toolbar -->
 
-                    <div class="header"  style="background-image: url(<%~ ./assets/icon-48-config.png %>)"><%[Ticketing - Configuration]%></div>
+                    <div class="header"  style="background-image: url(<%~ ./assets/icon-48-period.png %>)"><%[Ticketing - Period]%></div>
                     <div class="clr"></div>
                 </div><!-- end class m -->
 
@@ -60,7 +59,7 @@
             <com:TLiteral ID="koMsg" Text="" />
 
             <div id="element-box">
-    
+
                 <div class="t">
                     <div class="t">
                         <div class="t"></div>
@@ -96,26 +95,26 @@
                     >
                         <prop:HeaderTemplate>
                             <com:TActiveCheckBox
-                                ID="headerCB" 
+                                ID="headerCB"
                                 AutoPostBack="true"
                                 OnCallback="Page.checkboxAllCallback"
                                 InputAttributes.value="0"
                             />
                         </prop:HeaderTemplate>
                         <prop:ItemTemplate>
-							<com:TConditional Condition="!$this->Page->isRecordBlock('hr_vp_parking', $this->NamingContainer->DataItem['id'])">
-								<prop:TrueTemplate>
-		                            <com:TActiveCheckBox 
-		                                ID="item"
-		                                InputAttributes.value="<%#$this->NamingContainer->DataItem['id']%>"
-		                            />
-		    		            </prop:TrueTemplate>
-								<prop:FalseTemplate>
-									<span onmouseover="Tip('<%[This record is modified by <b>]%><%= $this->Page->getUserName($this->NamingContainer->DataItem['locked']) %></b> ', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)">
-										<com:TImage ID="noAccess" ImageUrl="./themes/letux/images/menu/icon-16-access.png" />
-									</span>
-		            		    </prop:FalseTemplate>
-							</com:TConditional>
+			<com:TConditional Condition="!$this->Page->isRecordBlock('hr_vp_period', $this->NamingContainer->DataItem['id'])">
+        			<prop:TrueTemplate>
+                                    <com:TActiveCheckBox
+                                        ID="item"
+                                        InputAttributes.value="<%#$this->NamingContainer->DataItem['id']%>"
+                                    />
+                                    </prop:TrueTemplate>
+                                    <prop:FalseTemplate>
+                                            <span onmouseover="Tip('<%[This record is modified by <b>]%><%= $this->Page->getUserName($this->NamingContainer->DataItem['locked']) %></b> ', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)">
+                                                    <com:TImage ID="noAccess" ImageUrl="./themes/letux/images/menu/icon-16-access.png" />
+                                            </span>
+                                    </prop:FalseTemplate>
+                                </com:TConditional>
                         </prop:ItemTemplate>
                     </com:TTemplateColumn>
 
@@ -128,49 +127,46 @@
                         />
                     </prop:HeaderTemplate>
 
-
-                        <prop:ItemTemplate>
-							<com:TConditional Condition="!$this->Page->isRecordBlock('hr_vp_parking', $this->NamingContainer->DataItem['id'])">
-								<prop:TrueTemplate>
-		                            <com:THyperLink 
-		                                NavigateUrl="<%= $this->Service->constructUrl('components.velopark.modconfig',array('id'=>$this->NamingContainer->DataItem['id'])) %>"
-		                                Text="<%#$this->NamingContainer->DataItem['name']%>"
-		                            />
-		    		            </prop:TrueTemplate>
-								<prop:FalseTemplate>
-									<com:TLabel
-			                        	Text="<%#$this->NamingContainer->DataItem['name']%>"
-            			            />
-		            		    </prop:FalseTemplate>
-							</com:TConditional>
-                        </prop:ItemTemplate>
-	                </com:TTemplateColumn>
+                    <prop:ItemTemplate>
+                            <com:TConditional Condition="!$this->Page->isRecordBlock('hr_vp_period', $this->NamingContainer->DataItem['id'])">
+                            <prop:TrueTemplate>
+                                <com:THyperLink
+                                    NavigateUrl="<%= $this->Service->constructUrl('components.velopark.modperiod',array('id'=>$this->NamingContainer->DataItem['id'])) %>"
+                                    Text="<%#$this->NamingContainer->DataItem['name']%>"
+                                />
+                            </prop:TrueTemplate>
+                            <prop:FalseTemplate>
+                                <com:TLabel Text="<%#$this->NamingContainer->DataItem['name']%>" />
+                            </prop:FalseTemplate>
+                        </com:TConditional>
+                    </prop:ItemTemplate>
+                    </com:TTemplateColumn>
 
                     <com:TBoundColumn
-                        HeaderText="<%[Area]%>"
-                        DataField="area"
+                        HeaderText="<%[Start]%>"
+                        DataField="start"
+                    />
+                    <com:TBoundColumn
+                        HeaderText="<%[End]%>"
+                        DataField="end"
                     />
 
-                    <com:TBoundColumn
-                        HeaderText="<%[Filling]%>"
-                        DataField="filling"
-                    />
                     </com:TDataGrid>
 
 
-				<div class="clr"></div>
-				</div> <!-- end class m -->
+                    <div class="clr"></div>
+                </div> <!-- end class m -->
                 <div class="b">
-                    <div class="b"> 
+                    <div class="b">
                         <div class="b"></div>
                     </div>
                 </div>
             </div><!-- end class toolbar-box -->
 
-			
+
             <div class="clr"></div>
 
-            
+
         </div> <!-- end class toolbar-box -->
         <div class="clr"></div>
     </div><!-- end class content-box -->

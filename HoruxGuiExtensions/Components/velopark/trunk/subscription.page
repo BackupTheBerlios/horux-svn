@@ -42,7 +42,7 @@
                         </table>
                     </div><!-- end class toolbar -->
 
-                    <div class="header"  style="background-image: url(<%~ ./assets/icon-48-subscription.png %>)"><%[Velo Park - Subscription]%></div>
+                    <div class="header"  style="background-image: url(<%~ ./assets/icon-48-subscription.png %>)"><%[Ticketing - Subscription]%></div>
                     <div class="clr"></div>
                 </div><!-- end class m -->
 

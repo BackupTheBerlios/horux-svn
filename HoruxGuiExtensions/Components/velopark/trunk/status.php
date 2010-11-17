@@ -161,7 +161,7 @@ class status extends Page
           );		
 
 
-          $graph->title->set(Prado::localize("Parking {name}", array("name" => utf8_decode($data['name']))));
+          $graph->title->set(Prado::localize("Service {name}", array("name" => utf8_decode($data['name']))));
           $graph->shadow->setSize(3);
           $graph->shadow->smooth(TRUE);
           $graph->shadow->setPosition(Shadow::RIGHT_BOTTOM);

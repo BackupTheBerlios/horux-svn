@@ -34,11 +34,11 @@ class addconfig extends Page {
         if($this->Page->IsValid) {
             if($lastId = $this->saveData()) {
                 $id = $lastId;
-                $pBack = array('okMsg'=>Prado::localize('The parking was added successfully'), 'id'=>$id);
+                $pBack = array('okMsg'=>Prado::localize('The service was added successfully'), 'id'=>$id);
                 $this->Response->redirect($this->Service->constructUrl('components.velopark.modconfig', $pBack));
             }
             else {
-                $pBack = array('koMsg'=>Prado::localize('The parking was not added'));
+                $pBack = array('koMsg'=>Prado::localize('The service was not added'));
             }
         }
     }
@@ -46,10 +46,10 @@ class addconfig extends Page {
     public function onSave($sender, $param) {
         if($this->Page->IsValid) {
             if($this->saveData()) {
-                $pBack = array('okMsg'=>Prado::localize('The parking was added successfully'));
+                $pBack = array('okMsg'=>Prado::localize('The service was added successfully'));
             }
             else
-                $pBack = array('koMsg'=>Prado::localize('The parking was not added'));
+                $pBack = array('koMsg'=>Prado::localize('The service was not added'));
             $this->Response->redirect($this->Service->constructUrl('components.velopark.config',$pBack));
         }
     }
@@ -60,7 +60,7 @@ class addconfig extends Page {
 
 
     protected function saveData() {
-        $cmd = $this->db->createCommand( "INSERT INTO `hr_vp_parking` (`name` ,`area` ,`access_unknown_msg`,`access_ko_msg`,`device_ids`,`access_credit_warning_msg`,`access_warning_msg` ) VALUES (:name, :area, :access_unknown_msg,:access_ko_msg,:device_ids,:access_credit_warning_msg, :access_warning_msg)" );
+        $cmd = $this->db->createCommand( "INSERT INTO `hr_vp_parking` (`name` ,`area` ,`access_unknown_msg`,`access_ko_msg`,`device_ids`,`access_credit_warning_msg`,`access_warning_msg`, `creditValue` ) VALUES (:name, :area, :access_unknown_msg,:access_ko_msg,:device_ids,:access_credit_warning_msg, :access_warning_msg, :creditValue)" );
 
         $cmd->bindValue(":name",$this->name->SafeText,PDO::PARAM_STR);
         $cmd->bindValue(":area",$this->area->SafeText,PDO::PARAM_STR);
@@ -68,6 +68,7 @@ class addconfig extends Page {
         $cmd->bindValue(":access_ko_msg",$this->access_ko_msg->SafeText,PDO::PARAM_STR);
         $cmd->bindValue(":access_credit_warning_msg",$this->access_credit_warning_msg->SafeText,PDO::PARAM_STR);
         $cmd->bindValue(":access_warning_msg",$this->access_warning_msg->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":creditValue",$this->credit_value->SafeText,PDO::PARAM_STR);
 
 
         $indices=$this->accesspoint->SelectedIndices;

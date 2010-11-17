@@ -42,7 +42,7 @@
                         </table>
                     </div><!-- end class toolbar -->
 
-                    <div class="header"  style="background-image: url(<%~ ./assets/icon-48-ticket.jpg %>)"><%= stripslashes(Prado::localize('Velo Park - Subscription Attribution')) %></div>
+                    <div class="header"  style="background-image: url(<%~ ./assets/icon-48-ticket.jpg %>)"><%= stripslashes(Prado::localize('Ticketing - Subscription Attribution')) %></div>
                     <div class="clr"></div>
                 </div><!-- end class m -->
 
@@ -104,7 +104,7 @@
                 </div>
                 <div class="m">
 
-					<h2><%[List of the subscription for the current user]%> ( <%= $this->fullname  %> )</h2>
+					<h2><%[List of the subscription for the current user]%></h2>
 					<div id="list">
 
 					<com:THiddenField ID="userId" />

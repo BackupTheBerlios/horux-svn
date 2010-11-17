@@ -24,7 +24,7 @@
                         </table>
                     </div><!-- end class toolbar -->
 
-                    <div class="header"  style="background-image: url(<%~ ./assets/icon-48-status.png %>)"><%[Velo Park - Status]%></div>
+                    <div class="header"  style="background-image: url(<%~ ./assets/icon-48-status.png %>)"><%[Ticketing - Status]%></div>
                     <div class="clr"></div>
                 </div><!-- end class m -->
 
@@ -48,7 +48,7 @@
                     </div>
                 </div>
                 <div class="m">
-                                <h2><%[Parking statistics]%></h2>
+                                <h2><%[Service statistics]%></h2>
 				<com:TRepeater ID="Repeater" EnableViewState="false">
 
 					<prop:ItemTemplate>

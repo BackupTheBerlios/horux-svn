@@ -13,6 +13,7 @@
  */
 
 class addsubscription extends Page {
+
     public function onLoad($param) {
         parent::onLoad($param);
 
@@ -26,17 +27,32 @@ class addsubscription extends Page {
             $this->multiple->DataSource = $this->Credit;
             $this->multiple->dataBind();
 
+            $this->period->DataSource = $this->Period;
+            $this->period->dataBind();
+
+
              $this->multiple->setSelectedIndex(0);
 
         }
     }
 
+    public function getPeriod()
+    {
+        $cmd = NULL;
+        $cmd = $this->db->createCommand( "SELECT id AS Value, name AS Text FROM hr_vp_period" );
+        $data =  $cmd->query();
+        $data = $data->readAll();
+        $d[0]['Value'] = 0;
+        $d[0]['Text'] = Prado::localize('---- None ----');
+        $data = array_merge($d, $data);
+        return $data;
+    }
 
     public function getCredit()
     {
         $credits = array();
 
-        for($i=1; $i<=50;$i++)
+        for($i=1; $i<=1000;$i++)
         {
            $credits[] = array('Text'=>$i, "Value"=>$i);
         }
@@ -79,7 +95,7 @@ class addsubscription extends Page {
         $cmd->bindValue(":name",$this->name->SafeText,PDO::PARAM_STR);
         $cmd->bindValue(":description",$this->description->SafeText, PDO::PARAM_STR);
 
-        $validity = $this->year->getSelectedValue().":".$this->month->getSelectedValue().":".$this->day->getSelectedValue().":".$this->hour->getSelectedValue();
+        $validity = $this->year->getSelectedValue().":".$this->month->getSelectedValue().":".$this->day->getSelectedValue().":".$this->hour->getSelectedValue().":".$this->period->getSelectedValue();
 
         $cmd->bindValue(":validity",$validity, PDO::PARAM_STR);
         $cmd->bindValue(":credit",$this->multiple->getSelectedValue(), PDO::PARAM_STR);

@@ -2,7 +2,7 @@
 
 class velopark extends TService
 {
-    protected $db = NULL;
+/*    protected $db = NULL;
 
     function __construct()
     {
@@ -10,9 +10,46 @@ class velopark extends TService
       $this->db->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY,true);
 
       $this->db->Active=true;
+    }*/
+
+    public function syncStandalone($ids)
+    {
+	$app = Prado::getApplication();
+      	$db = $app->getModule('horuxDb')->DbConnection;
+        $db->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY,true);
+        $db->Active=true;
+
+        $ids = explode(",", $ids);
+        $idsOk = array();
+        foreach($ids as $id)
+        {
+
+            $sql = "SELECT COUNT(*) AS n FROM hr_gantner_standalone_action WHERE id=".$id;
+            $cmd= $db->createCommand($sql);
+            $data = $cmd->query();
+            $data = $data->read();
+            if($data['n'] > 0)
+            {
+
+                $sql = "DELETE FROM hr_gantner_standalone_action WHERE id=".$id;
+
+
+                $cmd= $db->createCommand($sql);
+
+                if($cmd->execute())
+                {
+                    $idsOk[] = $id;
+                }
+            }
+            else
+                $idsOk[] = $id;
+
+        }
+
+        return implode(",", $idsOk);
     }
 
-    public function buySub($params)
+   /* public function buySub($params)
     {
         if(is_array($params))
         {
@@ -331,7 +368,7 @@ class velopark extends TService
         else
             return false;
 
-    }
+    }*/
 }
 
 ?>

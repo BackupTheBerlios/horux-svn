@@ -92,115 +92,125 @@
                           <tr>
                             <td valign="top" class="key"><span onmouseover="Tip('<%[Set the validity of this subscription.]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Validity]%></span></td>
                             <td>
-								<%[Year]%> <com:TDropDownList 
-									ID="year"
-						  		    DataTextField="Text"
-								    DataValueField="Value"
-								>
+                                <%[Year]%> <com:TDropDownList
+                                        ID="year"
+                                    DataTextField="Text"
+                                    DataValueField="Value"
+                                >
 
-									<com:TListItem Value="0" Text="0" Selected="true" />
-									<com:TListItem Value="1" Text="1" />
-									<com:TListItem Value="2" Text="2" />
-									<com:TListItem Value="3" Text="3" />
-									<com:TListItem Value="4" Text="4" />
-									<com:TListItem Value="5" Text="5" />
-									<com:TListItem Value="6" Text="6" />
-									<com:TListItem Value="7" Text="7" />
-									<com:TListItem Value="8" Text="8" />
-									<com:TListItem Value="9" Text="9" />
-								</com:TDropDownList>
+                                        <com:TListItem Value="0" Text="0" Selected="true" />
+                                        <com:TListItem Value="1" Text="1" />
+                                        <com:TListItem Value="2" Text="2" />
+                                        <com:TListItem Value="3" Text="3" />
+                                        <com:TListItem Value="4" Text="4" />
+                                        <com:TListItem Value="5" Text="5" />
+                                        <com:TListItem Value="6" Text="6" />
+                                        <com:TListItem Value="7" Text="7" />
+                                        <com:TListItem Value="8" Text="8" />
+                                        <com:TListItem Value="9" Text="9" />
+                                </com:TDropDownList>
 
-								<%[Month]%> <com:TDropDownList 
-									ID="month"
-						  		    DataTextField="Text"
-								    DataValueField="Value"
-								>
+                                <%[Month]%> <com:TDropDownList
+                                        ID="month"
+                                    DataTextField="Text"
+                                    DataValueField="Value"
+                                >
 
-									<com:TListItem Value="0" Text="0" Selected="true"/>
-									<com:TListItem Value="1" Text="1" />
-									<com:TListItem Value="2" Text="2" />
-									<com:TListItem Value="3" Text="3" />
-									<com:TListItem Value="4" Text="4" />
-									<com:TListItem Value="5" Text="5" />
-									<com:TListItem Value="6" Text="6" />
-									<com:TListItem Value="7" Text="7" />
-									<com:TListItem Value="8" Text="8" />
-									<com:TListItem Value="9" Text="9" />
-									<com:TListItem Value="10" Text="10" />
-									<com:TListItem Value="11" Text="11" />
-								</com:TDropDownList>
+                                        <com:TListItem Value="0" Text="0" Selected="true"/>
+                                        <com:TListItem Value="1" Text="1" />
+                                        <com:TListItem Value="2" Text="2" />
+                                        <com:TListItem Value="3" Text="3" />
+                                        <com:TListItem Value="4" Text="4" />
+                                        <com:TListItem Value="5" Text="5" />
+                                        <com:TListItem Value="6" Text="6" />
+                                        <com:TListItem Value="7" Text="7" />
+                                        <com:TListItem Value="8" Text="8" />
+                                        <com:TListItem Value="9" Text="9" />
+                                        <com:TListItem Value="10" Text="10" />
+                                        <com:TListItem Value="11" Text="11" />
+                                </com:TDropDownList>
 
-								<%[Day]%> <com:TDropDownList 
-									ID="day"
-						  		    DataTextField="Text"
-								    DataValueField="Value"
-								>
+                                <%[Day]%> <com:TDropDownList
+                                        ID="day"
+                                    DataTextField="Text"
+                                    DataValueField="Value"
+                                >
 
-									<com:TListItem Value="0" Text="0" Selected="true"/>
-									<com:TListItem Value="1" Text="1" />
-									<com:TListItem Value="2" Text="2" />
-									<com:TListItem Value="3" Text="3" />
-									<com:TListItem Value="4" Text="4" />
-									<com:TListItem Value="5" Text="5" />
-									<com:TListItem Value="6" Text="6" />
-									<com:TListItem Value="7" Text="7" />
-									<com:TListItem Value="8" Text="8" />
-									<com:TListItem Value="9" Text="9" />
-									<com:TListItem Value="10" Text="10" />
-									<com:TListItem Value="11" Text="11" />
-									<com:TListItem Value="12" Text="12" />
-									<com:TListItem Value="13" Text="13" />
-									<com:TListItem Value="14" Text="14" />
-									<com:TListItem Value="15" Text="15" />
-									<com:TListItem Value="16" Text="16" />
-									<com:TListItem Value="17" Text="17" />
-									<com:TListItem Value="18" Text="18" />
-									<com:TListItem Value="19" Text="19" />
-									<com:TListItem Value="20" Text="20" />
-									<com:TListItem Value="21" Text="21" />
-									<com:TListItem Value="22" Text="22" />
-									<com:TListItem Value="23" Text="23" />
-									<com:TListItem Value="24" Text="24" />
-									<com:TListItem Value="25" Text="25" />
-									<com:TListItem Value="26" Text="26" />
-									<com:TListItem Value="27" Text="27" />
-									<com:TListItem Value="28" Text="28" />
-									<com:TListItem Value="29" Text="29" />
-									<com:TListItem Value="30" Text="30" />
-								</com:TDropDownList>
+                                        <com:TListItem Value="0" Text="0" Selected="true"/>
+                                        <com:TListItem Value="1" Text="1" />
+                                        <com:TListItem Value="2" Text="2" />
+                                        <com:TListItem Value="3" Text="3" />
+                                        <com:TListItem Value="4" Text="4" />
+                                        <com:TListItem Value="5" Text="5" />
+                                        <com:TListItem Value="6" Text="6" />
+                                        <com:TListItem Value="7" Text="7" />
+                                        <com:TListItem Value="8" Text="8" />
+                                        <com:TListItem Value="9" Text="9" />
+                                        <com:TListItem Value="10" Text="10" />
+                                        <com:TListItem Value="11" Text="11" />
+                                        <com:TListItem Value="12" Text="12" />
+                                        <com:TListItem Value="13" Text="13" />
+                                        <com:TListItem Value="14" Text="14" />
+                                        <com:TListItem Value="15" Text="15" />
+                                        <com:TListItem Value="16" Text="16" />
+                                        <com:TListItem Value="17" Text="17" />
+                                        <com:TListItem Value="18" Text="18" />
+                                        <com:TListItem Value="19" Text="19" />
+                                        <com:TListItem Value="20" Text="20" />
+                                        <com:TListItem Value="21" Text="21" />
+                                        <com:TListItem Value="22" Text="22" />
+                                        <com:TListItem Value="23" Text="23" />
+                                        <com:TListItem Value="24" Text="24" />
+                                        <com:TListItem Value="25" Text="25" />
+                                        <com:TListItem Value="26" Text="26" />
+                                        <com:TListItem Value="27" Text="27" />
+                                        <com:TListItem Value="28" Text="28" />
+                                        <com:TListItem Value="29" Text="29" />
+                                        <com:TListItem Value="30" Text="30" />
+                                </com:TDropDownList>
 
-								<%[Hour]%> <com:TDropDownList 
-									ID="hour"
-						  		    DataTextField="Text"
-								    DataValueField="Value"
-								>
+                                <%[Hour]%> <com:TDropDownList
+                                        ID="hour"
+                                    DataTextField="Text"
+                                    DataValueField="Value"
+                                >
 
-									<com:TListItem Value="0" Text="0" Selected="true"/>
-									<com:TListItem Value="1" Text="1" />
-									<com:TListItem Value="2" Text="2" />
-									<com:TListItem Value="3" Text="3" />
-									<com:TListItem Value="4" Text="4" />
-									<com:TListItem Value="5" Text="5" />
-									<com:TListItem Value="6" Text="6" />
-									<com:TListItem Value="7" Text="7" />
-									<com:TListItem Value="8" Text="8" />
-									<com:TListItem Value="9" Text="9" />
-									<com:TListItem Value="10" Text="10" />
-									<com:TListItem Value="11" Text="11" />
-									<com:TListItem Value="12" Text="12" />
-									<com:TListItem Value="13" Text="13" />
-									<com:TListItem Value="14" Text="14" />
-									<com:TListItem Value="15" Text="15" />
-									<com:TListItem Value="16" Text="16" />
-									<com:TListItem Value="17" Text="17" />
-									<com:TListItem Value="18" Text="18" />
-									<com:TListItem Value="19" Text="19" />
-									<com:TListItem Value="20" Text="20" />
-									<com:TListItem Value="21" Text="21" />
-									<com:TListItem Value="22" Text="22" />
-									<com:TListItem Value="23" Text="23" />
+                                        <com:TListItem Value="0" Text="0" Selected="true"/>
+                                        <com:TListItem Value="1" Text="1" />
+                                        <com:TListItem Value="2" Text="2" />
+                                        <com:TListItem Value="3" Text="3" />
+                                        <com:TListItem Value="4" Text="4" />
+                                        <com:TListItem Value="5" Text="5" />
+                                        <com:TListItem Value="6" Text="6" />
+                                        <com:TListItem Value="7" Text="7" />
+                                        <com:TListItem Value="8" Text="8" />
+                                        <com:TListItem Value="9" Text="9" />
+                                        <com:TListItem Value="10" Text="10" />
+                                        <com:TListItem Value="11" Text="11" />
+                                        <com:TListItem Value="12" Text="12" />
+                                        <com:TListItem Value="13" Text="13" />
+                                        <com:TListItem Value="14" Text="14" />
+                                        <com:TListItem Value="15" Text="15" />
+                                        <com:TListItem Value="16" Text="16" />
+                                        <com:TListItem Value="17" Text="17" />
+                                        <com:TListItem Value="18" Text="18" />
+                                        <com:TListItem Value="19" Text="19" />
+                                        <com:TListItem Value="20" Text="20" />
+                                        <com:TListItem Value="21" Text="21" />
+                                        <com:TListItem Value="22" Text="22" />
+                                        <com:TListItem Value="23" Text="23" />
 
-								</com:TDropDownList>
+                                </com:TDropDownList>
+
+                                <%[Period]%> <com:TDropDownList
+                                    ID="period"
+                                    DataTextField="Text"
+                                    DataValueField="Value"
+                                >
+
+                                </com:TDropDownList>
+
+
                             </td> 
                           </tr>
 

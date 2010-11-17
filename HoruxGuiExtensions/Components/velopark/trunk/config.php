@@ -93,7 +93,7 @@ class config extends PageList
         if($koMsg !== '')
           $pBack = array('koMsg'=>$koMsg);
         else
-          $pBack = array('okMsg'=>Prado::localize('{n} parking was deleted',array('n'=>$nDelete)));
+          $pBack = array('okMsg'=>Prado::localize('{n} service was deleted',array('n'=>$nDelete)));
         $this->Response->redirect($this->Service->constructUrl('components.velopark.config',$pBack));
     }
 

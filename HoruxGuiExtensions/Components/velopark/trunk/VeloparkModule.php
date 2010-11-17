@@ -18,6 +18,11 @@ class VeloparkModule extends TComponentModule {
         $cmd = $db->createCommand($sql);
         $cmd->bindValue(":id",$userId);
         $cmd->execute();
+
+        $sql = "INSERT INTO hr_vp_deleted_user (user_id) VALUES (:id)";
+        $cmd = $db->createCommand($sql);
+        $cmd->bindValue(":id",$userId);
+        $cmd->execute();
     }
 
     public function saveData($db, $form, $userId) {

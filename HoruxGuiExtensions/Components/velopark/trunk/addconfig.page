@@ -43,7 +43,7 @@
                         </table>
                     </div><!-- end class toolbar -->
 
-                    <div class="header"  style="background-image: url(<%~ ./assets/icon-48-config.png %>)"><%[Add a parking]%></div>
+                    <div class="header"  style="background-image: url(<%~ ./assets/icon-48-config.png %>)"><%[Add a service]%></div>
                     <div class="clr"></div>
                 </div><!-- end class m -->
 
@@ -74,7 +74,7 @@
 
                           <tr>
                             <td valign="top" class="key">
-                              <span onmouseover="Tip('<%[Enter the name for this parking]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)">* <%[Name]%></span>
+                              <span onmouseover="Tip('<%[Enter the name for this service]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)">* <%[Name]%></span>
                             </td>
                             <td>
                               <com:TTextBox
@@ -83,7 +83,7 @@
                                 Width="50" />
                               <com:TRequiredFieldValidator
 								ValidationGroup="Group1"
-								ControlToValidate="area"
+								ControlToValidate="name"
 								Text="<%[This field is required]%>"
 								Display="Dynamic"/>
                             </td>
@@ -91,7 +91,7 @@
 
                           <tr>
                             <td valign="top" class="key">
-                              <span onmouseover="Tip('<%[Enter the name for this parking]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)">* <%[Access point device]%></span>
+                              <span onmouseover="Tip('<%[Enter the device giving the access to this service]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)">* <%[Access point device]%></span>
                             </td>
                             <td>
                                 <com:TCheckBoxList RepeatDirection="Horizontal" ID="accesspoint" DataTextField="Text" DataValueField="Value" >
@@ -102,7 +102,7 @@
 
                           <tr>
                             <td valign="top" class="key">
-                              <span onmouseover="Tip('<%[Enter the number of place to park]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)">* <%[Area]%></span>
+                              <span onmouseover="Tip('<%[Enter the number of places available for this service]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)">* <%[Area]%></span>
                             </td>
                             <td>
                               <com:TTextBox 
@@ -171,6 +171,24 @@
                             </td>
                           </tr>
                           
+                          <tr>
+                            <td valign="top" class="key">
+                              <span onmouseover="Tip('<%[Enter the number of credits used when using this service]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"> <%[Credit value]%></span>
+                            </td>
+                            <td>
+                              <com:TTextBox
+                                CssClass="text_area"
+                                ID="credit_value"
+                                 /> 
+                              <com:TDataTypeValidator
+                                ValidationGroup="Group1"
+                                ControlToValidate="credit_value"
+                                DataType="Float"
+                                Text="<%[You must enter a floating number.]%>" />
+
+
+                            </td>
+                          </tr>
 
                         </tbody>
                       </table>

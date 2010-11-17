@@ -14,9 +14,6 @@
 
 
 class attribution extends PageList {
-
-    public $fullname = '';
-
     public function onLoad($param) {
         parent::onLoad($param);
 
@@ -39,13 +36,6 @@ class attribution extends PageList {
 
             $this->userId->Value = $this->Request['id'];
 
-            $sql = "SELECT CONCAT(name, ' ', firstname) AS fullname FROM hr_user WHERE id = ". $this->Request['id'];
-
-            $cmd=$this->db->createCommand($sql);
-            $data = $cmd->query();
-            $data = $data->read();
-
-            $this->fullname = $data['fullname'];
         }
 
         if(isset($this->Request['okMsg'])) {
@@ -130,7 +120,11 @@ class attribution extends PageList {
         $data = $data->read();
 
         $insertAC = false;
-        
+
+        $validPeriodId = 0;
+        $startDateTime = date("Y-m-d");
+        $endDateTime = date("Y-m-d");
+
         // does we have already a subscrion for this user?
         if($nStarted>0) {
 
@@ -170,13 +164,27 @@ class attribution extends PageList {
         else {
             $validity = explode(':', $data["validity"]);
             $nHours = ($validity[0]*365*24) + ($validity[1]*30*24) + ($validity[2]*24) + ($validity[3]);
+            $validPeriodId = $validity[4];
+            if($validPeriodId == 0) { // is it a period
 
-            // is a multi ticket, if yes, do not set de end and the start
-            if($data["multiticket"]==1) {
-                $sql = "INSERT INTO hr_vp_subscription_attribution (user_id, subcription_id, create_date, status, credit, start, end, create_by,multiticket) VALUES (:user_id,  :subcription_id, NOW(), 'started', :credit, 'NULL', 'NULL', :create_by,1)";
-            }
-            else {
-                $sql = "INSERT INTO hr_vp_subscription_attribution (user_id, subcription_id, create_date, status, credit, start, end, create_by,multiticket) VALUES (:user_id,  :subcription_id, NOW(), 'started', :credit, NOW(), NOW()+ INTERVAL ".$nHours." HOUR, :create_by,0)";
+                // is a multi ticket, if yes, do not set de end and the start
+                if($data["multiticket"]==1) {
+                    $sql = "INSERT INTO hr_vp_subscription_attribution (user_id, subcription_id, create_date, status, credit, start, end, create_by,multiticket) VALUES (:user_id,  :subcription_id, NOW(), 'started', :credit, 'NULL', 'NULL', :create_by,1)";
+                }
+                else {
+                    $sql = "INSERT INTO hr_vp_subscription_attribution (user_id, subcription_id, create_date, status, credit, start, end, create_by,multiticket) VALUES (:user_id,  :subcription_id, NOW(), 'started', :credit, NOW(), NOW()+ INTERVAL ".$nHours." HOUR, :create_by,0)";
+                }
+            } else {
+                $sql = "SELECT * FROM hr_vp_period WHERE id=:id";
+                $cmd=$this->db->createCommand($sql);
+                $cmd->bindValue(":id",$validity[4]);
+                $dataPeriod = $cmd->query();
+                $dataPeriod = $dataPeriod->read();
+
+                $startDateTime .= " ".$dataPeriod['start'];
+                $endDateTime .= " ".$dataPeriod['end'];
+
+                $sql = "INSERT INTO hr_vp_subscription_attribution (user_id, subcription_id, create_date, status, credit, start, end, create_by,multiticket) VALUES (:user_id,  :subcription_id, NOW(), 'started', :credit, :start, :end, :create_by,0)";
             }
 
             $insertAC = true;
@@ -187,6 +195,12 @@ class attribution extends PageList {
 
         $cmd->bindValue(":user_id",$this->userId->Value,PDO::PARAM_STR);
         $cmd->bindValue(":subcription_id",$subId,PDO::PARAM_STR);
+
+        if($validPeriodId>0) {
+            $cmd->bindValue(":start",$startDateTime,PDO::PARAM_STR);
+            $cmd->bindValue(":end",$endDateTime,PDO::PARAM_STR);
+
+        }
 
         if($data["multiticket"] == 1)
             $cmd->bindValue(":credit",$data["credit"],PDO::PARAM_STR);

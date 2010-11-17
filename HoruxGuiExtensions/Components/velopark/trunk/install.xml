@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <install type="component">
 	<installName>velopark</installName>
-	<name>Velo park</name>
+	<name>Ticketing</name>
 	<version>beta</version>
 	<creationDate>14/10/08</creationDate>
 	<author>Jean-Luc Gyger / Letux</author>
@@ -9,38 +9,44 @@
 	<authorUrl>http://www.letux.ch</authorUrl>
 	<copyright>Letux</copyright>
 	<license>GNU/GPL</license>
-	<description>Extension for cycle parking</description>
+	<description>Extension for tickting</description>
 	
 	<sqlinstall>install.sql</sqlinstall>
 	<sqluninstall>uninstall.sql</sqluninstall>	
 	
 	<mainmenu>
-		<menu iconmenu="icon-16-ticket.jpg" url="user.UserList" name="Velo Park">
+		<menu iconmenu="icon-16-ticket.jpg" url="user.UserList" name="Ticketing">
 			<submenus>
 				<submenu iconmenu="icon-16-config.png" url="components.velopark.config" name="Configuration" ></submenu>
 				<submenu iconmenu="icon-16-subscrption.png" url="components.velopark.subscription" name="Subscription" ></submenu>
 				<submenu iconmenu="icon-16-invoice.png" url="components.velopark.invoice" name="Invoice" ></submenu>
 				<submenu iconmenu="icon-16-status.png" url="components.velopark.status" name="Status" ></submenu>
+				<submenu iconmenu="icon-16-period.png" url="components.velopark.perdiod" name="Period" ></submenu>
 			</submenus>
 		</menu>	
 	</mainmenu>
 	
 	<permissions>
-		<permission id="1" parent="0">components.velopark.config</permission>
+	<permission id="1" parent="0">components.velopark.config</permission>
         <permission id="2" parent="1">components.velopark.modconfig</permission>
         <permission id="3" parent="1">components.velopark.addconfig</permission>
 
-		<permission id="4" parent="0">components.velopark.status</permission>
+	<permission id="4" parent="0">components.velopark.status</permission>
 
-		<permission id="5" parent="0">components.velopark.subscription</permission>
+	<permission id="5" parent="0">components.velopark.subscription</permission>
         <permission id="6" parent="5">components.velopark.addsubscription</permission>
         <permission id="7" parent="5">components.velopark.modsubscription</permission>
 
-		<permission id="8" parent="0" add="false" >user.UserList</permission>
-		<permission id="9" parent="8">components.velopark.attribution</permission>
+	<permission id="8" parent="0" add="false" >user.UserList</permission>
+	<permission id="9" parent="8">components.velopark.attribution</permission>
         <permission id="10" parent="8">components.velopark.modattribution</permission>
 
-		<permission id="11" parent="0">components.velopark.invoice</permission>
+	<permission id="11" parent="0">components.velopark.invoice</permission>
+
+	<permission id="12" parent="0">components.velopark.period</permission>
+	<permission id="13" parent="12">components.velopark.addperiod</permission>
+	<permission id="14" parent="12">components.velopark.modperiod</permission>
+        
 	</permissions>
 	
 </install>

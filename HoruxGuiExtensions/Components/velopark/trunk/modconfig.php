@@ -55,6 +55,7 @@ class modconfig extends Page {
             $this->access_ko_msg->Text = $data['access_ko_msg'];
             $this->access_credit_warning_msg->Text = $data['access_credit_warning_msg'];
             $this->access_warning_msg->Text = $data['access_warning_msg'];
+            $this->credit_value->Text = $data['creditValue'];
 
             $items=$this->accesspoint->getItems();
 
@@ -76,11 +77,11 @@ class modconfig extends Page {
     public function onApply($sender, $param) {
         if($this->Page->IsValid) {
             if($this->saveData()) {
-                $pBack = array('okMsg'=>Prado::localize('The parking was modified successfully'), 'id'=>$this->id->Value);
+                $pBack = array('okMsg'=>Prado::localize('The service was modified successfully'), 'id'=>$this->id->Value);
                 $this->Response->redirect($this->Service->constructUrl('components.velopark.modconfig', $pBack));
             }
             else {
-                $pBack = array('koMsg'=>Prado::localize('The parking was not modified'), 'id'=>$this->id->Value);
+                $pBack = array('koMsg'=>Prado::localize('The service was not modified'), 'id'=>$this->id->Value);
                 $this->Response->redirect($this->Service->constructUrl('components.velopark.modconfig', $pBack));
             }
         }
@@ -89,10 +90,10 @@ class modconfig extends Page {
     public function onSave($sender, $param) {
         if($this->Page->IsValid) {
             if($this->saveData()) {
-                $pBack = array('okMsg'=>Prado::localize('The parking was modified successfully'));
+                $pBack = array('okMsg'=>Prado::localize('The service was modified successfully'));
             }
             else
-                $pBack = array('koMsg'=>Prado::localize('The parking was not modified'));
+                $pBack = array('koMsg'=>Prado::localize('The service was not modified'));
 
             $this->blockRecord('hr_vp_parking', $this->id->Value, 0);
             $this->Response->redirect($this->Service->constructUrl('components.velopark.config',$pBack));
@@ -114,7 +115,8 @@ class modconfig extends Page {
                                             `access_ko_msg`=:access_ko_msg,
                                             `device_ids`=:device_ids,
                                             `access_credit_warning_msg`=:access_credit_warning_msg,
-                                            `access_warning_msg`=:access_warning_msg
+                                            `access_warning_msg`=:access_warning_msg,
+                                            `creditValue`:=:creditValue
                                             WHERE id =:id" );
 
         $cmd->bindValue(":name",$this->name->SafeText,PDO::PARAM_STR);
@@ -125,6 +127,7 @@ class modconfig extends Page {
         $cmd->bindValue(":access_ko_msg",$this->access_ko_msg->SafeText,PDO::PARAM_STR);
         $cmd->bindValue(":access_credit_warning_msg",$this->access_credit_warning_msg->SafeText,PDO::PARAM_STR);
         $cmd->bindValue(":access_warning_msg",$this->access_warning_msg->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":creditValue",$this->credit_value->SafeText,PDO::PARAM_STR);
 
         $indices=$this->accesspoint->SelectedIndices;
         $result=array();
