@@ -68,7 +68,7 @@ public slots:
 protected:
   bool checkAccess(QMap<QString, QVariant> params, bool emitAction, bool emitNotification);
   bool checkAccessLevel(QString groupId, QString deviceId, QString *reason);
-  void insertTracking(QString userId, QString keyId, QString entryId, QString reason, bool isAccess, QString serialNumber, bool emitAction, bool emitNotification);
+  void insertTracking(QString userId, QString keyId, QString deviceId, QString parendId, QString reason, bool isAccess, QString serialNumber, bool emitAction, bool emitNotification);
   void timerEvent(QTimerEvent *e);
   void checkFreeAccess();
 

@@ -130,12 +130,13 @@ QString CXmlFactory::deviceEvent(QString id, QString e, QMap<QString, QString>p)
     return doc.toString();
 }
 
-QString CXmlFactory::keyDetection(QString id, QString pn, QString k)
+QString CXmlFactory::keyDetection(QString id, QString id_parent, QString pn, QString k)
 {
     QDomDocument doc;
 
     QDomElement deviceEvent = doc.createElement("deviceEvent");
     deviceEvent.setAttribute("id", id);
+    deviceEvent.setAttribute("id_parent", id_parent);
 
     QDomElement event = doc.createElement("event");
     QDomText e_dt = doc.createTextNode("keyDetected");
@@ -357,6 +358,7 @@ QMap<QString, QVariant> CXmlFactory::deviceEvent(QString xml)
     }
 
     QString deviceId = root.attribute ( "id" );
+    QString deviceParentId = root.attribute ( "id_parent" );
 
     QDomNode eventNode = root.firstChild();
 
@@ -403,6 +405,7 @@ QMap<QString, QVariant> CXmlFactory::deviceEvent(QString xml)
             }
 
             funcParams["deviceId"] = deviceId;
+            funcParams["deviceParentId"] = deviceParentId;
         }
         else
             return funcParams;

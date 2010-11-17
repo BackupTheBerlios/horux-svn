@@ -74,7 +74,7 @@ public:
         @pn Name of the access plugin
         @k Value of the key
      */
-    static QString keyDetection(QString id, QString pn, QString k);
+    static QString keyDetection(QString id, QString id_parent, QString pn, QString k);
 
     /*!
       Parse the xml device action and return it as a QMap
