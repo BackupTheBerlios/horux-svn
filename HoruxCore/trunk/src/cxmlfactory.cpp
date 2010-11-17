@@ -358,7 +358,10 @@ QMap<QString, QVariant> CXmlFactory::deviceEvent(QString xml)
     }
 
     QString deviceId = root.attribute ( "id" );
-    QString deviceParentId = root.attribute ( "id_parent" );
+
+    if(root.attribute ( "id_parent", "" ) != "") {
+        funcParams["deviceParentId"] = root.attribute ( "id_parent" );
+    }
 
     QDomNode eventNode = root.firstChild();
 
@@ -405,7 +408,7 @@ QMap<QString, QVariant> CXmlFactory::deviceEvent(QString xml)
             }
 
             funcParams["deviceId"] = deviceId;
-            funcParams["deviceParentId"] = deviceParentId;
+            ;
         }
         else
             return funcParams;
