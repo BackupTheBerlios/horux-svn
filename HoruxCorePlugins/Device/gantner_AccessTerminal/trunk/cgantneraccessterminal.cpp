@@ -136,7 +136,9 @@ CDeviceInterface *CGantnerAccessTerminal::createInstance (QMap<QString, QVariant
 
 void CGantnerAccessTerminal::deviceAction(QString xml)
 {
+
   QMap<QString, MapParam> func = CXmlFactory::deviceAction(xml, id);
+
 
   QMapIterator<QString, MapParam> i(func);
   while (i.hasNext())
@@ -147,21 +149,7 @@ void CGantnerAccessTerminal::deviceAction(QString xml)
           void (*func)(QObject *, QMap<QString, QVariant>) = interfaces[i.key()];
           func(getMetaObject(), i.value());
      }
-     else
-     {
-        if( i.key() == "") return;
-        if( i.key() == "openDoor") return;
 
-        // try to push the action to a child device
-        foreach(CDeviceInterface *d, childDevice)
-        {
-            xml.replace("<deviceAction id=\"" + QString::number(id)  + "\">", "<deviceAction id=\"" + d->getParameter("id").toString() + "\">");
-            xml.replace("<deviceAction id=\"" + QString::number(id)  + "\" >", "<deviceAction id=\"" + d->getParameter("id").toString() + "\">");
-            d->deviceAction(xml);
-        }
-
-        //qDebug("The function %s is not define in the device %s", i.key().toLatin1() .constData(), name.toLatin1().constData());
-    }
   }
 
 }
@@ -900,6 +888,7 @@ void CGantnerAccessTerminal::replaceCharTable(QByteArray *message)
     message->replace(QByteArray("Ü"), QByteArray("]"));
     message->replace(QByteArray("β"), QByteArray("~"));
     message->replace(QByteArray("Û"), QByteArray("$"));
+
 }
 
 void CGantnerAccessTerminal::appendMessage(QByteArray *newMessage)
@@ -913,7 +902,7 @@ void CGantnerAccessTerminal::appendMessage(QByteArray *newMessage)
       currentMessage.clear();
 
       // replace the char
-     // replaceCharTable( newMessage );
+      //replaceCharTable( newMessage );
 
       currentMessage = newMessage->constData();
 
@@ -1432,7 +1421,7 @@ void CGantnerAccessTerminal::checkTerimalInformationResp( QByteArray message )
             if(!timerPollingAccessStatus->isActive())
             {
                 // start the time who poll the temrinal to obtain the access status
-                timerPollingAccessStatus->start(500);
+                timerPollingAccessStatus->start(200);
             }
         }
 
@@ -1706,6 +1695,7 @@ void CGantnerAccessTerminal::checkOutBookings(QByteArray message )
             params["code"] = accessCode;
             params["entering"] = entering;
             params["deviceId"] = QString::number(id);
+            params["deviceParentId"] = QString::number(id);
 
             switch((char)accessCode.at(0).toLatin1())
             {
@@ -1721,6 +1711,8 @@ void CGantnerAccessTerminal::checkOutBookings(QByteArray message )
 
                         QString xml = CXmlFactory::deviceEvent(QString::number(id), "Gantner_AccessTerminal_accessDetected", params);
                         emit deviceEvent(xml);
+
+
                     }
                     break;
                 case '2':   // company ID incorrect
@@ -1759,6 +1751,7 @@ void CGantnerAccessTerminal::checkOutBookings(QByteArray message )
                         }
 
                         QString xml = CXmlFactory::deviceEvent(QString::number(id), "Gantner_AccessTerminal_accessDetected", params);
+
                         emit deviceEvent(xml);
                     }
                     break;
@@ -3244,11 +3237,13 @@ void CGantnerAccessTerminal::s_loadPersonnel(QObject *p, QMap<QString, QVariant>
     QByteArray *msg = new QByteArray;
     QScriptValueList args;
 
+
+
     args.clear();
     args << QScriptValue(&(pThis->engine),params["personnelNumber"].toString().rightJustified(8,'0'));
     args << QScriptValue(&(pThis->engine),params["cardNumber"].toString().rightJustified(11,'0'));
     args << QScriptValue(&(pThis->engine),params["cardVersion"].toString().rightJustified(2,'0'));
-    args << QScriptValue(&(pThis->engine),params["fullname"].toString().leftJustified(16,' '));
+    args << QScriptValue(&(pThis->engine),QString::fromUtf8(params["fullname"].toString().leftJustified(16,' ').toLatin1()));
     args << QScriptValue(&(pThis->engine),params["masterAuhtorization"].toString().rightJustified(1,'0'));
     args << QScriptValue(&(pThis->engine),params["PINCode"].toString().rightJustified(8,' '));
     args << QScriptValue(&(pThis->engine),params["scheduleNumber"].toString().rightJustified(2,'0'));
@@ -3411,9 +3406,11 @@ void CGantnerAccessTerminal::checkAccessStatus(QByteArray message)
                 params["code"] = "1";
                 params["entering"] = QString::number(entering);
                 params["deviceId"] = QString::number(id);
+                params["deviceParentId"] = QString::number(id);
 
                 QString xml = CXmlFactory::deviceEvent(QString::number(id), "Gantner_AccessTerminal_accessDetectedBeforeBooking", params);
                 emit deviceEvent(xml);
+
             }
         }
         else
@@ -3423,7 +3420,7 @@ void CGantnerAccessTerminal::checkAccessStatus(QByteArray message)
 
         if(nonStored1 & 0x01)
         {
-            pollingTerminalInformation();
+            pollingTerminalInformation();            
         }
     }
 

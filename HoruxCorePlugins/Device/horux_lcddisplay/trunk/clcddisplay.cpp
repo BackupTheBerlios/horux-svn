@@ -23,6 +23,7 @@
 
 CLCDDisplay::CLCDDisplay(QObject *parent) : QObject(parent)
 {
+  deviceParent = NULL;
   _isConnected = false;
   status = FREE;
   socket = NULL;
@@ -53,7 +54,11 @@ CDeviceInterface *CLCDDisplay::createInstance (QMap<QString, QVariant> config, Q
 
 void CLCDDisplay::deviceAction(QString xml)
 {
-  QMap<QString, MapParam> func = CXmlFactory::deviceAction(xml, id);
+  int parent_id = 0;
+  if(deviceParent)
+      parent_id = deviceParent->getParameter("id").toInt();
+
+  QMap<QString, MapParam> func = CXmlFactory::deviceAction(xml, id,parent_id);
   QMapIterator<QString, MapParam> i(func);
   while (i.hasNext())
   {
