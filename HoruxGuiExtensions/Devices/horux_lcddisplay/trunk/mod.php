@@ -12,11 +12,11 @@
  * See COPYRIGHT.php for copyright notices and details.
  */
 
-Prado::using('horux.pages.hardware.device.a3m_lgm.sql');
+Prado::using('horux.pages.hardware.device.horux_lcddisplay.sql');
 
 class mod extends ModDevicePage {
     public function onLoad($param) {
-        $this->deviceName = "a3m_lgm";
+        $this->deviceName = "horux_lcddisplay";
         parent::onLoad($param);
     }
 
@@ -24,21 +24,27 @@ class mod extends ModDevicePage {
 
         parent::setData();
 
-        $this->address->Text =  $this->data['address'];
-        $this->serialNumberFormat->Text =  $this->data['serialNumberFormat'];
+        $this->ip->Text =  $this->data['ip'];
+        $this->port->Text =  $this->data['port'];
+        $this->messageTimerDisplay->Text =  $this->data['messageTimerDisplay'];
+        $this->defaultMessage->Text = $this->data['defaultMessage'];
+
     }
 
+
     public function saveData() {
+
         parent::saveData();
 
-        $cmd = $this->db->createCommand( SQL::SQL_UPDATE_DEVICE );
-        $cmd->bindValue(":address",$this->address->SafeText,PDO::PARAM_STR);
-        $cmd->bindValue(":serialNumberFormat",$this->serialNumberFormat->SafeText,PDO::PARAM_STR);
+        $cmd = $this->db->createCommand( SQL::SQL_UPDATE_LCDDISPLAY );
+        $cmd->bindValue(":ip",$this->ip->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":port",$this->port->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":messageTimerDisplay",$this->messageTimerDisplay->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":defaultMessage",$this->defaultMessage->SafeText,PDO::PARAM_STR);
         
         $cmd->bindValue(":id",$this->id->Value,PDO::PARAM_STR);
         $cmd->Execute();
 
         return true;
     }
-
 }

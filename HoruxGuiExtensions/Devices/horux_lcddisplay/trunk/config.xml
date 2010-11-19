@@ -1,0 +1,7 @@
+<configuration>
+    <modules>
+        <module id="globalization_horux_lcddisplay" class="TGlobalization" >
+            <translation  type="XLIFF" source="horux.messages" catalogue="hr_horux_lcddisplay" marker="" />
+        </module>
+    </modules>
+</configuration>

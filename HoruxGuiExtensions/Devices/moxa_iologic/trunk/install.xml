@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<install type="device">
+	<name>Moxa IOLogic</name>
+        <installName>moxa_iologic</installName>
+	<version>1.0.0</version>
+	<creationDate>19/11/10</creationDate>
+	<author>Jean-Luc Gyger / Letux</author>
+	<authorEmail>info@letux.ch</authorEmail>
+	<authorUrl>http://www.letux.ch</authorUrl>
+	<copyright>Letux</copyright>
+	<license>GNU/GPL</license>
+	<description>Configure Moxa IOLogic device</description>
+	<sqlinstall>install.sql</sqlinstall>
+	<sqluninstall>uninstall.sql</sqluninstall>
+	
+	<permissions>
+		<permission>hardware.device.moxa_iologic.add</permission>
+		<permission>hardware.device.moxa_iologic.mod</permission>
+	</permissions>	
+	
+	
+</install>

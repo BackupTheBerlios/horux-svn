@@ -4,7 +4,7 @@
 
     <com:TToolbarBox
         ID="tbb"
-        Title="<%[Modify an RS/TCPIP Converter]%>"
+        Title="<%[Modify the Horux LCD Didplay]%>"
         CssIcon="icon-48-ifcs"
         ApplyVisible="true"
         SaveVisible="true"
@@ -13,14 +13,14 @@
         />
 
     <%include Application.common.template.headerBoxContent %>
-
   <%include Application.common.template.generalDeviceParameters %>
 
-  <fieldset class="adminform">
+
+   <fieldset class="adminform">
      <legend><%[Specific Parameters]%></legend>
       <table class="admintable" cellspacing="1">
         <tbody>
-          <tr>
+         <tr>
             <td valign="top" class="key">
               <span onmouseover="Tip('<%[Enter ip address]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)">* <%[IP address]%></span>
             </td>
@@ -53,7 +53,28 @@
                 Display="Dynamic"/>
             </td>
          </tr>
-        </tbody>
+
+          <tr>
+            <td valign="top" class="key"><span onmouseover="Tip('<%[Insert the default message displayed on the display.<br/>If you insert {date} or/and {time} in your message<br/> the time or/and the date will be inserted and repeated automaticly.<br/>If you want to force the second line, just insert {nl}<br/>To set the cursor at a specific line/column insert a tag like {1,3}]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Default message]%></span></td>
+            <td>
+              <com:TTextBox CssClass="text_area" ID="defaultMessage" Width="400px"/> {time},{date},{nl},{l,c}
+            </td>
+          </tr>
+
+          <tr>
+            <td valign="top" class="key"><span onmouseover="Tip('<%[Time that a message must be displayed before to display the default message (in second)]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Message time display]%></span></td>
+            <td>
+              <com:TTextBox CssClass="text_area" ID="messageTimerDisplay" Width="20px" />
+                <com:TDataTypeValidator
+                    ValidationGroup="Group1"
+                    Display="Dynamic"
+                    ControlToValidate="messageTimerDisplay"
+                    DataType="Integer"
+                    Text="You must enter an integer." />
+
+          </tr>
+
+       </tbody>
       </table>
   </fieldset>
 

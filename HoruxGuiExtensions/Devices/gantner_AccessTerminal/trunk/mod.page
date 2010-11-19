@@ -13,35 +13,12 @@
         />
 
     <%include Application.common.template.headerBoxContent %>
-    <com:THiddenField ID="id" value="" />
+  <%include Application.common.template.generalDeviceParameters %>
+
     <fieldset class="adminform">
      <legend><%[Parameters]%></legend>
           <table class="admintable" cellspacing="1">
             <tbody>
-              <tr>
-                <td valign="top" class="key">
-                  <span onmouseover="Tip('<%[Enter a <strong>unique</strong> name for this device]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)">* <%[Name]%></span>
-                </td>
-                <td>
-                  <com:TTextBox
-                    CssClass="text_area"
-                    ID="name"
-                    Width="50" />
-                  <com:TCustomValidator
-                    ValidationGroup="Group1"
-                    EnableClientScript="false"
-                    ControlToValidate="name"
-                    OnServerValidate="serverValidateName"
-                    Display="Dynamic"
-                    Text="<%[This name is already used]%>" />
-                  <com:TRequiredFieldValidator
-                    ValidationGroup="Group1"
-                    ControlToValidate="name"
-                    Text="<%[This field is required]%>"
-                    Display="Dynamic"/>
-                </td>
-             </tr>
-
               <tr>
                 <td valign="top" class="key">
                   <span onmouseover="Tip('<%[Enter an IP address or the dhcp name for this device.<br/> <em>Ex:192.168.1.50 or AccessDevice</em>]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)">* <%[IP Address/DHCP name]%></span>
@@ -76,21 +53,6 @@
                         Display="Dynamic"/>
                 </td>
               </tr>
-
-              <tr>
-                <td valign="top" class="key"><span onmouseover="Tip('<%[Allow to log the communication in a log file]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Debug]%></span></td>
-                <td>
-                    <com:TCheckBox Text="" ID="isLog"/>
-                </td>
-              </tr>
-
-              <tr>
-                <td valign="top" class="key"><span onmouseover="Tip('<%[You could insert a description for this device.]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Description]%></span></td>
-                <td>
-                  <com:TTextBox CssClass="text_area" ID="comment" Width="400px"/>
-                </td>
-              </tr>
-
 
             </tbody>
           </table>

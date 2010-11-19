@@ -1,284 +1,184 @@
 <?php
 /**
-* @version      $Id$
-* @package      Horux
-* @subpackage   Horux
-* @copyright    Copyright (C) 2007  Letux. All rights reserved.
-* @license      GNU/GPL, see LICENSE.php
-* Horux is free software. This version may have been modified pursuant
-* to the GNU General Public License, and as distributed it includes or
-* is derivative of works licensed under the GNU General Public License or
-* other free or open source software licenses.
-* See COPYRIGHT.php for copyright notices and details.
-*/
+ * @version      $Id$
+ * @package      Horux
+ * @subpackage   Horux
+ * @copyright    Copyright (C) 2007  Letux. All rights reserved.
+ * @license      GNU/GPL, see LICENSE.php
+ * Horux is free software. This version may have been modified pursuant
+ * to the GNU General Public License, and as distributed it includes or
+ * is derivative of works licensed under the GNU General Public License or
+ * other free or open source software licenses.
+ * See COPYRIGHT.php for copyright notices and details.
+ */
 
 Prado::using('horux.pages.hardware.device.gantner_AccessTerminal.sql');
 
-class mod extends Page
-{
-    public function onLoad($param)
-    {
+class mod extends ModDevicePage {
+    public function onLoad($param) {
+        $this->deviceName = "gantner_AccessTerminal";
         parent::onLoad($param);
-        
-        if(!$this->isPostBack)
-        {
+    }
+    
 
-          $userId=$this->Application->getUser()->getUserId();
-    	  $this->blockRecord('hr_device', $this->Request['id'], $userId);                            
-            
-          $param = $this->Application->getParameters();
-          $superAdmin = $this->Application->getUser()->getSuperAdmin();
-          
-          if($param['appMode'] == 'demo' && $superAdmin == 0)
-          {
-                  $this->tbb->Save->setEnabled(false);
-                  $this->tbb->apply->setEnabled(false);
-          }  
+    public function setData() {
 
-          $this->id->Value = $this->Request['id'];
-          $this->setData();
-          
-        }        
+        parent::setData();
+
+        $this->ipOrDhcp->Text = $this->data['ipOrDhcp'];
+        $this->checkBooking->Text = $this->data['checkBooking'];
+
+
+        $this->userMemory->setSelectedValue($this->data['userMemory']) ;
+        $this->accessMemory->setSelectedValue($this->data['accessMemory']) ;
+        $this->subscriberNumber->Text = $this->data['subscriberNumber'];
+        $this->plantNumber->Text = $this->data['plantNumber'];
+        $this->mainCompIdCard->Text = $this->data['mainCompIdCard'];
+        $this->bookingCodeSumWinSwitchOver->Text = $this->data['bookingCodeSumWinSwitchOver'];
+        $this->switchOverLeap->Text = $this->data['switchOverLeap'];
+        $this->waitingTimeInput->Text = $this->data['waitingTimeInput'];
+        $this->monitoringTime->Text = $this->data['monitoringTime'];
+        $this->monitorinChangingTime->Text = $this->data['monitorinChangingTime'];
+        $this->cardReaderType->setSelectedValue($this->data['cardReaderType']) ;
+        $this->maxDoorOpenTime->Text = $this->data['maxDoorOpenTime'];
+        $this->warningTimeDoorOpenTime->Text = $this->data['warningTimeDoorOpenTime'];
+        $this->unlockingTime->Text = $this->data['unlockingTime'];
+        $this->relay1->setSelectedValue($this->data['relay1']) ;
+        $this->timeRelay1->Text = $this->data['timeRelay1'];
+        $this->relay2->setSelectedValue($this->data['relay2']);
+        $this->timeRelay2->Text = $this->data['timeRelay2'];
+        $this->relay3->setSelectedValue($this->data['relay3']) ;
+        $this->timeRelay3->Text = $this->data['timeRelay3'];
+        $this->relay3->setSelectedValue($this->data['relay3']);
+        $this->timeRelay3->Text = $this->data['timeRelay3'];
+        $this->opto1->setSelectedValue($this->data['opto1']);
+        $this->opto2->setSelectedValue($this->data['opto2']);
+        $this->opto3->setSelectedValue($this->data['opto3']);
+        $this->opto4->setSelectedValue($this->data['opto4']);
+        $this->enterExitInfo->setSelectedValue($this->data['enterExitInfo']);
+
+        $f = $this->autoUnlocking->setChecked($this->data['autoUnlocking']);
+        $f = $this->lockUnlockCommand->setChecked($this->data['lockUnlockCommand']);
+        $this->holdUpPINCode->Text = $this->data['holdUpPINCode'];
+        $f = $this->twoPersonAccess->setChecked($this->data['twoPersonAccess']);
+        $this->barriereRepeatedAccess->Text = $this->data['barriereRepeatedAccess'];
+        $f = $this->antiPassActive->setChecked($this->data['antiPassActive']);
+
+        $this->relayExpanderControl->setSelectedValue($this->data['relayExpanderControl']);
+        $this->doorOpenTimeUnit->setSelectedValue($this->data['doorOpenTimeUnit']);
+
+
+        $this->optionalCompanyID1->Text = $this->data['optionalCompanyID1'];
+        $this->optionalCompanyID2->Text = $this->data['optionalCompanyID2'];
+        $this->optionalCompanyID3->Text = $this->data['optionalCompanyID3'];
+        $this->optionalCompanyID4->Text = $this->data['optionalCompanyID4'];
+        $this->optionalCompanyID5->Text = $this->data['optionalCompanyID5'];
+        $this->optionalCompanyID6->Text = $this->data['optionalCompanyID6'];
+        $this->optionalCompanyID7->Text = $this->data['optionalCompanyID7'];
+        $this->optionalCompanyID8->Text = $this->data['optionalCompanyID8'];
+        $this->optionalCompanyID9->Text = $this->data['optionalCompanyID9'];
+        $this->optionalCompanyID10->Text = $this->data['optionalCompanyID10'];
+
+        $this->optionalCardStructur->Text = $this->data['optionalCardStructur'];
+        $this->optionalGantnerNationalCode->Text = $this->data['optionalGantnerNationalCode'];
+        $this->optionalGantnerCustomerCode1->Text = $this->data['optionalGantnerCustomerCode1'];
+        $this->optionalGantnerCustomerCode2->Text = $this->data['optionalGantnerCustomerCode2'];
+        $this->optionalGantnerCustomerCode3->Text = $this->data['optionalGantnerCustomerCode3'];
+        $this->optionalGantnerCustomerCode4->Text = $this->data['optionalGantnerCustomerCode4'];
+        $this->optionalGantnerCustomerCode5->Text = $this->data['optionalGantnerCustomerCode5'];
+        $this->optionalReaderInitialisation->Text = $this->data['optionalReaderInitialisation'];
+        $this->optionalTableCardType->Text = $this->data['optionalTableCardType'];
     }
 
 
-    protected function setData()
-    {
-        $cmd = $this->db->createCommand( SQL::SQL_GET_GANTNERTERMINAL );
-        $cmd->bindParameter(":id",$this->id->Value, PDO::PARAM_INT);
-        $query = $cmd->query();
+    public function saveData() {
 
-        if($query)
-        {
-          $data = $query->read();
-          $this->name->Text = $data['name'];
-          $this->comment->Text = $data['description'];
-          $this->ipOrDhcp->Text = $data['ipOrDhcp'];
-          $this->checkBooking->Text = $data['checkBooking'];
+        parent::saveData();
 
- 
-          $this->userMemory->setSelectedValue($data['userMemory']) ;
-          $this->accessMemory->setSelectedValue($data['accessMemory']) ;
-          $this->subscriberNumber->Text = $data['subscriberNumber'];
-          $this->plantNumber->Text = $data['plantNumber'];
-          $this->mainCompIdCard->Text = $data['mainCompIdCard'];
-          $this->bookingCodeSumWinSwitchOver->Text = $data['bookingCodeSumWinSwitchOver'];
-          $this->switchOverLeap->Text = $data['switchOverLeap'];
-          $this->waitingTimeInput->Text = $data['waitingTimeInput'];
-          $this->monitoringTime->Text = $data['monitoringTime'];
-          $this->monitorinChangingTime->Text = $data['monitorinChangingTime'];
-          $this->cardReaderType->setSelectedValue($data['cardReaderType']) ;
-          $this->maxDoorOpenTime->Text = $data['maxDoorOpenTime'];
-          $this->warningTimeDoorOpenTime->Text = $data['warningTimeDoorOpenTime'];
-          $this->unlockingTime->Text = $data['unlockingTime'];
-          $this->relay1->setSelectedValue($data['relay1']) ;
-          $this->timeRelay1->Text = $data['timeRelay1'];
-          $this->relay2->setSelectedValue($data['relay2']);
-          $this->timeRelay2->Text = $data['timeRelay2'];
-          $this->relay3->setSelectedValue($data['relay3']) ;
-          $this->timeRelay3->Text = $data['timeRelay3'];
-          $this->relay3->setSelectedValue($data['relay3']);
-          $this->timeRelay3->Text = $data['timeRelay3'];
-          $this->opto1->setSelectedValue($data['opto1']);
-          $this->opto2->setSelectedValue($data['opto2']);
-          $this->opto3->setSelectedValue($data['opto3']);
-          $this->opto4->setSelectedValue($data['opto4']);
-          $this->enterExitInfo->setSelectedValue($data['enterExitInfo']);
+        $cmd = $this->db->createCommand( SQL::SQL_UPDATE_GANTNERTERMINAL );
 
-          $f = $this->autoUnlocking->setChecked($data['autoUnlocking']);
-          $f = $this->lockUnlockCommand->setChecked($data['lockUnlockCommand']);
-          $this->holdUpPINCode->Text = $data['holdUpPINCode'];
-          $f = $this->twoPersonAccess->setChecked($data['twoPersonAccess']);
-          $this->barriereRepeatedAccess->Text = $data['barriereRepeatedAccess'];
-          $f = $this->antiPassActive->setChecked($data['antiPassActive']);
+        $cmd->bindValue(":ipOrDhcp",$this->ipOrDhcp->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":checkBooking",$this->checkBooking->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":userMemory",$this->userMemory->getSelectedValue(),PDO::PARAM_STR);
+        $cmd->bindValue(":accessMemory",$this->accessMemory->getSelectedValue(),PDO::PARAM_STR);
+        $cmd->bindValue(":subscriberNumber",$this->subscriberNumber->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":plantNumber",$this->plantNumber->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":mainCompIdCard",$this->mainCompIdCard->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":bookingCodeSumWinSwitchOver",$this->bookingCodeSumWinSwitchOver->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":switchOverLeap",$this->switchOverLeap->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":waitingTimeInput",$this->waitingTimeInput->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":monitoringTime",$this->monitoringTime->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":monitorinChangingTime",$this->monitorinChangingTime->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":cardReaderType",$this->cardReaderType->getSelectedValue(),PDO::PARAM_STR);
+        $cmd->bindValue(":maxDoorOpenTime",$this->maxDoorOpenTime->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":warningTimeDoorOpenTime",$this->warningTimeDoorOpenTime->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":unlockingTime",$this->unlockingTime->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":relay1",$this->relay1->getSelectedValue(),PDO::PARAM_STR);
+        $cmd->bindValue(":timeRelay1",$this->timeRelay1->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":relay2",$this->relay2->getSelectedValue(),PDO::PARAM_STR);
+        $cmd->bindValue(":timeRelay2",$this->timeRelay2->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":relay3",$this->relay3->getSelectedValue(),PDO::PARAM_STR);
+        $cmd->bindValue(":timeRelay3",$this->timeRelay3->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":relay4",$this->relay3->getSelectedValue(),PDO::PARAM_STR);
+        $cmd->bindValue(":timeRelay4",$this->timeRelay3->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":opto1",$this->opto1->getSelectedValue(),PDO::PARAM_STR);
+        $cmd->bindValue(":opto2",$this->opto2->getSelectedValue(),PDO::PARAM_STR);
+        $cmd->bindValue(":opto3",$this->opto3->getSelectedValue(),PDO::PARAM_STR);
+        $cmd->bindValue(":opto4",$this->opto4->getSelectedValue(),PDO::PARAM_STR);
+        $cmd->bindValue(":enterExitInfo",$this->enterExitInfo->getSelectedValue(),PDO::PARAM_STR);
 
-          $this->relayExpanderControl->getSelectedValue($data['relayExpanderControl']);
-          $this->doorOpenTimeUnit->getSelectedValue($data['doorOpenTimeUnit']);
+        $f1 = $this->autoUnlocking->getChecked() ? 1 : 0;
+        $cmd->bindValue(":autoUnlocking",$f1,PDO::PARAM_STR);
+
+        $f2 = $this->lockUnlockCommand->getChecked() ? 1 : 0;
+        $cmd->bindValue(":lockUnlockCommand",$f2,PDO::PARAM_STR);
+
+        $cmd->bindValue(":holdUpPINCode",$this->holdUpPINCode->SafeText,PDO::PARAM_STR);
+
+        $f3 = $this->twoPersonAccess->getChecked() ? 1 : 0;
+        $cmd->bindValue(":twoPersonAccess",$f3,PDO::PARAM_STR);
+
+        $cmd->bindValue(":barriereRepeatedAccess",$this->barriereRepeatedAccess->SafeText,PDO::PARAM_STR);
+
+        $f4 = $this->antiPassActive->getChecked() ? 1 : 0;
+        $cmd->bindValue(":antiPassActive",$f4,PDO::PARAM_STR);
+
+        $cmd->bindValue(":relayExpanderControl",$this->relayExpanderControl->getSelectedValue(),PDO::PARAM_STR);
+        $cmd->bindValue(":doorOpenTimeUnit",$this->doorOpenTimeUnit->getSelectedValue(),PDO::PARAM_STR);
 
 
-          $this->optionalCompanyID1->Text = $data['optionalCompanyID1'];
-          $this->optionalCompanyID2->Text = $data['optionalCompanyID2'];
-          $this->optionalCompanyID3->Text = $data['optionalCompanyID3'];
-          $this->optionalCompanyID4->Text = $data['optionalCompanyID4'];
-          $this->optionalCompanyID5->Text = $data['optionalCompanyID5'];
-          $this->optionalCompanyID6->Text = $data['optionalCompanyID6'];
-          $this->optionalCompanyID7->Text = $data['optionalCompanyID7'];
-          $this->optionalCompanyID8->Text = $data['optionalCompanyID8'];
-          $this->optionalCompanyID9->Text = $data['optionalCompanyID9'];
-          $this->optionalCompanyID10->Text = $data['optionalCompanyID10'];
+        $cmd->bindValue(":optionalCompanyID1",$this->optionalCompanyID1->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":optionalCompanyID2",$this->optionalCompanyID2->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":optionalCompanyID3",$this->optionalCompanyID3->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":optionalCompanyID4",$this->optionalCompanyID4->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":optionalCompanyID5",$this->optionalCompanyID5->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":optionalCompanyID6",$this->optionalCompanyID6->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":optionalCompanyID7",$this->optionalCompanyID7->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":optionalCompanyID8",$this->optionalCompanyID8->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":optionalCompanyID9",$this->optionalCompanyID9->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":optionalCompanyID10",$this->optionalCompanyID10->SafeText,PDO::PARAM_STR);
 
-          $this->optionalCardStructur->Text = $data['optionalCardStructur'];
-          $this->optionalGantnerNationalCode->Text = $data['optionalGantnerNationalCode'];
-          $this->optionalGantnerCustomerCode1->Text = $data['optionalGantnerCustomerCode1'];
-          $this->optionalGantnerCustomerCode2->Text = $data['optionalGantnerCustomerCode2'];
-          $this->optionalGantnerCustomerCode3->Text = $data['optionalGantnerCustomerCode3'];
-          $this->optionalGantnerCustomerCode4->Text = $data['optionalGantnerCustomerCode4'];
-          $this->optionalGantnerCustomerCode5->Text = $data['optionalGantnerCustomerCode5'];
-          $this->optionalReaderInitialisation->Text = $data['optionalReaderInitialisation'];
-          $this->optionalTableCardType->Text = $data['optionalTableCardType'];
+        $cmd->bindValue(":optionalCardStructur",$this->optionalCardStructur->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":optionalGantnerNationalCode",$this->optionalGantnerNationalCode->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":optionalGantnerCustomerCode1",$this->optionalGantnerCustomerCode1->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":optionalGantnerCustomerCode2",$this->optionalGantnerCustomerCode2->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":optionalGantnerCustomerCode3",$this->optionalGantnerCustomerCode3->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":optionalGantnerCustomerCode4",$this->optionalGantnerCustomerCode4->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":optionalGantnerCustomerCode5",$this->optionalGantnerCustomerCode5->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":optionalReaderInitialisation",$this->optionalReaderInitialisation->SafeText,PDO::PARAM_STR);
+        $cmd->bindValue(":optionalTableCardType",$this->optionalTableCardType->SafeText,PDO::PARAM_STR);
 
-        }
+        $cmd->bindValue(":id",$this->id->Value,PDO::PARAM_STR);
 
+        $cmd->Execute();
+
+        $horuxService = new THoruxService();
+        $horuxService->onStopDevice($id);
+        $horuxService->onStartDevice($id);
+
+        $sa = new TStandAlone();
+        $sa->addStandalone("add", $this->id->Value, 'reinit');
+
+        return true;
     }
-
-    public function onApply($sender, $param)
-    {
-        if($this->Page->IsValid)
-        {
-          if($this->saveData())
-          {
-            $id = $this->id->Value;
-
-            $horuxService = new THoruxService();
-            $horuxService->onStopDevice($id);
-            $horuxService->onStartDevice($id);
-
-            $sa = new TStandAlone();
-            $sa->addStandalone("add", $this->id->Value, 'reinit');
-
-
-            $pBack = array('okMsg'=>Prado::localize('The device was modified successfully'), 'id'=>$id);
-            $this->Response->redirect($this->Service->constructUrl('hardware.device.gantner_AccessTerminal.mod', $pBack));
-          }
-          else
-          {
-            $pBack = array('koMsg'=>Prado::localize('The device was not modified'));
-          }
-        }
-    }
-
-    public function onSave($sender, $param)
-    {
-        if($this->Page->IsValid)
-        {
-          if($this->saveData())
-          {
-            $pBack = array('okMsg'=>Prado::localize('The device was modified successfully'));
-            $horuxService = new THoruxService();
-            $horuxService->onStopDevice($this->id->Value);
-            $horuxService->onStartDevice($this->id->Value);
-
-            $sa = new TStandAlone();
-            $sa->addStandalone("add", $this->id->Value, 'reinit');
-
-
-          }
-          else
-            $pBack = array('koMsg'=>Prado::localize('The device was not modified'));
-          
-          $this->blockRecord('hr_device', $this->id->Value, 0);
-          $this->Response->redirect($this->Service->constructUrl('hardware.HardwareList',$pBack));
-        }
-    }
-
-	public function onCancel($sender, $param)
-	{
-	     $this->blockRecord('hr_device', $this->id->Value, 0);	
-            $this->Response->redirect($this->Service->constructUrl('hardware.HardwareList'));	
-	}    
-
-    protected function saveData()
-    {
-      $cmd = $this->db->createCommand( SQL::SQL_MOD_DEVICE );
-	  $cmd->bindParameter(":name",$this->name->SafeText,PDO::PARAM_STR);
-	  $cmd->bindParameter(":description",$this->comment->SafeText,PDO::PARAM_STR);
-	  $cmd->bindParameter(":isLog",$this->isLog->getChecked(),PDO::PARAM_STR);
-	  $cmd->bindParameter(":id",$this->id->Value,PDO::PARAM_STR);
-	  $cmd->Execute();
-
-
-      $cmd = $this->db->createCommand( SQL::SQL_UPDATE_GANTNERTERMINAL );
-  
-	  $cmd->bindParameter(":ipOrDhcp",$this->ipOrDhcp->SafeText,PDO::PARAM_STR);
-	  $cmd->bindParameter(":checkBooking",$this->checkBooking->SafeText,PDO::PARAM_STR);
-	  $cmd->bindParameter(":userMemory",$this->userMemory->getSelectedValue(),PDO::PARAM_STR);
-	  $cmd->bindParameter(":accessMemory",$this->accessMemory->getSelectedValue(),PDO::PARAM_STR);
-	  $cmd->bindParameter(":subscriberNumber",$this->subscriberNumber->SafeText,PDO::PARAM_STR);
-	  $cmd->bindParameter(":plantNumber",$this->plantNumber->SafeText,PDO::PARAM_STR);
-	  $cmd->bindParameter(":mainCompIdCard",$this->mainCompIdCard->SafeText,PDO::PARAM_STR);
-	  $cmd->bindParameter(":bookingCodeSumWinSwitchOver",$this->bookingCodeSumWinSwitchOver->SafeText,PDO::PARAM_STR);
-	  $cmd->bindParameter(":switchOverLeap",$this->switchOverLeap->SafeText,PDO::PARAM_STR);
-	  $cmd->bindParameter(":waitingTimeInput",$this->waitingTimeInput->SafeText,PDO::PARAM_STR);
-	  $cmd->bindParameter(":monitoringTime",$this->monitoringTime->SafeText,PDO::PARAM_STR);
-	  $cmd->bindParameter(":monitorinChangingTime",$this->monitorinChangingTime->SafeText,PDO::PARAM_STR);
-	  $cmd->bindParameter(":cardReaderType",$this->cardReaderType->getSelectedValue(),PDO::PARAM_STR);
-	  $cmd->bindParameter(":maxDoorOpenTime",$this->maxDoorOpenTime->SafeText,PDO::PARAM_STR);
-	  $cmd->bindParameter(":warningTimeDoorOpenTime",$this->warningTimeDoorOpenTime->SafeText,PDO::PARAM_STR);
-	  $cmd->bindParameter(":unlockingTime",$this->unlockingTime->SafeText,PDO::PARAM_STR);
-	  $cmd->bindParameter(":relay1",$this->relay1->getSelectedValue(),PDO::PARAM_STR);
-	  $cmd->bindParameter(":timeRelay1",$this->timeRelay1->SafeText,PDO::PARAM_STR);
-	  $cmd->bindParameter(":relay2",$this->relay2->getSelectedValue(),PDO::PARAM_STR);
-	  $cmd->bindParameter(":timeRelay2",$this->timeRelay2->SafeText,PDO::PARAM_STR);
-	  $cmd->bindParameter(":relay3",$this->relay3->getSelectedValue(),PDO::PARAM_STR);
-	  $cmd->bindParameter(":timeRelay3",$this->timeRelay3->SafeText,PDO::PARAM_STR);
-	  $cmd->bindParameter(":relay4",$this->relay3->getSelectedValue(),PDO::PARAM_STR);
-	  $cmd->bindParameter(":timeRelay4",$this->timeRelay3->SafeText,PDO::PARAM_STR);
-	  $cmd->bindParameter(":opto1",$this->opto1->getSelectedValue(),PDO::PARAM_STR);
-	  $cmd->bindParameter(":opto2",$this->opto2->getSelectedValue(),PDO::PARAM_STR);
-	  $cmd->bindParameter(":opto3",$this->opto3->getSelectedValue(),PDO::PARAM_STR);
-	  $cmd->bindParameter(":opto4",$this->opto4->getSelectedValue(),PDO::PARAM_STR);
-	  $cmd->bindParameter(":enterExitInfo",$this->enterExitInfo->getSelectedValue(),PDO::PARAM_STR);
-
-      $f1 = $this->autoUnlocking->getChecked() ? 1 : 0;
-	  $cmd->bindParameter(":autoUnlocking",$f1,PDO::PARAM_STR);
-
-      $f2 = $this->lockUnlockCommand->getChecked() ? 1 : 0;
-	  $cmd->bindParameter(":lockUnlockCommand",$f2,PDO::PARAM_STR);
-
-	  $cmd->bindParameter(":holdUpPINCode",$this->holdUpPINCode->SafeText,PDO::PARAM_STR);
-
-      $f3 = $this->twoPersonAccess->getChecked() ? 1 : 0;
-	  $cmd->bindParameter(":twoPersonAccess",$f3,PDO::PARAM_STR);
-
-	  $cmd->bindParameter(":barriereRepeatedAccess",$this->barriereRepeatedAccess->SafeText,PDO::PARAM_STR);
-
-      $f4 = $this->antiPassActive->getChecked() ? 1 : 0;
-	  $cmd->bindParameter(":antiPassActive",$f4,PDO::PARAM_STR);
-
-	  $cmd->bindParameter(":relayExpanderControl",$this->relayExpanderControl->getSelectedValue(),PDO::PARAM_STR);
-	  $cmd->bindParameter(":doorOpenTimeUnit",$this->doorOpenTimeUnit->getSelectedValue(),PDO::PARAM_STR);
-
-
-	  $cmd->bindParameter(":optionalCompanyID1",$this->optionalCompanyID1->SafeText,PDO::PARAM_STR);
-	  $cmd->bindParameter(":optionalCompanyID2",$this->optionalCompanyID2->SafeText,PDO::PARAM_STR);
-	  $cmd->bindParameter(":optionalCompanyID3",$this->optionalCompanyID3->SafeText,PDO::PARAM_STR);
-	  $cmd->bindParameter(":optionalCompanyID4",$this->optionalCompanyID4->SafeText,PDO::PARAM_STR);
-	  $cmd->bindParameter(":optionalCompanyID5",$this->optionalCompanyID5->SafeText,PDO::PARAM_STR);
-	  $cmd->bindParameter(":optionalCompanyID6",$this->optionalCompanyID6->SafeText,PDO::PARAM_STR);
-	  $cmd->bindParameter(":optionalCompanyID7",$this->optionalCompanyID7->SafeText,PDO::PARAM_STR);
-	  $cmd->bindParameter(":optionalCompanyID8",$this->optionalCompanyID8->SafeText,PDO::PARAM_STR);
-	  $cmd->bindParameter(":optionalCompanyID9",$this->optionalCompanyID9->SafeText,PDO::PARAM_STR);
-	  $cmd->bindParameter(":optionalCompanyID10",$this->optionalCompanyID10->SafeText,PDO::PARAM_STR);
-
-	  $cmd->bindParameter(":optionalCardStructur",$this->optionalCardStructur->SafeText,PDO::PARAM_STR);
-	  $cmd->bindParameter(":optionalGantnerNationalCode",$this->optionalGantnerNationalCode->SafeText,PDO::PARAM_STR);
-	  $cmd->bindParameter(":optionalGantnerCustomerCode1",$this->optionalGantnerCustomerCode1->SafeText,PDO::PARAM_STR);
-	  $cmd->bindParameter(":optionalGantnerCustomerCode2",$this->optionalGantnerCustomerCode2->SafeText,PDO::PARAM_STR);
-	  $cmd->bindParameter(":optionalGantnerCustomerCode3",$this->optionalGantnerCustomerCode3->SafeText,PDO::PARAM_STR);
-	  $cmd->bindParameter(":optionalGantnerCustomerCode4",$this->optionalGantnerCustomerCode4->SafeText,PDO::PARAM_STR);
-	  $cmd->bindParameter(":optionalGantnerCustomerCode5",$this->optionalGantnerCustomerCode5->SafeText,PDO::PARAM_STR);
-	  $cmd->bindParameter(":optionalReaderInitialisation",$this->optionalReaderInitialisation->SafeText,PDO::PARAM_STR);
-	  $cmd->bindParameter(":optionalTableCardType",$this->optionalTableCardType->SafeText,PDO::PARAM_STR);
-
-	  $cmd->bindParameter(":id",$this->id->Value,PDO::PARAM_STR);
-
-      $cmd->Execute();
-
-	  return true;
-    }
-
-    public function serverValidateName($sender, $param)
-    {
-      $cmd = $this->db->createCommand( SQL::SQL_IS_READER_NAME_EXIST2);
-      $cmd->bindParameter(":name",$this->name->SafeText,PDO::PARAM_STR);
-      $cmd->bindParameter(":id",$this->id->Value,PDO::PARAM_STR);
-      $array = $cmd->query()->readAll();
-
-      if(count($array) > 0)
-        $param->IsValid=false;
-      else 
-        $param->IsValid=true;
-	}
-
-
 }

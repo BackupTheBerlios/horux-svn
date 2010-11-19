@@ -1,0 +1,228 @@
+<com:TContent ID="Main">
+
+    <%include Application.common.template.headerContent %>
+
+    <com:TToolbarBox
+        ID="tbb"
+        Title="<%[Add a Moxa IOLogic]%>"
+        CssIcon="icon-48-ifcs"
+        ApplyVisible="true"
+        SaveVisible="true"
+        CancelVisible="true"
+        HelpVisible="true"
+        />
+
+    <%include Application.common.template.headerBoxContent %>
+
+    <%include Application.common.template.generalDeviceParameters %>
+
+  <fieldset class="adminform">
+     <legend><%[Specific Parameters]%></legend>
+      <table class="admintable" cellspacing="1">
+        <tbody>
+          <tr>
+            <td valign="top" class="key">
+              <span onmouseover="Tip('<%[Enter ip address]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)">* <%[IP address]%></span>
+            </td>
+            <td>
+              <com:TTextBox
+                CssClass="text_area"
+                ID="ip"
+                Width="50" />
+              <com:TRequiredFieldValidator
+                ValidationGroup="Group1"
+                ControlToValidate="ip"
+                Text="<%[This field is required]%>"
+                Display="Dynamic"/>
+            </td>
+         </tr>
+
+          <tr>
+            <td valign="top" class="key">
+              <span onmouseover="Tip('<%[Enter port number]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)">* <%[Port number]%></span>
+            </td>
+            <td>
+              <com:TTextBox
+                CssClass="text_area"
+                ID="port"
+                Width="50" />
+              <com:TRequiredFieldValidator
+                ValidationGroup="Group1"
+                ControlToValidate="port"
+                Text="<%[This field is required]%>"
+                Display="Dynamic"/>
+            </td>
+         </tr>
+
+          <tr>
+            <td valign="top" class="key"><span onmouseover="Tip('<%[Set the password used for the communication]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Password]%></span></td>
+            <td>
+              <com:TTextBox CssClass="text_area" ID="password" />
+            </td>
+          </tr>
+
+          <tr>
+            <td valign="top" class="key"><span onmouseover="Tip('<%[Set the initial status for the output]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Initial output status]%></span></td>
+            <td>
+              <com:TTextBox CssClass="text_area" ID="initialOutput" Text="0,0,0,0,0,0,0,0" />
+            </td>
+          </tr>
+
+	  <tr>
+	      <td valign="top" class="key"><span onmouseover="Tip('<%[Set the output function]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Output 0 function]%></span></td>
+	      <td>
+		<com:TListBox ID="output0_func" SelectionMode="Multiple" >
+                    <com:TListItem Text="<%[Not used]%>" Value="none" Selected="true" />
+                    <com:TListItem Text="<%[Set on an access accepted]%>" Value="accessAccepted" />
+                    <com:TListItem Text="<%[Set on an access refused]%>" Value="accessRefused" />
+                    <com:TListItem Text="<%[Reset the output on a key detected]%>" Value="keyDetectedReset" />
+		</com:TListBox>
+	      </td>
+          </tr>
+
+	  <tr>
+	      <td valign="top" class="key"><span onmouseover="Tip('<%[Set the output function]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Output 1 function]%></span></td>
+	      <td>
+		<com:TListBox ID="output1_func" SelectionMode="Multiple" >
+                    <com:TListItem Text="<%[Not used]%>" Value="none" Selected="true" />
+                    <com:TListItem Text="<%[Set on an access accepted]%>" Value="accessAccepted" />
+                    <com:TListItem Text="<%[Set on an access refused]%>" Value="accessRefused" />
+                    <com:TListItem Text="<%[Reset the output on a key detected]%>" Value="keyDetectedReset" />
+		</com:TListBox>
+	      </td>
+          </tr>
+
+      	  <tr>
+	      <td valign="top" class="key"><span onmouseover="Tip('<%[Set the output function]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Output 2 function]%></span></td>
+	      <td>
+		<com:TListBox ID="output2_func" SelectionMode="Multiple" >
+                    <com:TListItem Text="<%[Not used]%>" Value="none" Selected="true" />
+                    <com:TListItem Text="<%[Set on an access accepted]%>" Value="accessAccepted" />
+                    <com:TListItem Text="<%[Set on an access refused]%>" Value="accessRefused" />
+                    <com:TListItem Text="<%[Reset the output on a key detected]%>" Value="keyDetectedReset" />
+		</com:TListBox>
+	      </td>
+          </tr>
+
+	  <tr>
+	      <td valign="top" class="key"><span onmouseover="Tip('<%[Set the output function]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Output 3 function]%></span></td>
+	      <td>
+		<com:TListBox ID="output3_func" SelectionMode="Multiple" >
+                    <com:TListItem Text="<%[Not used]%>" Value="none" Selected="true" />
+                    <com:TListItem Text="<%[Set on an access accepted]%>" Value="accessAccepted" />
+                    <com:TListItem Text="<%[Set on an access refused]%>" Value="accessRefused" />
+                    <com:TListItem Text="<%[Reset the output on a key detected]%>" Value="keyDetectedReset" />
+		</com:TListBox>
+	      </td>
+          </tr>
+
+	  <tr>
+	      <td valign="top" class="key"><span onmouseover="Tip('<%[Set the output function]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Output 4 function]%></span></td>
+	      <td>
+		<com:TListBox ID="output4_func" SelectionMode="Multiple" >
+                    <com:TListItem Text="<%[Not used]%>" Value="none" Selected="true" />
+                    <com:TListItem Text="<%[Set on an access accepted]%>" Value="accessAccepted" />
+                    <com:TListItem Text="<%[Set on an access refused]%>" Value="accessRefused" />
+                    <com:TListItem Text="<%[Reset the output on a key detected]%>" Value="keyDetectedReset" />
+		</com:TListBox>
+	      </td>
+          </tr>
+
+	  <tr>
+	      <td valign="top" class="key"><span onmouseover="Tip('<%[Set the output function]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Output 5 function]%></span></td>
+	      <td>
+		<com:TListBox ID="output5_func" SelectionMode="Multiple" >
+                    <com:TListItem Text="<%[Not used]%>" Value="none" Selected="true" />
+                    <com:TListItem Text="<%[Set on an access accepted]%>" Value="accessAccepted" />
+                    <com:TListItem Text="<%[Set on an access refused]%>" Value="accessRefused" />
+                    <com:TListItem Text="<%[Reset the output on a key detected]%>" Value="keyDetectedReset" />
+		</com:TListBox>
+	      </td>
+          </tr>
+
+	  <tr>
+	      <td valign="top" class="key"><span onmouseover="Tip('<%[Set the output function]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Output 6 function]%></span></td>
+	      <td>
+		<com:TListBox ID="output6_func" SelectionMode="Multiple" >
+                    <com:TListItem Text="<%[Not used]%>" Value="none" Selected="true" />
+                    <com:TListItem Text="<%[Set on an access accepted]%>" Value="accessAccepted" />
+                    <com:TListItem Text="<%[Set on an access refused]%>" Value="accessRefused" />
+                    <com:TListItem Text="<%[Reset the output on a key detected]%>" Value="keyDetectedReset" />
+		</com:TListBox>
+	      </td>
+          </tr>
+
+	  <tr>
+	      <td valign="top" class="key"><span onmouseover="Tip('<%[Set the output function]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Output 7 function]%></span></td>
+	      <td>
+		<com:TListBox ID="output7_func" SelectionMode="Multiple" >
+                    <com:TListItem Text="<%[Not used]%>" Value="none" Selected="true" />
+                    <com:TListItem Text="<%[Set on an access accepted]%>" Value="accessAccepted" />
+                    <com:TListItem Text="<%[Set on an access refused]%>" Value="accessRefused" />
+                    <com:TListItem Text="<%[Reset the output on a key detected]%>" Value="keyDetectedReset" />
+		</com:TListBox>
+	      </td>
+          </tr>
+
+          <tr>
+            <td valign="top" class="key"><span onmouseover="Tip('<%[Set time to set on the ouput when an event happens, in ms]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Time output 0]%></span></td>
+            <td>
+              <com:TTextBox CssClass="text_area" ID="output0Time" Text="0"/>
+            </td>
+          </tr>
+
+          <tr>
+            <td valign="top" class="key"><span onmouseover="Tip('<%[Set time to set on the ouput when an event happens, in ms]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Time output 1]%></span></td>
+            <td>
+              <com:TTextBox CssClass="text_area" ID="output1Time" Text="0"/>
+            </td>
+          </tr>
+
+          <tr>
+            <td valign="top" class="key"><span onmouseover="Tip('<%[Set time to set on the ouput when an event happens, in ms]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Time output 2]%></span></td>
+            <td>
+              <com:TTextBox CssClass="text_area" ID="output2Time" Text="0"/>
+            </td>
+          </tr>
+
+          <tr>
+            <td valign="top" class="key"><span onmouseover="Tip('<%[Set time to set on the ouput when an event happens, in ms]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Time output 3]%></span></td>
+            <td>
+              <com:TTextBox CssClass="text_area" ID="output3Time" Text="0"/>
+            </td>
+          </tr>
+
+          <tr>
+            <td valign="top" class="key"><span onmouseover="Tip('<%[Set time to set on the ouput when an event happens, in ms]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Time output 4]%></span></td>
+            <td>
+              <com:TTextBox CssClass="text_area" ID="output4Time" Text="0"/>
+            </td>
+          </tr>
+
+          <tr>
+            <td valign="top" class="key"><span onmouseover="Tip('<%[Set time to set on the ouput when an event happens, in ms]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Time output 5]%></span></td>
+            <td>
+              <com:TTextBox CssClass="text_area" ID="output5Time" Text="0"/>
+            </td>
+          </tr>
+
+          <tr>
+            <td valign="top" class="key"><span onmouseover="Tip('<%[Set time to set on the ouput when an event happens, in ms]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Time output 6]%></span></td>
+            <td>
+              <com:TTextBox CssClass="text_area" ID="output6Time" Text="0"/>
+            </td>
+          </tr>
+
+          <tr>
+            <td valign="top" class="key"><span onmouseover="Tip('<%[Set time to set on the ouput when an event happens, in ms]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Time output 7]%></span></td>
+            <td>
+              <com:TTextBox CssClass="text_area" ID="output7Time" Text="0"/>
+            </td>
+          </tr>
+
+        </tbody>
+      </table>
+  </fieldset>
+
+   <%include Application.common.template.footerContent %>
+</com:TContent>
