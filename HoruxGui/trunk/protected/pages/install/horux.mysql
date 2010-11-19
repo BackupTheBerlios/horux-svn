@@ -659,8 +659,9 @@ CREATE TABLE IF NOT EXISTS `hr_horux_controller` (
 `name` VARCHAR( 50 ) NOT NULL ,
 `ip` VARCHAR( 100 ) NOT NULL ,
 `type` SET( 'master', 'slave' ) NOT NULL ,
+`locked` int(11) NOT NULL,
 `comment` VARCHAR( 255 ) NOT NULL
 ) ENGINE = MYISAM DEFAULT CHARSET=utf8 ;
 
-INSERT INTO `hr_horux_controller` (`id`, `name`, `ip`, `type`, `comment`) VALUES
-(1, 'Master Horux Controller', 'localhost', 'master', 'Master Horux Controller');
+INSERT INTO `hr_horux_controller` (`id`, `name`, `ip`, `type`, `locked` ,`comment`) VALUES
+(1, 'Master Horux Controller', 'localhost', 'master', 0, 'Master Horux Controller');
