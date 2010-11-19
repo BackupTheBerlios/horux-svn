@@ -74,3 +74,4 @@ class HardwareAddList extends Page
         $this->Response->redirect($this->Service->constructUrl('hardware.HardwareList'));
     }
 }
+?>

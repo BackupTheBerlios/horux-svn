@@ -60,10 +60,15 @@ class Update extends PageList
                 $newFile = $update->updateFile($fileToUpdate);
 
                 if($newFile) {
+		    if(file_exists($fileToUpdate))
+		      unlink($fileToUpdate);
+
                     if(($handle = fopen($fileToUpdate, "w"))) {
                         fwrite($handle,$newFile);
 
                         fclose($handle);
+
+                        chmod($fileToUpdate, 0777);
                     }
                 }
 
