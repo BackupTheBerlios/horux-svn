@@ -132,7 +132,7 @@ class AddDevicePage extends Page
     }
 
     public function serverValidateName($sender, $param) {
-        $cmd = $this->db->createCommand("SELECT name FROM  hr_device WHERE type='".$this->deviceName." AND name=:name");
+        $cmd = $this->db->createCommand("SELECT name FROM  hr_device WHERE type='".$this->deviceName."' AND name=:name");
         $cmd->bindValue(":name",$this->name->SafeText,PDO::PARAM_STR);
         $array = $cmd->query()->readAll();
 
