@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'horux_rstcpip_converter.h'
 **
-** Created: Thu Nov 18 15:02:42 2010
+** Created: Fri Nov 19 09:40:23 2010
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.6.3)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_CHRstcpipC[] = {
        4,       // revision
        0,       // classname
        6,   14, // classinfo
-      10,   26, // methods
+      11,   26, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -50,7 +50,8 @@ static const uint qt_meta_data_CHRstcpipC[] = {
      411,  195,  195,  195, 0x09,
      429,  195,  195,  195, 0x09,
      461,  449,  195,  195, 0x09,
-     503,  195,  195,  195, 0x09,
+     515,  503,  195,  195, 0x09,
+     550,  195,  195,  195, 0x09,
 
        0        // eod
 };
@@ -69,6 +70,7 @@ static const char qt_meta_stringdata_CHRstcpipC[] = {
     "deviceAction(QString)\0deviceConnected()\0"
     "deviceDiconnected()\0socketError\0"
     "deviceError(QAbstractSocket::SocketError)\0"
+    "socketState\0abcd(QAbstractSocket::SocketState)\0"
     "readyRead()\0"
 };
 
@@ -114,10 +116,11 @@ int CHRstcpipC::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         case 6: deviceConnected(); break;
         case 7: deviceDiconnected(); break;
         case 8: deviceError((*reinterpret_cast< QAbstractSocket::SocketError(*)>(_a[1]))); break;
-        case 9: readyRead(); break;
+        case 9: abcd((*reinterpret_cast< QAbstractSocket::SocketState(*)>(_a[1]))); break;
+        case 10: readyRead(); break;
         default: ;
         }
-        _id -= 10;
+        _id -= 11;
     }
     return _id;
 }

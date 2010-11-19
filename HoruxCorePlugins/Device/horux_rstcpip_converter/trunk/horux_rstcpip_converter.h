@@ -54,7 +54,9 @@
     void deviceConnected();  // ce slot est appelée par la socket une fois la connexion avec le périphérique établit
     void deviceDiconnected();  // ce slot est appelé par la socket lors d'une déconnexion
     void deviceError( QAbstractSocket::SocketError socketError ); // permet d'obtenir les erreurs apparaissant sur la socket
+    void abcd( QAbstractSocket::SocketState socketState );
     void readyRead (); // ce slot appelé par la socket lorsque des données sont à lire depuis le périphérique
+    void checkConnection ();
  };
 #endif
 

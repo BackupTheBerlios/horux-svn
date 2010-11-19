@@ -10,6 +10,29 @@ CHRstcpipC::CHRstcpipC(QObject *parent) : QObject(parent)
 
    // création de la socket
    socket = new QTcpSocket(this);
+
+   /*// vérifie si la connexion est déjà établie
+   if(socket)
+   {
+      if(socket->isOpen())
+         return p;
+   }*/
+
+   // connexion des sigaux de la socket aux slots
+   connect(socket, SIGNAL(readyRead ()), this, SLOT(readyRead()));
+   connect(socket, SIGNAL(connected ()), this, SLOT(deviceConnected()));
+   connect(socket, SIGNAL(disconnected ()), this, SLOT(deviceDiconnected()));
+   connect(socket, SIGNAL(error ( QAbstractSocket::SocketError )), this, SLOT(deviceError( QAbstractSocket::SocketError )));
+   connect( socket,
+            SIGNAL(stateChanged(QAbstractSocket::SocketState)),
+            this,
+            SLOT(abcd(QAbstractSocket::SocketState)) );
+
+
+   // connexion au périphérique
+   //socket->connectToHost(ip, port.toInt());
+   //socket->connectToHost(ip, port.toInt(), QIODevice::ReadWrite);
+   socket->connectToHost("192.168.1.60", 4001, QIODevice::ReadWrite);
 }
 
 CDeviceInterface *CHRstcpipC::createInstance (QMap<QString, QVariant> config, QObject *parent )
@@ -70,21 +93,9 @@ void CHRstcpipC::setParameter(QString paramName, QVariant value)
 
 bool CHRstcpipC::open()
 {
-   // vérifie si la connexion est déjà établie
-   if(socket)
-   {
-      if(socket->isOpen())
-         return true;
-   }
-
-   // connexion des sigaux de la socket aux slots
-   connect(socket, SIGNAL(readyRead ()), this, SLOT(readyRead()));
-   connect(socket, SIGNAL(connected ()), this, SLOT(deviceConnected()));
-   connect(socket, SIGNAL(disconnected ()), this, SLOT(deviceDiconnected()));
-   connect(socket, SIGNAL(error ( QAbstractSocket::SocketError )), this, SLOT(deviceError( QAbstractSocket::SocketError )));
-
-   // connexion au périphérique
-   socket->connectToHost(ip, port.toInt());
+   timer = new QTimer(this);
+   connect(timer, SIGNAL(timeout()), this, SLOT(sendBufferContent()));
+   timer->start(3000);
 
    return true;
 }
@@ -132,12 +143,17 @@ void CHRstcpipC::deviceConnected()
    _isConnected = true;
    emit deviceConnection(id, true);
    qDebug() << "connected!";
+
+   socket->setSocketOption(QAbstractSocket::KeepAliveOption, 1);
 }
 
 void CHRstcpipC::deviceDiconnected()
 {
    close();
    qDebug() << "disconnected!";
+}
+void CHRstcpipC::abcd( QAbstractSocket::SocketState socketState ){
+   qDebug()<<"sdukafhjsdg";
 }
 
 void CHRstcpipC::deviceError( QAbstractSocket::SocketError socketError )
@@ -165,9 +181,13 @@ void CHRstcpipC::deviceError( QAbstractSocket::SocketError socketError )
    case QAbstractSocket::NetworkError:
       close();
       break;
+   case QAbstractSocket::RemoteHostClosedError:
+      close();
+      break;
    default:
       qDebug() << "Socket error (" << socketError << ") on the device" << name;
    }
+   qDebug() << socketError ;
 
 }
 
