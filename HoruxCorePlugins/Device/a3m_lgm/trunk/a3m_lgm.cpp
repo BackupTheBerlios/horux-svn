@@ -151,12 +151,12 @@ QString CA3mLgm::getScript()
       QByteArray ba((const char*)uncryptedFile,clear_len);
       QString script (ba);
       file.close();
-      qDebug() << "Protocol Gantner p.time loaded";
+      qDebug() << "Protocol A3m LGM loaded";
 
       return script;
    }
 
-   qDebug() << "Protocol Gantner p.time not loaded";
+   qDebug() << "Protocol A3m LGM not loaded";
    return "-1";
 }
 
