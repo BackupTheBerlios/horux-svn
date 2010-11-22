@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <xliff version="1.0">
- <file source-language="FR" target-language="fr" datatype="plaintext" original="messages" date="2010-11-10T10:05:11Z" product-name="messages">
+ <file source-language="FR" target-language="fr" datatype="plaintext" original="messages" date="2010-11-22T07:49:25Z" product-name="messages">
   <body>
   
 <trans-unit id="1" lock="1">
@@ -3931,174 +3931,251 @@
 <target>Support de PDO-MYSQL</target>
 </trans-unit>
 
-<trans-unit id="743">
-<source>PEAR XML/RPC support</source>
-<target>Support de PEAR XML/RPC</target>
-</trans-unit>
 
-<trans-unit id="744">
+
+<trans-unit id="743">
 <source>Memory limit</source>
 <target>Limitation de m&#xE9;moire</target>
 </trans-unit>
 
-<trans-unit id="745">
+<trans-unit id="744">
 <source>Select the shortcut</source>
 <target>S&#xE9;lectionner un raccourci</target>
 </trans-unit>
 
-<trans-unit id="746">
+<trans-unit id="745">
 <source>Shortcut</source>
 <target>Raccourci</target>
 </trans-unit>
 
-<trans-unit id="747">
+<trans-unit id="746">
 <source>-- Select a shortcut --</source>
 <target>-- S&#xE9;lectionner un raccourci --</target>
 </trans-unit>
 
-<trans-unit id="748">
+<trans-unit id="747">
 <source>Enabled</source>
 <target>Activ&#xE9;</target>
 </trans-unit>
 
-<trans-unit id="749">
+<trans-unit id="748">
 <source>Click here to enable or&lt;br/&gt; disable the device</source>
 <target>Cliquez ici pour activ&#xE9; ou&lt;br/&gt;d&#xE9;sactiv&#xE9; le p&#xE9;riph&#xE9;rique</target>
 </trans-unit>
 
-<trans-unit id="750">
+<trans-unit id="749">
 <source>Add an Horux Controller</source>
 <target>Ajouter un contr&#xF4;lleur Horux</target>
 </trans-unit>
 
-<trans-unit id="751">
+<trans-unit id="750">
 <source>Enter a name for this Horux Controller</source>
 <target>Entrez un nom pour ce contr&#xF4;lleur Horux</target>
 </trans-unit>
 
-<trans-unit id="752">
+<trans-unit id="751">
 <source>Insert the IP address or the dns name</source>
 <target>Entrez une adresse IP ou un nom dns</target>
 </trans-unit>
 
-<trans-unit id="753">
+<trans-unit id="752">
 <source>IP/DNS</source>
 <target>IP/DNS</target>
 </trans-unit>
 
-<trans-unit id="754">
+<trans-unit id="753">
 <source>Check it if this Horux Controller is a master</source>
 <target>Cochez si ce contr&#xF4;lleur Horux est un contr&#xF4;leur ma&#xEE;tre</target>
 </trans-unit>
 
-<trans-unit id="755">
+<trans-unit id="754">
 <source>Master</source>
 <target>Ma&#xEE;tre</target>
 </trans-unit>
 
-<trans-unit id="756">
+<trans-unit id="755">
 <source>The Horux Controller was added successfully</source>
 <target>Le contr&#xF4;lleur Horux a &#xE9;t&#xE9; ajout&#xE9; avec succ&#xE8;s</target>
 </trans-unit>
 
-<trans-unit id="757">
+<trans-unit id="756">
 <source>The Horux Controller was not added</source>
 <target>Le contr&#xF4;lleur Horux n'a pas &#xE9;t&#xE9; ajout&#xE9;</target>
 </trans-unit>
 
-<trans-unit id="758">
+<trans-unit id="757">
 <source>Horux Controller List</source>
 <target>Liste des contr&#xF4;lleurs Horux</target>
 </trans-unit>
 
-<trans-unit id="759">
+<trans-unit id="758">
 <source>Cannot delete the master Horux Controller</source>
 <target>Ne peut pas supprimer un contr&#xF4;lleur Horux ma&#xEE;tre</target>
 </trans-unit>
 
-<trans-unit id="760">
+<trans-unit id="759">
 <source>{n} Horux Controller was deleted</source>
 <target>{n} contr&#xF4;lleur Horux ont &#xE9;t&#xE9; supprim&#xE9;s</target>
 </trans-unit>
 
-<trans-unit id="761">
+<trans-unit id="760">
 <source>Modify an Horux Controller</source>
 <target>Modifier un contr&#xF4;lleur Horux</target>
 </trans-unit>
 
-<trans-unit id="762">
+<trans-unit id="761">
 <source>The Horux Controller was modified successfully</source>
 <target>Le contr&#xF4;lleur Horux a &#xE9;t&#xE9; modifi&#xE9; avec succ&#xE8;s</target>
 </trans-unit>
 
-<trans-unit id="763">
+<trans-unit id="762">
 <source>The Horux Controller was not modified</source>
 <target>Le contr&#xF4;lleur Horux n'a pas &#xE9;t&#xE9; modifi&#xE9;</target>
 </trans-unit>
 
-<trans-unit id="764">
+<trans-unit id="763">
 <source>Horux Controller</source>
 <target>Contr&#xF4;lleur Horux</target>
 </trans-unit>
 
-<trans-unit id="765">
+<trans-unit id="764">
 <source>Update</source>
 <target>Mise &#xE0; jour</target>
 </trans-unit>
 
-<trans-unit id="766">
+<trans-unit id="765">
 <source>Horux Update</source>
 <target>Mise &#xE0; jour de Horux</target>
 </trans-unit>
 
-<trans-unit id="767">
+<trans-unit id="766">
 <source>Horux Gui files</source>
 <target>Fichier de Horux GUI</target>
 </trans-unit>
 
-<trans-unit id="768">
+<trans-unit id="767">
 <source>MD5</source>
 <target>MD5</target>
 </trans-unit>
 
-<trans-unit id="769">
+<trans-unit id="768">
 <source>Diff</source>
 <target>Diff&#xE9;rence</target>
 </trans-unit>
 
-<trans-unit id="770">
+<trans-unit id="769">
 <source>Show difference</source>
 <target>Voir les diff&#xE9;rences</target>
 </trans-unit>
 
-<trans-unit id="771">
+<trans-unit id="770">
 <source>Show changes</source>
 <target>Voir les changements</target>
 </trans-unit>
 
-<trans-unit id="772">
+<trans-unit id="771">
 <source>Missing</source>
 <target>Manquant</target>
 </trans-unit>
 
-<trans-unit id="773">
+<trans-unit id="772">
 <source>Your version is not up to date</source>
 <target>Votre version n'est pas &#xE0; jour</target>
 </trans-unit>
 
-<trans-unit id="774">
+<trans-unit id="773">
 <source>Your version is up to date</source>
 <target>Votre version est &#xE0; jour</target>
 </trans-unit>
 
-<trans-unit id="775">
+<trans-unit id="774">
 <source>Enter the birsthday of the user</source>
 <target>Entrez l\'anniversaire de l'utilisateur</target>
 </trans-unit>
 
-<trans-unit id="776">
+<trans-unit id="775">
 <source>Birthday</source>
 <target>Date d'anniversaire</target>
+</trans-unit>
+
+<trans-unit id="776">
+<source>The device was added successfully</source>
+<target>Le p&#xE9;riph&#xE9;rique a &#xE9;t&#xE9; ajout&#xE9; avec succ&#xE8;s</target>
+</trans-unit>
+
+<trans-unit id="777">
+<source>The device was not added</source>
+<target>Le p&#xE9;riph&#xE9;rique n'a pas &#xE9;t&#xE9; ajout&#xE9;</target>
+</trans-unit>
+
+<trans-unit id="778">
+<source>The device was not saved</source>
+<target>Le p&#xE9;riph&#xE9;rique n'a pas &#xE9;t&#xE9; sauv&#xE9;</target>
+</trans-unit>
+
+<trans-unit id="779">
+<source>-- None --</source>
+<target>-- Aucun --</target>
+</trans-unit>
+
+<trans-unit id="780">
+<source>The device was modified successfully</source>
+<target>Le p&#xE9;riph&#xE9;rique a &#xE9;t&#xE9; modifi&#xE9; avec succ&#xE8;s</target>
+</trans-unit>
+
+<trans-unit id="781">
+<source>The device was not modified</source>
+<target>Le p&#xE9;riph&#xE9;rique n'a pas &#xE9;t&#xE9; modifi&#xE9;</target>
+</trans-unit>
+
+<trans-unit id="782">
+<source>General parameters</source>
+<target>Param&#xE8;tres g&#xE9;n&#xE9;raux</target>
+</trans-unit>
+
+<trans-unit id="783">
+<source>Enter a &lt;strong&gt;unique&lt;/strong&gt; name for this device</source>
+<target>Entrez un nom unique pour ce p&#xE9;riph&#xE9;rique</target>
+</trans-unit>
+
+<trans-unit id="784">
+<source>Set if the device musst be active or not</source>
+<target>Cocher si ce p&#xE9;riph&#xE9;rique est actif</target>
+</trans-unit>
+
+<trans-unit id="785">
+<source>Is Active</source>
+<target>Actif</target>
+</trans-unit>
+
+<trans-unit id="786">
+<source>Allow to log the communication in a log file</source>
+<target>Permet la journalisation de la communication avec le p&#xE9;riph&#xE9;rique</target>
+</trans-unit>
+
+<trans-unit id="787">
+<source>Set on which controller the device is connected</source>
+<target>S&#xE9;lectionner quel controller g&#xE8;re ce p&#xE9;riph&#xE9;rique</target>
+</trans-unit>
+
+<trans-unit id="788">
+<source>Horux controller</source>
+<target>Controlleur Horux</target>
+</trans-unit>
+
+<trans-unit id="789">
+<source>Set on which device this device&lt;br/&gt;is connected. Set none if the device is not connected to any device</source>
+<target>S&#xE9;lectionner le p&#xE9;rip&#xE9;rique parent au quel le p&#xE9;riph&#xE9;rique est connect&#xE9;. Mettre none, si celui-ci est d&#xE9;j&#xE0; le p&#xE9;riph&#xE9;rique parent.</target>
+</trans-unit>
+
+<trans-unit id="790">
+<source>Parent device</source>
+<target>P&#xE9;riph&#xE9;rique parent</target>
+</trans-unit>
+
+<trans-unit id="791">
+<source>You could insert a description for this device.</source>
+<target>Vous pouvez ins&#xE9;rer une description pour ce p&#xE9;riph&#xE9;rique</target>
 </trans-unit>
 </body>
 </file>
