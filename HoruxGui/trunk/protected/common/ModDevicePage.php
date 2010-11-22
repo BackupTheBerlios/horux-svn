@@ -51,7 +51,7 @@ class ModDevicePage extends Page
 
     public function setData() {
         $cmd = $this->db->createCommand( "SELECT * FROM hr_".$this->deviceName." AS ai LEFT JOIN hr_device AS d ON d.id=ai.id_device  WHERE ai.id_device=:id" );
-        $cmd->bindParameter(":id",$this->id->Value, PDO::PARAM_INT);
+        $cmd->bindValue(":id",$this->id->Value, PDO::PARAM_INT);
         $query = $cmd->query();
         $data = array();
 
