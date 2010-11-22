@@ -1,21 +1,38 @@
-#include "a3m_lgm.h"
+/***************************************************************************
+ *   Copyright (C) 2010 by Thierry Forchelet                               *
+ *   thierry.forchelet@letux.ch                                            *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 3 of the License.        *
+ *                                                                         *
+ *                                                                         *
+ *   This program is distributed in the hope that it will be useful,       *
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
+ *   GNU General Public License for more details.                          *
+ *                                                                         *
+ *   You should have received a copy of the GNU General Public License     *
+ *   along with this program; if not, write to the                         *
+ *   Free Software Foundation, Inc.,                                       *
+ *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
+ ***************************************************************************/
 
+#include "a3m_lgm.h"
 #include "QTimer"
 #include "../../horux_rstcpip_converter/trunk/horux_rstcpip_converter.h"
 
 CA3mLgm::CA3mLgm(QObject *parent) : QObject(parent)
 {
-   // initialisation des variables
+   // Init default values
    _isConnected = false;
    readerAction = 0;
    deviceParent = NULL;
-   // on ajoute les fonctions disponible pour les sous systèmes (alarme, accès)
+   ecbDecryption = NULL;
+
+   // Add the support of Horux's devices function
    addFunction("accessRefused", CA3mLgm::s_accessRefused);
    addFunction("accessAccepted", CA3mLgm::s_accessAccepted);
-   status = FREE;
-   busyCounter = 0;
-   initReader = true;
-   ecbDecryption = NULL;
 }
 
 CDeviceInterface *CA3mLgm::createInstance (QMap<QString, QVariant> config, QObject *parent )
@@ -77,7 +94,12 @@ bool CA3mLgm::open()
    if (_isConnected)
       return true;
 
-   // get the encrypted Gantner protocol
+   // Init values
+   busyCounter = 0;
+   status = FREE;
+   initReader = true;
+
+   // get the encrypted A3M protocol
    QString script = getScript();
 
    if(script != "-1")
@@ -87,7 +109,7 @@ bool CA3mLgm::open()
 
       if(engine.hasUncaughtException())
       {
-         QString xml = CXmlFactory::deviceEvent(QString::number(id), "1017", "A3m script protocol for LGM error (line:" + QString::number(engine.uncaughtExceptionLineNumber()) + ","+ result.toString() + ")");
+         QString xml = CXmlFactory::deviceEvent(QString::number(id), "1017", "A3M script protocol for LGM error (line:" + QString::number(engine.uncaughtExceptionLineNumber()) + ","+ result.toString() + ")");
          emit deviceEvent(xml);
          return false;
       }
@@ -100,16 +122,6 @@ bool CA3mLgm::open()
       CHRstcpipC* parent = (CHRstcpipC*) deviceParent;
       socket = parent->getSocket();
       _isConnected = parent->isOpened();
-
-
-
-      //QScriptValue result = engine.evaluate("getFtpPassword");
-      result = engine.evaluate("getFtpPassword");
-      QString password = result.call().toString();
-
-      result = engine.evaluate("getFtpUsername");
-      QString username = result.call().toString();
-      qDebug()<<password<<username;
 
       return true;
    }
@@ -151,12 +163,12 @@ QString CA3mLgm::getScript()
       QByteArray ba((const char*)uncryptedFile,clear_len);
       QString script (ba);
       file.close();
-      qDebug() << "Protocol A3m LGM loaded";
+      qDebug() << "Protocol A3M LGM loaded";
 
       return script;
    }
 
-   qDebug() << "Protocol A3m LGM not loaded";
+   qDebug() << "Protocol A3M LGM not loaded";
    return "-1";
 }
 
@@ -166,18 +178,17 @@ bool CA3mLgm::decrypt(const unsigned char *encrypt_msg,
                       int *clear_len)
 {
    int padding = 0;
-   int blockNbre = encrypt_len / 16; //! How many 16byte blocks do we have?
-   padding = 16 - (encrypt_len % 16); //! How many padding bytes do we have to add?
+   int blockNbre = encrypt_len / 16; // How many 16byte blocks do we have?
+   padding = 16 - (encrypt_len % 16); // How many padding bytes do we have to add?
 
-   //! if the padding is less that 16, the message is wrong
+   // if the padding is less that 16, the message is wrong
    if(padding < 16)
    {
       return false;
    }
 
-
    int index = 0;
-   //! uncrypt each 16 bytes blocks
+   // uncrypt each 16 bytes blocks
    for(int i = 0; i<blockNbre; i++)
    {
       ecbDecryption->ProcessData( (byte*)clear_msg+index, (const byte*)encrypt_msg+index, 16);
@@ -189,8 +200,12 @@ bool CA3mLgm::decrypt(const unsigned char *encrypt_msg,
 }
 
 void CA3mLgm::connection(int deviceId, bool isConnected) {
-   if (deviceId == deviceParent->getParameter("id"))
-      _isConnected = isConnected;
+   if (deviceId == deviceParent->getParameter("id")) {
+      if (isConnected)
+         open();
+      else
+         close();
+   }
 }
 
 void CA3mLgm::sendBufferContent() {
@@ -235,7 +250,7 @@ void CA3mLgm::sendBufferContent() {
    if(pendingMessage.size() > 0 && status == FREE)
    {
       baNext = pendingMessage.takeFirst();
-      if(baNext.size())
+      if(baNext.size() && socket)
       {
          status = BUSY;
          socket->write(baNext, baNext.size());
@@ -247,10 +262,14 @@ void CA3mLgm::close()
 {
    _isConnected = false;
 
-   pendingMessage.clear();
-   delete timer;
+   if (timer != NULL) {
+      delete timer;
+      timer = NULL;
+   }
 
-   // émet le signal pour les sous systèmes
+   pendingMessage.clear();
+
+   // Emit the signal for the subsystems
    emit deviceConnection(id, false);
 }
 
@@ -290,10 +309,10 @@ void CA3mLgm::hasMsg()
    QString idCard = "0x";
    int msgSize = msg.size();
 
-   //! do we read any byte
+   // Do we read any byte
    if(msgSize == 0) return;
 
-   //! do we have at least 7 bytes
+   // Do we have at least 7 bytes
    if(msgSize >= 7)
    {
       uchar etxPos = msg.at(3)+5;
@@ -327,7 +346,7 @@ void CA3mLgm::hasMsg()
                break;
             case LGM_CMD_WIEGAND_FORMAT:
             case 0X00:
-               // Has the reader is in passive Wiegand mode (or "mode" SEQ=0 by default) when it give us keys it return the same SEQ as we defined for Wiegand format...
+               // As the reader is in passive Wiegand mode (or "mode" SEQ=0 by default) when it give us keys it return the same SEQ as we defined for Wiegand format...
                if (status == FREE) // If we don't wait for a new Wiegand format confirmation, we have a card
                {
                   key = formatData(msg.mid(5, 7), serialNumberFormat);
@@ -357,6 +376,7 @@ void CA3mLgm::hasMsg()
          {
             if (DEBUG) qDebug() << "Checksum error";
             alarmXml = CXmlFactory::deviceEvent(QString::number(id), "1017",QString(__FUNCTION__) + ": checksum error");
+            msg.clear();
          }
 
          if(alarmXml != "")
@@ -420,7 +440,7 @@ QByteArray CA3mLgm::sendCmd(CMD_TYPE cmd, QByteArray params)
    for (int i = 0; i < ba.size(); i++)
       ba[i] = (uchar)lst.at(i).toDouble();
 
-   // (Always had to resend later, so don't send know...)
+   // (Always have to resend later, so don't send know...)
    /*if (!pendingMessage.size() && status == FREE)
    {
       status = BUSY;
@@ -520,24 +540,21 @@ void CA3mLgm::deviceAction(QString xml)
 
 void CA3mLgm::logComm(uchar *ba, bool isReceive, int len)
 {
-   // a-t-on besoin de journaliser
    if(!_isLog)
       return;
 
-   // date du message
    QString date = QDateTime::currentDateTime().toString(Qt::ISODate);
 
-   // afin de pouvoir être exploiter par un Horux Gui, nous vérifions les permissions du fichier pour être sûre qu'il soit exploitable le serveur web
    checkPermision(logPath + "log_" + name + ".html");
 
-   // ouverture du fichier de journalisations
+   // Open the log file
    QFile file(logPath + "log_" + name + ".html");
    if (!file.open(QIODevice::Append | QIODevice::Text))
       return;
 
-   QString s = "",s1;
-
-   for(int i=0;i<len; i++)
+   // Get a readable content from the received byte array
+   QString s = "", s1;
+   for(int i=0; i<len; i++)
       s += s1.sprintf("%02X ",ba[i]);
 
    QTextStream out(&file);
@@ -571,6 +588,7 @@ void CA3mLgm::s_accessRefused(QObject *p, QMap<QString, QVariant>/*params*/)
    ba[3] = 0X00;
    ba[4] = 0X00;
    ba[5] = 0X01;
+
    pThis->sendCmd(ACTIVE_BUZZER, ba);
    pThis->sendCmd(CMD_WIEGAND_FORMAT);
 }
@@ -596,6 +614,7 @@ void CA3mLgm::s_accessAccepted(QObject *p, QMap<QString, QVariant>/*params*/)
    ba[3] = 0X00;
    ba[4] = 0X00;
    ba[5] = 0X01;
+
    pThis->sendCmd(ACTIVE_BUZZER, ba);
    pThis->sendCmd(CMD_WIEGAND_FORMAT);
 }

@@ -8,11 +8,10 @@ CHRstcpipC::CHRstcpipC(QObject *parent) : QObject(parent)
    _isConnected = false;
    ip = "";
    firstConnCheck = true;
-
-   // création de la socket
-   socket = new QTcpSocket(this);
-
+   socket = NULL;
    testSocket = new QTcpSocket(this);
+   timer = new QTimer(this);
+   connect(timer, SIGNAL(timeout()), this, SLOT(checkConnection()));
 }
 
 CDeviceInterface *CHRstcpipC::createInstance (QMap<QString, QVariant> config, QObject *parent )
@@ -78,6 +77,8 @@ bool CHRstcpipC::open()
    {
       return true;
    }
+   else
+      socket = new QTcpSocket(this);
 
    // connexion des sigaux de la socket aux slots
    connect(socket, SIGNAL(readyRead ()), this, SLOT(readyRead()));
@@ -87,11 +88,12 @@ bool CHRstcpipC::open()
 
    connect(testSocket, SIGNAL(error ( QAbstractSocket::SocketError )), this, SLOT(deviceTestState( QAbstractSocket::SocketError )));
 
+   testSocket->close();
+   testSocket->abort();
+
    // connexion au périphérique
    socket->connectToHost(ip, port.toInt());
 
-   timer = new QTimer(this);
-   connect(timer, SIGNAL(timeout()), this, SLOT(checkConnection()));
    timer->start(10000);
 
    return true;
@@ -102,12 +104,14 @@ void CHRstcpipC::checkConnection() {
    {
       qDebug()<<testSocket->isOpen();
       if (testSocket->isOpen()) {
-         _isConnected = true;
-         emit deviceConnection(id, true);
+         //_isConnected = true;
+         //emit deviceConnection(id, true);
+         open();
       }
       else {
-         _isConnected = false;
-         emit deviceConnection(id, false);
+         //_isConnected = false;
+         //emit deviceConnection(id, false);
+         close();
       }
    }
    else
@@ -126,7 +130,17 @@ void CHRstcpipC::close()
    {
       socket->close();
       socket->deleteLater();
+      socket = NULL;
    }
+
+   /*if(testSocket)
+   {
+      testSocket->close();
+      testSocket->deleteLater();
+   }*/
+
+   /*if (timer)
+      delete timer;*/
 
    // émet le signal pour les sous systèmes
    emit deviceConnection(id, false);
