@@ -347,10 +347,10 @@ class tracking extends PageList
                 else
                     $item->CComment->Comment->ForeColor = "red";
 
-                if($item->DataItem['identicator'] == '') {
+                if($item->DataItem['identificator'] == '') {
                     $item->KKey->Key->Text = $item->DataItem['key'];
                 } else {
-                    $item->KKey->Key->Text = $item->DataItem['identicator'];
+                    $item->KKey->Key->Text = $item->DataItem['identificator'];
                 }
             }
         }

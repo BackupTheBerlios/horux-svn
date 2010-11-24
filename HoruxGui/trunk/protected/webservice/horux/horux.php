@@ -264,6 +264,8 @@ class horux
 
         $nreOfRecord = 0;
 
+        $ids = '';
+
         if("trackingDump" == $doc->getTagName())
         {
             if($doc->getHasElement())

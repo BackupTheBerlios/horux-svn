@@ -35,7 +35,7 @@ class MTAuthManager extends TAuthManager {
 
         // if the soap request is done by the server himself, do not check the password
         if( $app->getService()->getID() == 'soap' &&
-            $_SERVER[SERVER_ADDR] === $_SERVER[REMOTE_ADDR])
+            $_SERVER['SERVER_ADDR'] === $_SERVER['REMOTE_ADDR'])
         {
             return;
         }
