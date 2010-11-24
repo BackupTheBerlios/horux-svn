@@ -1171,7 +1171,7 @@ void CVeloPark::checkDb()
                                 if(queryHasSubscription.next()) {
                                     if(queryHasSubscription.value(6).toDateTime() <= QDateTime::currentDateTime()) {
                                         isSubscription = true;
-                                        qDebug() << "AAAAAAAAAAAAAAAAAa";
+
                                     }
                                 }
 
