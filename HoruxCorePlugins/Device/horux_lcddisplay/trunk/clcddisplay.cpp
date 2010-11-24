@@ -137,7 +137,7 @@ bool CLCDDisplay::open()
   connect(socket, SIGNAL(connected ()), this, SLOT(deviceConnected()));
   connect(socket, SIGNAL(disconnected ()), this, SLOT(deviceDiconnected()));
   connect(socket, SIGNAL(error ( QAbstractSocket::SocketError )), this, SLOT(deviceError( QAbstractSocket::SocketError )));
-  qDebug() << ip<<":"<<port;
+
   socket->connectToHost(ip, port);
 
   return true;
@@ -532,6 +532,12 @@ void CLCDDisplay::s_displayMessage(QObject *p, QMap<QString, QVariant>params)
 
      //start a single shot timer to redisplay the default message after X seconds
      pThis->messageTimer->start(pThis->messageTimerDisplay * 1000);
+}
+
+void CLCDDisplay::connection(int deviceId, bool isConnected) {
+    if(deviceId == deviceParent->getParameter("id")) {
+        close();
+    }
 }
 
 Q_EXPORT_PLUGIN2(clcddisplay, CLCDDisplay);

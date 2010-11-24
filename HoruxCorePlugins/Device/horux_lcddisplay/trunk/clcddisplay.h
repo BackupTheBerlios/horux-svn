@@ -79,6 +79,8 @@ public slots:
     void deviceError( QAbstractSocket::SocketError socketError );
     void readyRead ();
 
+    void connection(int deviceId, bool isConnected);
+
 signals:
     void deviceEvent(QString xmlEvent);
     void deviceInputChange(int deviceId, int in, bool status);
