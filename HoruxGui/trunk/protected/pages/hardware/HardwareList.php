@@ -291,8 +291,6 @@ class HardwareList extends PageList
 
         if($sender->ImageUrl == "./themes/letux/images/menu/icon-16-checkin.png")
         {
-            $this->log("Enable the device ".$data2['name']);
-
             $flag = 0;
             $sender->ImageUrl = "./themes/letux/images/menu/icon-16-checkin.png";
             $cmd->bindValue(":flag",$flag);
@@ -316,6 +314,7 @@ class HardwareList extends PageList
             $cmd2 = $cmd2->query();
             $data2 = $cmd2->read();
 
+            $this->log("Enable the device ".$data2['name']);
         }
         $cmd->execute();
 
