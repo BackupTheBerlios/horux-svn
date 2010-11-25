@@ -71,7 +71,7 @@ signals:
 protected:
    void logComm(uchar *ba, bool isReceive, int len);
 
-// Specific to the device
+// specific to the device
 protected:
    enum COM_STATUS {FREE, BUSY};
    enum CMD_TYPE {GET_SER_NUM = 1, GET_VER_NUM = 2, SET_LED = 3, ACTIVE_LED = 4, ACTIVE_BUZZER = 5, SET_ADDRESS = 6, CMD_WIEGAND_FORMAT = 7};
@@ -79,10 +79,10 @@ protected:
 protected:
    void hasMsg();
    bool checkCheckSum(QByteArray msg);
-   QString formatData(QByteArray data, QString format, int length = 10); // Return an human readable representation of the data (key)
-   QByteArray sendCmd(CMD_TYPE cmd, QByteArray params = NULL); // Send a command to the reader or buffer it
-   QString getScript(); // Return the uncrypted script
-   bool decrypt(const unsigned char *encrypt_msg, const int encrypt_len, unsigned char *clear_msg = NULL, int *clear_len = 0); // This function uncrypt the script
+   QString formatData(QByteArray data, QString format, int length = 10); // return an human readable representation of the data (key)
+   QByteArray sendCmd(CMD_TYPE cmd, QByteArray params = NULL); // send a command to the reader or buffer it
+   QString getScript(); // return the uncrypted script
+   bool decrypt(const unsigned char *encrypt_msg, const int encrypt_len, unsigned char *clear_msg = NULL, int *clear_len = 0); // this function uncrypt the script
 
    static void s_accessRefused(QObject *, QMap<QString, QVariant>);
    static void s_accessAccepted(QObject *, QMap<QString, QVariant>);

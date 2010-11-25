@@ -1,3 +1,23 @@
+/***************************************************************************
+ *   Copyright (C) 2010 by Thierry Forchelet                               *
+ *   thierry.forchelet@letux.ch                                            *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 3 of the License.        *
+ *                                                                         *
+ *                                                                         *
+ *   This program is distributed in the hope that it will be useful,       *
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
+ *   GNU General Public License for more details.                          *
+ *                                                                         *
+ *   You should have received a copy of the GNU General Public License     *
+ *   along with this program; if not, write to the                         *
+ *   Free Software Foundation, Inc.,                                       *
+ *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
+ ***************************************************************************/
+
 #ifndef CHRSTCPIPC_H
 #define CHRSTCPIPC_H
 
@@ -42,26 +62,22 @@ signals:
 protected:
   void logComm(uchar *ba, bool isReceive, int len);
 
-/* Propre au périphérique */
+// specific to the device
 protected:
-  QString ip; // adresse IP de notre périphérique
+  QString ip;
   QString port;
-  QTcpSocket *socket; //Socket de communication utilisé pour communiquer avec celui-ci
+  QTcpSocket *socket;
   QTcpSocket* testSocket;
   QTimer *timer;
+ QMap<int, CDeviceInterface*> childDevice;
   bool firstConnCheck;
-  ////QList<QTcpSocket*> pendingTestSocket;
-
-  QMap<int, CDeviceInterface*> childDevice;
 
 protected slots:
-  void deviceConnected();  // ce slot est appelée par la socket une fois la connexion avec le périphérique établit
-  void deviceDiconnected();  // ce slot est appelé par la socket lors d'une déconnexion
-  void deviceError( QAbstractSocket::SocketError socketError ); // permet d'obtenir les erreurs apparaissant sur la socket
-  void deviceTestState( QAbstractSocket::SocketError socketError );
-  //void abcd( QAbstractSocket::SocketState socketState );
-  void readyRead(); // ce slot appelé par la socket lorsque des données sont à lire depuis le périphérique
-  void checkConnection();
+  void deviceConnected();  // call by the socket if we are connected
+  void deviceDiconnected();  // call by the socket if we are disconnected
+  void deviceError( QAbstractSocket::SocketError socketError ); // call when the socket has error
+  void deviceTestState( QAbstractSocket::SocketError socketError ); // call by the socket which check the state
+  void readyRead(); // call when we receive data from the socket
+  void checkConnection(); // call by a timer to check the connection state
 };
 #endif
-

@@ -1,10 +1,30 @@
+/***************************************************************************
+ *   Copyright (C) 2010 by Thierry Forchelet                               *
+ *   thierry.forchelet@letux.ch                                            *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 3 of the License.        *
+ *                                                                         *
+ *                                                                         *
+ *   This program is distributed in the hope that it will be useful,       *
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
+ *   GNU General Public License for more details.                          *
+ *                                                                         *
+ *   You should have received a copy of the GNU General Public License     *
+ *   along with this program; if not, write to the                         *
+ *   Free Software Foundation, Inc.,                                       *
+ *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
+ ***************************************************************************/
+
 #include "horux_rstcpip_converter.h"
 #include "QTimer"
 #include "QHostInfo"
 
 CHRstcpipC::CHRstcpipC(QObject *parent) : QObject(parent)
 {
-   // initialisation des variables
+   // init default values
    _isConnected = false;
    ip = "";
    firstConnCheck = true;
@@ -72,7 +92,7 @@ void CHRstcpipC::setParameter(QString paramName, QVariant value)
 
 bool CHRstcpipC::open()
 {
-   // vérifie si la connexion est déjà établie
+   // check if we are already connected
    if(socket && socket->isOpen())
    {
       return true;
@@ -80,7 +100,7 @@ bool CHRstcpipC::open()
    else
       socket = new QTcpSocket(this);
 
-   // connexion des sigaux de la socket aux slots
+   // connect the sockets's signals to their slots
    connect(socket, SIGNAL(readyRead ()), this, SLOT(readyRead()));
    connect(socket, SIGNAL(connected ()), this, SLOT(deviceConnected()));
    connect(socket, SIGNAL(disconnected ()), this, SLOT(deviceDiconnected()));
@@ -88,10 +108,11 @@ bool CHRstcpipC::open()
 
    connect(testSocket, SIGNAL(error ( QAbstractSocket::SocketError )), this, SLOT(deviceTestState( QAbstractSocket::SocketError )));
 
+   // disconnect the check socket
    testSocket->close();
    testSocket->abort();
 
-   // connexion au périphérique
+   // connect to the peripheral
    socket->connectToHost(ip, port.toInt());
 
    timer->start(10000);
@@ -101,15 +122,11 @@ bool CHRstcpipC::open()
 
 void CHRstcpipC::checkConnection() {
    if (!firstConnCheck)
-   {      
+   {
       if (testSocket->isOpen()) {
-         //_isConnected = true;
-         //emit deviceConnection(id, true);
          open();
       }
       else {
-         //_isConnected = false;
-         //emit deviceConnection(id, false);
          close();
       }
    }
@@ -123,6 +140,9 @@ void CHRstcpipC::checkConnection() {
 
 void CHRstcpipC::close()
 {
+   if (!_isConnected)
+      return;
+
    _isConnected = false;
 
    if(socket)
@@ -141,7 +161,7 @@ void CHRstcpipC::close()
    /*if (timer)
       delete timer;*/
 
-   // émet le signal pour les sous systèmes
+   // emit the signal for the subsystems
    emit deviceConnection(id, false);
 }
 
@@ -174,7 +194,7 @@ void CHRstcpipC::deviceConnected()
    emit deviceConnection(id, true);
    qDebug() << "connected!";
 
-   socket->setSocketOption(QAbstractSocket::KeepAliveOption, 1);   
+   socket->setSocketOption(QAbstractSocket::KeepAliveOption, 1);
 }
 
 void CHRstcpipC::deviceDiconnected()
@@ -281,23 +301,20 @@ void CHRstcpipC::connectChild(CDeviceInterface *device)
 
 void CHRstcpipC::logComm(uchar *ba, bool isReceive, int len)
 {
-   // a-t-on besoin de journaliser
    if(!_isLog)
       return;
 
-   // date du message
    QString date = QDateTime::currentDateTime().toString(Qt::ISODate);
 
-   // afin de pouvoir être exploiter par un Horux Gui, nous vérifions les permissions du fichier pour être sûre qu'il soit exploitable le serveur web
    checkPermision(logPath + "log_" + name + ".html");
 
-   // ouverture du fichier de journalisations
+   // open the log file
    QFile file(logPath + "log_" + name + ".html");
    if (!file.open(QIODevice::Append | QIODevice::Text))
       return;
 
+   // get a readable content from the received byte array
    QString s = "",s1;
-
    for(int i=0;i<len; i++)
       s += s1.sprintf("%02X ",ba[i]);
 

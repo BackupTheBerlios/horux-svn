@@ -111,12 +111,16 @@ void CVeloPark::deviceEvent(QString xml)
             }
         }
 
+        // get current date and time
+        QDate date = QDate::currentDate();
+        QTime time = QTime::currentTime();
+
         // insert in the tracking
         QString query = "INSERT INTO `hr_tracking` (  `id_user` , `id_key` , `time` , `date` , `id_entry` , `is_access` , `id_comment`, `key` ) VALUES ('" +
                                         params["userId"].toString() +
                                         "','" +
                                         keyId +
-                                        "', '" + params["time"].toString()  + "', '" + params["date"].toString() + "', '" +//todo
+                                        "', '" + time.toString() + "', '" + date.toString("yyyy-MM-dd") + "', '" +
                                         params["deviceId"].toString() +
                                         "', '" +
                                         isAccessStr +

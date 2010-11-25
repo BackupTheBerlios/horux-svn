@@ -24,13 +24,13 @@
 
 CA3mLgm::CA3mLgm(QObject *parent) : QObject(parent)
 {
-   // Init default values
+   // init default values
    _isConnected = false;
    readerAction = 0;
    deviceParent = NULL;
    ecbDecryption = NULL;
 
-   // Add the support of Horux's devices function
+   // add the support of Horux's devices function
    addFunction("accessRefused", CA3mLgm::s_accessRefused);
    addFunction("accessAccepted", CA3mLgm::s_accessAccepted);
 }
@@ -104,7 +104,7 @@ bool CA3mLgm::open()
    if (_isConnected)
       return true;
 
-   // Init values
+   // init values
    busyCounter = 0;
    status = FREE;
    initReader = true;
@@ -188,8 +188,8 @@ bool CA3mLgm::decrypt(const unsigned char *encrypt_msg,
                       int *clear_len)
 {
    int padding = 0;
-   int blockNbre = encrypt_len / 16; // How many 16byte blocks do we have?
-   padding = 16 - (encrypt_len % 16); // How many padding bytes do we have to add?
+   int blockNbre = encrypt_len / 16; // how many 16byte blocks do we have?
+   padding = 16 - (encrypt_len % 16); // how many padding bytes do we have to add?
 
    // if the padding is less that 16, the message is wrong
    if(padding < 16)
@@ -226,8 +226,6 @@ void CA3mLgm::sendBufferContent() {
    if (status == BUSY)
    {
       if (busyCounter % 5 >= 4) {
-         //timer->setInterval(100);
-
          if (busyCounter <= 25)
          {
             socket->write(baNext, baNext.size());
@@ -243,11 +241,10 @@ void CA3mLgm::sendBufferContent() {
          }
       }
 
-      //timer->setInterval(100);
       busyCounter++;
    }
 
-   // Init LEDs (turn off) at startup
+   // init LEDs (turn off) at startup
    if (initReader && status == FREE)
    {
       initReader = false;
@@ -260,7 +257,7 @@ void CA3mLgm::sendBufferContent() {
       sendCmd(CMD_WIEGAND_FORMAT);
    }
 
-   // Process the next pending message if we have one and the device isn't busy
+   // process the next pending message if we have one and the device isn't busy
    if(pendingMessage.size() > 0 && status == FREE)
    {
       baNext = pendingMessage.takeFirst();
@@ -290,7 +287,7 @@ void CA3mLgm::close()
 
    pendingMessage.clear();
 
-   // Emit the signal for the subsystems
+   // emit the signal for the subsystems
    emit deviceConnection(id, false);
 }
 
@@ -340,10 +337,10 @@ void CA3mLgm::hasMsg()
    QString idCard = "0x";
    int msgSize = msg.size();
 
-   // Do we read any byte
+   // do we read any byte
    if(msgSize == 0) return;
 
-   // Do we have at least 7 bytes
+   // do we have at least 7 bytes
    if(msgSize >= 7)
    {
       uchar etxPos = msg.at(3)+5;
@@ -382,8 +379,8 @@ void CA3mLgm::hasMsg()
                break;
             case LGM_CMD_WIEGAND_FORMAT:
             case 0X00:
-               // As the reader is in passive Wiegand mode (or "mode" SEQ=0 by default) when it give us keys it return the same SEQ as we defined for Wiegand format...
-               if (status == FREE) // If we don't wait for a new Wiegand format confirmation, we have a card
+               // as the reader is in passive Wiegand mode (or "mode" SEQ=0 by default) when it give us keys it return the same SEQ as we defined for Wiegand format...
+               if (status == FREE) // if we don't wait for a new Wiegand format confirmation, we have a card
                {
                   key = formatData(msg.mid(5, 7), serialNumberFormat);
 
@@ -437,13 +434,13 @@ void CA3mLgm::hasMsg()
 
          msg.remove(0, etxPos+1);
       }
-      // Incorrect STX
+      // incorrect STX
       else if(msg.at(0) != 0x02)
       {
          if (DEBUG) qDebug() << "BAD STX";
          msg.clear();
       }
-      // Incorrect ETX
+      // incorrect ETX
       else if (etxPos < msgSize)
       {
          if (DEBUG) qDebug() << "BAD ETX";
@@ -457,26 +454,26 @@ QByteArray CA3mLgm::sendCmd(CMD_TYPE cmd, QByteArray params)
    QByteArray ba;
    QScriptValue scriptParams = engine.newArray(params.size());
 
-   // Give the params to the script
+   // give the params to the script
    for (int i = 0; i < params.size(); i++)
       scriptParams.setProperty(i, params.at(i));
    engine.globalObject().setProperty("params", scriptParams);
 
-   // Call the script's function
+   // call the script's function
    QScriptValue result = engine.evaluate("sendCmd");
    QScriptValueList args;
    args << QScriptValue(&(engine),cmd);
    args << QScriptValue(&(engine),address.toUInt());
    args << QScriptValue(&(engine),params.size());
 
-   // Get the result and convert it to ByteArray
+   // get the result and convert it to ByteArray
    result = result.call(QScriptValue(), args);
    QVariantList lst = result.toVariant().toList();
    ba.resize(lst.size());
    for (int i = 0; i < ba.size(); i++)
       ba[i] = (uchar)lst.at(i).toDouble();
 
-   // (Always have to resend later, so don't send know...)
+   // (always have to resend later, so don't send know...)
    /*if (!pendingMessage.size() && status == FREE)
    {
       status = BUSY;
@@ -583,12 +580,12 @@ void CA3mLgm::logComm(uchar *ba, bool isReceive, int len)
 
    checkPermision(logPath + "log_" + name + ".html");
 
-   // Open the log file
+   // open the log file
    QFile file(logPath + "log_" + name + ".html");
    if (!file.open(QIODevice::Append | QIODevice::Text))
       return;
 
-   // Get a readable content from the received byte array
+   // get a readable content from the received byte array
    QString s = "", s1;
    for(int i=0; i<len; i++)
       s += s1.sprintf("%02X ",ba[i]);
