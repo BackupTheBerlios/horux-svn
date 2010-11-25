@@ -347,7 +347,7 @@
                                             <div style="float:left;">
                                                 <div class="icon">
                                                     <a href="<%= $this->Service->constructUrl($this->Data['page']) %>">
-                                                        <img src="<%# $this->Data['icon'] %>" alt="<%#$this->Data['name']%>"  />
+                                                        <img src="<%# $this->Data['icon'] %>" alt="<%#$this->Data['Name']%>"  />
                                                         <span><%# $this->Data['Name'] %></span>
                                                     </a>
                                                 </div>
