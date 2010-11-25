@@ -117,7 +117,7 @@ class ControlPanel extends Page
 
                             if(preg_match("/IconAsset=\"<%~(.*)%>\"/", $content, $matches))
                             {
-                                $icon = substr($matches[1],11, strlen($matches[1])-11);
+                                $icon = str_replace("./assets/", "", $matches[1]);
                                 $icon = trim($icon);
                                 $url=Prado::getApplication()->getAssetManager()->publishFilePath(Prado::getApplication()->getBasePath().'/pages/components/'.$d2['name'].'/assets/'.$icon);
                             }
