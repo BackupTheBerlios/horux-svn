@@ -735,7 +735,7 @@ qDebug() << "createTrigger";
     {
 
         QStringList ids = response.returnValue().toString().split(",");
-qDebug() << ids;
+
         foreach(QString id, ids)
         {
             QStringList i = id.split(":");
@@ -985,7 +985,7 @@ void CHorux::sendTracking()
 
     QtSoapMessage message;
     message.setMethod("syncTrackingTable");
-qDebug() << xml_dump.toString();
+
     message.addMethodArgument("xml", "", xml_dump.toString());
 
     soapClient.submitRequest(message, saas_path+"/index.php?soap=horux&password=" + saas_password + "&username=" + saas_username);
