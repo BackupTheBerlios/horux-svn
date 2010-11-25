@@ -536,7 +536,10 @@ void CLCDDisplay::s_displayMessage(QObject *p, QMap<QString, QVariant>params)
 
 void CLCDDisplay::connection(int deviceId, bool isConnected) {
     if(deviceId == deviceParent->getParameter("id")) {
-        close();
+        if(!isConnected)
+            close();
+        else
+            open();
     }
 }
 
