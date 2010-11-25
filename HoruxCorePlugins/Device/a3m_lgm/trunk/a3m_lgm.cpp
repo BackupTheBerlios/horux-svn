@@ -64,6 +64,10 @@ QVariant CA3mLgm::getParameter(QString paramName)
       return address;
    if(paramName == "serialNumberFormat")
       return serialNumberFormat;
+   if(paramName == "serialNumber")
+      return serialNumber;
+   if(paramName == "firmwareVersion")
+      return firmwareVersion;
 
    return "undefined";
 }
@@ -87,6 +91,12 @@ void CA3mLgm::setParameter(QString paramName, QVariant value)
 
    if(paramName == "serialNumberFormat")
       serialNumberFormat = value.toString();
+
+   if(paramName == "serialNumber")
+      serialNumber = value.toString();
+
+   if(paramName == "firmwareVersion")
+      firmwareVersion = value.toString();
 }
 
 bool CA3mLgm::open()
@@ -244,6 +254,8 @@ void CA3mLgm::sendBufferContent() {
       p.resize(1);
       p[0] = 0x00;
 
+      sendCmd(GET_SER_NUM);
+      sendCmd(GET_VER_NUM);
       sendCmd(SET_LED, p);
       sendCmd(CMD_WIEGAND_FORMAT);
    }
@@ -302,6 +314,16 @@ QDomElement CA3mLgm::getDeviceInfo(QDomDocument xml_info )
    newElement.appendChild(text);
    device.appendChild(newElement);
 
+   newElement = xml_info.createElement( "firmwareVersion");
+   text =  xml_info.createTextNode(firmwareVersion);
+   newElement.appendChild(text);
+   device.appendChild(newElement);
+
+   newElement = xml_info.createElement( "serialNumber");
+   text =  xml_info.createTextNode(serialNumber);
+   newElement.appendChild(text);
+   device.appendChild(newElement);
+
    return device;
 }
 
@@ -335,12 +357,17 @@ void CA3mLgm::hasMsg()
             QString key;
             QString xml;
             int idParent;
+            QByteArray tmbBa;
 
             switch((uchar)msg.at(1))
             {
             case LGM_GET_SER_NUM:
+               serialNumber = msg.mid(5, 8);
+               if (DEBUG) qDebug()<<"Serial " << serialNumber;
                break;
             case LGM_GET_VER_NUM:
+               firmwareVersion = msg.mid(6, msg.at(3)-0X02);
+               if (DEBUG) qDebug() << "Firmware " << firmwareVersion;
                break;
             case LGM_SET_LED:
                if (DEBUG) qDebug() << "setLed";

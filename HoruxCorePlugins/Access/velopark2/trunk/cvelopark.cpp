@@ -24,11 +24,6 @@
 #include <QSslError>
 #include <QNetworkReply>
 
-void CVeloPark::test() {
-    QString xml = "<deviceEvent id=\"6\"><event>keyDetected</event><params><param><name>code</name><value>1</value></param><param><name>date</name><value>2010-11-17</value></param><param><name>deviceId</name><value>6</value></param><param><name>entering</name><value>1</value></param><param><name>key</name><value>988775685</value></param><param><name>time</name><value>09:10:57</value></param><param><name>userId</name><value>-1</value></param></params></deviceEvent>";
-    qDebug() << "Teste la fonction";
-    deviceEvent(xml);
-}
 
 
 CVeloPark::CVeloPark(QObject *parent) : QObject(parent)
@@ -49,11 +44,6 @@ CVeloPark::CVeloPark(QObject *parent) : QObject(parent)
         timerCheckDb->start(TIME_DB_CHECKING);
     }
 
-    // pour les testes
-    /*timerTest = new QTimer(this);
-    connect(timerTest, SIGNAL(timeout()), this, SLOT(test()));
-    timerTest->start(10000);*/
-    // fin code de test
 }
 
 
@@ -86,6 +76,20 @@ void CVeloPark::deviceEvent(QString xml)
         if(event != "keyDetected")
             return;
 
+        // get the key id
+        QString keyId = "1";
+        QSqlQuery queryKey("SELECT id FROM hr_keys WHERE serialNumber='" + params["key"].toString() + "'");
+        if(queryKey.next())
+           keyId = queryKey.value(0).toString();
+
+        // get the key's user
+        QString usrId = "-1";
+        QSqlQuery queryUserId("SELECT id_user FROM hr_keys_attribution WHERE id_key='" + keyId + "'");
+        if(queryUserId.next())
+           usrId = queryUserId.value(0).toString();
+        params.insert("userId", usrId);
+
+        // grant acess or not
         if(checkAccessOnline(params)) {
             isAccessStr = "1";
             accessAccepted(params, true);
@@ -107,20 +111,12 @@ void CVeloPark::deviceEvent(QString xml)
             }
         }
 
-        // get the key id
-        QString keyId = "1";
-        QSqlQuery queryKey("SELECT id FROM hr_keys WHERE serialNumber='" + params["key"].toString() + "'");
-
-        if(queryKey.next())
-                keyId = queryKey.value(0).toString();
-
-
         // insert in the tracking
         QString query = "INSERT INTO `hr_tracking` (  `id_user` , `id_key` , `time` , `date` , `id_entry` , `is_access` , `id_comment`, `key` ) VALUES ('" +
                                         params["userId"].toString() +
                                         "','" +
                                         keyId +
-                                        "', '" + params["time"].toString()  + "', '" + params["date"].toString() + "', '" +
+                                        "', '" + params["time"].toString()  + "', '" + params["date"].toString() + "', '" +//todo
                                         params["deviceId"].toString() +
                                         "', '" +
                                         isAccessStr +
@@ -1103,10 +1099,10 @@ void CVeloPark::checkLastCredit(QMap<QString, QVariant> params)
 
 bool CVeloPark::checkSubDate(QDateTime start, QDateTime end)
 {
-	if(start <= QDateTime::currentDateTime() &&  QDateTime::currentDateTime() <= end)
-		return true;
-	
-	return false;
+   if(start <= QDateTime::currentDateTime() &&  QDateTime::currentDateTime() <= end)
+      return true;
+
+   return false;
 }
 
 
@@ -1166,7 +1162,7 @@ void CVeloPark::checkDb()
                             if(queryHasAccessDevice.next())
                             {
                                 //check subscription
-                                bool isSubscription = false;                               
+                                bool isSubscription = false;
                                 QSqlQuery queryHasSubscription("SELECT * FROM hr_vp_subscription_attribution WHERE user_id=" + userId + " AND status='started'"  );
                                 if(queryHasSubscription.next()) {
                                     if(queryHasSubscription.value(6).toDateTime() <= QDateTime::currentDateTime()) {
