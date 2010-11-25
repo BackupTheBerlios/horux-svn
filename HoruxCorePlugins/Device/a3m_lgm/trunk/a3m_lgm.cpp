@@ -210,6 +210,8 @@ void CA3mLgm::connection(int deviceId, bool isConnected) {
 
 void CA3mLgm::sendBufferContent() {
    QByteArray p;
+   if (!socket)
+      return;
 
    if (status == BUSY)
    {
@@ -268,6 +270,10 @@ void CA3mLgm::close()
    if (timer != NULL) {
       delete timer;
       timer = NULL;
+   }
+
+   if (socket != NULL) {
+      socket = NULL;
    }
 
    pendingMessage.clear();
