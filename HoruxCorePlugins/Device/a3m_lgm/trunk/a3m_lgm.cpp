@@ -121,7 +121,7 @@ bool CA3mLgm::open()
 
       CHRstcpipC* parent = (CHRstcpipC*) deviceParent;
       socket = parent->getSocket();
-      _isConnected = parent->isOpened();
+      _isConnected = true;
 
       return true;
    }
@@ -260,6 +260,9 @@ void CA3mLgm::sendBufferContent() {
 
 void CA3mLgm::close()
 {
+    if(!_isConnected)
+        return;
+
    _isConnected = false;
 
    if (timer != NULL) {

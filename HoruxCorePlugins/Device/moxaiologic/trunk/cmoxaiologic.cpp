@@ -297,6 +297,10 @@ bool CMoxaIOLogic::open()
 void CMoxaIOLogic::close()
 {
 
+    if(!_isConnected)
+        return;
+
+qDebug() << "MXIO CLOSED";
   if(MXEIO_Disconnect(socket) == MXIO_OK) {
 
     _isConnected = false;
@@ -460,7 +464,7 @@ void CMoxaIOLogic::resetOutput() {
 }
 
 void CMoxaIOLogic::s_accessAccepted(QObject *p, QMap<QString, QVariant>params) {
-
+qDebug()<< "s_accessAccepted";
     CMoxaIOLogic *pThis = qobject_cast<CMoxaIOLogic *>(p);
 
     if( pThis->output0_func.contains("accessAccepted") ) {
@@ -523,7 +527,7 @@ void CMoxaIOLogic::s_accessAccepted(QObject *p, QMap<QString, QVariant>params) {
 
 void CMoxaIOLogic::s_accessRefused(QObject *p, QMap<QString, QVariant>params) {
     CMoxaIOLogic *pThis = qobject_cast<CMoxaIOLogic *>(p);
-
+qDebug()<< "s_accessRefused";
     if( pThis->output0_func.contains("accessRefused") ) {
         // get the initial value of the output
         int ivo = pThis->initialOutput.section(",",0,0).toInt();
@@ -584,7 +588,7 @@ void CMoxaIOLogic::s_accessRefused(QObject *p, QMap<QString, QVariant>params) {
 void CMoxaIOLogic::s_keyDetected(QObject *p, QMap<QString, QVariant>params) {
     CMoxaIOLogic *pThis = qobject_cast<CMoxaIOLogic *>(p);
 
-
+qDebug()<< "s_keyDetected";
 
     if( pThis->output0_func.contains("keyDetectedReset") ) {
         // get the initial value of the output
@@ -714,8 +718,12 @@ void CMoxaIOLogic::reopen() {
 
 
 void CMoxaIOLogic::connection(int deviceId, bool isConnected) {
-    if(deviceId == deviceParent->getParameter("id")) {
-        close();
+    if(deviceId == deviceParent->getParameter("id") ) {
+        if(isConnected) {
+            open();
+        } else {
+            close();
+        }
     }
 }
 

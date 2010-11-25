@@ -101,8 +101,7 @@ bool CHRstcpipC::open()
 
 void CHRstcpipC::checkConnection() {
    if (!firstConnCheck)
-   {
-      qDebug()<<testSocket->isOpen();
+   {      
       if (testSocket->isOpen()) {
          //_isConnected = true;
          //emit deviceConnection(id, true);
@@ -175,7 +174,7 @@ void CHRstcpipC::deviceConnected()
    emit deviceConnection(id, true);
    qDebug() << "connected!";
 
-   socket->setSocketOption(QAbstractSocket::KeepAliveOption, 1);
+   socket->setSocketOption(QAbstractSocket::KeepAliveOption, 1);   
 }
 
 void CHRstcpipC::deviceDiconnected()
@@ -275,7 +274,7 @@ void CHRstcpipC::connectChild(CDeviceInterface *device)
          childDevice[device->getParameter("id").toInt()] = device;
          connect(this, SIGNAL(subDeviceMessage(QByteArray)), device->getMetaObject(), SLOT(dispatchMessage(QByteArray)));
          connect(this, SIGNAL(deviceConnection(int, bool)), device->getMetaObject(), SLOT(connection(int, bool)));
-         device->open();
+         //device->open();
       }
    }
 }
