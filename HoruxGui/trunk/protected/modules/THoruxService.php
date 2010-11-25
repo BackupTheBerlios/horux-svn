@@ -56,7 +56,7 @@ class THoruxService extends TModule
         $params = array(new xmlrpcval($dataObj['name'], 'string'), new xmlrpcval($dataObj['password'], 'string'));
 
         $message = new xmlrpcmsg("horux.stopEngine", $params);
-        $resp = $client->send($message);
+        @$resp = $client->send($message);
 
     }
 
