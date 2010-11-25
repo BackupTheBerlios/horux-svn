@@ -76,7 +76,7 @@ class addsubscription extends Page {
     public function onSave($sender, $param) {
         if($this->Page->IsValid) {
             if($this->saveData()) {
-                $pBack = array('okMsg'=>Prado::localize('The subscriptio was added successfully'));
+                $pBack = array('okMsg'=>Prado::localize('The subscription was added successfully'));
             }
             else
                 $pBack = array('koMsg'=>Prado::localize('The subscription was not added'));

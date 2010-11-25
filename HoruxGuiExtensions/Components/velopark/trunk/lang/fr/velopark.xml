@@ -384,8 +384,8 @@
 
 
             <trans-unit id="63">
-                <source>The subscriptio was added successfully</source>
-                <target>L'abonnement n'a pas &#xE9;t&#xE9; ajout&#xE9; avec succ&#xE8;s</target>
+                <source>The subscription was added successfully</source>
+                <target>L'abonnement a &#xE9;t&#xE9; ajout&#xE9; avec succ&#xE8;s</target>
             </trans-unit>
 
             <trans-unit id="64">
