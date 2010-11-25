@@ -104,9 +104,9 @@ void CVeloPark::deviceEvent(QString xml)
                 QString ids = queryMessage.value(7).toString();
                 QStringList idsList= ids.split(',');
 
-                if(idsList.contains(params["deviceParentId"].toString()))
+                if(idsList.contains(params["deviceId"].toString()))
                 {
-                    displayMessage(params, queryMessage.value(4).toString());
+                    displayMessage(params["deviceParentId"].toString(), queryMessage.value(4).toString());
                 }
             }
         }
@@ -156,9 +156,9 @@ void CVeloPark::deviceEvent(QString xml)
                 QString ids = queryMessage.value(7).toString();
                 QStringList idsList= ids.split(',');
 
-                if(idsList.contains(params["deviceParentId"].toString()))
+                if(idsList.contains(params["deviceId"].toString()))
                 {
-                    displayMessage(params, queryMessage.value(3).toString());
+                    displayMessage(params["deviceParentId"].toString(), queryMessage.value(3).toString());
                 }
             }
 
@@ -185,9 +185,9 @@ void CVeloPark::deviceEvent(QString xml)
                 QString ids = queryMessage.value(7).toString();
                 QStringList idsList= ids.split(',');
 
-                if(idsList.contains(params["deviceParentId"].toString()))
+                if(idsList.contains(params["deviceId"].toString()))
                 {
-                    displayMessage(params, queryMessage.value(4).toString());
+                    displayMessage(params["deviceParentId"].toString(), queryMessage.value(4).toString());
                 }
             }
 
@@ -231,13 +231,14 @@ void CVeloPark::deviceEvent(QString xml)
 
 }
 
-void CVeloPark::displayMessage(QMap<QString, QVariant> params, QString message)
+void CVeloPark::displayMessage(QString id, QString message)
 {
     QMap<QString, QString> p;
     p.clear();
     QString f = "displayMessage";
     p["message"] = message;
-    QString xmlFunc = CXmlFactory::deviceAction( params["deviceParentId"].toString()  ,f, p);
+    QString xmlFunc = CXmlFactory::deviceAction( id  ,f, p);
+
     emit accessAction(xmlFunc);
 }
 
@@ -320,14 +321,14 @@ bool CVeloPark::checkAccessOnline(QMap<QString, QVariant> params) {
                     QString ids = queryMessage.value(7).toString();
                     QStringList idsList= ids.split(',');
 
-                    if(idsList.contains(params["deviceParentId"].toString()))
+                    if(idsList.contains(params["deviceId"].toString()))
                     {
                         float solde = querySub.value(5).toFloat()-creditValue;
                         QString soldeStr = QString::number(solde);
 
                         QString message = queryMessage.value(8).toString();
                         message.replace("{credit}", soldeStr.rightJustified(2, ' '));
-                        displayMessage(params, message);
+                        displayMessage(params["deviceParentId"].toString(), message);
                     }
                 }
             }
@@ -341,12 +342,12 @@ bool CVeloPark::checkAccessOnline(QMap<QString, QVariant> params) {
                     QString ids = queryMessage.value(7).toString();
                     QStringList idsList= ids.split(',');
 
-                    if(idsList.contains(params["deviceParentId"].toString()))
+                    if(idsList.contains(params["deviceId"].toString()))
                     {
                         QString message = queryMessage.value(9).toString();
                         message.replace("{date}", QString(date.toString("dd-MM-yyyy")));
                         message.replace("{time}", QString(date.toString("hh:mm")));
-                        displayMessage(params, message);
+                        displayMessage(params["deviceParentId"].toString(), message);
                     }
                 }
             }
@@ -420,14 +421,14 @@ bool CVeloPark::checkAccessOnline(QMap<QString, QVariant> params) {
                         QString ids = queryMessage.value(7).toString();
                         QStringList idsList= ids.split(',');
 
-                        if(idsList.contains(params["deviceParentId"].toString()))
+                        if(idsList.contains(params["deviceId"].toString()))
                         {
                             float solde =  querySub.value(5).toFloat()-creditValue;
                             QString soldeStr = QString::number(solde);
 
                             QString message = queryMessage.value(8).toString();
                             message.replace("{credit}", soldeStr.rightJustified(2, ' '));
-                            displayMessage(params, message);
+                            displayMessage(params["deviceParentId"].toString(), message);
                         }
                     }
 
@@ -530,14 +531,14 @@ bool CVeloPark::checkAccessOnline(QMap<QString, QVariant> params) {
                     QString ids = queryMessage.value(7).toString();
                     QStringList idsList= ids.split(',');
 
-                    if(idsList.contains(params["deviceParentId"].toString()))
+                    if(idsList.contains(params["deviceId"].toString()))
                     {
                         int solde = querySub2.value(5).toFloat()-creditValue;
                         QString soldeStr = QString::number(solde);
 
                         QString message = queryMessage.value(8).toString();
                         message.replace("{credit}", soldeStr.rightJustified(2, ' '));
-                        displayMessage(params, message);
+                        displayMessage(params["deviceParentId"].toString(), message);
                     }
                 }
             }
@@ -551,12 +552,12 @@ bool CVeloPark::checkAccessOnline(QMap<QString, QVariant> params) {
                     QString ids = queryMessage.value(7).toString();
                     QStringList idsList= ids.split(',');
 
-                    if(idsList.contains(params["deviceParentId"].toString()))
+                    if(idsList.contains(params["deviceId"].toString()))
                     {
                         QString message = queryMessage.value(9).toString();
                         message.replace("{date}", QString(date.toString("dd-MM-yyyy")));
                         message.replace("{time}", QString(date.toString("hh:mm")));
-                        displayMessage(params, message);
+                        displayMessage(params["deviceParentId"].toString(), message);
                     }
                 }
 
@@ -659,14 +660,14 @@ bool CVeloPark::checkAccessGantner(QMap<QString, QVariant> params)
                                 QString ids = queryMessage.value(7).toString();
                                 QStringList idsList= ids.split(',');
 
-                                if(idsList.contains(params["deviceParentId"].toString()))
+                                if(idsList.contains(params["deviceId"].toString()))
                                 {
                                     int solde =  querySub.value(5).toInt();
                                     QString soldeStr = QString::number(solde);
 
                                     QString message = queryMessage.value(8).toString();
                                     message.replace("{credit}", soldeStr.rightJustified(2, ' '));
-                                    displayMessage(params, message);
+                                    displayMessage(params["deviceParentId"].toString(), message);
                                 }
                             }
                         }
@@ -680,12 +681,12 @@ bool CVeloPark::checkAccessGantner(QMap<QString, QVariant> params)
                                 QString ids = queryMessage.value(7).toString();
                                 QStringList idsList= ids.split(',');
 
-                                if(idsList.contains(params["deviceParentId"].toString()))
+                                if(idsList.contains(params["deviceId"].toString()))
                                 {
                                     QString message = queryMessage.value(9).toString();
                                     message.replace("{date}", QString(date.toString("dd-MM-yyyy")));
                                     message.replace("{time}", QString(date.toString("hh:mm")));
-                                    displayMessage(params, message);
+                                    displayMessage(params["deviceParentId"].toString(), message);
                                 }
                             }
                         }
@@ -765,14 +766,14 @@ bool CVeloPark::checkAccessGantner(QMap<QString, QVariant> params)
                                         QString ids = queryMessage.value(7).toString();
                                         QStringList idsList= ids.split(',');
 
-                                        if(idsList.contains(params["deviceParentId"].toString()))
+                                        if(idsList.contains(params["deviceId"].toString()))
                                         {
                                             int solde = querySub.value(5).toInt()-1;
                                             QString soldeStr = QString::number(solde);
 
                                             QString message = queryMessage.value(8).toString();
                                             message.replace("{credit}", soldeStr.rightJustified(2, ' '));
-                                            displayMessage(params, message);
+                                            displayMessage(params["deviceParentId"].toString(), message);
                                         }
                                     }
                                 }
@@ -897,14 +898,14 @@ bool CVeloPark::checkAccessGantner(QMap<QString, QVariant> params)
                                     QString ids = queryMessage.value(7).toString();
                                     QStringList idsList= ids.split(',');
 
-                                    if(idsList.contains(params["deviceParentId"].toString()))
+                                    if(idsList.contains(params["deviceId"].toString()))
                                     {
                                         int solde = querySub2.value(5).toInt()-1;
                                         QString soldeStr = QString::number(solde);
 
                                         QString message = queryMessage.value(8).toString();
                                         message.replace("{credit}", soldeStr.rightJustified(2, ' '));
-                                        displayMessage(params, message);
+                                        displayMessage(params["deviceParentId"].toString(), message);
                                     }
                                 }
                             }
@@ -918,12 +919,12 @@ bool CVeloPark::checkAccessGantner(QMap<QString, QVariant> params)
                                     QString ids = queryMessage.value(7).toString();
                                     QStringList idsList= ids.split(',');
 
-                                    if(idsList.contains(params["deviceParentId"].toString()))
+                                    if(idsList.contains(params["deviceId"].toString()))
                                     {
                                         QString message = queryMessage.value(9).toString();
                                         message.replace("{date}", QString(date.toString("dd-MM-yyyy")));
                                         message.replace("{time}", QString(date.toString("hh:mm")));
-                                        displayMessage(params, message);
+                                        displayMessage(params["deviceParentId"].toString(), message);
                                     }
                                 }
 

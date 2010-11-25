@@ -86,7 +86,7 @@ protected slots:
 protected:
     void checkLastCredit(QMap<QString, QVariant> params);
     void updateUser(QMap<QString, QVariant> params, bool multiticket);
-    void displayMessage(QMap<QString, QVariant> params, QString message);
+    void displayMessage(QString id, QString message);
     void accessAccepted(QMap<QString, QVariant> params, bool isAccepted);
 
 protected:
