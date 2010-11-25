@@ -87,7 +87,7 @@ class modperiod extends Page {
         $cmd->execute();
 
 
-        return $lastId;
+        return true;
 
     }
 }
