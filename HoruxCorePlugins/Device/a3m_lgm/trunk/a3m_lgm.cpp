@@ -285,6 +285,15 @@ void CA3mLgm::close()
       socket = NULL;
    }
 
+
+   foreach (QTimer *value, passbackTimer) {
+      value->stop();
+      value->deleteLater();
+    }
+
+   passbackTimer.clear();
+
+
    pendingMessage.clear();
 
    // emit the signal for the subsystems
@@ -384,17 +393,24 @@ void CA3mLgm::hasMsg()
                {
                   key = formatData(msg.mid(5, 7), serialNumberFormat);
 
-                  readerAction = 1;
-                  if (DEBUG) qDebug() << "CARD ID : " << key;
+                  if(!passbackTimer.contains(key)) {
 
-                  idParent = id;
+                      readerAction = 1;
+                      if (DEBUG) qDebug() << "CARD ID : " << key;
 
-                  if (deviceParent)
-                     idParent = deviceParent->getParameter("id").toInt();
+                      idParent = id;
 
-                  xml = CXmlFactory::keyDetection(QString::number(id), QString::number(idParent), getAccessPluginName(),key);
+                      if (deviceParent)
+                         idParent = deviceParent->getParameter("id").toInt();
 
-                  emit deviceEvent(xml);
+                      xml = CXmlFactory::keyDetection(QString::number(id), QString::number(idParent), getAccessPluginName(),key);
+
+                      passbackTimer[key] = new QTimer(this);
+                      connect(passbackTimer[key], SIGNAL(timeout()), this, SLOT(passBackTimeout()));
+                      passbackTimer[key]->start(10000);
+
+                      emit deviceEvent(xml);
+                  }
                }
                else
                   if (DEBUG) qDebug() << "wiegand";
@@ -650,6 +666,17 @@ void CA3mLgm::s_accessAccepted(QObject *p, QMap<QString, QVariant>/*params*/)
 
    pThis->sendCmd(ACTIVE_BUZZER, ba);
    pThis->sendCmd(CMD_WIEGAND_FORMAT);
+}
+
+void CA3mLgm::passBackTimeout() {
+    QTimer *timer = qobject_cast<QTimer*>(sender());
+
+    timer->stop();
+    timer->deleteLater();
+
+    QString key = passbackTimer.key(timer);
+
+    passbackTimer.remove(key);
 }
 
 Q_EXPORT_PLUGIN2(a3mlgm, CA3mLgm);

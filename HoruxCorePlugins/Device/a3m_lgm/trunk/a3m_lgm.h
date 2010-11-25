@@ -59,6 +59,12 @@ public:
    QObject *getMetaObject() { return this;}
    QDomElement getDeviceInfo(QDomDocument xml_info );
 
+// specific to the device
+protected:
+  enum COM_STATUS {FREE, BUSY};
+  enum CMD_TYPE {GET_SER_NUM = 1, GET_VER_NUM = 2, SET_LED = 3, ACTIVE_LED = 4, ACTIVE_BUZZER = 5, SET_ADDRESS = 6, CMD_WIEGAND_FORMAT = 7};
+
+
 public slots:
    void dispatchMessage(QByteArray ba);
    void deviceAction(QString xml);
@@ -71,11 +77,6 @@ signals:
 protected:
    void logComm(uchar *ba, bool isReceive, int len);
 
-// specific to the device
-protected:
-   enum COM_STATUS {FREE, BUSY};
-   enum CMD_TYPE {GET_SER_NUM = 1, GET_VER_NUM = 2, SET_LED = 3, ACTIVE_LED = 4, ACTIVE_BUZZER = 5, SET_ADDRESS = 6, CMD_WIEGAND_FORMAT = 7};
-
 protected:
    void hasMsg();
    bool checkCheckSum(QByteArray msg);
@@ -86,6 +87,12 @@ protected:
 
    static void s_accessRefused(QObject *, QMap<QString, QVariant>);
    static void s_accessAccepted(QObject *, QMap<QString, QVariant>);
+
+protected slots:
+   void sendBufferContent ();
+   void connection(int deviceId, bool isConnected);
+   void passBackTimeout();
+
 protected:
    static const uchar LGM_GET_SER_NUM = 0X80;
    static const uchar LGM_GET_VER_NUM = 0X88;
@@ -111,8 +118,8 @@ protected:
    bool initReader;
    ECB_Mode<AES >::Decryption *ecbDecryption;
    QScriptEngine engine;
-protected slots:
-   void sendBufferContent ();
-   void connection(int deviceId, bool isConnected);
+
+   QMap<QString, QTimer*>passbackTimer;
+
 };
 #endif
