@@ -340,7 +340,7 @@ class tracking extends PageList
             if($item->ItemType==='Item' || $item->ItemType==='AlternatingItem' )
             {
                 $i = $item->DataItem['id_comment'];
-                $item->CComment->Comment->Text = $accessMessage[$i];
+                $item->CComment->Comment->Text = isset($accessMessage[$i]) ? $accessMessage[$i] : $i;
 
                 if($item->DataItem['is_access'] == 1)
                     $item->CComment->Comment->ForeColor = "green";
