@@ -464,7 +464,7 @@ void CMoxaIOLogic::resetOutput() {
 }
 
 void CMoxaIOLogic::s_accessAccepted(QObject *p, QMap<QString, QVariant>params) {
-qDebug()<< "s_accessAccepted";
+
     CMoxaIOLogic *pThis = qobject_cast<CMoxaIOLogic *>(p);
 
     if( pThis->output0_func.contains("accessAccepted") ) {
@@ -527,7 +527,7 @@ qDebug()<< "s_accessAccepted";
 
 void CMoxaIOLogic::s_accessRefused(QObject *p, QMap<QString, QVariant>params) {
     CMoxaIOLogic *pThis = qobject_cast<CMoxaIOLogic *>(p);
-qDebug()<< "s_accessRefused";
+
     if( pThis->output0_func.contains("accessRefused") ) {
         // get the initial value of the output
         int ivo = pThis->initialOutput.section(",",0,0).toInt();
@@ -588,7 +588,6 @@ qDebug()<< "s_accessRefused";
 void CMoxaIOLogic::s_keyDetected(QObject *p, QMap<QString, QVariant>params) {
     CMoxaIOLogic *pThis = qobject_cast<CMoxaIOLogic *>(p);
 
-qDebug()<< "s_keyDetected";
 
     if( pThis->output0_func.contains("keyDetectedReset") ) {
         // get the initial value of the output

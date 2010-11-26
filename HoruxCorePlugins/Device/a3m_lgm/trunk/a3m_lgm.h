@@ -115,7 +115,6 @@ protected:
    QByteArray baNext;
    int busyCounter;
 
-   bool initReader;
    ECB_Mode<AES >::Decryption *ecbDecryption;
    QScriptEngine engine;
 
