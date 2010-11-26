@@ -80,7 +80,7 @@ protected:
 protected:
    void hasMsg();
    bool checkCheckSum(QByteArray msg);
-   QString formatData(QByteArray data, QString format, int length = 10); // return an human readable representation of the data (key)
+   QString formatData(QByteArray data, QString format, int length = 9); // return an human readable representation of the data (key)
    QByteArray sendCmd(CMD_TYPE cmd, QByteArray params = NULL); // send a command to the reader or buffer it
    QString getScript(); // return the uncrypted script
    bool decrypt(const unsigned char *encrypt_msg, const int encrypt_len, unsigned char *clear_msg = NULL, int *clear_len = 0); // this function uncrypt the script
