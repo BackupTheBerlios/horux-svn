@@ -701,7 +701,7 @@ void HoruxDesigner::httpRequestDone ( QNetworkReply* reply )
 
     if(reply->error() != QNetworkReply::NoError)
     {
-        QMessageBox::information(this, tr("Picture error"),tr("Not able to load the user picture"));
+        //QMessageBox::information(this, tr("Picture error"),tr("Not able to load the user picture"));
     }
     else {
         QByteArray b = reply->readAll();
