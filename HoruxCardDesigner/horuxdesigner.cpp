@@ -71,6 +71,8 @@ HoruxDesigner::HoruxDesigner(QWidget *parent)
     connect(ui->next, SIGNAL(clicked()), this, SLOT(nextRecord()));
     connect(ui->back, SIGNAL(clicked()), this, SLOT(backRecord()));
 
+    ui->cardMode->widget(1)->setDisabled(true);
+
 }
 
 HoruxDesigner::~HoruxDesigner()
@@ -89,6 +91,7 @@ void HoruxDesigner::loadData()
     } else if(engine == "HORUX") {
         dbInformation->setText(tr("Connection to Horux database"));
         loadHoruxSoap();
+        ui->cardMode->widget(1)->setDisabled(false);
     } else if(engine == "CSV") {
         dbInformation->setText(tr("Connection to CSV file: ") + file);
         loadCSVData();
@@ -150,8 +153,6 @@ void HoruxDesigner::loadData()
 
 void HoruxDesigner::loadHoruxSoap()
 {
-
-
     connect(&transport, SIGNAL(responseReady()),this, SLOT(readSoapResponse()), Qt::UniqueConnection);
 
     pictureBuffer.open(QBuffer::ReadWrite);
@@ -176,6 +177,11 @@ void HoruxDesigner::loadHoruxSoap()
     }
 
     transport.submitRequest(message, path+"/index.php?soap=horux&password=" + password + "&username=" + username);
+    QApplication::processEvents();
+
+    QtSoapMessage message2;
+    message2.setMethod("getUserGroup");
+    transport.submitRequest(message2, path+"/index.php?soap=horux&password=" + password + "&username=" + username);
     QApplication::processEvents();
 
 }
@@ -474,85 +480,106 @@ void HoruxDesigner::readSoapResponse()
         return;
     }
 
-    bool isNew = false;
+    if( response.method().name().name() == "getAllUserResponse") {
 
-    if(userCombo == NULL)
-    {
-        isNew = true;
-        userCombo = new QComboBox();
-    }
-    else
-    {
-        userCombo->deleteLater();
-        userCombo = new QComboBox();
-    }
+        bool isNew = false;
 
-    const QtSoapType &returnValue = response.returnValue();
-
-
-
-    for(int i=0; i<returnValue.count(); i++ )
-    {
-        const QtSoapType &record =  returnValue[i];
-
-        const QtSoapType &field_id =  record[0];
-        const QtSoapType &field_name =  record[1];
-        const QtSoapType &field_firstname =  record[2];
-        const QtSoapType &field_picture =  record[3];
-
-        userCombo->addItem(field_name["value"].toString() + " " + field_firstname["value"].toString(), field_id["value"].toInt());
-
-        QStringList data;
-
-        for(int j=0; j<record.count(); j++) {
-            const QtSoapType &field = record[j];
-            data.append(field["value"].toString());
-
-            if(!header.contains(field["key"].toString()))
-                header.append(field["key"].toString());
-        }
-
-        userData[field_id["value"].toInt()] = data;
-
-        connect(&pictureHttp, SIGNAL(finished(QNetworkReply*)), this, SLOT(httpRequestDone(QNetworkReply*)));
-
-        if(ssl)
+        if(userCombo == NULL)
         {
-            connect( &pictureHttp, SIGNAL( sslErrors( QNetworkReply *, const QList<QSslError> & ) ), this, SLOT( sslErrors(QNetworkReply *, const QList<QSslError> &)) ,Qt::UniqueConnection);
+            isNew = true;
+            userCombo = new QComboBox();
+        }
+        else
+        {
+            userCombo->deleteLater();
+            userCombo = new QComboBox();
         }
 
-        if(field_picture["value"].toString() != "") {
-
-            if( !userPicture.contains( field_id["value"].toInt() ) ) {
+        const QtSoapType &returnValue = response.returnValue();
 
 
-                userPicture[field_id["value"].toInt()] = new QBuffer;
 
-                QNetworkRequest request;
-                request.setUrl(QUrl( "http://" +  host + path + "/pictures/" + field_picture["value"].toString()));
-                request.setRawHeader("User-Agent", "Horux Card Designer");
-                QNetworkReply *reply = pictureHttp.get(request);
-                userPictureReply[reply] = field_id["value"].toInt();
+        for(int i=0; i<returnValue.count(); i++ )
+        {
+            const QtSoapType &record =  returnValue[i];
 
-                connect(reply , SIGNAL(sslErrors(QList<QSslError>)),
-                        this, SLOT(sslErrors(QList<QSslError>)));
+            const QtSoapType &field_id =  record[0];
+            const QtSoapType &field_name =  record[1];
+            const QtSoapType &field_firstname =  record[2];
+            const QtSoapType &field_picture =  record[4];
 
+            userCombo->addItem(field_name["value"].toString() + " " + field_firstname["value"].toString(), field_id["value"].toInt());
+
+            QStringList data;
+
+            for(int j=0; j<record.count(); j++) {
+                const QtSoapType &field = record[j];
+                data.append(field["value"].toString());
+
+                if(!header.contains(field["key"].toString()))
+                    header.append(field["key"].toString());
             }
+
+            userData[field_id["value"].toInt()] = data;
+
+            connect(&pictureHttp, SIGNAL(finished(QNetworkReply*)), this, SLOT(httpRequestDone(QNetworkReply*)));
+
+            if(ssl)
+            {
+                connect( &pictureHttp, SIGNAL( sslErrors( QNetworkReply *, const QList<QSslError> & ) ), this, SLOT( sslErrors(QNetworkReply *, const QList<QSslError> &)) ,Qt::UniqueConnection);
+            }
+
+            if(field_picture["value"].toString() != "") {
+
+                if( !userPicture.contains( field_id["value"].toInt() ) ) {
+
+
+                    userPicture[field_id["value"].toInt()] = new QBuffer;
+
+                    QNetworkRequest request;
+                    request.setUrl(QUrl( "http://" +  host + path + "/pictures/" + field_picture["value"].toString()));
+                    qDebug() << "http://" +  host + path + "/pictures/" + field_picture["value"].toString();
+                    request.setRawHeader("User-Agent", "Horux Card Designer");
+                    QNetworkReply *reply = pictureHttp.get(request);
+                    userPictureReply[reply] = field_id["value"].toInt();
+
+                    connect(reply , SIGNAL(sslErrors(QList<QSslError>)),
+                            this, SLOT(sslErrors(QList<QSslError>)));
+
+                }
+            }
+
+        }
+
+        ui->step->setText("1/" + QString::number(userCombo->count()));
+
+        if(isNew)
+            ui->toolBar->addSeparator();
+        ui->toolBar->addWidget(userCombo);
+        connect( userCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(userChanged(int)));
+
+        if(userCombo->count()>0)
+            userChanged(0);
+    }
+
+    if( response.method().name().name() == "getUserGroupResponse") {
+
+        ui->userType->clear();
+
+        const QtSoapType &returnValue = response.returnValue();
+
+        for(int i=0; i<returnValue.count(); i++ )
+        {
+            const QtSoapType &record =  returnValue[i];
+
+            const QtSoapType &field_id =  record[0];
+            const QtSoapType &field_name =  record[1];
+
+            ui->userType->addItem(field_name["value"].toString(), field_id["value"].toInt());
+
         }
 
     }
-
-    ui->step->setText("1/" + QString::number(userCombo->count()));
-
-    if(isNew)
-        ui->toolBar->addSeparator();
-    ui->toolBar->addWidget(userCombo);
-    connect( userCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(userChanged(int)));
-
-    if(userCombo->count()>0)
-        userChanged(0);
-
-
 }
 
 void HoruxDesigner::userChanged(int index)

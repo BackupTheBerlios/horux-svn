@@ -22,6 +22,15 @@ SOURCES += main.cpp \
     csvtest.cpp \
     formattext.cpp \
     printselection.cpp
+
+win32:SOURCES += twain/twaincpp.cpp \
+    twain/qtwainsubstitute.cpp \
+    twain/qtwaininterface.cpp \
+    twain/qtwain.cpp \
+    twain/dibutil.c \
+    twain/dibfile.c \
+    twain/dib.cpp
+
 HEADERS += horuxdesigner.h \
     cardscene.h \
     carditemtext.h \
@@ -36,6 +45,16 @@ HEADERS += horuxdesigner.h \
     csvtest.h \
     formattext.h \
     printselection.h
+
+win32:SOURCES +=  twain/twaincpp.h \
+    twain/twain.h \
+    twain/stdafx.h \
+    twain/qtwainsubstitute.h \
+    twain/qtwaininterface.h \
+    twain/qtwain.h \
+    twain/dibutil.h \
+    twain/dibapi.h \
+    twain/dib.h
 FORMS += horuxdesigner.ui \
     textsetting.ui \
     cardsetting.ui \
