@@ -119,6 +119,26 @@ class horux
 
 
     /**
+     * @return mixed Return the users groups data
+     * @soapmethod
+     */
+    public function getUserGroup()
+    {
+        $app = Prado::getApplication();
+      	$db = $app->getModule('horuxDb')->DbConnection;
+        $db->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY,true);
+        $db->Active=true;
+
+        $sql = "SELECT * FROM hr_user_group ORDER BY name";
+
+        $cmd= $db->createCommand($sql);
+        $data = $cmd->query();
+        $data = $data->readAll();
+
+        return $data;
+    }
+
+    /**
      * @return bool Return true if the system status was well updated, else false
      * @param mixed $status status of the system
      * @soapmethod
