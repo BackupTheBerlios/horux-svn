@@ -37,7 +37,62 @@ class Attribution extends Page {
     public function onLoad($param) {
         parent::onLoad($param);
 
-        
+        if(isset($this->Request['sn'])) {
+            $cmd = $this->db->createCommand( "SELECT * FROM hr_keys WHERE serialNumber=:sn AND isUsed=0" );
+            $cmd->bindValue(":sn",$this->Request['sn'],PDO::PARAM_STR);
+            $data=$cmd->query();
+            $data = $data->read();
+            if($data) {
+                $cmd=$this->db->createCommand(SQL::SQL_ATTRIBUTE_KEY);
+                $cmd->bindValue(":id_user", $this->Request['id']);
+                $cmd->bindValue(":id_key",$data['id']);
+                $cmd->execute();
+
+                $cmd=$this->db->createCommand(SQL::SQL_SET_USED_KEY);
+                $cmd->bindValue(":id",$data['id']);
+                $flag = 1;
+                $cmd->bindValue(":flag",$flag);
+                $cmd->execute();
+
+                $this->addStandalone('add', $data['id']);
+
+                $this->Response->redirect($this->Service->constructUrl('user.attribution',array('id'=>$this->Request['id'])));
+
+            }
+            else {
+                $cmd = $this->db->createCommand( "SELECT * FROM hr_keys WHERE serialNumber=:sn AND isUsed=1" );
+                $cmd->bindValue(":sn",$this->Request['sn'],PDO::PARAM_STR);
+                $data=$cmd->query();
+                $data = $data->read();
+                if($data) {
+                    $this->displayMessage(Prado::localize("The key is already attributed"), false);
+                }
+                else {
+                    $cmd = NULL;
+                    //! add the new key in the database
+                    if($this->db->DriverName == 'sqlite')
+                        $cmd=$this->db->createCommand(SQL::SQL_ADD_KEY_SQLITE);
+                    else
+                        $cmd=$this->db->createCommand(SQL::SQL_ADD_KEY);
+                    $cmd->bindValue(":serialNumber",$this->Request['sn']);
+                    $cmd->execute();
+                    //! attribute the new key
+
+                    $lastId = $this->db->LastInsertID;
+
+                    $cmd=$this->db->createCommand(SQL::SQL_ATTRIBUTE_KEY);
+                    $cmd->bindValue(":id_user", $this->Request['id']);
+                    $cmd->bindValue(":id_key",$lastId);
+                    $cmd->execute();
+
+                    $this->addStandalone('add', $lastId);
+
+                    $this->Response->redirect($this->Service->constructUrl('user.attribution',array('id'=>$this->Request['id'])));
+
+                }
+
+            }
+        }
 
 
         $this->setHoruxSysTray(true);

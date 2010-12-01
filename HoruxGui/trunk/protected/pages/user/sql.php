@@ -56,10 +56,10 @@ class SQL {
                         `isUsed`
                   )
                   VALUES (
-                        CONCAT('Key', ' - ', :serialNumber),
+                        :serialNumber,
                         :serialNumber,
                         '0',
-                        '0'
+                        '1'
                   )";
 
     const SQL_ADD_KEY_SQLITE = "INSERT INTO hr_keys (
