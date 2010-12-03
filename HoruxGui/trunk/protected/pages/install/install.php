@@ -316,6 +316,7 @@ class install extends TPage
         if($this->dbServer->getSelectedValue() == "mysql")
         {
             @$link = mysql_connect($this->hostname->safeText, $this->username_db->safeText, $this->password_db->safeText);
+            mysql_set_charset('utf8',@$link);
             $selectResult = mysql_select_db( $this->dbname->safeText );
 
             $query = "INSERT INTO `hr_site` (`id`, `name`) VALUES (1, '".$this->sitename->safeText."')";
@@ -342,6 +343,7 @@ class install extends TPage
         if($this->dbServer->getSelectedValue() == "mysql")
         {
             @$link = mysql_connect($this->hostname->safeText, $this->username_db->safeText, $this->password_db->safeText);
+            mysql_set_charset('utf8',@$link);
             $selectResult = mysql_select_db( $this->dbname->safeText );
 
             $password = sha1($this->admin_password->safeText);
