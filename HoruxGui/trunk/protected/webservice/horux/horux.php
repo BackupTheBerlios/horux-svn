@@ -53,11 +53,13 @@ class horux
                     u.phone2 AS phone_professional,
                     u.email2 AS email_professional,
                     u.fax AS fax_professional,
-                    k.serialNumber AS key_number
+                    k.serialNumber AS key_number,
+                    uga.id_group AS ugroup
                  FROM hr_user AS u
                  LEFT JOIN hr_department AS d ON u.department = d.id
                  LEFT JOIN hr_keys_attribution AS ka ON ka.id_user = u.id
                  LEFT JOIN hr_keys AS k ON k.id = ka.id_key
+                 LEFT JOIN hr_user_group_attribution AS uga ON uga.id_user = u.id
                  WHERE u.id=$id";
 
         $cmd= $db->createCommand($sql);
@@ -103,11 +105,13 @@ class horux
                     u.phone2 AS phone_professional,
                     u.email2 AS email_professional,
                     u.fax AS fax_professional,
-                    k.serialNumber AS key_number
+                    k.serialNumber AS key_number,
+                    uga.id_group AS ugroup
                 FROM hr_user AS u
                 LEFT JOIN hr_department AS d ON u.department = d.id
                 LEFT JOIN hr_keys_attribution AS ka ON ka.id_user = u.id
                 LEFT JOIN hr_keys AS k ON k.id = ka.id_key
+                LEFT JOIN hr_user_group_attribution AS uga ON uga.id_user = u.id
                 WHERE u.id>1 ORDER BY u.name, u.firstname";
 
         $cmd= $db->createCommand($sql);
