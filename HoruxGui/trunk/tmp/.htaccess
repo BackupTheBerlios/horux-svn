@@ -1,0 +1,9 @@
+<FilesMatch soapcache>
+AuthName "Identifiants d'accès au WebService"
+AuthType Basic
+AuthUserFile "/var/www/horux/tmp/.htpasswd"
+<LIMIT GET POST>
+Require valid-user
+</LIMIT>
+</FilesMatch>
+
