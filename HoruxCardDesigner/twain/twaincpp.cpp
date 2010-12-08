@@ -253,7 +253,7 @@ it will not process the message unless a scan is in progress.
 */
 bool CTwain::ProcessMessage(MSG msg)
 {
- qWarning("ProcessMessage");
+
 	if(SourceEnabled())
 	{
 	TW_UINT16  twRC = TWRC_NOTDSEVENT;

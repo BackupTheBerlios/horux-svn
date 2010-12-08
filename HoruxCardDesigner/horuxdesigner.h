@@ -10,7 +10,13 @@
 #include <QMap>
 #include <QSplashScreen>
 #include <QtSql>
+#include "ui_horuxdesigner.h"
 
+#if defined(Q_WS_WIN)
+    #include "qtwain.h"
+    #include "dib.h"
+    #include "qtwaininterface.h"
+#endif
 
 #include "cardscene.h"
 #include "confpage.h"
@@ -33,9 +39,11 @@ public:
     ~HoruxDesigner();
 
     void loadData();
-    void loadHoruxSoap();
+
     void loadCSVData();
     void loadSQLData();
+
+    void showEvent(QShowEvent* thisEvent);
 
     static QString getHost() { return pThis->host; }
     static QString getUsername() { return pThis->username; }
@@ -53,6 +61,20 @@ public:
     static QStringList getHeader() { return pThis->header; }
     static QString getVersion() { return tr("Version 0.0.1"); }
 
+    static QString getHoruxUserName() { return pThis->ui->name->text(); }
+    static QString getHoruxUserFirstName() { return pThis->ui->firstName->text(); }
+    static QString getHoruxUserStreet() { return pThis->ui->street->text(); }
+    static QString getHoruxUserZip() { return pThis->ui->zip->text(); }
+    static QString getHoruxUserCity() { return pThis->ui->city->text(); }
+    static QString getHoruxUserPhone() { return pThis->ui->phone->text(); }
+    static QString getHoruxUserEmail() { return pThis->ui->email->text(); }
+    static QString getHoruxUserBirthday() { return pThis->ui->birthday->text(); }
+    static int getHoruxUserGroup() { return pThis->ui->userType->itemData(pThis->ui->userType->currentIndex()).toInt();  }
+    static QByteArray getHoruxUserPicture() { return pThis->pictureBuffer.data(); }
+
+public slots:
+    void loadHoruxSoap();
+
 private:
     void createToolBox();
     void initScene();
@@ -66,6 +88,12 @@ private:
     QString strippedName(const QString &fullFileName);
 
 private slots:
+    void onClear();
+    void onPrintHoruxUser();
+    void onUserHoruxFieldChange();
+    void onAcquireButton();
+    void onSourceButton();
+    void onDibAcquired(CDIB* pDib);
     void buttonGroupClicked(int id);
     void itemInserted(QGraphicsItem *item);
     void textInserted(QGraphicsTextItem *item);
@@ -105,9 +133,13 @@ private slots:
 
     void fileChange();
 
+signals:
+    void printCardOk();
+
 protected:
     void resizeEvent ( QResizeEvent * even);
     void updatePrintPreview();
+    virtual bool winEvent(MSG* pMsg,long * result);
 
     virtual void closeEvent ( QCloseEvent * event );
 private:
@@ -177,6 +209,11 @@ private:
     int pictureColumn;
 
     bool fileChanged;
+
+    #if defined(Q_WS_WIN)
+    QTwain* m_pTwain;
+    QPixmap* m_pPixmap;
+    #endif
 
 };
 

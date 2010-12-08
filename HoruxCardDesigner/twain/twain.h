@@ -77,8 +77,8 @@
 
 /* Define one of the following, depending on the platform */
 /* #define _MAC_   */
- #define _UNIX_
-/* #define _MSWIN_ */
+/* #define _UNIX_  */
+#define _MSWIN_
 
 #ifdef _MSWIN_
 #include <windows.h>

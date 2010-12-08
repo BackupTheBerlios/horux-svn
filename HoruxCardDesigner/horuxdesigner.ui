@@ -154,7 +154,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>190</width>
+          <width>198</width>
           <height>672</height>
          </rect>
         </property>
@@ -241,7 +241,21 @@ background-image: url(:/images/filigrane.png);</string>
              </widget>
             </item>
             <item row="0" column="3" colspan="2">
-             <widget class="QDateEdit" name="birthday"/>
+             <widget class="QDateEdit" name="birthday">
+              <property name="dateTime">
+               <datetime>
+                <hour>0</hour>
+                <minute>0</minute>
+                <second>0</second>
+                <year>2000</year>
+                <month>1</month>
+                <day>1</day>
+               </datetime>
+              </property>
+              <property name="displayFormat">
+               <string>yyyy-MM-dd</string>
+              </property>
+             </widget>
             </item>
             <item row="1" column="0">
              <widget class="QLabel" name="label_3">
@@ -319,7 +333,7 @@ background-image: url(:/images/filigrane.png);</string>
              </widget>
             </item>
             <item row="3" column="4">
-             <widget class="QPushButton" name="pushButton">
+             <widget class="QPushButton" name="scanButton">
               <property name="text">
                <string>Scanning...</string>
               </property>
@@ -327,6 +341,9 @@ background-image: url(:/images/filigrane.png);</string>
             </item>
             <item row="9" column="0">
              <widget class="QPushButton" name="addUser">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
               <property name="text">
                <string>Print user</string>
               </property>
@@ -355,6 +372,20 @@ background-image: url(:/images/filigrane.png);</string>
             <item row="5" column="1">
              <widget class="QComboBox" name="userType"/>
             </item>
+            <item row="4" column="4">
+             <widget class="QPushButton" name="source">
+              <property name="text">
+               <string>Source...</string>
+              </property>
+             </widget>
+            </item>
+            <item row="9" column="1">
+             <widget class="QPushButton" name="clear">
+              <property name="text">
+               <string>Clear</string>
+              </property>
+             </widget>
+            </item>
            </layout>
           </widget>
          </item>
@@ -374,7 +405,7 @@ background-image: url(:/images/filigrane.png);</string>
      <x>0</x>
      <y>0</y>
      <width>1136</width>
-     <height>21</height>
+     <height>20</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFormat">
@@ -684,7 +715,7 @@ background-image: url(:/images/filigrane.png);</string>
   <tabstop>birthday</tabstop>
   <tabstop>email</tabstop>
   <tabstop>phone</tabstop>
-  <tabstop>pushButton</tabstop>
+  <tabstop>scanButton</tabstop>
   <tabstop>addUser</tabstop>
   <tabstop>tableWidget</tabstop>
   <tabstop>graphicsView</tabstop>

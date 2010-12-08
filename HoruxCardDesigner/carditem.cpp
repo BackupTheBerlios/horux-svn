@@ -125,7 +125,7 @@ void CardItem::loadCard(QDomElement card )
         }
         if(node.toElement().tagName() == "bkgColor")
         {
-            bkgColor.setNamedColor( node.toElement().text() );
+            setBkgColor(node.toElement().text());
         }
         if(node.toElement().tagName() == "bkgFile")
         {

@@ -1,8 +1,9 @@
 #include <QtGui>
 #include <QSslError>
 #include <QNetworkReply>
+#include <QCryptographicHash>
 #include "horuxdesigner.h"
-#include "ui_horuxdesigner.h"
+
 #include "carditemtext.h"
 #include "carditem.h"
 #include "confpage.h"
@@ -10,6 +11,7 @@
 #include "horuxdialog.h"
 #include "databaseconnection.h"
 #include "printselection.h"
+#include "printhoruxuser.h"
 
 const int InsertTextButton = 10;
 const int InsertImageButton = 11;
@@ -69,10 +71,32 @@ HoruxDesigner::HoruxDesigner(QWidget *parent)
     createToolBar();
 
     connect(ui->next, SIGNAL(clicked()), this, SLOT(nextRecord()));
-    connect(ui->back, SIGNAL(clicked()), this, SLOT(backRecord()));
+    connect(ui->back, SIGNAL(clicked()), this, SLOT(backRecord()));    
 
     ui->cardMode->widget(1)->setDisabled(true);
 
+    #if defined(Q_WS_WIN)
+    m_pTwain = new QTwain(0);
+    m_pPixmap = NULL;
+
+    connect(ui->scanButton, SIGNAL(clicked()), this, SLOT(onAcquireButton()));
+    connect(ui->source, SIGNAL(clicked()), this, SLOT(onSourceButton()));
+    connect(ui->clear, SIGNAL(clicked()), this, SLOT(onClear()));
+    connect(m_pTwain, SIGNAL(dibAcquired(CDIB*)),
+                         this, SLOT(onDibAcquired(CDIB*)));
+
+    #endif
+
+
+    connect(ui->name, SIGNAL(textChanged(QString)), this, SLOT(onUserHoruxFieldChange()));
+    connect(ui->firstName, SIGNAL(textChanged(QString)), this, SLOT(onUserHoruxFieldChange()));
+    connect(ui->street, SIGNAL(textChanged(QString)), this, SLOT(onUserHoruxFieldChange()));
+    connect(ui->city, SIGNAL(textChanged(QString)), this, SLOT(onUserHoruxFieldChange()));
+    connect(ui->zip, SIGNAL(textChanged(QString)), this, SLOT(onUserHoruxFieldChange()));
+    connect(ui->email, SIGNAL(textChanged(QString)), this, SLOT(onUserHoruxFieldChange()));
+    connect(ui->phone, SIGNAL(textChanged(QString)), this, SLOT(onUserHoruxFieldChange()));
+    connect(ui->birthday, SIGNAL(dateChanged(QDate)), this, SLOT(onUserHoruxFieldChange()));
+    connect(ui->addUser, SIGNAL(clicked()), this, SLOT(onPrintHoruxUser()));
 }
 
 HoruxDesigner::~HoruxDesigner()
@@ -80,6 +104,121 @@ HoruxDesigner::~HoruxDesigner()
     if(sqlQuery)
         delete sqlQuery;
     delete ui;
+}
+
+void HoruxDesigner::showEvent(QShowEvent* thisEvent)
+{
+    // set the parent here to be sure to have a really
+    // valid window as the twain parent!
+    m_pTwain->setParent(this);
+} // !showEvent()
+
+
+
+bool HoruxDesigner::winEvent(MSG* pMsg, long* result)
+{
+    m_pTwain->processMessage(*pMsg);
+    return false;
+}
+
+void HoruxDesigner::onAcquireButton()
+{
+    if (!m_pTwain->acquire())
+    {
+        qWarning("acquire() call not successful!");
+    }
+}
+
+void HoruxDesigner::onSourceButton() {
+    m_pTwain->selectSource();
+}
+
+void HoruxDesigner::onDibAcquired(CDIB* pDib)
+{
+    qDebug()<<"We have an image";
+
+    if (m_pPixmap)
+            delete m_pPixmap;
+
+    m_pPixmap = QTwainInterface::convertToPixmap(pDib);
+
+
+    ui->picture->setPixmap(m_pPixmap->scaledToWidth(100));
+
+    pictureBuffer.close();
+
+    m_pPixmap->save(&pictureBuffer,"JPG");
+
+    updatePrintPreview();
+
+    delete pDib;
+}
+
+void HoruxDesigner::onClear() {
+    ui->name->setText("");
+    ui->birthday->setDate(QDate(2000,1,1));
+    ui->firstName->setText("");
+    ui->street->setText("");
+    ui->city->setText("");
+    ui->zip->setText("");
+    ui->phone->setText("");
+    ui->email->setText("");
+
+    QFile unknown(":/images/unknown.jpg");
+
+    if(unknown.open(QIODevice::ReadOnly)) {
+        QPixmap p(":/images/unknown.jpg");
+        ui->picture->setPixmap(p);
+
+        pictureBuffer.close();
+
+        p.save(&pictureBuffer,"JPG");
+    }
+
+    updatePrintPreview();
+}
+
+void HoruxDesigner::onUserHoruxFieldChange() {
+
+    QObject *p = sender();
+
+    if(p == ui->name)
+        userValue["name"] = ui->name->text();
+
+    if(p == ui->firstName)
+        userValue["firstname"] = ui->firstName->text();
+
+    if(p == ui->birthday)
+        userValue["birthday"] =  ui->birthday->text();
+
+    if(p == ui->street)
+        userValue["street_private"] = ui->street->text();
+
+    if(p == ui->city)
+        userValue["city_private"] = ui->city->text();
+
+    if(p == ui->zip)
+        userValue["zip_private"] =  ui->zip->text();
+
+    if(p == ui->phone)
+        userValue["phone_private"] =  ui->phone->text();
+
+    if(p == ui->email)
+        userValue["email_private"] =  ui->email->text();
+
+    updatePrintPreview();
+}
+
+void HoruxDesigner::onPrintHoruxUser() {
+    PrintHoruxUser dlg(this);
+
+    connect(&dlg, SIGNAL(printCard()), this, SLOT(printPreview()));
+    connect(this, SIGNAL(printCardOk()), &dlg, SLOT(rfidStep()));
+    connect(&dlg, SIGNAL(newUserAdd()), this, SLOT(loadHoruxSoap()));
+
+    dlg.setUserType(ui->userType->currentText());
+
+    dlg.exec();
 }
 
 void HoruxDesigner::loadData()
@@ -507,9 +646,6 @@ void HoruxDesigner::readSoapResponse()
             const QtSoapType &field_name =  record[1];
             const QtSoapType &field_firstname =  record[2];
             const QtSoapType &field_picture =  record[4];
-
-            userCombo->addItem(field_name["value"].toString() + " " + field_firstname["value"].toString(), field_id["value"].toInt());
-
             QStringList data;
 
             for(int j=0; j<record.count(); j++) {
@@ -521,6 +657,7 @@ void HoruxDesigner::readSoapResponse()
             }
 
             userData[field_id["value"].toInt()] = data;
+            userCombo->addItem(field_name["value"].toString() + " " + field_firstname["value"].toString(), field_id["value"].toInt());
 
             connect(&pictureHttp, SIGNAL(finished(QNetworkReply*)), this, SLOT(httpRequestDone(QNetworkReply*)));
 
@@ -533,18 +670,33 @@ void HoruxDesigner::readSoapResponse()
 
                 if( !userPicture.contains( field_id["value"].toInt() ) ) {
 
-
                     userPicture[field_id["value"].toInt()] = new QBuffer;
 
-                    QNetworkRequest request;
-                    request.setUrl(QUrl( "http://" +  host + path + "/pictures/" + field_picture["value"].toString()));
-                    qDebug() << "http://" +  host + path + "/pictures/" + field_picture["value"].toString();
-                    request.setRawHeader("User-Agent", "Horux Card Designer");
-                    QNetworkReply *reply = pictureHttp.get(request);
-                    userPictureReply[reply] = field_id["value"].toInt();
+                    QString pathPicture = currenFile.fileName().left(currenFile.fileName().length()-4) ;
+                    QDir dir(pathPicture);
 
-                    connect(reply , SIGNAL(sslErrors(QList<QSslError>)),
-                            this, SLOT(sslErrors(QList<QSslError>)));
+                    if(!dir.exists())
+                    {
+                        dir.mkdir(pathPicture );
+                    }
+
+                    if(!QFile::exists(pathPicture + "/" + field_picture["value"].toString())) {
+
+                        QNetworkRequest request;
+                        request.setUrl(QUrl( "http://" +  host + path + "/pictures/" + field_picture["value"].toString()));
+                        qDebug() << "http://" +  host + path + "/pictures/" + field_picture["value"].toString();
+                        request.setRawHeader("User-Agent", "Horux Card Designer");
+                        QNetworkReply *reply = pictureHttp.get(request);
+                        userPictureReply[reply] = field_id["value"].toInt();
+
+                        connect(reply , SIGNAL(sslErrors(QList<QSslError>)),
+                                this, SLOT(sslErrors(QList<QSslError>)));
+                    } else {
+                        QFile p( pathPicture + "/" + field_picture["value"].toString() );
+                        p.open(QIODevice::ReadOnly);
+                        userPicture[field_id["value"].toInt()]->setData(p.readAll());
+                        p.close();
+                    }
 
                 }
             }
@@ -579,6 +731,7 @@ void HoruxDesigner::readSoapResponse()
 
         }
 
+        ui->addUser->setEnabled(true);
     }
 }
 
@@ -595,9 +748,24 @@ void HoruxDesigner::userChanged(int index)
 
             int i = 0;
             foreach(QString s, header) {
-               userValue[s] = userData[userId].at(i);
+               if(userData[userId].size()-1>=i)
+                    userValue[s] = userData[userId].at(i);
                i++;
             }
+
+            ui->name->setText(userValue["name"]);
+            ui->firstName->setText(userValue["firstname"]);
+            ui->street->setText(userValue["street_private"]);
+            ui->zip->setText(userValue["zip_private"]);
+            ui->city->setText(userValue["city_private"]);
+            ui->email->setText(userValue["email_private"]);
+            ui->phone->setText(userValue["phone_private"]);
+            ui->birthday->setDate(QDate( userValue["birthday"].section("-",0,0).toInt() ,
+                                         userValue["birthday"].section("-",1,1).toInt(),
+                                         userValue["birthday"].section("-",2,2).toInt()));
+
+            ui->userType->setCurrentIndex(ui->userType->findData(userValue["ugroup"]));
+
 
             if(userData.count() > 0 && userCombo && userCombo->count() > userCombo->currentIndex()+1 ) {
                 ui->next->setEnabled(true);
@@ -605,14 +773,20 @@ void HoruxDesigner::userChanged(int index)
 
             userValue["__countIndex"] = QString::number(userCombo->currentIndex());
 
-
             if(userValue["picture"] != "")
             {
                 pictureBuffer.close();
                 pictureBuffer.setData(QByteArray());
 
-                if(userPicture.contains(userId))
+                if(userPicture.contains(userId)) {
+                    pictureBuffer.close();
                     pictureBuffer.setData(userPicture[userId]->buffer());
+                }
+
+                QPixmap p;
+                p.loadFromData(userPicture[userId]->buffer());
+                p = p.scaledToWidth(100);
+                ui->picture->setPixmap(p);
 
                 updatePrintPreview();
 
@@ -735,9 +909,17 @@ void HoruxDesigner::httpRequestDone ( QNetworkReply* reply )
         if(b.size() > 0 ) {
             int userId = userPictureReply[reply];
             userPicture[userId]->setData(b);
+
+            QString pathPicture = currenFile.fileName().left(currenFile.fileName().length()-4) ;
+            QFile p( pathPicture + "/" + userData[userId].at(4) );
+            p.open(QIODevice::WriteOnly);
+            p.write(b);
+            p.close();
+
+            updatePrintPreview();
+            QApplication::processEvents();
         }
 
-        updatePrintPreview();
     }
 
     reply->deleteLater();
@@ -1269,6 +1451,7 @@ void HoruxDesigner::printPreview()
     if (dlg.exec() != QDialog::Rejected )
     {
         print();
+        emit printCardOk();
     }
 
 

@@ -1,7 +1,7 @@
 # -------------------------------------------------
 # Project created by QtCreator 2009-12-10T16:22:17
 # -------------------------------------------------
-QT += network \
+QT += core gui network \
     sql \
     svg \
     xml
@@ -21,15 +21,16 @@ SOURCES += main.cpp \
     printcounter.cpp \
     csvtest.cpp \
     formattext.cpp \
-    printselection.cpp
+    printselection.cpp \
+    printhoruxuser.cpp
+
 
 win32:SOURCES += twain/twaincpp.cpp \
-    twain/qtwainsubstitute.cpp \
     twain/qtwaininterface.cpp \
     twain/qtwain.cpp \
-    twain/dibutil.c \
+    twain/dib.cpp \
     twain/dibfile.c \
-    twain/dib.cpp
+    twain/dibutil.c
 
 HEADERS += horuxdesigner.h \
     cardscene.h \
@@ -44,17 +45,17 @@ HEADERS += horuxdesigner.h \
     printcounter.h \
     csvtest.h \
     formattext.h \
-    printselection.h
+    printselection.h \
+    printhoruxuser.h
 
-win32:SOURCES +=  twain/twaincpp.h \
+win32:HEADERS +=  twain/twaincpp.h \
     twain/twain.h \
     twain/stdafx.h \
-    twain/qtwainsubstitute.h \
     twain/qtwaininterface.h \
-    twain/qtwain.h \
-    twain/dibutil.h \
+    twain/dib.h \
     twain/dibapi.h \
-    twain/dib.h
+    twain/qtwain.h
+
 FORMS += horuxdesigner.ui \
     textsetting.ui \
     cardsetting.ui \
@@ -66,10 +67,17 @@ FORMS += horuxdesigner.ui \
     printcounter.ui \
     csvtest.ui \
     formattext.ui \
-    printselection.ui
+    printselection.ui \
+    printhoruxuser.ui
 RESOURCES += ressource.qrc
 win32:RC_FILE = myapp.rc
 TRANSLATIONS = horuxcarddesigner_fr.ts
 CODECFORTR = ISO-8859-5
+
+win32:INCLUDEPATH += ./twain
+
 include(./qtsoap-2.7_1-opensource/src/qtsoap.pri)
 OTHER_FILES += TODO.txt
+
+
+win32:LIBS += -lkernel32 -luser32 -lgdi32 -lcomdlg32 -lole32 -ldinput -lddraw -ldxguid -lwinmm -ldsound

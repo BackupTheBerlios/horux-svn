@@ -21,6 +21,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include <QWidget>
 #include <QPixmap>
 #include <QImage>
+#include <QApplication>
 #include "dib.h"
 #include "dibutil.h"
 #include "dibapi.h"
@@ -28,7 +29,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 
 
-
+#include <QDebug>
 
 QTwainInterface::QTwainInterface(QWidget* parent)
 {
@@ -71,16 +72,23 @@ QPixmap* QTwainInterface::convertToPixmap(CDIB* pDib)//,const unsigned int nWidt
 
 //	if (nUseWidth == 0)
 	nUseWidth = pDib->Width();
+
 //	if (nUseHeight == 0)
 	nUseHeight = pDib->Height();
 
-	//QPixmap* retval = new QPixmap(nUseWidth, nUseHeight);
+        //QPixmap* retval = new QPixmap(nUseWidth, nUseHeight);
 	HANDLE hdib=pDib->DIBHandle();
-	HPALETTE pepe =CreateDIBPalette(hdib);
-	HBITMAP ima =DIBToBitmap(hdib,pepe);
-	QPixmap* retval2= new QPixmap(QPixmap::fromWinHBITMAP ( ima,QPixmap::NoAlpha));
 
-	//return retval2;
+// don't remove this stupid qDebug()
+qDebug() << "KJKJK4";
+
+        HPALETTE pepe =CreateDIBPalette(hdib);
+
+        HBITMAP ima =DIBToBitmap(hdib,pepe);
+
+        QPixmap* retval2= new QPixmap(QPixmap::fromWinHBITMAP ( ima,QPixmap::NoAlpha));
+
+        //return retval2;
 	//HDC hehe;
 	
 	/*pDib->BitBlt(hehe, 
