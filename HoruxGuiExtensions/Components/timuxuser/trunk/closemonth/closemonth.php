@@ -172,7 +172,7 @@ class closemonth extends PageList
             }
             else
             {
-                $cmd=$this->db->createCommand("SELECT* FROM hr_timux_activity_counter WHERE user_id=".$d['user_id']." AND year=$year AND month=$month");
+                $cmd=$this->db->createCommand("SELECT* FROM hr_timux_activity_counter WHERE user_id=".$d['user_id']." AND year=$year AND month=$month AND isClosedMonth=1");
                 $data = $cmd->query();
                 $data = $data->readAll();
 
@@ -195,7 +195,7 @@ class closemonth extends PageList
                         $m--;
                     }
 
-                    $cmd=$this->db->createCommand("SELECT* FROM hr_timux_activity_counter WHERE user_id=".$d['user_id']." AND year=$y AND month=$m");
+                    $cmd=$this->db->createCommand("SELECT* FROM hr_timux_activity_counter WHERE user_id=".$d['user_id']." AND year=$y AND month=$m AND isClosedMonth=1");
                     $data = $cmd->query();
                     $data = $data->readAll();
 

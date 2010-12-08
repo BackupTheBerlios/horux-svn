@@ -725,7 +725,7 @@ class employee
     }
 
     public function getActivityCounter($year, $month, $timecode) {
-        $cmd = $this->db->createCommand( "SELECT ROUND(SUM(nbre), 4) AS n FROM hr_timux_activity_counter WHERE timecode_id=$timecode AND year=$year AND month=$month AND user_id={$this->employeeId}") ;
+        $cmd = $this->db->createCommand( "SELECT ROUND(SUM(nbre), 4) AS n FROM hr_timux_activity_counter WHERE isClosedMonth=0 AND 	timecode_id=$timecode AND year=$year AND month=$month AND user_id={$this->employeeId}") ;
         $query = $cmd->query();
         $data = $query->read();
 
@@ -734,7 +734,7 @@ class employee
 
 
     public function getAllActivityCounter($year, $month) {
-        $cmd = $this->db->createCommand( "SELECT ac.*, tc.formatDisplay, tc.name FROM hr_timux_activity_counter AS ac LEFT JOIN hr_timux_timecode AS tc ON tc.id=ac.timecode_id WHERE year=$year AND month=$month AND user_id={$this->employeeId}") ;
+        $cmd = $this->db->createCommand( "SELECT ac.*, tc.formatDisplay, tc.name FROM hr_timux_activity_counter AS ac LEFT JOIN hr_timux_timecode AS tc ON tc.id=ac.timecode_id WHERE ac.isClosedMonth=0 AND year=$year AND month=$month AND user_id={$this->employeeId}") ;
         $query = $cmd->query();
         return  $query->readAll();
     }
@@ -1580,13 +1580,16 @@ class employee
 
                         $overTimeMonth = 0;
 
-                        for($day=1; $day<date('t', mktime(0,0,0,$month,1,$year));$day++) {
+                        for($day=1; $day<=date('t', mktime(0,0,0,$month,1,$year));$day++) {
                             $todo = $this->getDayTodo($day,$month, $year);
                             $done = $this->getDayDone($day,$month, $year);
                             $overTimeMonth = bcadd($overTimeMonth, bcsub($done['done'], $todo ,4),4 );
                         }
 
                         $overtime = bcadd($overTimeLastMonth,$overTimeMonth,4);
+
+                        $timeCode = $this->getDefaultOvertimeCounter();
+                        $overtime = bcadd($overtime, $this->getActivityCounter($year, $month, $timeCode), 4);
 
                         $cmd=$this->db->createCommand("INSERT hr_timux_activity_counter SET isClosedMonth=1, nbre=".$overtime.", year=$year, month=$month, user_id=".$this->employeeId.", timecode_id=".$tc['id']);
                         $cmd->execute();
