@@ -30,12 +30,12 @@ class CHRstcpipC : public QObject, CDeviceInterface
 {
   Q_OBJECT
   Q_INTERFACES ( CDeviceInterface )
-  Q_CLASSINFO ( "Author", "Letux Sàrl" );
-  Q_CLASSINFO ( "Copyright", "Letux Sàrl" );
+  Q_CLASSINFO ( "Author", "Thierry Forchelet" );
+  Q_CLASSINFO ( "Copyright", "Letux - 2010" );
   Q_CLASSINFO ( "Version", "0.0.1" );
   Q_CLASSINFO ( "PluginName", "horux_rstcpip_converter" );
   Q_CLASSINFO ( "PluginType", "device" );
-  Q_CLASSINFO ( "PluginDescription", "Lecteur clavier permettant d'ouvrir une porte à l'aide d'un PIN code" );
+  Q_CLASSINFO ( "PluginDescription", "Handle a rs / tcp-ip converter" );
 
 public:
   CHRstcpipC( QObject *parent=0);

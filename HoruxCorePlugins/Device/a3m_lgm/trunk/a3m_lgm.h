@@ -40,7 +40,7 @@ class CA3mLgm : public QObject, CDeviceInterface
 {
    Q_OBJECT
    Q_INTERFACES ( CDeviceInterface )
-   Q_CLASSINFO ( "Author", "Letux Sàrl" );
+   Q_CLASSINFO ( "Author", "Thierry Forchelet" );
    Q_CLASSINFO ( "Copyright", "Letux - 2010" );
    Q_CLASSINFO ( "Version", "0.0.1" );
    Q_CLASSINFO ( "PluginName", "a3m_lgm" );

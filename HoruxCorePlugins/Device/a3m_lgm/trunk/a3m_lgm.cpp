@@ -255,6 +255,12 @@ void CA3mLgm::sendBufferContent() {
        {
             qDebug()<<"stopRES" << busyCounter;
             status = FREE;
+
+            if (_isConnected)
+            {
+               _isConnected = false;
+               emit deviceConnection(id, _isConnected);
+            }
        }
    }
 
@@ -342,6 +348,12 @@ void CA3mLgm::hasMsg()
       msgD += tmp.sprintf("%02X ", (uchar)msg.at(i));
    }
    if (DEBUG) qDebug() << "# " << msgD;*/
+
+   if (!_isConnected)
+   {
+      _isConnected = true;
+      emit deviceConnection(id, _isConnected);
+   }
 
     if(timer->isActive())
         timer->stop();
@@ -488,7 +500,7 @@ void CA3mLgm::hasMsg()
             if (DEBUG) qDebug() << "BAD ETX";
             msg.remove(0, etxPos+1);
         }
-    }    
+    }
 }
 
 QByteArray CA3mLgm::sendCmd(CMD_TYPE cmd, QByteArray params)
