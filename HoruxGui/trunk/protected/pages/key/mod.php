@@ -16,11 +16,24 @@ Prado::using('horux.pages.key.sql');
 
 class mod extends Page
 {
+    public $cards_format;
+
     public function onLoad($param)
     {
         parent::onLoad($param);
 
         $this->setHoruxSysTray(true);
+
+        // get the cards format...
+        $sql = "SELECT cards_format FROM hr_config WHERE id=1";
+        $cmd=$this->db->createCommand($sql);
+        $data = $cmd->query();
+        $data = $data->read();
+        $sn = $this->Request['sn'];
+
+        if($data['cards_format'] != "") {
+          $this->cards_format = $data['cards_format'];
+        }
 
         if(!$this->isPostBack)
         {

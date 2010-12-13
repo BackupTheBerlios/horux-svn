@@ -31,7 +31,7 @@ class SQL {
                         `mail_smtp_password`=:mail_smtp_password,
                         `mail_smtp_host`=:mail_smtp_host,
                         `mail_smtp_port`=:mail_smtp_port,
-
+                        `cards_format`=:cards_format,
                         `publicurl`=:publicurl,
 
                         `picturepath`=:picturepath,

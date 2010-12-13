@@ -75,7 +75,6 @@ class KeyList extends PageList
 
         $this->setHoruxSysTray(true);
 
-
         if(!$this->IsPostBack)
         {
             $FilterIdentificator = $this->Session[$this->getApplication()->getService()->getRequestedPagePath().'FilterIdentificator'];

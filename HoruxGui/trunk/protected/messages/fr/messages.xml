@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <xliff version="1.0">
- <file source-language="FR" target-language="fr" datatype="plaintext" original="messages" date="2010-11-22T07:49:25Z" product-name="messages">
+ <file source-language="FR" target-language="fr" datatype="plaintext" original="messages" date="2010-12-13T16:17:05Z" product-name="messages">
   <body>
   
 <trans-unit id="1" lock="1">
@@ -4176,6 +4176,31 @@
 <trans-unit id="791">
 <source>You could insert a description for this device.</source>
 <target>Vous pouvez ins&#xE9;rer une description pour ce p&#xE9;riph&#xE9;rique</target>
+</trans-unit>
+
+<trans-unit id="792">
+<source>Cards Settings</source>
+<target>Param&#xE8;tres des cl&#xE9;s</target>
+</trans-unit>
+
+<trans-unit id="793">
+<source>Keys Settings</source>
+<target>Param&#xE8;tres des cl&#xE9;s</target>
+</trans-unit>
+
+<trans-unit id="794">
+<source>Keys format</source>
+<target>Format des cl&#xE9;s</target>
+</trans-unit>
+
+<trans-unit id="795">
+<source>Cannot delete a parent Horux Controller</source>
+<target>Ne peut pas supprimer un contr&#xF4;lleur Horux parent</target>
+</trans-unit>
+
+<trans-unit id="796">
+<source>Select which format you wish to use for keys readings.</source>
+<target>Entrez le format du num&#xE9;ro de la cl&#xE9; utilis&#xE9; par le lecteur&lt;br /&gt;X(hexa), x(hexa invers&#xE9;), D(decimal), d(decimal invers&#xE9;), _(ignore).&lt;br /&gt;Example ___XXXX, ignore les 3 premiers bytes et lit les 4 derniers en hexa</target>
 </trans-unit>
 </body>
 </file>

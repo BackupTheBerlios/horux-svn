@@ -1,5 +1,5 @@
 <com:TContent ID="Main">
-
+    <script language="Javascript" src="./js/BigInt.js"></script>
     <script language="Javascript">
 
         var serial = new Array();
@@ -58,6 +58,40 @@
 
 
                             document.getElementById( '<%= $this->serialNumber->getClientID() %>' ).value = sn;
+
+                            // get the sn in the desired format
+                            format = '<%=$this->cards_format%>';
+
+                            var strHexSn = bigInt2str(str2bigInt(sn, 10, 0),16);
+                            var data = strHexSn;
+                            var dataSize = format.length;
+
+                            ret = "";
+                            if (format == "")
+                                ret = sn;
+                            else {
+                                if (format.indexOf('X') != -1 || format.indexOf('D') != -1) {
+                                    for (i = 0; i < dataSize; i++) {
+                                        if (format.charAt(i) != '_') {
+                                            ret += data.charAt(i*2)+data.charAt((i*2)+1);
+                                        }
+                                    }
+                                }
+                                else {
+                                    for (i = dataSize-1; i > -1; i--) {
+                                        if (format.charAt(dataSize-1-i) != '_')
+                                            ret += data.charAt(i*2)+data.charAt((i*2)+1);
+                                    }
+                                }
+
+                                if (format.indexOf('D') != -1 || format.indexOf('d') != -1) {
+                                    ret = parseInt(ret, 16).toString(10);
+                                }
+                            }
+
+                            document.getElementById( '<%= $this->identificator->getClientID() %>' ).value = ret;
+                            // --------------------------------
+
                             counter = 0;
                             delete serial;
                             serial = new Array();

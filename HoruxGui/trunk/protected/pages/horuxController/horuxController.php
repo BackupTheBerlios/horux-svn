@@ -95,20 +95,30 @@ class horuxController extends PageList
 
                 if( (bool)$cb->getChecked() && $cb->Value != "0")
                 {
-                    $cmd=$this->db->createCommand("SELECT * FROM hr_horux_controller WHERE id=".$id);
+                    // Check for child device
+                    $cmd=$this->db->createCommand("SELECT * FROM hr_device WHERE horuxControllerId=".$id);
                     $data = $cmd->query();
                     $data = $data->read();
 
-                    if($data['type'] !== 'master' && $data['id'] == 1) {
-
-                        $cmd=$this->db->createCommand("DELETE FROM hr_horux_controller WHERE id=".$id);
-                        $cmd->execute();
-                        $nDelete++;
+                    if ($data) {
+                        $pBack = array('koMsg'=>Prado::localize('Cannot delete a parent Horux Controller'));
+                        $this->Response->redirect($this->Service->constructUrl('horuxController.horuxController',$pBack));
                     }
                     else {
-                        $pBack = array('koMsg'=>Prado::localize('Cannot delete the master Horux Controller'));
-                        $this->Response->redirect($this->Service->constructUrl('horuxController.horuxController',$pBack));
+                      $cmd=$this->db->createCommand("SELECT * FROM hr_horux_controller WHERE id=".$id);
+                      $data = $cmd->query();
+                      $data = $data->read();
 
+                      if($data['id'] != 1) {
+
+                          $cmd=$this->db->createCommand("DELETE FROM hr_horux_controller WHERE id=".$id);
+                          $cmd->execute();
+                          $nDelete++;
+                      }
+                      else {
+                          $pBack = array('koMsg'=>Prado::localize('Cannot delete the master Horux Controller'));
+                          $this->Response->redirect($this->Service->constructUrl('horuxController.horuxController',$pBack));
+                      }
                     }
                 }
             }

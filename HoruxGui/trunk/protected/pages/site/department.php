@@ -90,7 +90,7 @@ class department extends PageList
                 {
                     $id = $cb->Value;
 
-                    if($id>1)
+                    if($id>0)
                     {
 
                         $cmd=$this->db->createCommand("SELECT name FROM hr_department WHERE id=".$id);

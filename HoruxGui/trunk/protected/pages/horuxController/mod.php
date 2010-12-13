@@ -38,6 +38,10 @@ class mod extends Page
               $this->tbb->Save->setEnabled(false);
               $this->tbb->apply->setEnabled(false);
         }
+
+        if ($this->id->Value == 1) {
+          $this->type->InputAttributes->onclick="document.getElementById('ctl0_Main_type').checked=1;";
+        }
     }
 
     protected function setData()
@@ -94,7 +98,10 @@ class mod extends Page
         $cmd->bindValue(":id",$this->id->Value, PDO::PARAM_INT);
         $cmd->bindValue(":name",$this->name->SafeText,PDO::PARAM_STR);
         $cmd->bindValue(":ip",$this->ip->SafeText,PDO::PARAM_STR);
-        $cmd->bindValue(":type", $this->type->Checked ? 'master' : 'slave' ,PDO::PARAM_STR);
+        if ($this->id->Value != 1)
+          $cmd->bindValue(":type", $this->type->Checked ? 'master' : 'slave' ,PDO::PARAM_STR);
+        else
+          $cmd->bindValue(":type", 'master',PDO::PARAM_STR);
         $cmd->bindValue(":comment",$this->comment->SafeText,PDO::PARAM_STR);
 
         $res = $cmd->execute();

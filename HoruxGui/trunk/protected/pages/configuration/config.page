@@ -317,6 +317,25 @@
         </table>
     </fieldset>
 
+    <fieldset class="adminform">
+        <legend><%[Keys Settings]%></legend>
+        <table class="admintable" cellspacing="1">
+            <tbody>
+                <tr>
+                    <td valign="top" class="key">
+                        <span onmouseover="Tip('<%[Select which format you wish to use for keys readings.]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Keys format]%></span>
+                    </td>
+                    <td>
+                        <com:TTextBox
+                            CssClass="text_area"
+                            ID="cards_format"
+                            Text=""
+                            Width="50" />
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </fieldset>
    
 
 

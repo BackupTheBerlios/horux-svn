@@ -83,6 +83,7 @@ class Config extends Page {
             $this->smtp_password->Text = $data['mail_smtp_password'];
             $this->smtp_host->Text = $data['mail_smtp_host'];
             $this->smtp_port->Text = $data['mail_smtp_port'];
+            $this->cards_format->Text = $data['cards_format'];
         }
     }
 
@@ -141,6 +142,7 @@ class Config extends Page {
         $cmd->bindValue(":mail_smtp_host",$this->smtp_host->SafeText,PDO::PARAM_STR);
         $cmd->bindValue(":mail_smtp_port",$this->smtp_port->SafeText,PDO::PARAM_STR);
 
+        $cmd->bindValue(":cards_format",$this->cards_format->SafeText,PDO::PARAM_STR);
 
         $_SESSION['helpKey'] = $this->key->SafeText;
 

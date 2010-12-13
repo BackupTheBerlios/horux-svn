@@ -65,7 +65,6 @@
                         for(i=2; i<serial.length-2; i++)
                             sn += String.fromCharCode(serial[i]);
 
-
                         window.location.replace('index.php?page=key.mod&sn=' + sn);
                         counter = 0;
                         delete serial;

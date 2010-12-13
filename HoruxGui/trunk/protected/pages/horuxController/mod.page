@@ -37,19 +37,19 @@
 
                 <tr>
                     <td valign="top" class="key">
-                        <span onmouseover="Tip('<%[Insert the IP address or the dns name]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[IP/DNS]%></span>
+                        <span onmouseover="Tip('<%[Insert the IP address or the dns name]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)">* <%[IP/DNS]%></span>
                     </td>
                     <td>
                         <com:TTextBox
                             CssClass="text_area"
                             ID="ip"
                             Width="50" />
-                    </td>
                         <com:TRequiredFieldValidator
                             ValidationGroup="Group1"
                             ControlToValidate="ip"
                             Text="<%[This field is required]%>"
                             Display="Dynamic"/>
+                        </td>
                 </tr>
 
 
