@@ -345,7 +345,7 @@ void CLCDDisplay::deviceDiconnected()
 
 void CLCDDisplay::deviceError( QAbstractSocket::SocketError socketError )
 {
-  qDebug() << "Socket error " << socketError;
+  //qDebug() << "Socket error " << socketError;
 
   close();
 
@@ -363,7 +363,7 @@ void CLCDDisplay::readyRead ()
 
 void CLCDDisplay::close()
 {
-  _isConnected = false;
+
 
   if(socket)
   {
@@ -386,7 +386,12 @@ void CLCDDisplay::close()
 
   status = FREE;
 
-  emit deviceConnection(id, false);
+  if(_isConnected)
+    emit deviceConnection(id, false);
+
+  _isConnected = false;
+
+
 }
 
 bool CLCDDisplay::isOpened()

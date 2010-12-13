@@ -388,8 +388,10 @@ void CGantnerTimeTerminal::commandFinished(  int id, bool error)
                 case SEND_DOWN:
                     idRemoveDown = ftp->remove("Down.info");
                     break;
-                case SEND_CONFIG:
-                    idSendConfigCmd = ftp->put(configFile.toLatin1(), "config.dat");
+                case SEND_CONFIG: {
+                        QTextCodec *codec = QTextCodec::codecForName("UTF-8");
+                        idSendConfigCmd = ftp->put(codec->fromUnicode(configFile), "config.dat");
+                    }
                     break;
                 case REINIT:
                     reinit();
@@ -503,7 +505,10 @@ void CGantnerTimeTerminal::commandFinished(  int id, bool error)
         {
             //qDebug("REBOOT UNIT");
             QScriptValue result = engine.evaluate("reboot");
-            ftp->put(result.call().toString().toLatin1(), "Down.dat");
+
+            QTextCodec *codec = QTextCodec::codecForName("UTF-8");
+
+            ftp->put(codec->fromUnicode(result.call().toString()), "Down.dat");
             action = WAITING;
             ftp->close();
             //qDebug("START THE BOOKING TIMER 3");
@@ -588,12 +593,14 @@ void CGantnerTimeTerminal::commandFinished(  int id, bool error)
         if(!error)
         {
             //qDebug("REMOVE Down.info OK");
-            idSendDown = ftp->put(sendFile.toLatin1(), "Down.dat");
+            QTextCodec *codec = QTextCodec::codecForName("UTF-8");
+            idSendDown = ftp->put(codec->fromUnicode( sendFile ), "Down.dat");
         }
         else
         {
             //qDebug("NO Down.info");
-            idSendDown = ftp->put(sendFile.toLatin1(), "Down.dat");
+            QTextCodec *codec = QTextCodec::codecForName("UTF-8");
+            idSendDown = ftp->put(codec->fromUnicode( sendFile ), "Down.dat");
         }
     }
 
@@ -728,7 +735,8 @@ void CGantnerTimeTerminal::checkConfigFile(QString xml)
            if( isDiff )
            {
                //qDebug("CONFIG DIFF");
-               idSendConfig = ftp->put(config.toString().toLatin1(), "GatTimeCe.Config");
+               QTextCodec *codec = QTextCodec::codecForName("UTF-8");
+               idSendConfig = ftp->put(codec->fromUnicode(config.toString()), "GatTimeCe.Config");
                return;
            }
        }
@@ -780,6 +788,7 @@ void CGantnerTimeTerminal::dispatchMessage(QByteArray bookings)
     do
     {
         line = books.readLine();
+qDebug() << line;
         if(line.length() > 0)
         {
             QStringList data = line.split(";");
@@ -865,6 +874,8 @@ void CGantnerTimeTerminal::reinit()
 {
     qDebug("REINIT");
 
+
+
     QSettings settings(QCoreApplication::instance()->applicationDirPath() +"/horux.ini", QSettings::IniFormat);
     settings.beginGroup("GantnerTimeTerminal");
 
@@ -897,6 +908,7 @@ void CGantnerTimeTerminal::reinit()
 
     // set the reader configuration
     args.clear();
+
     args << QScriptValue(&engine,fid);
     result = engine.evaluate("readerConfig");
     config += result.call(QScriptValue(), args).toString() + "\n";
@@ -979,7 +991,8 @@ void CGantnerTimeTerminal::reinit()
         {
             args.clear();
             args << QScriptValue(&engine,queryButton.value(2).toString());
-            args << QScriptValue(&engine,QString(queryButton.value(3).toString() ));
+
+            args << QScriptValue(&engine,QString( queryButton.value(3).toString())  );
 
             if(!queryButton.value(4).toString().contains("dlg_InputData") ) {
                 args << QScriptValue(&engine,queryButton.value(4).toString());
@@ -1101,8 +1114,9 @@ void CGantnerTimeTerminal::reinit()
     result = engine.evaluate("removeAllAbsentReason");
     config += result.call().toString() + "\n";
 
-qDebug() << config;
-    ftp->put(config.toLatin1(), "config.dat");
+    QTextCodec *codec = QTextCodec::codecForName("UTF-8");
+
+    ftp->put(codec->fromUnicode(config), "config.dat");
 
     QMap<QString, QVariant> p;
     CGantnerTimeTerminal::s_removeAllUsers(this,p);
