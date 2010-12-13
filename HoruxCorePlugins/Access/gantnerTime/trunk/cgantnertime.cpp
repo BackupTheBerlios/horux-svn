@@ -129,6 +129,9 @@ bool CGantnerTime::isAccess(QMap<QString, QVariant> params, bool, bool )
                         BDE20 +
                         "')"
                         );
+
+            setUserPresence(userId, true);
+
         } else {
 
         QSqlQuery querykey = "SELECT id FROM hr_keys WHERE serialNumber='" + key + "'";
@@ -168,6 +171,17 @@ bool CGantnerTime::isAccess(QMap<QString, QVariant> params, bool, bool )
             if(round == 0)
             {
                 roundBooking = noRoundBooking;
+                if(code == "255" || reason.right(3) == "_IN" || code == "155") // arrive
+                {
+                    setUserPresence(userId, true);
+                }
+                else
+                {
+                     if(code == "254" || reason.right(4) == "_OUT") // leave
+                     {
+                        setUserPresence(userId, false);
+                     }
+                }
             }
             else
             {
@@ -176,12 +190,14 @@ bool CGantnerTime::isAccess(QMap<QString, QVariant> params, bool, bool )
                    if(code == "255" || reason.right(3) == "_IN" || code == "155") // arrive
                    {
                         roundBooking.setHMS(noRoundBooking.hour(),noRoundBooking.minute()+1,0);
+                        setUserPresence(userId, true);
                    }
                    else
                    {
                         if(code == "254" || reason.right(4) == "_OUT") // leave
                         {
                             roundBooking.setHMS(noRoundBooking.hour(),noRoundBooking.minute(),0);
+                            setUserPresence(userId, false);
                         }
                    }
 
@@ -193,7 +209,7 @@ bool CGantnerTime::isAccess(QMap<QString, QVariant> params, bool, bool )
                     {
                         if(code == "255" || reason.right(3) == "_IN" || code == "155") // arrive
                         {
-                            m++;
+                            m++;                            
                         }
                         else
                         {
@@ -207,12 +223,14 @@ bool CGantnerTime::isAccess(QMap<QString, QVariant> params, bool, bool )
                     if(code == "255" || reason.right(3) == "_IN" || code == "155") // arrive
                     {
                         roundBooking.setHMS(noRoundBooking.hour(),m,0);
+                        setUserPresence(userId, true);
                     }
                     else
                     {
                         if(code == "254" || reason.right(4) == "_OUT") // leave
                         {
                             roundBooking.setHMS(noRoundBooking.hour(),m,0);
+                            setUserPresence(userId, false);
                         }
                     }
                 }
@@ -352,6 +370,45 @@ bool CGantnerTime::isAccess(QMap<QString, QVariant> params, bool, bool )
     }
 
     return true;
+}
+
+void CGantnerTime::setUserPresence(QString userId, bool isPresent) {
+
+
+    QMapIterator<int, bool> i(devices);
+    while (i.hasNext())
+    {
+        i.next();
+
+        if(i.value() ) {
+            QSqlQuery userQuery;
+            userQuery.prepare("SELECT CONCAT(name, ' ', firstname) AS fullname, language FROM hr_user AS u LEFT JOIN hr_user_group_attribution AS uga ON uga.id_user=u.id LEFT JOIN hr_user_group_access AS ugac ON ugac.id_group=uga.id_group  WHERE u.id=:id AND ugac.id_device=:id_device");
+            userQuery.bindValue(":id", userId);
+            userQuery.bindValue(":id_device", i.key());
+            userQuery.exec();
+
+            if(userQuery.next()) {
+
+                QMap<QString, QString> p;
+                QString f = "addUser";
+                p["userId"] = userId;
+                p["userNo"] = userId;
+                p["displayName"] = userQuery.value(0).toString();
+                p["lang"] = userQuery.value(1).toString();
+                p["fiuUse"] = "0";
+
+                if(isPresent)
+                    p["attendanceStatus"] = "1";
+                else
+                    p["attendanceStatus"] = "2";
+
+                QString xmlFunc = CXmlFactory::deviceAction( QString::number(i.key()) ,f, p);
+
+                emit accessAction(xmlFunc);
+            }
+        }
+    }
+
 }
 
 void CGantnerTime::deviceEvent(QString xml)
@@ -562,6 +619,7 @@ void CGantnerTime::checkDb()
     while (i.hasNext())
     {
         i.next();
+
 
         if(i.value())
         {

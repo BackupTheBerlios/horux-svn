@@ -59,6 +59,7 @@ public slots:
 protected:
     void reloadAllData();
     void initSAASMode();
+    void setUserPresence(QString userId, bool isPresent);
 
 protected slots:
     void checkDb();
