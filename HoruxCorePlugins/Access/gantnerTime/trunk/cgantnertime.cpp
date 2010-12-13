@@ -816,7 +816,7 @@ void CGantnerTime::initSAASMode()
 
         timerCheckBalances = new QTimer(this);
         connect(timerCheckBalances, SIGNAL(timeout()), this, SLOT(checkBalances()));
-        timerCheckBalances->start(1000 * 60 * 60 * 12); // check every 12 hours
+        timerCheckBalances->start(10000 * 6 * 60); // check every 1 hours
         checkBalances();
     }
     else
@@ -829,7 +829,7 @@ void CGantnerTime::initSAASMode()
 
         timerCheckBalances = new QTimer(this);
         connect(timerCheckBalances, SIGNAL(timeout()), this, SLOT(checkBalances()));
-        timerCheckBalances->start(1000 * 60 * 60 * 12); // check every 12 hours
+        timerCheckBalances->start(10000 * 6 * 60); // check every 1 hours
         checkBalances();
     }
 }
@@ -867,6 +867,7 @@ void CGantnerTime::soapSSLErrors ( QNetworkReply * reply, const QList<QSslError>
 
 void CGantnerTime::readSoapBalancesResponse()
 {
+
     // check if the response from the web service is ok
     const QtSoapMessage &response = soapClientBalances.getResponse();
 
@@ -877,6 +878,7 @@ void CGantnerTime::readSoapBalancesResponse()
 
     if(response.returnValue().toString().toInt() < 0)
     {
+        qDebug() << response.returnValue().toString();
         return;
     }
 
