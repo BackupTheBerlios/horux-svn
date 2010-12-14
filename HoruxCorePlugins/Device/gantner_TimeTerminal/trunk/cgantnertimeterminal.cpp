@@ -1015,13 +1015,18 @@ void CGantnerTimeTerminal::reinit()
         {
             args.clear();
             args << QScriptValue(&engine,queryButton.value(2).toString());
-            args << QScriptValue(&engine,QString(queryButton.value(3).toString() ));
 
-            if(queryButton.value(4).toString() != "<dlg_InputData>") {
+            args << QScriptValue(&engine,QString( queryButton.value(3).toString())  );
+
+            if(!queryButton.value(4).toString().contains("dlg_InputData") ) {
                 args << QScriptValue(&engine,queryButton.value(4).toString());
             }
             else {
-                QString inputData = "<dlg_InputData,150,," + queryButton.value(5).toString() + ">";
+                QString inputData;
+                if(queryButton.value(4).toString() =="<dlg_InputData,150>")
+                      inputData = "<dlg_InputData,150,," + queryButton.value(5).toString() + ">";
+                else
+                    inputData = "<dlg_InputData,155,," + queryButton.value(5).toString() + ">";
                 args << QScriptValue(&engine,inputData);
                 isInputData = true;
             }
@@ -1113,7 +1118,7 @@ void CGantnerTimeTerminal::reinit()
     //Remove all absent reason
     result = engine.evaluate("removeAllAbsentReason");
     config += result.call().toString() + "\n";
-
+qDebug() << config;
     QTextCodec *codec = QTextCodec::codecForName("UTF-8");
 
     ftp->put(codec->fromUnicode(config), "config.dat");
