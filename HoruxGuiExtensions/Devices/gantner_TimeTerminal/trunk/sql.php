@@ -15,8 +15,6 @@
 
 class SQL {
 
-    const SQL_GET_ACCESSPOINT = "SELECT id, name FROM hr_device WHERE accessPoint=1";
-
     const SQL_ADD_GANTNERTERMINAL = "INSERT INTO hr_gantner_TimeTerminal (
                         `id_device` ,
                         `ipOrDhcp` ,
@@ -102,25 +100,25 @@ class SQL {
                         :checkBooking,
                         :language,
                         :autoBooking,
-                        :inputDBEText1
-                        :inputDBEText2
-                        :inputDBEText3
-                        :inputDBEText4
-                        :inputDBEText5
-                        :inputDBEText6
-                        :inputDBEText7
-                        :inputDBEText8
-                        :inputDBEText9
-                        :inputDBEText10
-                        :inputDBEText11
-                        :inputDBEText12
-                        :inputDBEText13
-                        :inputDBEText14
-                        :inputDBEText15
-                        :inputDBEText16
-                        :inputDBEText17
-                        :inputDBEText18
-                        :inputDBEText19
+                        :inputDBEText1,
+                        :inputDBEText2,
+                        :inputDBEText3,
+                        :inputDBEText4,
+                        :inputDBEText5,
+                        :inputDBEText6,
+                        :inputDBEText7,
+                        :inputDBEText8,
+                        :inputDBEText9,
+                        :inputDBEText10,
+                        :inputDBEText11,
+                        :inputDBEText12,
+                        :inputDBEText13,
+                        :inputDBEText14,
+                        :inputDBEText15,
+                        :inputDBEText16,
+                        :inputDBEText17,
+                        :inputDBEText18,
+                        :inputDBEText19,
                         :inputDBEText20,
                         :inputDBECheck1,
                         :inputDBECheck2,
@@ -164,40 +162,6 @@ class SQL {
                         :inputDBEFormat20
                   )";
 
-
-    const SQL_ADD_DEVICE = "INSERT INTO hr_device (
-                        `name` , 
-                        `accessPoint` , 
-                        `type` , 
-                        `isLog` , 
-                        `locked` , 
-                        `parent_id` , 
-                        `description`,
-                        `accessPlugin`
-                  )
-                  VALUES (
-                        :name,
-                        1,
-                        'gantner_TimeTerminal',
-                        :isLog,
-                        0,
-                        0,
-                        :description,
-                        ''
-                  )";
-
-    const SQL_IS_NAME_EXIST = "SELECT name FROM
-  								hr_device 
-  								WHERE type='hr_gantner_TimeTerminal' AND name=:name";
-
-    const SQL_GET_GANTNERTERMINAL = "SELECT * FROM hr_gantner_TimeTerminal AS ai LEFT JOIN hr_device AS d ON d.id=ai.id_device  WHERE ai.id_device=:id";
-
-    const SQL_MOD_DEVICE =  "UPDATE hr_device SET
-			            `name`=:name,
-                                `isLog`=:isLog, 
-                                `description`=:description
-                                  WHERE id=:id"
-    ;
 
     const SQL_UPDATE_GANTNERTERMINAL  =  "UPDATE hr_gantner_TimeTerminal SET
                         `ipOrDhcp`=:ipOrDhcp ,
@@ -272,10 +236,6 @@ class SQL {
                         `inputDBEFormat20`=:inputDBEFormat20
                         WHERE id_device=:id"
     ;
-
-    const SQL_IS_READER_NAME_EXIST2 = "SELECT name FROM
-  								hr_device
-  								WHERE type='hr_gantner_TimeTerminal' AND name=:name AND id<>:id";
 
     const SQL_GET_KEY = "SELECT * FROM hr_gantner_TimeTerminal_key WHERE device_id=:id";
 

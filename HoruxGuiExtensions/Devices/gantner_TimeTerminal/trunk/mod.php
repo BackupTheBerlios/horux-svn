@@ -14,36 +14,22 @@
 
 Prado::using('horux.pages.hardware.device.gantner_TimeTerminal.sql');
 
-class mod extends Page {
+class mod extends ModDevicePage {
 
     protected $inputData;
 
     public function onLoad($param) {
-        parent::onLoad($param);
+        $this->deviceName = "gantner_TimeTerminal";
 
         if(!$this->isPostBack) {
-
-            $userId=$this->Application->getUser()->getUserId();
-            $this->blockRecord('hr_device', $this->Request['id'], $userId);
 
             $this->brightness->setDataValueField('value');
             $this->brightness->setDataTextField('text');
             $this->brightness->DataSource=$this->Brightness;
             $this->brightness->dataBind();
 
-
-            $param = $this->Application->getParameters();
-            $superAdmin = $this->Application->getUser()->getSuperAdmin();
-
-            if($param['appMode'] == 'demo' && $superAdmin == 0) {
-                $this->tbb->Save->setEnabled(false);
-                $this->tbb->apply->setEnabled(false);
-            }
-
-            $this->id->Value = $this->Request['id'];
-            $this->setData();
-
         }
+        parent::onLoad($param);
     }
 
 
@@ -56,104 +42,97 @@ class mod extends Page {
         return $v;
     }
 
-    protected function setData() {
-        $cmd = $this->db->createCommand( SQL::SQL_GET_GANTNERTERMINAL );
-        $cmd->bindValue(":id",$this->id->Value, PDO::PARAM_INT);
-        $query = $cmd->query();
+    public function setData() {
 
-        if($query) {
-            $data = $query->read();
-            $this->name->Text = $data['name'];
-            $this->comment->Text = $data['description'];
-            $this->ipOrDhcp->Text = $data['ipOrDhcp'];
+        parent::setData();
 
-            $this->isAutoRestart->setChecked($data['isAutoRestart']);
-            $time = explode(":", $data['autoRestart']);
-            $this->autoRestartHour->Text = $time[0];
-            $this->autoRestartMinute->Text = $time[1];
-            $this->displayTimeout->Text = $data['displayTimeout'];
-            $this->inputTimeout->Text = $data['inputTimeout'];
-            $this->inputTimeout->Text = $data['inputTimeout'];
-            $this->brightness->setSelectedValue($data['brightness']);
-            $this->udpServer->setChecked($data['udpServer']);
-            $this->autoBooking->setChecked($data['autoBooking']);
-            $this->checkBooking->Text = $data['checkBooking'];
-            $this->isLog->setChecked($data['isLog'] );
+        $this->ipOrDhcp->Text = $this->data['ipOrDhcp'];
 
-            $languages = explode(",", $data['language']);
+        $this->isAutoRestart->setChecked($this->data['isAutoRestart']);
+        $time = explode(":", $this->data['autoRestart']);
+        $this->autoRestartHour->Text = $time[0];
+        $this->autoRestartMinute->Text = $time[1];
+        $this->displayTimeout->Text = $this->data['displayTimeout'];
+        $this->inputTimeout->Text = $this->data['inputTimeout'];
+        $this->inputTimeout->Text = $this->data['inputTimeout'];
+        $this->brightness->setSelectedValue($this->data['brightness']);
+        $this->udpServer->setChecked($this->data['udpServer']);
+        $this->autoBooking->setChecked($this->data['autoBooking']);
+        $this->checkBooking->Text = $this->data['checkBooking'];
+        $this->isLog->setChecked($this->data['isLog'] );
 
-            if(count($languages)>0) {
-                foreach($languages as $l) {
-                    if($l != '') {
-                        $this->$l->setChecked(true);
-                    }
+        $languages = explode(",", $this->data['language']);
+
+        if(count($languages)>0) {
+            foreach($languages as $l) {
+                if($l != '') {
+                    $this->$l->setChecked(true);
                 }
             }
-
-            $this->inputDBEText1->Text = $data['inputDBEText1'];
-            $this->inputDBEText2->Text = $data['inputDBEText2'];
-            $this->inputDBEText3->Text = $data['inputDBEText3'];
-            $this->inputDBEText4->Text = $data['inputDBEText4'];
-            $this->inputDBEText5->Text = $data['inputDBEText5'];
-            $this->inputDBEText6->Text = $data['inputDBEText6'];
-            $this->inputDBEText7->Text = $data['inputDBEText7'];
-            $this->inputDBEText8->Text = $data['inputDBEText8'];
-            $this->inputDBEText9->Text = $data['inputDBEText9'];
-            $this->inputDBEText10->Text = $data['inputDBEText10'];
-            $this->inputDBEText11->Text = $data['inputDBEText11'];
-            $this->inputDBEText12->Text = $data['inputDBEText12'];
-            $this->inputDBEText13->Text = $data['inputDBEText13'];
-            $this->inputDBEText14->Text = $data['inputDBEText14'];
-            $this->inputDBEText15->Text = $data['inputDBEText15'];
-            $this->inputDBEText16->Text = $data['inputDBEText16'];
-            $this->inputDBEText17->Text = $data['inputDBEText17'];
-            $this->inputDBEText18->Text = $data['inputDBEText18'];
-            $this->inputDBEText19->Text = $data['inputDBEText19'];
-            $this->inputDBEText20->Text = $data['inputDBEText20'];
-
-            $this->inputDBECheck1->setChecked( $data['inputDBECheck1'] );
-            $this->inputDBECheck2->setChecked( $data['inputDBECheck2'] );
-            $this->inputDBECheck3->setChecked( $data['inputDBECheck3'] );
-            $this->inputDBECheck4->setChecked( $data['inputDBECheck4'] );
-            $this->inputDBECheck5->setChecked( $data['inputDBECheck5'] );
-            $this->inputDBECheck6->setChecked( $data['inputDBECheck6'] );
-            $this->inputDBECheck7->setChecked( $data['inputDBECheck7'] );
-            $this->inputDBECheck8->setChecked( $data['inputDBEChecky8'] );
-            $this->inputDBECheck9->setChecked( $data['inputDBECheck9'] );
-            $this->inputDBECheck10->setChecked( $data['inputDBECheck10'] );
-            $this->inputDBECheck11->setChecked( $data['inputDBECheck11'] );
-            $this->inputDBECheck12->setChecked( $data['inputDBECheck12'] );
-            $this->inputDBECheck13->setChecked( $data['inputDBECheck13'] );
-            $this->inputDBECheck14->setChecked( $data['inputDBECheck14'] );
-            $this->inputDBECheck15->setChecked( $data['inputDBECheck15'] );
-            $this->inputDBECheck16->setChecked( $data['inputDBECheck16'] );
-            $this->inputDBECheck17->setChecked( $data['inputDBECheck17'] );
-            $this->inputDBECheck18->setChecked( $data['inputDBECheck18'] );
-            $this->inputDBECheck19->setChecked( $data['inputDBECheck19'] );
-            $this->inputDBECheck20->setChecked( $data['inputDBECheck20'] );
-
-            $this->inputDBEDisplay1->Text =  $data['inputDBEFormat1'] ;
-            $this->inputDBEDisplay2->Text =  $data['inputDBEFormat2'] ;
-            $this->inputDBEDisplay3->Text =  $data['inputDBEFormat3'] ;
-            $this->inputDBEDisplay4->Text =  $data['inputDBEFormat4'] ;
-            $this->inputDBEDisplay5->Text =  $data['inputDBEFormat5'] ;
-            $this->inputDBEDisplay6->Text =  $data['inputDBEFormat6'] ;
-            $this->inputDBEDisplay7->Text =  $data['inputDBEFormat7'] ;
-            $this->inputDBEDisplay8->Text =  $data['inputDBEFormat8'] ;
-            $this->inputDBEDisplay9->Text =  $data['inputDBEFormat9'] ;
-            $this->inputDBEDisplay10->Text =  $data['inputDBEFormat10'] ;
-            $this->inputDBEDisplay11->Text =  $data['inputDBEFormat11'] ;
-            $this->inputDBEDisplay12->Text =  $data['inputDBEFormat12'] ;
-            $this->inputDBEDisplay13->Text =  $data['inputDBEFormat13'] ;
-            $this->inputDBEDisplay14->Text =  $data['inputDBEFormat14'] ;
-            $this->inputDBEDisplay15->Text =  $data['inputDBEFormat15'] ;
-            $this->inputDBEDisplay16->Text =  $data['inputDBEFormat16'] ;
-            $this->inputDBEDisplay17->Text =  $data['inputDBEFormat17'] ;
-            $this->inputDBEDisplay18->Text =  $data['inputDBEFormat18'] ;
-            $this->inputDBEDisplay19->Text =  $data['inputDBEFormat19'] ;
-            $this->inputDBEDisplay20->Text =  $data['inputDBEFormat20'] ;
-
         }
+
+        $this->inputDBEText1->Text = $this->data['inputDBEText1'];
+        $this->inputDBEText2->Text = $this->data['inputDBEText2'];
+        $this->inputDBEText3->Text = $this->data['inputDBEText3'];
+        $this->inputDBEText4->Text = $this->data['inputDBEText4'];
+        $this->inputDBEText5->Text = $this->data['inputDBEText5'];
+        $this->inputDBEText6->Text = $this->data['inputDBEText6'];
+        $this->inputDBEText7->Text = $this->data['inputDBEText7'];
+        $this->inputDBEText8->Text = $this->data['inputDBEText8'];
+        $this->inputDBEText9->Text = $this->data['inputDBEText9'];
+        $this->inputDBEText10->Text = $this->data['inputDBEText10'];
+        $this->inputDBEText11->Text = $this->data['inputDBEText11'];
+        $this->inputDBEText12->Text = $this->data['inputDBEText12'];
+        $this->inputDBEText13->Text = $this->data['inputDBEText13'];
+        $this->inputDBEText14->Text = $this->data['inputDBEText14'];
+        $this->inputDBEText15->Text = $this->data['inputDBEText15'];
+        $this->inputDBEText16->Text = $this->data['inputDBEText16'];
+        $this->inputDBEText17->Text = $this->data['inputDBEText17'];
+        $this->inputDBEText18->Text = $this->data['inputDBEText18'];
+        $this->inputDBEText19->Text = $this->data['inputDBEText19'];
+        $this->inputDBEText20->Text = $this->data['inputDBEText20'];
+
+        $this->inputDBECheck1->setChecked( $this->data['inputDBECheck1'] );
+        $this->inputDBECheck2->setChecked( $this->data['inputDBECheck2'] );
+        $this->inputDBECheck3->setChecked( $this->data['inputDBECheck3'] );
+        $this->inputDBECheck4->setChecked( $this->data['inputDBECheck4'] );
+        $this->inputDBECheck5->setChecked( $this->data['inputDBECheck5'] );
+        $this->inputDBECheck6->setChecked( $this->data['inputDBECheck6'] );
+        $this->inputDBECheck7->setChecked( $this->data['inputDBECheck7'] );
+        $this->inputDBECheck8->setChecked( $this->data['inputDBEChecky8'] );
+        $this->inputDBECheck9->setChecked( $this->data['inputDBECheck9'] );
+        $this->inputDBECheck10->setChecked( $this->data['inputDBECheck10'] );
+        $this->inputDBECheck11->setChecked( $this->data['inputDBECheck11'] );
+        $this->inputDBECheck12->setChecked( $this->data['inputDBECheck12'] );
+        $this->inputDBECheck13->setChecked( $this->data['inputDBECheck13'] );
+        $this->inputDBECheck14->setChecked( $this->data['inputDBECheck14'] );
+        $this->inputDBECheck15->setChecked( $this->data['inputDBECheck15'] );
+        $this->inputDBECheck16->setChecked( $this->data['inputDBECheck16'] );
+        $this->inputDBECheck17->setChecked( $this->data['inputDBECheck17'] );
+        $this->inputDBECheck18->setChecked( $this->data['inputDBECheck18'] );
+        $this->inputDBECheck19->setChecked( $this->data['inputDBECheck19'] );
+        $this->inputDBECheck20->setChecked( $this->data['inputDBECheck20'] );
+
+        $this->inputDBEDisplay1->Text =  $this->data['inputDBEFormat1'] ;
+        $this->inputDBEDisplay2->Text =  $this->data['inputDBEFormat2'] ;
+        $this->inputDBEDisplay3->Text =  $this->data['inputDBEFormat3'] ;
+        $this->inputDBEDisplay4->Text =  $this->data['inputDBEFormat4'] ;
+        $this->inputDBEDisplay5->Text =  $this->data['inputDBEFormat5'] ;
+        $this->inputDBEDisplay6->Text =  $this->data['inputDBEFormat6'] ;
+        $this->inputDBEDisplay7->Text =  $this->data['inputDBEFormat7'] ;
+        $this->inputDBEDisplay8->Text =  $this->data['inputDBEFormat8'] ;
+        $this->inputDBEDisplay9->Text =  $this->data['inputDBEFormat9'] ;
+        $this->inputDBEDisplay10->Text =  $this->data['inputDBEFormat10'] ;
+        $this->inputDBEDisplay11->Text =  $this->data['inputDBEFormat11'] ;
+        $this->inputDBEDisplay12->Text =  $this->data['inputDBEFormat12'] ;
+        $this->inputDBEDisplay13->Text =  $this->data['inputDBEFormat13'] ;
+        $this->inputDBEDisplay14->Text =  $this->data['inputDBEFormat14'] ;
+        $this->inputDBEDisplay15->Text =  $this->data['inputDBEFormat15'] ;
+        $this->inputDBEDisplay16->Text =  $this->data['inputDBEFormat16'] ;
+        $this->inputDBEDisplay17->Text =  $this->data['inputDBEFormat17'] ;
+        $this->inputDBEDisplay18->Text =  $this->data['inputDBEFormat18'] ;
+        $this->inputDBEDisplay19->Text =  $this->data['inputDBEFormat19'] ;
+        $this->inputDBEDisplay20->Text =  $this->data['inputDBEFormat20'] ;
 
         $cmd = $this->db->createCommand( SQL::SQL_GET_KEY );
         $cmd->bindValue(":id",$this->id->Value, PDO::PARAM_INT);
@@ -271,62 +250,10 @@ class mod extends Page {
         $this->setViewState('inputData',$this->inputData);
     }
 
-    public function onApply($sender, $param) {
-        if($this->Page->IsValid) {
-            if($this->saveData()) {
-                $id = $this->id->Value;
 
-                $horuxService = new THoruxService();
-                $horuxService->onStopDevice($id);
-                $horuxService->onStartDevice($id);
+   public function saveData() {
 
-                $sa = new TStandAlone();
-                $sa->addStandalone("add", $this->id->Value, 'timuxReinit');
-
-
-                $pBack = array('okMsg'=>Prado::localize('The device was modified successfully'), 'id'=>$id);
-                $this->Response->redirect($this->Service->constructUrl('hardware.device.gantner_TimeTerminal.mod', $pBack));
-            }
-            else {
-                $pBack = array('koMsg'=>Prado::localize('The device was not modified'));
-            }
-        }
-    }
-
-    public function onSave($sender, $param) {
-        if($this->Page->IsValid) {
-            if($this->saveData()) {
-                $pBack = array('okMsg'=>Prado::localize('The device was modified successfully'));
-                $horuxService = new THoruxService();
-                $horuxService->onStopDevice($this->id->Value);
-                $horuxService->onStartDevice($this->id->Value);
-
-                $sa = new TStandAlone();
-                $sa->addStandalone("add", $this->id->Value, 'timuxReinit');
-
-
-            }
-            else
-                $pBack = array('koMsg'=>Prado::localize('The device was not modified'));
-
-            $this->blockRecord('hr_device', $this->id->Value, 0);
-            $this->Response->redirect($this->Service->constructUrl('hardware.HardwareList',$pBack));
-        }
-    }
-
-    public function onCancel($sender, $param) {
-        $this->blockRecord('hr_device', $this->id->Value, 0);
-        $this->Response->redirect($this->Service->constructUrl('hardware.HardwareList'));
-    }
-
-    protected function saveData() {
-        $cmd = $this->db->createCommand( SQL::SQL_MOD_DEVICE );
-        $cmd->bindValue(":name",$this->name->SafeText,PDO::PARAM_STR);
-        $cmd->bindValue(":description",$this->comment->SafeText,PDO::PARAM_STR);
-        $cmd->bindValue(":isLog",$this->isLog->getChecked(),PDO::PARAM_STR);
-        $cmd->bindValue(":id",$this->id->Value,PDO::PARAM_STR);
-        $cmd->Execute();
-
+        parent::saveData();
 
         $cmd = $this->db->createCommand( SQL::SQL_UPDATE_GANTNERTERMINAL );
         $cmd->bindValue(":ipOrDhcp",$this->ipOrDhcp->SafeText,PDO::PARAM_STR);
@@ -627,20 +554,17 @@ class mod extends Page {
 
         }
 
+
+        $horuxService = new THoruxService();
+        $horuxService->onStopDevice($id);
+        $horuxService->onStartDevice($id);
+
+        $sa = new TStandAlone();
+        $sa->addStandalone("add", $this->id->Value, 'timuxReinit');
+
         return true;
     }
 
-    public function serverValidateName($sender, $param) {
-        $cmd = $this->db->createCommand( SQL::SQL_IS_READER_NAME_EXIST2);
-        $cmd->bindValue(":name",$this->name->SafeText,PDO::PARAM_STR);
-        $cmd->bindValue(":id",$this->id->Value,PDO::PARAM_STR);
-        $array = $cmd->query()->readAll();
-
-        if(count($array) > 0)
-            $param->IsValid=false;
-        else
-            $param->IsValid=true;
-    }
 
     public function buttonOptionChange($sender, $param) {
         if($sender->getSelectedValue() == '<dlg_InputData,150>' || $sender->getSelectedValue() == '<dlg_InputData,155>') {
