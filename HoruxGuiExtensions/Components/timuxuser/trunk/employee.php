@@ -204,7 +204,7 @@ class employee
                 ON
                     tb.tracking_id = t.id
                 WHERE
-                    `date`=:date AND id_user=:id_user ORDER by tb.roundBooking";
+                    `date`=:date AND id_user=:id_user ORDER by tb.roundBooking, t.id";
 
         $cmd = $this->db->createCommand( $sql );
         $cmd->bindValue(":id_user",$this->employeeId,PDO::PARAM_STR);

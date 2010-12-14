@@ -416,6 +416,9 @@ class booking extends PageList
                         $cmd->bindValue(":id",$cb->Value);
                         $cmd->execute();
 
+                        $cmd=$this->db->createCommand("DELETE FROM hr_timux_booking_bde WHERE tracking_id =:id");
+                        $cmd->bindValue(":id",$cb->Value);
+                        $cmd->execute();
 
                         $cmd=$this->db->createCommand("DELETE FROM hr_timux_booking WHERE tracking_id =:id");
                         $cmd->bindValue(":id",$cb->Value);

@@ -176,21 +176,59 @@ class add extends Page
         if($this->sign->getSelectedValue() == '_IN' || $this->sign->getSelectedValue() == '_OUT')
         {
             $action = 100;
-            $cmd->bindValue(":action",$action, PDO::PARAM_STR);
 
             $cmd2=$this->db->createCommand("SELECT *  FROM hr_timux_timecode WHERE id=".$this->timecode->getSelectedValue());
 
             $data2 = $cmd2->query();
             $data2 = $data2->read();
 
-            if($data2['signtype'] == 'both')
-            {
-                $actionReason = $this->timecode->getSelectedValue().$this->sign->getSelectedValue();
-            }
-            else
-            {
-                $actionReason = $this->timecode->getSelectedValue();
-            }
+	    //$$
+	    if($data2['type'] == 'load') {
+	      $action = 255;
+
+
+	      $cmd2 = $this->db->createCommand( "INSERT INTO `hr_timux_booking_bde` (
+						    `tracking_id` ,
+						    `user_id`,
+						    `device_id`,
+						    `date`,
+						    `time`,
+						    `code`,
+						    `BDE1`
+						    )
+						    VALUES (
+						    :tracking_id,
+						    :user_id,
+						    :device_id,
+						    :date,
+						    :time,
+						    155,
+						    :bde1
+						    );" );
+	      
+	      $cmd2->bindValue(":tracking_id",$lastId,PDO::PARAM_STR);
+	      $cmd2->bindValue(":user_id",$this->userId,PDO::PARAM_STR);
+	      $cmd2->bindValue(":device_id",0,PDO::PARAM_STR);
+	      $cmd2->bindValue(":date",$this->dateToSql( $this->date->SafeText ),PDO::PARAM_STR);
+	      $cmd2->bindValue(":time",$this->time->SafeText,PDO::PARAM_STR);
+	      $cmd2->bindValue(":bde1",$data2['abbreviation'],PDO::PARAM_STR);
+	      $cmd2->execute();
+	    }
+
+            $cmd->bindValue(":action",$action, PDO::PARAM_STR);
+
+	    if($action != 255) {
+	      if($data2['signtype'] == 'both')
+	      {
+		  $actionReason = $this->timecode->getSelectedValue().$this->sign->getSelectedValue();
+	      }
+	      else
+	      {
+		  $actionReason = $this->timecode->getSelectedValue();
+	      }
+	    } else {
+		$actionReason = 0;
+	    }
             $cmd->bindValue(":actionReason",$actionReason, PDO::PARAM_STR);
         }
         else
@@ -213,7 +251,7 @@ class add extends Page
     {
         $date = explode("-",$this->date->SafeText);
 
-        $cmd = $this->db->createCommand( "SELECT * FROM hr_timux_activity_counter WHERE user_id=:id AND year=:year AND month=:month");
+        $cmd = $this->db->createCommand( "SELECT * FROM hr_timux_activity_counter WHERE user_id=:id AND year=:year AND month=:month AND isClosedMonth=1");
         $cmd->bindValue(":id",$this->userId, PDO::PARAM_INT);
         $cmd->bindValue(":year",$date[2], PDO::PARAM_INT);
         $cmd->bindValue(":month",$date[1], PDO::PARAM_INT);

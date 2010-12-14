@@ -63,6 +63,29 @@ class mod extends Page
             if($data['action'] == '254' || $data['action'] == '255')
                 $this->sign->setSelectedValue($data['action']);
 
+	    if($data['action'] == '255') {
+  
+	      $cmd2 = $this->db->createCommand( "SELECT * FROM hr_timux_booking_bde WHERE tracking_id=:id");
+	      $cmd2->bindValue(":id",$this->id->Value, PDO::PARAM_INT);
+	      $query2 = $cmd2->query();
+	    
+	      $data2 = $query2->read();
+
+	      if($data2) {
+
+		$cmd2 = $this->db->createCommand( "SELECT * FROM hr_timux_timecode WHERE abbreviation=:abb");
+		$cmd2->bindValue(":abb",$data2['BDE1'], PDO::PARAM_STR);
+		$query2 = $cmd2->query();
+	      
+		$data2 = $query2->read();
+
+		
+                $this->sign->setSelectedValue("_IN");
+		
+		$this->timecode->setSelectedValue($data2['id']);
+	      }
+	    }
+
             if($data['action'] == '100')
             {
                 $ar = explode('_', $data['actionReason']);
@@ -224,21 +247,63 @@ class mod extends Page
         if($this->sign->getSelectedValue() == '_IN' || $this->sign->getSelectedValue() == '_OUT')
         {
             $action = 100;
-            $cmd->bindValue(":action",$action, PDO::PARAM_STR);
             
             $cmd2=$this->db->createCommand("SELECT *  FROM hr_timux_timecode WHERE id=".$this->timecode->getSelectedValue());
 
             $data2 = $cmd2->query();
             $data2 = $data2->read();
 
-            if($data2['signtype'] == 'both')
-            {
-                $actionReason = $this->timecode->getSelectedValue().$this->sign->getSelectedValue();
-            }
-            else
-            {
-                $actionReason = $this->timecode->getSelectedValue();
-            }
+	    //$$
+	    if($data2['type'] == 'load') {
+	      $action = 255;
+
+	      $cmd2 = $this->db->createCommand("DELETE FROM `hr_timux_booking_bde` WHERE tracking_id=:tracking_id");
+	      $cmd2->bindValue(":tracking_id",$this->id->Value,PDO::PARAM_STR);
+	      $cmd2->execute();
+      
+
+	      $cmd2 = $this->db->createCommand( "INSERT INTO `hr_timux_booking_bde` (
+						    `tracking_id` ,
+						    `user_id`,
+						    `device_id`,
+						    `date`,
+						    `time`,
+						    `code`,
+						    `BDE1`
+						    )
+						    VALUES (
+						    :tracking_id,
+						    :user_id,
+						    :device_id,
+						    :date,
+						    :time,
+						    155,
+						    :bde1
+						    );" );
+	      
+	      $cmd2->bindValue(":tracking_id",$this->id->Value,PDO::PARAM_STR);
+	      $cmd2->bindValue(":user_id",$this->employee->getSelectedValue(),PDO::PARAM_STR);
+	      $cmd2->bindValue(":device_id",0,PDO::PARAM_STR);
+	      $cmd2->bindValue(":date",$this->dateToSql( $this->date->SafeText ),PDO::PARAM_STR);
+	      $cmd2->bindValue(":time",$this->time->SafeText,PDO::PARAM_STR);
+	      $cmd2->bindValue(":bde1",$data2['abbreviation'],PDO::PARAM_STR);
+	      $cmd2->execute();
+	    }
+
+            $cmd->bindValue(":action",$action, PDO::PARAM_STR);
+
+	    if($action != 255) {
+	      if($data2['signtype'] == 'both')
+	      {
+		  $actionReason = $this->timecode->getSelectedValue().$this->sign->getSelectedValue();
+	      }
+	      else
+	      {
+		  $actionReason = $this->timecode->getSelectedValue();
+	      }
+	    } else {
+	      $actionReason = 0;
+	    }
             $cmd->bindValue(":actionReason",$actionReason, PDO::PARAM_STR);
         }
         else
@@ -253,7 +318,7 @@ class mod extends Page
 
         $res2 = $cmd->execute();
 
-        return $res1 || $res2;
+        return true;
     }
 
 
@@ -274,6 +339,11 @@ class mod extends Page
             $cmd=$this->db->createCommand("DELETE FROM hr_timux_booking WHERE tracking_id =:id");
             $cmd->bindValue(":id",$this->id->Value);
             $cmd->execute();
+
+            $cmd=$this->db->createCommand("DELETE FROM hr_timux_booking_bde WHERE tracking_id =:id");
+            $cmd->bindValue(":id",$this->id->Value);
+            $cmd->execute();
+
         }
 
         if(isset($this->Request['back']))
