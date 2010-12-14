@@ -352,7 +352,7 @@ class year extends PageList
 
         $this->totalVacation->Text = sprintf("%.02f",bcadd($nHolidays,$this->daysVacationLastYear->Text,4));
 
-        $this->hoursBalance->Text = sprintf("%.02f",$this->employee->getOvertimeLastMonth(1,$year));
+        $this->hoursBalance->Text = sprintf("%.02f",$this->employee->getOvertimeLastYear($year-1));
 
         $totalYearHours100 = 0;
         $totalYearHoursX2 = 0;

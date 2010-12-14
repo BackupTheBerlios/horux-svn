@@ -669,6 +669,21 @@ class employee
     }
 
     /**
+     *  Return the overtime of the last year
+     *  @param int $LastYear
+     */
+    public function getOvertimeLastYear($lastYear) {
+
+        $timeCode = $this->getDefaultOvertimeCounter();
+        
+        $cmd = $this->db->createCommand( "SELECT * FROM hr_timux_activity_counter WHERE isClosedMonth=1 AND year=$lastYear AND month=12 AND timecode_id=$timeCode AND user_id=".$this->employeeId );
+        $query = $cmd->query();
+        $data = $query->read();
+
+        return $data['nbre'];
+    }
+
+    /**
      *  Return the overtime of the last month
      *  @param int $month
      *  @param int $year

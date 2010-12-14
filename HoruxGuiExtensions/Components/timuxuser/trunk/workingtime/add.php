@@ -222,7 +222,8 @@ class add extends Page
                                                     timecode_id=:timecode_id,
                                                     year=:year,
                                                     month=:month,
-                                                    nbre=:nbre
+                                                    nbre=:nbre,
+                                                    isClosedMonth=:isClosedMonth
                                                 ");
                 $cmd->bindValue(":user_id",$this->employee->getSelectedValue(),PDO::PARAM_STR);
                 $cmd->bindValue(":timecode_id",$d['id'],PDO::PARAM_STR);
@@ -231,12 +232,8 @@ class add extends Page
 
                 list($day,$month,$year) = explode("-",$this->from->SafeText);
 
-                if($month == 1) {
-                    $month = 12;
-                    $year--;
-                } else {
-                    $month--;
-                }
+                $month = 12;
+                $year--;
 
                 $cmd->bindValue(":year",$year,PDO::PARAM_STR);
                 $cmd->bindValue(":month",$month,PDO::PARAM_STR);
@@ -255,17 +252,40 @@ class add extends Page
 
                 if($d['defaultOvertime'] == 1)
                 {
+                    list($day,$month,$year) = explode("-",$this->from->SafeText);
+
+                    if($month == 1) {
+                        $month = 12;
+                        $year--;
+                    } else {
+                        $month--;
+                    }
+
                     $nbreLast = $this->overtimeLastYear->SafeText;
                     $nbre = 0;
+
+                    if($month != 12) {
+                        $cmd->bindValue(":year",$year-1,PDO::PARAM_STR);
+                        $cmd->bindValue(":month",12,PDO::PARAM_STR);
+                        $cmd->bindValue(":nbre",$nbreLast,PDO::PARAM_STR);
+                        $cmd->bindValue(":isClosedMonth",1,PDO::PARAM_STR);
+                        $res1 = $cmd->execute();
+                    }
+
+                    $cmd->bindValue(":year",$year,PDO::PARAM_STR);
+                    $cmd->bindValue(":month",$month,PDO::PARAM_STR);
+
                 }
 
 
                 $cmd->bindValue(":nbre",$nbreLast,PDO::PARAM_STR);
+                $cmd->bindValue(":isClosedMonth",1,PDO::PARAM_STR);
                 $res1 = $cmd->execute();
 
                 $cmd->bindValue(":year",0,PDO::PARAM_STR);
                 $cmd->bindValue(":month",0,PDO::PARAM_STR);
                 $cmd->bindValue(":nbre",$nbre,PDO::PARAM_STR);
+                $cmd->bindValue(":isClosedMonth",0,PDO::PARAM_STR);
                 $res1 = $cmd->execute();
 
 
