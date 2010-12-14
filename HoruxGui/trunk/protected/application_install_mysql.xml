@@ -65,7 +65,7 @@
   <!-- application parameters -->
   <parameters>
     <parameter id="SiteTitle" value="Horux - Access control" />
-    <parameter id="HoruxVersion" value="1.0.5" />
+    <parameter id="HoruxVersion" value="1.0.6" />
     <parameter id="appMode" value="production" />
   </parameters>
   
