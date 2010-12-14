@@ -63,7 +63,7 @@ class TimuxModule extends TComponentModule
     public function saveData($db, $form, $userId)
     {
 
-        $name = $form->findControlsByID('name');
+        $name = $form->findControlsByID('su_username');
         $password = $form->findControlsByID('su_password');
         $group_id = $form->findControlsByID('group_id');
         $email1 = $form->findControlsByID('email1');
