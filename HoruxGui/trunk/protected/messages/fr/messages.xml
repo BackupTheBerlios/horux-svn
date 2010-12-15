@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <xliff version="1.0">
- <file source-language="FR" target-language="fr" datatype="plaintext" original="messages" date="2010-12-13T16:17:05Z" product-name="messages">
+ <file source-language="FR" target-language="fr" datatype="plaintext" original="messages" date="2010-12-15T09:41:25Z" product-name="messages">
   <body>
   
 <trans-unit id="1" lock="1">
@@ -4201,6 +4201,11 @@
 <trans-unit id="796">
 <source>Select which format you wish to use for keys readings.</source>
 <target>Entrez le format du num&#xE9;ro de la cl&#xE9; utilis&#xE9; par le lecteur&lt;br /&gt;X(hexa), x(hexa invers&#xE9;), D(decimal), d(decimal invers&#xE9;), _(ignore).&lt;br /&gt;Example ___XXXX, ignore les 3 premiers bytes et lit les 4 derniers en hexa</target>
+</trans-unit>
+
+<trans-unit id="797">
+<source>Hello</source>
+<target>Bonjour</target>
 </trans-unit>
 </body>
 </file>

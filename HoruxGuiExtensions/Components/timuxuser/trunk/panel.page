@@ -19,6 +19,12 @@
 			new Effect.BlindUp(document.getElementById('cpanel-panel-timecode'), {queue: 'end'});
 			document.getElementById('cpanel-panel-timecode_title').className = 'jpane-toggler title';
 		}
+
+        if( 'cpanel-panel-quick_sign' != obj)
+		{
+			new Effect.BlindUp(document.getElementById('cpanel-panel-quick_sign'), {queue: 'end'});
+			document.getElementById('cpanel-panel-quick_sign_title').className = 'jpane-toggler title';
+		}
 	  }
 -->
 </script>
@@ -241,7 +247,7 @@
 									</div>
 
                                     <div class="panel">
-                                        <h3 class="jpane-toggler-down title" id="cpanel-panel-timecode_title" onclick="blind(this,'cpanel-panel-timecode')">
+                                        <h3 class="jpane-toggler title" id="cpanel-panel-timecode_title" onclick="blind(this,'cpanel-panel-timecode')">
                                             <span><%[Time code]%></span>
                                         </h3>
                                         <div class="jpane-slider content" id="cpanel-panel-timecode">
@@ -283,6 +289,45 @@
                                             </div>
                                         </div>
                                     </div>
+
+									<div class="panel">
+										<h3 class="jpane-toggler title" id="cpanel-panel-quick_sign_title" onclick="blind(this,'cpanel-panel-quick_sign')">
+											<span><%[Quick sign in/out]%></span>
+										</h3>
+										<div class="jpane-slider content" id="cpanel-panel-quick_sign">
+											<div style="padding: 5px">
+                                                <table>
+                                                    <tr>
+                                                        <td>
+                                                            <div id="cpanel" onclick="alert('aaa');">
+                                                                <div class="icon">
+                                                                    <com:TLinkButton OnClick="signIn">
+                                                                        <img src="<%~ ./assets/signin.png %>" alt="<%[Sign in]%>"  />
+                                                                        <span><%[Sign in]%></span>
+                                                                    </com:TLinkButton>
+                                                                </div>
+                                                                <div class="icon">
+                                                                    <com:TLinkButton OnClick="signOut">
+                                                                        <img src="<%~ ./assets/signout.png %>" alt="<%[Sign out]%>"  />
+                                                                        <span><%[Sign out]%></span>
+                                                                    </com:TLinkButton>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+
+                                                        <td valign="top" class="key"><span onmouseover="Tip('<%[Select the time code]%>', BALLOON, true, BALLOONIMGPATH, './js/tip_balloon', OFFSETX, -10, TEXTALIGN, 'justify', FADEIN, 600, FADEOUT, 600, PADDING, 8)"><%[Time code]%></span></td>
+                                                        <td valign="top">
+                                                            <com:TActiveDropDownList
+                                                                ID="timecode"
+                                                                DataTextField="Text"
+                                                                DataValueField="Value"
+                                                                />
+                                                        </td>
+                                                    </tr>
+                                                </table>
+											</div>
+										</div>
+									</div>
                                 </div>
 							</td>
 						</tr>
@@ -307,6 +352,7 @@
 <script type="text/javascript">
 <!--
 new Effect.BlindUp(document.getElementById('cpanel-panel-custom'), {queue: 'end'});
+new Effect.BlindUp(document.getElementById('cpanel-panel-quick_sign'), {queue: 'end'});
 -->
 </script>
 

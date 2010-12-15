@@ -1,5 +1,7 @@
 <div id="header-box">
     <div id="module-status">
+        <com:TLabel ID="ActualUser" Text=<%= Prado::localize("Hello").' '.$this->getActualUser() %> />
+
         <com:TConditional Condition="$this->isAccess('system.Alarms')">
             <prop:TrueTemplate>
                 <com:TTimeTriggeredCallback ID="CheckAlarm" Interval="60" OnCallback="onDispAlarm" StartTimerOnLoad="true" />

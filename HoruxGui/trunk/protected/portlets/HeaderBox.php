@@ -552,6 +552,29 @@ class HeaderBox extends Portlet {
         $this->accessLink->Visible = $flag;
     }
 
+    public function getActualUser() {
+        if(get_class($this->page) == 'install') return true;
+
+        // get the super user's infos
+        $app = $this->getApplication();
+        $usedId = $app->getUser()->getUserID() == null ? 0 : $app->getUser()->getUserID();
+        $name = $app->getUser()->getName();
+
+        // try to get the coresponding system user's info
+        $app = $this->getApplication();
+        $db = $app->getModule('horuxDb')->DbConnection;
+
+        $sql = "SELECT u.name, u.firstname FROM hr_superusers AS s, hr_user AS u WHERE s.user_id=u.id";
+        $cmd= $db->createCommand($sql);
+        $data = $cmd->query();
+        $data = $data->read();
+
+        if ($data !== false)
+          $name = $data['firstname'].' '.$data['name'];
+
+        return $name;
+    }
+
     public function getUserLogged() {
         if(get_class($this->page) == 'install') return true;
 

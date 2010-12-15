@@ -38,6 +38,10 @@ class panel extends Page
 
         if(!$this->IsPostBack)
         {
+            $this->timecode->DataSource = $this->TimeCodeList;
+            $this->timecode->dataBind();
+            //$this->timecode->setEnabled(false);
+
             $this->timecodeGrid->DataSource=$this->TimecodeGrid;
             $this->timecodeGrid->dataBind();
         }
@@ -264,6 +268,171 @@ class panel extends Page
 			}
 
 		return true;
+    }
+
+    protected function getTimeCodeList()
+    {
+        $cmd = NULL;
+        //$cmd = $this->db->createCommand( "SELECT id AS Value, CONCAT('[',abbreviation, '] ', name) AS Text FROM hr_timux_timecode" );
+        //$cmd = $this->db->createCommand( "SELECT id AS Value, CONCAT('[',abbreviation, '] ', name) AS Text FROM hr_timux_timecode WHERE signtype='in' OR signtype='both'" );
+        $cmd = $this->db->createCommand( "SELECT id AS Value, CONCAT('[',abbreviation, '] ', name) AS Text FROM hr_timux_timecode  WHERE signtype='out' OR signtype='both'" );
+        $data =  $cmd->query();
+        $data = $data->readAll();
+        $d[0]['Value'] = 0;
+        $d[0]['Text'] = Prado::localize('---- Choose a timecode ----');
+        $data = array_merge($d, $data);
+        return $data;
+    }
+
+
+    public function signIn($sender,$param)
+    {
+        if($this->Page->IsValid)
+        {
+            if($this->saveData(255))
+            {
+                $pBack = array('okMsg'=>Prado::localize('The sign was added successfully'));
+            }
+            else
+                $pBack = array('koMsg'=>Prado::localize('The sign was not added'));
+
+            $this->Response->redirect($this->Service->constructUrl('components.timuxuser.panel',$pBack));
+        }
+    }
+
+    public function signOut($sender,$param)
+    {
+        if($this->Page->IsValid)
+        {
+            if($this->saveData(254))
+            {
+                $pBack = array('okMsg'=>Prado::localize('The sign was added successfully'));
+            }
+            else
+                $pBack = array('koMsg'=>Prado::localize('The sign was not added'));
+
+            $this->Response->redirect($this->Service->constructUrl('components.timuxuser.panel',$pBack));
+        }
+    }
+
+    protected function saveData($action)
+    {
+        $date = date('Y-m-d');
+        $time = date('H:i:s');
+        $sign = $action;
+
+        $cmd = $this->db->createCommand( "INSERT INTO `hr_tracking` (
+                                            `id_user` ,
+                                            `time`,
+                                            `date`,
+                                            `is_access`
+                                            )
+                                            VALUES (
+                                            :id_user,
+                                            :time,
+                                            :date,
+                                            '1'
+                                            );" );
+
+        $cmd->bindValue(":id_user",$this->userId,PDO::PARAM_STR);
+        $cmd->bindValue(":time",$time, PDO::PARAM_STR);
+        $cmd->bindValue(":date",$date, PDO::PARAM_STR);
+
+        $res1 = $cmd->execute();
+        $lastId = $this->db->LastInsertID;
+
+        $cmd = $this->db->createCommand( "INSERT INTO `hr_timux_booking` (
+                                            `tracking_id` ,
+                                            `action`,
+                                            `roundBooking`,
+                                            `actionReason`,
+                                            `internet`
+                                            )
+                                            VALUES (
+                                            :tracking_id,
+                                            :action,
+                                            :roundBooking,
+                                            :actionReason,
+                                            1
+                                            );" );
+
+        $cmd->bindValue(":tracking_id",$lastId,PDO::PARAM_STR);
+
+        if($action == 254 && $this->timecode->getSelectedValue())
+        {
+            $action = 100;
+
+            $cmd2=$this->db->createCommand("SELECT *  FROM hr_timux_timecode WHERE id=".$this->timecode->getSelectedValue());
+
+            $data2 = $cmd2->query();
+            $data2 = $data2->read();
+
+	          //$$
+	          if($data2['type'] == 'load') {
+	            $action = 255;
+              $sign = "_IN";
+
+
+	            $cmd2 = $this->db->createCommand( "INSERT INTO `hr_timux_booking_bde` (
+						          `tracking_id` ,
+						          `user_id`,
+						          `device_id`,
+						          `date`,
+						          `time`,
+						          `code`,
+						          `BDE1`
+						          )
+						          VALUES (
+						          :tracking_id,
+						          :user_id,
+						          :device_id,
+						          :date,
+						          :time,
+						          155,
+						          :bde1
+						          );" );
+	            
+	            $cmd2->bindValue(":tracking_id",$lastId,PDO::PARAM_STR);
+	            $cmd2->bindValue(":user_id",$this->userId,PDO::PARAM_STR);
+	            $cmd2->bindValue(":device_id",0,PDO::PARAM_STR);
+	            $cmd2->bindValue(":date",$date,PDO::PARAM_STR);
+	            $cmd2->bindValue(":time",$time,PDO::PARAM_STR);
+	            $cmd2->bindValue(":bde1",$data2['abbreviation'],PDO::PARAM_STR);
+	            $cmd2->execute();
+	          }
+            else
+              $sign = "_OUT";
+
+                  $cmd->bindValue(":action",$action, PDO::PARAM_STR);
+
+	          if($action != 255) {
+	            if($data2['signtype'] == 'both')
+	            {
+		            $actionReason = $this->timecode->getSelectedValue().$sign;
+	            }
+	            else
+	            {
+		            $actionReason = $this->timecode->getSelectedValue();
+	            }
+	          } else {
+		          $actionReason = 0;
+	          }
+            $cmd->bindValue(":actionReason",$actionReason, PDO::PARAM_STR);
+        }
+        else
+        {
+            $actionReason = 0;
+            $cmd->bindValue(":action",$action, PDO::PARAM_STR);
+            $cmd->bindValue(":actionReason",$actionReason, PDO::PARAM_STR);
+
+        }
+
+
+        $cmd->bindValue(":roundBooking",$time, PDO::PARAM_STR);
+
+        $res1 = $cmd->execute();
+
+        return $lastId;
     }
 
 }
