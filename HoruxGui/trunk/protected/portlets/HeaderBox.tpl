@@ -1,6 +1,6 @@
 <div id="header-box">
     <div id="module-status">
-        <com:TLabel ID="ActualUser" Text=<%= Prado::localize("Hello").' '.$this->getActualUser() %> />
+        <com:TLabel ID="ActualUser" Text=<%= Prado::localize("Hello", array(null), 'messages').' '.$this->getActualUser() %> />
 
         <com:TConditional Condition="$this->isAccess('system.Alarms')">
             <prop:TrueTemplate>
