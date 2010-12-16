@@ -38,9 +38,10 @@ class panel extends Page
 
         if(!$this->IsPostBack)
         {
-            $this->timecode->DataSource = $this->TimeCodeList;
+            $this->timecode->DataSource = $this->getTimeCodeList('out');
             $this->timecode->dataBind();
-            //$this->timecode->setEnabled(false);
+            $this->timecodeIn->DataSource = $this->getTimeCodeList('in');
+            $this->timecodeIn->dataBind();
 
             $this->timecodeGrid->DataSource=$this->TimecodeGrid;
             $this->timecodeGrid->dataBind();
@@ -270,12 +271,10 @@ class panel extends Page
 		return true;
     }
 
-    protected function getTimeCodeList()
+    protected function getTimeCodeList($mode = 'out')
     {
         $cmd = NULL;
-        //$cmd = $this->db->createCommand( "SELECT id AS Value, CONCAT('[',abbreviation, '] ', name) AS Text FROM hr_timux_timecode" );
-        //$cmd = $this->db->createCommand( "SELECT id AS Value, CONCAT('[',abbreviation, '] ', name) AS Text FROM hr_timux_timecode WHERE signtype='in' OR signtype='both'" );
-        $cmd = $this->db->createCommand( "SELECT id AS Value, CONCAT('[',abbreviation, '] ', name) AS Text FROM hr_timux_timecode  WHERE signtype='out' OR signtype='both'" );
+        $cmd = $this->db->createCommand( "SELECT id AS Value, CONCAT('[',abbreviation, '] ', name) AS Text FROM hr_timux_timecode  WHERE signtype='".$mode."' OR signtype='both'" );
         $data =  $cmd->query();
         $data = $data->readAll();
         $d[0]['Value'] = 0;
@@ -358,11 +357,17 @@ class panel extends Page
 
         $cmd->bindValue(":tracking_id",$lastId,PDO::PARAM_STR);
 
-        if($action == 254 && $this->timecode->getSelectedValue())
+        if(($action == 254 && $this->timecode->getSelectedValue()) || ($action == 255 && $this->timecodeIn->getSelectedValue()))
         {
+            $oldAction = $action;
+            if ($action == 254)
+              $timecodeValue = $this->timecode->getSelectedValue();
+            else
+              $timecodeValue = $this->timecodeIn->getSelectedValue();
+
             $action = 100;
 
-            $cmd2=$this->db->createCommand("SELECT *  FROM hr_timux_timecode WHERE id=".$this->timecode->getSelectedValue());
+            $cmd2=$this->db->createCommand("SELECT *  FROM hr_timux_timecode WHERE id=".$timecodeValue);
 
             $data2 = $cmd2->query();
             $data2 = $data2->read();
@@ -403,16 +408,19 @@ class panel extends Page
             else
               $sign = "_OUT";
 
+            if ($oldAction == 255)
+              $sign = "_IN";
+
                   $cmd->bindValue(":action",$action, PDO::PARAM_STR);
 
 	          if($action != 255) {
 	            if($data2['signtype'] == 'both')
 	            {
-		            $actionReason = $this->timecode->getSelectedValue().$sign;
+		            $actionReason = $timecodeValue.$sign;
 	            }
 	            else
 	            {
-		            $actionReason = $this->timecode->getSelectedValue();
+		            $actionReason = $timecodeValue;
 	            }
 	          } else {
 		          $actionReason = 0;

@@ -1,6 +1,24 @@
 <?php
 
-$param = Prado::getApplication()->getParameters();
+// load parameters
+$confFile = './protected/pages/components/timuxuser/config.xml';
+if (file_exists($confFile)) {
+  $config = new TApplicationConfiguration;
+  $config->loadFromFile($confFile);
+  $param = new TMap;
+  foreach($config->getParameters() as $id=>$parameter) {
+	  if(is_array($parameter)) {
+		  $component=Prado::createComponent($parameter[0]);
+		  foreach($parameter[1] as $name=>$value)
+			  $component->setSubProperty($name,$value);
+		  $param->add($id,$component);
+	  }
+	  else
+		  $param->add($id,$parameter);
+  }
+}
+else
+  $param = Prado::getApplication()->getParameters();
 $computation = $param['computation'];
 
 Prado::using('horux.pages.components.timuxuser.'.$computation);
