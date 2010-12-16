@@ -526,7 +526,7 @@
 
 <trans-unit id="103" lock="1">
 <source>Cancel</source>
-<target>Annuler</target>
+<target>Fermer</target>
 </trans-unit>
 
 <trans-unit id="104" lock="1">
