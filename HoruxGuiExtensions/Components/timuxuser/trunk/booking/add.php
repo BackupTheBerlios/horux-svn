@@ -12,9 +12,13 @@
 * See COPYRIGHT.php for copyright notices and details.
 */
 
+$param = Prado::getApplication()->getParameters();
+$computation = $param['computation'];
+
+Prado::using('horux.pages.components.timuxuser.'.$computation);
+
 class add extends Page
 {
-
     public function onLoad($param)
     {
         parent::onLoad($param);
@@ -30,6 +34,7 @@ class add extends Page
             {
                 $this->employee->setSelectedIndex(0);
             }
+
 
             $this->timecode->DataSource = $this->TimeCodeList;
             $this->timecode->dataBind();
@@ -78,7 +83,7 @@ class add extends Page
     {
         if($this->Page->IsValid)
         {
-            if($lastId = $this->saveData())
+            if(($lastId = $this->saveData()))
             {
                 $id = $lastId;
                 $pBack = array('okMsg'=>Prado::localize('The sign was added successfully'), 'id'=>$id);
@@ -139,13 +144,23 @@ class add extends Page
 
     protected function getPersonList()
     {
+
+
         $cmd = NULL;
-        $cmd = $this->db->createCommand( "SELECT id AS Value, CONCAT(name, ' ', firstname) AS Text FROM hr_user WHERE name<>'??' AND department>0" );
+        if(isset($this->Request['back'])) {
+            $cmd = $this->db->createCommand( "SELECT id AS Value, CONCAT(name, ' ', firstname) AS Text FROM hr_user WHERE name<>'??' AND department>0 AND id=:id" );
+            $cmd->bindValue(":id",$this->Request['userId'], PDO::PARAM_INT);
+
+        } else {
+            $cmd = $this->db->createCommand( "SELECT id AS Value, CONCAT(name, ' ', firstname) AS Text FROM hr_user WHERE name<>'??' AND department>0" );
+        }
         $data =  $cmd->query();
         $data = $data->readAll();
-        $d[0]['Value'] = 'null';
-        $d[0]['Text'] = Prado::localize('---- Choose a employee ----');
-        $data = array_merge($d, $data);
+        if(!isset($this->Request['back'])) {
+            $d[0]['Value'] = 'null';
+            $d[0]['Text'] = Prado::localize('---- Choose a employee ----');
+            $data = array_merge($d, $data);
+        }
         return $data;
     }
 

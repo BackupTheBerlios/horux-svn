@@ -152,12 +152,27 @@ class mod extends Page
     protected function getPersonList()
     {
         $cmd = NULL;
-        $cmd = $this->db->createCommand( "SELECT id AS Value, CONCAT(name, ' ', firstname) AS Text FROM hr_user WHERE name<>'??' AND department>0" );
+        if(isset($this->Request['back'])) {
+
+            $cmd = $this->db->createCommand( "SELECT * FROM hr_tracking WHERE id=:id " );
+            $cmd->bindValue(":id",$this->Request['id'], PDO::PARAM_INT);
+            $data =  $cmd->query();
+            $data = $data->read();
+
+
+            $cmd = $this->db->createCommand( "SELECT id AS Value, CONCAT(name, ' ', firstname) AS Text FROM hr_user WHERE name<>'??' AND department>0 AND id=:id" );
+            $cmd->bindValue(":id",$data['id_user'], PDO::PARAM_INT);
+
+        } else {
+            $cmd = $this->db->createCommand( "SELECT id AS Value, CONCAT(name, ' ', firstname) AS Text FROM hr_user WHERE name<>'??' AND department>0" );
+        }
         $data =  $cmd->query();
         $data = $data->readAll();
-        $d[0]['Value'] = 'null';
-        $d[0]['Text'] = Prado::localize('---- Choose a employee ----');
-        $data = array_merge($d, $data);
+        if(!isset($this->Request['back'])) {
+            $d[0]['Value'] = 'null';
+            $d[0]['Text'] = Prado::localize('---- Choose a employee ----');
+            $data = array_merge($d, $data);
+        }
         return $data;
     }
 
