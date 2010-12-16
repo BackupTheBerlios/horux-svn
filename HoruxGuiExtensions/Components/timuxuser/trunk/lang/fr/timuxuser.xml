@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xliff version="1.0">
-<file source-language="en" target-language="fr" datatype="plaintext" original="messages" date="2010-10-08T16:35:07Z" product-name="messages">
+<file source-language="en" target-language="fr" datatype="plaintext" original="messages" date="2010-12-15T13:08:35Z" product-name="messages">
 <body>
 <trans-unit id="1">
    <source>Balances - Month</source>
@@ -1293,6 +1293,11 @@
 <trans-unit id="299">
 <source>Balance</source>
 <target>Timbrage</target>
+</trans-unit>
+
+<trans-unit id="300">
+<source>Quick sign in/out</source>
+<target>Timbrage rapide</target>
 </trans-unit>
 </body>
 </file>
