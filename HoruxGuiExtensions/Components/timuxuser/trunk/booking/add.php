@@ -26,6 +26,23 @@ class add extends Page
         if(!$this->isPostBack)
         {
 
+
+            $app = $this->getApplication();
+            $usedId = $app->getUser()->getUserID() == null ? 0 : $app->getUser()->getUserID();
+
+            $cmd=$this->db->createCommand("SELECT user_id FROM hr_superusers WHERE id=$usedId");
+            $data = $cmd->query();
+            $dataUser = $data->read();
+            $userId = $dataUser['user_id'];
+
+            $employee = new employee($userId );
+            $role = $employee->getRole();
+
+            if($role == 'employee' && $userId != $this->Request['userId']) {
+                $this->Response->redirect($this->Service->constructUrl($this->Request['back']));
+            }
+
+
             $this->employee->DataSource = $this->PersonList;
             $this->employee->dataBind();
 

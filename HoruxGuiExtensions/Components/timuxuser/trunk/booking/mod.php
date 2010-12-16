@@ -19,11 +19,9 @@ class mod extends Page
         parent::onLoad($param);
 
         if(!$this->isPostBack)
-        {
-
+        {          
             $this->employee->DataSource = $this->PersonList;
             $this->employee->dataBind();
-
 
             $this->id->Value = $this->Request['id'];
             $this->setData();
