@@ -564,7 +564,7 @@ class HeaderBox extends Portlet {
         $app = $this->getApplication();
         $db = $app->getModule('horuxDb')->DbConnection;
 
-        $sql = "SELECT u.name, u.firstname FROM hr_superusers AS s, hr_user AS u WHERE s.user_id=u.id";
+        $sql = "SELECT u.name, u.firstname FROM hr_superusers AS s, hr_user AS u WHERE s.user_id=u.id AND s.id=$usedId";
         $cmd= $db->createCommand($sql);
         $data = $cmd->query();
         $data = $data->read();
