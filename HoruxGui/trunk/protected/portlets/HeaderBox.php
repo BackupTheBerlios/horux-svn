@@ -129,6 +129,20 @@ class HeaderBox extends Portlet {
             } else {
                 $this->onDispAlarm(null, null);
                 $this->generateShortcut($user->getUserId());
+
+                $db = $this->Application->getModule('horuxDb')->DbConnection;
+                $db->Active=true;
+
+                $sqlHome = "SELECT * FROM hr_superusers AS s LEFT JOIN hr_superuser_group AS sg ON s.group_id=sg.id WHERE s.id=".$user->getUserId();
+                $cmd=$db->createCommand($sqlHome);
+                $data = $cmd->query();
+                $data = $data->read();
+
+                if($data) {
+                    $this->Home->setNavigateUrl($this->Service->constructUrl($data['defaultPage']));
+                } else {
+                    $this->Home->setNavigateUrl($this->Service->constructUrl('controlPanel.ControlPanel'));
+                }
             }
         }
         else

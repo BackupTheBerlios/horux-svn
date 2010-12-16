@@ -8,7 +8,7 @@
             </prop:TrueTemplate>
         </com:TConditional>
 
-        <com:THyperLink NavigateUrl="<%= $this->Service->constructUrl('controlPanel.ControlPanel') %>"><img class="shortcut" src="themes/letux/images/menu/icon-16-controlPanel.png" /> </com:THyperLink>
+        <com:THyperLink ID="Home"><img class="shortcut" src="themes/letux/images/menu/icon-16-controlPanel.png" /> </com:THyperLink>
 
         <com:TRepeater ID="shortcut">
             <prop:ItemTemplate>
