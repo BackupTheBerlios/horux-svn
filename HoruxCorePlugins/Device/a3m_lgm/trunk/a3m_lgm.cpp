@@ -593,7 +593,7 @@ QString CA3mLgm::formatData(QByteArray data, QString format, int length)
 
     if (format.contains('D') || format.contains('d'))
     {
-        QString f = "%0" + tmp.setNum(length) + "d";
+        QString f = "%0" + tmp.setNum(length) + "u";
         bool ok;
 
         ret = "0X" + ret;
