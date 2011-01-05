@@ -110,14 +110,14 @@ class panel extends Page
 
     public function getTimecodeGrid()
     {
-        $cmd=$this->db->createCommand("SELECT ac.nbre, CONCAT('[',tt.abbreviation,'] - ', tt.name) AS timecode,tt.id AS timecodeId, tt.formatDisplay, tt.useMinMax, tt.minHour, tt.maxHour, tt.type, ac.year, ac.month  FROM hr_timux_activity_counter AS ac LEFT JOIN hr_user AS u ON u.id=ac.user_id LEFT JOIN hr_timux_timecode AS tt ON tt.id=ac.timecode_id WHERE  u.id=".$this->userId." AND ac.year=0 AND ac.month=0 AND (tt.type='leave' OR tt.type='overtime') ORDER BY u.name,u.firstname,tt.abbreviation");
+        $defOv = $this->employee->getDefaultOvertimeCounter();
+        $defH = $this->employee->getDefaultHolidaysCounter();
+        
+        $cmd=$this->db->createCommand("SELECT ac.nbre, CONCAT('[',tt.abbreviation,'] - ', tt.name) AS timecode,tt.id AS timecodeId, tt.formatDisplay, tt.useMinMax, tt.minHour, tt.maxHour, tt.type, ac.year, ac.month  FROM hr_timux_activity_counter AS ac LEFT JOIN hr_user AS u ON u.id=ac.user_id LEFT JOIN hr_timux_timecode AS tt ON tt.id=ac.timecode_id WHERE u.id=".$this->userId." AND ac.year=0 AND ac.month=0 AND (tt.type='leave' OR tt.type='overtime') AND tt.id IN ($defOv, $defH) ORDER BY u.name,u.firstname,tt.abbreviation");
 
         $data = $cmd->query();
         $data = $data->readAll();
-        
 
-        $defOv = $this->employee->getDefaultOvertimeCounter();
-        $defH = $this->employee->getDefaultHolidaysCounter();
         
         for($i=0; $i<count($data);$i++)
         {
@@ -151,6 +151,7 @@ class panel extends Page
                 
                 $data[$i]['nbre2'] = $hcurrentMonth;
             } else {
+
                 $request = $this->employee->getRequest(date('Y'), date('n'),$data[$i]['timecodeId']);
 
                 if($data[$i]['type'] == 'leave')
@@ -500,6 +501,9 @@ class panel extends Page
         $cmd->bindValue(":roundBooking",$time, PDO::PARAM_STR);
 
         $res1 = $cmd->execute();
+
+        $sa = new TStandAlone();
+        $sa->addStandalone('add', $this->userId, 'UserListMod');
 
         return $lastId;
     }

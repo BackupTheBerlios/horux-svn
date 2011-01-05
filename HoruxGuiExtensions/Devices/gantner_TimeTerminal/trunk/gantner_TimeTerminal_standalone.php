@@ -335,7 +335,7 @@ class gantner_TimeTerminal_standalone extends TDeviceStandalone
             {
                 $idreader = $d3['id_device'];
 
-                $cmd=$this->db->createCommand("INSERT INTO hr_gantner_standalone_action (`type`, `func`, `userId`,`keyId`, `deviceId`, `param`, `param2`) VALUES (:type,:func,:userId,:keyId,:deviceId, :param, :param2)");
+                $cmd=$this->db->createCommand("INSERT INTO hr_gantner_standalone_action (`type`, `func`, `userId`,`keyId`, `deviceId`, `param`, `param2`, `param3`) VALUES (:type,:func,:userId,:keyId,:deviceId, :param, :param2, :param3)");
                 $cmd->bindParameter(":func",$function);
                 $cmd->bindParameter(":type",$type);
                 $cmd->bindParameter(":userId",$userId);
@@ -343,6 +343,22 @@ class gantner_TimeTerminal_standalone extends TDeviceStandalone
                 $cmd->bindParameter(":deviceId",$idreader);
                 $cmd->bindParameter(":param",$fullname);
                 $cmd->bindParameter(":param2",$lang);
+
+                $cmd2=$this->db->createCommand("SELECT * FROM hr_tracking AS t LEFT JOIN hr_timux_booking AS tb ON t.id=tb.tracking_id WHERE t.id_user=:userId ORDER BY t.date DESC, t.time DESC LIMIT 0,1");
+                $cmd2->bindValue(":userId", $userId);
+                $data = $cmd2->query();
+                $data = $data->read();
+
+                if($data) {
+                    if($data['action'] == 255 || $data['action'] == 155 || substr($data['actionReason'],-3,3) === '_IN' ) {
+                        $cmd->bindValue(":param3",1);
+                    } else {
+                        $cmd->bindValue(":param3",2);
+                    }
+                } else {
+                    $cmd->bindValue(":param3",2);
+                }
+
                 $cmd->execute();
             }
 
