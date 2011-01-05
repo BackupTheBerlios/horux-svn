@@ -45,9 +45,68 @@ class panel extends Page
 
             $this->timecodeGrid->DataSource=$this->TimecodeGrid;
             $this->timecodeGrid->dataBind();
+
+            $this->presenceGrid->DataSource=$this->PresenceGrid;
+            $this->presenceGrid->dataBind();
+
         }
     }
 
+    public function getPresenceGrid()
+    {
+        $result = array();
+
+        $cmd=$this->db->createCommand("SELECT id, CONCAT(name, ' ', firstname) AS fullname FROM hr_user WHERE id>1 ORDER BY fullname");
+
+        $data = $cmd->query();
+        $data = $data->readAll();
+
+        $absence = array();
+        $presence = array();
+
+        foreach($data as $d) {
+
+            $cmd=$this->db->createCommand("SELECT * FROM hr_tracking AS t LEFT JOIN hr_timux_booking AS tb ON t.id=tb.tracking_id WHERE t.id_user=:userId ORDER BY t.date DESC, t.time DESC LIMIT 0,1");
+            $cmd->bindValue(":userId", $d['id']);
+            $data = $cmd->query();
+            $data = $data->read();
+
+            if($data) {
+                if($data['action'] == 255 || $data['action'] == 155 || substr($data['actionReason'],-3,3) === '_IN' ) {
+                    $presence[]  = "<span style='width:10px;height:10px; background-color:#60ff21'>&nbsp;&nbsp;&nbsp;&nbsp;</span> ".$d['fullname'];
+                } else {
+                    $absence[] = "<span style='width:10px;height:10px; background-color:#ff2a2a'>&nbsp;&nbsp;&nbsp;&nbsp;</span> ".$d['fullname'];
+                }
+            } else {
+                $absence[] = "<span style='width:10px;height:10px; background-color:#ff2a2a'>&nbsp;&nbsp;&nbsp;&nbsp;</span> ".$d['fullname'];
+            }
+        }
+
+        if(count($absence) > count($presence)) {
+
+           for($i=0; $i<count($presence); $i++) {
+               $result[] = array('present' => $presence[$i], 'absent' => $absence[$i]);
+           }
+
+           for($i; $i<count($absence); $i++) {
+               $result[] = array('present' => '', 'absent' => $absence[$i]);
+           }
+
+        } else {
+
+           for($i=0; $i<count($absence); $i++) {
+               $result[] = array('present' => $presence[$i], 'absent' => $absence[$i]);
+           }
+
+           for($i; $i<count($presence); $i++) {
+               $result[] = array('present' => $presence[$i], 'absent' =>'');
+           }
+
+        }
+
+
+        return $result;
+    }
 
     public function getTimecodeGrid()
     {
@@ -324,13 +383,15 @@ class panel extends Page
                                             `id_user` ,
                                             `time`,
                                             `date`,
-                                            `is_access`
+                                            `is_access`,
+                                            `extData`
                                             )
                                             VALUES (
                                             :id_user,
                                             :time,
                                             :date,
-                                            '1'
+                                            '1',
+                                            'hr_timux_booking'
                                             );" );
 
         $cmd->bindValue(":id_user",$this->userId,PDO::PARAM_STR);

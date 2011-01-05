@@ -1,370 +1,407 @@
 <com:TContent ID="Main">
-<com:TClientScript PradoScripts="effects" />
+    <com:TClientScript PradoScripts="effects" />
 
-<script type="text/javascript">
-<!--
-	  function blind(title,obj)
-	  {
-		title.className = 'jpane-toggler-down title';
-		new Effect.BlindDown(document.getElementById(obj), {queue: 'end'});
+    <script type="text/javascript">
+        <!--
+        function blind(title,obj)
+        {
+            title.className = 'jpane-toggler-down title';
+            new Effect.BlindDown(document.getElementById(obj), {queue: 'end'});
 
-		if( 'cpanel-panel-custom' != obj)
-		{
-			new Effect.BlindUp(document.getElementById('cpanel-panel-custom'), {queue: 'end'});
-			document.getElementById('cpanel-panel-custom_title').className = 'jpane-toggler title';
-		}
+            if( 'cpanel-panel-custom' != obj)
+            {
+                new Effect.BlindUp(document.getElementById('cpanel-panel-custom'), {queue: 'end'});
+                document.getElementById('cpanel-panel-custom_title').className = 'jpane-toggler title';
+            }
 
-		if( 'cpanel-panel-timecode' != obj)
-		{
-			new Effect.BlindUp(document.getElementById('cpanel-panel-timecode'), {queue: 'end'});
-			document.getElementById('cpanel-panel-timecode_title').className = 'jpane-toggler title';
-		}
+            if( 'cpanel-panel-presence' != obj)
+            {
+                new Effect.BlindUp(document.getElementById('cpanel-panel-presence'), {queue: 'end'});
+                document.getElementById('cpanel-panel-presence_title').className = 'jpane-toggler title';
+            }
 
-        if( 'cpanel-panel-quick_sign' != obj)
-		{
-			new Effect.BlindUp(document.getElementById('cpanel-panel-quick_sign'), {queue: 'end'});
-			document.getElementById('cpanel-panel-quick_sign_title').className = 'jpane-toggler title';
-		}
-	  }
--->
-</script>
+            if( 'cpanel-panel-timecode' != obj)
+            {
+                new Effect.BlindUp(document.getElementById('cpanel-panel-timecode'), {queue: 'end'});
+                document.getElementById('cpanel-panel-timecode_title').className = 'jpane-toggler title';
+            }
 
-<div id="content-box">
-	<div class="border">
-		<div class="padding">
+            if( 'cpanel-panel-quick_sign' != obj)
+            {
+                new Effect.BlindUp(document.getElementById('cpanel-panel-quick_sign'), {queue: 'end'});
+                document.getElementById('cpanel-panel-quick_sign_title').className = 'jpane-toggler title';
+            }
+        }
+        -->
+    </script>
 
-            <com:TLiteral ID="okMsg" Text="" />
-            <com:TLiteral ID="koMsg" Text="" />
+    <div id="content-box">
+        <div class="border">
+            <div class="padding">
 
-
-			<div id="element-box">
-
-				<div class="t">
-					<div class="t">
-						<div class="t"></div>
-					</div>
-				</div>
+                <com:TLiteral ID="okMsg" Text="" />
+                <com:TLiteral ID="koMsg" Text="" />
 
 
+                <div id="element-box">
 
-				<div class="m" >
-					<table class="adminform">
-						<tr>
-							<td width="55%" valign="top">
-								<div id="cpanel">
+                    <div class="t">
+                        <div class="t">
+                            <div class="t"></div>
+                        </div>
+                    </div>
 
-									<com:TConditional Condition="$this->isAccess('components.timuxuser.workingtime.workingtime')">
-									<prop:TrueTemplate>
-									<div style="float:left;">
-										<div class="icon">
-											<a href="<%= $this->Service->constructUrl('components.timuxuser.workingtime.workingtime') %>">
-												<img src="<%~ ./assets/workingtime.png %>" alt="<%[Workingtime]%>"  />
-												<span><%[Workingtime]%></span>
-											</a>
-										</div>
-									</div>
-									</prop:TrueTemplate>
-									</com:TConditional>
 
-									<com:TConditional Condition="$this->isAccess('components.timuxuser.counter.counter')">
-									<prop:TrueTemplate>
-									<div style="float:left;">
-										<div class="icon">
-											<a href="<%= $this->Service->constructUrl('components.timuxuser.counter.counter') %>">
-												<img src="<%~ ./assets/counter.png %>" alt="<%[Activity counter]%>"  />
-												<span><%[Activity counter]%></span>
-											</a>
-										</div>
-									</div>
-									</prop:TrueTemplate>
-									</com:TConditional>
 
-									<com:TConditional Condition="$this->isAccess('components.timuxuser.booking.booking')">
-									<prop:TrueTemplate>
-									<div style="float:left;">
-										<div class="icon">
-											<a href="<%= $this->Service->constructUrl('components.timuxuser.booking.booking') %>">
-												<img src="<%~ ./assets/booking.png %>" alt="<%[Sign in/out]%>"  />
-												<span><%[Sign in/out]%></span>
-											</a>
-										</div>
-									</div>
-									</prop:TrueTemplate>
-									</com:TConditional>
+                    <div class="m" >
+                        <table class="adminform">
+                            <tr>
+                                <td width="55%" valign="top">
+                                    <div id="cpanel">
 
-									<com:TConditional Condition="$this->isAccess('components.timuxuser.mybooking.mybooking')">
-									<prop:TrueTemplate>
-									<div style="float:left;">
-										<div class="icon">
-											<a href="<%= $this->Service->constructUrl('components.timuxuser.mybooking.mybooking') %>">
-												<img src="<%~ ./assets/mybooking.png %>" alt="<%[My sign in/out]%>"  />
-												<span><%[My sign in/out]%></span>
-											</a>
-										</div>
-									</div>
-									</prop:TrueTemplate>
-									</com:TConditional>
+                                        <com:TConditional Condition="$this->isAccess('components.timuxuser.workingtime.workingtime')">
+                                            <prop:TrueTemplate>
+                                                <div style="float:left;">
+                                                    <div class="icon">
+                                                        <a href="<%= $this->Service->constructUrl('components.timuxuser.workingtime.workingtime') %>">
+                                                            <img src="<%~ ./assets/workingtime.png %>" alt="<%[Workingtime]%>"  />
+                                                            <span><%[Workingtime]%></span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </prop:TrueTemplate>
+                                        </com:TConditional>
 
-									<com:TConditional Condition="$this->isAccess('components.timuxuser.leaverequest.leaverequest')">
-									<prop:TrueTemplate>
-									<div style="float:left;">
-										<div class="icon">
-											<a href="<%= $this->Service->constructUrl('components.timuxuser.leaverequest.leaverequest') %>">
-												<img src="<%~ ./assets/leaverequest.png %>" alt="<%[Leave Request]%>"  />
-												<span><%[Leave Request]%></span>
-											</a>
-										</div>
-									</div>
-									</prop:TrueTemplate>
-									</com:TConditional>
+                                        <com:TConditional Condition="$this->isAccess('components.timuxuser.counter.counter')">
+                                            <prop:TrueTemplate>
+                                                <div style="float:left;">
+                                                    <div class="icon">
+                                                        <a href="<%= $this->Service->constructUrl('components.timuxuser.counter.counter') %>">
+                                                            <img src="<%~ ./assets/counter.png %>" alt="<%[Activity counter]%>"  />
+                                                            <span><%[Activity counter]%></span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </prop:TrueTemplate>
+                                        </com:TConditional>
 
-									<com:TConditional Condition="$this->isAccess('components.timuxuser.leaverequestvalidation.leaverequestvalidation')">
-									<prop:TrueTemplate>
-									<div style="float:left;">
-										<div class="icon">
-											<a href="<%= $this->Service->constructUrl('components.timuxuser.leaverequestvalidation.leaverequestvalidation') %>">
-												<img src="<%~ ./assets/leaverequestvalidation.png %>" alt="<%[Leave Request Validation]%>"  />
-												<span><%[Leave Request Validation]%></span>
-											</a>
-										</div>
-									</div>
-									</prop:TrueTemplate>
-									</com:TConditional>
+                                        <com:TConditional Condition="$this->isAccess('components.timuxuser.booking.booking')">
+                                            <prop:TrueTemplate>
+                                                <div style="float:left;">
+                                                    <div class="icon">
+                                                        <a href="<%= $this->Service->constructUrl('components.timuxuser.booking.booking') %>">
+                                                            <img src="<%~ ./assets/booking.png %>" alt="<%[Sign in/out]%>"  />
+                                                            <span><%[Sign in/out]%></span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </prop:TrueTemplate>
+                                        </com:TConditional>
 
-									<com:TConditional Condition="$this->isAccess('components.timuxuser.leave.leave')">
-									<prop:TrueTemplate>
-									<div style="float:left;">
-										<div class="icon">
-											<a href="<%= $this->Service->constructUrl('components.timuxuser.leave.leave') %>">
-												<img src="<%~ ./assets/leave.png %>" alt="<%[Leave]%>"  />
-												<span><%[Leave]%></span>
-											</a>
-										</div>
-									</div>
-									</prop:TrueTemplate>
-									</com:TConditional>
+                                        <com:TConditional Condition="$this->isAccess('components.timuxuser.mybooking.mybooking')">
+                                            <prop:TrueTemplate>
+                                                <div style="float:left;">
+                                                    <div class="icon">
+                                                        <a href="<%= $this->Service->constructUrl('components.timuxuser.mybooking.mybooking') %>">
+                                                            <img src="<%~ ./assets/mybooking.png %>" alt="<%[My sign in/out]%>"  />
+                                                            <span><%[My sign in/out]%></span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </prop:TrueTemplate>
+                                        </com:TConditional>
 
-									<com:TConditional Condition="$this->isAccess('components.timuxuser.error.error')">
-									<prop:TrueTemplate>
-									<div style="float:left;">
-										<div class="icon">
-											<a href="<%= $this->Service->constructUrl('components.timuxuser.error.error') %>">
-												<img src="<%~ ./assets/bug.png %>" alt="<%[Errors]%>"  />
-												<span><%[Errors]%></span>
-											</a>
-										</div>
-									</div>
-									</prop:TrueTemplate>
-									</com:TConditional>
+                                        <com:TConditional Condition="$this->isAccess('components.timuxuser.leaverequest.leaverequest')">
+                                            <prop:TrueTemplate>
+                                                <div style="float:left;">
+                                                    <div class="icon">
+                                                        <a href="<%= $this->Service->constructUrl('components.timuxuser.leaverequest.leaverequest') %>">
+                                                            <img src="<%~ ./assets/leaverequest.png %>" alt="<%[Leave Request]%>"  />
+                                                            <span><%[Leave Request]%></span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </prop:TrueTemplate>
+                                        </com:TConditional>
 
-									<com:TConditional Condition="$this->isAccess('components.timuxuser.closemonth.closemonth')">
-									<prop:TrueTemplate>
-									<div style="float:left;">
-										<div class="icon">
-											<a href="<%= $this->Service->constructUrl('components.timuxuser.closemonth.closemonth') %>">
-												<img src="<%~ ./assets/closemonth.png %>" alt="<%[Close month]%>"  />
-												<span><%[Close month]%></span>
-											</a>
-										</div>
-									</div>
-									</prop:TrueTemplate>
-									</com:TConditional>
+                                        <com:TConditional Condition="$this->isAccess('components.timuxuser.leaverequestvalidation.leaverequestvalidation')">
+                                            <prop:TrueTemplate>
+                                                <div style="float:left;">
+                                                    <div class="icon">
+                                                        <a href="<%= $this->Service->constructUrl('components.timuxuser.leaverequestvalidation.leaverequestvalidation') %>">
+                                                            <img src="<%~ ./assets/leaverequestvalidation.png %>" alt="<%[Leave Request Validation]%>"  />
+                                                            <span><%[Leave Request Validation]%></span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </prop:TrueTemplate>
+                                        </com:TConditional>
 
-									<com:TConditional Condition="$this->isAccess('components.timuxuser.balances.balances')">
-									<prop:TrueTemplate>
-									<div style="float:left;">
-										<div class="icon">
-											<a href="<%= $this->Service->constructUrl('components.timuxuser.balances.balances') %>">
-												<img src="<%~ ./assets/balances.png %>" alt="<%[Balances]%>"  />
-												<span><%[Balances]%></span>
-											</a>
-										</div>
-									</div>
-									</prop:TrueTemplate>
-									</com:TConditional>
+                                        <com:TConditional Condition="$this->isAccess('components.timuxuser.leave.leave')">
+                                            <prop:TrueTemplate>
+                                                <div style="float:left;">
+                                                    <div class="icon">
+                                                        <a href="<%= $this->Service->constructUrl('components.timuxuser.leave.leave') %>">
+                                                            <img src="<%~ ./assets/leave.png %>" alt="<%[Leave]%>"  />
+                                                            <span><%[Leave]%></span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </prop:TrueTemplate>
+                                        </com:TConditional>
 
-									<com:TConditional Condition="$this->isAccess('components.timuxuser.calendar.calendar')">
-									<prop:TrueTemplate>
-									<div style="float:left;">
-										<div class="icon">
-											<a href="<%= $this->Service->constructUrl('components.timuxuser.calendar.calendar') %>">
-												<img src="<%~ ./assets/cal.png %>" alt="<%[Calendar]%>"  />
-												<span><%[Calendar]%></span>
-											</a>
-										</div>
-									</div>
-									</prop:TrueTemplate>
-									</com:TConditional>
+                                        <com:TConditional Condition="$this->isAccess('components.timuxuser.error.error')">
+                                            <prop:TrueTemplate>
+                                                <div style="float:left;">
+                                                    <div class="icon">
+                                                        <a href="<%= $this->Service->constructUrl('components.timuxuser.error.error') %>">
+                                                            <img src="<%~ ./assets/bug.png %>" alt="<%[Errors]%>"  />
+                                                            <span><%[Errors]%></span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </prop:TrueTemplate>
+                                        </com:TConditional>
 
-									<com:TConditional Condition="$this->isAccess('components.timuxuser.load.load')">
-									<prop:TrueTemplate>
-									<div style="float:left;">
-										<div class="icon">
-											<a href="<%= $this->Service->constructUrl('components.timuxuser.load.load') %>">
-												<img src="<%~ ./assets/load.png %>" alt="<%[Load]%>"  />
-												<span><%[Load]%></span>
-											</a>
-										</div>
-									</div>
-									</prop:TrueTemplate>
-									</com:TConditional>
+                                        <com:TConditional Condition="$this->isAccess('components.timuxuser.closemonth.closemonth')">
+                                            <prop:TrueTemplate>
+                                                <div style="float:left;">
+                                                    <div class="icon">
+                                                        <a href="<%= $this->Service->constructUrl('components.timuxuser.closemonth.closemonth') %>">
+                                                            <img src="<%~ ./assets/closemonth.png %>" alt="<%[Close month]%>"  />
+                                                            <span><%[Close month]%></span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </prop:TrueTemplate>
+                                        </com:TConditional>
 
-									<com:TConditional Condition="$this->isAccess('components.timuxuser.report.report')">
-									<prop:TrueTemplate>
-									<div style="float:left;">
-										<div class="icon">
-											<a href="<%= $this->Service->constructUrl('components.timuxuser.report.report') %>">
-												<img src="<%~ ./assets/report.png %>" alt="<%[Report]%>"  />
-												<span><%[Report]%></span>
-											</a>
-										</div>
-									</div>
-									</prop:TrueTemplate>
-									</com:TConditional>
+                                        <com:TConditional Condition="$this->isAccess('components.timuxuser.balances.balances')">
+                                            <prop:TrueTemplate>
+                                                <div style="float:left;">
+                                                    <div class="icon">
+                                                        <a href="<%= $this->Service->constructUrl('components.timuxuser.balances.balances') %>">
+                                                            <img src="<%~ ./assets/balances.png %>" alt="<%[Balances]%>"  />
+                                                            <span><%[Balances]%></span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </prop:TrueTemplate>
+                                        </com:TConditional>
 
-								</div>
-							</td>
-							<td width="45%" valign="top">
+                                        <com:TConditional Condition="$this->isAccess('components.timuxuser.calendar.calendar')">
+                                            <prop:TrueTemplate>
+                                                <div style="float:left;">
+                                                    <div class="icon">
+                                                        <a href="<%= $this->Service->constructUrl('components.timuxuser.calendar.calendar') %>">
+                                                            <img src="<%~ ./assets/cal.png %>" alt="<%[Calendar]%>"  />
+                                                            <span><%[Calendar]%></span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </prop:TrueTemplate>
+                                        </com:TConditional>
 
-								<div id="content-pane" class="pane-sliders">
-									<div class="panel">
-										<h3 class="jpane-toggler title" id="cpanel-panel-custom_title" onclick="blind(this,'cpanel-panel-custom')">
-											<span><%[Welcome to Timux User]%></span>
-										</h3>
-										<div class="jpane-slider content" id="cpanel-panel-custom">
-											<div style="padding: 5px">
-												<p>
-													<%[Welcome on Timux User, the time human ressource for Timux.]%>
-												</p>
-												<p>
-													<%[We hope you have much fun and success with Timux.]%>
-												</p>
-												<p>
+                                        <com:TConditional Condition="$this->isAccess('components.timuxuser.load.load')">
+                                            <prop:TrueTemplate>
+                                                <div style="float:left;">
+                                                    <div class="icon">
+                                                        <a href="<%= $this->Service->constructUrl('components.timuxuser.load.load') %>">
+                                                            <img src="<%~ ./assets/load.png %>" alt="<%[Load]%>"  />
+                                                            <span><%[Load]%></span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </prop:TrueTemplate>
+                                        </com:TConditional>
+
+                                        <com:TConditional Condition="$this->isAccess('components.timuxuser.report.report')">
+                                            <prop:TrueTemplate>
+                                                <div style="float:left;">
+                                                    <div class="icon">
+                                                        <a href="<%= $this->Service->constructUrl('components.timuxuser.report.report') %>">
+                                                            <img src="<%~ ./assets/report.png %>" alt="<%[Report]%>"  />
+                                                            <span><%[Report]%></span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </prop:TrueTemplate>
+                                        </com:TConditional>
+
+                                    </div>
+                                </td>
+                                <td width="45%" valign="top">
+
+                                    <div id="content-pane" class="pane-sliders">
+                                        <div class="panel">
+                                            <h3 class="jpane-toggler title" id="cpanel-panel-custom_title" onclick="blind(this,'cpanel-panel-custom')">
+                                                <span><%[Welcome to Timux User]%></span>
+                                            </h3>
+                                            <div class="jpane-slider content" id="cpanel-panel-custom">
+                                                <div style="padding: 5px">
+                                                    <p>
+                                                        <%[Welcome on Timux User, the time human ressource for Timux.]%>
+                                                    </p>
+                                                    <p>
+                                                        <%[We hope you have much fun and success with Timux.]%>
+                                                    </p>
+                                                    <p>
 													Letux. <img alt="Smile" border="0" src="themes/letux/images/smiley-smile.gif" title="Smile" />
-												</p>
-											</div>
-										</div>
-									</div>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
 
-                                    <div class="panel">
-                                        <h3 class="jpane-toggler title" id="cpanel-panel-timecode_title" onclick="blind(this,'cpanel-panel-timecode')">
-                                            <span><%[Time code]%></span>
-                                        </h3>
-                                        <div class="jpane-slider content" id="cpanel-panel-timecode">
-                                            <div style="padding: 5px">
+                                        <div class="panel">
+                                            <h3 class="jpane-toggler title" id="cpanel-panel-presence_title" onclick="blind(this,'cpanel-panel-presence')">
+                                                <span><%[Presence/Absence]%></span>
+                                            </h3>
+                                            <div class="jpane-slider content" id="cpanel-panel-presence">
+                                                <div style="padding: 5px">
 
-                                                <com:TDataGrid
-                                                ID="timecodeGrid"
-                                                DataKeyField="id"
-                                                AutoGenerateColumns="false"
-                                                CssClass="adminlist"
-                                                AllowPaging="false"
-                                                OnItemCreated="itemCreated"
-                                                >
+                                                    <com:TDataGrid
+                                                        ID="presenceGrid"
+                                                        AutoGenerateColumns="false"
+                                                        CssClass="adminlist"
+                                                        AllowPaging="false"
+                                                        >
 
-                                                <com:TBoundColumn
-                                                    HeaderText="<%[Time code]%>"
-                                                    DataField="timecode"
-                                                    />
-
-
-                                                <com:TTemplateColumn HeaderText="<%[Hours/Days - Last month]%>" ID="nnbre">
-                                                    <prop:ItemTemplate>
-                                                        <com:TLabel
-                                                            ID="nbre"
+                                                        <com:TBoundColumn
+                                                            HeaderText="<%[Present]%>"
+                                                            DataField="present"
                                                             />
-                                                    </prop:ItemTemplate>
-                                                </com:TTemplateColumn>
-
-                                                <com:TTemplateColumn HeaderText="<%[Hours/Days - Current month]%>" ID="nnbre2">
-                                                    <prop:ItemTemplate>
-                                                        <com:TLabel
-                                                            ID="nbre2"
+                                                        <com:TBoundColumn
+                                                            HeaderText="<%[Absent]%>"
+                                                            DataField="absent"
                                                             />
-                                                    </prop:ItemTemplate>
-                                                </com:TTemplateColumn>
 
-                                                </com:TDataGrid>
+                                                    </com:TDataGrid>
 
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="panel">
+                                            <h3 class="jpane-toggler title" id="cpanel-panel-timecode_title" onclick="blind(this,'cpanel-panel-timecode')">
+                                                <span><%[Time code]%></span>
+                                            </h3>
+                                            <div class="jpane-slider content" id="cpanel-panel-timecode">
+                                                <div style="padding: 5px">
+
+                                                    <com:TDataGrid
+                                                        ID="timecodeGrid"
+                                                        DataKeyField="id"
+                                                        AutoGenerateColumns="false"
+                                                        CssClass="adminlist"
+                                                        AllowPaging="false"
+                                                        OnItemCreated="itemCreated"
+                                                        >
+
+                                                        <com:TBoundColumn
+                                                            HeaderText="<%[Time code]%>"
+                                                            DataField="timecode"
+                                                            />
+
+
+                                                        <com:TTemplateColumn HeaderText="<%[Hours/Days - Last month]%>" ID="nnbre">
+                                                            <prop:ItemTemplate>
+                                                                <com:TLabel
+                                                                    ID="nbre"
+                                                                    />
+                                                            </prop:ItemTemplate>
+                                                        </com:TTemplateColumn>
+
+                                                        <com:TTemplateColumn HeaderText="<%[Hours/Days - Current month]%>" ID="nnbre2">
+                                                            <prop:ItemTemplate>
+                                                                <com:TLabel
+                                                                    ID="nbre2"
+                                                                    />
+                                                            </prop:ItemTemplate>
+                                                        </com:TTemplateColumn>
+
+                                                    </com:TDataGrid>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="panel">
+                                            <h3 class="jpane-toggler title" id="cpanel-panel-quick_sign_title" onclick="blind(this,'cpanel-panel-quick_sign')">
+                                                <span><%[Quick sign in/out]%></span>
+                                            </h3>
+                                            <div class="jpane-slider content" id="cpanel-panel-quick_sign">
+                                                <div style="padding: 5px">
+                                                    <table>
+                                                        <tr>
+                                                            <td>
+                                                                <div id="cpanel" style="margin: 0 auto 0 auto; width:110px;">
+                                                                    <div class="icon">
+                                                                        <com:TLinkButton OnClick="signIn">
+                                                                            <img src="<%~ ./assets/signin.png %>" alt="<%[Sign in]%>" />
+                                                                            <span><%[Sign in]%></span>
+                                                                        </com:TLinkButton>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div id="cpanel" style="margin: 0 auto 0 auto; width:110px;">
+                                                                    <div class="icon">
+                                                                        <com:TLinkButton OnClick="signOut">
+                                                                            <img src="<%~ ./assets/signout.png %>" alt="<%[Sign out]%>"  />
+                                                                            <span><%[Sign out]%></span>
+                                                                        </com:TLinkButton>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td valign="top">
+                                                        <com:TActiveDropDownList
+                                                            ID="timecodeIn"
+                                                            DataTextField="Text"
+                                                            DataValueField="Value"
+                                                            />
+                                                        </td>
+                                                        <td>
+                                                        <com:TActiveDropDownList
+                                                            ID="timecode"
+                                                            DataTextField="Text"
+                                                            DataValueField="Value"
+                                                            />
+                                                        </td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-
-									<div class="panel">
-										<h3 class="jpane-toggler title" id="cpanel-panel-quick_sign_title" onclick="blind(this,'cpanel-panel-quick_sign')">
-											<span><%[Quick sign in/out]%></span>
-										</h3>
-										<div class="jpane-slider content" id="cpanel-panel-quick_sign">
-											<div style="padding: 5px">
-                                                <table>
-                                                    <tr>
-                                                        <td>
-                                                            <div id="cpanel" style="margin: 0 auto 0 auto; width:110px;">
-                                                                <div class="icon">
-                                                                    <com:TLinkButton OnClick="signIn">
-                                                                        <img src="<%~ ./assets/signin.png %>" alt="<%[Sign in]%>" />
-                                                                        <span><%[Sign in]%></span>
-                                                                    </com:TLinkButton>
-                                                                </div>
-                                                             </div>
-                                                        </td>
-                                                        <td>
-                                                             <div id="cpanel" style="margin: 0 auto 0 auto; width:110px;">
-                                                                <div class="icon">
-                                                                    <com:TLinkButton OnClick="signOut">
-                                                                        <img src="<%~ ./assets/signout.png %>" alt="<%[Sign out]%>"  />
-                                                                        <span><%[Sign out]%></span>
-                                                                    </com:TLinkButton>
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td valign="top">
-                                                            <com:TActiveDropDownList
-                                                                ID="timecodeIn"
-                                                                DataTextField="Text"
-                                                                DataValueField="Value"
-                                                                />
-                                                        </td>
-                                                        <td>
-                                                            <com:TActiveDropDownList
-                                                                ID="timecode"
-                                                                DataTextField="Text"
-                                                                DataValueField="Value"
-                                                                />
-                                                        </td>
-                                                    </tr>
-                                                </table>
-											</div>
-										</div>
-									</div>
-                                </div>
-							</td>
-						</tr>
-					</table>
+                                </td>
+                            </tr>
+                        </table>
 
 
-					<div class="clr"></div>
+                        <div class="clr"></div>
 
-				</div>
+                    </div>
 
-				<div class="b">
-					<div class="b">
-						<div class="b"></div>
-					</div>
-				</div>
+                    <div class="b">
+                        <div class="b">
+                            <div class="b"></div>
+                        </div>
+                    </div>
 
-			</div>
-		</div>
-	</div>
-</div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-<script type="text/javascript">
-<!--
-new Effect.BlindUp(document.getElementById('cpanel-panel-custom'), {queue: 'end'});
-//new Effect.BlindUp(document.getElementById('cpanel-panel-quick_sign'), {queue: 'end'});
--->
-</script>
+    <script type="text/javascript">
+        <!--
+        new Effect.BlindUp(document.getElementById('cpanel-panel-custom'), {queue: 'end'});
+        new Effect.BlindUp(document.getElementById('cpanel-panel-presence'), {queue: 'end'});
+        //new Effect.BlindUp(document.getElementById('cpanel-panel-quick_sign'), {queue: 'end'});
+        -->
+    </script>
 
 </com:TContent>
