@@ -522,7 +522,7 @@ void CGantnerTime::reloadAllData()
         }
 
         //Reload balances text
-        QSqlQuery balancesTextQuery("SELECT * FROM hr_timux_timecode WHERE (type='overtime' OR type='leave')  ORDER BY type");
+        QSqlQuery balancesTextQuery("SELECT * FROM hr_timux_timecode WHERE (type='overtime' OR type='leave') AND (defaultHoliday=1 OR defaultOvertime=1) ORDER BY type");
         int fieldNo = 0;
         while( balancesTextQuery.next())
         {
@@ -536,7 +536,6 @@ void CGantnerTime::reloadAllData()
             insertQuery.bindValue(":param",fieldNo  );
             insertQuery.bindValue(":param2",balancesTextQuery.value(13).toString()  );
             insertQuery.exec();
-
             fieldNo++;
         }
 
@@ -646,7 +645,11 @@ void CGantnerTime::checkDb()
                     p["displayName"] = param;
                     p["lang"] = param2;
                     p["fiuUse"] = "0";
-                    p["attendanceStatus"] = "2";
+
+                    if(param3 == "")
+                        p["attendanceStatus"] = "2";
+                    else
+                        p["attendanceStatus"] = param3;
 
                     QString xmlFunc = CXmlFactory::deviceAction( deviceId ,f, p);
                     emit accessAction(xmlFunc);
