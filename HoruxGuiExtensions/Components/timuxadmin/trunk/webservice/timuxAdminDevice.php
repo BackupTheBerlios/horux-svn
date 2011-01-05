@@ -86,7 +86,7 @@ class timuxAdminDevice
             $overTimeLastMonth = $employee->getOvertimeLastMonth(date('n'), date('Y'));
 
             $overTimeMonth = 0;
-            for($day=1; $day<date('j');$day++) {
+            for($day=1; $day<=date('j');$day++) {
                 $todo = $employee->getDayTodo($day,date('n'), date('Y'));
                 $done = $employee->getDayDone($day,date('n'), date('Y'));
                 $overTimeMonth = bcadd($overTimeMonth, bcsub($done['done'], $todo ,4),4 );

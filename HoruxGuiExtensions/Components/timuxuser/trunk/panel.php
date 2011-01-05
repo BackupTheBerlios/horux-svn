@@ -126,7 +126,7 @@ class panel extends Page
                 $overTimeLastMonth = $this->employee->getOvertimeLastMonth(date('n'), date('Y'));
 
                 $overTimeMonth = 0;
-                for($day=1; $day<date('j');$day++) {
+                for($day=1; $day<=date('j');$day++) {
                     $todo = $this->employee->getDayTodo($day,date('n'), date('Y'));
                     $done = $this->employee->getDayDone($day,date('n'), date('Y'));
                     $overTimeMonth = bcadd($overTimeMonth, bcsub($done['done'], $todo ,4),4 );
