@@ -1692,6 +1692,20 @@ class employee
 
         return 0;
     }
+
+    public function isLastMonthLastYeatClosed($year) {
+        $year--;
+
+        $cmd=$this->db->createCommand("SELECT COUNT(*) AS n FROM hr_timux_activity_counter WHERE month=12 AND year=:year AND user_id=".$this->employeeId);
+        $cmd->bindValue(':year',$year);
+        $data = $cmd->query();
+        $data = $data->read();
+
+        if($data['n']>0)
+            return true;
+        else
+            return false;
+    }
 }
 
 ?>

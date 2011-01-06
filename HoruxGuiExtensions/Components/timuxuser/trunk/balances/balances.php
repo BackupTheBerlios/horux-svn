@@ -43,14 +43,14 @@ class balances extends PageList
         {
             
 
-            $cmd=$this->db->createCommand("SELECT t.date FROM hr_tracking AS t ORDER BY t.date LIMIT 0,1");
+            $cmd=$this->db->createCommand("SELECT t.startDate FROM hr_timux_workingtime AS t ORDER BY t.startDate LIMIT 0,1");
             $data = $cmd->query();
             $data = $data->readAll();
 
             $year = date("Y");
             if(count($data)>0)
             {
-                $year = explode("-",$data[0]['date']);
+                $year = explode("-",$data[0]['startDate']);
                 $year = $year[0];
             }
             $currentYear = date("Y");
@@ -806,45 +806,92 @@ class balances extends PageList
         $this->balanceHolidaysLastYear->Text = sprintf("%.02f",$balanceHolidaysLastYear);
 
 
-        $holidaysTotal = $this->employee->geHolidaystMonth($year,$month);
+        // compute in this way when the 12 month of the last year is not closed
 
-        $holidayActivityCounter = $this->employee->getActivityCounter($year, $month, $this->employee->getDefaultHolidaysCounter() );
+        if(!$this->employee->isLastMonthLastYeatClosed($year)) {
+            $wt = $this->employee->getWorkingTime(1, $month, $year);
+
+            // get the holiday for this month
+            $defaultHolidayTimeCode = $this->employee->getDefaultHolidaysCounter();
+            
+            for($i=1; $i<$month ;$i++) {
+                $holidays = $this->employee->getRequest($year,$i,$defaultHolidayTimeCode);                
+                $wt['holidaysByYear'] = bcsub($wt['holidaysByYear'], $holidays['nbre'],4);
+            }
+
+            $this->holidayForTheYear->Text = sprintf("%.02f",$wt['holidaysByYear']);
 
 
-        if($holidaysTotal>0) {
-            if($holidayActivityCounter)
-                $this->holidaysTotal->Text = sprintf("* +%.02f",$holidaysTotal);
-            else
-                $this->holidaysTotal->Text = sprintf("+%.02f",$holidaysTotal);
+            $holidaysLastMonth = bcadd($wt['holidaysByYear'],$balanceHolidaysLastYear,4);
+            if($holidaysLastMonth>0)
+                $this->holidaysLastMonth->Text = sprintf("+%.02f",$holidaysLastMonth);
+            elseif($holidaysLastMonth<0 || $holidaysLastMonth==0)
+                $this->holidaysLastMonth->Text = sprintf("%.02f",$holidaysLastMonth);
+
+
+            $holidays = $this->employee->getRequest($year,$month,$defaultHolidayTimeCode);
+            if($holidays['nbre']>0)
+                $this->holidaysThisMonth->Text = sprintf("-%.02f",$holidays['nbre']);
+            elseif($holidays['nbre']==0)
+                $this->holidaysThisMonth->Text = sprintf("%.02f",$holidays['nbre']);
+
+
+            $holidayActivityCounter = $this->employee->getActivityCounter($year, $month, $this->employee->getDefaultHolidaysCounter() );
+            $holidaysTotal = bcsub($holidaysLastMonth,$holidays['nbre'],4);
+
+            if($holidaysTotal>0) {
+                if($holidayActivityCounter)
+                    $this->holidaysTotal->Text = sprintf("* +%.02f",$holidaysTotal);
+                else
+                    $this->holidaysTotal->Text = sprintf("+%.02f",$holidaysTotal);
+            }
+            elseif($holidaysTotal<0 || $holidaysTotal==0) {
+                if($holidayActivityCounter)
+                    $this->holidaysTotal->Text = sprintf("* %.02f",$holidaysTotal);
+                else
+                    $this->holidaysTotal->Text = sprintf("%.02f",$holidaysTotal);
+            }
+
+        } else {
+
+            $holidaysTotal = $this->employee->geHolidaystMonth($year,$month);
+
+            $holidayActivityCounter = $this->employee->getActivityCounter($year, $month, $this->employee->getDefaultHolidaysCounter() );
+
+
+            if($holidaysTotal>0) {
+                if($holidayActivityCounter)
+                    $this->holidaysTotal->Text = sprintf("* +%.02f",$holidaysTotal);
+                else
+                    $this->holidaysTotal->Text = sprintf("+%.02f",$holidaysTotal);
+            }
+            elseif($holidaysTotal<0 || $holidaysTotal==0) {
+                if($holidayActivityCounter)
+                    $this->holidaysTotal->Text = sprintf("* %.02f",$holidaysTotal);
+                else
+                    $this->holidaysTotal->Text = sprintf("%.02f",$holidaysTotal);
+            }
+
+            // get the holiday for this month
+            $defaultHolidayTimeCode = $this->employee->getDefaultHolidaysCounter();
+            $holidays = $this->employee->getRequest($year,$month,$defaultHolidayTimeCode);
+
+            if($holidays['nbre']>0)
+                $this->holidaysThisMonth->Text = sprintf("-%.02f",$holidays['nbre']);
+            elseif($holidays['nbre']==0)
+                $this->holidaysThisMonth->Text = sprintf("%.02f",$holidays['nbre']);
+
+            $holidaysLastMonth = $holidaysTotal + $holidays['nbre'];
+
+            // display the value
+            if($holidaysLastMonth>0)
+                $this->holidaysLastMonth->Text = sprintf("+%.02f",$holidaysLastMonth);
+            elseif($holidaysLastMonth<0 || $holidaysLastMonth==0)
+                $this->holidaysLastMonth->Text = sprintf("%.02f",$holidaysLastMonth);
+
+
+            $this->holidayForTheYear->Text = sprintf("%.02f",$this->holidaysLastMonth->Text - $balanceHolidaysLastYear);
         }
-        elseif($holidaysTotal<0 || $holidaysTotal==0) {
-            if($holidayActivityCounter)
-                $this->holidaysTotal->Text = sprintf("* %.02f",$holidaysTotal);
-            else
-                $this->holidaysTotal->Text = sprintf("%.02f",$holidaysTotal);
-        }
-
-        // get the holiday for this month
-        $defaultHolidayTimeCode = $this->employee->getDefaultHolidaysCounter();
-        $holidays = $this->employee->getRequest($year,$month,$defaultHolidayTimeCode);
-
-        if($holidays['nbre']>0)
-            $this->holidaysThisMonth->Text = sprintf("-%.02f",$holidays['nbre']);
-        elseif($holidays['nbre']==0)
-            $this->holidaysThisMonth->Text = sprintf("%.02f",$holidays['nbre']);
-
-
-        $holidaysLastMonth = $holidaysTotal + $holidays['nbre'];
-
-        // display the value
-        if($holidaysLastMonth>0)
-            $this->holidaysLastMonth->Text = sprintf("+%.02f",$holidaysLastMonth);
-        elseif($holidaysLastMonth<0 || $holidaysLastMonth==0)
-            $this->holidaysLastMonth->Text = sprintf("%.02f",$holidaysLastMonth);
-
-
-        $this->holidayForTheYear->Text = sprintf("%.02f",$this->holidaysLastMonth->Text - $balanceHolidaysLastYear);
-
 
 
        

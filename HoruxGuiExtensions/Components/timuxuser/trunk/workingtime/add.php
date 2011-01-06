@@ -204,7 +204,7 @@ class add extends Page
         $lastId = $this->db->LastInsertID;
 
         //create the employee counter
-        $cmd = $this->db->createCommand( "SELECT * FROM hr_timux_timecode WHERE type='overtime' OR type='leave'");
+        $cmd = $this->db->createCommand( "SELECT * FROM hr_timux_timecode WHERE (type='overtime' OR type='leave') AND (defaultHoliday=1 OR defaultOvertime=1)");
         $data = $cmd->query();
         $data = $data->readAll();
 

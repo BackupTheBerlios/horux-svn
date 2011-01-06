@@ -62,14 +62,14 @@ class load extends PageList
 
         if(!$this->IsPostBack)
         {
-            $cmd=$this->db->createCommand("SELECT t.date FROM hr_tracking AS t ORDER BY t.date LIMIT 0,1");
+            $cmd=$this->db->createCommand("SELECT t.startDate FROM hr_timux_workingtime AS t ORDER BY t.startDate LIMIT 0,1");
             $data = $cmd->query();
             $data = $data->readAll();
 
             $year = date("Y");
             if(count($data)>0)
             {
-                $year = explode("-",$data[0]['date']);
+                $year = explode("-",$data[0]['startDate']);
                 $year = $year[0];
             }
             $currentYear = date("Y");
