@@ -86,9 +86,17 @@ class timuxAdminDevice
             $overTimeLastMonth = $employee->getOvertimeLastMonth(date('n'), date('Y'));
 
             $overTimeMonth = 0;
-            for($day=1; $day<=date('j');$day++) {
+            for($day=1; $day<date('j');$day++) {
                 $todo = $employee->getDayTodo($day,date('n'), date('Y'));
                 $done = $employee->getDayDone($day,date('n'), date('Y'));
+                $overTimeMonth = bcadd($overTimeMonth, bcsub($done['done'], $todo ,4),4 );
+            }
+
+            //get the info the current day only if the overtime +
+            $todo = $employee->getDayTodo(date('j'),date('n'), date('Y'));
+            $done = $employee->getDayDone(date('j'),date('n'), date('Y'));
+
+            if(bcsub($done['done'], $todo ,4) > 0) {
                 $overTimeMonth = bcadd($overTimeMonth, bcsub($done['done'], $todo ,4),4 );
             }
 
