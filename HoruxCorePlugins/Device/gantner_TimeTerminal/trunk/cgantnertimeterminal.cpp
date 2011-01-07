@@ -445,7 +445,7 @@ void CGantnerTimeTerminal::commandFinished(  int id, bool error)
         else
         {
             //qDebug("Remove reload.txt KO");
-            QString xml = CXmlFactory::deviceEvent(QString::number(id), "1017", "Cannot remove the file reload.txt, please check the connection");
+            QString xml = CXmlFactory::deviceEvent(QString::number(id), "1017", "Cannot remove the file reload.txt, please check the connection (" + ftp->errorString() + ")");
             emit deviceEvent(xml);
         }
 
@@ -469,7 +469,7 @@ void CGantnerTimeTerminal::commandFinished(  int id, bool error)
         }
         else
         {
-            QString xml = CXmlFactory::deviceEvent(QString::number(this->id), "1017", "Cannot read the config file");
+            QString xml = CXmlFactory::deviceEvent(QString::number(this->id), "1017", "Cannot read the config file (" + ftp->errorString() + ")");
             emit deviceEvent(xml);
 
             action = WAITING;
@@ -490,7 +490,7 @@ void CGantnerTimeTerminal::commandFinished(  int id, bool error)
         }
         else
         {
-            QString xml = CXmlFactory::deviceEvent(QString::number(this->id), "1017", "Cannot write the config command file");
+            QString xml = CXmlFactory::deviceEvent(QString::number(this->id), "1017", "Cannot write the config command file (" + ftp->errorString() + ")");
             emit deviceEvent(xml);
 
             action = WAITING;
@@ -516,7 +516,7 @@ void CGantnerTimeTerminal::commandFinished(  int id, bool error)
         }
         else
         {
-            QString xml = CXmlFactory::deviceEvent(QString::number(this->id), "1017", "Cannot write the config file");
+            QString xml = CXmlFactory::deviceEvent(QString::number(this->id), "1017", "Cannot write the config file (" + ftp->errorString() + ")");
             emit deviceEvent(xml);
 
             action = WAITING;
@@ -558,8 +558,8 @@ void CGantnerTimeTerminal::commandFinished(  int id, bool error)
         else
         {
             if(!bookingError)
-            {
-                QString xml = CXmlFactory::deviceEvent(QString::number(this->id), "1017", "Cannot read the bookings file");
+            {                                
+                QString xml = CXmlFactory::deviceEvent(QString::number(this->id), "1017", "Cannot read the bookings file (" + ftp->errorString() + ")");
                 emit deviceEvent(xml);
                 bookingError = true;
             }
@@ -579,7 +579,7 @@ void CGantnerTimeTerminal::commandFinished(  int id, bool error)
         else
         {
             //qDebug("REMOVE BOOKING KO");
-            QString xml = CXmlFactory::deviceEvent(QString::number(this->id), "1017", "Cannot remove the bookings file");
+            QString xml = CXmlFactory::deviceEvent(QString::number(this->id), "1017", "Cannot remove the bookings file (" + ftp->errorString() + ")");
             emit deviceEvent(xml);
         }
 
@@ -614,7 +614,7 @@ void CGantnerTimeTerminal::commandFinished(  int id, bool error)
         else
         {
             //qDebug("SEND Down.dat KO");
-            QString xml = CXmlFactory::deviceEvent(QString::number(this->id), "1017", "Cannot send the Down.dat file");
+            QString xml = CXmlFactory::deviceEvent(QString::number(this->id), "1017", "Cannot send the Down.dat file (" + ftp->errorString() + ")");
             emit deviceEvent(xml);
         }
 
@@ -1203,6 +1203,20 @@ bool CGantnerTimeTerminal::isOpened()
 
 void CGantnerTimeTerminal::timerEvent ( QTimerEvent * event )
 {
+    // if the terminal is configure to reboot automaticly at every specific time, don't try to communicate with him during this time
+    if(isAutoRestart) {
+        QTime current = QTime::currentTime();
+        QStringList t = autoRestart.split(":");
+        if(t.count()>=2) {
+            QTime rebootTime(t.at(0).toInt() ,t.at(1).toInt(),0);
+
+            if(rebootTime <= current && current <= rebootTime.addSecs(600) )
+                return;
+        }
+
+    }
+
+
     if(timerSyncTime == event->timerId() )
     {
         QScriptValue result = engine.evaluate("setUnitTime");
