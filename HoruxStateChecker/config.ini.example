@@ -1,0 +1,19 @@
+; example of a configuration file
+; (to quit the program use the "ctrl+shift+alt+q" shortcut)
+
+[config]
+timerInterval = 5000
+nbsecBeforeDeclareDown = 300
+displayDailySubscription = true
+fullscreen = true
+
+[text]
+lblDailyInfo = "<html><b>Information du jour</b><br />Nombre d'accès</html>"
+lblDailySubscription = "<html><b>Billets vendus aujourd'hui</b>"
+
+[webservice]
+host = "192.168.1.2"
+path = "/ttsa/"
+user = ""
+password = ""
+ssl = false
