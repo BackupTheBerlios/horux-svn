@@ -626,6 +626,191 @@ class horux
 
         return true;
     }
+
+    /**
+     * @return string The system's status
+     * @soapmethod
+     */
+    public function getSystemStatus()
+    {
+        $app = Prado::getApplication();
+      	$db = $app->getModule('horuxDb')->DbConnection;
+        $db->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY,true);
+        $db->Active=true;
+
+        $sql = "SELECT * FROM hr_config";
+        $command=$db->createCommand($sql);
+        $dataObj=$command->query();
+        $dataObj = $dataObj->read();
+        $this->host = $dataObj['xmlrpc_server'];
+        $this->port = $dataObj['xmlrpc_port'];
+
+        require_once("xmlrpc/lib/xmlrpc.inc");
+        
+        $result = "";
+        $content_error = "";
+
+        $client = new xmlrpc_client( "RPC2", $this->host, $this->port );
+
+        $message = new xmlrpcmsg("horux.getSystemInfo");
+        $response = $client->send($message);
+
+        if($response)
+        {
+            if (!$response->faultCode())
+            {
+                $v = $response->value();
+                $result = html_entity_decode( $v->scalarval() );
+            }
+            else
+            {
+                $content_error = "ERROR - ";
+                $content_error .= "Code: " . $response->faultCode() . " Reason '" . $response->faultString() . "'<br/>";
+            };
+        }
+
+        if($content_error != "")
+        {
+            return $content_error;
+        }
+        else
+        {
+            if($result != "")
+            {
+                return $result;
+            }
+        }
+
+        return 'The server horux seems to be down';
+    }
+
+
+    /**
+     * @param string $xmlresp The status to parse (current if not specified)
+     * @return mixed The parsed status
+     * @soapmethod
+     */
+    function parseStatus($xmlresp)
+    {
+        if (!$xmlresp)
+          $xmlresp = $this->getSystemStatus();
+        $ret = array();
+        $app = Prado::getApplication();
+      	$db = $app->getModule('horuxDb')->DbConnection;
+        $db->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY,true);
+        $db->Active=true;
+
+        $xml = simplexml_load_string($xmlresp);
+
+        $horuxRepeaterData = array();
+        $plugins = array();
+
+        $devices = array();
+
+        if($xml != "")
+        {
+            $param = $app->getParameters();
+            
+            foreach ($xml->controller as $controller)
+            {
+                $sql = "SELECT * FROM hr_horux_controller WHERE id=".(int)$controller->controllerID;
+                $command=$db->createCommand($sql);
+                $dataObj=$command->query();
+                $dataObj = $dataObj->read();
+
+                $horuxRD = array();
+
+                $horuxRD["controllerId"] = (int)$controller->controllerID;
+                $horuxRD["name"] = $dataObj['name'];
+                $horuxRD["horuxVersion"] = (String)$controller->appVersion;
+                $horuxRD["lastUpdate"] = (String)$controller->lastUpdate;
+                $horuxRD["horuxTimeLive"] = (String)$controller->serverLive;
+                $horuxRepeaterData[] = $horuxRD;
+
+                foreach ($controller->plugins as $plugs)
+                {
+                    foreach ($plugs as $plugin)
+                    {
+                        $p = array();
+                        $p['name'] = (String)$plugin->name;
+                        $p['description'] = (String)$plugin->description;
+                        $p['version'] = (String)$plugin->version;
+                        $p['author'] = (String)$plugin->author;
+                        $p['copyright'] = (String)$plugin->copyright;
+                        $p['type'] = (string)$plugins['type'];
+                        $p['horuxController'] = $dataObj['name'];
+                        $plugins[] = $p;
+                    }
+                }
+
+                foreach ($controller->devices as $devs)
+                {
+                    foreach ($devs as $device)
+                    {
+                        $p = array();
+                        $p['id'] = (string)$device['id'];
+                        $p['name'] = utf8_decode((String)$device->name);
+                        $p['serialNumber'] = (String)$device->serialNumber;
+                        $p['isConnected'] = (String)$device->isConnected;
+                        $p['firmwareVersion'] = (String)$device->firmwareVersion;
+                        $p['port'] = (String)$port;
+                        $p['host'] = (String)$host;
+                        $p['mode'] = (String)$param['appMode'];
+                        $p['saasdbname'] =  md5($db->getConnectionString());
+                        $p['horuxController'] = $dataObj['name'];
+                        $devices[] = $p;
+                    }
+                }
+
+                $ret['horuxRepeaterData'] = $horuxRepeaterData;
+                $ret['plugins'] = $plugins;
+                $ret['devices'] = $devices;
+            }
+        }
+      return $ret;
+    }
+
+    /**
+     * @return mixed Return the horux controllers
+     * @soapmethod
+     */
+    public function getControllers()
+    {
+        $app = Prado::getApplication();
+      	$db = $app->getModule('horuxDb')->DbConnection;
+        $db->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY,true);
+        $db->Active=true;
+
+        $sql = "SELECT * FROM hr_horux_controller";
+
+        $cmd= $db->createCommand($sql);
+        $data = $cmd->query();
+        $data = $data->readAll();
+
+        return $data;
+    }
+
+    /**
+     * @param string $date The date (Y-m-d)
+     * @return mixed Return the daily tracking infos
+     * @soapmethod
+     */
+    public function getDailyTracking($date)
+    {
+      if (!$date)
+        $date = date("Y-m-d");
+      $app = Prado::getApplication();
+    	$db = $app->getModule('horuxDb')->DbConnection;
+      $db->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY,true);
+      $db->Active=true;
+      $sql = "SELECT * FROM hr_tracking WHERE date = :date";
+      $cmd = $db->createCommand($sql);
+      $cmd->bindParameter(":date",$date,PDO::PARAM_STR);
+      $data = $cmd->query();
+      $data = $data->readAll();
+
+      return $data;
+    }
 }
 
 ?>
