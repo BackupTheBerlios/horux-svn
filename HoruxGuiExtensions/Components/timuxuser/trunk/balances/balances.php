@@ -579,7 +579,7 @@ class balances extends PageList
 
             foreach($bookingsDay as $b) {
                 // if we print on a pdf, do not insert the link
-                if(!$isPrint)
+                if(!$isPrint && $this->isAccess('components.timuxuser.booking.mod'))
                 {
                     $line['sign'].= '<a href="index.php?page=components.timuxuser.booking.mod&back=components.timuxuser.balances.balances&id='.$b['id'].'" >';
                 }
@@ -995,5 +995,39 @@ class balances extends PageList
         }
     }
 
+
+    public function isAccess($page)
+    {
+        $app = $this->getApplication();
+        $db = $this->db;
+
+        $usedId = $app->getUser()->getUserID() == null ? 0 : $app->getUser()->getUserID();
+        $groupId = $app->getUser()->getGroupID() == null ? 0 : $app->getUser()->getGroupID();
+
+        $sql =  'SELECT `allowed` FROM hr_gui_permissions WHERE ' .
+                      '(`page`=\''.$page.'\' OR `page` IS NULL) ' .
+                      "AND (" .
+                              "(`selector`='user_id' AND `value`=".$usedId.") " .
+                              "OR (`selector`='group_id' AND `value`=".$groupId.") " .
+                      ")" .
+              'ORDER BY `page` DESC';
+
+        $cmd = $db->createCommand($sql);
+        $res = $cmd->query();
+        $res = $res->readAll();
+        // If there were no results
+        if (!$res)
+        return false;
+        else
+        // Traverse results
+        foreach ($res as $allowed)
+        {
+            // If we get deny here
+            if (! $allowed)
+            return false;
+        }
+
+        return true;
+    }
 }
 ?>

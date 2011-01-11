@@ -27,7 +27,9 @@
 			},
 
             allDayText:'<%[All the day]%>',
-            
+
+            firstDay:1,
+
             timeFormat: {
                     agenda : 'H:mm{ - H:mm}',
                     '': 'H:mm{ - H:mm}'
