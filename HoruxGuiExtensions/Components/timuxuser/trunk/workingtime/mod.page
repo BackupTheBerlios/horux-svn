@@ -13,6 +13,7 @@
     <%include Application.common.template.headerBoxContent %>
 
     <com:THiddenField ID="id" value="" />
+    <com:THiddenField ID="specialWT" value="0" />
     <fieldset class="adminform">
         <legend><%[Employee]%></legend>
         <table class="admintable" cellspacing="1">

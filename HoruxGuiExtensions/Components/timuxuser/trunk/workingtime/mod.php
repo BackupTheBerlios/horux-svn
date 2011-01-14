@@ -108,10 +108,26 @@ class mod extends Page
                 $cmd->bindValue(":id", $data['user_id'], PDO::PARAM_STR);
                 $cmd->bindValue(":year", $lastYear, PDO::PARAM_STR);
 
-                $data2 = $cmd->query();
-                $data2 = $data2->read();
+                $data3 = $cmd->query();
+                $data3 = $data3->read();
 
-                $this->holidaysLastYear->Text = $data2['nbre'];
+                //if no data, try a second year before, but normaly this should appear
+                if(!$data3) {
+                    $lastYear--;
+                    $cmd = $this->db->createCommand( "SELECT nbre FROM hr_timux_activity_counter WHERE timecode_id=:defHol AND user_id=:id AND year=:year AND month=12");
+                    $cmd->bindValue(":defHol", $data2['id'], PDO::PARAM_STR);
+                    $cmd->bindValue(":id", $data['user_id'], PDO::PARAM_STR);
+                    $cmd->bindValue(":year", $lastYear, PDO::PARAM_STR);
+
+                    $data3 = $cmd->query();
+                    $data3 = $data3->read();
+
+                    if($data3) {
+                        $this->specialWT->Value = 1;
+                    }
+                }
+
+                $this->holidaysLastYear->Text = $data3['nbre'];
             }
 
 
@@ -128,10 +144,27 @@ class mod extends Page
                 $cmd->bindValue(":id", $data['user_id'], PDO::PARAM_STR);
                 $cmd->bindValue(":year", $lastYear, PDO::PARAM_STR);
 
-                $data2 = $cmd->query();
-                $data2 = $data2->read();
+                $data3 = $cmd->query();
+                $data3 = $data3->read();
 
-                $this->overtimeLastYear->Text = $data2['nbre'];
+                //if no data, try a second year before, but normaly this should appear
+                if(!$data3) {
+
+                    $lastYear--;
+                    $cmd = $this->db->createCommand( "SELECT nbre FROM hr_timux_activity_counter WHERE timecode_id=:defHol AND user_id=:id AND year=:year AND month=12");
+                    $cmd->bindValue(":defHol", $data2['id'], PDO::PARAM_STR);
+                    $cmd->bindValue(":id", $data['user_id'], PDO::PARAM_STR);
+                    $cmd->bindValue(":year", $lastYear, PDO::PARAM_STR);
+
+                    $data3 = $cmd->query();
+                    $data3 = $data3->read();
+
+                    if($data3) {
+                        $this->specialWT->Value = 1;
+                    }
+                }
+
+                $this->overtimeLastYear->Text = $data3['nbre'];
             }
 
         }
@@ -313,6 +346,10 @@ class mod extends Page
 
                 $lastYear = $year-1;
 
+                if($this->specialWT->Value == 1) {
+                    $lastYear--;
+                }
+
                 $cmd = $this->db->createCommand( "SELECT nbre FROM hr_timux_activity_counter WHERE timecode_id=:defHol AND user_id=:id AND year=:year AND month=12");
                 $cmd->bindValue(":defHol", $data['id'], PDO::PARAM_STR);
                 $cmd->bindValue(":id", $userId, PDO::PARAM_STR);
@@ -337,7 +374,7 @@ class mod extends Page
 
                 $diff = bcsub($nbre2, $nbre);
 
-                $cmd = $this->db->createCommand( "UPDATE hr_timux_activity_counter SET nbre=nbre-:diff WHERE timecode_id=:defHol AND user_id=:id AND year!=:year AND month!=12");
+                $cmd = $this->db->createCommand( "UPDATE hr_timux_activity_counter SET nbre=ROUND(nbre-:diff,2) WHERE timecode_id=:defHol AND user_id=:id AND year!=:year AND month!=12");
                 $cmd->bindValue(":diff", $diff, PDO::PARAM_STR);
                 $cmd->bindValue(":defHol", $data['id'], PDO::PARAM_STR);
                 $cmd->bindValue(":id", $userId, PDO::PARAM_STR);
@@ -424,6 +461,10 @@ class mod extends Page
                 list($day,$month,$lastYear) = explode("-",$this->from->SafeText);
                 $lastYear--;
 
+                if($this->specialWT->Value == 1) {
+                    $lastYear--;
+                }
+
                 $cmd = $this->db->createCommand( "SELECT nbre FROM hr_timux_activity_counter WHERE timecode_id=:defOverTime AND user_id=:id AND year=:year AND month=12");
                 $cmd->bindValue(":defOverTime", $data['id'], PDO::PARAM_STR);
                 $cmd->bindValue(":id", $this->employee->getSelectedValue(), PDO::PARAM_STR);
@@ -433,10 +474,10 @@ class mod extends Page
                 $data2 = $cmd->query();
                 $data2 = $data2->read();
 
-                $diff = $data2['nbre'] - $this->overtimeLastYear->SafeText;
+                $diff = bcsub($data2['nbre'], $this->overtimeLastYear->SafeText,2);
 
 
-                $cmd = $this->db->createCommand( "UPDATE hr_timux_activity_counter SET nbre=nbre-:diff WHERE timecode_id=:defOverTime AND user_id=:id AND month>0 AND year>0");
+                $cmd = $this->db->createCommand( "UPDATE hr_timux_activity_counter SET nbre=ROUND(nbre-:diff,2) WHERE timecode_id=:defOverTime AND user_id=:id AND month>0 AND year>0");
                 $cmd->bindValue(":diff", $diff, PDO::PARAM_STR);
                 $cmd->bindValue(":defOverTime", $data['id'], PDO::PARAM_STR);
                 $cmd->bindValue(":id", $userId, PDO::PARAM_STR);
