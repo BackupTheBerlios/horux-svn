@@ -1314,6 +1314,12 @@
 <source>Absent</source>
 <target>Absent</target>
 </trans-unit>
+
+<trans-unit id="304">
+<source>Leave counter</source>
+<target>Compteur d'activité</target>
+</trans-unit>
+
 </body>
 </file>
 </xliff>
