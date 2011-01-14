@@ -381,6 +381,19 @@ class mod extends Page
                 $cmd->bindValue(":year", $lastYear, PDO::PARAM_STR);
 
                 $cmd->execute();
+
+                $nbre = $this->holidaysByYear->SafeText;
+                $nbreLast = $this->holidaysLastYear->SafeText;
+
+                $nbre = bcdiv( bcmul((12-$month+1), $nbre,2), 12.0, 2);
+                $nbre = bcadd($nbre, $nbreLast,2 );
+
+                $cmd = $this->db->createCommand( "UPDATE hr_timux_activity_counter SET nbre=:diff WHERE timecode_id=:defHol AND user_id=:id AND year=0 AND month=0");
+                $cmd->bindValue(":diff", $nbre, PDO::PARAM_STR);
+                $cmd->bindValue(":defHol", $data['id'], PDO::PARAM_STR);
+                $cmd->bindValue(":id", $userId, PDO::PARAM_STR);
+
+                $cmd->execute();
             }
 
         }
