@@ -44,37 +44,70 @@ class timecode extends PageList
 
     protected function onPrint()
     {
+        $param = Prado::getApplication()->getParameters();
+
+        $nbreOfColumn = $param['barcodeprintcolumn'];
+
         parent::onPrint();
         $this->pdf->AddPage();
+        $type = $this->Request['f1'];   //type
+
+        $typeText = '';
+
+        switch($type) {
+            case '0':
+                break;
+            case 'leave' :
+                $typeText = " - ".Prado::localize("Leave");
+                break;
+            case 'absence':
+                $typeText = " - ".Prado::localize("Absence");
+                break;
+            case 'overtime':
+                $typeText = " - ".Prado::localize("Overtime");
+                break;
+            case 'load':
+                $typeText = " - ".Prado::localize("Load");
+                break;
+        }
 
         $this->pdf->SetFont('Arial','',11);
-        $this->pdf->Cell(0,10,utf8_decode(Prado::localize('List of time code')),0,0,'L');
+        $this->pdf->Cell(0,10,utf8_decode(Prado::localize('List of time code').$typeText),0,0,'L');
         $this->pdf->Ln(10);
 
         $this->pdf->setDefaultFont();
 
-        $cmd=$this->db->createCommand("SELECT * FROM hr_timux_timecode ORDER BY id");
+
+        if($type == '0') {
+            $cmd=$this->db->createCommand("SELECT * FROM hr_timux_timecode ORDER BY name");
+        }
+        else {
+            $cmd=$this->db->createCommand("SELECT * FROM hr_timux_timecode WHERE type=:type ORDER BY name");
+            $cmd->bindValue(":type", $type);
+        }
         $data = $cmd->query();
         $timeCode = $data->readAll();
 
-        while(count($timeCode) % 3 > 0) {
+        while(count($timeCode) % $nbreOfColumn > 0) {
             $timeCode[] = array('name'=>'', 'abbreviation'=>'' );
         }
 
         $i=0;
         $j=0;
-        $x=15;
-        $y=50;
+        $x=10;
+        $y=38;
+        $width = 190 / $nbreOfColumn;
+
         foreach($timeCode as $tc) {
 
-            $this->pdf->Cell(63,6,utf8_decode($tc['name']),'LTR');
+            $this->pdf->Cell($width,6,utf8_decode($tc['name']),'LTR');
 
             $objCode = new pi_barcode() ;
 
-            $objCode->setSize(50);
+            $objCode->setSize(20);
             $objCode->hideCodeType();
             $objCode->setColors('#000000');
-            $objCode->setSize(80);
+            $objCode->setSize(30);
 
             $param = Prado::getApplication()->getParameters();
 
@@ -88,21 +121,21 @@ class timecode extends PageList
 
                 $this->pdf->Image('./tmp/bctc'.$i.'.png',$x,$y);
 
-                $x += 63;
+                $x += 93;
             }
             $i++;
-            if($i%3 == 0) {
+            if($i%$nbreOfColumn == 0) {
                 $this->pdf->Ln();
-                $this->pdf->Cell(63,60,'','LRB');
-                $this->pdf->Cell(63,60,'','LRB');
-                $this->pdf->Cell(63,60,'','LRB');
+
+                for($c=0; $c<$nbreOfColumn; $c++)
+                    $this->pdf->Cell($width,20,'','LRB');
 
                 $j++;
 
-                if($j%3 == 0) {
+                if($j%9 == 0) {
                     $this->pdf->AddPage();
                     $x = 15;
-                    $y = 50;
+                    $y = 38;
                     $this->pdf->SetFont('Arial','',11);
                     $this->pdf->Cell(0,10,utf8_decode(Prado::localize('List of time code')),0,0,'L');
                     $this->pdf->Ln(10);
@@ -110,8 +143,8 @@ class timecode extends PageList
                     $this->pdf->setDefaultFont();
                 } else {
                     $this->pdf->Ln();
-                    $y += 66;
-                    $x=15;
+                    $y += 26;
+                    $x=10;
                 }
             }
 

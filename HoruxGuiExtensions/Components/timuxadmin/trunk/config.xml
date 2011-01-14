@@ -7,5 +7,6 @@
     </modules>
     <parameters>
         <parameter id="barcodetype" value="C39" Name="Code bar type" RightText="" />
+        <parameter id="barcodeprintcolumn" value="1" Name="Code bar print column" RightText="" />
     </parameters>
 </configuration>

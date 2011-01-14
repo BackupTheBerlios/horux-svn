@@ -3,7 +3,11 @@
     <script language="Javascript">
         function onPrintRedirect()
         {
-            window.open( "<%= $this->Service->constructUrl($this->getApplication()->getService()->getRequestedPagePath()) %>&action=print", target="_blank" ) ;
+            var f1 = document.getElementById( '<%= $this->filterType->getClientID() %>' );
+
+            var param = "&f1=" + f1.value;
+
+            window.open( "<%= $this->Service->constructUrl($this->getApplication()->getService()->getRequestedPagePath()) %>&action=print" + param, target="_blank" ) ;
         }
     </script>
     <com:TToolbarBox
