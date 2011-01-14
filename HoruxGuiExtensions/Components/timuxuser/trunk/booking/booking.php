@@ -329,8 +329,19 @@ class booking extends PageList
 
             $item->ddate->date->Text = $this->dateFromSql($item->DataItem['date']);
 
-            if($item->DataItem['action'] == 255)
+            if($item->DataItem['action'] == 255) {
                 $item->aaction->action->Text = $signInText;
+                
+                $cmd=$this->db->createCommand("SELECT * FROM hr_timux_booking_bde WHERE tracking_id=:trackingId"); 
+                $cmd->bindValue("trackingId", $item->DataItem['id']);
+                
+                $data = $cmd->query();
+                $data = $data->read();
+                
+                if($data) {
+                    $item->aactionr->actionr->Text = $data['BDE1'];
+                }
+            }
             if($item->DataItem['action'] == 254)
                 $item->aaction->action->Text = $signOutText;
 
