@@ -448,7 +448,7 @@ void CGantnerTime::reloadAllData()
             {
                 QString deviceId = deviceQuery.value(0).toString();
                 QSqlQuery insertQuery;
-                insertQuery.prepare("INSERT INTO hr_gantner_standalone_action (`type`, `func`, `userId`,`keyId`, `deviceId`, `param`, `param2`) VALUES (:type,:func,:userId,:keyId,:deviceId, :param, :param2)");
+                insertQuery.prepare("INSERT INTO hr_gantner_standalone_action (`type`, `func`, `userId`,`keyId`, `deviceId`, `param`, `param2`, `param3`) VALUES (:type,:func,:userId,:keyId,:deviceId, :param, :param2, :param3)");
                 insertQuery.bindValue(":func", "add");
                 insertQuery.bindValue(":type", "user");
                 insertQuery.bindValue(":userId", userQuery.value(0) );
@@ -456,6 +456,26 @@ void CGantnerTime::reloadAllData()
                 insertQuery.bindValue(":deviceId", deviceId );
                 insertQuery.bindValue(":param", userQuery.value(1)  );
                 insertQuery.bindValue(":param2",userQuery.value(2) );
+
+
+                //check the last booking to know if the user is present or absent
+                QSqlQuery checkLastBooking;
+                checkLastBooking.prepare("SELECT * FROM hr_tracking AS t LEFT JOIN hr_timux_booking AS tb ON t.id=tb.tracking_id WHERE t.id_user=:userId ORDER BY t.date DESC, t.time DESC LIMIT 0,1");
+                checkLastBooking.bindValue(":userId", userQuery.value(0) );
+                checkLastBooking.exec();
+                if(checkLastBooking.next()) {
+                    if(checkLastBooking.value(11).toInt() == 255 || checkLastBooking.value(11).toInt() == 155 || checkLastBooking.value(12).toString().right(3) == "_IN" ) {
+                        insertQuery.bindValue(":param3",1 );
+                    } else {
+                        insertQuery.bindValue(":param3",2 );
+                    }
+                } else {
+                    //no booking, the user is absent
+                    insertQuery.bindValue(":param3",2 );
+                }
+
+
+
                 insertQuery.exec();
 
                 QSqlQuery keyQuery;
