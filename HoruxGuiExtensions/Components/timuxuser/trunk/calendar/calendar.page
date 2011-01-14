@@ -11,6 +11,17 @@
 
     <link rel="stylesheet" type="text/css" href="index.php?page=components.timuxuser.calendar.calendar&ajax=getStyleSheet" />
 
+    <script type="text/javascript">
+
+        function onPrintRedirect()
+        {
+            window.open( "<%= $this->Service->constructUrl($this->getApplication()->getService()->getRequestedPagePath()) %>&action=print", target="_blank" ) ;
+        }
+
+        Effect.Fade(document.getElementById('loading'), {duration:0});
+
+    </script>
+
 
     <script type='text/javascript'>
      var $j = jQuery.noConflict();
@@ -126,10 +137,12 @@
         IconAsset="<%~ ../assets/cal.png %>"
         CancelVisible="true"
         HelpVisible="true"
+        PrintVisible="true"
+        JsClickPrint="onPrintRedirect()"
         />
 
     <%include Application.common.template.headerBoxContent %>
-    
+
     <div id='loading' style='display:none'>loading...</div>
     <div id='calendar'></div>
 
