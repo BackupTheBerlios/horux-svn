@@ -32,22 +32,6 @@ CGantnerTime::CGantnerTime(QObject *parent) : QObject(parent)
     timerCheckDb->start(TIME_DB_CHECKING);
 
     initSAASMode();
-
-
-    // for test
-
-    QMap<QString, QVariant> params;
-
-    params["userId"] = "5";
-    params["deviceId"] = "5";
-    params["date"] = "2011-01-17";
-    params["time"] = "09:30:00";
-    params["key"] = "36061215477913348";
-    params["code"] = "255";
-    params["reason"] =  "";
-    params["BDEValue1"] = "";
-
-    isAccess(params, false, false);
 }
 
 bool CGantnerTime::isAccess(QMap<QString, QVariant> params, bool, bool )
