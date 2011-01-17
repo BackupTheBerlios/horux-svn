@@ -458,10 +458,6 @@ class employee
         $res['timecodeName'] = '';
         $SpecialTimeCodeWithCompensation = false;
 
-        if($day == 10) {
-            $z = 100;
-        }
-
         $bookings  = $this->getBookingsDay($day, $month, $year);
 
         $break = bcmul($this->isBreakOk($bookings), 60, 4);
@@ -485,16 +481,21 @@ class employee
                 // if the type is equal, use it for the computation
                 if($type == $nextBookingType) {
                     if($type == 'IN') {
+
                         $bookinIN = $bookings[$i]['roundBooking'];
+
                     } else {
+
                         $res['done'] += (strtotime($bookings[$i]['roundBooking']) - strtotime($bookinIN));
                         $bookinIN = 0;
+                        
                     }
 
                 }
 
-                if($bookinIN > 0 || $nextBookingType == 'OUT')
+                if(strtotime($bookinIN) > 0 || $nextBookingType == 'OUT') {
                     $nextBookingType = $nextBookingType == 'IN' ? 'OUT' : 'IN';
+                }
             }
         }
 
