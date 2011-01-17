@@ -32,6 +32,22 @@ CGantnerTime::CGantnerTime(QObject *parent) : QObject(parent)
     timerCheckDb->start(TIME_DB_CHECKING);
 
     initSAASMode();
+
+
+    // for test
+
+    QMap<QString, QVariant> params;
+
+    params["userId"] = "5";
+    params["deviceId"] = "5";
+    params["date"] = "2011-01-17";
+    params["time"] = "09:30:00";
+    params["key"] = "36061215477913348";
+    params["code"] = "255";
+    params["reason"] =  "";
+    params["BDEValue1"] = "";
+
+    isAccess(params, false, false);
 }
 
 bool CGantnerTime::isAccess(QMap<QString, QVariant> params, bool, bool )
@@ -44,6 +60,9 @@ bool CGantnerTime::isAccess(QMap<QString, QVariant> params, bool, bool )
     QString code = params["code"].toString();
     QString reason = params["reason"].toString() == "" ? "0" : params["reason"].toString();
 
+    QString keyId = "";
+
+
     if(userId == "0") {
         QSqlQuery querykey = "SELECT ka.id_user FROM hr_user AS u LEFT JOIN hr_keys_attribution AS ka ON ka.id_user=u.id LEFT JOIN hr_keys AS k ON k.id=ka.id_key  WHERE k.serialNumber='" + key + "'";
         if(querykey.next()) {
@@ -52,6 +71,13 @@ bool CGantnerTime::isAccess(QMap<QString, QVariant> params, bool, bool )
         else {
             return false;
         }
+    }
+
+    // get the id of the key
+    QSqlQuery querykey("SELECT id FROM hr_keys WHERE serialNumber='" + key + "'");
+
+    if(querykey.next()) {
+        keyId = querykey.value(0).toString();
     }
 
     if(code == "150") {
@@ -134,30 +160,9 @@ bool CGantnerTime::isAccess(QMap<QString, QVariant> params, bool, bool )
 
         } else {
 
-        QSqlQuery querykey = "SELECT id FROM hr_keys WHERE serialNumber='" + key + "'";
-        querykey.next();
 
-        QSqlQuery query("INSERT INTO `hr_tracking` ( `id` , `id_user` , `id_key` , `time` , `date` , `id_entry` , `is_access` , `id_comment`, `key`, `extData` ) VALUES ('', '" +
-                    userId +
-                    "','" +
-                    querykey.value(0).toString() +
-                    "', '" + time +"', '" + date +"', '" +
-                    deviceId +
-                    "', '" +
-                    "1" +
-                    "', '" +
-                    "0" +
-                    "', '" +
-                    key +
-                    "', '" +
-                    "hr_timux_booking"
-                    "')"
-                    );
 
-        QSqlQuery lastTracking = "SELECT id FROM `hr_tracking` WHERE id_entry=" + deviceId + " ORDER BY id DESC LIMIT 0,1";
-        lastTracking.next();
-        QString last = lastTracking.value(0).toString();
-
+        // compute the round of the time
         QStringList timeSplit = time.split(":");
 
         QTime roundBooking ;
@@ -237,7 +242,74 @@ bool CGantnerTime::isAccess(QMap<QString, QVariant> params, bool, bool )
             }
         }
 
+        QString lastTrackingId;
+
+        // this is an entry BDE
         if(code == "155") {
+
+            // be sure the last booking was an exit. Wo have to check this. If not the case, we have to insert an exit booking with the same time than
+            // this booking
+            QSqlQuery lastBooking("SELECT tb.action FROM  hr_timux_booking AS tb LEFT JOIN hr_tracking AS t ON tb.tracking_id=t.id WHERE t.id_user=" + userId + " ORDER BY t.date DESC, t.time DESC, tb.tracking_id DESC LIMIT 0,1");
+            if(lastBooking.next()) {
+                if(lastBooking.value(0) == "255") { // last booking was an already an entry, we have to insert an exit
+
+                    QSqlQuery query = "INSERT INTO `hr_tracking` ( `id` , `id_user` , `id_key` , `time` , `date` , `id_entry` , `is_access` , `id_comment`, `key`, `extData` ) VALUES ('', '" +
+                                userId +
+                                "','" +
+                                keyId +
+                                "', '" + time +"', '" + date +"', '" +
+                                deviceId +
+                                "', '" +
+                                "1" +
+                                "', '" +
+                                "0" +
+                                "', '" +
+                                key +
+                                "', '" +
+                                "hr_timux_booking"
+                                "')";
+
+                    QSqlQuery lastTracking = "SELECT id FROM `hr_tracking` WHERE id_entry=" + deviceId + " AND id_user=" + userId + " ORDER BY id DESC LIMIT 0,1";
+                    lastTracking.next();
+                    QString last = lastTracking.value(0).toString();
+
+                    QSqlQuery bookquery("INSERT INTO `hr_timux_booking` ( `tracking_id` , `action` , `actionReason`, `roundBooking` ) VALUES (" +
+                                last +
+                                "," +
+                                "254" +
+                                ",'" +
+                                reason +
+                                "','" +
+                                roundBooking.toString("hh:mm:ss") +
+                                "')"
+                                );
+
+                }
+
+            }
+
+            QSqlQuery query("INSERT INTO `hr_tracking` ( `id` , `id_user` , `id_key` , `time` , `date` , `id_entry` , `is_access` , `id_comment`, `key`, `extData` ) VALUES ('', '" +
+                        userId +
+                        "','" +
+                        keyId +
+                        "', '" + time +"', '" + date +"', '" +
+                        deviceId +
+                        "', '" +
+                        "1" +
+                        "', '" +
+                        "0" +
+                        "', '" +
+                        key +
+                        "', '" +
+                        "hr_timux_booking"
+                        "')"
+                        );
+
+            QSqlQuery lastTracking = "SELECT id FROM `hr_tracking` WHERE id_entry=" + deviceId + " AND id_user=" + userId + " ORDER BY id DESC LIMIT 0,1";
+            lastTracking.next();
+            lastTrackingId = lastTracking.value(0).toString();
+
+
             QString BDE1 =  params["BDEValue1"].toString();
             QString BDE2 =  params["BDEValue2"].toString();
             QString BDE3 =  params["BDEValue3"].toString();
@@ -260,7 +332,7 @@ bool CGantnerTime::isAccess(QMap<QString, QVariant> params, bool, bool )
             QString BDE20 =  params["BDEValue20"].toString();
 
             QSqlQuery bookquery("INSERT INTO `hr_timux_booking_bde` (  `tracking_id` , `user_id` , `device_id`, `date`, `time`, `code`, `BDE1`, `BDE2`, `BDE3`, `BDE4`, `BDE5`, `BDE6`, `BDE7`, `BDE8`, `BDE9`, `BDE10`, `BDE11`, `BDE12`, `BDE13`, `BDE14`, `BDE15`, `BDE16`, `BDE17`, `BDE18`, `BDE19`, `BDE20` ) VALUES (" +
-                        last +
+                        lastTrackingId +
                         "," +
                         userId +
                         "," +
@@ -316,47 +388,33 @@ bool CGantnerTime::isAccess(QMap<QString, QVariant> params, bool, bool )
 
             code = "255";
 
-            // be sure the last booking was an exit. Wo have to check this. If not the case, we have to insert an exit booking with the same time than
-            // this booking
-            QSqlQuery lastBooking("SELECT tb.action FROM  hr_timux_booking AS tb LEFT JOIN hr_tracking AS t ON tb.tracking_id=t.id WHERE t.id_user=" + userId + " ORDER BY t.date DESC, t.time DESC, tb.tracking_id DESC LIMIT 0,1");
-            if(lastBooking.next()) {
-                if(lastBooking.value(0) == "255") { // last booking was an already an entry, we have to insert an exit
-                    QSqlQuery bookquery("INSERT INTO `hr_timux_booking` ( `tracking_id` , `action` , `actionReason`, `roundBooking` ) VALUES (" +
-                                last +
-                                "," +
-                                "254" +
-                                ",'" +
-                                reason +
-                                "','" +
-                                roundBooking.toString("hh:mm:ss") +
-                                "')"
-                                );
 
-                    query = "INSERT INTO `hr_tracking` ( `id` , `id_user` , `id_key` , `time` , `date` , `id_entry` , `is_access` , `id_comment`, `key`, `extData` ) VALUES ('', '" +
-                                userId +
-                                "','" +
-                                querykey.value(0).toString() +
-                                "', '" + time +"', '" + date +"', '" +
-                                deviceId +
-                                "', '" +
-                                "1" +
-                                "', '" +
-                                "0" +
-                                "', '" +
-                                key +
-                                "', '" +
-                                "hr_timux_booking"
-                                "')";
+        } else {
 
-                    lastTracking = "SELECT id FROM `hr_tracking` WHERE id_entry=" + deviceId + " ORDER BY id DESC LIMIT 0,1";
-                    lastTracking.next();
-                    last = lastTracking.value(0).toString();
-                }
-            }
+            QSqlQuery query("INSERT INTO `hr_tracking` ( `id` , `id_user` , `id_key` , `time` , `date` , `id_entry` , `is_access` , `id_comment`, `key`, `extData` ) VALUES ('', '" +
+                        userId +
+                        "','" +
+                        keyId +
+                        "', '" + time +"', '" + date +"', '" +
+                        deviceId +
+                        "', '" +
+                        "1" +
+                        "', '" +
+                        "0" +
+                        "', '" +
+                        key +
+                        "', '" +
+                        "hr_timux_booking"
+                        "')"
+                        );
+
+            QSqlQuery lastTracking = "SELECT id FROM `hr_tracking` WHERE id_entry=" + deviceId + " AND id_user=" + userId + " ORDER BY id DESC LIMIT 0,1";
+            lastTracking.next();
+            lastTrackingId = lastTracking.value(0).toString();
         }
 
         QSqlQuery bookquery("INSERT INTO `hr_timux_booking` ( `tracking_id` , `action` , `actionReason`, `roundBooking` ) VALUES (" +
-                    last +
+                    lastTrackingId +
                     "," +
                     code +
                     ",'" +
