@@ -47,6 +47,7 @@ class timecode extends PageList
         $param = Prado::getApplication()->getParameters();
 
         $nbreOfColumn = $param['barcodeprintcolumn'];
+        $orderOfColumn = $param['orderprintcolumn'];
 
         parent::onPrint();
         $this->pdf->AddPage();
@@ -79,10 +80,10 @@ class timecode extends PageList
 
 
         if($type == '0') {
-            $cmd=$this->db->createCommand("SELECT * FROM hr_timux_timecode ORDER BY name");
+            $cmd=$this->db->createCommand("SELECT * FROM hr_timux_timecode ORDER BY $orderOfColumn");
         }
         else {
-            $cmd=$this->db->createCommand("SELECT * FROM hr_timux_timecode WHERE type=:type ORDER BY name");
+            $cmd=$this->db->createCommand("SELECT * FROM hr_timux_timecode WHERE type=:type ORDER BY $orderOfColumn");
             $cmd->bindValue(":type", $type);
         }
         $data = $cmd->query();
