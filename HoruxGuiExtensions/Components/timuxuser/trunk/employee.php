@@ -204,7 +204,7 @@ class employee
                 ON
                     tb.tracking_id = t.id
                 WHERE
-                    `date`=:date AND id_user=:id_user ORDER by tb.roundBooking, t.id";
+                    `date`=:date AND id_user=:id_user ORDER by tb.roundBooking ASC, tb.action ASC ";
 
         $cmd = $this->db->createCommand( $sql );
         $cmd->bindValue(":id_user",$this->employeeId,PDO::PARAM_STR);
@@ -275,7 +275,7 @@ class employee
 
         }
 
-        $cmd=$this->db->createCommand("SELECT  t.id, t.date, tb.roundBooking AS time, tb.action, tb.actionReason, tb.internet FROM hr_tracking AS t LEFT JOIN hr_timux_booking AS tb ON tb.tracking_id=t.id WHERE $date $status t.id_user=".$this->employeeId." AND tb.action!='NULL' ORDER BY t.date $order, t.time $order  LIMIT 0,500");
+        $cmd=$this->db->createCommand("SELECT  t.id, t.date, tb.roundBooking AS time, tb.action, tb.actionReason, tb.internet FROM hr_tracking AS t LEFT JOIN hr_timux_booking AS tb ON tb.tracking_id=t.id WHERE $date $status t.id_user=".$this->employeeId." AND tb.action!='NULL' ORDER BY t.date $order, t.time $order, tb.action $order  LIMIT 0,500");
         $data = $cmd->query();
         return $data->readAll();
 

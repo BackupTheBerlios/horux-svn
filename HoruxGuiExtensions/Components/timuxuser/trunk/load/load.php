@@ -22,43 +22,9 @@ Prado::using('System.I18N.core.DateFormat');
 
 class load extends PageList
 {
-
-    public function testLoadData() {
-
-        $userIds = array(3,4,10,13);
-        $timeCode = 10; // administration
-
-        foreach($userIds as $userId) {
-
-            $cmd=$this->db->createCommand("SELECT * FROM hr_tracking AS t LEFT JOIN hr_timux_booking AS tb ON tb.tracking_id = t.id WHERE action=255 AND id_user=$userId ORDER BY id");
-            $data = $cmd->query();
-            $data = $data->readAll();
-
-            foreach($data as $d) {
-
-                $cmd=$this->db->createCommand("INSERT INTO `hr_timux_booking_bde` (  `tracking_id` , `user_id` , `device_id`, `date`, `time`, `code`, `BDE1`)
-                                                VALUES (:tracking_id,:user_id,:device_id,:date,:time, 155, :BDE1 )");
-
-                $cmd->bindValue(":tracking_id", $d['id'] );
-                $cmd->bindValue(":user_id", $userId);
-                $cmd->bindValue(":device_id", 5 );
-                $cmd->bindValue(":date", $d['date']);
-                $cmd->bindValue(":time", $d['time']);
-                $cmd->bindValue(":BDE1", $timeCode);
-
-                $cmd->execute();
-            }
-        }
-
-    }
-
-
     public function onLoad($param)
     {
         parent::onLoad($param);
-
-        //test
-        //$this->testLoadData();
 
         if(!$this->IsPostBack)
         {
@@ -238,7 +204,7 @@ class load extends PageList
                                                FROM hr_tracking AS t
                                                LEFT JOIN hr_timux_booking AS tb ON tb.tracking_id=t.id
                                                LEFT JOIN hr_timux_booking_bde AS tbb ON tbb.tracking_id=t.id
-                                               WHERE $date t.id_user={$user['Value']} AND tb.action!='NULL'  GROUP BY t.id  ORDER BY  t.date , t.time");
+                                               WHERE $date t.id_user={$user['Value']} AND tb.action!='NULL'  GROUP BY t.id  ORDER BY  t.date ASC , t.time ASC, tb.action ASC");
 
                 $data = $cmd->query();
                 $data = $data->readAll();
@@ -264,9 +230,16 @@ class load extends PageList
                             $bookinIN = 0;
                             $timeCode = '';
                         }
-                    } 
 
-                    $nextBookingType = $nextBookingType == 'IN' ? 'OUT' : 'IN';
+                        $nextBookingType = $nextBookingType == 'IN' ? 'OUT' : 'IN';
+
+                    } else {
+
+                        $bookinIN = 0;
+                        $timeCode = '';
+                        $nextBookingType = 'IN';
+
+                    }                    
                 }               
             }
         }
