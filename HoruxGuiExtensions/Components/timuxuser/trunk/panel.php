@@ -1,29 +1,27 @@
 <?php
 /**
-* @version      $Id$
-* @package      Horux
-* @subpackage   Horux
-* @copyright    Copyright (C) 2007  Letux. All rights reserved.
-* @license      GNU/GPL, see LICENSE.php
-* Horux is free software. This version may have been modified pursuant
-* to the GNU General Public License, and as distributed it includes or
-* is derivative of works licensed under the GNU General Public License or
-* other free or open source software licenses.
-* See COPYRIGHT.php for copyright notices and details.
-*/
+ * @version      $Id$
+ * @package      Horux
+ * @subpackage   Horux
+ * @copyright    Copyright (C) 2007  Letux. All rights reserved.
+ * @license      GNU/GPL, see LICENSE.php
+ * Horux is free software. This version may have been modified pursuant
+ * to the GNU General Public License, and as distributed it includes or
+ * is derivative of works licensed under the GNU General Public License or
+ * other free or open source software licenses.
+ * See COPYRIGHT.php for copyright notices and details.
+ */
 
 $param = Prado::getApplication()->getParameters();
 $computation = $param['computation'];
 
 Prado::using('horux.pages.components.timuxuser.'.$computation);
 
-class panel extends Page
-{
+class panel extends Page {
     protected $userId = 0;
     protected $employee = null;
 
-    public function onLoad($param)
-    {
+    public function onLoad($param) {
         parent::onLoad($param);
         $app = $this->getApplication();
         $usedId = $app->getUser()->getUserID() == null ? 0 : $app->getUser()->getUserID();
@@ -36,8 +34,7 @@ class panel extends Page
         $this->employee = new employee($this->userId );
 
 
-        if(!$this->IsPostBack)
-        {
+        if(!$this->IsPostBack) {
             $this->timecode->DataSource = $this->getTimeCodeList('out');
             $this->timecode->dataBind();
             $this->timecodeIn->DataSource = $this->getTimeCodeList('in');
@@ -52,8 +49,7 @@ class panel extends Page
         }
     }
 
-    public function getPresenceGrid()
-    {
+    public function getPresenceGrid() {
         $result = array();
 
         $cmd=$this->db->createCommand("SELECT id, CONCAT(name, ' ', firstname) AS fullname FROM hr_user WHERE id>1 ORDER BY fullname");
@@ -66,7 +62,7 @@ class panel extends Page
 
         foreach($data as $d) {
 
-            $cmd=$this->db->createCommand("SELECT * FROM hr_tracking AS t LEFT JOIN hr_timux_booking AS tb ON t.id=tb.tracking_id WHERE t.id_user=:userId ORDER BY t.date DESC, t.time DESC LIMIT 0,1");
+            $cmd=$this->db->createCommand("SELECT * FROM hr_tracking AS t LEFT JOIN hr_timux_booking AS tb ON t.id=tb.tracking_id WHERE t.id_user=:userId ORDER BY t.date DESC, t.time DESC, tb.action DESC LIMIT 0,1");
             $cmd->bindValue(":userId", $d['id']);
             $data = $cmd->query();
             $data = $data->read();
@@ -84,23 +80,23 @@ class panel extends Page
 
         if(count($absence) > count($presence)) {
 
-           for($i=0; $i<count($presence); $i++) {
-               $result[] = array('present' => $presence[$i], 'absent' => $absence[$i]);
-           }
+            for($i=0; $i<count($presence); $i++) {
+                $result[] = array('present' => $presence[$i], 'absent' => $absence[$i]);
+            }
 
-           for($i; $i<count($absence); $i++) {
-               $result[] = array('present' => '', 'absent' => $absence[$i]);
-           }
+            for($i; $i<count($absence); $i++) {
+                $result[] = array('present' => '', 'absent' => $absence[$i]);
+            }
 
         } else {
 
-           for($i=0; $i<count($absence); $i++) {
-               $result[] = array('present' => $presence[$i], 'absent' => $absence[$i]);
-           }
+            for($i=0; $i<count($absence); $i++) {
+                $result[] = array('present' => $presence[$i], 'absent' => $absence[$i]);
+            }
 
-           for($i; $i<count($presence); $i++) {
-               $result[] = array('present' => $presence[$i], 'absent' =>'');
-           }
+            for($i; $i<count($presence); $i++) {
+                $result[] = array('present' => $presence[$i], 'absent' =>'');
+            }
 
         }
 
@@ -108,28 +104,25 @@ class panel extends Page
         return $result;
     }
 
-    public function getTimecodeGrid()
-    {
+    public function getTimecodeGrid() {
         $defOv = $this->employee->getDefaultOvertimeCounter();
         $defH = $this->employee->getDefaultHolidaysCounter();
-        
+
         $cmd=$this->db->createCommand("SELECT ac.nbre, CONCAT('[',tt.abbreviation,'] - ', tt.name) AS timecode,tt.id AS timecodeId, tt.formatDisplay, tt.useMinMax, tt.minHour, tt.maxHour, tt.type, ac.year, ac.month  FROM hr_timux_activity_counter AS ac LEFT JOIN hr_user AS u ON u.id=ac.user_id LEFT JOIN hr_timux_timecode AS tt ON tt.id=ac.timecode_id WHERE u.id=".$this->userId." AND ac.year=0 AND ac.month=0 AND (tt.type='leave' OR tt.type='overtime') AND tt.id IN ($defOv, $defH) ORDER BY u.name,u.firstname,tt.abbreviation");
 
         $data = $cmd->query();
         $data = $data->readAll();
 
-        
-        for($i=0; $i<count($data);$i++)
-        {
-            if($data[$i]['timecodeId'] == $defOv)
-            {
+
+        for($i=0; $i<count($data);$i++) {
+            if($data[$i]['timecodeId'] == $defOv) {
                 $overTimeLastMonth = $this->employee->getOvertimeLastMonth(date('n'), date('Y'));
 
                 $overTimeMonth = 0;
                 for($day=1; $day<date('j');$day++) {
                     $todo = $this->employee->getDayTodo($day,date('n'), date('Y'));
                     $done = $this->employee->getDayDone($day,date('n'), date('Y'));
-                    $overTimeMonth = bcadd($overTimeMonth, bcsub($done['done'], $todo ,4),4 );                    
+                    $overTimeMonth = bcadd($overTimeMonth, bcsub($done['done'], $todo ,4),4 );
                 }
 
                 //get the info the current day only if the overtime +
@@ -137,7 +130,7 @@ class panel extends Page
                 $done = $this->employee->getDayDone(date('j'),date('n'), date('Y'));
 
                 if(bcsub($done['done'], $todo ,4) > 0) {
-                    $overTimeMonth = bcadd($overTimeMonth, bcsub($done['done'], $todo ,4),4 );        
+                    $overTimeMonth = bcadd($overTimeMonth, bcsub($done['done'], $todo ,4),4 );
                 }
 
 
@@ -157,7 +150,7 @@ class panel extends Page
 
 
                 $data[$i]['nbre'] = $hLastMonth;
-                
+
                 $data[$i]['nbre2'] = $hcurrentMonth;
             } else {
 
@@ -171,34 +164,27 @@ class panel extends Page
         }
 
         return $data;
-        
+
     }
 
-    public function itemCreated($sender, $param)
-    {
+    public function itemCreated($sender, $param) {
         $item=$param->Item;
 
-        if($item->ItemType==='Item' || $item->ItemType==='AlternatingItem' )
-        {
-            if( $item->DataItem['formatDisplay'] == 'hour' )
-            {
-                if($item->DataItem['nbre'] > 0)
-                {
+        if($item->ItemType==='Item' || $item->ItemType==='AlternatingItem' ) {
+            if( $item->DataItem['formatDisplay'] == 'hour' ) {
+                if($item->DataItem['nbre'] > 0) {
                     $item->nnbre->nbre->Text = sprintf("+%.2f ",$item->DataItem['nbre']).Prado::localize('hours');
-                    if($item->DataItem['useMinMax'] )
-                    {
+                    if($item->DataItem['useMinMax'] ) {
                         if($item->DataItem['nbre']>$item->DataItem['maxHour'])
                             $item->nnbre->nbre->ForeColor = "red";
                     }
 
                 }
 
-                if($item->DataItem['nbre'] < 0)
-                {
+                if($item->DataItem['nbre'] < 0) {
                     $item->nnbre->nbre->Text = sprintf("%.2f ",$item->DataItem['nbre']).Prado::localize('hours');
 
-                    if($item->DataItem['useMinMax'] )
-                    {
+                    if($item->DataItem['useMinMax'] ) {
                         if($item->DataItem['nbre']<$item->DataItem['minHour'])
                             $item->nnbre->nbre->ForeColor = "red";
                     }
@@ -210,24 +196,19 @@ class panel extends Page
 
             }
 
-            if( $item->DataItem['formatDisplay'] == 'day' )
-            {
-                if($item->DataItem['nbre'] > 0)
-                {
+            if( $item->DataItem['formatDisplay'] == 'day' ) {
+                if($item->DataItem['nbre'] > 0) {
                     $item->nnbre->nbre->Text = sprintf("+%.2f ",$item->DataItem['nbre']).Prado::localize('days');
-                    if($item->DataItem['useMinMax'] )
-                    {
+                    if($item->DataItem['useMinMax'] ) {
                         if($item->DataItem['nbre']>$item->DataItem['maxHour'])
                             $item->nnbre->nbre->ForeColor = "red";
                     }
 
                 }
 
-                if($item->DataItem['nbre'] < 0)
-                {
+                if($item->DataItem['nbre'] < 0) {
                     $item->nnbre->nbre->Text = sprintf("%.2f ",$item->DataItem['nbre']).Prado::localize('days');
-                    if($item->DataItem['useMinMax'] )
-                    {
+                    if($item->DataItem['useMinMax'] ) {
                         if($item->DataItem['nbre']<$item->DataItem['minHour'])
                             $item->nnbre->nbre->ForeColor = "red";
                     }
@@ -242,25 +223,20 @@ class panel extends Page
 
             ////
 
-            if( $item->DataItem['formatDisplay'] == 'hour' )
-            {
-                if($item->DataItem['nbre2'] > 0)
-                {
+            if( $item->DataItem['formatDisplay'] == 'hour' ) {
+                if($item->DataItem['nbre2'] > 0) {
                     $item->nnbre2->nbre2->Text = sprintf("+%.2f ",$item->DataItem['nbre2']).Prado::localize('hours');
-                    if($item->DataItem['useMinMax'] )
-                    {
+                    if($item->DataItem['useMinMax'] ) {
                         if($item->DataItem['nbre2']>$item->DataItem['maxHour'])
                             $item->nnbre2->nbre2->ForeColor = "red";
                     }
 
                 }
 
-                if($item->DataItem['nbre2'] < 0)
-                {
+                if($item->DataItem['nbre2'] < 0) {
                     $item->nnbre2->nbre2->Text = sprintf("%.2f ",$item->DataItem['nbre2']).Prado::localize('hours');
 
-                    if($item->DataItem['useMinMax'] )
-                    {
+                    if($item->DataItem['useMinMax'] ) {
                         if($item->DataItem['nbre2']<$item->DataItem['minHour'])
                             $item->nnbre2->nbre2->ForeColor = "red";
                     }
@@ -272,24 +248,19 @@ class panel extends Page
 
             }
 
-            if( $item->DataItem['formatDisplay'] == 'day' )
-            {
-                if($item->DataItem['nbre2'] > 0)
-                {
+            if( $item->DataItem['formatDisplay'] == 'day' ) {
+                if($item->DataItem['nbre2'] > 0) {
                     $item->nnbre2->nbre2->Text = sprintf("+%.2f ",$item->DataItem['nbre2']).Prado::localize('days');
-                    if($item->DataItem['useMinMax'] )
-                    {
+                    if($item->DataItem['useMinMax'] ) {
                         if($item->DataItem['nbre2']>$item->DataItem['maxHour'])
                             $item->nnbre2->nbre2->ForeColor = "red";
                     }
 
                 }
 
-                if($item->DataItem['nbre2'] < 0)
-                {
+                if($item->DataItem['nbre2'] < 0) {
                     $item->nnbre2->nbre2->Text = sprintf("%.2f ",$item->DataItem['nbre2']).Prado::localize('days');
-                    if($item->DataItem['useMinMax'] )
-                    {
+                    if($item->DataItem['useMinMax'] ) {
                         if($item->DataItem['nbre2']<$item->DataItem['minHour'])
                             $item->nnbre2->nbre2->ForeColor = "red";
                     }
@@ -305,43 +276,40 @@ class panel extends Page
     }
 
 
-    public function isAccess($page)
-    {
-		$app = $this->getApplication();
-      	$db = $app->getModule('horuxDb')->DbConnection;
-      	$db->Active=true;
+    public function isAccess($page) {
+        $app = $this->getApplication();
+        $db = $app->getModule('horuxDb')->DbConnection;
+        $db->Active=true;
 
-		$usedId = $app->getUser()->getUserID() == null ? 0 : $app->getUser()->getUserID();
-		$groupId = $app->getUser()->getGroupID() == null ? 0 : $app->getUser()->getGroupID();
+        $usedId = $app->getUser()->getUserID() == null ? 0 : $app->getUser()->getUserID();
+        $groupId = $app->getUser()->getGroupID() == null ? 0 : $app->getUser()->getGroupID();
 
-		$sql = 	'SELECT `allowed`, `shortcut` FROM hr_gui_permissions WHERE ' .
-				'(`page`=\''.$page.'\' OR `page` IS NULL) ' .
-				"AND (" .
-					"(`selector`='user_id' AND `value`=".$usedId.") " .
-					"OR (`selector`='group_id' AND `value`=".$groupId.") " .
-				")" .
-			'ORDER BY `page` DESC';
+        $sql = 	'SELECT `allowed`, `shortcut` FROM hr_gui_permissions WHERE ' .
+                '(`page`=\''.$page.'\' OR `page` IS NULL) ' .
+                "AND (" .
+                "(`selector`='user_id' AND `value`=".$usedId.") " .
+                "OR (`selector`='group_id' AND `value`=".$groupId.") " .
+                ")" .
+                'ORDER BY `page` DESC';
 
-		$cmd = $db->createCommand($sql);
-		$res = $cmd->query();
-		$res = $res->readAll();
-		// If there were no results
-		if (!$res)
-			return false;
-		else
-			// Traverse results
-			foreach ($res as $allowed)
-			{
-				// If we get deny here
-				if (! $allowed)
-					return false;
-			}
+        $cmd = $db->createCommand($sql);
+        $res = $cmd->query();
+        $res = $res->readAll();
+        // If there were no results
+        if (!$res)
+            return false;
+        else
+        // Traverse results
+            foreach ($res as $allowed) {
+                // If we get deny here
+                if (! $allowed)
+                    return false;
+            }
 
-		return true;
+        return true;
     }
 
-    protected function getTimeCodeList($mode = 'out')
-    {
+    protected function getTimeCodeList($mode = 'out') {
         $cmd = NULL;
         $cmd = $this->db->createCommand( "SELECT id AS Value, CONCAT('[',abbreviation, '] ', name) AS Text FROM hr_timux_timecode  WHERE signtype='".$mode."' OR signtype='both'" );
         $data =  $cmd->query();
@@ -353,12 +321,9 @@ class panel extends Page
     }
 
 
-    public function signIn($sender,$param)
-    {
-        if($this->Page->IsValid)
-        {
-            if($this->saveData(255))
-            {
+    public function signIn($sender,$param) {
+        if($this->Page->IsValid) {
+            if($this->saveData(255)) {
                 $pBack = array('okMsg'=>Prado::localize('The sign was added successfully'));
             }
             else
@@ -368,12 +333,9 @@ class panel extends Page
         }
     }
 
-    public function signOut($sender,$param)
-    {
-        if($this->Page->IsValid)
-        {
-            if($this->saveData(254))
-            {
+    public function signOut($sender,$param) {
+        if($this->Page->IsValid) {
+            if($this->saveData(254)) {
                 $pBack = array('okMsg'=>Prado::localize('The sign was added successfully'));
             }
             else
@@ -383,33 +345,12 @@ class panel extends Page
         }
     }
 
-    protected function saveData($action)
-    {
+    protected function saveData($action) {
         $date = date('Y-m-d');
         $time = date('H:i:s');
         $sign = $action;
 
-        $cmd = $this->db->createCommand( "INSERT INTO `hr_tracking` (
-                                            `id_user` ,
-                                            `time`,
-                                            `date`,
-                                            `is_access`,
-                                            `extData`
-                                            )
-                                            VALUES (
-                                            :id_user,
-                                            :time,
-                                            :date,
-                                            '1',
-                                            'hr_timux_booking'
-                                            );" );
-
-        $cmd->bindValue(":id_user",$this->userId,PDO::PARAM_STR);
-        $cmd->bindValue(":time",$time, PDO::PARAM_STR);
-        $cmd->bindValue(":date",$date, PDO::PARAM_STR);
-
-        $res1 = $cmd->execute();
-        $lastId = $this->db->LastInsertID;
+        $lastId = false;
 
         $cmd = $this->db->createCommand( "INSERT INTO `hr_timux_booking` (
                                             `tracking_id` ,
@@ -426,15 +367,12 @@ class panel extends Page
                                             1
                                             );" );
 
-        $cmd->bindValue(":tracking_id",$lastId,PDO::PARAM_STR);
-
-        if(($action == 254 && $this->timecode->getSelectedValue()) || ($action == 255 && $this->timecodeIn->getSelectedValue()))
-        {
+        if(($action == 254 && $this->timecode->getSelectedValue()) || ($action == 255 && $this->timecodeIn->getSelectedValue())) {
             $oldAction = $action;
             if ($action == 254)
-              $timecodeValue = $this->timecode->getSelectedValue();
+                $timecodeValue = $this->timecode->getSelectedValue();
             else
-              $timecodeValue = $this->timecodeIn->getSelectedValue();
+                $timecodeValue = $this->timecodeIn->getSelectedValue();
 
             $action = 100;
 
@@ -443,13 +381,83 @@ class panel extends Page
             $data2 = $cmd2->query();
             $data2 = $data2->read();
 
-	          //$$
-	          if($data2['type'] == 'load') {
-	            $action = 255;
-              $sign = "_IN";
+            //$$
+            if($data2['type'] == 'load') {
+                $action = 255;
+                $sign = "_IN";
+
+                $cmd3 = $this->db->createCommand("SELECT tb.action FROM  hr_timux_booking AS tb LEFT JOIN hr_tracking AS t ON tb.tracking_id=t.id WHERE t.id_user=".$this->userId." ORDER BY t.date DESC, t.time DESC, tb.tracking_id DESC LIMIT 0,1");
+                $cmd3 = $cmd3->query();
+                $data3 = $cmd3->read();
+
+                if($data3) {
+                    if($data3['action'] == "255") { // last booking was an already an entry, we have to insert an exit
+                         $cmd4 = $this->db->createCommand( "INSERT INTO `hr_tracking` (
+                                                            `id_user` ,
+                                                            `time`,
+                                                            `date`,
+                                                            `is_access`,
+                                                            `extData`
+                                                            )
+                                                            VALUES (
+                                                            :id_user,
+                                                            :time,
+                                                            :date,
+                                                            '1',
+                                                            'hr_timux_booking'
+                                                            );" );
+
+                        $cmd4->bindValue(":id_user",$this->userId,PDO::PARAM_STR);
+                        $cmd4->bindValue(":time",$time, PDO::PARAM_STR);
+                        $cmd4->bindValue(":date",$date, PDO::PARAM_STR);
+
+                        $res1 = $cmd4->execute();
+
+                        $cmd5 = $this->db->createCommand( "INSERT INTO `hr_timux_booking` (
+                                            `tracking_id` ,
+                                            `action`,
+                                            `roundBooking`,
+                                            `actionReason`,
+                                            `internet`
+                                            )
+                                            VALUES (
+                                            :tracking_id,
+                                            254,
+                                            :roundBooking,
+                                            :actionReason,
+                                            1
+                                            );" );
+                        $cmd5->bindValue(":tracking_id",$this->db->LastInsertID,PDO::PARAM_STR);
+                        $cmd5->bindValue(":roundBooking",$time, PDO::PARAM_STR);
+                        $cmd5->bindValue(":actionReason","0", PDO::PARAM_STR);
+                        $res1 = $cmd5->execute();
+                    }
+                }
+
+                 $cmd4 = $this->db->createCommand( "INSERT INTO `hr_tracking` (
+                                                    `id_user` ,
+                                                    `time`,
+                                                    `date`,
+                                                    `is_access`,
+                                                    `extData`
+                                                    )
+                                                    VALUES (
+                                                    :id_user,
+                                                    :time,
+                                                    :date,
+                                                    '1',
+                                                    'hr_timux_booking'
+                                                    );" );
+
+                $cmd4->bindValue(":id_user",$this->userId,PDO::PARAM_STR);
+                $cmd4->bindValue(":time",$time, PDO::PARAM_STR);
+                $cmd4->bindValue(":date",$date, PDO::PARAM_STR);
+
+                $res1 = $cmd4->execute();
+                $lastId = $this->db->LastInsertID;
 
 
-	            $cmd2 = $this->db->createCommand( "INSERT INTO `hr_timux_booking_bde` (
+                $cmd2 = $this->db->createCommand( "INSERT INTO `hr_timux_booking_bde` (
 						          `tracking_id` ,
 						          `user_id`,
 						          `device_id`,
@@ -467,46 +475,69 @@ class panel extends Page
 						          155,
 						          :bde1
 						          );" );
-	            
-	            $cmd2->bindValue(":tracking_id",$lastId,PDO::PARAM_STR);
-	            $cmd2->bindValue(":user_id",$this->userId,PDO::PARAM_STR);
-	            $cmd2->bindValue(":device_id",0,PDO::PARAM_STR);
-	            $cmd2->bindValue(":date",$date,PDO::PARAM_STR);
-	            $cmd2->bindValue(":time",$time,PDO::PARAM_STR);
-	            $cmd2->bindValue(":bde1",$data2['abbreviation'],PDO::PARAM_STR);
-	            $cmd2->execute();
-	          }
+
+                $cmd2->bindValue(":tracking_id",$lastId,PDO::PARAM_STR);
+                $cmd2->bindValue(":user_id",$this->userId,PDO::PARAM_STR);
+                $cmd2->bindValue(":device_id",0,PDO::PARAM_STR);
+                $cmd2->bindValue(":date",$date,PDO::PARAM_STR);
+                $cmd2->bindValue(":time",$time,PDO::PARAM_STR);
+                $cmd2->bindValue(":bde1",$data2['abbreviation'],PDO::PARAM_STR);
+                $cmd2->execute();
+            }
             else
-              $sign = "_OUT";
+                $sign = "_OUT";
 
             if ($oldAction == 255)
-              $sign = "_IN";
+                $sign = "_IN";
 
-                  $cmd->bindValue(":action",$action, PDO::PARAM_STR);
+            $cmd->bindValue(":action",$action, PDO::PARAM_STR);
 
-	          if($action != 255) {
-	            if($data2['signtype'] == 'both')
-	            {
-		            $actionReason = $timecodeValue.$sign;
-	            }
-	            else
-	            {
-		            $actionReason = $timecodeValue;
-	            }
-	          } else {
-		          $actionReason = 0;
-	          }
+            if($action != 255) {
+                if($data2['signtype'] == 'both') {
+                    $actionReason = $timecodeValue.$sign;
+                }
+                else {
+                    $actionReason = $timecodeValue;
+                }
+            } else {
+                $actionReason = 0;
+            }
             $cmd->bindValue(":actionReason",$actionReason, PDO::PARAM_STR);
         }
-        else
-        {
+        else {
             $actionReason = 0;
             $cmd->bindValue(":action",$action, PDO::PARAM_STR);
             $cmd->bindValue(":actionReason",$actionReason, PDO::PARAM_STR);
 
         }
 
+        if(!$lastId) {
+            $cmd6 = $this->db->createCommand( "INSERT INTO `hr_tracking` (
+                                                `id_user` ,
+                                                `time`,
+                                                `date`,
+                                                `is_access`,
+                                                `extData`
+                                                )
+                                                VALUES (
+                                                :id_user,
+                                                :time,
+                                                :date,
+                                                '1',
+                                                'hr_timux_booking'
+                                                );" );
 
+            $cmd6->bindValue(":id_user",$this->userId,PDO::PARAM_STR);
+            $cmd6->bindValue(":time",$time, PDO::PARAM_STR);
+            $cmd6->bindValue(":date",$date, PDO::PARAM_STR);
+
+            $res1 = $cmd6->execute();
+            $lastId = $this->db->LastInsertID;
+
+            
+        }
+
+        $cmd->bindValue(":tracking_id",$lastId,PDO::PARAM_STR);
         $cmd->bindValue(":roundBooking",$time, PDO::PARAM_STR);
 
         $res1 = $cmd->execute();
