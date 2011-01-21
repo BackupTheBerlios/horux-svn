@@ -181,6 +181,8 @@ protected:
 protected:
     QFtp *ftp;
 
+    bool closedSended;
+
     bool bookingError;
 
     QScriptEngine engine;

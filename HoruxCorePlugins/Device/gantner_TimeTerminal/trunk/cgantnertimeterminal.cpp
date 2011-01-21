@@ -35,6 +35,8 @@ CGantnerTimeTerminal::CGantnerTimeTerminal(QObject *parent) : QObject(parent)
     udpServer=true;
     checkBooking = 10 * 1000; //every 10 minutes
 
+    closedSended = false;
+
     autoBooking = false;
 
     action = WAITING;
@@ -303,18 +305,6 @@ bool CGantnerTimeTerminal::open()
     //start the process by stating the connection
     connectionToFtp();
 
-    // set the device as connected
-    _isConnected = true;
-
-
-    udp = new QUdpSocket(this);
-
-    connect(udp, SIGNAL(readyRead ()), this, SLOT(readUdp()));
-
-    result = engine.evaluate("readInfo");
-
-    udp->connectToHost(QHostAddress(ipOrDhcp), 8216);
-    udp->write(result.call().toString().toLatin1());
 
     /*result= engine.evaluate("setUnitTime");
     QScriptValueList args;
@@ -322,11 +312,7 @@ bool CGantnerTimeTerminal::open()
 
     udp->write(result.call(QScriptValue(), args).toString().toLatin1());*/
 
-    timerSyncTime = startTimer(1000 * 60 * 60); // sync the time every 1 hour
-    result = engine.evaluate("setUnitTime");
-    QScriptValueList args;
-    args << QScriptValue(&engine,QDateTime::currentDateTime().toString(Qt::ISODate));
-    udp->write(result.call(QScriptValue(), args).toString().toLatin1());
+
 
     return true;
   }
@@ -348,6 +334,8 @@ void CGantnerTimeTerminal::commandFinished(  int id, bool error)
     {
         if(!error)
         {
+            closedSended = false;
+
             killTimer( timerConnectionAbort ) ;
             timerConnectionAbort = 0;
 
@@ -756,12 +744,30 @@ void CGantnerTimeTerminal::checkConfigFile(QString xml)
         action = WAITING;
         ftp->close();
 
+        // set the device as connected
+        _isConnected = true;
+
         emit deviceConnection(this->id,true);
 
         //send down.dat every three secondes if available
         timerSendFile = startTimer(3000);
         timerConfigFile = startTimer(3000);
 
+        QScriptValue result;
+        if(udp == NULL) {
+            udp = new QUdpSocket(this);
+            connect(udp, SIGNAL(readyRead ()), this, SLOT(readUdp()));
+        }
+        result = engine.evaluate("readInfo");
+        udp->connectToHost(QHostAddress(ipOrDhcp), 8216);
+        udp->write(result.call().toString().toLatin1());
+
+        result = engine.evaluate("setUnitTime");
+        QScriptValueList args;
+        args << QScriptValue(&engine,QDateTime::currentDateTime().toString(Qt::ISODate));
+        udp->write(result.call(QScriptValue(), args).toString().toLatin1());
+
+        timerSyncTime = startTimer(1000 * 60 ); // sync the time every 1 minute
 
         //start the timer allowing to check the bookings
         //qDebug("START THE BOOKING TIMER 1");
@@ -926,6 +932,7 @@ void CGantnerTimeTerminal::reinit()
 
     // set the booking timer configuration
     QSqlQuery query("SELECT hoursBlockMorning1, hoursBlockMorning2, hoursBlockMorning3, hoursBlockMorning4, hoursBlockAfternoon1,hoursBlockAfternoon2,hoursBlockAfternoon3,hoursBlockAfternoon4 FROM hr_timux_config");
+
     if(autoBooking && query.next())
     {
         args.clear();
@@ -1177,20 +1184,26 @@ void CGantnerTimeTerminal::close()
       timerSyncTime = 0;
   }
 
-  ftp->abort();
-  ftp->close();
-  ftp->deleteLater();
-  ftp = NULL;
+  if(ftp) {
+      ftp->abort();
+      ftp->close();
+      ftp->deleteLater();
+      ftp = NULL;
+  }
 
-  udp->close();
-  udp->deleteLater();
-  udp = NULL;
+  if(udp) {
+      udp->close();
+      udp->deleteLater();
+      udp = NULL;
+  }
 
   bookingError = false;
   action = WAITING;
 
-  if(  _isConnected )
+  if(  _isConnected && !closedSended ) {
     emit deviceConnection(id, false);
+    closedSended = true;
+  }
 
   _isConnected = false;
 
@@ -1219,10 +1232,21 @@ void CGantnerTimeTerminal::timerEvent ( QTimerEvent * event )
 
     if(timerSyncTime == event->timerId() )
     {
-        QScriptValue result = engine.evaluate("setUnitTime");
+        QScriptValue result;
         QScriptValueList args;
-        args << QScriptValue(&engine,QDateTime::currentDateTime().toString(Qt::ISODate));
-        udp->write(result.call(QScriptValue(), args).toString().toLatin1());
+        if(udp) {
+
+            if(udp->state() != QAbstractSocket::ConnectedState)
+                udp->connectToHost(QHostAddress(ipOrDhcp), 8216);
+
+            result = engine.evaluate("setUnitTime");
+            args << QScriptValue(&engine,QDateTime::currentDateTime().toString(Qt::ISODate));
+            udp->write(result.call(QScriptValue(), args).toString().toLatin1());
+
+
+            result = engine.evaluate("readInfo");
+            udp->write(result.call().toString().toLatin1());
+        }
 
         return;
     }

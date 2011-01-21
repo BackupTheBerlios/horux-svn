@@ -502,7 +502,7 @@ void CGantnerTime::reloadAllData()
 
                 //check the last booking to know if the user is present or absent
                 QSqlQuery checkLastBooking;
-                checkLastBooking.prepare("SELECT * FROM hr_tracking AS t LEFT JOIN hr_timux_booking AS tb ON t.id=tb.tracking_id WHERE t.id_user=:userId ORDER BY t.date DESC, t.time DESC LIMIT 0,1");
+                checkLastBooking.prepare("SELECT * FROM hr_tracking AS t LEFT JOIN hr_timux_booking AS tb ON t.id=tb.tracking_id WHERE t.id_user=:userId ORDER BY t.date DESC, t.time DESC, tb.action DESC LIMIT 0,1");
                 checkLastBooking.bindValue(":userId", userQuery.value(0) );
                 checkLastBooking.exec();
                 if(checkLastBooking.next()) {
@@ -680,7 +680,6 @@ void CGantnerTime::checkDb()
     while (i.hasNext())
     {
         i.next();
-
 
         if(i.value())
         {
