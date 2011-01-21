@@ -520,6 +520,16 @@ class horux
         $db->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY,true);
         $db->Active=true;
 
+        $cmd= $db->createCommand("SHOW TRIGGERS");
+        $data = $cmd->query();
+        $data->setFetchMode(PDO::FETCH_NUM);
+        $data = $data->readAll();
+
+        foreach($data as $d) {
+            $cmd= $db->createCommand("DROP TRIGGER ".$d[0]);
+            $cmd->execute();
+        }
+
         $cmd= $db->createCommand("SHOW TABLES");
         $data = $cmd->query();
         $data->setFetchMode(PDO::FETCH_NUM);
