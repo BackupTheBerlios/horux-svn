@@ -284,7 +284,7 @@ bool CHorux::startEngine()
         timerSoapTracking->start(1000 * 60 * saas_info_send_timer);
 
         if(saas_syncMode == "horux") {
-            timerSoapSyncData->start(1000 * 60 * saas_info_send_timer );
+            timerSoapSyncData->start(1000 * 60 * saas_info_send_timer);
         }
 
         getInfo();
@@ -798,25 +798,47 @@ qDebug() << "createTrigger";
                                 }
                                 else
                                 {
-                                     qDebug() <<   queryDelete.lastError().text();
+                                     qDebug() <<   "SAAS (DELETE) " << queryDelete.lastError().text();
                                 }
                             }
 
                             if(action == "INSERT")
                             {
+                                QStringList values = newValues.split("','");
                                 QSqlQuery queryField( "SHOW COLUMNS FROM " + name);
                                 QStringList fields;
+                                QMap<QString, QVariant> valuesMap;
+                                int i=0;
                                 while( queryField.next() )
                                 {
-                                    fields << queryField.value(0).toString();
+                                    if(values.count() > i) {
+                                        fields << "`" + queryField.value(0).toString() + "`=:" + queryField.value(0).toString();
+                                        valuesMap[":" + queryField.value(0).toString()] = cleanSAASValue(values.at(i));
+                                    }
+                                    else {
+                                        fields << "`" + queryField.value(0).toString() + "`=''";
+                                        valuesMap[":" + queryField.value(0).toString()] = "";
+                                    }
+                                    i++;
                                 }
 
-                                fields.join(",");
+                                //fields.join(",");
 
-                                //qDebug() << "INSERT INTO " + name + " ( `" + fields.join("`,`") + "` ) VALUES (" + newValues + " )";
 
                                 QSqlQuery queryInsert;
-                                if(queryInsert.exec("INSERT INTO " + name + " ( `" + fields.join("`,`") + "` ) VALUES (" + newValues + " )"))
+
+                                //qDebug() << "INSERT " + name + " SET " + fields.join(",");
+
+                                queryInsert.prepare("INSERT " + name + " SET " + fields.join(","));
+
+                                QMapIterator<QString, QVariant> it(valuesMap);
+                                 while (it.hasNext()) {
+                                     it.next();
+                                     queryInsert.bindValue(it.key() , it.value().toString());
+                                 }
+
+
+                                if(queryInsert.exec())
                                     ids << trigger.attribute("id","");
                                 else
                                 {
@@ -827,39 +849,52 @@ qDebug() << "createTrigger";
                                     }
                                     else
                                     {
-                                        qDebug() <<   queryInsert.lastError().text();
-                                        qDebug() <<   queryInsert.lastError().number();
+                                        qDebug() <<   "SAAS (INSERT) " <<  queryInsert.lastError().text();
+                                        qDebug() <<   "SAAS (UPDATE) " <<  queryInsert.lastError().number();
                                     }
                                 }
                             }
 
                             if(action == "UPDATE")
                             {
-                                QStringList values = newValues.split(",");
+                                QStringList values = newValues.split("','");
                                 QSqlQuery queryField( "SHOW COLUMNS FROM " + name);
 
                                 QStringList fields;
+                                QMap<QString, QVariant> valuesMap;
                                 int i=0;
                                 while( queryField.next() )
                                 {
-                                    if(values.count() > i)
-                                        fields << "`" + queryField.value(0).toString()+"`=" + values.at(i);
-                                    else
-                                        fields << "`" + queryField.value(0).toString()+"`=''";
+                                    if(values.count() > i) {
+                                        fields << "`" + queryField.value(0).toString() + "`=:" + queryField.value(0).toString();
+                                        valuesMap[":" + queryField.value(0).toString()] = cleanSAASValue(values.at(i));
+                                    }
+                                    else {
+                                        fields << "`" + queryField.value(0).toString() + "`=''";
+                                        valuesMap[":" + queryField.value(0).toString()] = "";
+                                    }
                                     i++;
                                 }
 
                                 //qDebug() << "UPDATE " + name + " SET " + fields.join(",") + " WHERE " + key;
 
                                 QSqlQuery queryUpdate;
-                                if(queryUpdate.exec("UPDATE " + name + " SET " + fields.join(",") + " WHERE " + key))
+                                queryUpdate.prepare("UPDATE " + name + " SET " + fields.join(",") + " WHERE " + key);
+
+                                QMapIterator<QString, QVariant> it(valuesMap);
+                                 while (it.hasNext()) {
+                                     it.next();
+                                     queryUpdate.bindValue(it.key() , it.value().toString());
+                                 }
+
+                                if(queryUpdate.exec())
                                 {
                                     ids << trigger.attribute("id","");
                                     QSqlQuery queryOptimize("OPTIMIZE TABLE " + name);
                                 }
                                 else
                                 {
-                                     qDebug() <<   queryUpdate.lastError().text();
+                                    qDebug() <<   "SAAS (UPDATE) " << queryUpdate.lastError().text();
                                 }
 
                             }
@@ -889,6 +924,18 @@ qDebug() << "createTrigger";
     {
         return;
     }
+}
+
+QString CHorux::cleanSAASValue(QString value) {
+
+    if(value.at(0) == '\'') {
+        value = value.right(value.length()-1);
+    }
+
+    if(value.at(value.length()-1) == '\'')
+        value = value.left(value.length()-1);
+
+    return value;
 }
 
 void CHorux::soapSSLErrors ( QNetworkReply * reply, const QList<QSslError> & errors )

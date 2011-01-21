@@ -146,6 +146,7 @@ class CHorux : public QObject
 
     private:
         void initSAASMode();
+        QString cleanSAASValue(QString value);
 
     protected:
 

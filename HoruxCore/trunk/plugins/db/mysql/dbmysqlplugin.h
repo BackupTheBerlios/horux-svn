@@ -38,7 +38,7 @@ class DbMysqlPlugin : public QObject, CDbInterface
     Q_CLASSINFO ( "PluginName", "horux_mysql_db" );
     Q_CLASSINFO ( "PluginType", "db" );
     Q_CLASSINFO ( "PluginDescription", "Handle a MySql database for Horux Core" );
-    Q_CLASSINFO ( "DbTableUsed", "hr_device,hr_config,hr_superusers");
+    Q_CLASSINFO ( "DbTableUsed", "hr_device,hr_horux_controller,hr_config,hr_superusers,hr_superuser_group");
 
  public:
     bool open(const QString host,

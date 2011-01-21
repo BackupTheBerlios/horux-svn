@@ -364,22 +364,29 @@ QMap<QString,QStringList> CDeviceHandling::getUsedTables()
     QMapIterator<QString, CDeviceInterface *> i ( loadedPlugins );
     while ( i.hasNext() )
     {
-        i.next();
+        i.next();        
 
         int index = i.value()->getMetaObject()->metaObject()->indexOfClassInfo ( "DbTableUsed" );
-        QString value = "";
-        if ( index != -1 )
-        {
-            value = i.value()->getMetaObject()->metaObject()->classInfo ( index ).value();
-            returnList["DbTableUsed"] << value.split(",");
-        }
 
-        index = i.value()->getMetaObject()->metaObject()->indexOfClassInfo ( "DbTrackingTable" );
-        value = "";
-        if ( index != -1 )
-        {
-            value = i.value()->getMetaObject()->metaObject()->classInfo ( index ).value();
-            returnList["DbTrackingTable"] << value.split(",");
+        QString pName;
+        int indexName = i.value()->getMetaObject()->metaObject()->indexOfClassInfo ( "PluginName" );
+        pName = i.value()->getMetaObject()->metaObject()->classInfo ( indexName ).value();
+
+        if(!CHorux::getUnloadPlugins().contains(pName)) {
+            QString value = "";
+            if ( index != -1 )
+            {
+                value = i.value()->getMetaObject()->metaObject()->classInfo ( index ).value();
+                returnList["DbTableUsed"] << value.split(",");
+            }
+
+            index = i.value()->getMetaObject()->metaObject()->indexOfClassInfo ( "DbTrackingTable" );
+            value = "";
+            if ( index != -1 )
+            {
+                value = i.value()->getMetaObject()->metaObject()->classInfo ( index ).value();
+                returnList["DbTrackingTable"] << value.split(",");
+            }
         }
     }
 

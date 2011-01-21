@@ -184,24 +184,30 @@ QMap<QString,QStringList> CAccessHandling::getUsedTables()
         QPluginLoader pluginLoader ( pluginDirectory.absoluteFilePath ( fileName ),this );
         QObject *plugin = pluginLoader.instance();
 
+        QString pName;
+
         if(plugin)
         {
             int index = plugin->metaObject()->indexOfClassInfo ( "DbTableUsed" );
-            QString value = "";
-            if ( index != -1 )
-            {
-                value = plugin->metaObject()->classInfo ( index ).value();
-                returnList["DbTableUsed"] << value.split(",");
-            }
+            int indexName = plugin->metaObject()->indexOfClassInfo ( "PluginName" );
+            pName = plugin->metaObject()->classInfo ( indexName ).value();
 
-            index = plugin->metaObject()->indexOfClassInfo ( "DbTrackingTable" );
-            value = "";
-            if ( index != -1 )
-            {
-                value = plugin->metaObject()->classInfo ( index ).value();
-                returnList["DbTrackingTable"] << value.split(",");
-            }
+            if(!CHorux::getUnloadPlugins().contains(pName)) {
+                QString value = "";
+                if ( index != -1 )
+                {
+                    value = plugin->metaObject()->classInfo ( index ).value();
+                    returnList["DbTableUsed"] << value.split(",");
+                }
 
+                index = plugin->metaObject()->indexOfClassInfo ( "DbTrackingTable" );
+                value = "";
+                if ( index != -1 )
+                {
+                    value = plugin->metaObject()->classInfo ( index ).value();
+                    returnList["DbTrackingTable"] << value.split(",");
+                }
+            }
         }
     }
 
