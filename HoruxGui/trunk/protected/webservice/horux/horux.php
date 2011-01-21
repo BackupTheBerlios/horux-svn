@@ -330,6 +330,11 @@ class horux
                     }
 
                     $ids .= $this->syncAlarm($tableArray["hr_alarms"]);
+
+                    if($ids != "") {
+                        $ids .= ",";
+                    }
+
                     $ids .= $this->syncTracking($tableArray);
 
                     return $ids;
@@ -402,32 +407,33 @@ class horux
 
             if($cmd->execute())
             {
-                $ids[] = "hr_tracking:".$id;
-
                 $lastID = $db->getLastInsertID();
+
+                $ids[] = "hr_tracking:".$id;
 
                 if($track['extData'] != '')
                 {
-                    foreach($tracking[$track['extData']] as $extTracking)
-                    {
-                        if($extTracking['tracking_id'] == $id)
+                    if(count($tracking[$track['extData']]) > 0 ) {
+                        foreach($tracking[$track['extData']] as $extTracking)
                         {
-                            $extTracking['tracking_id'] = $lastID;
-
-                            $sFieldnames = join("`,`", array_keys($extTracking));
-                            $sFieldnames = "(`".$sFieldnames."`)";
-
-                            $sFieldvalues= join("','", array_values($extTracking));
-                            $sFieldvalues = "('".$sFieldvalues."')";
-
-                            $cmd= $db->createCommand("INSERT INTO ".$track['extData']." ".$sFieldnames." VALUES ".$sFieldvalues);
-
-                            if($cmd->execute())
+                            if($extTracking['tracking_id'] == $id)
                             {
-                                $ids[] = $track['extData'].":".$id;
+                                $extTracking['tracking_id'] = $lastID;
+
+                                $sFieldnames = join("`,`", array_keys($extTracking));
+                                $sFieldnames = "(`".$sFieldnames."`)";
+
+                                $sFieldvalues= join("','", array_values($extTracking));
+                                $sFieldvalues = "('".$sFieldvalues."')";
+
+                                $cmd= $db->createCommand("INSERT INTO ".$track['extData']." ".$sFieldnames." VALUES ".$sFieldvalues);
+
+                                if($cmd->execute())
+                                {
+                                    $ids[] = $track['extData'].":".$id;
+                                }
                             }
                         }
-
                     }
                 }
             }
