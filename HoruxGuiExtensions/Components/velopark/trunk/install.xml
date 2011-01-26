@@ -21,7 +21,7 @@
 				<submenu iconmenu="icon-16-subscrption.png" url="components.velopark.subscription" name="Subscription" ></submenu>
 				<submenu iconmenu="icon-16-invoice.png" url="components.velopark.invoice" name="Invoice" ></submenu>
 				<submenu iconmenu="icon-16-status.png" url="components.velopark.status" name="Status" ></submenu>
-				<submenu iconmenu="icon-16-period.png" url="components.velopark.perdiod" name="Period" ></submenu>
+				<submenu iconmenu="icon-16-period.png" url="components.velopark.period" name="Period" ></submenu>
 			</submenus>
 		</menu>	
 	</mainmenu>

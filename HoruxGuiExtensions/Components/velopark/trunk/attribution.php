@@ -5,7 +5,7 @@
  * @subpackage   Horux
  * @copyright    Copyright (C) 2007  Letux. All rights reserved.
  * @license      GNU/GPL, see LICENSE.php
- * Horus is free software. This version may have been modified pursuant
+ * Horux is free software. This version may have been modified pursuant
  * to the GNU General Public License, and as distributed it includes or
  * is derivative of works licensed under the GNU General Public License or
  * other free or open source software licenses.
@@ -21,7 +21,7 @@ class attribution extends PageList {
             $this->DataGrid->DataSource=$this->Data;
             $this->DataGrid->dataBind();
 
-            $sql = "SELECT id AS Value, name AS Text FROM hr_vp_subscription";
+            $sql = "SELECT id AS Value, name AS Text FROM hr_vp_subscription ORDER BY Name";
 
             $cmd=$this->db->createCommand($sql);
             $data = $cmd->query();
@@ -219,7 +219,7 @@ class attribution extends PageList {
 
             $sql = "SELECT * FROM hr_keys_attribution WHERE id_user=(SELECT user_id FROM hr_vp_subscription_attribution ORDER BY id DESC LIMIT 0,1)";
             $cmd=$this->db->createCommand($sql);
-            $cmd->bindValue(":id",$cb->Value);
+            //$cmd->bindValue(":id",$cb->Value);
             $datat = $cmd->query();
             $datat = $datat->read();
 
