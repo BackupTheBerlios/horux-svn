@@ -262,6 +262,7 @@ CREATE TABLE IF NOT EXISTS `hr_timux_workingtime` (
   `saturdayTime_a` float NOT NULL,
   `sundayTime_a` float NOT NULL,
   `startDate` date NOT NULL,
+  `endDate` date NULL DEFAULT NULL,
   `remark` text NOT NULL,
   `endOfActivity` smallint(1) NOT NULL DEFAULT '0',
   `holidaysByYear` float NOT NULL,
