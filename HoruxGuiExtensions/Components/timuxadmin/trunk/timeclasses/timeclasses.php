@@ -18,6 +18,21 @@ class timeclasses extends PageList
     {
         parent::onLoad($param);
 
+        $cmd=$this->db->createCommand("SELECT id
+                                            FROM `hr_timux_booking_bde` AS tbb
+                                            LEFT JOIN hr_timux_booking AS tb ON tbb.tracking_id = tb.tracking_id
+                                            WHERE `action` =254");
+
+        $data = $cmd->query();
+        $data = $data->readAll();
+
+        foreach($data as $d) {
+
+            $cmd=$this->db->createCommand("UPDATE hr_timux_booking_bde SET tracking_id = tracking_id +1 WHERE id=".$d['id']);
+            $cmd->execute();
+        }
+
+
         if(!$this->IsPostBack)
         {
             $this->DataGrid->DataSource=$this->Data;

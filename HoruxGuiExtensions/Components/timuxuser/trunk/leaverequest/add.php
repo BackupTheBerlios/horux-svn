@@ -264,4 +264,20 @@ class add extends Page
     {
         $this->Response->redirect($this->Service->constructUrl('components.timuxuser.leaverequest.leaverequest'));
     }
+
+    public function isNotClosed($sender,$param)
+    {
+        $date = explode("-",$this->from->SafeText);
+
+        $cmd = $this->db->createCommand( "SELECT * FROM hr_timux_activity_counter WHERE user_id=:id AND year=:year AND month=:month");
+        $cmd->bindValue(":id",$this->userId, PDO::PARAM_INT);
+        $cmd->bindValue(":year",$date[2], PDO::PARAM_INT);
+        $cmd->bindValue(":month",$date[1], PDO::PARAM_INT);
+        $query = $cmd->query();
+        $query = $query->read();
+
+        if($query)
+            $param->IsValid=false;
+
+    }
 }

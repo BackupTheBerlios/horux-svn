@@ -78,6 +78,7 @@ CREATE TABLE IF NOT EXISTS `hr_timux_booking_bde` (
 CREATE TABLE IF NOT EXISTS `hr_timux_config` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `daysByWeek` int(11) NOT NULL DEFAULT '5',
+  `workingDays` varchar(13) NOT NULL DEFAULT '1,1,1,1,1,0,0',
   `minimumBreaks` int(11) NOT NULL,
   `bookingRounding` int(11) NOT NULL,
   `hoursByWeek` int(11) NOT NULL,
@@ -265,6 +266,7 @@ CREATE TABLE IF NOT EXISTS `hr_timux_workingtime` (
   `endOfActivity` smallint(1) NOT NULL DEFAULT '0',
   `holidaysByYear` float NOT NULL,
   `role` set('employee','manager','rh') NOT NULL DEFAULT 'employee',
+  `calendarType` smallint(6) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 

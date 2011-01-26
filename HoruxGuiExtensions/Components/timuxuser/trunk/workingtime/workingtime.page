@@ -130,6 +130,16 @@
                 </prop:ItemTemplate>
         </com:TTemplateColumn>
 
+
+        <com:TTemplateColumn HeaderText="<%[To]%>" ID="ddateTo">
+                <prop:ItemTemplate>
+                    <com:TLabel
+                        ID="dateTo"
+                        />
+                </prop:ItemTemplate>
+        </com:TTemplateColumn>
+
+
         <com:TBoundColumn
             HeaderText="<%[Hours by week at 100%]%>"
             DataField="hoursByWeek"

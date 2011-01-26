@@ -1,5 +1,16 @@
 <com:TContent ID="Main">
+
+    <com:TClientScript PradoScripts="effects" />
+
+    <div id="loading" class="loading"></div>
+
     <%include Application.common.template.headerContent %>
+
+    <script type="text/javascript">
+
+        Effect.Fade(document.getElementById('loading'), {duration:0});
+
+    </script>
 
     <com:TToolbarBox
         ID="tbb"
@@ -19,7 +30,13 @@
         OnSelectedIndexChanged="selectionChangedDepartment"
         CssClass="inputbox"
         DataTextField="Text"
-        DataValueField="Value" >
+        DataValueField="Value"  >
+
+        <prop:ClientSide
+            OnLoading="Effect.Appear(document.getElementById('loading'), {duration:0, from:0.3, to:0.3})"
+            OnComplete="Effect.Fade(document.getElementById('loading'), {duration:0})"
+         />
+
     </com:TActiveDropDownList>
     
     <%[Employee]%>
@@ -29,6 +46,10 @@
         CssClass="inputbox"
         DataTextField="Text"
         DataValueField="Value">
+        <prop:ClientSide
+            OnLoading="Effect.Appear(document.getElementById('loading'), {duration:0, from:0.3, to:0.3})"
+            OnComplete="Effect.Fade(document.getElementById('loading'), {duration:0})"
+         />
     </com:TActiveDropDownList>
 
     <%[Year]%>
@@ -37,7 +58,15 @@
         OnSelectedIndexChanged="selectionChangedYear"
         CssClass="inputbox"
         DataTextField="Text"
-        DataValueField="Value"/>
+        DataValueField="Value">
+
+        <prop:ClientSide
+            OnLoading="Effect.Appear(document.getElementById('loading'), {duration:0, from:0.3, to:0.3})"
+            OnComplete="Effect.Fade(document.getElementById('loading'), {duration:0})"
+         />
+    </com:TActiveDropDownList>
+
+
     <%[Month]%>
     <com:TActiveDropDownList
         ID="FilterMonth"
@@ -55,6 +84,10 @@
         <com:TListItem Value="10" Text="<%[October]%>"/>
         <com:TListItem Value="11" Text="<%[November]%>"/>
         <com:TListItem Value="12" Text="<%[December]%>"/>
+        <prop:ClientSide
+            OnLoading="Effect.Appear(document.getElementById('loading'), {duration:0, from:0.3, to:0.3})"
+            OnComplete="Effect.Fade(document.getElementById('loading'), {duration:0})"
+         />
     </com:TActiveDropDownList>
 
     <div id="list">
@@ -75,6 +108,11 @@
             OnPagerCreated="pagerCreated"
             OnItemCreated="itemCreated"
             >
+
+            <com:TBoundColumn  
+                HeaderText="<%[Employee]%>"
+                DataField="user"
+                />
 
             <com:TTemplateColumn HeaderText="<%[Date]%>" ID="ddate" HeaderStyle.Width = "200px" >
                 <prop:ItemTemplate>

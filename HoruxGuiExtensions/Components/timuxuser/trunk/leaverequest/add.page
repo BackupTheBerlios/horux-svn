@@ -32,6 +32,11 @@
                             ControlToValidate="from"
                             Text="<%[This field is required]%>"
                             Display="Dynamic" />
+                        <com:TCustomValidator
+                            ValidationGroup="Group1"
+                            ControlToValidate="from"
+                            OnServerValidate="isNotClosed"
+                            Text="<%[Cannot add a request in a closed month]%>" />
                     </td>
                 </tr>
                 <tr>

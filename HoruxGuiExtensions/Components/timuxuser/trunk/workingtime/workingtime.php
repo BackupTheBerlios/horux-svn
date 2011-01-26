@@ -100,6 +100,7 @@ class workingtime extends PageList
         {
 
             $item->ddate->date->Text = $this->dateFromSql($item->DataItem['startDate']);
+            $item->ddateTo->dateTo->Text = $this->dateFromSql($item->DataItem['endDate']);
 
             $item->hhoursByWeek2->hoursByWeek2->Text = $item->DataItem['workingPercent'] * $item->DataItem['hoursByWeek'] / 100;
 
@@ -158,10 +159,30 @@ class workingtime extends PageList
             {
                 if( (bool)$cb->getChecked() && $cb->Value != "0")
                 {
+                    $cmd=$this->db->createCommand("SELECT user_id FROM hr_timux_workingtime WHERE id=:id");
+                    $cmd->bindValue(":id",$cb->Value);
+                    $cmd = $cmd->query();
+                    $data = $cmd->read();
+                    $userId = $data['user_id'];
+
                     $cmd=$this->db->createCommand("DELETE FROM hr_timux_workingtime WHERE id=:id");
                     $cmd->bindValue(":id",$cb->Value);
-                    if($cmd->execute())
+                    if($cmd->execute()) {
+
                         $nDelete++;
+
+                        $cmd=$this->db->createCommand("SELECT COUNT(*) AS n FROM hr_timux_workingtime WHERE user_id=:user_id");
+                        $cmd->bindValue(":user_id",$userId);
+                        $cmd = $cmd->query();
+                        $data = $cmd->read();
+
+                        if($data['n'] == 0) {
+
+                            $cmd=$this->db->createCommand("DELETE FROM hr_timux_activity_counter WHERE user_id=:user_id");
+                            $cmd->bindValue(":user_id",$userId);
+                            $cmd->execute();
+                        }
+                    }
 
                     //$this->log("Delete the key: ".$data['serialNumber']);
 

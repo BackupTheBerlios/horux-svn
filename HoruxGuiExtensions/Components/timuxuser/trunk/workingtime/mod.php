@@ -36,7 +36,7 @@ class mod extends Page
             $this->employee->dataBind();
             $this->id->Value = $this->Request['id'];
             $this->setData();
-            $this->onWorkingDayTimeChanged(NULL,NULL);
+           // $this->onWorkingDayTimeChanged(NULL,NULL);
         }
         
     }
@@ -50,30 +50,70 @@ class mod extends Page
         if($query)
         {
             $data = $query->read();
+
+            list($day,$month,$year) = explode("-",$this->dateFromSql($data['startDate']));
+
+            // Check if we can modify this working time. If the first month is closed, we can't modify it
+            $cmd = $this->db->createCommand( "SELECT COUNT(*) AS n FROM hr_timux_activity_counter WHERE user_id=:id AND year=:year AND month=:month AND isClosedMonth=1");
+            $cmd->bindValue(":id", $data['user_id'], PDO::PARAM_STR);
+            $cmd->bindValue(":year", $year, PDO::PARAM_STR);
+            $cmd->bindValue(":month", $month, PDO::PARAM_STR);
+
+            $data3 = $cmd->query();
+            $data3 = $data3->read();
+            if($data3['n'] > 0) {
+                $pBack = array('koMsg'=>Prado::localize('The first month was already closed. You are not able to modify this working time'));
+                $this->Response->redirect($this->Service->constructUrl('components.timuxuser.workingtime.workingtime',$pBack));
+            }
+
+
+
             $this->id->Value = $data['id'];
             $this->employee->setSelectedValue($data['user_id']);
             $this->from->Text = $this->dateFromSql($data['startDate']);
-            $this->endActivity->setChecked( $data['endOfActivity'] );
+            $this->to->Text = $this->dateFromSql($data['endDate']);
             $this->remark->Text = $data['remark'];
             $this->hoursByWeek->Text = $data['hoursByWeek'];
             $this->workingPercent->Text = $data['workingPercent'];
-            $this->totalHourByWeek->Text = $data['totalHourByWeek'];
 
-            $this->monday_m->Text = sprintf("%.2f",$data['mondayTime_m']);
-            $this->tuesday_m->Text = sprintf("%.2f",$data['tuesdayTime_m']);
-            $this->wednesday_m->Text = sprintf("%.2f",$data['wednesdayTime_m']);
-            $this->thursday_m->Text = sprintf("%.2f",$data['thursdayTime_m']);
-            $this->friday_m->Text = sprintf("%.2f",$data['fridayTime_m']);
-            $this->saturday_m->Text = sprintf("%.2f",$data['saturdayTime_m']);
-            $this->sunday_m->Text = sprintf("%.2f",$data['sundayTime_m']);
+            $this->calendarType->setSelectedValue($data['calendarType']);
 
-            $this->monday_a->Text = sprintf("%.2f",$data['mondayTime_a']);
-            $this->tuesday_a->Text = sprintf("%.2f",$data['tuesdayTime_a']);
-            $this->wednesday_a->Text = sprintf("%.2f",$data['wednesdayTime_a']);
-            $this->thursday_a->Text = sprintf("%.2f",$data['thursdayTime_a']);
-            $this->friday_a->Text = sprintf("%.2f",$data['fridayTime_a']);
-            $this->saturday_a->Text = sprintf("%.2f",$data['saturdayTime_a']);
-            $this->sunday_a->Text = sprintf("%.2f",$data['sundayTime_a']);
+            if($data['calendarType'] == '1') {
+                $this->monday_m->setChecked($data['mondayTime_m']);
+                $this->tuesday_m->setChecked($data['tuesdayTime_m']);
+                $this->wednesday_m->setChecked($data['wednesdayTime_m']);
+                $this->thursday_m->setChecked($data['thursdayTime_m']);
+                $this->friday_m->setChecked($data['fridayTime_m']);
+                $this->saturday_m->setChecked($data['saturdayTime_m']);
+                $this->sunday_m->setChecked($data['sundayTime_m']);
+
+                $this->monday_a->setChecked($data['mondayTime_a']);
+                $this->tuesday_a->setChecked($data['tuesdayTime_a']);
+                $this->wednesday_a->setChecked($data['wednesdayTime_a']);
+                $this->thursday_a->setChecked($data['thursdayTime_a']);
+                $this->friday_a->setChecked($data['fridayTime_a']);
+                $this->saturday_a->setChecked($data['saturdayTime_a']);
+                $this->sunday_a->setChecked($data['sundayTime_a']);
+            }
+
+            if($data['calendarType'] == '2') {
+                $this->monday_m2->Text = $data['mondayTime_m'];
+                $this->tuesday_m2->Text = $data['tuesdayTime_m'];
+                $this->wednesday_m2->Text = $data['wednesdayTime_m'];
+                $this->thursday_m2->Text = $data['thursdayTime_m'];
+                $this->friday_m2->Text = $data['fridayTime_m'];
+                $this->saturday_m2->Text = $data['saturdayTime_m'];
+                $this->sunday_m2->Text = $data['sundayTime_m'];
+
+                $this->monday_a2->Text = $data['mondayTime_a'];
+                $this->tuesday_a2->Text = $data['tuesdayTime_a'];
+                $this->wednesday_a2->Text = $data['wednesdayTime_a'];
+                $this->thursday_a2->Text = $data['thursdayTime_a'];
+                $this->friday_a2->Text = $data['fridayTime_a'];
+                $this->saturday_a2->Text = $data['saturdayTime_a'];
+                $this->sunday_a2->Text = $data['sundayTime_a'];
+            }
+
 
             $this->holidaysByYear->Text = $data['holidaysByYear'];
             $this->holidaysByYearHidden->Value = $data['holidaysByYear'];
@@ -91,10 +131,10 @@ class mod extends Page
                     break;
             }
 
-            $this->totalHourByWeek->Text = $this->workingPercent->Text * $this->hoursByWeek->Text / 100;
-
+            //recompute the activity counter for the holidays
             list($day,$month,$year) = explode("-",$this->from->Text);
 
+            // get the id of the defaul time code for the holiday
             $cmd = $this->db->createCommand( "SELECT * FROM hr_timux_timecode WHERE defaultHoliday=1");
             $data2 = $cmd->query();
             $data2 = $data2->read();
@@ -110,23 +150,7 @@ class mod extends Page
 
                 $data3 = $cmd->query();
                 $data3 = $data3->read();
-
-                //if no data, try a second year before, but normaly this should appear
-                if(!$data3) {
-                    $lastYear--;
-                    $cmd = $this->db->createCommand( "SELECT nbre FROM hr_timux_activity_counter WHERE timecode_id=:defHol AND user_id=:id AND year=:year AND month=12");
-                    $cmd->bindValue(":defHol", $data2['id'], PDO::PARAM_STR);
-                    $cmd->bindValue(":id", $data['user_id'], PDO::PARAM_STR);
-                    $cmd->bindValue(":year", $lastYear, PDO::PARAM_STR);
-
-                    $data3 = $cmd->query();
-                    $data3 = $data3->read();
-
-                    if($data3) {
-                        $this->specialWT->Value = 1;
-                    }
-                }
-
+               
                 $this->holidaysLastYear->Text = $data3['nbre'];
             }
 
@@ -146,23 +170,6 @@ class mod extends Page
 
                 $data3 = $cmd->query();
                 $data3 = $data3->read();
-
-                //if no data, try a second year before, but normaly this should appear
-                if(!$data3) {
-
-                    $lastYear--;
-                    $cmd = $this->db->createCommand( "SELECT nbre FROM hr_timux_activity_counter WHERE timecode_id=:defHol AND user_id=:id AND year=:year AND month=12");
-                    $cmd->bindValue(":defHol", $data2['id'], PDO::PARAM_STR);
-                    $cmd->bindValue(":id", $data['user_id'], PDO::PARAM_STR);
-                    $cmd->bindValue(":year", $lastYear, PDO::PARAM_STR);
-
-                    $data3 = $cmd->query();
-                    $data3 = $data3->read();
-
-                    if($data3) {
-                        $this->specialWT->Value = 1;
-                    }
-                }
 
                 $this->overtimeLastYear->Text = $data3['nbre'];
             }
@@ -217,7 +224,6 @@ class mod extends Page
     {
 
         $cmd = $this->db->createCommand( "UPDATE `hr_timux_workingtime` SET
-                                            `user_id`=:user_id ,
                                             `workingPercent`=:workingPercent ,
                                             `hoursByWeek`=:hoursByWeek ,
                                             `mondayTime_m`=:mondayTime_m ,
@@ -234,40 +240,54 @@ class mod extends Page
                                             `fridayTime_a`=:fridayTime_a ,
                                             `saturdayTime_a`=:saturdayTime_a ,
                                             `sundayTime_a`=:sundayTime_a ,
-                                            `startDate`=:startDate ,
                                             `remark`=:remark ,
-                                            `endOfActivity`=:endOfActivity ,
                                             `holidaysByYear`=:holidaysByYear,
-                                            `role`=:role
+                                            `role`=:role,
+                                            `calendarType`=:calendarType
                                             WHERE id=:id" );
 
         $cmd->bindValue(":id",$this->id->Value,PDO::PARAM_STR);
-        $cmd->bindValue(":user_id",$this->employee->getSelectedValue(),PDO::PARAM_STR);
         $cmd->bindValue(":workingPercent",$this->workingPercent->SafeText, PDO::PARAM_STR);
         $cmd->bindValue(":hoursByWeek",$this->hoursByWeek->SafeText, PDO::PARAM_STR);
-        $cmd->bindValue(":mondayTime_m",$this->monday_m->SafeText, PDO::PARAM_STR);
-        $cmd->bindValue(":tuesdayTime_m",$this->tuesday_m->SafeText, PDO::PARAM_STR);
-        $cmd->bindValue(":wednesdayTime_m",$this->wednesday_m->SafeText, PDO::PARAM_STR);
-        $cmd->bindValue(":thursdayTime_m",$this->thursday_m->SafeText, PDO::PARAM_STR);
-        $cmd->bindValue(":fridayTime_m",$this->friday_m->SafeText, PDO::PARAM_STR);
-        $cmd->bindValue(":saturdayTime_m",$this->saturday_m->SafeText, PDO::PARAM_STR);
-        $cmd->bindValue(":sundayTime_m",$this->sunday_m->SafeText, PDO::PARAM_STR);
-        $cmd->bindValue(":mondayTime_a",$this->monday_a->SafeText, PDO::PARAM_STR);
-        $cmd->bindValue(":tuesdayTime_a",$this->tuesday_a->SafeText, PDO::PARAM_STR);
-        $cmd->bindValue(":wednesdayTime_a",$this->wednesday_a->SafeText, PDO::PARAM_STR);
-        $cmd->bindValue(":thursdayTime_a",$this->thursday_a->SafeText, PDO::PARAM_STR);
-        $cmd->bindValue(":fridayTime_a",$this->friday_a->SafeText, PDO::PARAM_STR);
-        $cmd->bindValue(":saturdayTime_a",$this->saturday_a->SafeText, PDO::PARAM_STR);
-        $cmd->bindValue(":sundayTime_a",$this->sunday_a->SafeText, PDO::PARAM_STR);
-        $cmd->bindValue(":startDate",$this->dateToSql($this->from->SafeText), PDO::PARAM_STR);
+        if($this->calendarType->getSelectedValue() == 1) {
+            $cmd->bindValue(":mondayTime_m",$this->monday_m->getChecked(), PDO::PARAM_STR);
+            $cmd->bindValue(":tuesdayTime_m",$this->tuesday_m->getChecked(), PDO::PARAM_STR);
+            $cmd->bindValue(":wednesdayTime_m",$this->wednesday_m->getChecked(), PDO::PARAM_STR);
+            $cmd->bindValue(":thursdayTime_m",$this->thursday_m->getChecked(), PDO::PARAM_STR);
+            $cmd->bindValue(":fridayTime_m",$this->friday_m->getChecked(), PDO::PARAM_STR);
+            $cmd->bindValue(":saturdayTime_m",$this->saturday_m->getChecked(), PDO::PARAM_STR);
+            $cmd->bindValue(":sundayTime_m",$this->sunday_m->getChecked(), PDO::PARAM_STR);
+            $cmd->bindValue(":mondayTime_a",$this->monday_a->getChecked(), PDO::PARAM_STR);
+            $cmd->bindValue(":tuesdayTime_a",$this->tuesday_a->getChecked(), PDO::PARAM_STR);
+            $cmd->bindValue(":wednesdayTime_a",$this->wednesday_a->getChecked(), PDO::PARAM_STR);
+            $cmd->bindValue(":thursdayTime_a",$this->thursday_a->getChecked(), PDO::PARAM_STR);
+            $cmd->bindValue(":fridayTime_a",$this->friday_a->getChecked(), PDO::PARAM_STR);
+            $cmd->bindValue(":saturdayTime_a",$this->saturday_a->getChecked(), PDO::PARAM_STR);
+            $cmd->bindValue(":sundayTime_a",$this->sunday_a->getChecked(), PDO::PARAM_STR);
+        }
+
+        if($this->calendarType->getSelectedValue() == 2) {
+            $cmd->bindValue(":mondayTime_m",$this->monday_m2->SafeText, PDO::PARAM_STR);
+            $cmd->bindValue(":tuesdayTime_m",$this->tuesday_m2->SafeText, PDO::PARAM_STR);
+            $cmd->bindValue(":wednesdayTime_m",$this->wednesday_m2->SafeText, PDO::PARAM_STR);
+            $cmd->bindValue(":thursdayTime_m",$this->thursday_m2->SafeText, PDO::PARAM_STR);
+            $cmd->bindValue(":fridayTime_m",$this->friday_m2->SafeText, PDO::PARAM_STR);
+            $cmd->bindValue(":saturdayTime_m",$this->saturday_m2->SafeText, PDO::PARAM_STR);
+            $cmd->bindValue(":sundayTime_m",$this->sunday_m2->SafeText, PDO::PARAM_STR);
+            $cmd->bindValue(":mondayTime_a",$this->monday_a2->SafeText, PDO::PARAM_STR);
+            $cmd->bindValue(":tuesdayTime_a",$this->tuesday_a2->SafeText, PDO::PARAM_STR);
+            $cmd->bindValue(":wednesdayTime_a",$this->wednesday_a2->SafeText, PDO::PARAM_STR);
+            $cmd->bindValue(":thursdayTime_a",$this->thursday_a2->SafeText, PDO::PARAM_STR);
+            $cmd->bindValue(":fridayTime_a",$this->friday_a2->SafeText, PDO::PARAM_STR);
+            $cmd->bindValue(":saturdayTime_a",$this->saturday_a2->SafeText, PDO::PARAM_STR);
+            $cmd->bindValue(":sundayTime_a",$this->sunday_a2->SafeText, PDO::PARAM_STR);
+        }
+
+
         $cmd->bindValue(":remark",$this->remark->SafeText, PDO::PARAM_STR);
         $cmd->bindValue(":holidaysByYear",$this->holidaysByYear->SafeText, PDO::PARAM_STR);
+        $cmd->bindValue(":calendarType",$this->calendarType->getSelectedValue(), PDO::PARAM_STR);
 
-        $endActivity = false;
-        if($this->endActivity->getChecked())
-            $endActivity = true;
-
-        $cmd->bindValue(":endOfActivity",$endActivity, PDO::PARAM_STR);
 
         $role = 'employee';
 
@@ -291,111 +311,54 @@ class mod extends Page
         $data = $data->read();
 
         if($data) {
+            $diff = 0;
 
-            $cmd = $this->db->createCommand( "SELECT * FROM hr_timux_activity_counter WHERE timecode_id=".$data['id'].' AND user_id='.$this->employee->getSelectedValue());
+            list($day,$month,$year) = explode("-",$this->from->Text);
+
+            $lastYear = $year-1;
+
+            $cmd = $this->db->createCommand( "SELECT nbre FROM hr_timux_activity_counter WHERE timecode_id=:defHol AND user_id=:id AND year=:year AND month=12");
+            $cmd->bindValue(":defHol", $data['id'], PDO::PARAM_STR);
+            $cmd->bindValue(":id", $userId, PDO::PARAM_STR);
+            $cmd->bindValue(":year", $lastYear, PDO::PARAM_STR);
+
             $data2 = $cmd->query();
-            $data2 = $data2->readAll();
+            $data2 = $data2->read();
 
-            // the counter don't exist, we must create it
-            if(count($data2)==0) {
+            $diff = bcsub($data2['nbre'], $this->holidaysLastYear->SafeText, 2);
 
-                $cmd = $this->db->createCommand("INSERT hr_timux_activity_counter SET
-                                                    user_id=:user_id,
-                                                    timecode_id=:timecode_id,
-                                                    year=:year,
-                                                    month=:month,
-                                                    nbre=:nbre,
-                                                    isClosedMonth=:isClosedMonth
-                                                ");
-                $cmd->bindValue(":user_id",$this->employee->getSelectedValue(),PDO::PARAM_STR);
-                $cmd->bindValue(":timecode_id",$data['id'],PDO::PARAM_STR);
-                $nbre = 0;
-                $nbreLast = 0;
+            $cmd = $this->db->createCommand( "UPDATE hr_timux_activity_counter SET nbre=ROUND(nbre-:diff,2) WHERE timecode_id=:defHol AND user_id=:id");
+            $cmd->bindValue(":diff", $diff, PDO::PARAM_STR);
+            $cmd->bindValue(":defHol", $data['id'], PDO::PARAM_STR);
+            $cmd->bindValue(":id", $userId, PDO::PARAM_STR);
 
-                list($day,$month,$year) = explode("-",$this->from->SafeText);
+            $cmd->execute();
 
-                $month = 12;
-                $year--;
+            $nbre = bcdiv( bcmul((12-$month+1), $this->holidaysByYear->SafeText ,2), 12.0, 2);
+            $nbre2 = bcdiv( bcmul((12-$month+1), $this->holidaysByYearHidden->Value ,2), 12.0, 2);
 
-                $cmd->bindValue(":year",$year,PDO::PARAM_STR);
-                $cmd->bindValue(":month",$month,PDO::PARAM_STR);
+            $diff = bcsub($nbre2, $nbre);
 
-                list($day,$month,$year) = explode("-",$this->from->SafeText);
+            $cmd = $this->db->createCommand( "UPDATE hr_timux_activity_counter SET nbre=ROUND(nbre-:diff,2) WHERE timecode_id=:defHol AND user_id=:id AND year!=:year AND month!=12");
+            $cmd->bindValue(":diff", $diff, PDO::PARAM_STR);
+            $cmd->bindValue(":defHol", $data['id'], PDO::PARAM_STR);
+            $cmd->bindValue(":id", $userId, PDO::PARAM_STR);
+            $cmd->bindValue(":year", $lastYear, PDO::PARAM_STR);
 
-                $nbre = $this->holidaysByYear->SafeText;
-                $nbreLast = $this->holidaysLastYear->SafeText;
+            $cmd->execute();
 
-                $nbre = bcdiv( bcmul((12-$month+1), $nbre,2), 12.0, 2);
-                $nbre = bcadd($nbre, $nbreLast,2 );
+            $nbre = $this->holidaysByYear->SafeText;
+            $nbreLast = $this->holidaysLastYear->SafeText;
 
-                $cmd->bindValue(":nbre",$nbreLast,PDO::PARAM_STR);
-                $cmd->bindValue(":isClosedMonth",1,PDO::PARAM_STR);
-                $res1 = $cmd->execute();
+            $nbre = bcdiv( bcmul((12-$month+1), $nbre,2), 12.0, 2);
+            $nbre = bcadd($nbre, $nbreLast,2 );
 
-                $cmd->bindValue(":year",0,PDO::PARAM_STR);
-                $cmd->bindValue(":month",0,PDO::PARAM_STR);
-                $cmd->bindValue(":nbre",$nbre,PDO::PARAM_STR);
-                $cmd->bindValue(":isClosedMonth",0,PDO::PARAM_STR);
-                $res1 = $cmd->execute();
+            $cmd = $this->db->createCommand( "UPDATE hr_timux_activity_counter SET nbre=:diff WHERE timecode_id=:defHol AND user_id=:id AND year=0 AND month=0");
+            $cmd->bindValue(":diff", $nbre, PDO::PARAM_STR);
+            $cmd->bindValue(":defHol", $data['id'], PDO::PARAM_STR);
+            $cmd->bindValue(":id", $userId, PDO::PARAM_STR);
 
-            } else {
-
-                $diff = 0;
-
-                list($day,$month,$year) = explode("-",$this->from->SafeText);
-
-                $lastYear = $year-1;
-
-                if($this->specialWT->Value == 1) {
-                    $lastYear--;
-                }
-
-                $cmd = $this->db->createCommand( "SELECT nbre FROM hr_timux_activity_counter WHERE timecode_id=:defHol AND user_id=:id AND year=:year AND month=12");
-                $cmd->bindValue(":defHol", $data['id'], PDO::PARAM_STR);
-                $cmd->bindValue(":id", $userId, PDO::PARAM_STR);
-                $cmd->bindValue(":year", $lastYear, PDO::PARAM_STR);
-
-                $data2 = $cmd->query();
-                $data2 = $data2->read();
-
-                $diff = $data2['nbre'] - $this->holidaysLastYear->SafeText;
-
-                $cmd = $this->db->createCommand( "UPDATE hr_timux_activity_counter SET nbre=nbre-:diff WHERE timecode_id=:defHol AND user_id=:id");
-                $cmd->bindValue(":diff", $diff, PDO::PARAM_STR);
-                $cmd->bindValue(":defHol", $data['id'], PDO::PARAM_STR);
-                $cmd->bindValue(":id", $userId, PDO::PARAM_STR);
-
-                $cmd->execute();
-
-
-
-                $nbre = bcdiv( bcmul((12-$month+1), $this->holidaysByYear->SafeText ,2), 12.0, 2);
-                $nbre2 = bcdiv( bcmul((12-$month+1), $this->holidaysByYearHidden->Value ,2), 12.0, 2);
-
-                $diff = bcsub($nbre2, $nbre);
-
-                $cmd = $this->db->createCommand( "UPDATE hr_timux_activity_counter SET nbre=ROUND(nbre-:diff,2) WHERE timecode_id=:defHol AND user_id=:id AND year!=:year AND month!=12");
-                $cmd->bindValue(":diff", $diff, PDO::PARAM_STR);
-                $cmd->bindValue(":defHol", $data['id'], PDO::PARAM_STR);
-                $cmd->bindValue(":id", $userId, PDO::PARAM_STR);
-                $cmd->bindValue(":year", $lastYear, PDO::PARAM_STR);
-
-                $cmd->execute();
-
-                $nbre = $this->holidaysByYear->SafeText;
-                $nbreLast = $this->holidaysLastYear->SafeText;
-
-                $nbre = bcdiv( bcmul((12-$month+1), $nbre,2), 12.0, 2);
-                $nbre = bcadd($nbre, $nbreLast,2 );
-
-                $cmd = $this->db->createCommand( "UPDATE hr_timux_activity_counter SET nbre=:diff WHERE timecode_id=:defHol AND user_id=:id AND year=0 AND month=0");
-                $cmd->bindValue(":diff", $nbre, PDO::PARAM_STR);
-                $cmd->bindValue(":defHol", $data['id'], PDO::PARAM_STR);
-                $cmd->bindValue(":id", $userId, PDO::PARAM_STR);
-
-                $cmd->execute();
-            }
-
+            $cmd->execute();
         }
 
         $cmd = $this->db->createCommand( "SELECT * FROM hr_timux_timecode WHERE defaultOvertime=1");
@@ -404,102 +367,32 @@ class mod extends Page
 
         if($data) {
 
-            $cmd = $this->db->createCommand( "SELECT * FROM hr_timux_activity_counter WHERE timecode_id=".$data['id'].' AND user_id='.$this->employee->getSelectedValue());
+            $diff = 0;
+
+            list($day,$month,$lastYear) = explode("-",$this->from->Text);
+            $lastYear--;
+
+
+            $cmd = $this->db->createCommand( "SELECT nbre FROM hr_timux_activity_counter WHERE timecode_id=:defOverTime AND user_id=:id AND year=:year AND month=12");
+            $cmd->bindValue(":defOverTime", $data['id'], PDO::PARAM_STR);
+            $cmd->bindValue(":id", $this->employee->getSelectedValue(), PDO::PARAM_STR);
+            $cmd->bindValue(":year", $lastYear, PDO::PARAM_STR);
+
+
             $data2 = $cmd->query();
-            $data2 = $data2->readAll();
+            $data2 = $data2->read();
 
-            // if not exist, create the counter for the employee
-            if(count($data2)==0)
-            {
-
-                $cmd = $this->db->createCommand("INSERT hr_timux_activity_counter SET
-                                                    user_id=:user_id,
-                                                    timecode_id=:timecode_id,
-                                                    year=:year,
-                                                    month=:month,
-                                                    nbre=:nbre,
-                                                    isClosedMonth=:isClosedMonth
-                                                ");
-                $cmd->bindValue(":user_id",$this->employee->getSelectedValue(),PDO::PARAM_STR);
-                $cmd->bindValue(":timecode_id",$data['id'],PDO::PARAM_STR);
-                $nbre = 0;
-                $nbreLast = 0;
-
-                list($day,$month,$year) = explode("-",$this->from->SafeText);
-
-                $month = 12;
-                $year--;
-
-                $cmd->bindValue(":year",$year,PDO::PARAM_STR);
-                $cmd->bindValue(":month",$month,PDO::PARAM_STR);
-
-                list($day,$month,$year) = explode("-",$this->from->SafeText);
-
-                if($month == 1) {
-                    $month = 12;
-                    $year--;
-                } else {
-                    $month--;
-                }
-
-                $nbreLast = $this->overtimeLastYear->SafeText;
-                $nbre = 0;
-
-                if($month != 12) {
-                    $cmd->bindValue(":year",$year-1,PDO::PARAM_STR);
-                    $cmd->bindValue(":month",12,PDO::PARAM_STR);
-                    $cmd->bindValue(":nbre",$nbreLast,PDO::PARAM_STR);
-                    $cmd->bindValue(":isClosedMonth",1,PDO::PARAM_STR);
-                    $res1 = $cmd->execute();
-                }
-
-                $cmd->bindValue(":year",$year,PDO::PARAM_STR);
-                $cmd->bindValue(":month",$month,PDO::PARAM_STR);
-
-                $cmd->bindValue(":nbre",$nbreLast,PDO::PARAM_STR);
-                $cmd->bindValue(":isClosedMonth",1,PDO::PARAM_STR);
-                $res1 = $cmd->execute();
-
-                $cmd->bindValue(":year",0,PDO::PARAM_STR);
-                $cmd->bindValue(":month",0,PDO::PARAM_STR);
-                $cmd->bindValue(":nbre",$nbre,PDO::PARAM_STR);
-                $cmd->bindValue(":isClosedMonth",0,PDO::PARAM_STR);
-                $res1 = $cmd->execute();
+            $diff = bcsub($data2['nbre'], $this->overtimeLastYear->SafeText,2);
 
 
-            } else {
+            $cmd = $this->db->createCommand( "UPDATE hr_timux_activity_counter SET nbre=ROUND(nbre-:diff,2) WHERE timecode_id=:defOverTime AND user_id=:id AND month>0 AND year>0");
+            $cmd->bindValue(":diff", $diff, PDO::PARAM_STR);
+            $cmd->bindValue(":defOverTime", $data['id'], PDO::PARAM_STR);
+            $cmd->bindValue(":id", $userId, PDO::PARAM_STR);
 
-                $diff = 0;
+            $cmd->execute();
 
-                list($day,$month,$lastYear) = explode("-",$this->from->SafeText);
-                $lastYear--;
-
-                if($this->specialWT->Value == 1) {
-                    $lastYear--;
-                }
-
-                $cmd = $this->db->createCommand( "SELECT nbre FROM hr_timux_activity_counter WHERE timecode_id=:defOverTime AND user_id=:id AND year=:year AND month=12");
-                $cmd->bindValue(":defOverTime", $data['id'], PDO::PARAM_STR);
-                $cmd->bindValue(":id", $this->employee->getSelectedValue(), PDO::PARAM_STR);
-                $cmd->bindValue(":year", $lastYear, PDO::PARAM_STR);
-
-
-                $data2 = $cmd->query();
-                $data2 = $data2->read();
-
-                $diff = bcsub($data2['nbre'], $this->overtimeLastYear->SafeText,2);
-
-
-                $cmd = $this->db->createCommand( "UPDATE hr_timux_activity_counter SET nbre=ROUND(nbre-:diff,2) WHERE timecode_id=:defOverTime AND user_id=:id AND month>0 AND year>0");
-                $cmd->bindValue(":diff", $diff, PDO::PARAM_STR);
-                $cmd->bindValue(":defOverTime", $data['id'], PDO::PARAM_STR);
-                $cmd->bindValue(":id", $userId, PDO::PARAM_STR);
-
-                $cmd->execute();
-
-            }
         }
-
 
         return true;
     }
@@ -508,66 +401,6 @@ class mod extends Page
     public function onCancel($sender, $param)
     {
         $this->Response->redirect($this->Service->constructUrl('components.timuxuser.workingtime.workingtime'));
-    }
-
-    public function onDivideTheDays($sender, $param)
-    {
-        $byDay = bcdiv( (float)$this->hoursByWeek->Text , (float)$this->daysByWeek*2 ,2 );
-        $byDay = bcdiv( bcmul($byDay, $this->workingPercent->Text,2), 100.0, 2);
-
-        $this->monday_m->Text = $byDay;
-        $this->tuesday_m->Text = $byDay;
-        $this->wednesday_m->Text = $byDay;
-        $this->thursday_m->Text = $byDay;
-        $this->friday_m->Text = $byDay;
-        $this->monday_a->Text = $byDay;
-        $this->tuesday_a->Text = $byDay;
-        $this->wednesday_a->Text = $byDay;
-        $this->thursday_a->Text = $byDay;
-        $this->friday_a->Text = $byDay;
-
-        $this->onWorkingDayTimeChanged($sender, $param);
-    }
-
-    public function onHoursByWeekChanged($sender, $param)
-    {
-
-        $this->totalHourByWeek->Text = $this->workingPercent->Text * $this->hoursByWeek->Text / 100;
-        $this->onWorkingDayTimeChanged($sender, $param);
-        
-    }
-
-    public function onWorkingPercentChanged($sender, $param)
-    {
-        $this->totalHourByWeek->Text = $this->workingPercent->Text * $this->hoursByWeek->Text / 100;
-        $this->onWorkingDayTimeChanged($sender, $param);
-    }
-
-    public function onWorkingDayTimeChanged($sender, $param)
-    {
-        $count = 0.0;
-        $count = bcadd($count,$this->monday_m->Text,2);
-        $count = bcadd($count,$this->tuesday_m->Text,2);
-        $count = bcadd($count,$this->wednesday_m->Text,2);
-        $count = bcadd($count,$this->thursday_m->Text,2);
-        $count = bcadd($count,$this->friday_m->Text,2);
-        $count = bcadd($count,$this->saturday_m->Text,2);
-        $count = bcadd($count,$this->sunday_m->Text,2);
-        $count = bcadd($count,$this->monday_a->Text,2);
-        $count = bcadd($count,$this->tuesday_a->Text,2);
-        $count = bcadd($count,$this->wednesday_a->Text,2);
-        $count = bcadd($count,$this->thursday_a->Text,2);
-        $count = bcadd($count,$this->friday_a->Text,2);
-        $count = bcadd($count,$this->saturday_a->Text,2);
-        $count = bcadd($count,$this->sunday_a->Text,2);
-
-        if((float)$count >= (float)$this->totalHourByWeek->Text)
-            $this->totalCheck->Text = '<span style="color:red">> '.$count.'</span>';
-        if((float)$count <= (float)$this->totalHourByWeek->Text)
-            $this->totalCheck->Text = '<span style="color:red">< '.$count.'</span>';
-        if((float)$count == (float)$this->totalHourByWeek->Text)
-            $this->totalCheck->Text = '<span style="color:green">'.$count.'</span>';
-
     }
 
 }

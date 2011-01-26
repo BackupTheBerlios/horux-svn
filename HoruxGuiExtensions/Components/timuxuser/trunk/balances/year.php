@@ -322,11 +322,14 @@ class year extends PageList
             $year = $this->FilterYear->getSelectedValue();
         }
 
+        $config = $this->employee->getConfig();
+
         $months = array();
         $app = $this->getApplication()->getGlobalization();
 
         $nHolidays = 0;
         $totalYearHoursX = 0;
+        $nWeekH = 0;
         for($i=1; $i<=12; $i++) {
             $wt = $this->employee->getWorkingTime(1, $i, $year);
             $monthTemp = 0;
@@ -341,12 +344,46 @@ class year extends PageList
                         $totalYearHoursX = bcadd($totalYearHoursX, $todo,4);
                 }
 
+
+                $dayPerWeek = 0;
+
+                if($wt['mondayTime_m']>0)
+                    $dayPerWeek += 0.5;
+                if($wt['mondayTime_a']>0)
+                    $dayPerWeek += 0.5;
+                if($wt['tuesdayTime_m']>0)
+                    $dayPerWeek += 0.5;
+                if($wt['tuesdayTime_a']>0)
+                    $dayPerWeek += 0.5;
+                if($wt['wednesdayTime_m']>0)
+                    $dayPerWeek += 0.5;
+                if($wt['wednesdayTime_a']>0)
+                    $dayPerWeek += 0.5;
+                if($wt['thursdayTime_m']>0)
+                    $dayPerWeek += 0.5;
+                if($wt['thursdayTime_a']>0)
+                    $dayPerWeek += 0.5;
+                if($wt['fridayTime_m']>0)
+                    $dayPerWeek += 0.5;
+                if($wt['fridayTime_a']>0)
+                    $dayPerWeek += 0.5;
+                if($wt['saturdayTime_m']>0)
+                    $dayPerWeek += 0.5;
+                if($wt['saturdayTime_a']>0)
+                    $dayPerWeek += 0.5;
+                if($wt['sundayTime_m']>0)
+                    $dayPerWeek += 0.5;
+                if($wt['sundayTime_a']>0)
+                    $dayPerWeek += 0.5;
+
+                if($dayPerWeek>0)
+                    $nWeekH = bcadd($nWeekH, bcdiv(bcdiv($wt['holidaysByYear'],12,4),$dayPerWeek,4),4);
+
             }
 
         }
        
-
-        $this->daysVacation->Text = sprintf("%.02f %s / %.02f ".Prado::localize('weeks'),$nHolidays,Prado::localize('days'),bcdiv($nHolidays,5,4));
+        $this->daysVacation->Text = sprintf("%.02f %s / %.02f ".Prado::localize('weeks'),$nHolidays,Prado::localize('days'),$nWeekH);
 
         $this->daysVacationLastYear->Text = sprintf("%.02f",$this->employee->geHolidaystMonth($year-1,12));
 
@@ -382,6 +419,10 @@ class year extends PageList
             $nWorkingDay = 0;
             
 
+            $months[$month]['hours100'] = 0;
+
+            $wt = $this->employee->getWorkingTime(1, $month, $year);
+
             for($day=1; $day<=$nbreOfDay;$day++) {
 
                 $dayTodo = $this->employee->getDayTodo($day, $month, $year);
@@ -396,6 +437,12 @@ class year extends PageList
 
                 if($dayTodo)
                     $nWorkingDay++;
+
+                if($this->employee->isAWorkingDay($year, $month, $day)>0 && !$this->employee->isNonWorkingDay($day, $month, $year)) {
+
+                    $months[$month]['hours100'] = bcadd($months[$month]['hours100'], bcdiv($wt['hoursByWeek'],$config['daysByWeek'], 4),4);
+
+                }
                 
             }
 
@@ -405,7 +452,7 @@ class year extends PageList
 
             if($HoursMonth>0) {
                 if($months[$month]['occupancy']>0)
-                    $months[$month]['hours100'] = sprintf("%.02f",bcdiv(bcmul($HoursMonth, 100.0,4),$months[$month]['occupancy'],4),4);
+                    $months[$month]['hours100'] = sprintf("%.02f",$months[$month]['hours100']);
                 else
                     $months[$month]['hours100'] = sprintf("%.02f", 0);
                 
@@ -422,11 +469,10 @@ class year extends PageList
             $nbreHolidaysDay = bcadd($nbreHolidaysDay,$months[$month]['nbreHolidaysDay'],2);
 
             if($nWorkingDay>0) {
-                $holidaysHour = bcmul(bcdiv($HoursMonth,$nWorkingDay,4),$holidays['nbre'],4);
+                $holidaysHour = bcmul($holidays['nbre'],bcdiv($wt['hoursByWeek'],$config['daysByWeek'], 4),4);//  bcmul(bcdiv($HoursMonth,$nWorkingDay,4),$holidays['nbre'],4);
                 $nbreHolidaysHour = bcadd($nbreHolidaysHour,$holidaysHour,2);
             }
             $months[$month]['nbreHolidaysHour'] = sprintf("%.02f",$holidaysHour);
-
             $totalHourWorked = bcsub($totalHourWorked, $holidaysHour,4);
 
 
@@ -435,30 +481,52 @@ class year extends PageList
             else
                 $months[$month]['holidayBalance'] = sprintf("%.02f",$months[$month-1]['holidayBalance']-$months[$month]['nbreHolidaysDay']);
 
-            $nbreLeaveDay = $this->employee->getMonthLeaveRequest($month, $year);
-            $months[$month]['nbreLeaveDay'] = sprintf("%.02f",$nbreLeaveDay);
-
-            if($nWorkingDay>0)
-                $nbreLeaveHour = bcmul(bcdiv($HoursMonth,$nWorkingDay,4),$nbreLeaveDay,4);
-            
+            $nbreLeaveHour = $this->employee->getMonthLeaveRequest($month, $year);
             $months[$month]['nbreLeaveHour'] = sprintf("%.02f",$nbreLeaveHour);
+
             $totalHourWorked = bcsub($totalHourWorked,$nbreLeaveHour,4);
 
+            $nbreLeaveDay = 0;
+
+            if($nbreLeaveHour>0) {
+
+                $wt = $this->employee->getWorkingTime(1, $month, $year);
+
+                $config = $this->employee->getConfig();
+
+                $hoursByDay = bcdiv($wt['hoursByWeek'], $config['daysByWeek'],4);
+
+                if($wt['calendarType'] == 1) {
+                    $hoursByDay = bcdiv(bcmul($wt['workingPercent'],$hoursByDay,4),100,4);
+                }
+
+                $nbreLeaveDay = bcdiv($nbreLeaveHour,$hoursByDay,4);
+            }
+
+            $months[$month]['nbreLeaveDay'] = sprintf("%.02f",$nbreLeaveDay);
 
             $nbreAbsenceDay = $this->employee->getMonthAbsentRequest($month, $year);
 
             if($this->employee->getHoursByDay($month, $year)>0)
                 $nbreAbsenceDay = bcadd($nbreAbsenceDay, bcdiv($absentHoursComp,$this->employee->getHoursByDay($month, $year),4),4);
 
+
             $months[$month]['nbreAbsenceDay'] = sprintf("%.02f",$nbreAbsenceDay);
             $nbreAbsenceDay2 = bcadd($nbreAbsenceDay2,$nbreAbsenceDay ,2);
 
             if($nWorkingDay>0) {
-                $nbreAbsenceHour = bcmul(bcdiv($HoursMonth,$nWorkingDay,4),$nbreAbsenceDay,4);
+
+                $wt = $this->employee->getWorkingTime(1, $month, $year);
+                if($wt['calendarType'] == 1) {
+                    $nbreAbsenceHour = bcmul(bcdiv($HoursMonth,$nWorkingDay,4),$nbreAbsenceDay,4);
+                } else {
+                    $nbreAbsenceHour = bcmul(bcdiv($months[$month]['hours100'],$nWorkingDay,4),$nbreAbsenceDay,4);
+                }
 
                 $nbreAbsenceHour2 = bcadd($nbreAbsenceHour,$nbreAbsenceHour2,2);
             }
-            
+
+
             $months[$month]['nbreAbsenceHour'] = sprintf("%.02f",$nbreAbsenceHour);
             $totalHourWorked = bcsub($totalHourWorked, $nbreAbsenceHour,4);
 

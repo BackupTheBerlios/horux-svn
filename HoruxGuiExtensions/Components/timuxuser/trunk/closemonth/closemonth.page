@@ -69,7 +69,12 @@
 
 
     <br/><br/>
-    <com:TActiveButton OnClick="onCloseMonth" Text="<%[Close the month]%>" />
+    <com:TActiveButton OnClick="onCloseMonth" Text="<%[Close the month]%>" >
+           <prop:ClientSide
+            OnLoading="Effect.Appear(document.getElementById('loading'), {duration:0, from:0.3, to:0.3})"
+            OnComplete="Effect.Fade(document.getElementById('loading'), {duration:0})"
+         />
+    </com:TActiveButton>
     <br/>
 
     <div id="list">

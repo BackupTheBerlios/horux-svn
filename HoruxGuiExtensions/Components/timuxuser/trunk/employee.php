@@ -174,7 +174,7 @@ class employee
             return $this->cache['workingTime'][$date];
         }
 
-        $cmd = $this->db->createCommand( "SELECT * FROM hr_timux_workingtime WHERE user_id=".$this->employeeId." AND startDate<='".$date."' ORDER BY startDate DESC" );
+        $cmd = $this->db->createCommand( "SELECT * FROM hr_timux_workingtime WHERE user_id=".$this->employeeId." AND startDate<='".$date."' AND ( endDate>='".$date."' || endDate IS NULL ) ORDER BY startDate DESC" );
         $query = $cmd->query();
 
 
@@ -371,31 +371,190 @@ class employee
      */
     public function getDayTodo($day, $month, $year) {
 
+        if($this->isNonWorkingDay($day,$month, $year))
+                return 0;
+
         //check if the day is in its contract
         $wt = $this->getWorkingTime($day, $month, $year);
 
+        $config = $this->getConfig();
+
+        $workingDay = explode(",", $config['workingDays']);
+
         if($wt) {
-            $nday = date("N",mktime(0,0,0,$month,$day, $year));
 
-            if($nday >= MON && $nday <= FRI) {
+            if($wt['calendarType'] == 1) {
+                $nbreOfDayInMonth = date("t",mktime(0,0,0,$month,1, $year));
+                $nbreOfDayInMonthToWorks = 0;
+                $nbreRealWorks = 0;
+                for($d=1; $d<=$nbreOfDayInMonth; $d++) {
 
-                // check if it is a non working day
-                if($this->isNonWorkingDay($day,$month, $year))
-                    return 0;
+                    $nday = date("N",mktime(0,0,0,$month,$d, $year));
 
-                $timeByDay = bcdiv($wt['hoursByWeek'], 5, 4);
+                    $isNWD = $this->isNonWorkingDay($d,$month, $year);
 
-                if($wt['workingPercent'] == 100) {
-                    return $timeByDay;
-                } else {
-                    $timeByDay = bcmul($timeByDay, bcdiv($wt['workingPercent'],100,4),4);
+                    if(!$isNWD && $workingDay[$nday-1])
+                        $nbreOfDayInMonthToWorks++;
 
-                    return $timeByDay;
+                    if($nday == MON && !$isNWD) {
+                        if($wt['mondayTime_m']>0)
+                            $nbreRealWorks += 0.5;
+                        if($wt['mondayTime_a']>0)
+                            $nbreRealWorks += 0.5;
+                    }
+                    if($nday == TUE && !$isNWD) {
+                        if($wt['tuesdayTime_m']>0)
+                            $nbreRealWorks += 0.5;
+                        if($wt['tuesdayTime_a']>0)
+                            $nbreRealWorks += 0.5;
+                    }
+                    if($nday == WED && !$isNWD) {
+                        if($wt['wednesdayTime_m']>0)
+                            $nbreRealWorks += 0.5;
+                        if($wt['wednesdayTime_a']>0)
+                            $nbreRealWorks += 0.5;
+                    }
+                    if($nday == THU && !$isNWD) {
+                        if($wt['thursdayTime_m']>0)
+                            $nbreRealWorks += 0.5;
+                        if($wt['thursdayTime_a']>0)
+                            $nbreRealWorks += 0.5;
+                    }
+                    if($nday == FRI && !$isNWD) {
+                        if($wt['fridayTime_m']>0)
+                            $nbreRealWorks += 0.5;
+                        if($wt['fridayTime_a']>0)
+                            $nbreRealWorks += 0.5;
+                    }
+                    if($nday == SAT && !$isNWD) {
+                        if($wt['saturdayTime_m']>0)
+                            $nbreRealWorks += 0.5;
+                        if($wt['saturdayTime_a']>0)
+                            $nbreRealWorks += 0.5;
+                    }
+                    if($nday == SUN && !$isNWD) {
+                        if($wt['sundayTime_m']>0)
+                            $nbreRealWorks += 0.5;
+                        if($wt['sundayTime_a']>0)
+                            $nbreRealWorks += 0.5;
+                    }
                 }
+
+                //by 1/2 day
+                $nbreRealWorks *=2;
+
+                $nbreOfDayInMonthToWorks = bcmul(bcdiv($wt['hoursByWeek'], 5, 4), $nbreOfDayInMonthToWorks, 4);
+
+                if($wt['workingPercent'] != 100) {
+                     $nbreOfDayInMonthToWorks = bcmul($nbreOfDayInMonthToWorks, bcdiv($wt['workingPercent'],100,4),4);
+                }
+
+                if($nbreRealWorks > 0)
+                    $timeByHalfDay = bcdiv($nbreOfDayInMonthToWorks,$nbreRealWorks,4 );
+                else
+                    $timeByHalfDay = 0;
+
+
+                $nday = date("N",mktime(0,0,0,$month,$day, $year));
+
+                if($nday == MON) {
+                    if($wt['mondayTime_m']>0)
+                        $timeByDay = bcadd($timeByDay,$timeByHalfDay,4);
+                    if($wt['mondayTime_a']>0)
+                        $timeByDay = bcadd($timeByDay,$timeByHalfDay,4);
+                }
+                if($nday == TUE) {
+                    if($wt['tuesdayTime_m']>0)
+                        $timeByDay = bcadd($timeByDay,$timeByHalfDay,4);
+                    if($wt['tuesdayTime_a']>0)
+                        $timeByDay = bcadd($timeByDay,$timeByHalfDay,4);
+                }
+                if($nday == WED) {
+                    if($wt['wednesdayTime_m']>0)
+                        $timeByDay = bcadd($timeByDay,$timeByHalfDay,4);
+                    if($wt['wednesdayTime_a']>0)
+                        $timeByDay = bcadd($timeByDay,$timeByHalfDay,4);
+                }
+                if($nday == THU) {
+                    if($wt['thursdayTime_m']>0)
+                        $timeByDay = bcadd($timeByDay,$timeByHalfDay,4);
+                    if($wt['thursdayTime_a']>0)
+                        $timeByDay = bcadd($timeByDay,$timeByHalfDay,4);
+                }
+                if($nday == FRI) {
+                    if($wt['fridayTime_m']>0)
+                        $timeByDay = bcadd($timeByDay,$timeByHalfDay,4);
+                    if($wt['fridayTime_a']>0)
+                        $timeByDay = bcadd($timeByDay,$timeByHalfDay,4);
+                }
+                if($nday == SAT) {
+                    if($wt['saturdayTime_m']>0)
+                        $timeByDay = bcadd($timeByDay,$timeByHalfDay,4);
+                    if($wt['saturdayTime_a']>0)
+                        $timeByDay = bcadd($timeByDay,$timeByHalfDay,4);
+                }
+                if($nday == SUN) {
+                    if($wt['sundayTime_m']>0)
+                        $timeByDay = bcadd($timeByDay,$timeByHalfDay,4);
+                    if($wt['sundayTime_a']>0)
+                        $timeByDay = bcadd($timeByDay,$timeByHalfDay,4);
+                }
+
+                return $timeByDay;
+            } 
+            
+            if($wt['calendarType'] == 2) {
+                $nday = date("N",mktime(0,0,0,$month,$day, $year));
+
+                $nbreRealWorks = 0;
+
+                $isNWD = $this->isNonWorkingDay($d,$month, $year);
+
+                if($nday == MON && !$isNWD) {
+                    if($wt['mondayTime_m']>0)
+                        $nbreRealWorks += $wt['mondayTime_m'];
+                    if($wt['mondayTime_a']>0)
+                        $nbreRealWorks += $wt['mondayTime_a'];
+                }
+                if($nday == TUE && !$isNWD) {
+                    if($wt['tuesdayTime_m']>0)
+                        $nbreRealWorks += $wt['tuesdayTime_m'];
+                    if($wt['tuesdayTime_a']>0)
+                        $nbreRealWorks += $wt['tuesdayTime_a'];
+                }
+                if($nday == WED && !$isNWD) {
+                    if($wt['wednesdayTime_m']>0)
+                        $nbreRealWorks += $wt['wednesdayTime_m'];
+                    if($wt['wednesdayTime_a']>0)
+                        $nbreRealWorks += $wt['wednesdayTime_a'];
+                }
+                if($nday == THU && !$isNWD) {
+                    if($wt['thursdayTime_m']>0)
+                        $nbreRealWorks += $wt['thursdayTime_m'];
+                    if($wt['thursdayTime_a']>0)
+                        $nbreRealWorks += $wt['thursdayTime_a'];
+                }
+                if($nday == FRI && !$isNWD) {
+                    if($wt['fridayTime_m']>0)
+                        $nbreRealWorks += $wt['fridayTime_m'];
+                    if($wt['fridayTime_a']>0)
+                        $nbreRealWorks += $wt['fridayTime_a'];
+                }
+                if($nday == SAT && !$isNWD) {
+                    if($wt['saturdayTime_m']>0)
+                        $nbreRealWorks += $wt['saturdayTime_m'];
+                    if($wt['saturdayTime_a']>0)
+                        $nbreRealWorks += $wt['saturdayTime_a'];
+                }
+                if($nday == SUN && !$isNWD) {
+                    if($wt['sundayTime_m']>0)
+                        $nbreRealWorks += $wt['sundayTime_m'];
+                    if($wt['sundayTime_a']>0)
+                        $nbreRealWorks += $wt['sundayTime_a'];
+                }
+
+                return $nbreRealWorks;
             }
-
-            return 0;
-
         } else {
             return 0;
         }
@@ -972,24 +1131,24 @@ class employee
                                 $nbreOfHours['nbre'] += $format == 'day' ? 0.5 : bcmul(0.5, $this->getDayTodo($date[2], $date[1], $date[0]), 4);
                         }
 
-                        if($nwd==0 && $period == 'morning')
+                        if($nwd==false && $period == 'morning')
+                        { 
+                            if($nPeriod =='allday')
+                                $nbreOfHours['nbre'] += $format == 'day' ? 0.5 : bcmul(0.5, $this->getDayTodo($date[2], $date[1], $date[0]), 4);
+                        }
+
+                        if($nwd==false && $period == 'afternoon')
                         {
                             if($nPeriod =='allday')
                                 $nbreOfHours['nbre'] += $format == 'day' ? 0.5 : bcmul(0.5, $this->getDayTodo($date[2], $date[1], $date[0]), 4);
                         }
 
-                        if($nwd==0 && $period == 'afternoon')
+                        if($nwd==false && $period == 'allday')
                         {
-                            if($nPeriod =='allday')
-                                $nbreOfHours['nbre'] += $format == 'day' ? 0.5 : bcmul(0.5, $this->getDayTodo($date[2], $date[1], $date[0]), 4);
-                        }
-
-                        if($nwd==0 && $period == 'allday')
-                        {
-                            if($nPeriod == $period)
+                           if($nPeriod == $period)
                                 $nbreOfHours['nbre'] += $format == 'day' ? 1 : bcmul(1, $this->getDayTodo($date[2], $date[1], $date[0]), 4);
-                            else
-                                $nbreOfHours['nbre'] += $format == 'day' ? 0.5 : bcmul(0.5, $this->getDayTodo($date[2], $date[1], $date[0]), 4);
+                           else
+                                $nbreOfHours['nbre'] += $format == 'day' ? 0.5 : bcmul(1, $this->getDayTodo($date[2], $date[1], $date[0]), 4);
                         }
 
                         if($timecode == $this->getDefaultHolidaysCounter() ) {
@@ -1064,6 +1223,20 @@ class employee
         {
             return false;
         }
+
+    }
+
+    public function isAWorkingDay($year, $month, $day) {
+        $config = $this->getConfig();
+
+        $nday = date("N",mktime(0,0,0,$month,$day, $year));
+
+        $workingDay = explode(",", $config['workingDays']);
+
+        if($workingDay[$nday-1])
+            return true;
+        else
+            return false;
 
     }
 
@@ -1234,83 +1407,38 @@ class employee
 
         if($timecode == "") return array();
 
+        $cmd=$this->db->createCommand("SELECT * FROM hr_timux_timecode WHERE (type='leave' OR type='overtime' ) AND id!=".$timecode);
+
+        $data = $cmd->query();
+        $datas = $data->readAll();
 
         $nbreOfHours = 0.0;
+        $nbreOfDay = 0.0;
 
-        while(strtotime($dateFrom) <= strtotime($dateTo))
-        {
-            $cmd=$this->db->createCommand("SELECT * FROM hr_timux_request AS r LEFT JOIN hr_timux_request_leave AS rl ON rl.request_id=r.id LEFT JOIN hr_timux_timecode AS t ON t.id=r.timecodeId WHERE (t.type='leave' OR t.type='overtime' )  AND rl.datefrom>='".$dateFrom."' AND rl.dateto<='".$dateTo."' AND ( r.state='validate' OR  r.state='closed') AND r.userId=".$this->employeeId." AND t.id!=".$timecode);
+        foreach($datas as $d) {
+            $n = $this->getRequest($year, $month, $d['id']);
 
-            $data = $cmd->query();
-            $datas = $data->readAll();
+            if($n['format'] == 'day') {
+                $nbreOfDay = bcadd($nbreOfHours, $n['nbre'], 4);
 
-            if($data) {
-                foreach($datas as $data) {
-
-
-                    $date = explode("-",$dateFrom);
-
-                    $period = $data['period'];
-                    $format = $data['formatDisplay'];
-
-                    if($this->isWorking($date[0], $date[1], $date[2]))
-                    {
-                        $nwd = $this->getNonWorkingDay($date[0], $date[1], $date[2]);
-                        $nwdPeriod = $this->getNonWorkingDayPeriod($date[0], $date[1], $date[2]);
-                        $nPeriod = $this->isWorkingPeriod($date[0], $date[1], $date[2]);
-
-                        if($nwdPeriod == 'morning' && $period == 'afternoon')
-                        {
-                            if($nPeriod != $nwdPeriod)
-                                $nbreOfHours += 0.5;
-                        }
-
-                        if($nwdPeriod == 'afternoon' && $period == 'morning')
-                        {
-                            if($nPeriod != $nwdPeriod)
-                                $nbreOfHours += 0.5;
-                        }
-
-                        if($nwdPeriod == 'afternoon' && $period == 'allday')
-                        {
-                            if($nPeriod != $nwdPeriod)
-                                $nbreOfHours += 0.5;
-                        }
-
-                        if($nwdPeriod == 'morning' && $period == 'allday')
-                        {
-                            if($nPeriod != $nwdPeriod)
-                                $nbreOfHours += 0.5;
-                        }
-
-                        if($nwd==0 && $period == 'morning')
-                        {
-                            if($nPeriod =='allday')
-                                $nbreOfHours += 0.5;
-                        }
-
-                        if($nwd==0 && $period == 'afternoon')
-                        {
-                            if($nPeriod =='allday')
-                                $nbreOfHours += 0.5;
-                        }
-
-                        if($nwd==0 && $period == 'allday')
-                        {
-                            if($nPeriod == $period)
-                                $nbreOfHours += 1;
-                            else
-                                $nbreOfHours += 0.5;
-                        }
-                    }
-                }
+            } else {
+                $nbreOfHours = bcadd($nbreOfHours, $n['nbre'], 4);
             }
-
-            $dateFrom = date("Y-m-d",strtotime(date("Y-m-d", strtotime($dateFrom)) . " +1 day"));
-            
         }
 
-        return $nbreOfHours;
+        $wt = $this->getWorkingTime(1, $month, $year);
+
+        $config = $this->getConfig();
+
+        $hoursByDay = bcdiv($wt['hoursByWeek'], $config['daysByWeek'],4);
+
+        if($wt['calendarType'] == 1) {
+            $hoursByDay = bcdiv(bcmul($wt['workingPercent'],$hoursByDay,4),100,4);
+        }
+
+        $nbreOfDay = bcmul($nbreOfDay,$hoursByDay,4 );
+
+        return bcadd($nbreOfHours, $nbreOfDay, 4);
     }
 
     public function getMonthAbsentRequest($month, $year) {
@@ -1449,7 +1577,7 @@ class employee
                   $remark .= "&nbsp;&nbsp;&nbsp;";
                }
 
-               $result[] = array('date'=>  $date, 'typeText'=>$typeText, 'remark'=>$remark, 'type'=>'sign');
+               $result[] = array('user'=>$this->getFullName(), 'date'=>  $date, 'typeText'=>$typeText, 'remark'=>$remark, 'type'=>'sign');
             }
 
             
@@ -1495,28 +1623,44 @@ class employee
             if($config['daysByWeek'] > 0) {
                 $hoursByDay = bcdiv($config['hoursByWeek'], $config['daysByWeek'], 4);
             }
-            
-            return $hoursByDay;            
+
+            return $hoursByDay;
         }
 
-        $hoursByDay = 0;
-
-        $percentage = $this->getPercentage(1, $month, $year);
-
+        $wt = $this->getWorkingTime(1, $month, $year);
         $config = $this->getConfig();
+        
+        if($wt['calendarType'] == 1) {
+            $hours100 = 0;
+            $nWorkingDay = 0;
 
-        if($config['daysByWeek'] > 0) {
-            $hoursByDay = bcdiv($config['hoursByWeek'], $config['daysByWeek'], 4);
+            $nbreOfDay = date("t",mktime(0,0,0,$month,1,$year));
+            
+            for($day=1; $day<=$nbreOfDay;$day++) {
 
-            if($percentage<100) {
-                $percentage = bcdiv($percentage, 100, 4);
-                $hoursByDay = bcmul($hoursByDay, $percentage, 4);
+                if($this->isAWorkingDay($year, $month, $day)>0 && !$this->isNonWorkingDay($day, $month, $year)) {
+
+                    $hours100 = bcadd($hours100, bcdiv($wt['hoursByWeek'],$config['daysByWeek'], 4),4);
+                    $nWorkingDay++;
+                }
+
             }
+
+           $hoursX = bcmul($hours100 ,bcdiv($wt['workingPercent'], 100, 4),4);
+
+           return bcdiv($hoursX, $nWorkingDay, 4);
+
         }
-        else {
-            $hoursByDay = 0;
+        
+        if($wt['calendarType'] == 2) {
+
+            if($config['daysByWeek'] > 0) {
+                $hoursByDay = bcdiv($wt['hoursByWeek'], $config['daysByWeek'], 4);
+            }
+
+            return $hoursByDay;
         }
-        return $hoursByDay;
+
     }
 
     /*
@@ -1569,7 +1713,11 @@ class employee
 
                         $holidays = $this->getRequest($year,$month,$defaultTimeCodeHolidays);
 
+                        
                         $holidaysCurrentMonth = bcsub($nvy, $holidays['nbre'],2);
+
+                        $holidaysCurrentMonth = bcadd($holidaysCurrentMonth, $this->getActivityCounter($year, $month, $defaultTimeCodeHolidays), 4);
+
 
                         $cmd=$this->db->createCommand("INSERT hr_timux_activity_counter SET  isClosedMonth=1, nbre=".$holidaysCurrentMonth.", year=$year, month=$month, user_id=".$this->employeeId.", timecode_id=".$tc['id']);
                         $cmd->execute();
@@ -1706,6 +1854,18 @@ class employee
             return true;
         else
             return false;
+    }
+
+    public function isClosedMonth($month, $year) {
+        $cmd=$this->db->createCommand("SELECT* FROM hr_timux_activity_counter WHERE user_id=".$this->employeeId." AND year=$year AND month=$month AND isClosedMonth=1");
+        $data = $cmd->query();
+        $data = $data->readAll();
+
+        if(count($data)>0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
 

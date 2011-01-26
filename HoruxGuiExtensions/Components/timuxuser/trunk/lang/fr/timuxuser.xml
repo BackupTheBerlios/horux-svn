@@ -1320,6 +1320,53 @@
 <target>Compteur d'activité</target>
 </trans-unit>
 
+<trans-unit id="305">
+<source>at X%</source>
+<target>à x%</target>
+</trans-unit>
+
+<trans-unit id="306">
+<source>Calendar type</source>
+<target>Type du calendrier</target>
+</trans-unit>
+
+<trans-unit id="307">
+<source>Fixed</source>
+<target>Fixe</target>
+</trans-unit>
+
+<trans-unit id="308">
+<source>Variable</source>
+<target>Variable</target>
+</trans-unit>
+
+<trans-unit id="309">
+<source>Select the type of the calendar</source>
+<target>Sélectionnez le type du calendrier</target>
+</trans-unit>
+
+<trans-unit id="310">
+<source>To</source>
+<target>Jusqu'au</target>
+</trans-unit>
+
+<trans-unit id="311">
+<source>Date when finished this working time. Empty if not define</source>
+<target>Date de fin de ce contrat. Laissez vide si non définit.</target>
+</trans-unit>
+
+<trans-unit id="312">
+<source>The first month was already closed. You are not able to modify this working time</source>
+<target>Le premier mois a déjà été clôturé. Vous ne pouvez plus modifier ce contrat de travail.</target>
+</trans-unit>
+
+<trans-unit id="313">
+<source>Cannot add a request in a closed month</source>
+<target>Ne peut pas ajouter de congé dans un mois clôturé</target>
+</trans-unit>
+
+
+
 </body>
 </file>
 </xliff>

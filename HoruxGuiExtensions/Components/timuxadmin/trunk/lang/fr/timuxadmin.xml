@@ -676,6 +676,37 @@
 <source>List of time code</source>
 <target>Liste des codes de temps</target>
 </trans-unit>
+
+<trans-unit id="157">
+   <source>Monday</source>
+   <target>Lundi</target>
+</trans-unit>
+<trans-unit id="158">
+   <source>Tuesday</source>
+   <target>Mardi</target>
+</trans-unit>
+<trans-unit id="159">
+   <source>Wednesday</source>
+   <target>Mercredi</target>
+</trans-unit>
+<trans-unit id="160">
+   <source>Thursday</source>
+   <target>Jeudi</target>
+</trans-unit>
+<trans-unit id="161">
+   <source>Friday</source>
+   <target>Vendredi</target>
+</trans-unit>
+<trans-unit id="162">
+   <source>Saturday</source>
+   <target>Samedi</target>
+</trans-unit>
+<trans-unit id="163">
+   <source>Sunday</source>
+   <target>Dimanche</target>
+</trans-unit>
+
+
 </body>
 </file>
 </xliff>

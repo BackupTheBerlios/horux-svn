@@ -38,9 +38,10 @@ class error extends PageList
 
         if(!$this->IsPostBack)
         {
-            $cmd=$this->db->createCommand("SELECT w.startDate FROM hr_timux_workingtime AS w WHERE w.user_id=".$this->userId." ORDER BY w.startDate LIMIT 0,1");
+            $cmd=$this->db->createCommand("SELECT t.startDate FROM hr_timux_workingtime AS t ORDER BY t.startDate LIMIT 0,1");
             $data = $cmd->query();
             $data = $data->readAll();
+
 
             $year = date("Y");
             if(count($data)>0)
@@ -125,6 +126,7 @@ class error extends PageList
             $id = 'id='.$this->userId.' AND ';
         }
 
+
         $department = $this->FilterDepartment->getSelectedValue();
 
         if($department>0)
@@ -134,6 +136,14 @@ class error extends PageList
 
         $data = $cmd->query();
         $data = $data->readAll();
+
+        if($role == 'rh' || $role == 'manager') {
+            $dataAll[] = array("Value"=>0, "Text"=>Prado::localize("--- All ---"));
+
+            $data = array_merge($dataAll, $data);
+        }
+
+
         return $data;
 
     }
@@ -165,9 +175,29 @@ class error extends PageList
 
     public function getData()
     {
-        $this->employee = new employee($this->FilterEmployee->getSelectedValue() );
+        if($this->FilterEmployee->getSelectedValue() == 0) {
 
-        return $this->employee->getError($this->FilterYear->getSelectedValue(),$this->FilterMonth->getSelectedValue());
+            $items = $this->FilterEmployee->getItems();
+
+            $data = array();
+
+            for($i=0; $i< $items->count(); $i++) {
+                $item = $items->itemAt ($i);
+
+                $employee = new employee($item->Value);
+                $errors = $employee->getError($this->FilterYear->getSelectedValue(),$this->FilterMonth->getSelectedValue());
+
+                $data = array_merge($data, $errors);
+            }
+
+            return $data;
+
+        } else {
+
+            $this->employee = new employee($this->FilterEmployee->getSelectedValue() );
+
+            return $this->employee->getError($this->FilterYear->getSelectedValue(),$this->FilterMonth->getSelectedValue());
+        }
     }
 
     public function onCancel($sender, $param)

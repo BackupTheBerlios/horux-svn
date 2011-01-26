@@ -42,7 +42,18 @@ class config extends Page
         if($query)
         {
             $data = $query->read();
-            $this->daysByWeek->Text = $data['daysByWeek'];
+
+            $workginDays = explode(",", $data['workingDays']);
+
+            $this->mon->setChecked($workginDays[0]);
+            $this->tue->setChecked($workginDays[1]);
+            $this->wed->setChecked($workginDays[2]);
+            $this->thu->setChecked($workginDays[3]);
+            $this->fri->setChecked($workginDays[4]);
+            $this->sat->setChecked($workginDays[5]);
+            $this->sun->setChecked($workginDays[6]);
+
+
             $this->breakMinimum->setChecked( $data['minimumBreaks'] );
             $this->rounding->setSelectedValue($data['bookingRounding']);
             $this->defaultHourByWeek->Text = $data['hoursByWeek'];
@@ -84,6 +95,7 @@ class config extends Page
     {
         $cmd = $this->db->createCommand( "UPDATE hr_timux_config SET 
                                             daysByWeek=:daysByWeek,
+                                            workingDays=:workingDays,
                                             minimumBreaks=:minimumBreaks,
                                             bookingRounding=:bookingRounding,
                                             hoursByWeek=:hoursByWeek,
@@ -99,7 +111,41 @@ class config extends Page
                                             WHERE id=1
                                             " );
 
-        $cmd->bindValue(":daysByWeek",$this->daysByWeek->SafeText,PDO::PARAM_STR);
+        $daysByWeek = 0;
+        $workingDays = array(0,0,0,0,0,0,0);
+
+        if($this->mon->getChecked()) {
+            $daysByWeek++;
+            $workingDays[0] = 1;
+        }
+        if($this->tue->getChecked()) {
+            $daysByWeek++;
+            $workingDays[1] = 1;
+        }
+        if($this->wed->getChecked()) {
+            $daysByWeek++;
+            $workingDays[2] = 1;
+        }
+        if($this->thu->getChecked()) {
+            $daysByWeek++;
+            $workingDays[3] = 1;
+        }
+        if($this->fri->getChecked()) {
+            $daysByWeek++;
+            $workingDays[4] = 1;
+        }
+        if($this->sat->getChecked()) {
+            $daysByWeek++;
+            $workingDays[5] = 1;
+        }
+        if($this->sun->getChecked()) {
+            $daysByWeek++;
+            $workingDays[6] = 1;
+        }
+
+        $cmd->bindValue(":daysByWeek",$daysByWeek,PDO::PARAM_STR);
+        $cmd->bindValue(":workingDays",implode(",", $workingDays),PDO::PARAM_STR);
+
         $cmd->bindValue(":minimumBreaks",$this->breakMinimum->getChecked(),PDO::PARAM_STR);
         $cmd->bindValue(":bookingRounding",$this->rounding->getSelectedValue(),PDO::PARAM_STR);
         $cmd->bindValue(":hoursByWeek",$this->defaultHourByWeek->SafeText,PDO::PARAM_STR);

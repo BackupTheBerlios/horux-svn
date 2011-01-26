@@ -210,6 +210,7 @@
                             ImageUrl="<%~ ../assets/edit_add.png %>"
                             Style="border:0px"
                             Text="<%[Add signing]%>"
+                            Visible =<%= $this->Page->couldAddBooking() == true %>
                             />
                     </prop:TrueTemplate>
                     </com:TConditional>

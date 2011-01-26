@@ -578,8 +578,9 @@ class balances extends PageList
             $index_br = 1;
 
             foreach($bookingsDay as $b) {
+
                 // if we print on a pdf, do not insert the link
-                if(!$isPrint && $this->isAccess('components.timuxuser.booking.mod'))
+                if(!$isPrint && $this->isAccess('components.timuxuser.booking.mod') && $b['closed'] == 0)
                 {
                     $line['sign'].= '<a href="index.php?page=components.timuxuser.booking.mod&back=components.timuxuser.balances.balances&id='.$b['id'].'" >';
                 }
@@ -1028,6 +1029,15 @@ class balances extends PageList
         }
 
         return true;
+    }
+
+    function couldAddBooking() {
+
+        if($this->employee->isClosedMonth($this->FilterMonth->getSelectedValue(),$this->FilterYear->getSelectedValue() ) ) {
+            return false;
+        } else {
+            return true;
+        }
     }
 }
 ?>
