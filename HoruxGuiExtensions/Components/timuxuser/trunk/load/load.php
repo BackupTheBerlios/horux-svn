@@ -41,6 +41,7 @@ class load extends PageList
             $currentYear = date("Y");
 
             $yearList = array();
+			
             for($i=$year; $i<= $currentYear;$i++ )
             {
                 $yearList[] = array('Value'=>$i, 'Text'=>$i);
@@ -176,7 +177,6 @@ class load extends PageList
 
     public function getData($isPrint=false)
     {
-
         $param = Prado::getApplication()->getParameters();
         $computation2 = $param['computation2'];
         if($computation2 != '') {
@@ -197,9 +197,14 @@ class load extends PageList
 
         foreach($userList as $user) {
 
+			set_time_limit(10);
+		
             if($user['Value']>0) {
                 $employee = new employee($user['Value']);
-
+				$hourMonthTodo = $employee->getHoursMonthTodo($month, $year);
+				$hourly = $employee->getHourly($month, $year);
+				$hoursByDay = $employee->getHoursByDay($month, $year);
+				
                 $cmd=$this->db->createCommand("SELECT t.id_user, t.id, t.date, tb.roundBooking AS time, tb.action, tb.actionReason, tb.internet, tbb.BDE1
                                                FROM hr_tracking AS t
                                                LEFT JOIN hr_timux_booking AS tb ON tb.tracking_id=t.id
@@ -222,9 +227,10 @@ class load extends PageList
                         } else {
                             $t = bcdiv((strtotime($d['time']) - strtotime($bookinIN)), 3600, 4);
                             $timeCodeList[$timeCode][$user['Text']]['total'] = bcadd($timeCodeList[$timeCode][$user['Text']]['total'], $t,4);
-                            $timeCodeList[$timeCode][$user['Text']]['hourDayTodo'] = $employee->getHoursByDay($month, $year);
-                            $timeCodeList[$timeCode][$user['Text']]['hourly'] = $employee->getHourly($month, $year);
+                            $timeCodeList[$timeCode][$user['Text']]['hourDayTodo'] = $hoursByDay;
+                            $timeCodeList[$timeCode][$user['Text']]['hourly'] = $hourly;
                             $timeCodeList[$timeCode][$user['Text']]['id'] = $user['Value'];
+							$timeCodeList[$timeCode][$user['Text']]['hourMonthTodo'] = $hourMonthTodo;
 
                             $timeCodeList[$timeCode]['total'] = bcadd($timeCodeList[$timeCode]['total'],$t,4);
                             $bookinIN = 0;
@@ -245,10 +251,14 @@ class load extends PageList
         }
 
         foreach($userList as $user) {
+			set_time_limit(10);
             if($user['Value']>0) {
 
                 $employee = new employee($user['Value']);
-                
+                $hourMonthTodo = $employee->getHoursMonthTodo($month, $year);
+				$hourly = $employee->getHourly($month, $year);
+				$hoursByDay = $employee->getHoursByDay($month, $year);
+				
                 $dtcH = $employee->getDefaultHolidaysCounter();
                 $dtcO = $employee->getDefaultOvertimeCounter();
 
@@ -257,16 +267,18 @@ class load extends PageList
                     if($h['disp'] == 'day') {
                         $timeCodeList[$dtcH]['total'] = bcadd($timeCodeList[$dtcH]['total'], bcmul($h['nbre'],$employee->getHoursByDay($month, $year),4),4);
                         $timeCodeList[$dtcH][$user['Text']]['total'] = bcadd($timeCodeList[$dtcH][$user['Text']]['total'], bcmul($h['nbre'],$employee->getHoursByDay($month, $year),4),4);
-                        $timeCodeList[$dtcH][$user['Text']]['hourDayTodo'] = $employee->getHoursByDay($month, $year);
-                        $timeCodeList[$dtcH][$user['Text']]['hourly'] = $employee->getHourly($month, $year);
+                        $timeCodeList[$dtcH][$user['Text']]['hourDayTodo'] = $hoursByDay;
+                        $timeCodeList[$dtcH][$user['Text']]['hourly'] = $hourly;
                         $timeCodeList[$dtcH][$user['Text']]['id'] = $user['Value'];
+						$timeCodeList[$dtcH][$user['Text']]['hourMonthTodo'] = $hourMonthTodo;
 
                     } else {
                         $timeCodeList[$dtcH]['total'] += bcadd($timeCodeList[$dtcH]['total'], $h['nbre'],4);
                         $timeCodeList[$dtcH][$user['Text']]['total'] = bcadd($timeCodeList[$dtcH][$user['Text']]['total'], $h['nbre'],4);
-                        $timeCodeList[$dtcH][$user['Text']]['hourDayTodo'] = $employee->getHoursByDay($month, $year);
-                        $timeCodeList[$dtcH][$user['Text']]['hourly'] = $employee->getHourly($month, $year);
+                        $timeCodeList[$dtcH][$user['Text']]['hourDayTodo'] = $hoursByDay;
+                        $timeCodeList[$dtcH][$user['Text']]['hourly'] = $hourly;
                         $timeCodeList[$dtcH][$user['Text']]['id'] = $user['Value'];
+						$timeCodeList[$dtcH][$user['Text']]['hourMonthTodo'] = $hourMonthTodo;
                     }
                 }
 
@@ -280,15 +292,17 @@ class load extends PageList
                         if($h['disp'] == 'day') {
                             $timeCodeList[$d['id']]['total'] = bcadd($timeCodeList[$d['id']]['total'], bcmul($h['nbre'],$employee->getHoursByDay($month, $year),4),4);
                             $timeCodeList[$d['id']][$user['Text']]['total'] += bcadd($timeCodeList[$d['id']][$user['Text']]['total'], bcmul($h['nbre'],$employee->getHoursByDay($month, $year),4),4);
-                            $timeCodeList[$d['id']][$user['Text']]['hourDayTodo'] = $employee->getHoursByDay($month, $year);
-                            $timeCodeList[$d['id']][$user['Text']]['hourly'] = $employee->getHourly($month, $year);
+                            $timeCodeList[$d['id']][$user['Text']]['hourDayTodo'] = $hoursByDay;
+                            $timeCodeList[$d['id']][$user['Text']]['hourly'] = $hourly;
                             $timeCodeList[$d['id']][$user['Text']]['id'] = $user['Value'];
+							$timeCodeList[$d['id']][$user['Text']]['hourMonthTodo'] = $hourMonthTodo;
                         } else {
                             $timeCodeList[$d['id']]['total'] += bcadd($timeCodeList[$d['id']]['total'], $h['nbre'],4);
                             $timeCodeList[$d['id']][$user['Text']]['total'] += bcadd($timeCodeList[$d['id']][$user['Text']]['total'] , $h['nbre'],4);
-                            $timeCodeList[$d['id']][$user['Text']]['hourDayTodo'] = $employee->getHoursByDay($month, $year);
-                            $timeCodeList[$d['id']][$user['Text']]['hourly'] = $employee->getHourly($month, $year);
+                            $timeCodeList[$d['id']][$user['Text']]['hourDayTodo'] = $hoursByDay;
+                            $timeCodeList[$d['id']][$user['Text']]['hourly'] = $hourly;
                             $timeCodeList[$d['id']][$user['Text']]['id'] = $user['Value'];
+							$timeCodeList[$d['id']][$user['Text']]['hourMonthTodo'] = $hourMonthTodo;
                         }
                     }
                 }
@@ -298,9 +312,10 @@ class load extends PageList
                     if($nwd > 0 && $employee->isWorking($year, $month, $i)) {
                         $timeCodeList[Prado::localize('Non working day')]['total'] = bcadd($timeCodeList[Prado::localize('Non working day')]['total'] , bcmul($nwd,$employee->getHoursByDay($month, $year),4),4);
                         $timeCodeList[Prado::localize('Non working day')][$user['Text']]['total'] = bcadd($timeCodeList[Prado::localize('Non working day')][$user['Text']]['total'], bcmul($nwd,$employee->getHoursByDay($month, $year),4),4);
-                        $timeCodeList[Prado::localize('Non working day')][$user['Text']]['hourDayTodo'] = $employee->getHoursByDay($month, $year);
-                        $timeCodeList[Prado::localize('Non working day')][$user['Text']]['hourly'] = $employee->getHourly($month, $year);
+                        $timeCodeList[Prado::localize('Non working day')][$user['Text']]['hourDayTodo'] = $hoursByDay;
+                        $timeCodeList[Prado::localize('Non working day')][$user['Text']]['hourly'] = $hourly;
                         $timeCodeList[Prado::localize('Non working day')][$user['Text']]['id'] = $user['Value'];
+						$timeCodeList[Prado::localize('Non working day')][$user['Text']]['hourMonthTodo'] = $hourMonthTodo;
                     }
                 }
 
@@ -313,10 +328,11 @@ class load extends PageList
 
                     if($overtime != 0) {
                         $timeCodeList[Prado::localize('Overtime2')][$user['Text']]['total'] = bcadd($timeCodeList[Prado::localize('Overtime2')][$user['Text']]['total'],$overtime,4);
-                        $timeCodeList[Prado::localize('Overtime2')][$user['Text']]['hourDayTodo'] = $employee->getHoursByDay($month, $year);
+                        $timeCodeList[Prado::localize('Overtime2')][$user['Text']]['hourDayTodo'] = $hoursByDay;
                         $timeCodeList[Prado::localize('Overtime2')]['total'] = bcadd($timeCodeList[Prado::localize('Overtime2')]['total'], $overtime,4);
-                        $timeCodeList[Prado::localize('Overtime2')][$user['Text']]['hourly'] = $employee->getHourly($month, $year);
+                        $timeCodeList[Prado::localize('Overtime2')][$user['Text']]['hourly'] = $hourly;
                         $timeCodeList[Prado::localize('Overtime2')][$user['Text']]['id'] = $user['Value'];
+						$timeCodeList[Prado::localize('Overtime2')][$user['Text']]['hourMonthTodo'] = $hourMonthTodo;
                     }
                 }
             }
@@ -348,7 +364,7 @@ class load extends PageList
                             $extendHourly = new $computation2();
 
                             if($extendHourly) {
-                                $u['hourly'] = $extendHourly->getHourly($month,$year, $k2);
+                                $u['hourly'] = $extendHourly->getHourly($month,$year, $u);
                             }
                         }       
 
@@ -384,7 +400,7 @@ class load extends PageList
                                     $extendHourly = new $computation2();
 
                                     if($extendHourly) {
-                                        $u['hourly'] = $extendHourly->getHourly($month,$year, $k);
+                                        $u['hourly'] = $extendHourly->getHourly($month,$year, $u);
                                     }
                                 }
 
@@ -414,7 +430,7 @@ class load extends PageList
                                     $extendHourly = new $computation2();
 
                                     if($extendHourly) {
-                                        $u['hourly'] = $extendHourly->getHourly($month,$year, $k);
+                                        $u['hourly'] = $extendHourly->getHourly($month,$year, $u);
                                     }
                                 }
 
@@ -447,7 +463,7 @@ class load extends PageList
                                 $extendHourly = new $computation2();
 
                                 if($extendHourly) {
-                                    $u['hourly'] = $extendHourly->getHourly($month,$year, $k);
+                                    $u['hourly'] = $extendHourly->getHourly($month,$year, $u);
                                 }
                             }       
 
