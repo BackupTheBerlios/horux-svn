@@ -1867,6 +1867,24 @@ class employee
             return false;
         }
     }
+
+    public function getHoursMonthTodo($month, $year) {
+
+        $HoursMonth = 0;
+
+        $nbreOfDay = date("t",mktime(0,0,0,$month,1,$year));
+        
+        $wt = $this->getWorkingTime(1, $month, $year);
+
+        for($day=1; $day<=$nbreOfDay;$day++) {
+
+            $dayTodo = $this->getDayTodo($day, $month, $year);
+            $HoursMonth = bcadd($HoursMonth,$dayTodo,4);
+        }
+
+        return $HoursMonth;
+    }
+
 }
 
 ?>
