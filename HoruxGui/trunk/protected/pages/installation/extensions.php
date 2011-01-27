@@ -21,7 +21,7 @@ class extensions extends Page
     {
         parent::onLoad($param);
 
-        if(!is_writeable('./tmp'))
+        if(!is_writeable('.'.DIRECTORY_SEPARATOR.'tmp'))
         {
             $this->displayMessage(Prado::localize('The directory ./tmp must be writeable to install an extension'), false);
         }
@@ -552,7 +552,7 @@ class extensions extends Page
 
     public function fileUploaded($sender,$param)
     {
-        if(!is_writeable('./tmp')) return;
+        if(!is_writeable('.'.DIRECTORY_SEPARATOR.'tmp')) return;
         if($this->fileUpload->HasFile)
         {
             $path_info = pathinfo($this->fileUpload->fileName);

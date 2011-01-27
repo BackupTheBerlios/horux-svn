@@ -81,7 +81,7 @@ else
         }
 
         if($username !== "")
-        {
+        { 
             if(($pos = strpos($username, '@')) !== false)
             {
                 $domain = strstr($username, '@');

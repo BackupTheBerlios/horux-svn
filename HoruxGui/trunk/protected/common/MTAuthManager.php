@@ -30,23 +30,13 @@ class MTAuthManager extends TAuthManager {
     public function OnAuthorize($param) {
         $app = $this->getApplication();
 
-        if( $app->getService()->getID() == 'xmlrpc' ) return true;
-
-
-        /*// if the soap request is done by the server himself, do not check the password
-        if( $app->getService()->getID() == 'soap' &&
-            $_SERVER['SERVER_ADDR'] === $_SERVER['REMOTE_ADDR'])
-        {
-            return;
-        }*///TODO...
-
         $authManager=$app->getModule('Auth');
         $username="";
         $password="";
 
         if(!isset($this->Request['username']) && !isset($this->Request['password']))
         {
-            if(file_exists("./tmp/soapcache") && $fp = fopen("./tmp/soapcache", "r"))
+            if(file_exists(".".DIRECTORY_SEPARATOR."tmp".DIRECTORY_SEPARATOR."soapcache") && $fp = fopen(".".DIRECTORY_SEPARATOR."tmp".DIRECTORY_SEPARATOR."soapcache", "r"))
             {
                 $line = fgets($fp);
                 $line = explode(",", $line);
@@ -54,7 +44,6 @@ class MTAuthManager extends TAuthManager {
                 $password = $line[1];
 
                 fclose($fp);
-                //unlink("./tmp/soapcache");
             }
         }
         else
@@ -66,21 +55,19 @@ class MTAuthManager extends TAuthManager {
 
         if( $app->getService()->getID() == 'soap' )
         {
-            //return true;
             if($app->getUser()->getUserID() == null)
             {
                 //Check if the user has access
                 if(!$authManager->login(strtolower($username),$password ))
                 {
                     $this->DenyRequest();
-
                     return false;
                 }
                 else
                 {
-                    $isWebservice = $app->getUser()->getWebservice();
+                    $isWebserviceAccess = $app->getUser()->getWebservice();
 
-                    if($isWebservice == 0)
+                    if($isWebserviceAccess == 0)
                     {
                         $this->DenyRequest();
                         return false;
@@ -88,9 +75,9 @@ class MTAuthManager extends TAuthManager {
                     else
                     {
                         //if wsdl, else not
-                        if(isset($this->Request['soap']) &&  substr($this->Request['soap'], -5,5) == ".wsdl")
+                        if(isset($this->Request['soap']))
                         {
-                            if($fp = fopen("./tmp/soapcache", "w"))
+                            if( ($fp = fopen(".".DIRECTORY_SEPARATOR."tmp".DIRECTORY_SEPARATOR."soapcache", "w")) )
                             {
                                 fwrite($fp, $username.",".$password.",");
                                 fclose($fp);
@@ -102,15 +89,16 @@ class MTAuthManager extends TAuthManager {
             }
             else
             {
-                $isWebservice = $app->getUser()->getWebservice();
+                $isWebserviceAccess = $app->getUser()->getWebservice();
 
-                if($isWebservice == 0 || !$authManager->login(strtolower($username),$password ))
+                if($isWebserviceAccess == 0 || !$authManager->login(strtolower($username),$password ))
                 {
                     $this->DenyRequest();
                     return false;
                 }
-                else
-                return true;
+                else {
+                    return true;
+                }
             }
         }
 
