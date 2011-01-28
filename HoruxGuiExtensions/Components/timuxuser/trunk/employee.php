@@ -442,6 +442,7 @@ class employee
 
         if($wt) {
 
+
             if($wt['calendarType'] == 1) {
                 $nbreOfDayInMonth = date("t",mktime(0,0,0,$month,1, $year));
                 $nbreOfDayInMonthToWorks = 0;
@@ -450,53 +451,38 @@ class employee
 
                     $nday = date("N",mktime(0,0,0,$month,$d, $year));
 
-                    $isNWD = $this->isNonWorkingDay($d,$month, $year);
-
-                    if(!$isNWD && $workingDay[$nday-1])
+                    if( $workingDay[$nday-1])
                         $nbreOfDayInMonthToWorks++;
 
-                    if($nday == MON && !$isNWD) {
-                        if($wt['mondayTime_m']>0)
-                            $nbreRealWorks += 0.5;
-                        if($wt['mondayTime_a']>0)
-                            $nbreRealWorks += 0.5;
+                    
+                    switch($nday) {
+                        case MON:
+                            $dayName = 'mondayTime_';
+                            break;
+                        case TUE:
+                            $dayName = 'tuesdayTime_';
+                            break;
+                        case WED:
+                            $dayName = 'wednesdayTime_';
+                            break;
+                        case THU:
+                            $dayName = 'thursdayTime_';
+                            break;
+                        case FRI:
+                            $dayName = 'fridayTime_';
+                            break;
+                        case SAT:
+                            $dayName = 'saturdayTime_';
+                            break;
+                        case SUN:
+                            $dayName = 'sundayTime_';
+                            break;
                     }
-                    if($nday == TUE && !$isNWD) {
-                        if($wt['tuesdayTime_m']>0)
-                            $nbreRealWorks += 0.5;
-                        if($wt['tuesdayTime_a']>0)
-                            $nbreRealWorks += 0.5;
-                    }
-                    if($nday == WED && !$isNWD) {
-                        if($wt['wednesdayTime_m']>0)
-                            $nbreRealWorks += 0.5;
-                        if($wt['wednesdayTime_a']>0)
-                            $nbreRealWorks += 0.5;
-                    }
-                    if($nday == THU && !$isNWD) {
-                        if($wt['thursdayTime_m']>0)
-                            $nbreRealWorks += 0.5;
-                        if($wt['thursdayTime_a']>0)
-                            $nbreRealWorks += 0.5;
-                    }
-                    if($nday == FRI && !$isNWD) {
-                        if($wt['fridayTime_m']>0)
-                            $nbreRealWorks += 0.5;
-                        if($wt['fridayTime_a']>0)
-                            $nbreRealWorks += 0.5;
-                    }
-                    if($nday == SAT && !$isNWD) {
-                        if($wt['saturdayTime_m']>0)
-                            $nbreRealWorks += 0.5;
-                        if($wt['saturdayTime_a']>0)
-                            $nbreRealWorks += 0.5;
-                    }
-                    if($nday == SUN && !$isNWD) {
-                        if($wt['sundayTime_m']>0)
-                            $nbreRealWorks += 0.5;
-                        if($wt['sundayTime_a']>0)
-                            $nbreRealWorks += 0.5;
-                    }
+
+                    if($wt[$dayName.'m']>0)
+                        $nbreRealWorks += 0.5;
+                    if($wt[$dayName.'a']>0)
+                        $nbreRealWorks += 0.5;
                 }
 
                 //by 1/2 day
@@ -515,49 +501,37 @@ class employee
 
 
                 $nday = date("N",mktime(0,0,0,$month,$day, $year));
+                $dayName = '';
+                switch($nday) {
+                    case MON:
+                        $dayName = 'mondayTime_';
+                        break;
+                    case TUE:
+                        $dayName = 'tuesdayTime_';
+                        break;
+                    case WED:
+                        $dayName = 'wednesdayTime_';
+                        break;
+                    case THU:
+                        $dayName = 'thursdayTime_';
+                        break;
+                    case FRI:
+                        $dayName = 'fridayTime_';
+                        break;
+                    case SAT:
+                        $dayName = 'saturdayTime_';
+                        break;
+                    case SUN:
+                        $dayName = 'sundayTime_';
+                        break;
+                }
 
-                if($nday == MON) {
-                    if($wt['mondayTime_m']>0)
-                        $timeByDay = bcadd($timeByDay,$timeByHalfDay,4);
-                    if($wt['mondayTime_a']>0)
-                        $timeByDay = bcadd($timeByDay,$timeByHalfDay,4);
-                }
-                if($nday == TUE) {
-                    if($wt['tuesdayTime_m']>0)
-                        $timeByDay = bcadd($timeByDay,$timeByHalfDay,4);
-                    if($wt['tuesdayTime_a']>0)
-                        $timeByDay = bcadd($timeByDay,$timeByHalfDay,4);
-                }
-                if($nday == WED) {
-                    if($wt['wednesdayTime_m']>0)
-                        $timeByDay = bcadd($timeByDay,$timeByHalfDay,4);
-                    if($wt['wednesdayTime_a']>0)
-                        $timeByDay = bcadd($timeByDay,$timeByHalfDay,4);
-                }
-                if($nday == THU) {
-                    if($wt['thursdayTime_m']>0)
-                        $timeByDay = bcadd($timeByDay,$timeByHalfDay,4);
-                    if($wt['thursdayTime_a']>0)
-                        $timeByDay = bcadd($timeByDay,$timeByHalfDay,4);
-                }
-                if($nday == FRI) {
-                    if($wt['fridayTime_m']>0)
-                        $timeByDay = bcadd($timeByDay,$timeByHalfDay,4);
-                    if($wt['fridayTime_a']>0)
-                        $timeByDay = bcadd($timeByDay,$timeByHalfDay,4);
-                }
-                if($nday == SAT) {
-                    if($wt['saturdayTime_m']>0)
-                        $timeByDay = bcadd($timeByDay,$timeByHalfDay,4);
-                    if($wt['saturdayTime_a']>0)
-                        $timeByDay = bcadd($timeByDay,$timeByHalfDay,4);
-                }
-                if($nday == SUN) {
-                    if($wt['sundayTime_m']>0)
-                        $timeByDay = bcadd($timeByDay,$timeByHalfDay,4);
-                    if($wt['sundayTime_a']>0)
-                        $timeByDay = bcadd($timeByDay,$timeByHalfDay,4);
-                }
+                if($wt[$dayName.'m']>0)
+                    $timeByDay = bcadd($timeByDay,$timeByHalfDay,4);
+                if($wt[$dayName.'a']>0)
+                    $timeByDay = bcadd($timeByDay,$timeByHalfDay,4);
+
+                
 
                 $this->setCache('getDayTodo_'.$dateCache, $timeByDay);
                 return $timeByDay;
@@ -568,51 +542,38 @@ class employee
 
                 $nbreRealWorks = 0;
 
-                $isNWD = $this->isNonWorkingDay($d,$month, $year);
 
-                if($nday == MON && !$isNWD) {
-                    if($wt['mondayTime_m']>0)
-                        $nbreRealWorks += $wt['mondayTime_m'];
-                    if($wt['mondayTime_a']>0)
-                        $nbreRealWorks += $wt['mondayTime_a'];
-                }
-                if($nday == TUE && !$isNWD) {
-                    if($wt['tuesdayTime_m']>0)
-                        $nbreRealWorks += $wt['tuesdayTime_m'];
-                    if($wt['tuesdayTime_a']>0)
-                        $nbreRealWorks += $wt['tuesdayTime_a'];
-                }
-                if($nday == WED && !$isNWD) {
-                    if($wt['wednesdayTime_m']>0)
-                        $nbreRealWorks += $wt['wednesdayTime_m'];
-                    if($wt['wednesdayTime_a']>0)
-                        $nbreRealWorks += $wt['wednesdayTime_a'];
-                }
-                if($nday == THU && !$isNWD) {
-                    if($wt['thursdayTime_m']>0)
-                        $nbreRealWorks += $wt['thursdayTime_m'];
-                    if($wt['thursdayTime_a']>0)
-                        $nbreRealWorks += $wt['thursdayTime_a'];
-                }
-                if($nday == FRI && !$isNWD) {
-                    if($wt['fridayTime_m']>0)
-                        $nbreRealWorks += $wt['fridayTime_m'];
-                    if($wt['fridayTime_a']>0)
-                        $nbreRealWorks += $wt['fridayTime_a'];
-                }
-                if($nday == SAT && !$isNWD) {
-                    if($wt['saturdayTime_m']>0)
-                        $nbreRealWorks += $wt['saturdayTime_m'];
-                    if($wt['saturdayTime_a']>0)
-                        $nbreRealWorks += $wt['saturdayTime_a'];
-                }
-                if($nday == SUN && !$isNWD) {
-                    if($wt['sundayTime_m']>0)
-                        $nbreRealWorks += $wt['sundayTime_m'];
-                    if($wt['sundayTime_a']>0)
-                        $nbreRealWorks += $wt['sundayTime_a'];
+                $dayName = '';
+                switch($nday) {
+                    case MON:
+                        $dayName = 'mondayTime_';
+                        break;
+                    case TUE:
+                        $dayName = 'tuesdayTime_';
+                        break;
+                    case WED:
+                        $dayName = 'wednesdayTime_';
+                        break;
+                    case THU:
+                        $dayName = 'thursdayTime_';
+                        break;
+                    case FRI:
+                        $dayName = 'fridayTime_';
+                        break;
+                    case SAT:
+                        $dayName = 'saturdayTime_';
+                        break;
+                    case SUN:
+                        $dayName = 'sundayTime_';
+                        break;
                 }
 
+                if($wt[$dayName.'m']>0)
+                    $nbreRealWorks += $wt['mondayTime_m'];
+                if($wt[$dayName.'a']>0)
+                    $nbreRealWorks += $wt['mondayTime_a'];
+
+               
                 $this->setCache('getDayTodo_'.$dateCache, $nbreRealWorks);
                 return $nbreRealWorks;
             }
