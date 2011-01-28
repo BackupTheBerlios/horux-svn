@@ -312,7 +312,8 @@ class add extends Page
 
         $res1 = $cmd->execute();
 
-        Prado::getApplication()->getCache()->flush();
+        if(Prado::getApplication()->getCache())
+            Prado::getApplication()->getCache()->flush();
 
         return $lastId;
     }

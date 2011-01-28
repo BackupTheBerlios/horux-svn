@@ -331,7 +331,8 @@ class mod extends Page
 
         $res2 = $cmd->execute();
 
-        Prado::getApplication()->getCache()->flush();
+        if(Prado::getApplication()->getCache())
+            Prado::getApplication()->getCache()->flush();
 
         return true;
     }
@@ -361,7 +362,8 @@ class mod extends Page
 
         }
 
-        Prado::getApplication()->getCache()->flush();
+        if(Prado::getApplication()->getCache())
+            Prado::getApplication()->getCache()->flush();
 
         if(isset($this->Request['back']))
             $this->Response->redirect($this->Service->constructUrl($this->Request['back']));

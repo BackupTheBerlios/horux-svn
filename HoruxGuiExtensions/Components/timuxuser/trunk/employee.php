@@ -45,16 +45,24 @@ class employee
     }
 
     protected function getCache($key) {
-        return $this->pradoCache->get($this->employeeId."_".$key);
+
+        if($this->pradoCache)
+            return $this->pradoCache->get($this->employeeId."_".$key);
+        else
+            return $this->cache[$this->employeeId."_".$key];
     }
 
     protected function setCache($key, $value) {
 
-        $param = Prado::getApplication()->getParameters();
+        if($this->pradoCache) {
+            $param = Prado::getApplication()->getParameters();
 
-        $cacheTimeout = $param['cacheTimeout'];
+            $cacheTimeout = $param['cacheTimeout'];
 
-        $this->pradoCache->set($this->employeeId."_".$key, $value, $cacheTimeout);
+            $this->pradoCache->set($this->employeeId."_".$key, $value, $cacheTimeout);
+        } else {
+            $this->cache[$this->employeeId."_".$key] = $value;
+        }
     }
 
     public function getUserId()
@@ -192,7 +200,7 @@ class employee
      */
     public function getWorkingTime($day, $month, $year)
     { 
-        $date = $year."-".sprintf("%02d",$month)."-".date('t', mktime(0,0,0,$month,$day,$year));
+        $date = $year."-".sprintf("%02d",$month)."-".$day;
         $cache = $this->getCache('getWorkingTime_'.$date);
         if($cache) {
             return $cache;
@@ -206,8 +214,10 @@ class employee
              $this->setCache('getWorkingTime_'.$date, $query->read());
              return $this->getCache('getWorkingTime_'.$date);
         }
-        else
+        else {
+            $this->setCache('getWorkingTime_'.$date, false);
             return false;
+        }
 
     }
 
@@ -920,7 +930,7 @@ class employee
      */
     public function getOvertimeLastYear($lastYear) {
 
-        $dateCache = $year."-".sprintf("%02d",$month);
+        $dateCache = $lastYear;
         $cache = $this->getCache('getOvertimeLastYear_'.$dateCache);
         if($cache) {
             return $cache;
@@ -943,7 +953,7 @@ class employee
      */
     public function getOvertimeLastMonth($currentMonth, $currentYear, $lastOvertime = 0) {
 
-        $date = $currentYear."-".sprintf("%02d",$currentMonth);
+        $date = $currentYear."-".sprintf("%02d",$currentMonth).$lastOvertime;
 
         $cache = $this->getCache('getOvertimeLastMonth_'.$date);
         if($cache) {
@@ -1243,14 +1253,14 @@ class employee
     {
         $dateCache = $year."-".sprintf("%02d",$month)."-".$timecode;
 
-        $cache = $this->getCache('getRequest_'.$date);
+        $cache = $this->getCache('getRequest_'.$dateCache);
         if($cache) {
             return $cache;
         }
 
 
         if($timecode == NULL) {
-            $this->setCache('getRequest_'.$date, 0);
+            $this->setCache('getRequest_'.$dateCache, 0);
             return 0;
         }
 
@@ -1376,7 +1386,7 @@ class employee
             $dateFrom = date("Y-m-d",strtotime(date("Y-m-d", strtotime($dateFrom)) . " +1 day"));
         }
 
-        $this->setCache('getRequest_'.$date, $nbreOfHours);
+        $this->setCache('getRequest_'.$dateCache, $nbreOfHours);
         return $nbreOfHours;
     }
 
