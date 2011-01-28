@@ -176,9 +176,6 @@ class load extends PageList {
 
         $timeCodeList = array();
 
-  list($usec, $sec) = explode(' ', microtime());
-   $script_start = (float) $sec + (float) $usec;
-
 
         $hourMonthTodo = array();
         $hourly = array();
@@ -242,14 +239,6 @@ class load extends PageList {
 
 
         }
-
-list($usec, $sec) = explode(' ', microtime());
-   $script_end = (float) $sec + (float) $usec;
-echo round($script_end - $script_start, 5)."<br>";
-
-
-  list($usec, $sec) = explode(' ', microtime());
-   $script_start = (float) $sec + (float) $usec;
 
         foreach($userList as $user) {
             if($user['Value']>0) {
@@ -335,11 +324,6 @@ echo round($script_end - $script_start, 5)."<br>";
             }
         }
 
-
-list($usec, $sec) = explode(' ', microtime());
-   $script_end = (float) $sec + (float) $usec;
-echo round($script_end - $script_start, 5);
-
         $cmd = $this->db->createCommand( "SELECT * FROM hr_timux_config" );
         $query = $cmd->query();
         $data = $query->read();
@@ -353,6 +337,12 @@ echo round($script_end - $script_start, 5);
 
         $res = array();
 
+        $extendHourly = false;
+        if(class_exists($computation2)) {
+            $extendHourly = new $computation2();
+        }
+
+
         foreach($timeCodeList as $k=>$v) {
 
             $totalCost = 0;
@@ -361,14 +351,9 @@ echo round($script_end - $script_start, 5);
 
                     if(is_array($u)) {
 
-                        if(class_exists($computation2)) {
-                            $extendHourly = new $computation2();
-
-                            if($extendHourly) {
-                                $u['hourly'] = $extendHourly->getHourly($month,$year, $u);
-                            }
+                        if($extendHourly) {
+                            $u['hourly'] = $extendHourly->getHourly($month,$year, $u);
                         }
-
 
                         $totalCost = bcadd($totalCost, bcmul($u['hourly'], round($u['total'],2), 2),2);
                     }
@@ -397,12 +382,8 @@ echo round($script_end - $script_start, 5);
                             if($u['hourDayTodo']>0) $hoursByDay2 = $u['hourDayTodo']; else $hoursByDay2 = $hoursByDay;
                             if($k != 'total') {
 
-                                if(class_exists($computation2)) {
-                                    $extendHourly = new $computation2();
-
-                                    if($extendHourly) {
-                                        $u['hourly'] = $extendHourly->getHourly($month,$year, $u);
-                                    }
+                                if($extendHourly) {
+                                    $u['hourly'] = $extendHourly->getHourly($month,$year, $u);
                                 }
 
                                 $r['timecode'] = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;".$k;
@@ -427,12 +408,8 @@ echo round($script_end - $script_start, 5);
                             if($u['hourDayTodo']>0) $hoursByDay2 = $u['hourDayTodo']; else $hoursByDay2 = $hoursByDay;
                             if($k != 'total') {
 
-                                if(class_exists($computation2)) {
-                                    $extendHourly = new $computation2();
-
-                                    if($extendHourly) {
-                                        $u['hourly'] = $extendHourly->getHourly($month,$year, $u);
-                                    }
+                                if($extendHourly) {
+                                    $u['hourly'] = $extendHourly->getHourly($month,$year, $u);
                                 }
 
                                 $r['timecode'] = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;".$k;
@@ -460,12 +437,8 @@ echo round($script_end - $script_start, 5);
                         if($u['hourDayTodo']>0) $hoursByDay2 = $u['hourDayTodo']; else $hoursByDay2 = $hoursByDay;
                         if($k != 'total') {
 
-                            if(class_exists($computation2)) {
-                                $extendHourly = new $computation2();
-
-                                if($extendHourly) {
-                                    $u['hourly'] = $extendHourly->getHourly($month,$year, $u);
-                                }
+                            if($extendHourly) {
+                                $u['hourly'] = $extendHourly->getHourly($month,$year, $u);
                             }
 
                             $r['timecode'] = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;".$k;
