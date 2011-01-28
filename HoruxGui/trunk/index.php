@@ -30,7 +30,7 @@ if(SSL)
     }
 }
 
-$frameworkPath='./prado/framework/prado.php';
+$frameworkPath='./prado/framework/pradolite.php';
 
 // The following directory checks may be removed if performance is required
 $basePath=dirname(__FILE__);

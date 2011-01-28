@@ -35,22 +35,22 @@
 
     <com:TConditional Condition="strtolower(substr($this->getApplication()->getService()->getRequestedPagePath(),-3,3)) != 'mod'">
         <prop:TrueTemplate>
-            <div id="menu-box">
-              <script type="text/javascript"><!--
-              var myMenu = <%= $this->generateMenu() %>
+                <div id="menu-box">
+                  <script type="text/javascript"><!--
+                  var myMenu = <%= $this->generateMenu() %>
 
-              --></script>
+                  --></script>
 
-                <div id="myMenuID"></div>
-                <script type="text/javascript">
-                <!--
-                    var prop = cmClone (cmThemeIE);
-                    prop.effect = new CMSlidingEffect (8);
+                    <div id="myMenuID"></div>
+                    <script type="text/javascript">
+                    <!--
+                        var prop = cmClone (cmThemeIE);
+                        prop.effect = new CMSlidingEffect (8);
 
-                    cmDraw ('myMenuID', myMenu, 'hbr', prop);
-                -->
-                </script>
-            </div>
+                        cmDraw ('myMenuID', myMenu, 'hbr', prop);
+                    -->
+                    </script>
+                </div>
         </prop:TrueTemplate>
         <prop:FalseTemplate>
             <div id="menu-box">
