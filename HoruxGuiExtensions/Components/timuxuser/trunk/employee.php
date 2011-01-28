@@ -31,6 +31,7 @@ class employee
     protected $employeeId = NULL;
 
     protected $cache = array();
+    protected $pradoCache;
 
     function __construct($userId) {
         $this->db = Prado::getApplication()->getModule('horuxDb')->DbConnection;
@@ -39,6 +40,21 @@ class employee
         $this->db->Active=true;
 
         $this->employeeId = $userId;
+
+        $this->pradoCache = Prado::getApplication()->getCache();
+    }
+
+    protected function getCache($key) {
+        return $this->pradoCache->get($this->employeeId."_".$key);
+    }
+
+    protected function setCache($key, $value) {
+
+        $param = Prado::getApplication()->getParameters();
+
+        $cacheTimeout = $param['cacheTimeout'];
+
+        $this->pradoCache->set($this->employeeId."_".$key, $value, $cacheTimeout);
     }
 
     public function getUserId()
@@ -152,9 +168,17 @@ class employee
      */
     public function getConfig()
     {
+        $cache = $this->getCache('getConfig');
+        if($cache) {
+            return $cache;
+        }
+
         $cmd = $this->db->createCommand( "SELECT * FROM hr_timux_config" );
         $query = $cmd->query();
-        return $query->read();
+
+        $this->setCache('getConfig',$query->read());
+
+        return $this->getCache('getConfig');
     }
 
 
@@ -167,11 +191,11 @@ class employee
      * @return mixed
      */
     public function getWorkingTime($day, $month, $year)
-    {
+    { 
         $date = $year."-".sprintf("%02d",$month)."-".date('t', mktime(0,0,0,$month,$day,$year));
-
-        if(isset($this->cache['workingTime'][$date])) {
-            return $this->cache['workingTime'][$date];
+        $cache = $this->getCache('getWorkingTime_'.$date);
+        if($cache) {
+            return $cache;
         }
 
         $cmd = $this->db->createCommand( "SELECT * FROM hr_timux_workingtime WHERE user_id=".$this->employeeId." AND startDate<='".$date."' AND ( endDate>='".$date."' || endDate IS NULL ) ORDER BY startDate DESC" );
@@ -179,8 +203,8 @@ class employee
 
 
         if($query) {
-            $this->cache['workingTime'][$date] =  $query->read();
-            return $this->cache['workingTime'][$date];
+             $this->setCache('getWorkingTime_'.$date, $query->read());
+             return $this->getCache('getWorkingTime_'.$date);
         }
         else
             return false;
@@ -196,6 +220,12 @@ class employee
      * @param int $year
      */
     public function getBookingsDay($day, $month, $year) {
+
+        $dateCache = $year."-".sprintf("%02d",$month)."-".$day;
+        $cache = $this->getCache('getBookingsDay_'.$dateCache);
+        if($cache) {
+            return $cache;
+        }
 
         $sql = "SELECT t.id, tb.roundBooking, tb.internet, tb.closed, tb.action, tb.actionReason FROM
                     hr_tracking AS t
@@ -213,9 +243,11 @@ class employee
         $query = $cmd->query();
         if($query)
         {
-            return $query->readAll();
+            $this->setCache('getBookingsDay_'.$dateCache,$query->readAll());
+            return $this->getCache('getBookingsDay_'.$dateCache);
         }
 
+        $this->setCache('getBookingsDay_'.$dateCache,array());
         return array();
     }
 
@@ -227,7 +259,13 @@ class employee
      * @param <type> $until 
      */
     public function getBookings($status, $from, $until, $order='DESC') {
-        
+
+        $dateCache = $status.$from.$until.$order;
+        $cache = $this->getCache('getBookings_'.$dateCache);
+        if($cache) {
+            return $cache;
+        }
+
        $statusTmp = $status;
 
         switch($status)
@@ -277,7 +315,9 @@ class employee
 
         $cmd=$this->db->createCommand("SELECT  t.id, t.date, tb.roundBooking AS time, tb.action, tb.actionReason, tb.internet FROM hr_tracking AS t LEFT JOIN hr_timux_booking AS tb ON tb.tracking_id=t.id WHERE $date $status t.id_user=".$this->employeeId." AND tb.action!='NULL' ORDER BY t.date $order, t.time $order, tb.action $order  LIMIT 0,500");
         $data = $cmd->query();
-        return $data->readAll();
+
+        $this->setCache('getBookings_'.$dateCache,$data->readAll());
+        return $this->getCache('getBookings_'.$dateCache);
 
     }
 
@@ -332,6 +372,7 @@ class employee
     }
 
     public function getBookingTimeCode($booking) {
+
         if($this->isSpecialTimeCode($booking)) {
             $timecodeId = explode("_", $booking['actionReason']);
             $timecodeId = $timecodeId[0];
@@ -371,8 +412,16 @@ class employee
      */
     public function getDayTodo($day, $month, $year) {
 
-        if($this->isNonWorkingDay($day,$month, $year))
-                return 0;
+        $dateCache = $year."-".sprintf("%02d",$month)."-".$day;
+        $cache = $this->getCache('getDayTodo_'.$dateCache);
+        if($cache) {
+            return $cache;
+        }
+
+        if($this->isNonWorkingDay($day,$month, $year)) {
+            $this->setCache('getDayTodo_'.$dateCache, 0);
+            return 0;
+        }
 
         //check if the day is in its contract
         $wt = $this->getWorkingTime($day, $month, $year);
@@ -500,6 +549,7 @@ class employee
                         $timeByDay = bcadd($timeByDay,$timeByHalfDay,4);
                 }
 
+                $this->setCache('getDayTodo_'.$dateCache, $timeByDay);
                 return $timeByDay;
             } 
             
@@ -553,9 +603,11 @@ class employee
                         $nbreRealWorks += $wt['sundayTime_a'];
                 }
 
+                $this->setCache('getDayTodo_'.$dateCache, $nbreRealWorks);
                 return $nbreRealWorks;
             }
         } else {
+            $this->setCache('getDayTodo_'.$dateCache, 0);
             return 0;
         }
     }
@@ -567,6 +619,12 @@ class employee
      * @param int $year 
      */
     public function getDayRequest($day, $month, $year) {
+
+        $dateCache = $year."-".sprintf("%02d",$month)."-".$day;
+        $cache = $this->getCache('getDayRequest_'.$dateCache);
+        if($cache) {
+            return $cache;
+        }  
 
         $date = $year."-".$month."-".$day;
         $cmd = $this->db->createCommand( "SELECT * FROM
@@ -594,9 +652,11 @@ class employee
         $query = $cmd->query();
         if($query) {
             $row = $query->readAll();
+            $this->setCache('getDayRequest_'.$dateCache,$row);
             return $row;
         }
 
+        $this->setCache('getDayRequest_'.$dateCache,false);
         return false;
 
     }
@@ -609,6 +669,12 @@ class employee
      * @return return the time
      */
     public function getDayDone($day, $month, $year) {
+
+        $dateCache = $year."-".sprintf("%02d",$month)."-".$day;
+        $cache = $this->getCache('getDayDone_'.$dateCache);
+        if($cache) {
+            return $cache;
+        }
 
         $res = array();
         $res['done'] = 0;
@@ -669,9 +735,11 @@ class employee
                     if($request['period'] == 'allday') {
                         if(bcdiv($res['done'], 3600, 4) > $this->getDayTodo($day, $month, $year)) {
                             $res['done'] = bcdiv($res['done'], 3600, 4);
+                            $this->setCache('getDayDone_'.$dateCache, $res);
                             return $res;
                         } else {
                             $res['done'] = bcadd($this->getDayTodo($day, $month, $year),bcdiv($res['done'], 3600, 4),4) ;
+                            $this->setCache('getDayDone_'.$dateCache, $res);
                             return $res;
                         }
                     } else {
@@ -694,6 +762,7 @@ class employee
         if($SpecialTimeCodeWithCompensation && bcdiv($res['done'], 3600, 4) < $this->getDayTodo($day, $month, $year)) {
             $res['compensation'] = $this->getDayTodo($day, $month, $year) - bcdiv($res['done'], 3600, 4);
             $res['done'] = $this->getDayTodo($day, $month, $year);
+            $this->setCache('getDayDone_'.$dateCache, $res);
             return $res;
         }
 
@@ -702,6 +771,7 @@ class employee
 
         $res['done'] = bcdiv($res['done'], 3600, 4);
 
+        $this->setCache('getDayDone_'.$dateCache, $res);
         return $res;
     }
 
@@ -711,6 +781,12 @@ class employee
      * @param int $year
      */
     public function getNumberOfWorkingDayInMonth($month, $year) {
+
+        $dateCache = $year."-".sprintf("%02d",$month);
+        $cache = $this->getCache('getNumberOfWorkingDayInMonth_'.$dateCache);
+        if($cache) {
+            return $cache;
+        }
 
         $res = 0;
 
@@ -724,6 +800,7 @@ class employee
             }            
         }
 
+        $this->setCache('getNumberOfWorkingDayInMonth_'.$dateCache,$res);
         return $res;
 
     }
@@ -737,6 +814,12 @@ class employee
      */
     public function isNonWorkingDay($day, $month, $year)
     {
+        $dateCache = $year."-".sprintf("%02d",$month)."-".$day;
+        $cache = $this->getCache('isNonWorkingDay_'.$dateCache);
+        if($cache) {
+            return $cache;
+        }
+
         $date = $year."-".$month."-".$day;
 
         $cmd = $this->db->createCommand( "SELECT period FROM hr_non_working_day AS n WHERE n.from<='$date' AND n.until>='$date'" );
@@ -744,9 +827,11 @@ class employee
 
         if($query->read())
         {
+            $this->setCache('isNonWorkingDay_'.$dateCache, true);
             return true;
         }
 
+        $this->setCache('isNonWorkingDay_'.$dateCache, false);
         return false;
     }
 
@@ -755,6 +840,7 @@ class employee
      * @param array $bookings 
      */
     public function isBreakOk($bookings) {
+
 
         $nbreOfBooking = count($bookings);
 
@@ -834,12 +920,19 @@ class employee
      */
     public function getOvertimeLastYear($lastYear) {
 
+        $dateCache = $year."-".sprintf("%02d",$month);
+        $cache = $this->getCache('getOvertimeLastYear_'.$dateCache);
+        if($cache) {
+            return $cache;
+        }   
+
         $timeCode = $this->getDefaultOvertimeCounter();
         
         $cmd = $this->db->createCommand( "SELECT * FROM hr_timux_activity_counter WHERE isClosedMonth=1 AND year=$lastYear AND month=12 AND timecode_id=$timeCode AND user_id=".$this->employeeId );
         $query = $cmd->query();
         $data = $query->read();
 
+        $this->setCache('getOvertimeLastYear_'.$dateCache,$data['nbre']);
         return $data['nbre'];
     }
 
@@ -849,6 +942,13 @@ class employee
      *  @param int $year
      */
     public function getOvertimeLastMonth($currentMonth, $currentYear, $lastOvertime = 0) {
+
+        $date = $currentYear."-".sprintf("%02d",$currentMonth);
+
+        $cache = $this->getCache('getOvertimeLastMonth_'.$date);
+        if($cache) {
+            return $cache;
+        }
 
         if($currentMonth == 1) {
             $lastMonth = 12;
@@ -862,6 +962,7 @@ class employee
         $wt = $this->getWorkingTime(1,$currentMonth, $currentYear);
 
         if(!$wt) {
+            $this->setCache('getOvertimeLastMonth_'.$date,$lastOvertime);
             return $lastOvertime;
         }
 
@@ -876,7 +977,9 @@ class employee
             $data = $query->read();
 
             if($data) {
-                return bcadd($lastOvertime, $data['nbre'], 4);
+                $this->setCache('getOvertimeLastMonth_'.$date,bcadd($lastOvertime, $data['nbre'], 4));
+
+                return $this->getCache('getOvertimeLastMonth_'.$date);
             }
             else {
 
@@ -892,26 +995,48 @@ class employee
 
                 $lastOvertime = bcadd($lastOvertime, $this->getActivityCounter($lastYear, $lastMonth, $timeCode), 4);
 
-                return $this->getOvertimeLastMonth($lastMonth, $lastYear, $lastOvertime);
+                $this->setCache('getOvertimeLastMonth_'.$date,$this->getOvertimeLastMonth($lastMonth, $lastYear, $lastOvertime));
+                return $this->getCache('getOvertimeLastMonth_'.$date);
             }
         }
-
+        $this->setCache('getOvertimeLastMonth_'.$date,0);
         return 0;
     }
 
     public function getActivityCounter($year, $month, $timecode) {
+
+        $date = $year."-".sprintf("%02d",$month)."-".$timecode;
+
+        $cache = $this->getCache('getActivityCounter_'.$date);
+        if($cache) {
+            return $cache;
+        }
+
         $cmd = $this->db->createCommand( "SELECT ROUND(SUM(nbre), 4) AS n FROM hr_timux_activity_counter WHERE isClosedMonth=0 AND 	timecode_id=$timecode AND year=$year AND month=$month AND user_id={$this->employeeId}") ;
         $query = $cmd->query();
         $data = $query->read();
+
+        $this->setCache('getActivityCounter_'.$date,$data['n']);
 
         return $data['n'];
     }
 
 
     public function getAllActivityCounter($year, $month) {
+
+        $date = $year."-".sprintf("%02d",$month);
+
+        $cache = $this->getCache('getAllActivityCounter_'.$date);
+        if($cache) {
+            return $cache;
+        }
+
         $cmd = $this->db->createCommand( "SELECT ac.*, tc.formatDisplay, tc.name FROM hr_timux_activity_counter AS ac LEFT JOIN hr_timux_timecode AS tc ON tc.id=ac.timecode_id WHERE ac.isClosedMonth=0 AND year=$year AND month=$month AND user_id={$this->employeeId}") ;
         $query = $cmd->query();
-        return  $query->readAll();
+
+        $this->setCache('getAllActivityCounter_'.$date,$query->readAll());
+
+        return  $this->getCache('getAllActivityCounter_'.$date);
     }
 
     /**
@@ -920,12 +1045,20 @@ class employee
      */
     public function getDefaultOvertimeCounter()
     {
+        $cache = $this->getCache('getDefaultOvertimeCounter_');
+        if($cache) {
+            return $cache;
+        }
+
         $cmd = $this->db->createCommand( "SELECT id FROM hr_timux_timecode WHERE defaultOvertime=1" );
         $query = $cmd->query();
         $data = $query->read();
-        if($data)
+        if($data) {
+            $this->setCache('getDefaultOvertimeCounter_', $data['id']);
             return $data['id'];
+        }
 
+        $this->setCache('getDefaultOvertimeCounter_', false);
         return false;
 
     }
@@ -936,12 +1069,20 @@ class employee
      */
     public function getDefaultHolidaysCounter()
     {
+         $cache = $this->getCache('getDefaultHolidaysCounter_');
+        if($cache) {
+            return $cache;
+        }
+
         $cmd = $this->db->createCommand( "SELECT id FROM hr_timux_timecode WHERE defaultHoliday=1" );
         $query = $cmd->query();
         $data = $query->read();
-        if($data)
+        if($data) {
+            $this->setCache('getDefaultHolidaysCounter_', $data['id']);
             return $data['id'];
+        }
 
+        $this->setCache('getDefaultHolidaysCounter_', false);
         return false;
 
     }
@@ -955,6 +1096,13 @@ class employee
      */
     public function getNonWorkingDay($year,$month, $day)
     {
+        $date = $year."-".sprintf("%02d",$month)."-".$day;
+
+        $cache = $this->getCache('getNonWorkingDay_'.$date);
+        if($cache) {
+            return $cache;
+        }
+
         $date = $year."-".$month."-".$day;
 
         $cmd = $this->db->createCommand( "SELECT period FROM hr_non_working_day AS n WHERE n.from<='$date' AND n.until>='$date'" );
@@ -963,12 +1111,17 @@ class employee
 
         if($data)
         {
-            if($data['period'] == 'allday')
+            if($data['period'] == 'allday') {
+                $this->setCache('getNonWorkingDay_'.$date, 1);
                 return 1;
-            else
+            }
+            else {
+                $this->setCache('getNonWorkingDay_'.$date, 0.5);
                 return 0.5;
+            }
         }
 
+        $this->setCache('getNonWorkingDay_'.$date, 0);
         return 0;
     }
 
@@ -980,6 +1133,13 @@ class employee
      */
     public function getAllNonWorkingDay($year,$month)
     {
+        $date = $year."-".sprintf("%02d",$month);
+
+        $cache = $this->getCache('getAllNonWorkingDay_'.$date);
+        if($cache) {
+            return $cache;
+        }
+
         $dateFrom = $year."-".$month."-1";
         $dateTo = $year."-".$month."-".date("t",mktime(0,0,0,$month,1,$year));
 
@@ -1043,6 +1203,7 @@ class employee
             }
         }
 
+        $this->setCache('getAllNonWorkingDay_'.$date,$nbre);
         return $nbre;
     }
 
@@ -1054,12 +1215,20 @@ class employee
      */
     public function getNonWorkingDayEndOfYear($month,$year)
     {
+        $date = $year."-".sprintf("%02d",$month);
+
+        $cache = $this->getCache('getNonWorkingDayEndOfYear_'.$date);
+        if($cache) {
+            return $cache;
+        }
+
         $nbre = 0.0;
         for($i=$month+1; $i<=12; $i++)
         {
             $nbre += $this->getAllNonWorkingDay($year, $i);
         }
 
+        $this->setCache('getNonWorkingDayEndOfYear_'.$date, $nbre);
         return $nbre;
     }
 
@@ -1072,7 +1241,18 @@ class employee
      */
     public function getRequest($year,$month, $timecode)
     {
-        if($timecode == NULL) return 0;
+        $dateCache = $year."-".sprintf("%02d",$month)."-".$timecode;
+
+        $cache = $this->getCache('getRequest_'.$date);
+        if($cache) {
+            return $cache;
+        }
+
+
+        if($timecode == NULL) {
+            $this->setCache('getRequest_'.$date, 0);
+            return 0;
+        }
 
         $dateFrom = $year."-".$month."-1";
         $dateTo = $year."-".$month."-".date("t",mktime(0,0,0,$month,1,$year));
@@ -1196,6 +1376,7 @@ class employee
             $dateFrom = date("Y-m-d",strtotime(date("Y-m-d", strtotime($dateFrom)) . " +1 day"));
         }
 
+        $this->setCache('getRequest_'.$date, $nbreOfHours);
         return $nbreOfHours;
     }
 
@@ -1208,40 +1389,71 @@ class employee
      */
     public function isWorking($year, $month, $day)
     {
+        $date = $year."-".sprintf("%02d",$month)."-".$day;
+
+        $cache = $this->getCache('isWorking_'.$date);
+        if($cache) {
+            return $cache;
+        }    
+
         $wt = $this->getWorkingTime($day, $month, $year);
 
         $dayName = strtolower(date("l",mktime(0,0,0,$month,$day,$year)));
 
         if($wt[$dayName.'Time_m'] > 0 || $wt[$dayName.'Time_a'] > 0)
         {
-            if($wt[$dayName.'Time_m'] > 0 && $wt[$dayName.'Time_a'] > 0)
+            if($wt[$dayName.'Time_m'] > 0 && $wt[$dayName.'Time_a'] > 0) {
+                $this->setCache('isWorking_'.$date,1);
                 return 1;
+            }
+
+            $this->setCache('isWorking_'.$date,0.5);
             return 0.5;
 
         }
         else
         {
+            $this->setCache('isWorking_'.$date,false);
             return false;
         }
 
     }
 
     public function isAWorkingDay($year, $month, $day) {
+
+        $date = $year."-".sprintf("%02d",$month)."-".$day;
+
+        $cache = $this->getCache('isAWorkingDay_'.$date);
+        if($cache) {
+            return $cache;
+        }   
+
         $config = $this->getConfig();
 
         $nday = date("N",mktime(0,0,0,$month,$day, $year));
 
         $workingDay = explode(",", $config['workingDays']);
 
-        if($workingDay[$nday-1])
+        if($workingDay[$nday-1]) {
+            $this->setCache('isAWorkingDay_'.$date,true);
             return true;
-        else
+        }
+        else {
+            $this->setCache('isAWorkingDay_'.$date,false);
             return false;
+        }
 
     }
 
     public function isWorkingPeriod($year, $month, $day)
     {
+
+        $date = $year."-".sprintf("%02d",$month)."-".$day;
+        $cache = $this->getCache('isWorkingPeriod_'.$date);
+        if($cache) {
+            return $cache;
+        }
+
         $wt = $this->getWorkingTime($day, $month, $year);
 
         $dayName = strtolower(date("l",mktime(0,0,0,$month,$day,$year)));
@@ -1250,20 +1462,24 @@ class employee
         {
             if($wt[$dayName.'Time_m'] > 0 && $wt[$dayName.'Time_a'] > 0)
             {
+                $this->setCache('isWorkingPeriod_'.$date,'allday');
                 return 'allday';
             }
             elseif($wt[$dayName.'Time_m'] > 0)
             {
+                $this->setCache('isWorkingPeriod_'.$date,'morning');
                 return 'morning';
             }
             else
             {
+                $this->setCache('isWorkingPeriod_'.$date,'afternoon');
                 return 'afternoon';
             }
 
         }
         else
         {
+            $this->setCache('isWorkingPeriod_'.$date,false);
             return false;
         }
 
@@ -1277,6 +1493,12 @@ class employee
      */
     public function getNonWorkingDayPeriod($year,$month, $day)
     {
+        $dateCache = $year."-".sprintf("%02d",$month)."-".$day;
+        $cache = $this->getCache('getNonWorkingDayPeriod_'.$dateCache);
+        if($cache) {
+            return $cache;
+        }
+
         $date = $year."-".$month."-".$day;
 
         $cmd = $this->db->createCommand( "SELECT period FROM hr_non_working_day AS n WHERE n.from<='$date' AND n.until>='$date'" );
@@ -1285,14 +1507,23 @@ class employee
 
         if($data)
         {
+           $this->setCache('getNonWorkingDayPeriod_'.$dateCache,$data['period']);
            return $data['period'];
         }
 
+        $this->setCache('getNonWorkingDayPeriod_'.$dateCache,false);
         return false;
     }
 
     public function geHolidaystMonth($year, $month)
     {
+        $date = $year."-".sprintf("%02d",$month);
+
+        $cache = $this->getCache('geHolidaystMonth_'.$date);
+        if($cache) {
+            return $cache;
+        }
+
         if($oldM == 0 && $oldY == 0) {
             $oldM = $month;
             $oldY = $year;
@@ -1300,13 +1531,18 @@ class employee
 
         $timeCode = $this->getDefaultHolidaysCounter();
 
-        if(!$timeCode ) return 0;
+        if(!$timeCode ) {
+            $this->setCache('geHolidaystMonth_'.$date,0);
+            return 0;
+        }
 
         $cmd = $this->db->createCommand( "SELECT * FROM hr_timux_activity_counter WHERE isClosedMonth=1 AND year=$year AND month=$month AND timecode_id=$timeCode AND user_id=".$this->employeeId );
         $query = $cmd->query();
         $data = $query->read();
 
-        if($data) { // ok, the month is closed            
+        if($data) { // ok, the month is closed
+
+            $this->setCache('geHolidaystMonth_'.$date,$data['nbre']);
             return $data['nbre'] ;
         } else {
 
@@ -1337,8 +1573,8 @@ class employee
                     $nvt -= $holidayActivityCounter;
 
                 }
-
-                return $currentNbre - $nvt;
+                $this->setCache('geHolidaystMonth_'.$date,$currentNbre - $nvt);
+                return $this->getCache('geHolidaystMonth_'.$date);
 
 
             } else {
@@ -1355,8 +1591,8 @@ class employee
 
                     $nvt -= $holidayActivityCounter;
                 }
-
-                return $currentNbre - $nvt;
+                $this->setCache('geHolidaystMonth_'.$date,$currentNbre - $nvt);
+                return $this->getCache('geHolidaystMonth_'.$date);
             }
         }
     }
@@ -1380,6 +1616,12 @@ class employee
      */
     public function getMonthAbsence($month, $year)
     {
+        $date = $year."-".sprintf("%02d",$month);
+        $cache = $this->getCache('getMonthAbsence_'.$date);
+        if($cache) {
+            return $cache;
+        }
+
         $idDO = $this->getDefaultOvertimeCounter();
         $idDH = $this->getDefaultHolidaysCounter();
         $cmd = $this->db->createCommand( "SELECT * FROM hr_timux_timecode WHERE id NOT IN ($idDO, $idDH) ORDER BY name");
@@ -1395,17 +1637,29 @@ class employee
             }
         }
 
+        $this->setCache('getMonthAbsence_'.$date,$absences);
         return $absences;
     }
 
 
     public function getMonthLeaveRequest($month, $year) {
+
+        $date = $year."-".sprintf("%02d",$month);
+
+        $cache = $this->getCache('getMonthLeaveRequest_'.$date);
+        if($cache) {
+            return $cache;
+        }
+
         $dateFrom = $year."-".$month."-1";
         $dateTo = $year."-".$month."-".date("t",mktime(0,0,0,$month,1,$year));
 
         $timecode = $this->getDefaultHolidaysCounter();
 
-        if($timecode == "") return array();
+        if($timecode == "")  {
+            $this->setCache('getMonthLeaveRequest_'.$date, array());
+            return array();
+        }
 
         $cmd=$this->db->createCommand("SELECT * FROM hr_timux_timecode WHERE (type='leave' OR type='overtime' ) AND id!=".$timecode);
 
@@ -1438,16 +1692,29 @@ class employee
 
         $nbreOfDay = bcmul($nbreOfDay,$hoursByDay,4 );
 
-        return bcadd($nbreOfHours, $nbreOfDay, 4);
+        $this->setCache('getMonthLeaveRequest_'.$date, bcadd($nbreOfHours, $nbreOfDay, 4));
+
+        return $this->getCache('getMonthLeaveRequest_'.$date);
     }
 
     public function getMonthAbsentRequest($month, $year) {
+
+        $dateCache = $year."-".sprintf("%02d",$month);
+
+        $cache = $this->getCache('getMonthAbsentRequest_'.$dateCache);
+        if($cache) {
+            return $cache;
+        }
+
         $dateFrom = $year."-".$month."-1";
         $dateTo = $year."-".$month."-".date("t",mktime(0,0,0,$month,1,$year));
 
         $timecode = $this->getDefaultHolidaysCounter();
 
-        if($timecode == "") return array();
+        if($timecode == "") {
+            $this->setCache('getMonthAbsentRequest_'.$dateCache, array());
+            return array();
+        }
 
         $nbreOfDays = 0.0;
 
@@ -1521,6 +1788,8 @@ class employee
 
         }
 
+        $this->setCache('getMonthAbsentRequest_'.$dateCache, $nbreOfDays);
+
         return $nbreOfDays;
     }
 
@@ -1528,10 +1797,21 @@ class employee
      * Return the error in a month
      */
     public function getError($year=0, $month=0) {
+
+        $dateCache = $year."-".sprintf("%02d",$month);
+
+        $cache = $this->getCache('getError_'.$dateCache);
+        if($cache) {
+            return $cache;
+        }
+
         $result = array();
 
-        if($this->employeeId == '' || $this->employeeId == '')
-                return $result;
+
+        if($this->employeeId == '' || $this->employeeId == '') {
+            $this->setCache('getError_'.$dateCache,$result);
+            return $result;
+        }
 
         $nbreOfDay = 0;
         // Get the current month
@@ -1543,8 +1823,10 @@ class employee
         }
         else
         {
-            if($month > date("n") && $year >= date("Y"))
+            if($month > date("n") && $year >= date("Y")) {
+                $this->setCache('getError_'.$dateCache,array());
                 return array();
+            }
 
             if($month == date("n") && $year == date("Y"))
                 $nbreOfDay = date("j")-1;
@@ -1583,6 +1865,7 @@ class employee
             
         }
 
+        $this->setCache('getError_'.$dateCache,$result);
         return $result;
     }
 
@@ -1591,6 +1874,11 @@ class employee
      */
     public function getEmployeeLeaveRequest($state)
     {
+        $cache = $this->getCache('getEmployeeLeaveRequest_'.$state);
+        if($cache) {
+            return $cache;
+        }
+
         if($state != 'all')
             $state = ' tr.state=\''.$state.'\' AND ';
         else
@@ -1603,9 +1891,11 @@ class employee
         if($query)
         {
             $data = $query->readAll();
+            $this->setCache('getEmployeeLeaveRequest_'.$state,$data);
             return $data;
         }
 
+        $this->setCache('getEmployeeLeaveRequest_'.$state,array());
         return array();
     }
 
@@ -1614,6 +1904,13 @@ class employee
      */
     function getHoursByDay($month=0, $year=0)
     {
+
+        $date = $year."-".sprintf("%02d",$month);
+
+        $cache = $this->getCache('getHoursByDay_'.$date);
+        if($cache) {
+            return $cache;
+        }
 
         if($month == 0 && $year == 0) {
             $hoursByDay = 0;
@@ -1624,6 +1921,7 @@ class employee
                 $hoursByDay = bcdiv($config['hoursByWeek'], $config['daysByWeek'], 4);
             }
 
+            $this->setCache('getHoursByDay_'.$date,$hoursByDay);
             return $hoursByDay;
         }
 
@@ -1648,7 +1946,9 @@ class employee
 
            $hoursX = bcmul($hours100 ,bcdiv($wt['workingPercent'], 100, 4),4);
 
-           return bcdiv($hoursX, $nWorkingDay, 4);
+
+           $this->setCache('getHoursByDay_'.$date,bcdiv($hoursX, $nWorkingDay, 4));
+           return $this->getCache('getHoursByDay_'.$date);
 
         }
         
@@ -1657,7 +1957,7 @@ class employee
             if($config['daysByWeek'] > 0) {
                 $hoursByDay = bcdiv($wt['hoursByWeek'], $config['daysByWeek'], 4);
             }
-
+            $this->setCache('getHoursByDay_'.$date,$hoursByDay);
             return $hoursByDay;
         }
 
@@ -1667,15 +1967,24 @@ class employee
      * return the timecode name
      */
     public function getTimeCodeName($timecodeId) {
+
+        $cache = $this->getCache('getTimeCodeName_'.$timecodeId);
+        if($cache) {
+            return $cache;
+        }
+
         $cmd = $this->db->createCommand( "SELECT name FROM hr_timux_timecode WHERE id=:id" );
         $cmd->bindValue(":id",$timecodeId,PDO::PARAM_STR);
         $query = $cmd->query();
         if($query)
         {
             $data = $query->read();
+            $this->setCache('getTimeCodeName_'.$timecodeId,$data['name']);
             return $data['name'];
         }
 
+        $this->setCache('getTimeCodeName_'.$timecodeId, '');
+        return '';
     }
 
    /*
@@ -1831,18 +2140,34 @@ class employee
     }
 
     public function getHourly($month, $year) {
+
+        $date = $year."-".sprintf("%02d",$month);
+        $cache = $this->getCache('getHourly_'.$date);
+        if($cache) {
+            return $cache;
+        }
+
         $cmd=$this->db->createCommand("SELECT hourly FROM hr_timux_hourly WHERE month=:month AND year=:year AND user_id=".$this->employeeId);
         $cmd->bindValue(':month', $month);
         $cmd->bindValue(':year',$year);
         $data = $cmd->query();
         $data = $data->read();
-        if($data)
+        if($data) {
+            $this->setCache('getHourly_'.$date,$data['hourly']);
             return $data['hourly'];
+        }
 
+        $this->setCache('getHourly_'.$date,0);
         return 0;
     }
 
     public function isLastMonthLastYeatClosed($year) {
+
+        $cache = $this->getCache('isLastMonthLastYeatClosed_'.$year);
+        if($cache) {
+            return $cache;
+        }
+
         $year--;
 
         $cmd=$this->db->createCommand("SELECT COUNT(*) AS n FROM hr_timux_activity_counter WHERE month=12 AND year=:year AND user_id=".$this->employeeId);
@@ -1850,25 +2175,46 @@ class employee
         $data = $cmd->query();
         $data = $data->read();
 
-        if($data['n']>0)
+        if($data['n']>0) {
+            $this->setCache('isLastMonthLastYeatClosed_'.$year, true);
             return true;
-        else
+        }
+        else {
+            $this->setCache('isLastMonthLastYeatClosed_'.$year, false);
             return false;
+        }
     }
 
     public function isClosedMonth($month, $year) {
+
+        $date = $year."-".sprintf("%02d",$month);
+
+        $cache = $this->getCache('isClosedMonth_'.$date);
+        if($cache) {
+            return $cache;
+        }
+
         $cmd=$this->db->createCommand("SELECT* FROM hr_timux_activity_counter WHERE user_id=".$this->employeeId." AND year=$year AND month=$month AND isClosedMonth=1");
         $data = $cmd->query();
         $data = $data->readAll();
 
         if(count($data)>0) {
+            $this->setCache('isClosedMonth_'.$date, true);
             return true;
         } else {
+            $this->setCache('isClosedMonth_'.$date, false);
             return false;
         }
     }
 
     public function getHoursMonthTodo($month, $year) {
+
+        $date = $year."-".sprintf("%02d",$month);
+
+        $cache = $this->getCache('getHoursMonthTodo_'.$date);
+        if($cache) {
+            return $cache;
+        }
 
         $HoursMonth = 0;
 
@@ -1881,6 +2227,8 @@ class employee
             $dayTodo = $this->getDayTodo($day, $month, $year);
             $HoursMonth = bcadd($HoursMonth,$dayTodo,4);
         }
+
+        $this->setCache('getHoursMonthTodo_'.$date, $HoursMonth);
 
         return $HoursMonth;
     }
