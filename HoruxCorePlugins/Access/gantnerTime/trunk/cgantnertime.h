@@ -70,6 +70,7 @@ protected slots:
     */
     void readSoapResponse();
     void readSoapBalancesResponse();
+    void readSoapInputBDEResponse();
 
     /*!
       Read the SSL error when doing a SOAP transaction
@@ -86,6 +87,7 @@ private:
   QMap<int, bool> devices;
   QtSoapHttpTransport soapClient;
   QtSoapHttpTransport soapClientBalances;
+  QtSoapHttpTransport soapClientInputBDE;
 
     //! saas param
     bool saas;

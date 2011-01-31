@@ -46,6 +46,8 @@ bool CGantnerTime::isAccess(QMap<QString, QVariant> params, bool, bool )
 
     QString keyId = "";
 
+    QString trackingIdToCheck = "";
+
 
     if(userId == "0") {
         QSqlQuery querykey = "SELECT ka.id_user FROM hr_user AS u LEFT JOIN hr_keys_attribution AS ka ON ka.id_user=u.id LEFT JOIN hr_keys AS k ON k.id=ka.id_key  WHERE k.serialNumber='" + key + "'";
@@ -373,6 +375,9 @@ bool CGantnerTime::isAccess(QMap<QString, QVariant> params, bool, bool )
             code = "255";
 
 
+            //check the booking if it is a valid input
+            trackingIdToCheck = lastTrackingId;
+
         } else {
 
             QSqlQuery query("INSERT INTO `hr_tracking` ( `id` , `id_user` , `id_key` , `time` , `date` , `id_entry` , `is_access` , `id_comment`, `key`, `extData` ) VALUES ('', '" +
@@ -407,6 +412,24 @@ bool CGantnerTime::isAccess(QMap<QString, QVariant> params, bool, bool )
                     roundBooking.toString("hh:mm:ss") +
                     "')"
                     );
+
+        if(trackingIdToCheck != "") {
+            QtSoapMessage message;
+            message.setMethod("callServiceComponent");
+
+            QtSoapArray *array = new QtSoapArray(QtSoapQName("params"));
+
+            array->insert(0, new QtSoapSimpleType(QtSoapQName("component"),"timuxadmin"));
+            array->insert(1, new QtSoapSimpleType(QtSoapQName("class"),"timuxAdminDevice"));
+            array->insert(2, new QtSoapSimpleType(QtSoapQName("function"),"checkInputBDE"));
+            array->insert(3, new QtSoapSimpleType(QtSoapQName("trackingId"),lastTrackingId));
+
+            message.addMethodArgument(array);
+
+            soapClientInputBDE.submitRequest(message, saas_path+"/index.php?soap=soapComponent&password=" + saas_password + "&username=" + saas_username);
+
+            qDebug() << "Check the input BDE";
+        }
 
         checkBalances(userId.toInt());
     }
@@ -878,6 +901,14 @@ void CGantnerTime::initSAASMode()
         connect(soapClientBalances.networkAccessManager(),SIGNAL(sslErrors( QNetworkReply *, const QList<QSslError> & )),
                 this, SLOT(soapSSLErrors(QNetworkReply*,QList<QSslError>)));
 
+
+        soapClientInputBDE.setHost(saas_host,saas_ssl);
+
+        connect(&soapClientInputBDE, SIGNAL(responseReady()),this, SLOT(readSoapInputBDEResponse()));
+        connect(soapClientInputBDE.networkAccessManager(),SIGNAL(sslErrors( QNetworkReply *, const QList<QSslError> & )),
+                this, SLOT(soapSSLErrors(QNetworkReply*,QList<QSslError>)));
+
+
         timerCheckBalances = new QTimer(this);
         connect(timerCheckBalances, SIGNAL(timeout()), this, SLOT(checkBalances()));
         timerCheckBalances->start(10000 * 6 * 60); // check every 1 hours
@@ -890,6 +921,15 @@ void CGantnerTime::initSAASMode()
         connect(&soapClientBalances, SIGNAL(responseReady()),this, SLOT(readSoapBalancesResponse()));
         connect(soapClientBalances.networkAccessManager(),SIGNAL(sslErrors( QNetworkReply *, const QList<QSslError> & )),
                 this, SLOT(soapSSLErrors(QNetworkReply*,QList<QSslError>)));
+
+
+        soapClientInputBDE.setHost(saas_host,saas_ssl);
+
+        connect(&soapClientInputBDE, SIGNAL(responseReady()),this, SLOT(readSoapInputBDEResponse()));
+        connect(soapClientInputBDE.networkAccessManager(),SIGNAL(sslErrors( QNetworkReply *, const QList<QSslError> & )),
+                this, SLOT(soapSSLErrors(QNetworkReply*,QList<QSslError>)));
+
+
 
         timerCheckBalances = new QTimer(this);
         connect(timerCheckBalances, SIGNAL(timeout()), this, SLOT(checkBalances()));
@@ -1020,6 +1060,19 @@ void CGantnerTime::readSoapResponse()
 
     timerCheckDb->start(TIME_DB_CHECKING);
 
+}
+
+void CGantnerTime::readSoapInputBDEResponse() {
+    // check if the response from the web service is ok
+    const QtSoapMessage &response = soapClientInputBDE.getResponse();
+
+    if (response.isFault()) {
+        qDebug() << "(CGantnerTime) Not able to call the Horux GUI web service. (" << response.faultString().toString() << ":" << response.faultCode () << ")";
+        timerCheckDb->start(TIME_DB_CHECKING);
+        return;
+    }
+
+    qDebug() << "soap response:" << response.returnValue().toString();
 }
 
 //! Q_EXPORT_PLUGIN2(TARGET, CLASSNAME);
