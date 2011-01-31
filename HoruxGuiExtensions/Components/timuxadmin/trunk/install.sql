@@ -278,3 +278,18 @@ INSERT INTO `hr_user_action` (`name`, `page`, `icon`, `tip`, `catalog`, `type`) 
 
 INSERT INTO `hr_timux_config` (`id`, `daysByWeek`, `minimumBreaks`, `bookingRounding`, `hoursByWeek`, `holidayByYear`, `hoursBlockMorning1`, `hoursBlockMorning2`, `hoursBlockMorning3`, `hoursBlockMorning4`, `hoursBlockAfternoon1`, `hoursBlockAfternoon2`, `hoursBlockAfternoon3`, `hoursBlockAfternoon4`) VALUES
 (1, 5, 0, 0, 40, 25, '', '', '', '', '', '', '', '');
+
+
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `hr_timux_restore_month`
+--
+
+CREATE TABLE IF NOT EXISTS `hr_timux_restore_month` (
+  `user_id` int(11) NOT NULL,
+  `year` int(11) NOT NULL,
+  `month` int(11) NOT NULL,
+  `insert` text NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
