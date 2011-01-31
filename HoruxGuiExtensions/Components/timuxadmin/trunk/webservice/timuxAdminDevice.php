@@ -19,6 +19,7 @@ if (file_exists($confFile)) {
 }
 else
   $param = Prado::getApplication()->getParameters();
+
 $computation = $param['computation'];
 
 Prado::using('horux.pages.components.timuxuser.'.$computation);
@@ -127,6 +128,43 @@ class timuxAdminDevice
         }
 
         return $val;
+    }
+
+    public function checkInputBDE($trackingId) {
+        // load parameters
+        $confFile = './protected/pages/components/timuxuser/config.xml';
+        if (file_exists($confFile)) {
+          $config = new TApplicationConfiguration;
+          $config->loadFromFile($confFile);
+          $param = new TMap;
+          foreach($config->getParameters() as $id=>$parameter) {
+                  if(is_array($parameter)) {
+                          $component=Prado::createComponent($parameter[0]);
+                          foreach($parameter[1] as $name=>$value)
+                                  $component->setSubProperty($name,$value);
+                          $param->add($id,$component);
+                  }
+                  else
+                          $param->add($id,$parameter);
+          }
+        }
+        else
+          $param = Prado::getApplication()->getParameters();
+
+        $computation2 = $param['computation2'];
+
+        if($computation2 != '') {
+            Prado::using('horux.pages.components.timuxuser.'.$computation2);
+
+            if(class_exists($computation2)) {
+                $extend = new $computation2();
+
+                if($extend)
+                    return $extend->checkInputBDE($trackingId);
+            }
+        }
+        
+        return true;
     }
 }
 
