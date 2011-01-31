@@ -1958,11 +1958,88 @@ class employee
         return '';
     }
 
+    /*
+    * Restore a month
+    */
+    public function restoreMonth($month, $year) {
+
+       $cmd=$this->db->createCommand("SELECT * FROM hr_timux_restore_month WHERE user_id=:user_id AND `month`=:month AND `year`=:year");
+       $cmd->bindValue(":user_id",$this->employeeId);
+       $cmd->bindValue(":month",$month);
+       $cmd->bindValue(":year",$year);
+       $cmd = $cmd->query();
+       $rows = $cmd->readAll();
+
+       if(count($rows) == 0)
+           return;
+
+       $cmd=$this->db->createCommand("DELETE FROM hr_timux_activity_counter WHERE user_id=:user_id");
+       $cmd->bindValue(":user_id",$this->employeeId);
+       $cmd->execute();
+
+       foreach($rows as $row) {
+           $cmd=$this->db->createCommand($row['insert']);
+           $cmd->execute();
+
+           $cmd=$this->db->createCommand("DELETE FROM hr_timux_restore_month WHERE user_id=:user_id AND `month`>=:month AND `year`>=:year");
+           $cmd->bindValue(":user_id",$this->employeeId);
+           $cmd->bindValue(":month",$month);
+           $cmd->bindValue(":year",$year);
+           $cmd->execute();
+       }
+
+       //unlock the booking
+       $dateFrom = $year."-".$month."-01";
+       $cmd=$this->db->createCommand("UPDATE hr_timux_booking SET closed='0' WHERE tracking_id IN (SELECT id FROM hr_tracking AS t WHERE t.date>='$dateFrom' AND id_user=".$this->employeeId." )");
+       $cmd->execute();
+
+       //unlock the request
+        $dateFrom = $year."-".$month."-1";
+        $dateTo = $year."-".$month."-".date("t",mktime(0,0,0,$month,1,$year));
+
+        $cmd=$this->db->createCommand("SELECT r.id FROM hr_timux_request AS r LEFT JOIN hr_timux_request_leave AS rl ON rl.request_id=r.id LEFT JOIN hr_timux_timecode AS t ON t.id=r.timecodeId WHERE rl.datefrom>='".$dateFrom."' AND rl.dateto<='".$dateTo."' AND r.state='closed' AND r.userId=".$this->employeeId);
+
+        $data = $cmd->query();
+        $data = $data->readAll();
+
+        $app = Prado::getApplication();
+        $usedId = $app->getUser()->getUserID() == null ? 0 : $app->getUser()->getUserID();
+
+        $cmd=$this->db->createCommand("SELECT user_id FROM hr_superusers WHERE id=$usedId");
+        $data2 = $cmd->query();
+        $dataUser = $data2->read();
+        $userId = $dataUser['user_id'];
+
+        foreach($data as $d)
+        {
+            $cmd=$this->db->createCommand("UPDATE hr_timux_request SET state='validate', modifyDate=CURDATE(),modifyUserId=".$userId." WHERE id=".$d['id']);
+            $cmd->execute();
+        }
+    }
+
+
    /*
     * Close a month, do back possible after that
     */
    public function closeMonth($month, $year) {
 
+       //backup the current month
+       $cmd=$this->db->createCommand("SELECT * FROM hr_timux_activity_counter WHERE user_id=:user_id");
+       $cmd->bindValue(":user_id",$this->employeeId);
+       $rows = $cmd->query();
+       $rows = $rows->readAll();
+       
+       foreach($rows as $ac) {
+           $cmd=$this->db->createCommand("INSERT INTO hr_timux_restore_month (`user_id`, `year`, `month`, `insert`) VALUES (:user_id, :year, :month, :insert)");
+           $cmd->bindValue(":user_id",$this->employeeId);
+           $cmd->bindValue(":year",$year);
+           $cmd->bindValue(":month",$month);
+
+           $insert = "INSERT INTO hr_timux_activity_counter (`user_id`, `timecode_id`, `nbre`, `year`, `month`, `day`, `isClosedMonth`, `remark`) VALUES ({$ac['user_id']},{$ac['timecode_id']},{$ac['nbre']},{$ac['year']},{$ac['month']},{$ac['day']},{$ac['isClosedMonth']},'".addslashes($ac['remark'])."')";
+           $cmd->bindValue(":insert",$insert);
+
+           $cmd->execute();
+       }
 
 
        // get all the time code

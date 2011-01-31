@@ -1033,6 +1033,10 @@ class balances extends PageList
 
     function couldAddBooking() {
 
+        if(!$this->employee) {
+            return false;
+        }
+
         if($this->employee->isClosedMonth($this->FilterMonth->getSelectedValue(),$this->FilterYear->getSelectedValue() ) ) {
             return false;
         } else {

@@ -296,8 +296,6 @@ class closemonth extends PageList
 
     public function onCloseMonth($sender, $param)
     {
-
-
         if(count($this->DataGrid->DataKeys) === 0)
         {
             $pBack = array('koMsg'=>Prado::localize('Select one item'));
@@ -344,6 +342,39 @@ class closemonth extends PageList
             $this->Response->redirect($this->Service->constructUrl('components.timuxuser.closemonth.closemonth',$pBack));
         }
     }
+
+
+     public function onRestoreMonth($sender, $param)  {
+
+        $data = $this->getData();
+
+        foreach($data as $d)
+        {
+            if($d['canBeClosed'] == -2) { // month already closed
+                $employee = new employee( $d['user_id'] );
+
+                $employee->restoreMonth($this->FilterMonth->getSelectedValue(),$this->FilterYear->getSelectedValue());
+
+                $param = Prado::getApplication()->getParameters();
+                $computation2 = $param['computation2'];
+
+                if($computation2 != '') {
+                    Prado::using('horux.pages.components.timuxuser.'.$computation2);
+
+                    if(class_exists($computation2)) {
+                        $extendCloseMonth = new $computation2();
+
+                        if($extendCloseMonth)
+                            $extendCloseMonth->restoreMonth($this->FilterMonth->getSelectedValue(),$this->FilterYear->getSelectedValue(), $employee);
+                    }
+                }
+            }
+        }
+
+        $pBack = array('okMsg'=>Prado::localize('The month was restore'));
+        $this->Response->redirect($this->Service->constructUrl('components.timuxuser.closemonth.closemonth',$pBack));
+
+     }
 
 }
 ?>
