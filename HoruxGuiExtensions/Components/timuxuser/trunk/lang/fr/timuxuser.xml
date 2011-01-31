@@ -1365,7 +1365,15 @@
 <target>Ne peut pas ajouter de congé dans un mois clôturé</target>
 </trans-unit>
 
+<trans-unit id="314">
+<source>The month was restore</source>
+<target>Le mois a été restauré</target>
+</trans-unit>
 
+<trans-unit id="315">
+<source>Restore the month</source>
+<target>Restaurer le mois</target>
+</trans-unit>
 
 </body>
 </file>
