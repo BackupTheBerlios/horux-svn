@@ -55,7 +55,6 @@ class load extends PageList {
                 $FilterMonth = date('n');
             }
 
-            $FilterEmployee = $this->Session[$this->getApplication()->getService()->getRequestedPagePath().'FilterEmployee'];
             $FilterDepartment = $this->Session[$this->getApplication()->getService()->getRequestedPagePath().'FilterDepartment'];
 
             $this->FilterDepartment->DataSource=$this->DepartmentList;
@@ -67,6 +66,8 @@ class load extends PageList {
             else {
                 $this->FilterDepartment->setSelectedIndex(0);
             }
+
+            $FilterEmployee = $this->Session[$this->getApplication()->getService()->getRequestedPagePath().'FilterEmployee'];
 
             $this->FilterEmployee->DataSource=$this->EmployeeList;
             $this->FilterEmployee->dataBind();
@@ -85,11 +86,13 @@ class load extends PageList {
                 $this->FilterMonth->setSelectedValue($FilterMonth);
 
 
+            $FilterLoad = $this->Session[$this->getApplication()->getService()->getRequestedPagePath().'FilterLoad'];
+
             $this->FilterLoad->DataSource=$this->LoadList;
             $this->FilterLoad->dataBind();
 
             if($FilterLoad) {
-                $this->FilterEmployee->setSelectedValue($FilterLoad);
+                $this->FilterLoad->setSelectedValue($FilterLoad);
             }
             else {
                 $this->FilterLoad->setSelectedIndex(0);
@@ -167,6 +170,16 @@ class load extends PageList {
 
         $userList = $this->getEmployeeList();
 
+        $filterEmployee = $this->FilterEmployee->getSelectedValue();
+        $filterLoad = $this->FilterLoad->getSelectedValue();
+
+        if($filterEmployee>0) {
+            $employee = new employee($filterEmployee);
+            $userList = array();
+            $userList[] = array("Value"=>$filterEmployee, "Text"=>$employee->getFullName());
+        }
+
+
         $year = $this->FilterYear->getSelectedValue();
         $month = $this->FilterMonth->getSelectedValue();
 
@@ -207,12 +220,26 @@ class load extends PageList {
                 foreach($data as $d) {
 
                     $type = $this->isBookingIn($d) ? 'IN' : 'OUT';
-
                     if($type == $nextBookingType) {
                         if($type == 'IN') {
                             $bookinIN = $d['time'];
                             $timeCode = $d['BDE1'];
                         } else {
+
+                            if($d['action'] == '100') {
+                                $dateTodo = explode("-", $d['date']);
+                                $ddone = $employee->getDayDone($dateTodo[2], $dateTodo[1], $dateTodo[0]);
+
+                                $timeCodeList[$ddone['timecodeId']]['total'] = bcadd($timeCodeList[$ddone['timecodeId']]['total'], $ddone['compensation'],4);
+                                $timeCodeList[$ddone['timecodeId']][$user['Text']]['total'] = bcadd($timeCodeList[$ddone['timecodeId']][$user['Text']]['total'], $ddone['compensation'],4);
+
+                                $timeCodeList[$ddone['timecodeId']][$user['Text']]['hourDayTodo'] = $hoursByDay[$user['Value']];
+                                $timeCodeList[$ddone['timecodeId']][$user['Text']]['hourly'] = $hourly[$user['Value']];
+                                $timeCodeList[$ddone['timecodeId']][$user['Text']]['id'] = $user['Value'];
+                                $timeCodeList[$ddone['timecodeId']][$user['Text']]['hourMonthTodo'] = $hourMonthTodo[$user['Value']];
+                                
+                            }
+                           
                             $t = bcdiv((strtotime($d['time']) - strtotime($bookinIN)), 3600, 4);
                             $timeCodeList[$timeCode][$user['Text']]['total'] = bcadd($timeCodeList[$timeCode][$user['Text']]['total'], $t,4);
                             $timeCodeList[$timeCode][$user['Text']]['hourDayTodo'] = $hoursByDay[$user['Value']];
@@ -222,7 +249,10 @@ class load extends PageList {
 
                             $timeCodeList[$timeCode]['total'] = bcadd($timeCodeList[$timeCode]['total'],$t,4);
                             $bookinIN = 0;
+
                             $timeCode = '';
+
+
                         }
 
                         $nextBookingType = $nextBookingType == 'IN' ? 'OUT' : 'IN';
@@ -277,20 +307,24 @@ class load extends PageList {
                     if($h['nbre']>0) {
                         if($h['disp'] == 'day') {
                             $timeCodeList[$d['id']]['total'] = bcadd($timeCodeList[$d['id']]['total'], bcmul($h['nbre'],$hoursByDay[$user['Value']],4),4);
-                            $timeCodeList[$d['id']][$user['Text']]['total'] += bcadd($timeCodeList[$d['id']][$user['Text']]['total'], bcmul($h['nbre'],$hoursByDay[$user['Value']],4),4);
+                            $timeCodeList[$d['id']][$user['Text']]['total'] = bcadd($timeCodeList[$d['id']][$user['Text']]['total'], bcmul($h['nbre'],$hoursByDay[$user['Value']],4),4);
                             $timeCodeList[$d['id']][$user['Text']]['hourDayTodo'] = $hoursByDay[$user['Value']];
                             $timeCodeList[$d['id']][$user['Text']]['hourly'] = $hourly[$user['Value']];
                             $timeCodeList[$d['id']][$user['Text']]['id'] = $user['Value'];
                             $timeCodeList[$d['id']][$user['Text']]['hourMonthTodo'] = $hourMonthTodo[$user['Value']];
                         } else {
-                            $timeCodeList[$d['id']]['total'] += bcadd($timeCodeList[$d['id']]['total'], $h['nbre'],4);
-                            $timeCodeList[$d['id']][$user['Text']]['total'] += bcadd($timeCodeList[$d['id']][$user['Text']]['total'] , $h['nbre'],4);
+
+                            $timeCodeList[$d['id']]['total'] = bcadd($timeCodeList[$d['id']]['total'], $h['nbre'],4);
+                            $timeCodeList[$d['id']][$user['Text']]['total'] = bcadd($timeCodeList[$d['id']][$user['Text']]['total'] , $h['nbre'],4);
                             $timeCodeList[$d['id']][$user['Text']]['hourDayTodo'] = $hoursByDay[$user['Value']];
                             $timeCodeList[$d['id']][$user['Text']]['hourly'] = $hourly[$user['Value']];
                             $timeCodeList[$d['id']][$user['Text']]['id'] = $user['Value'];
                             $timeCodeList[$d['id']][$user['Text']]['hourMonthTodo'] = $hourMonthTodo[$user['Value']];
+
                         }
                     }
+
+
                 }
 
                 for($i=1; $i<date('t', mktime(0,0,0,$month,1,$year));$i++) {
@@ -342,8 +376,9 @@ class load extends PageList {
             $extendHourly = new $computation2();
         }
 
-
         foreach($timeCodeList as $k=>$v) {
+
+            
 
             $totalCost = 0;
             if(is_array($v)) {
@@ -366,6 +401,8 @@ class load extends PageList {
                 $cmd->bindValue(":abb", $k);
                 $data = $cmd->query();
                 $data = $data->read();
+
+                if($filterLoad != 0 && $data['id']!=$filterLoad) continue;
 
                 if($data) {
                     $r['timecode'] = '<b>'.$data['name'].'</b>';
@@ -521,6 +558,14 @@ class load extends PageList {
 
     }
 
+    public function selectionChangedLoad($sender, $param) {
+        $this->Session[$this->getApplication()->getService()->getRequestedPagePath().'FilterLoad'] = $this->FilterLoad->getSelectedValue();
+
+        $this->DataGrid->DataSource=$this->Data;
+        $this->DataGrid->dataBind();
+        $this->Page->CallbackClient->update('list', $this->DataGrid);
+    }
+
     public function onRefresh($sender, $param) {
 
         $this->Session[$this->getApplication()->getService()->getRequestedPagePath().'FilterYear'] = $this->FilterYear->getSelectedValue();
@@ -578,6 +623,7 @@ class load extends PageList {
         $this->DataGrid->DataSource=$this->Data;
         $this->DataGrid->dataBind();
     }
+
 
 }
 
