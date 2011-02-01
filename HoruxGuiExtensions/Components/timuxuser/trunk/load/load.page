@@ -27,7 +27,7 @@
         IconAsset="<%~ ../assets/load.png %>"
         HelpVisible="true"
         CancelVisible="true"
-        PrintVisible="true"
+        PrintVisible="false"
         JsClickPrint="onPrintRedirect()"
         />
 
