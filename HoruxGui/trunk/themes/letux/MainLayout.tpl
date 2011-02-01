@@ -37,6 +37,7 @@
 
 <com:TClientScript PradoScripts="ajax" />
 
+
 <div id="border-top">
     <div>
         <div>
