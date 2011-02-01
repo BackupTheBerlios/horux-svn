@@ -569,9 +569,9 @@ class employee
                 }
 
                 if($wt[$dayName.'m']>0)
-                    $nbreRealWorks += $wt['mondayTime_m'];
+                    $nbreRealWorks += $wt[$dayName.'m'];
                 if($wt[$dayName.'a']>0)
-                    $nbreRealWorks += $wt['mondayTime_a'];
+                    $nbreRealWorks += $wt[$dayName.'a'];
 
                
                 $this->setCache('getDayTodo_'.$dateCache, $nbreRealWorks);
