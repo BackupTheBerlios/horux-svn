@@ -34,6 +34,7 @@ class employee
     protected $pradoCache;
 
     function __construct($userId) {
+
         $this->db = Prado::getApplication()->getModule('horuxDb')->DbConnection;
         $this->db->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY,true);
 
@@ -1528,6 +1529,10 @@ class employee
             $data = $query->read();
             $lastCloseMonth = $data['month'];
             $lastCloseYear = $data['year'];
+
+            if($year - $lastCloseYear > 1) {
+                $currentNbre = 25 + $this->geHolidaystMonth($year-1,12);
+            }
 
             if($lastCloseMonth == 12 && $year-1 == $lastCloseYear ) {
 

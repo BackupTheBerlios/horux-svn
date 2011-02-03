@@ -1,7 +1,9 @@
 <?xml version="1.0"?>
 <configuration>
     <modules>
-        <module id="cache" class="Application.pages.components.timuxuser.Cache" />
+
+       <module id="cache" class="System.Caching.TMemCache" Host="localhost" Port="11211" />
+
         <module id="globalization_timuxuser" class="TGlobalization">
             <translation type="XLIFF" source="horux.messages" catalogue="timuxuser" marker="" cache="false" />
         </module>

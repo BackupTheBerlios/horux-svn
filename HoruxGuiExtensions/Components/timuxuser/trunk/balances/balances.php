@@ -111,9 +111,10 @@ class balances extends PageList
             if($FilterMonth)
                 $this->FilterMonth->setSelectedValue($FilterMonth);
 
-
-            $this->DataGrid->DataSource=$this->Data;
-            $this->DataGrid->dataBind();
+            if($this->employee->getUserId() > 0 ) {
+                $this->DataGrid->DataSource=$this->Data;
+                $this->DataGrid->dataBind();
+            }
         }
 
         if(isset($this->Request['okMsg']))

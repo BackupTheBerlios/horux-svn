@@ -102,9 +102,10 @@ class year extends PageList
             if($FilterYear)
                 $this->FilterYear->setSelectedValue($FilterYear);
 
-
-            $this->DataGrid->DataSource=$this->Data;
-            $this->DataGrid->dataBind();
+            if($this->employee->getUserId() > 0 ) {
+                $this->DataGrid->DataSource=$this->Data;
+                $this->DataGrid->dataBind();
+            }
         }
 
         if(isset($this->Request['okMsg']))
