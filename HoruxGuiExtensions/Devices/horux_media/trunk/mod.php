@@ -1,16 +1,4 @@
 <?php
-/**
-* @version      $Id$
-* @package      Horux
-* @subpackage   Horux
-* @copyright    Copyright (C) 2007  Letux. All rights reserved.
-* @license      GNU/GPL, see LICENSE.php
-* Horux is free software. This version may have been modified pursuant
-* to the GNU General Public License, and as distributed it includes or
-* is derivative of works licensed under the GNU General Public License or
-* other free or open source software licenses.
-* See COPYRIGHT.php for copyright notices and details.
-*/
 
 Prado::using('horux.pages.hardware.device.horux_media.sql');
 
@@ -56,7 +44,7 @@ class mod extends Page
     protected function setData()
     {
         $cmd = $this->db->createCommand( SQL::SQL_GET_INFODISPLAY );
-        $cmd->bindParameter(":id",$this->id->Value, PDO::PARAM_INT);
+        $cmd->bindValue(":id",$this->id->Value, PDO::PARAM_INT);
         $query = $cmd->query();
 
         if($query)
@@ -114,19 +102,19 @@ class mod extends Page
     protected function saveData()
     {
       $cmd = $this->db->createCommand( SQL::SQL_MOD_DEVICE );
-	  $cmd->bindParameter(":name",$this->name->SafeText,PDO::PARAM_STR);
-	  $cmd->bindParameter(":description",$this->comment->SafeText,PDO::PARAM_STR);
-	  $cmd->bindParameter(":isLog",$this->isLog->getChecked(),PDO::PARAM_STR);
-	  $cmd->bindParameter(":id",$this->id->Value,PDO::PARAM_STR);
+	  $cmd->bindValue(":name",$this->name->SafeText,PDO::PARAM_STR);
+	  $cmd->bindValue(":description",$this->comment->SafeText,PDO::PARAM_STR);
+	  $cmd->bindValue(":isLog",$this->isLog->getChecked(),PDO::PARAM_STR);
+	  $cmd->bindValue(":id",$this->id->Value,PDO::PARAM_STR);
 	  $cmd->Execute();
 
   
       $cmd = $this->db->createCommand( SQL::SQL_UPDATE_INFODISPLAY );
-	  $cmd->bindParameter(":ip",$this->ip->SafeText,PDO::PARAM_STR);
-	  $cmd->bindParameter(":port",$this->port->SafeText,PDO::PARAM_STR);
-	  $cmd->bindParameter(":id_action_device",$this->id_action_device->getSelectedValue(),PDO::PARAM_STR);
+	  $cmd->bindValue(":ip",$this->ip->SafeText,PDO::PARAM_STR);
+	  $cmd->bindValue(":port",$this->port->SafeText,PDO::PARAM_STR);
+	  $cmd->bindValue(":id_action_device",$this->id_action_device->getSelectedValue(),PDO::PARAM_STR);
 
-	  $cmd->bindParameter(":id",$this->id->Value,PDO::PARAM_STR);
+	  $cmd->bindValue(":id",$this->id->Value,PDO::PARAM_STR);
 	  $cmd->Execute();
 	  
 	  return true;
@@ -135,8 +123,8 @@ class mod extends Page
     public function serverValidateName($sender, $param)
     {
       $cmd = $this->db->createCommand( SQL::SQL_IS_READER_NAME_EXIST2);
-      $cmd->bindParameter(":name",$this->name->SafeText,PDO::PARAM_STR);
-      $cmd->bindParameter(":id",$this->id->Value,PDO::PARAM_STR);
+      $cmd->bindValue(":name",$this->name->SafeText,PDO::PARAM_STR);
+      $cmd->bindValue(":id",$this->id->Value,PDO::PARAM_STR);
       $array = $cmd->query()->readAll();
 
       if(count($array) > 0)

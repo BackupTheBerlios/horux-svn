@@ -1,9 +1,7 @@
 <?xml version="1.0"?>
 <configuration>
     <modules>
-
-       <module id="cache" class="System.Caching.TMemCache" Host="localhost" Port="11211" />
-
+        <module id="cache" class="System.Caching.TMemCache" Host="localhost" Port="11211" />
         <module id="globalization_timuxuser" class="TGlobalization">
             <translation type="XLIFF" source="horux.messages" catalogue="timuxuser" marker="" cache="false" />
         </module>
@@ -11,6 +9,6 @@
     <parameters>
         <parameter id="computation" value="employee" Name="Employee classe" RightText=".php" />
         <parameter id="computation2" value="" Name="Additional employee class" RightText=".php" />
-        <parameter id="cacheTimeout" value="30" Name="Cache timeout" RightText="" />
+        <parameter id="cacheTimeout" value="15" Name="Cache timeout" RightText="" />
     </parameters>
 </configuration>
