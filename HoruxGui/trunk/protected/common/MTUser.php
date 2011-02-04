@@ -1,8 +1,4 @@
 <?php
-/**
- * @author Artūras Šlajus <x11@arturaz.afraid.org>
- * @license http://creativecommons.org/licenses/LGPL/2.1/ CC-GNU LGPL
- */
  
 class MTUser extends TComponent implements IUser {
 	/**

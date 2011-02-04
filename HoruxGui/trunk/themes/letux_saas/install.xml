@@ -8,6 +8,6 @@
 	<authorEmail>info@letux.ch</authorEmail>
 	<authorUrl>http://www.letux.ch</authorUrl>
 	<copyright>Letux</copyright>
-	<license>GNU/GPL</license>
+	<license>AGPL</license>
 	<description>Saas Horux template</description>
 </install>

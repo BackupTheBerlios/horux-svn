@@ -19,8 +19,8 @@
    <target>Attention! Javascript doit être activé pour une utilisation propre de l'administration</target>
 </trans-unit>
 <trans-unit id="5">
-   <source>is Free Software released under the GNU/GPL License</source>
-   <target>est une application libre sous licence GNU/GPL</target>
+   <source>is Free Software released under the AGPL License</source>
+   <target>est une application libre sous licence AGPL</target>
 </trans-unit>
 </body>
 </file>

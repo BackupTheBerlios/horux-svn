@@ -1,14 +1,7 @@
-HoruxGui derives from copyrighted works licensed under the GNU General
-Public License Version 3.  This version has been modified pursuant to the
-GNU General Public License as of April 07, 2008, and as distributed,
-it includes or is derivative of works licensed under the GNU General
-Public License or other free or open source software licenses, including
-works copyrighted by any or all of the following, from 2008 through 2008:
-
-
 Code contributers:
 ------------------
-Jean-Luc Gyger(Letux)
+Jean-Luc Gyger (Letux)
+Thierry Forchelet (Letux)
 
 Documentation Contributers:
 ---------------------------

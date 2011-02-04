@@ -1,13 +1,4 @@
 <?php
-/**
- * TToolbarBox class file.
- *
- * @author Jean-Luc Gyger <info[at]letux[dot]ch>
- * @link http://www.letux.ch/
- * @copyright Copyright &copy; 2009 Letux Sàrl
- * @license http://www.pradosoft.com/license/
- * @version 0.1
- */
 
 class TToolbarBox extends TTemplateControl
 {

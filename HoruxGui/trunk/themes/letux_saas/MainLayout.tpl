@@ -73,7 +73,7 @@
 <div id="footer">
     <p class="copyright">
         <a href="http://www.letux.ch" target="_blank">Horux ®</a>
-        <com:TTranslate Catalogue="letux" Text="is Free Software released under the GNU/GPL License" /> -  &copy; <%= date('Y') %>  <a href="http://www.letux.ch" target="_blank">Letux Sàrl</a>
+        <com:TTranslate Catalogue="letux" Text="is Free Software released under the AGPL License" /> -  Powered by <a href="http://www.letux.ch" target="_blank">Letux Sàrl</a>
     </p>
 </div>
 </body>

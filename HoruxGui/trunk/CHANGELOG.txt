@@ -1,6 +1,6 @@
 1. Copyright and disclaimer
 ---------------------------
-This application is opensource software released under the GPL.  Please
+This application is opensource software released under the AGPL.  Please
 see source code and the LICENSE file
 
 

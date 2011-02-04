@@ -1,10 +1,5 @@
 <?php
-/**
- * @author Artūras Šlajus <x11@arturaz.afraid.org>
- * @license http://creativecommons.org/licenses/LGPL/2.1/ CC-GNU LGPL
- */
 
-// We'll need our user class later.
 Prado::using('MTUser');
 
 // Every user manager should implement IUserManager.
