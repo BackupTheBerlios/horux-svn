@@ -337,6 +337,8 @@ class load extends PageList {
 
                     $overtime = bcsub($b['done'],$todo,4);
 
+                    $overtime = bcmul($overtime,-1, 4);
+
                     if($overtime != 0) {
                         $timeCodeList[Prado::localize('Overtime2')][$user['Text']]['total'] = bcadd($timeCodeList[Prado::localize('Overtime2')][$user['Text']]['total'],$overtime,4);
                         $timeCodeList[Prado::localize('Overtime2')][$user['Text']]['hourDayTodo'] = $hoursByDay[$user['Value']];
