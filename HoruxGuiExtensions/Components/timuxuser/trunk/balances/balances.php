@@ -563,39 +563,38 @@ class balances extends PageList
 
             //------------------------------- BOOKINGS -----------------------------------------------------------------------------------------------
             $bookingsDay = $this->employee->getBookingsDay($day, $month, $year);
-            if (!is_array($bookingsDay)) {
-              return array();
-            }
+            if (is_array($bookingsDay)) {
 
-            // when 4 bookings are displayed, add a new line
-            $index_br = 1;
+                // when 4 bookings are displayed, add a new line
+                $index_br = 1;
 
-            foreach($bookingsDay as $b) {
+                foreach($bookingsDay as $b) {
 
-                // if we print on a pdf, do not insert the link
-                if(!$isPrint && $this->isAccess('components.timuxuser.booking.mod') && $b['closed'] == 0)
-                {
-                    $line['sign'].= '<a href="index.php?page=components.timuxuser.booking.mod&back=components.timuxuser.balances.balances&id='.$b['id'].'" >';
+                    // if we print on a pdf, do not insert the link
+                    if(!$isPrint && $this->isAccess('components.timuxuser.booking.mod') && $b['closed'] == 0)
+                    {
+                        $line['sign'].= '<a href="index.php?page=components.timuxuser.booking.mod&back=components.timuxuser.balances.balances&id='.$b['id'].'" >';
+                    }
+
+                    // add an * if the booking was modified by hand
+                    if($b['internet'] == 1) $line['sign'].= "*";
+
+                    $inout = $this->employee->isBookingIn($b) ? Prado::localize("in") : Prado::localize("out");
+
+                    // add the time without the second and close the link on th booking for an internet display
+                    if(!$isPrint)
+                    {
+                        $line['sign'] .= substr($b['roundBooking'],0,5)."/".$inout."</a>&nbsp;&nbsp;&nbsp;";
+                    }
+                    else
+                    {
+                        $line['sign'] .= substr($b['roundBooking'],0,5)."/".$inout."&nbsp;&nbsp;&nbsp;";
+                    }
+
+                    if($index_br % 4 == 0) $line['sign'] .= "<br/>";
+
+                    $index_br++;
                 }
-
-                // add an * if the booking was modified by hand
-                if($b['internet'] == 1) $line['sign'].= "*";
-
-                $inout = $this->employee->isBookingIn($b) ? Prado::localize("in") : Prado::localize("out");
-
-                // add the time without the second and close the link on th booking for an internet display
-                if(!$isPrint)
-                {
-                    $line['sign'] .= substr($b['roundBooking'],0,5)."/".$inout."</a>&nbsp;&nbsp;&nbsp;";
-                }
-                else
-                {
-                    $line['sign'] .= substr($b['roundBooking'],0,5)."/".$inout."&nbsp;&nbsp;&nbsp;";
-                }
-
-                if($index_br % 4 == 0) $line['sign'] .= "<br/>";
-
-                $index_br++;
             }
 
             if(substr($line['sign'],-5,5) == "<br/>")
