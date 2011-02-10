@@ -563,6 +563,9 @@ class balances extends PageList
 
             //------------------------------- BOOKINGS -----------------------------------------------------------------------------------------------
             $bookingsDay = $this->employee->getBookingsDay($day, $month, $year);
+            if (!is_array($bookingsDay)) {
+              return array();
+            }
 
             // when 4 bookings are displayed, add a new line
             $index_br = 1;
