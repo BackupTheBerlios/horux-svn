@@ -72,7 +72,7 @@ class HoruxGuiUpdate {
                                     }
 				} else {
                                   if($entry != "application_p.xml")
-					$this->out[$path_to_entry] = md5(file_get_contents($path_to_entry));
+					$this->out[$path_to_entry] = md5_file($path_to_entry);
 				}
 			}
 		}
