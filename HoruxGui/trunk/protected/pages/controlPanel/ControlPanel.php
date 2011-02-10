@@ -92,9 +92,12 @@ class ControlPanel extends Page {
                             $content = file_get_contents('./protected/pages/'.$pagePath.'.page');
 
                             if(preg_match("/IconAsset=\"<%~(.*)%>\"/", $content, $matches)) {
-                                $icon = str_replace("./assets/", "", $matches[1]);
-                                $icon = trim($icon);
-                                $url=Prado::getApplication()->getAssetManager()->publishFilePath(Prado::getApplication()->getBasePath().'/pages/components/'.$d2['name'].'/assets/'.$icon);
+                                if (($assetPos = strrpos($matches[1], "assets/")) !== false) {
+                                  $icon = substr($matches[1], $assetPos+7);
+                                  $icon = trim($icon);
+                                  if ($icon)
+                                    $url=Prado::getApplication()->getAssetManager()->publishFilePath(Prado::getApplication()->getBasePath().'/pages/components/'.$d2['name'].'/assets/'.$icon);
+                                }
                             }
                         }
 
