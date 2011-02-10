@@ -39,7 +39,7 @@ class Update extends PageList
         $items = $this->DataGrid->getDataSource();
 
         foreach ($this->DataGrid->items as $item){
-            
+            set_time_limit(10);
             $fileToUpdate = $item->name->Text;
 
             if($item->md5->Text != "") {
@@ -49,15 +49,16 @@ class Update extends PageList
                 $newFile = $update->updateFile($fileToUpdate);
 
                 if($newFile) {
-		    if(file_exists($fileToUpdate))
-		      unlink($fileToUpdate);
+		    if(file_exists($fileToUpdate)) {
+		      @unlink($fileToUpdate);
+                    }
 
                     if(($handle = fopen($fileToUpdate, "w"))) {
                         fwrite($handle,$newFile);
 
                         fclose($handle);
 
-                        chmod($fileToUpdate, 0777);
+                        @chmod($fileToUpdate, 0777);
                     }
                 }
 

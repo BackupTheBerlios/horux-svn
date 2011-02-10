@@ -7,7 +7,7 @@ include_once("../xmlrpc/lib/xmlrpc.inc");
 if(isset($_GET['file'])) {
     $file_content = file_get_contents("../".$_GET['file']);
 
-   $msg = new xmlrpcmsg("fileDiff", array(new xmlrpcval($_GET['file'], 'string'), new xmlrpcval($file_content, 'string')));
+   $msg = new xmlrpcmsg("fileDiff", array(new xmlrpcval($_GET['file'], 'string'), new xmlrpcval(base64_encode($file_content), 'string'), new xmlrpcval("1.0", 'string')));
 
     $cli = new xmlrpc_client("http://www.horux.ch/update/xml_rpc_update.php");
     $resp = $cli->send($msg);
@@ -19,7 +19,7 @@ if(isset($_GET['file'])) {
     if (!$resp->faultCode()) {
         $val = $resp->value();
 
-        print_r( unserialize($val->scalarval()) );
+        print_r( unserialize(base64_decode($val->scalarval())) );
 
     } else {
         /*

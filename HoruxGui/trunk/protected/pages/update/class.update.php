@@ -13,7 +13,7 @@ class HoruxGuiUpdate {
 
         $client = new xmlrpc_client("http://www.horux.ch/update/xml_rpc_update.php");
 
-        $message = new xmlrpcmsg("compareVersion", array(new xmlrpcval(serialize($this->out), 'string')));
+        $message = new xmlrpcmsg("compareVersion", array(new xmlrpcval(base64_encode(serialize($this->out)), 'string'), new xmlrpcval("1.0", 'string')));
         $resp = $client->send($message);
 
         if( $resp->faultCode() ) {
@@ -21,7 +21,7 @@ class HoruxGuiUpdate {
         } else {
 
             $value = $resp->value();
-            return unserialize($value->scalarval());
+            return unserialize(base64_decode($value->scalarval()));
         }
     }
 
@@ -32,7 +32,7 @@ class HoruxGuiUpdate {
 
         $client = new xmlrpc_client("http://www.horux.ch/update/xml_rpc_update.php");
 
-        $message = new xmlrpcmsg("getFile", array(new xmlrpcval($file, 'string')));
+        $message = new xmlrpcmsg("getFile", array(new xmlrpcval($file, 'string'), new xmlrpcval("1.0", 'string')));
         $resp = $client->send($message);
 
         if( $resp->faultCode() ) {
@@ -40,7 +40,7 @@ class HoruxGuiUpdate {
         } else {
 
             $value = $resp->value();
-            return $value->scalarval();
+            return base64_decode($value->scalarval());
         }
     }
 
