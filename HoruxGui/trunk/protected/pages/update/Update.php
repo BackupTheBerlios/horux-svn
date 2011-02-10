@@ -53,7 +53,7 @@ class Update extends PageList
 		      @unlink($fileToUpdate);
                     }
 
-                    if(($handle = fopen($fileToUpdate, "w"))) {
+                    if(($handle = @fopen($fileToUpdate, "w"))) {
                         fwrite($handle,$newFile);
 
                         fclose($handle);
